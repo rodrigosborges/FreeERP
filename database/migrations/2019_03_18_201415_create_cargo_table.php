@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAlunoTable extends Migration {
+class CreateCargoTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,12 @@ class CreateAlunoTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('aluno', function(Blueprint $table)
+		Schema::create('cargo', function(Blueprint $table)
 		{
 			$table->integer('id', true);
 			$table->string('nome', 100);
-			$table->string('prontuario', 7);
-			$table->timestamps();
-			$table->softDeletes();
+			$table->integer('horas_semanais');
+			$table->float('salario', 10, 0);
 		});
 	}
 
@@ -30,7 +29,7 @@ class CreateAlunoTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('aluno');
+		Schema::drop('cargo');
 	}
 
 }

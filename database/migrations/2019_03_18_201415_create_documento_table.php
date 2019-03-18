@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateEnderecoTable extends Migration {
+class CreateDocumentoTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,12 @@ class CreateEnderecoTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('endereco', function(Blueprint $table)
+		Schema::create('documento', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('rua', 100);
-			$table->integer('numero');
-			$table->string('bairro', 100);
-			$table->integer('aluno_id')->index('fk_endereco_aluno1');
+			$table->string('tipo');
+			$table->string('numero', 45);
+			$table->integer('funcionario_id')->index('fk_documento_funcionario1');
 		});
 	}
 
@@ -30,7 +29,7 @@ class CreateEnderecoTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('endereco');
+		Schema::drop('documento');
 	}
 
 }
