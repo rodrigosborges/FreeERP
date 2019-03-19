@@ -6,11 +6,11 @@ class Endereco extends Model{
 
     protected $table = 'endereco';
 
-    protected $fillable = ['rua', 'numero', 'bairro'];
+    protected $fillable = ['logradouro', 'numero', 'bairro', 'cidade','uf','cep','complemento'];
 
     public $timestamps = false;
 
-    public function aluno(){
-        return $this->belongsTo('App\Aluno');
+    public function funcionario(){
+        return $this->belongsTo('App\Funcionario');
     }
 }   
