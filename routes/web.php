@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return 'funcionando';
-});
+
+Route::get('/item/novo','ItemCompraController@novo');
