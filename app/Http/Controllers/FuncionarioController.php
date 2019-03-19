@@ -18,6 +18,8 @@ class FuncionarioController extends Controller
             'url' => '',
             'model' => '',
             'estado_civil' => [],
+            'estados' => [],
+            'cidades' => [],
             'cargos' => [],
             'title' => 'Cadastro de Funcionário'
         ];
