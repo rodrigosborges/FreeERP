@@ -33,3 +33,6 @@ Route::middleware(['OnlyBefore19H'])->group(function () {
         return 'oi';
     });
 });
+
+//FUNCIONÁRIO
+Route::resource('funcionario', 'FuncionarioController');
