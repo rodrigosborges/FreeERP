@@ -17,6 +17,8 @@ class FuncionarioController extends Controller
         $data = [
             'url' => '',
             'model' => '',
+            'estado_civil' => [],
+            'cargos' => [],
             'title' => 'Cadastro de Funcionário'
         ];
 
