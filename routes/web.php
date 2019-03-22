@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return 'funcionando';
 });
+
+Route::get('/template', function () {
+    return view('example', [
+        'moduleIcon' => 'android',
+        'moduleName' => 'Template',
+        'menu' => [
+            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+        ],
+    ]);
+});
