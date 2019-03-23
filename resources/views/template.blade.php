@@ -24,6 +24,7 @@
             #module-info {
                 color: #fff;
                 min-height: 64px;
+                padding-left: 10px;
             }
             #module-info i { font-size: 36px; }
             #module-info h1 {
@@ -67,9 +68,9 @@
     <body>
         <div class="d-flex">
             <div id="sidebar">
-                <div class="shadow-sm d-flex align-items-center justify-content-around" id="module-info">
-                    <i class="material-icons">{{$moduleIcon}}</i>
-                    <h1>{{$moduleName}}</h1>
+                <div class="shadow-sm d-flex align-items-center" id="module-info">
+                    <i class="material-icons mr-2">{{$moduleInfo['icon']}}</i>
+                    <h1>{{$moduleInfo['name']}}</h1>
                 </div>
                 <nav class="nav flex-column">
                     @foreach ($menu as $item)
@@ -92,6 +93,30 @@
                     </div>
                 </div>
                 <div id="content">
+                    @if(Session::get('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{Session::get("success")}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                    @if(Session::get('warning'))
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{Session::get('warning')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                    @if(Session::get('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{Session::get('error')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     @yield('content')
                 </div>
                 <div class="d-flex align-items-center" id="footer">
