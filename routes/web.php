@@ -11,5 +11,4 @@
 |
 */
 
-
-Route::get('/item/novo','ItemCompraController@novo');
+Route::resource('itemCompra', 'Compra\ItemCompraController');
