@@ -13,4 +13,9 @@ class Endereco extends Model{
     public function funcionario(){
         return $this->belongsTo('App\Funcionario');
     }
+
+    //limpar os dados futuramente
+    public function setCepAttribute($val){
+        $this->attributes['cep'] = $val;
+    }
 }   
