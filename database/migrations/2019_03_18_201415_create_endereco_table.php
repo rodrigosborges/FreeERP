@@ -22,7 +22,7 @@ class CreateEnderecoTable extends Migration {
 			$table->string('cidade', 100);
 			$table->string('uf', 2);
 			$table->string('cep', 8);
-			$table->string('complemento', 100);
+			$table->string('complemento', 100)->nullable();
 		});
 	}
 

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\EstadoCivil;
+use App\Cargo;
+use App\Funcionario;
+use DB;
 
 class FuncionarioController extends Controller
 {
@@ -15,16 +19,28 @@ class FuncionarioController extends Controller
     public function create()
     {
         $data = [
-            'url' => '',
+            'url' => url("funcionario"),
             'model' => '',
-            'estado_civil' => [],
+            'estado_civil' => EstadoCivil::all(),
             'estados' => [],
             'cidades' => [],
-            'cargos' => [],
+            'cargos' => Cargo::all(),
             'title' => 'Cadastro de Funcionário'
         ];
 
-        return view('funcionario.form', compact('data'));
+        $moduleInfo = [
+            'icon' => 'android',
+            'name' => 'Vendas',
+        ];
+
+        $menu = [
+            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
+            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+        ];
+
+        return view('funcionario.form', compact('data', 'moduleInfo', 'menu'));
     }
 
     public function store(Request $request){
@@ -34,7 +50,7 @@ class FuncionarioController extends Controller
 			$funcionario = Funcionario::create($request->input('funcionario'));
             $funcionario->endereco()->create($request->input('endereco'));
             $contato = $funcionario->contato()->create($request->input('contato'));
-            $contato->insert($request->input('telefone'));
+            $contato->telefones()->create($request->input('telefone'));
 			DB::commit();
             return redirect('/funcionario')->with('success', 'Funcionário cadastrado com successo');
             
