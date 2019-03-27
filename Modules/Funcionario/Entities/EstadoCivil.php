@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace Modules\Funcionario\Entities;
 use Illuminate\Database\Eloquent\Model;
 
 class EstadoCivil extends Model{
