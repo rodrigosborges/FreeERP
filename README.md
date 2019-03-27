@@ -38,19 +38,34 @@ Rotas REST (Route Resource)
 
 Exemplos no Laravel 5.*:
 
-### 1 - Enviando a variável de sessão com uma mensagem para a view anterior:
+### 1 - Enviando a variável de sessão com uma mensagem para a view anterior (o template principal ja está exibindo caso a session exista):
  ```
     return back()->with('success','O usuário foi cadastrado com sucesso!');
     return back()->with('warning','Acesso negado!');
     return back()->with('error','Houve um erro no servidor. Tente novamente!');
  ```
-
-### 2 - Exibindo a mensagem na view:
+ 
+ ## Utilizando o Laravel-Modules
+ 
+ ### Criando o módulo
  ```
-    @if( isset (Session::get('success')))
-        <div class="alert alert success" role="alert">
-            {{ Session::get('success') }}
-        </div>
-    @endif
+    php artisan module:make <nome_do_modulo>
  ```
  
+ ### Comandos de criação de arquivos
+ ```
+    php artisan module:make-migration <nome_do_migration> <nome_do_modulo>
+    php artisan module:make-controller <nome_do_controller> <nome_do_modulo>
+    php artisan module:make-model <nome_do_model> <nome_do_modulo>
+ ```
+ 
+ ### Utilizando os comandos relacionados ao migrate no modulo
+ ```
+    php artisan module:migrate <nome_do_modulo>
+    php artisan module:migrate-rollback <nome_do_modulo>
+    php artisan module:migrate-refresh <nome_do_modulo>
+    php artisan module:migrate-reset <nome_do_modulo>
+ ```
+ 
+ ### Outros comandos de criação de arquivos:
+ https://nwidart.com/laravel-modules/v4/advanced-tools/artisan-commands
