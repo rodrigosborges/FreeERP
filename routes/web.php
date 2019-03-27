@@ -11,4 +11,6 @@
 |
 */
 
+//Módulo de Compras
 Route::resource('itemCompra', 'Compra\ItemCompraController');
+Route::resource('Pedido', 'Compra\PedidoController');
