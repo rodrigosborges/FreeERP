@@ -5,6 +5,7 @@ namespace Modules\Exemplo\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Funcionario\Entities\{ExemploModel};
 
 class ExemploController extends Controller{
     public function index(){
