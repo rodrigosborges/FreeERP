@@ -1,74 +1,71 @@
-# Instalação
+# PADRONIZAÇÃO PROJETO INTEGRADO I
 
-  A documentação do Laravel é muito bem feita, caso tenham qualquer dúvida, provavelmente tem lá.
+## Banco de dados
 
-  Essa parte da instalação se encontra aqui: https://laravel.com/docs/5.7/installation
+Banco terceira forma normal
 
-  Baixar composer e instalar na pasta do php (só dar next next next):
-  https://getcomposer.org/Composer-Setup.exe
+Tabelas no singular
 
-```
-  abrir um cmd na pasta C:\xampp\htdocs
+Todos os campos e tabelas em letras minúsculas 
 
-  composer global require laravel/installer
+Separação por underline
 
-  laravel new nome_do_projeto (demora um pouco)
-```
+Chave estrangeira nomedatabela_id
 
-  executar o comando php artisan serve para rodar o projeto no link localhost:8000
-  pode abrir o localhost/nome_do-projeto/public também, funciona do mesmo jeito
+Chave primária id (auto_increment)
 
-# Clonando repositório de um projeto Laravel
+Escrever em português 
 
-  Clonar o projeto na pasta htdocs
+Tabelas geradas de relacionamento n..n (tabela1_has_tabela2)
 
-  Criar um arquivo .env na raiz do projeto de acordo com o .env.example (o meu é só copiar o conteudo do arquivo)
 
-  Abrir o cmd dentro do projeto
+## Código
 
-  Executar:
+Variáveis em camel case (nomeUsuario, dataDeAdmissao)
 
-```
-  composer update
-  php artisan key:generate
-```
+Nome de modelos no singular e primeira letra maiúscula
 
-# Estrutura de pasta
+Rotas REST (Route Resource)
 
-```
-  Controllers                     => app/Http/Controllers
-  Requests(validação)             => app/Http/Requests
-  Models                          => app/
-  Arquivos em geral(css,js,imgs)  => public/
-  Views                           => resources/views/
-  Rotas padrões                   => routes/web
-  Migrations                      => database/migrations
-```
 
-# Comandos de criação de arquivos
+## Alertas (mensagens de sucesso, alerta e erro)
 
-  Gerar um controller
-```
-php artisan make:controller NomeAquiController
-```
+●	Sucesso: “success”
 
-  Gerar um controller com estrutura para o route resource
-```
-php artisan make:controller NomeAquiController --resource
-```
-    
-  Gerar um model
-```
-php artisan make:model NomeDoModel
-```
+●	Alerta: “warning”
 
-  Gerar uma request(validação)
-```
-php artisan make:request NomeDaValidacao
-```
+●	Erro: “error”
 
-  Gerar um middleware(filtro de rotas)
-```
-php artisan make:middleware NomeDoMiddleware
-```
+Exemplos no Laravel 5.*:
 
+### 1 - Enviando a variável de sessão com uma mensagem para a view anterior (o template principal ja está exibindo caso a session exista):
+ ```
+    return back()->with('success','O usuário foi cadastrado com sucesso!');
+    return back()->with('warning','Acesso negado!');
+    return back()->with('error','Houve um erro no servidor. Tente novamente!');
+ ```
+ 
+ ## Utilizando o Laravel-Modules
+ 
+ ### Criando o módulo
+ ```
+    php artisan module:make <nome_do_modulo>
+ ```
+ 
+ ### Comandos de criação de arquivos
+ ```
+    php artisan module:make-migration <nome_do_migration> <nome_do_modulo>
+    php artisan module:make-controller <nome_do_controller> <nome_do_modulo>
+    php artisan module:make-model <nome_do_model> <nome_do_modulo>
+ ```
+ 
+ ### Utilizando os comandos relacionados ao migrate no modulo
+ ```
+    php artisan module:migrate <nome_do_modulo>
+    php artisan module:migrate-rollback <nome_do_modulo>
+    php artisan module:migrate-refresh <nome_do_modulo>
+    php artisan module:migrate-reset <nome_do_modulo>
+ ```
+ 
+ ### Outros comandos de criação de arquivos:
+ https://nwidart.com/laravel-modules/v4/advanced-tools/artisan-commands
