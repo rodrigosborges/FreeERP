@@ -14,7 +14,7 @@ class ItemCompraController extends Controller
     {
 
         $moduleInfo = [
-            'icon' => 'android',
+            'icon' => 'store',
             'name' => 'COMPRA',
         ];
         $menu = [
@@ -33,13 +33,23 @@ class ItemCompraController extends Controller
 
     public function create()
     {
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'COMPRA',
+        ];
+        $menu = [
+            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
+            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+		];
         $data = [
 			"url" 	 	=> url('itemCompra'),
 			"button" 	=> "Salvar",
 			"model"		=> null,
 			'title'		=> "Cadastrar Item Compra"
 		];
-	    return view('compra::formulario', compact('data'));
+	    return view('compra::formulario', compact('data','moduleInfo','menu'));
 
     }
 
@@ -49,7 +59,7 @@ class ItemCompraController extends Controller
 		try{
 			$itemCompra = ItemCompra::Create($request->all());
 			DB::commit();
-			return redirect('/itemCompra')->with('success', 'Item cadastrado com successo');
+			return redirect('/Compra/itemCompra')->with('success', 'Item cadastrado com successo');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -67,14 +77,25 @@ class ItemCompraController extends Controller
     }
 
     public function edit($id)
-    {
+    {   
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'COMPRA',
+        ];
+        $menu = [
+            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
+            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+            
+		];
         $data = [
 			"url" 	 	=> url("itemCompra/$id"),
 			"button" 	=> "Atualizar",
 			"model"		=> ItemCompra::findOrFail($id),
 			'title'		=> "Atualizar Item Compra"
 		];
-	    return view('compra::formulario', compact('data'));
+	    return view('compra::formulario', compact('data','moduleInfo','menu'));
         
     }
 
