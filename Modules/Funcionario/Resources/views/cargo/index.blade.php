@@ -1,4 +1,4 @@
-@extends('template.main')
+@extends('template')
 @section('content')
     <table class="table table-striped">
         <thead>
