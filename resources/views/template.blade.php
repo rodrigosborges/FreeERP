@@ -64,6 +64,7 @@
             }
             .btn-circle:hover { background: #ededed; }
         </style>
+        @yield('css')
     </head>
     <body>
         <div class="d-flex">
@@ -144,5 +145,6 @@
                 header.style.width = widthHeader;
             }
         </script>
+        @yield('js')
     </body>
 </html>
