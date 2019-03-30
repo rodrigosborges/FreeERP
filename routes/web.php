@@ -45,5 +45,3 @@ Route::get('/exemplo', function () {
         'menu' => $menu,
     ]);
 });
-
-Route::resource('funcionario', 'FuncionarioController');
