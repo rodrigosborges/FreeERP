@@ -11,11 +11,12 @@ class Endereco extends Model{
     public $timestamps = false;
 
     public function funcionario(){
-        return $this->belongsTo('App\Funcionario');
+        return $this->belongsTo('Modules\Funcionario\Entities\Funcionario');
     }
 
     //limpar os dados futuramente
     public function setCepAttribute($val){
         $this->attributes['cep'] = $val;
     }
+    
 }   

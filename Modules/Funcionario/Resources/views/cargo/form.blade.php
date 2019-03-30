@@ -1,32 +1,66 @@
-@extends('template')
+@extends('funcionario::template')
 
-@section('content')
-<div class="container">
-    <form action="{{ $data['url'] }}" method="POST" enctype="multipart/form-data">
+@section('title')
+    {{ $data['title'] }}
+@endsection
+
+@section('body')
+    <form action="{{ $data['url'] }}" id="form" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         @if($data['model'])
             @method('PUT')
         @endif
 
-        <div class="card">
-            <div class="card-header">
-                <h5>{{$data['title']}}</h5>
-            </div>
-            <div class="card-body">
-                <div class="form-group row">
-                    <div class="col-md-12">
-                        <label for="nome" class="control-label">Nome do cargo</label>
-                        <input type="text" placeholder="Nome" name="nome" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', '') }}">
-                        <label class="errors"> {{ $errors->first('nome') }} </label>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label for="nome" class="control-label">Nome</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="material-icons">person</i>
+                        </span>
                     </div>
+                    <input type="text" placeholder="Ex: Vendedor" name="nome" id="nome" class="form-control required" value="{{ $data['model'] ? $data['model']->nome : old('nome', '') }}">
                 </div>
+                <label class="errors"> {{ $errors->first('nome') }} </label>
             </div>
-            <div class="card-footer text-right">
-                <button class="btn btn-success" type="submit">{{$data['button']}}</button>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="horas_semanais" class="control-label">Horas semanais</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="material-icons">access_time</i>
+                        </span>
+                    </div>
+                    <input type="text" placeholder="Ex: 40" name="horas_semanais" id="horas_semanais" class="form-control required integer" value="{{ $data['model'] ? $data['model']->horas_semanais : old('horas_semanais', '') }}">
+                </div>
+                <label class="errors"> {{ $errors->first('horas_semanais') }} </label>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="salario" class="control-label">Salário</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="material-icons">attach_money</i>
+                        </span>
+                    </div>
+                    <input type="text" placeholder="Ex: 998,00" name="salario" id="salario" class="form-control required money" value="{{ $data['model'] ? $data['model']->salario : old('salario', '') }}">
+                </div>
+                <label class="errors"> {{ $errors->first('salario') }} </label>
             </div>
         </div>
     </form>
-</div>
-<script src="{{ Module::asset('funcionario:js/cargo.js') }}"></script>
+@endsection
 
+@section('footer')
+    <div class="text-right">
+        <button class="btn btn-success sendForm" type="button">{{$data['button']}}</button>
+    </div>
+@endsection
+
+@section('script')
+    <script src="{{Module::asset('funcionario:js/views/cargo/form.js')}}"></script>
 @endsection

@@ -13,7 +13,7 @@ class CargoController extends Controller{
         $data = [
 			'cargos'	=> Cargo::all(),
 			'title'		=> "Lista de cargos",
-		]; 
+		];
 
 	    return view('funcionario::cargo.index', compact('data'));
     }
@@ -25,20 +25,8 @@ class CargoController extends Controller{
 			"model"		=> null,
 			'title'		=> "Cadastrar cargo"
 		];
-
-		$moduleInfo = [
-            'icon' => 'android',
-            'name' => 'Vendas',
-        ];
-
-        $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-		];
 		
-	    return view('funcionario::cargo.form', compact('data', 'moduleInfo', 'menu'));
+	    return view('funcionario::cargo.form', compact('data'));
 	}
 
 	public function store(Request $request){
@@ -46,7 +34,7 @@ class CargoController extends Controller{
 		try{
 			$cargo = Cargo::Create($request->all());
 			DB::commit();
-			return redirect('/cargo');
+			return redirect('funcionario/cargo');
 		}catch(Exception $e){
 			DB::rollback();
 			return back();
@@ -60,6 +48,7 @@ class CargoController extends Controller{
 			"model"		=> Cargo::findOrFail($id),
 			'title'		=> "Atualizar cargo"
 		];
+
 	    return view('funcionario::cargo.form', compact('data'));
 	}
 	

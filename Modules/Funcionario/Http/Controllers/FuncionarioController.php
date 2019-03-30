@@ -25,19 +25,7 @@ class FuncionarioController extends Controller{
             'title' => 'Cadastro de Funcionário'
         ];
 
-        $moduleInfo = [
-            'icon' => 'android',
-            'name' => 'Vendas',
-        ];
-
-        $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-        ];
-
-        return view('funcionario::funcionario.form', compact('data', 'moduleInfo', 'menu'));
+        return view('funcionario::funcionario.form', compact('data'));
     }
 
     public function store(Request $request){

@@ -1,7 +1,10 @@
-@extends('template')
+@extends('funcionario::template')
 
-@section('content')
-<div class="container">
+@section('title')
+    {{ $data['title'] }}
+@endsection
+
+@section('body')
     <form action="{{ $data['url'] }}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         @if($data['model'])
@@ -166,11 +169,8 @@
                 <label class="errors"> {{ $errors->first('dependentes.comprovante') }} </label>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="col-md-12">
-                <button class="btn btn-success" type="submit">{{$data['model'] ? 'Editar' : 'Cadastrar'}}</button>
-            </div>
+        <div class="text-right">
+            <button class="btn btn-success" type="submit">{{$data['model'] ? 'Editar' : 'Cadastrar'}}</button>
         </div>
     </form>
-</div>
 @endsection

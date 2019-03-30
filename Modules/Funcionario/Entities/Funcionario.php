@@ -11,23 +11,23 @@ class Funcionario extends Model{
     protected $fillable = ['nome', 'data_nascimento', 'estado_civil_id', 'cargo_id', 'sexo', 'data_admissao'];
 
     public function estado_civil(){
-        return $this->belongsTo('App\EstadoCivil');
+        return $this->belongsTo('Modules\Funcionario\Entities\EstadoCivil');
     }
 
     public function cargos(){
-        return $this->belongsToMany('App\Cargo', 'cargo_has_funcionario');
+        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'cargo_has_funcionario');
     }
 
     public function documento(){
-        return $this->hasOne('App\Documento');
+        return $this->hasOne('Modules\Funcionario\Entities\Documento');
     }
 
     public function endereco(){
-        return $this->hasOne('App\Endereco');
+        return $this->hasOne('Modules\Funcionario\Entities\Endereco');
     }
 
     public function contato(){
-        return $this->hasOne('App\Contato');
+        return $this->hasOne('Modules\Funcionario\Entities\Contato');
     }
     
 }   

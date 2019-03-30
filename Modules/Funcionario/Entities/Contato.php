@@ -11,6 +11,6 @@ class Contato extends Model{
     public $timestamps = false;
 
     public function telefones(){
-        return $this->hasMany('App\Telefone');
+        return $this->hasMany('Modules\Funcionario\Entities\Telefone');
     }
 }   
