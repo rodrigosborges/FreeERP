@@ -34,7 +34,7 @@
 
         <div class="form-group">
             <button type="submit" class="btn btn-success"> {{ $data['button'] }} </button> 
-            <a class="btn btn-light" href="{{ url('/itemCompra') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+            <a class="btn btn-light" href="{{ url('compra/itemCompra') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
         </div>
     </form>
 

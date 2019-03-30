@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CompraMigration extends Migration
+class CreatePedido extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,11 @@ class CompraMigration extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('pedido', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('status');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +27,6 @@ class CompraMigration extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('pedido');
     }
 }

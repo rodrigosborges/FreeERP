@@ -44,12 +44,12 @@ class ItemCompraController extends Controller
             ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
 		];
         $data = [
-			"url" 	 	=> url('itemCompra'),
+			"url" 	 	=> url('compra/itemCompra'),
 			"button" 	=> "Salvar",
 			"model"		=> null,
 			'title'		=> "Cadastrar Item Compra"
 		];
-	    return view('compra::formulario', compact('data','moduleInfo','menu'));
+	    return view('compra::formulario_item', compact('data','moduleInfo','menu'));
 
     }
 
@@ -59,7 +59,7 @@ class ItemCompraController extends Controller
 		try{
 			$itemCompra = ItemCompra::Create($request->all());
 			DB::commit();
-			return redirect('/Compra/itemCompra')->with('success', 'Item cadastrado com successo');
+			return redirect('/compra/itemCompra')->with('success', 'Item cadastrado com successo');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -90,12 +90,12 @@ class ItemCompraController extends Controller
             
 		];
         $data = [
-			"url" 	 	=> url("itemCompra/$id"),
+			"url" 	 	=> url("compra/itemCompra/$id"),
 			"button" 	=> "Atualizar",
 			"model"		=> ItemCompra::findOrFail($id),
 			'title'		=> "Atualizar Item Compra"
 		];
-	    return view('compra::formulario', compact('data','moduleInfo','menu'));
+	    return view('compra::formulario_item', compact('data','moduleInfo','menu'));
         
     }
 
@@ -106,7 +106,7 @@ class ItemCompraController extends Controller
 			$itemCompra = ItemCompra::findOrFail($id);
 			$itemCompra->update($request->all());
 			DB::commit();
-			return redirect('/itemCompra')->with('success', 'Item atualizado com successo');
+			return redirect('compra/itemCompra')->with('success', 'Item atualizado com successo');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
