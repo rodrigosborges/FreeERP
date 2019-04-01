@@ -132,18 +132,20 @@
                 <label class="errors"> {{ $errors->first('contato.email') }} </label>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="col-md-6">
-                <label for="numero_telefone" class="control-label">Telefone</label>
-                <input type="text" placeholder="Telefone" name="telefone[numero]" id="numero_telefone" class="form-control" value="{{ $data['model'] ? $data['model']->numero : old('telefone.numero', '') }}">
-                <label class="errors"> {{ $errors->first('telefone.numero') }} </label>
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-info border text-center">+</button>
+        <div id="telefones">
+            <div class="form-group row tel">
+                <div class="col-md-6">
+                    <input type="text" placeholder="Telefone" name="telefone[numero]" id="numero_telefone" class="form-control" value="{{ $data['model'] ? $data['model']->numero : old('telefone.numero', '') }}">
+                    <label class="errors"> {{ $errors->first('telefone.numero') }} </label>
+                </div>
+                <div class="col-md-2">
+                    <i class="btn btn-info border text-center add-tel">+</i>
+                    <i class="btn btn-danger border text-center del-tel">-</i>
+                </div>
             </div>
         </div>
 
-        <strong><h6 class="mt-4 mb-3">Dependentes</h6></strong>
+        <!-- <strong><h6 class="mt-4 mb-3">Dependentes</h6></strong>
         <hr>
         <div class="form-group row">
             <div class="col-md-8">
@@ -171,6 +173,40 @@
         </div>
         <div class="text-right">
             <button class="btn btn-success" type="submit">{{$data['model'] ? 'Editar' : 'Cadastrar'}}</button>
-        </div>
+        </div> -->
     </form>
+@endsection
+
+@section('script')
+<script>
+//ADICIONA E REMOVE TELEFONES (transferir para outro arquivo)
+    $(document).on("click", ".add-tel", function() {
+        if($(".tel").length < 4) {
+            $(".tel").last().clone().appendTo("#telefones")
+            $(".telefones").last().val('')
+            $(".tel").last().find('label').remove()
+            //mascararTel(".telefones")
+        } else { 
+            alert("Número máximo de telefones permitidos atingido!")
+        }
+    })
+
+    const numerosRemovidos = []
+
+    $(document).on("click", ".del-tel", function() {
+        if($(".tel").length > 1) {
+            numerosRemovidos.push($(this).closest(".tel").attr('id'))
+            $(this).closest(".tel").remove()
+            $(".add-tel").last().show()
+        } else {
+            Swal.fire({
+                type: 'warning',
+                title: 'Atenção!',
+                text: 'O indivíduo deve ter pelo menos um telefone!',
+            })
+        }
+        $("#numeros_removidos").val(numerosRemovidos)
+    })
+    //###########################
+</script>
 @endsection
