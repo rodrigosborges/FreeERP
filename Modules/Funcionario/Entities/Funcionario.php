@@ -18,8 +18,8 @@ class Funcionario extends Model{
         return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'cargo_has_funcionario')->withTrashed();
     }
 
-    public function documento(){
-        return $this->hasOne('Modules\Funcionario\Entities\Documento');
+    public function documentos(){
+        return $this->hasMany('Modules\Funcionario\Entities\Documento');
     }
 
     public function endereco(){

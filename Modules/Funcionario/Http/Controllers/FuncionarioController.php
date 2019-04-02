@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario};
+use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario, Documento, Telefone};
 use DB;
 
 class FuncionarioController extends Controller{
@@ -30,15 +30,35 @@ class FuncionarioController extends Controller{
 
     public function store(Request $request){
 
-        return $request->all();
-
 		DB::beginTransaction();
 		try{
 
-			$funcionario = Funcionario::create($request->input('funcionario'));
+            $funcionario = Funcionario::create($request->input('funcionario'));
+            
+            foreach($request->documentos as $documento) {
+
+                $nome = uniqid(date('HisYmd'));
+                $extensao = $documento['comprovante']->extension();
+                $nomeArquivo = "{$nome}.{$extensao}";
+                $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
+
+                if (!$upload) {
+                    return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+                }
+
+                $documento['comprovante'] = $nomeArquivo;
+                
+                $funcionario->documentos()->save(new Documento($documento));
+
+            }
+
             $funcionario->endereco()->create($request->input('endereco'));
             $contato = $funcionario->contato()->create($request->input('contato'));
-            $contato->telefones()->create($request->input('telefone'));
+
+            foreach($request->telefone as $telefone) {
+                $contato->telefones()->save(new Telefone($telefone));
+            }
+
 			DB::commit();
             return redirect('/funcionario')->with('success', 'Funcionário cadastrado com successo');
             

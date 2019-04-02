@@ -5,7 +5,7 @@
 @endsection
 
 @section('body')
-    <form action="{{ $data['url'] }}" method="POST" enctype="multipart/form-data">
+    <form id="form" action="{{ $data['url'] }}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         @if($data['model'])
             @method('PUT')
@@ -13,92 +13,103 @@
 
         <strong><h6 class="mb-3">Dados Básicos</h6></strong>
         <hr>
-        <div class="form-group row">
-            <div class="col-md-8">
-                <label for="nome" class="control-label">Nome</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">person</i>
-                        </span>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="nome" class="control-label">Nome</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">person</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="Nome" name="funcionario[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', '') }}">
+                        <span class="errors"> {{ $errors->first('funcionario.nome') }} </span>
                     </div>
-                    <input type="text" placeholder="Nome" name="funcionario[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', '') }}">
-                    <span class="errors"> {{ $errors->first('funcionario.nome') }} </span>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <label for="data_nascimento" class="control-label">Data de Nascimento</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">date_range</i>
-                        </span>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="data_nascimento" class="control-label">Data de Nascimento</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">date_range</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_nascimento]" id="data_nascimento" class="form-control data" value="{{ $data['model'] ? $data['model']->data_nascimento : old('data_nascimento', '') }}">
                     </div>
-                    <input type="text" placeholder="00/00/0000" name="funcionario[data_nascimento]" id="data_nascimento" class="form-control" value="{{ $data['model'] ? $data['model']->data_nascimento : old('data_nascimento', '') }}">
+                    <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
                 </div>
-                <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="col-md-2">
-                <label for="sexo" class="control-label">Sexo</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">person</i>
-                        </span>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="sexo" class="control-label">Sexo</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">person</i>
+                            </span>
+                        </div>
+                        <select required name="funcionario[sexo]" class="form-control">
+                                <option value="">Selecione</option>
+                                <option value="0">Feminino</option>
+                                <option value="1">Masculino</option>
+                        </select>
                     </div>
-                    <select required name="funcionario[sexo]" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="estado_civil_id" class="control-label">Estado Civil</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">person</i>
+                            </span>
+                        </div>
+                        <select required name="funcionario[estado_civil_id]" class="form-control">
                             <option value="">Selecione</option>
-                            <option value="0">Feminino</option>
-                            <option value="1">Masculino</option>
-                    </select>
+                            @foreach($data['estado_civil'] as $item)
+                                <option value="{{ $item->id }}" {{ ($data['model'] && $item->id == $data['model']->estado_civil_id ) ? 'selected' : '' }}> {{ $item->nome }} </option>
+                            @endforeach 
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <label for="estado_civil_id" class="control-label">Estado Civil</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">person</i>
-                        </span>
+                <div class="form-group">
+                    <label for="cargo_id" class="control-label">Cargo</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">work</i>
+                            </span>
+                        </div>
+                        <select required name="funcionario[cargo_id]" class="form-control">
+                            <option value="">Selecione</option>
+                            @foreach($data['cargos'] as $item)
+                                <option value="{{ $item->id }}" {{ ($data['model'] && $item->id == $data['model']->cargo_id ) ? 'selected' : '' }}> {{ $item->nome }} </option>
+                            @endforeach 
+                        </select>
                     </div>
-                    <select required name="funcionario[estado_civil_id]" class="form-control">
-                        <option value="">Selecione</option>
-                        @foreach($data['estado_civil'] as $item)
-                            <option value="{{ $item->id }}" {{ ($data['model'] && $item->id == $data['model']->estado_civil_id ) ? 'selected' : '' }}> {{ $item->nome }} </option>
-                        @endforeach 
-                    </select>
                 </div>
             </div>
             <div class="col-md-3">
-                <label for="cargo_id" class="control-label">Cargo</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">work</i>
-                        </span>
+                <div class="form-group">
+                    <label for="data_admissao" class="control-label">Data de Admissão</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">date_range</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_admissao]" id="data_admissao" class="form-control data" value="{{ $data['model'] ? $data['model']->data_admissao : old('data_admissao', '') }}">
+                        <span class="errors"> {{ $errors->first('funcionario.data_admissao') }} </span>
                     </div>
-                    <select required name="funcionario[cargo_id]" class="form-control">
-                        <option value="">Selecione</option>
-                        @foreach($data['cargos'] as $item)
-                            <option value="{{ $item->id }}" {{ ($data['model'] && $item->id == $data['model']->cargo_id ) ? 'selected' : '' }}> {{ $item->nome }} </option>
-                        @endforeach 
-                    </select>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <label for="data_admissao" class="control-label">Data de Admissão</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">date_range</i>
-                        </span>
-                    </div>
-                    <input type="text" placeholder="00/00/0000" name="funcionario[data_admissao]" id="data_admissao" class="form-control" value="{{ $data['model'] ? $data['model']->data_admissao : old('data_admissao', '') }}">
-                </div>
-                <span class="errors"> {{ $errors->first('funcionario.data_admissao') }} </span>
             </div>
         </div>
 
@@ -110,45 +121,51 @@
         <hr>
         <div id="documentos">
             @foreach($documentos as $key => $documento)
-                <div key="{{$key}}" class="form-group row doc">
-                    <div class="col-md-2">
-                        <label for="tipo" class="control-label">Nome</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="material-icons">description</i>
-                                </span>
+                <div class="row doc">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="tipo" class="control-label">Nome</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">description</i>
+                                    </span>
+                                </div>
+                                <input required type="text" placeholder="Nome" name="documentos[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $data['model']->tipo : old('tipo', '') }}">
+                                <span class="errors"> {{ $errors->first('documentos.tipo') }}</span>
                             </div>
-                            <input type="text" placeholder="Nome" name="documentos[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $data['model']->tipo : old('tipo', '') }}">
                         </div>
-                        <span class="errors"> {{ $errors->first('documentos.tipo') }}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="numero_documento" class="control-label">Número</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">description</i>
+                                    </span>
+                                </div>
+                                <input required type="text" placeholder="Número" name="documentos[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $data['model']->numero : old('numero', '') }}">
+                                <span class="errors"> {{ $errors->first('documentos.numero') }} </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-4">
-                        <label for="numero_documento" class="control-label">Número</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="material-icons">description</i>
-                                </span>
-                            </div>
-                            <input type="text" placeholder="Número" name="documentos[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $data['model']->numero : old('numero', '') }}">
-                        </div>
-                        <span class="errors"> {{ $errors->first('documentos.numero') }} </span>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="control-label">Comprovante</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="material-icons">archive</i>
-                                </span>
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" name="documentos[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $data['model'] ? $data['model']->comprovante : old('comprovante', '') }}">
-                                <label for="comprovante" class="custom-file-label">Comprovante</label>   
+                        <div class="form-group">
+                            <label class="control-label">Comprovante</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">archive</i>
+                                    </span>
+                                </div>
+                                <div class="custom-file">
+                                    <input required type="file" name="documentos[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $data['model'] ? $data['model']->comprovante : old('comprovante', '') }}">
+                                    <label for="comprovante" class="custom-file-label">Comprovante</label>   
+                                </div>
+                                <span class="errors"> {{ $errors->first('documentos.comprovante') }}</span>
                             </div>
                         </div>
-                        <span class="errors"> {{ $errors->first('documentos.comprovante') }}</span>
                     </div>
                     <div class="col-md-2 mt-2">
                         <br>  
@@ -162,123 +179,141 @@
 
         <strong><h6 class="mt-5 mb-3">Endereço</h6></strong>
         <hr>
-        <div class="form-group row">
-            <div class="col-md-2">
-                <label for="cep" class="control-label">CEP</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">location_on</i>
-                        </span>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="cep" class="control-label">CEP</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ $data['model'] ? $data['model']->cep : old('endereco.cep', '') }}">
+                        <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
                     </div>
-                    <input type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ $data['model'] ? $data['model']->cep : old('endereco.cep', '') }}">
                 </div>
-                <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
             </div>
             <div class="col-md-2">
-                <label for="uf" class="control-label">UF</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">location_on</i>
-                        </span>
+                <div class="form-group">
+                    <label for="uf" class="control-label">UF</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="UF" name="endereco[uf]" id="uf" class="form-control" value="{{ $data['model'] ? $data['model']->uf : old('endereco.uf', '') }}">
+                        <span class="errors"> {{ $errors->first('endereco.uf') }} </span>
                     </div>
-                    <input type="text" placeholder="UF" name="endereco[uf]" id="uf" class="form-control" value="{{ $data['model'] ? $data['model']->uf : old('endereco.uf', '') }}">
                 </div>
-                <span class="errors"> {{ $errors->first('endereco.uf') }} </span>
             </div>
             <div class="col-md-4">
-                <label for="cidade" class="control-label">Cidade</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">location_on</i>
-                        </span>
+                <div class="form-group">
+                    <label for="cidade" class="control-label">Cidade</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="Cidade" name="endereco[cidade]" id="cidade" class="form-control" value="{{ $data['model'] ? $data['model']->cidade : old('endereco.cidade', '') }}">
+                        <span class="errors"> {{ $errors->first('endereco.cidade') }} </span>
                     </div>
-                    <input type="text" placeholder="Cidade" name="endereco[cidade]" id="cidade" class="form-control" value="{{ $data['model'] ? $data['model']->cidade : old('endereco.cidade', '') }}">
                 </div>
-                <span class="errors"> {{ $errors->first('endereco.cidade') }} </span>
             </div>
-            <div class="col-md-4">
-                <label for="bairro" class="control-label">Bairro</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">location_on</i>
-                        </span>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="bairro" class="control-label">Bairro</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control" value="{{ $data['model'] ? $data['model']->bairro : old('endereco.bairro', '') }}">
+                        <span class="errors"> {{ $errors->first('endereco.bairro') }} </span>
                     </div>
-                    <input type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control" value="{{ $data['model'] ? $data['model']->bairro : old('endereco.bairro', '') }}">
                 </div>
-                <span class="errors"> {{ $errors->first('endereco.bairro') }} </span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="row">
             <div class="col-md-5">
-                <label for="logradouro" class="control-label">Logradouro</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">location_on</i>
-                        </span>
+                <div class="form-group">
+                    <label for="logradouro" class="control-label">Logradouro</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control" value="{{ $data['model'] ? $data['model']->logradouro : old('endereco.logradouro', '') }}">
+                        <span class="errors"> {{ $errors->first('endereco.logradouro') }} </span>
                     </div>
-                    <input type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control" value="{{ $data['model'] ? $data['model']->logradouro : old('endereco.logradouro', '') }}">
                 </div>
-                <span class="errors"> {{ $errors->first('endereco.logradouro') }} </span>
             </div>
             <div class="col-md-2">
-                <label for="numero" class="control-label">Número</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">location_on</i>
-                        </span>
+                <div class="form-group">
+                    <label for="numero" class="control-label">Número</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control" value="{{ $data['model'] ? $data['model']->numero : old('endereco.numero', '') }}">
+                        <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
                     </div>
-                    <input type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control" value="{{ $data['model'] ? $data['model']->numero : old('endereco.numero', '') }}">
                 </div>
-                <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
             </div>
             <div class="col-md-5">
-                <label for="complemento" class="control-label">Complemento</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">location_on</i>
-                        </span>
+                <div class="form-group">
+                    <label for="complemento" class="control-label">Complemento</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ $data['model'] ? $data['model']->complemento : old('endereco.complemento', '') }}">
+                        <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
                     </div>
-                    <input type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ $data['model'] ? $data['model']->complemento : old('endereco.complemento', '') }}">
                 </div>
-                <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
             </div>
         </div>
 
         <strong><h6 class="mt-5 mb-3">Contato</h6></strong>
         <hr>
-        <div class="form-group row">
+        <div class="row">
             <div class="col-md-6">
-                <label for="email" class="control-label">E-mail</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="material-icons">email</i>
-                        </span>
-                    </div>
-                    <input type="text" placeholder="E-mail" name="contato[email]" id="email" class="form-control" value="{{ $data['model'] ? $data['model']->email : old('contato.email', '') }}">
-                </div>
-                <label class="errors"> {{ $errors->first('contato.email') }} </label>
-            </div>
-        </div>
-        <div id="telefones">
-            <div class="form-group row tel">
-                <div class="col-md-4">
+                <div class="form-group">
+                    <label for="email" class="control-label">E-mail</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="material-icons">phone</i>
+                                <i class="material-icons">email</i>
                             </span>
                         </div>
-                        <input type="text" placeholder="Telefone" name="telefone[][numero]" id="numero_telefone" class="form-control" value="{{ $data['model'] ? $data['model']->numero : old('telefone.numero', '') }}">
+                        <input required type="text" placeholder="E-mail" name="contato[email]" id="email" class="form-control" value="{{ $data['model'] ? $data['model']->email : old('contato.email', '') }}">
+                        <span class="errors"> {{ $errors->first('contato.email') }} </span>
                     </div>
-                    <span class="errors"> {{ $errors->first('telefone.numero') }}</span>
+                </div>
+            </div>
+        </div>
+        <div id="telefones">
+            <div class="row tel">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">phone</i>
+                                </span>
+                            </div>
+                            <input required type="text" placeholder="Telefone" name="telefone[][numero]" id="numero_telefone" class="form-control" value="{{ $data['model'] ? $data['model']->numero : old('telefone.numero', '') }}">
+                            <span class="errors"> {{ $errors->first('telefone.numero') }}</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-2">
                     <i class="btn btn-info border text-center material-icons add-tel">add</i>
@@ -326,9 +361,16 @@
 <script>
 
 //FUNÇÃO PARA CLONAR UM ELEMENTO
-function clonar(target, local) {
+function clonar(target, local, indices) {
     if($(target).length < 4) {
         $(target).last().clone().appendTo(local)
+
+        if(indices) {
+            $(target).last().find('input').each(function() {
+                var index = $(this).attr('name').split('[')[1].split(']')[0]
+                $(this).attr('name', $(this).attr('name').replace(index, parseInt(index) + 1))
+            })
+        }
     } else { 
         alert("Número máximo atingido!")
     }
@@ -350,7 +392,7 @@ function limparUltimoInput(input){
 
 //ADICIONA E REMOVE TELEFONES
 $(document).on("click", ".add-tel", function() {
-    clonar(".tel", "#telefones")
+    clonar(".tel", "#telefones", false)
     limparUltimoInput(".tel input")
 })
 
@@ -361,16 +403,32 @@ $(document).on("click", ".del-tel", function() {
 
 //ADICIONA E REMOVE DOCUMENTOS
 $(document).on("click", ".add-doc", function() {
-    clonar(".doc", "#documentos")
+
+    clonar(".doc", "#documentos", true)
     limparUltimoInput(".doc input")
-    $('.documentos').each(function(i, documento){
-        console.log($(documento).attr('name'))
-    })
+
 })
 
 $(document).on("click", ".del-doc", function() {
     remover(".doc", $(this))
 })
 //###########################
+
+//MÁSCARAS
+$(".data").mask("00/00/0000")
+$("#cep").mask('00000-000')
+
+
+$(document).ready(function() {
+    //VALIDAÇÕES
+    $('#form').validate({
+        rules: {
+            "endereco[numero]": {
+                number: true
+            }
+        },
+        messages:{}
+    })
+})
 </script>
 @endsection
