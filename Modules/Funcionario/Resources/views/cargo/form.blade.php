@@ -22,7 +22,7 @@
                     </div>
                     <input type="text" placeholder="Ex: Vendedor" name="nome" id="nome" class="form-control required" value="{{ $data['model'] ? $data['model']->nome : old('nome', '') }}">
                 </div>
-                <label class="errors"> {{ $errors->first('nome') }} </label>
+                <span class="errors"> {{ $errors->first('nome') }} </span>
             </div>
         </div>
 
@@ -37,7 +37,7 @@
                     </div>
                     <input type="text" placeholder="Ex: 40" name="horas_semanais" id="horas_semanais" class="form-control required integer" value="{{ $data['model'] ? $data['model']->horas_semanais : old('horas_semanais', '') }}">
                 </div>
-                <label class="errors"> {{ $errors->first('horas_semanais') }} </label>
+                <span class="errors"> {{ $errors->first('horas_semanais') }} </span>
             </div>
             <div class="form-group col-md-6">
                 <label for="salario" class="control-label">Salário</label>
@@ -49,7 +49,7 @@
                     </div>
                     <input type="text" placeholder="Ex: 998,00" name="salario" id="salario" class="form-control required money" value="{{ $data['model'] ? $data['model']->salario : old('salario', '') }}">
                 </div>
-                <label class="errors"> {{ $errors->first('salario') }} </label>
+                <span class="errors"> {{ $errors->first('salario') }} </span>
             </div>
         </div>
     </form>

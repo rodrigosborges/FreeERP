@@ -18,6 +18,7 @@ class CreateCargoTable extends Migration {
 			$table->string('nome', 100);
 			$table->integer('horas_semanais');
 			$table->float('salario', 10, 0);
+			$table->softDeletes();
 		});
 	}
 

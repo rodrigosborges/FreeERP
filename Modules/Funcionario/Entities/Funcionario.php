@@ -15,7 +15,7 @@ class Funcionario extends Model{
     }
 
     public function cargos(){
-        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'cargo_has_funcionario');
+        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'cargo_has_funcionario')->withTrashed();
     }
 
     public function documento(){

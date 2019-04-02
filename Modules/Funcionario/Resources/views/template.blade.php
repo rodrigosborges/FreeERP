@@ -6,7 +6,7 @@
 
     $menu = [
         ['icon' => 'people', 'tool' => 'Funcionario', 'route' => url('funcionario/funcionario')],
-        ['icon' => 'people', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
+        ['icon' => 'work', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
     ];
 ?>
 
@@ -40,5 +40,6 @@
     <script src="{{Module::asset('funcionario:js/bibliotecas/jquery.validate.min.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/bibliotecas/localization/messages_pt_BR.min.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/main.js')}}"></script>
+    <script>var main_url="{{url('')}}"</script>
     @yield('script')
 @endsection
