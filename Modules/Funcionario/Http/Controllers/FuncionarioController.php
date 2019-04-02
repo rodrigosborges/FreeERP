@@ -16,7 +16,7 @@ class FuncionarioController extends Controller{
     
     public function create(){
         $data = [
-            'url' => url("funcionario"),
+            'url' => url("funcionario/funcionario"),
             'model' => '',
             'estado_civil' => EstadoCivil::all(),
             'estados' => [],
@@ -29,6 +29,9 @@ class FuncionarioController extends Controller{
     }
 
     public function store(Request $request){
+
+        return $request->all();
+
 		DB::beginTransaction();
 		try{
 
