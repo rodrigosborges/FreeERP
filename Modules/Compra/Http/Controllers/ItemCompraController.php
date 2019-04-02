@@ -28,7 +28,7 @@ class ItemCompraController extends Controller
 			'title'				=> "Lista de Itens",
 		]; 
 			
-	    return view('compra::index', compact('data','moduleInfo','menu'));
+	    return view('compra::item', compact('data','moduleInfo','menu'));
     }
 
     public function create()

@@ -6,88 +6,122 @@ namespace Modules\Compra\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Modules\Compra\Entities\{Pedido};
+use Modules\Compra\Entities\{Pedido,ItemCompra};
+
 
 class PedidoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'COMPRA',
+        ];
+        $menu = [
+            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
+            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+		];
         $data = [
 			'pedido'		=> Pedido::all(),
 			'title'				=> "Lista de Pedidos",
 		]; 
 			
-	    return view('pedido.index', compact('data'));
+	    return view('compra::pedido', compact('data','moduleInfo','menu'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'COMPRA',
+        ];
+        $menu = [
+            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
+            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+		];
+        $data = [
+			"url" 	 	=> url('compra/pedido'),
+			"button" 	=> "Salvar",
+            "model"		=> null,
+            "itens"		=> ItemCompra::all(),
+			'title'		=> "Cadastrar Pedido"
+		];
+	    return view('compra::formulario_pedido', compact('data','moduleInfo','menu'));
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+		try{
+            $pedido = Pedido::Create(['status' => 'iniciado']);
+            $pedido->itens()->sync($request->itens);
+            DB::commit();
+            return redirect('/compra/pedido')->with('success', 'Pedido cadastrado com successo');
+		}catch(Exception $e){
+			DB::rollback();
+			return back()->with('error', 'Erro no servidor');
+		}
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($id)
     {
-        //
+        $pedido = Pedido::findOrFail($id);
+	    return view('compra::show', [
+            'model' => $pedido	    
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'COMPRA',
+        ];
+        $menu = [
+            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
+            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+            
+		];
+        $data = [
+			"url" 	 	=> url("compra/pedido/$id"),
+			"button" 	=> "Atualizar",
+			"model"		=> Pedido::findOrFail($id),
+			'title'		=> "Atualizar Pedido"
+		];
+	    return view('compra::pedido', compact('data','moduleInfo','menu'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+		try{
+			$pedido = Pedido::findOrFail($id);
+			$pedido->update($request->all());
+			DB::commit();
+			return redirect('compra/pedido')->with('success', 'Pedido atualizado com successo');
+		}catch(Exception $e){
+			DB::rollback();
+			return back()->with('error', 'Erro no servidor');
+		}
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy($id)
     {
-        //
+        $pedido = Pedido::findOrFail($id);
+		$pedido->delete();
+		return back()->with('success',  'Item deletado');  
     }
 }
