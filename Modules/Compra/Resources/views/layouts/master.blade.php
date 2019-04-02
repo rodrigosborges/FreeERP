@@ -16,4 +16,9 @@
         {{-- Laravel Mix - JS File --}}
         {{-- <script src="{{ mix('js/compra.js') }}"></script> --}}
     </body>
+
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    @yield('js')
+
 </html>

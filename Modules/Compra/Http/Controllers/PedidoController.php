@@ -50,7 +50,9 @@ class PedidoController extends Controller
 			"button" 	=> "Salvar",
             "model"		=> null,
             "itens"		=> ItemCompra::all(),
-			'title'		=> "Cadastrar Pedido"
+            "pedidos_itens" => [''],
+            'title'		=> "Cadastrar Pedido"
+            
 		];
 	    return view('compra::formulario_pedido', compact('data','moduleInfo','menu'));
 
@@ -96,7 +98,7 @@ class PedidoController extends Controller
         $data = [
 			"url" 	 	=> url("compra/pedido/$id"),
 			"button" 	=> "Atualizar",
-			"model"		=> Pedido::findOrFail($id),
+            "model"		=> Pedido::findOrFail($id),
 			'title'		=> "Atualizar Pedido"
 		];
 	    return view('compra::pedido', compact('data','moduleInfo','menu'));
@@ -107,10 +109,17 @@ class PedidoController extends Controller
     {
         DB::beginTransaction();
 		try{
-			$pedido = Pedido::findOrFail($id);
-			$pedido->update($request->all());
-			DB::commit();
-			return redirect('compra/pedido')->with('success', 'Pedido atualizado com successo');
+            $pedido = Pedido::findOrFail($id);
+            if($pedido->status =='iniciado'){
+                $pedido->update($request->all());
+                DB::commit();
+                return redirect('compra/pedido')->with('success', 'Pedido atualizado com successo');
+            }
+            else
+            {
+                return back()->with('warning',  'Pedido não pode ser alterado');
+            }
+
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -121,7 +130,14 @@ class PedidoController extends Controller
     public function destroy($id)
     {
         $pedido = Pedido::findOrFail($id);
-		$pedido->delete();
-		return back()->with('success',  'Item deletado');  
+        if($pedido->status =='iniciado')
+        {
+            $pedido->delete();
+            return back()->with('success',  'Pedido deletado');
+        }
+        else
+        {
+            return back()->with('warning',  'Pedido não pode ser deletado');
+        }  
     }
 }

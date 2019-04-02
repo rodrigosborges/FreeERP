@@ -34,12 +34,13 @@
 
 
 
+
     
     
 
 
 @endsection
-<script src="{{ asset('js/jquery.min.js') }}"></script>
+@section('js')
 <script>
         $("#adicionar").on("click", function(){
             var div = $(".item-select .form-group").first().clone()
@@ -51,3 +52,4 @@
                 $(".item-select .form-group").last().remove()
         })
 </script>
+@endsection
