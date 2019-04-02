@@ -8,32 +8,42 @@
     </div>
     <br>
     <div class="container">
-        <div class="table-responsive">
-            <table class="table table-stripped">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data['cargos'] as $cargo)
-                        <tr>
-                            <td>{{$cargo->nome}}</td>
-                            <td>
-                                <form action="{{url('funcionario/cargo', [$cargo->id])}}" method="POST">
-                                    {{method_field('DELETE')}}
-                                    {{ csrf_field() }}
-                                    <a class="btn btn-warning" href='{{ url("funcionario/cargo/$cargo->id/edit") }}'>Editar</a> 
-                                    @if(!$cargo->funcionarios()->count())
-                                        <input type="submit" class="btn btn-danger" value="Delete"/>
-                                    @endif
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+        <div id="results"></div>
     </div>
+@endsection
+
+@section('script')
+
+<script>
+    search = (url) => {
+        // setLoading($("#results"))
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#form").serialize(),
+            success: function (data) {
+                $("#results").html(data)
+            },
+            error: function (jqXHR, exception) {
+                $("#results").html("<div class='alert alert-danger'>Desculpe, ocorreu um erro. <br> Recarregue a página e tente novamente</div>")
+            },
+        })
+    }
+
+    $('#results').on('click', 'ul.pagination a', function(e){
+        e.preventDefault()
+        search($(this).attr('href'))
+    })
+
+    $(document).ready(function(){
+        search(`${main_url}/funcionario/cargo/list`)
+
+        $(document).on('keypress',function(e) {
+            if(e.which == 13) {
+                search(`${main_url}/list`)
+            }
+        });
+    })
+</script>
+
 @endsection

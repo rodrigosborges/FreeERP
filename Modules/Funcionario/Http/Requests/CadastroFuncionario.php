@@ -5,10 +5,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CadastroFuncionario extends FormRequest{
 
-    public function authorize(){
-        return true;
-    }
-
     public function rules(){
         return [
             'funcionario.nome'              => 'required|max:100',

@@ -1,9 +1,11 @@
 <?php
 namespace Modules\Funcionario\Entities;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cargo extends Model{
-
+    use SoftDeletes;
+    
     protected $table = 'cargo';
 
     protected $fillable = ['nome', 'horas_semanais', 'salario'];

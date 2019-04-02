@@ -26,6 +26,13 @@ $(document).ready(function() {
             this.element(element);
         },
     });
-
-
 })
+
+$.validator.addMethod(
+    "regex",
+    function(value, element, regexp) {
+        var re = new RegExp(regexp);
+        return this.optional(element) || re.test(value);
+    },
+    "Insira um formato válido."
+);

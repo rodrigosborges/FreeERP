@@ -1,3 +1,8 @@
 .error{
     color: red
 }
+
+td.min{
+    width:1%;
+    white-space: nowrap;
+}

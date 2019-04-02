@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Cargo};
+use Modules\Funcionario\Http\Requests\{CreateCargo};
 use DB;
 
 class CargoController extends Controller{
@@ -16,7 +17,12 @@ class CargoController extends Controller{
 		];
 
 	    return view('funcionario::cargo.index', compact('data'));
-    }
+	}
+	
+	public function list(Request $request){
+		$cargos = Cargos::paginate(10);
+		return view('funcionario::cargo.table', compact('cargos'));
+	}
     
 	public function create(Request $request){
 		$data = [
@@ -52,7 +58,7 @@ class CargoController extends Controller{
 	    return view('funcionario::cargo.form', compact('data'));
 	}
 	
-	public function update(Request $request, $id) {
+	public function update(CreateCargo $request,$id) {
 		DB::beginTransaction();
 		try{
 			$cargo = Cargo::findOrFail($id);
