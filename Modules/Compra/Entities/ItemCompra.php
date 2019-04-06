@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Modules\Compra\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +13,7 @@ class ItemCompra extends Model
 
     //Relação com tabela Lista_Compra
     public function requisicao(){
-        return $this->belongsToMany('App\Compra\Pedido', 'item_compra_has_pedido');
+        return $this->belongsToMany('App\Compra\ItemCompraHasPedido', 'item_compra_has_pedido');
     }
 
     
