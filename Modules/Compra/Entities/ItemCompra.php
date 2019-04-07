@@ -11,9 +11,9 @@ class ItemCompra extends Model
     protected $fillable = array('id','nome_produto','valor_estimado','quantidade','caracteristicas');
 
 
-    //Relação com tabela Lista_Compra
-    public function requisicao(){
-        return $this->belongsToMany('App\Compra\ItemCompraHasPedido', 'item_compra_has_pedido');
+    //Relação com tabela Pedido
+    public function pedidos(){
+        return $this->belongsToMany('App\Compra\Pedido', 'item_compra_has_pedido');
     }
 
     

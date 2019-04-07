@@ -99,9 +99,10 @@ class PedidoController extends Controller
 			"url" 	 	=> url("compra/pedido/$id"),
 			"button" 	=> "Atualizar",
             "model"		=> Pedido::findOrFail($id),
+            "itens"		=> Pedido::findOrFail($id)->itens()->get(),
 			'title'		=> "Atualizar Pedido"
 		];
-	    return view('compra::pedido', compact('data','moduleInfo','menu'));
+	    return view('compra::edit_pedido', compact('data','moduleInfo','menu'));
     }
 
     

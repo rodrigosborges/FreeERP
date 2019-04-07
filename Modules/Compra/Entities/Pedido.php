@@ -23,4 +23,7 @@ class Pedido extends Model
         return $this->belongsToMany('Modules\Compra\Entities\Orcamento','orcamento_has_pedido');
     }
 
+    
+   
+
 }
