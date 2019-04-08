@@ -14,8 +14,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-       
-        return view('controleusuario::index');
+        return 'funciona porra';
     }
 
     /**
