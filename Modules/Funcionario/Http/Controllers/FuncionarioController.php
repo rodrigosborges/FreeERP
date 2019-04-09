@@ -19,6 +19,18 @@ class FuncionarioController extends Controller{
 
         return view('funcionario::funcionario.index', compact('data'));
     }
+
+    public function list(Request $request, $status) {
+        $funcionarios = new Funcionario;
+
+        if($status == 'inativos'){
+            $funcionarios = $funcionarios->onlyTrashed();
+        }
+
+        $funcionarios = $funcionarios->paginate(10);
+
+        return view('funcionario::funcionario.table', compact('funcionarios', 'status'));
+    }
     
     public function create(){
         $data = [
@@ -28,7 +40,8 @@ class FuncionarioController extends Controller{
             'estados' => [],
             'cidades' => [],
             'cargos' => Cargo::all(),
-            'title' => 'Cadastro de Funcionário'
+            'title' => 'Cadastro de Funcionário',
+            'button' => 'Salvar'
         ];
 
         return view('funcionario::funcionario.form', compact('data'));
@@ -118,10 +131,13 @@ class FuncionarioController extends Controller{
     public function destroy($id){
         $funcionario = Funcionario::withTrashed()->findOrFail($id);
 
-        if($funcionario->trashed())
+        if($funcionario->trashed()) {
             $funcionario->restore();
-        else
+            return back()->with('success', 'Usuário ativado com sucesso!');
+        } else {
             $funcionario->delete();
+            return back()->with('success', 'Usuário desativado com sucesso!');
+        }
     }
 
     public static function brToEnDate($date) {

@@ -365,12 +365,13 @@
             </div>
         </div>
         -->
-
-        <div class="text-right">
-            <!-- <button class="btn btn-success sendForm">{{$data['model'] ? 'Editar' : 'Cadastrar'}}</button> -->
-            <button type="submit" class="btn btn-success">{{$data['model'] ? 'Editar' : 'Cadastrar'}}</button>
-        </div>
     </form>
+@endsection
+
+@section('footer')
+    <div class="text-right">
+        <button class="btn btn-success sendForm" type="button">{{$data['button']}}</button>
+    </div>
 @endsection
 
 @section('script')
@@ -432,7 +433,6 @@ $(document).on("click", ".del-doc", function() {
 $(".data").mask("00/00/0000")
 $("#cep").mask('00000-000')
 $(".telefone").mask('(00) 0000-0000')
-
 
 $(document).ready(function() {
     //VALIDAÇÕES
