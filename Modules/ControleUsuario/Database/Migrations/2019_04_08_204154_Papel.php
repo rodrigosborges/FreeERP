@@ -13,7 +13,7 @@ class Papel extends Migration
      */
     public function up()
     {
-        //
+        
     }
 
     /**
