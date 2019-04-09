@@ -50,7 +50,9 @@ class PedidoController extends Controller
 			"button" 	=> "Salvar",
             "model"		=> null,
             "itens"		=> ItemCompra::all(),
-            "pedidos_itens" => [''],
+            "itens_pedido"  => [
+                ['id' => '']
+            ],
             'title'		=> "Cadastrar Pedido"
             
 		];
@@ -99,10 +101,11 @@ class PedidoController extends Controller
 			"url" 	 	=> url("compra/pedido/$id"),
 			"button" 	=> "Atualizar",
             "model"		=> Pedido::findOrFail($id),
-            "itens"		=> Pedido::findOrFail($id)->itens()->get(),
+            "itens"		=> ItemCompra::all(),
+            "itens_pedido" => Pedido::findOrFail($id)->itens()->get(),
 			'title'		=> "Atualizar Pedido"
 		];
-	    return view('compra::edit_pedido', compact('data','moduleInfo','menu'));
+	    return view('compra::formulario_pedido', compact('data','moduleInfo','menu'));
     }
 
     
@@ -112,7 +115,7 @@ class PedidoController extends Controller
 		try{
             $pedido = Pedido::findOrFail($id);
             if($pedido->status =='iniciado'){
-                $pedido->update($request->all());
+                $pedido->itens()->sync($request->itens);
                 DB::commit();
                 return redirect('compra/pedido')->with('success', 'Pedido atualizado com successo');
             }

@@ -10,6 +10,7 @@
     <label for="item" class="control-label">Itens</label>
     @foreach($data['itens'] as $item)
         <div>
+        
             <p>{{$item->nome_produto}}</p>
         
         
