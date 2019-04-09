@@ -19,9 +19,14 @@ class CargoController extends Controller{
 	    return view('funcionario::cargo.index', compact('data'));
 	}
 	
-	public function list(Request $request){
-		$cargos = Cargos::paginate(10);
-		return view('funcionario::cargo.table', compact('cargos'));
+	public function list(Request $request, $status){
+		$cargos = new Cargo;
+
+		if($status == "inativos")
+			$cargos = $cargos->onlyTrashed();
+
+		$cargos = $cargos->paginate(10);
+		return view('funcionario::cargo.table', compact('cargos','status'));
 	}
     
 	public function create(Request $request){
@@ -79,8 +84,11 @@ class CargoController extends Controller{
     }
     
 	public function destroy(Request $request, $id) {
-		$cargo = Cargo::findOrFail($id);
-		$cargo->delete();
+		$cargo = Cargo::withTrashed()->find($id);
+		if($cargo->trashed())
+			$cargo->restore();
+		else
+			$cargo->delete();
 		return back();    
 	}
 	
