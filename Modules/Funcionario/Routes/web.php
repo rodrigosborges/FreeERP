@@ -12,7 +12,8 @@
 */
 
 Route::prefix('funcionario')->group(function() {
+    Route::get('cargo/list/{status}', 'CargoController@list');
+
     Route::resource('funcionario', 'FuncionarioController');
     Route::resource('cargo', 'CargoController');
-    Route::get('cargo/list', 'CargoController@list');
 });

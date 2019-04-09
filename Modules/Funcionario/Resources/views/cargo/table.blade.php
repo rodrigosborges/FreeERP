@@ -3,8 +3,10 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Ações</th>
-                <th></th>
+                <th class="min">Ações</th>
+                @if($status == "ativos")
+                    <th class="min"></th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -12,15 +14,15 @@
                 <tr>
                     <td>{{$cargo->nome}}</td>
                     <td class="min">                       
-                        <a class="btn btn-warning" href='{{ url("funcionario/cargo/$cargo->id/edit") }}'>Editar</a>
+                        @if($status == "ativos")
+                            <a class="btn btn-warning" href='{{ url("funcionario/cargo/$cargo->id/edit") }}'>Editar</a>
+                        @endif
                     </td>
                     <td class="min">
                         <form action="{{url('funcionario/cargo', [$cargo->id])}}" class="input-group" method="POST">
                             {{method_field('DELETE')}}
                             {{ csrf_field() }}
-                            @if(!$cargo->funcionarios()->count())
-                                <input type="submit" class="btn btn-danger" value="Deletar"/>
-                            @endif
+                                <input type="submit" class="btn btn-{{$cargo->trashed() ? 'success' : 'danger'}}" value="{{$cargo->trashed() ? 'Restaurar' : 'Deletar'}}"/>
                         </form>
                     </td>
                 </tr>
