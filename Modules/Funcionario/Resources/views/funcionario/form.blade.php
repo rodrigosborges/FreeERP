@@ -124,6 +124,22 @@
                 <div class="row doc">
                     <div class="col-md-3">
                         <div class="form-group">
+                            <label for="tipo" class="control-label">CPF</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">description</i>
+                                    </span>
+                                </div>
+                                <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[{{$key}}][cpf]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $data['model']->tipo : old('cpf', '') }}">
+                                <span class="errors"> {{ $errors->first('documentos.cpf') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>        
+                <div class="row doc">
+                    <div class="col-md-3">
+                        <div class="form-group">
                             <label for="tipo" class="control-label">Nome</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -310,7 +326,7 @@
                                     <i class="material-icons">phone</i>
                                 </span>
                             </div>
-                            <input required type="text" placeholder="Telefone" name="telefone[][numero]" id="numero_telefone" class="form-control" value="{{ $data['model'] ? $data['model']->numero : old('telefone.numero', '') }}">
+                            <input required type="text" placeholder="Telefone" name="telefone[][numero]" class="form-control telefone" value="{{ $data['model'] ? $data['model']->numero : old('telefone.numero', '') }}">
                             <span class="errors"> {{ $errors->first('telefone.numero') }}</span>
                         </div>
                     </div>
@@ -403,10 +419,8 @@ $(document).on("click", ".del-tel", function() {
 
 //ADICIONA E REMOVE DOCUMENTOS
 $(document).on("click", ".add-doc", function() {
-
     clonar(".doc", "#documentos", true)
-    limparUltimoInput(".doc input")
-
+    $(".doc").last().find(".documentos").val("")
 })
 
 $(document).on("click", ".del-doc", function() {
@@ -417,6 +431,7 @@ $(document).on("click", ".del-doc", function() {
 //MÁSCARAS
 $(".data").mask("00/00/0000")
 $("#cep").mask('00000-000')
+$(".telefone").mask('(00) 0000-0000')
 
 
 $(document).ready(function() {

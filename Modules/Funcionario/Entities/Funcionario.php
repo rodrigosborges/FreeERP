@@ -14,8 +14,8 @@ class Funcionario extends Model{
         return $this->belongsTo('Modules\Funcionario\Entities\EstadoCivil');
     }
 
-    public function cargos(){
-        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'cargo_has_funcionario')->withTrashed();
+    public function cargo(){
+        return $this->belongsTo('Modules\Funcionario\Entities\Cargo');
     }
 
     public function documentos(){
@@ -28,6 +28,22 @@ class Funcionario extends Model{
 
     public function contato(){
         return $this->hasOne('Modules\Funcionario\Entities\Contato');
+    }
+
+    public function setDataNascimentoAttribute($val){
+        $this->attributes['data_nascimento'] = implode('-', array_reverse(explode('/', $val))) ? : '';
+    }
+
+    public function getDataNascimentoAttribute($val){
+        return implode('/', array_reverse(explode('-', $val))) ? : '';
+    }
+
+    public function setDataAdmissaoAttribute($val){
+        $this->attributes['data_admissao'] = implode('-', array_reverse(explode('/', $val))) ? : '';
+    }
+
+    public function getDataAdmissaoAttribute($val){
+        return implode('/', array_reverse(explode('-', $val))) ? : '';
     }
     
 }   

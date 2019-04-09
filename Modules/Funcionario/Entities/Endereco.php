@@ -16,7 +16,7 @@ class Endereco extends Model{
 
     //limpar os dados futuramente
     public function setCepAttribute($val){
-        $this->attributes['cep'] = $val;
+        $this->attributes['cep'] = str_replace("-", "", $val);
     }
     
 }   

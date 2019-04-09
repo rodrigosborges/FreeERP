@@ -17,6 +17,7 @@ class CreateDocumentoTable extends Migration {
 			$table->integer('id', true);
 			$table->string('tipo');
 			$table->string('numero', 45);
+			$table->string('comprovante', 255);
 			$table->integer('funcionario_id')->index('fk_documento_funcionario1');
 		});
 	}

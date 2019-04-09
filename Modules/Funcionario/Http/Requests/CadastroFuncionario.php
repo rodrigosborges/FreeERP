@@ -5,7 +5,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CadastroFuncionario extends FormRequest{
 
-    public function rules(){
+    public function rules($id){
         return [
             'funcionario.nome'              => 'required|max:100',
             'funcionario.dataNascimento'    => 'required|date_format:"d/m/Y"',
@@ -13,6 +13,7 @@ class CadastroFuncionario extends FormRequest{
             'funcionario.estado_civil_id'   => 'required',
             'funcionario.cargo_id'          => 'required',
             'funcionario.dataAdmissao'      => 'required|date_format:d/m/Y',
+            'documentos.cpf'                => 'required|number|max:11',
             'endereco.logradouro'           => 'required|max:255',
             'endereco.numero'               => 'required|number|max:5',
             'endereco.bairro'               => 'required|max:100',

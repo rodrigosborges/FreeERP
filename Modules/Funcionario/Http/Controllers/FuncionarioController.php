@@ -6,12 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario, Documento, Telefone};
+use Modules\Funcionario\Http\Requests\{CreateCargo};
 use DB;
 
 class FuncionarioController extends Controller{
     
     public function index(){
-        
+        $data = [
+            'title' => 'Lista de Funcionários',
+            'funcionarios' => Funcionario::paginate(10)
+        ];
+
+        return view('funcionario::funcionario.index', compact('data'));
     }
     
     public function create(){
@@ -28,7 +34,11 @@ class FuncionarioController extends Controller{
         return view('funcionario::funcionario.form', compact('data'));
     }
 
-    public function store(Request $request){
+    public function store(CreateCargo $request){
+
+        // $validator = $request->validate([
+        //     'cpf' => 'unique:documentos,tipo,'.$id.',id,tipo'
+        // ]);
 
 		DB::beginTransaction();
 		try{
@@ -60,7 +70,7 @@ class FuncionarioController extends Controller{
             }
 
 			DB::commit();
-            return redirect('/funcionario')->with('success', 'Funcionário cadastrado com successo');
+            return redirect('/funcionario/funcionario')->with('success', 'Funcionário cadastrado com successo');
             
 		}catch(Exception $e){
 
@@ -112,5 +122,9 @@ class FuncionarioController extends Controller{
             $funcionario->restore();
         else
             $funcionario->delete();
+    }
+
+    public static function brToEnDate($date) {
+        return implode('-', array_reverse(explode('/', $date))) ? : '';
     }
 }
