@@ -23,22 +23,6 @@
                 </div>
             @endforeach
         </div>
-    
-        <!-- <div class="item-select">
-            <div class="form-group">        
-                    <div class="input-group">
-                    <select required name="itens[]" class="form-control">
-                            <option value="">Selecione uma opção</option>
-                            @foreach($data['itens'] as $item)
-                            <option value="{{ $item->id }}" {{ ( $data['model'] && $item->id == $data['model']->id ) ? 'selected' : '' }}> {{ $item->nome_produto }} </option>
-                            @endforeach
-                        </select>
-                        <button type="button" class="btn btn-danger remover">Remover</button>
-                        </div>
-                    </div>
-                </div>
-        </div> -->
-
 
         <div class="col-md-12 text-center">
             <button type="button" class="btn btn-success" id="adicionar">Adicionar</button>

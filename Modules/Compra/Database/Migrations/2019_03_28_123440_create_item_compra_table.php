@@ -20,6 +20,7 @@ class CreateItemCompraTable extends Migration
             $table->integer('quantidade');
             $table->string('caracteristicas');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

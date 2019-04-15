@@ -3,9 +3,11 @@
 namespace Modules\Compra\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Orcamento extends Model
 {
+    use SoftDeletes;
     protected $table = 'orcamento';
     public $timestamps = true;
     protected $fillable = array('id','valor_total');

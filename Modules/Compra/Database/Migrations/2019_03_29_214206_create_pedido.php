@@ -17,6 +17,7 @@ class CreatePedido extends Migration
             $table->bigIncrements('id');
             $table->string('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

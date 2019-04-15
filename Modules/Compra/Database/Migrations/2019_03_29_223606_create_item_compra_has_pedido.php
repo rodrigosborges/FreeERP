@@ -25,6 +25,7 @@ class CreateItemCompraHasPedido extends Migration
             $table->primary(['pedido_id','item_compra_id']);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
