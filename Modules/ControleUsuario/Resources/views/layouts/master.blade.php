@@ -7,7 +7,7 @@
         <title>Module ControleUsuario</title>
 
        {{-- Laravel Mix - CSS File --}}
-       {{-- <link rel="stylesheet" href="{{ mix('css/controleusuario.css') }}"> --}}
+       {{-- <link rel="stylesheet" href="{{ mix('exemplo/css/controleusuario.css') }}"> --}}
 
     </head>
     <body>
