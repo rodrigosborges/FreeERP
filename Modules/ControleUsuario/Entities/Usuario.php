@@ -3,7 +3,7 @@
 namespace Modules\ControleUsuario\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use\Illuminate\Database\Eloquent\SoftDelets;
+use\Illuminate\Database\Eloquent\SoftDeletes;
 
 class Usuario extends Model
 {
