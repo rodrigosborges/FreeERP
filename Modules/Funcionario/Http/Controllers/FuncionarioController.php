@@ -140,6 +140,14 @@ class FuncionarioController extends Controller{
         }
     }
 
+    public function search($valor) {
+
+		$funcionarios = DB::table('funcionario')->join('cargo', 'cargo.id', '=', 'funcionario.cargo_id')->select('funcionario.id', 'funcionario.nome as funcionario_nome', 'cargo.nome as cargo_nome')->where('funcionario.nome', 'like', '%'.$valor.'%')->where('funcionario.deleted_at', null)->limit(10)->get();
+
+		return $funcionarios;
+
+	}
+
     public static function brToEnDate($date) {
         return implode('-', array_reverse(explode('/', $date))) ? : '';
     }

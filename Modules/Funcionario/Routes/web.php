@@ -13,6 +13,8 @@
 
 Route::prefix('funcionario')->group(function() {
     Route::get('funcionario/list/{status}', 'FuncionarioController@list');
+    Route::get('funcionario/search/{valor}', 'FuncionarioController@search');
+    Route::get('cargo/search/{valor}', 'CargoController@search');
     Route::get('cargo/list/{status}', 'CargoController@list');
 
     Route::resource('funcionario', 'FuncionarioController');

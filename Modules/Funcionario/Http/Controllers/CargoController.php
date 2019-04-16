@@ -91,5 +91,13 @@ class CargoController extends Controller{
 			$cargo->delete();
 		return back();    
 	}
+
+	public function search($valor) {
+
+		$cargos = DB::table('cargo')->select('id', 'nome')->where('nome', 'like', '%'.$valor.'%')->where('cargo.deleted_at', null)->limit(10)->get();
+
+		return $cargos;
+
+	}
 	
 }

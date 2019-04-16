@@ -3,18 +3,32 @@
 @section('title','Lista de cargos')
 
 @section('body')
-    <div class="text-right">
-        <a class="btn btn-success" href="{{ url('funcionario/cargo/create') }}">Novo cargo</a>
-    </div>
-        <div class="form-group col-md-8">
-            <label>Nome</label>
-            <div class="input-group">
-                <input type="text" name="nome" class="form-control">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input id="search-input" class="form-control" type="text" name="pesquisa" />
             </div>
         </div>
-        <button type="button" class="btn btn-mapes btn-block" id="sendForm">Pesquisar</button>
-    <br>
-    <div class="container">
+        <div class="col-md-2 pl-0">
+            <div class="form-group">
+                <i id="search-button" class="btn btn-info material-icons">search</i>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-right">
+                <a class="btn btn-success" href="{{ url('funcionario/cargo/create') }}">Novo Cargo</a>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="form-group col-md-8">
+        <label>Nome</label>
+        <div class="input-group">
+            <input type="text" name="nome" class="form-control">
+        </div>
+    </div>
+    <button type="button" class="btn btn-mapes btn-block" id="sendForm">Pesquisar</button> -->
+    <!-- <br> -->
+    <!-- <div class="container"> -->
         <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="ativos-tab" data-toggle="tab" href="#ativos" role="tab" aria-controls="ativos" aria-selected="true">Ativos</a>
@@ -27,7 +41,7 @@
             <div class="tab-pane fade show active" id="ativos" role="tabpanel"></div>
             <div class="tab-pane fade" id="inativos" role="tabpanel"></div>
         </div>
-    </div>
+    <!-- </div> -->
 @endsection
 
 @section('script')
@@ -63,6 +77,39 @@
         })
         
     }
+
+    function searchFuncionarios() {
+        const valor = $("#search-input").val()
+
+        $.ajax({
+            url: main_url + '/funcionario/cargo/search/'+valor,
+            method: 'GET',
+            type: 'json',
+            success: function(data) {
+                var table = '<table class="table table-striped"><thead><tr><th>Cargo</th><th class="min">Ações</th></thead></tr>'
+
+                $.each(data, function(i, cargo) {
+                    table += '<tr><td>'+cargo['nome']+'</td>'
+                    table += '<td class="min"><a class="btn btn-warning" href="cargo/'+cargo['id']+'/edit">Editar</a></td>'
+                    table += '<td class="min"><a id="desativar-'+cargo['id']+'" class="btn btn-danger desativar" href="#">Desativar</a></td>'
+                    table += '</tr>'
+                })
+
+                table += '</table>'
+
+                Swal.fire({
+                    title: 'Resultados da busca:',
+                    html: '<p>Exibindo os resultados mais relevantes</p>' +
+                    table
+
+                })
+            }
+        })
+    }
+
+    $(document).on("click", "#search-button", function() {
+        searchFuncionarios()
+    })
 
     $(document).ready(function(){
         ativosInativos(`${main_url}/funcionario/cargo/list`)
