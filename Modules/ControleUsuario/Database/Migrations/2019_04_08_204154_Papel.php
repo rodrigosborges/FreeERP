@@ -16,10 +16,8 @@ class Papel extends Migration
         Schema::create('papel', function (Blueprint $table){
 
             if(!Schema::hasTable('papel')){
-
                 $table->increments('id');
                 $table->string('nome');
-                $table->timestamps();
                 $table->softDeletes();
             }
         });

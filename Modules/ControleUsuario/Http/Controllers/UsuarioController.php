@@ -15,7 +15,7 @@ class UsuarioController extends Controller
         /* Inicializa com o icone e nome padrao */
 
         // $papel = Papel::find()->where('idUsuario', '=', $idUsuario);
-        $papel = 'administrador',
+        $papel = 'administrador';
         $menu = [];
 
         switch ($papel) {

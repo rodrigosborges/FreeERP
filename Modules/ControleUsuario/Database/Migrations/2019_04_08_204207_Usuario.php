@@ -19,13 +19,7 @@ class Usuario extends Migration
             $table->string('nome');
             $table->string('email');
             $table->string('senha');
-            $table->timestamps();
             $table->softDeletes();
-
-            $table->integer('autenticacao_id')->unsigned();
-            $table->foreign(['autenticacao_id'])->references('id')->on('autenticacao');
-
-
         });
     }
 

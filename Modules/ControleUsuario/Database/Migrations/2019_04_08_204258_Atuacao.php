@@ -22,9 +22,7 @@ class Atuacao extends Migration
             $table->foreign('usuario_id')->references('id')->on('usuario');
             $table->foreign('papel_id')->references('id')->on('papel');
             $table->foreign('modulo_id')->references('id')->on('modulo');         
-            $table->timestamps();
             $table->softDeletes();
-
         });
     }
 
