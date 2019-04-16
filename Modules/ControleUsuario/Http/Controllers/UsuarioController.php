@@ -50,6 +50,11 @@ class UsuarioController extends Controller
         return view('controleusuario::cadastrar');
     }
 
+    public function autenticacao()
+    {
+        return view('controleusuario::login', $this->dadosTemplate);
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return Response
