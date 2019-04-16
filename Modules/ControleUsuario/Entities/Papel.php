@@ -3,11 +3,11 @@
 namespace Modules\ControleUsuario\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletets;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Papel extends Model
 {
-    use SoftDeletets;
+    use SoftDeletes;
     protected $table='papel';
     protected $fillable = ['nome'];
     protected $timestamps=false;

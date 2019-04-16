@@ -13,7 +13,16 @@ class Papel extends Migration
      */
     public function up()
     {
-        
+        Schema::create('papel', function (Blueprint $table){
+
+            if(!Schema::hasTable('papel')){
+
+                $table->increments('id');
+                $table->string('nome');
+                $table->timestamps();
+                $table->softDeletes();
+            }
+        });
     }
 
     /**
@@ -23,6 +32,6 @@ class Papel extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('papel');
     }
 }
