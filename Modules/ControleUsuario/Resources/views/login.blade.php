@@ -13,6 +13,7 @@
                     <label for="inputPassword">Senha</label>
                     <input type="password" class="form-control" id="inputPassword" placeholder="Senha">
                 </div>
+                <p>Esqueci minha senha</p>
                 <button type="submit" class="btn btn-primary">Entrar</button>
             </form>    
         </div>
