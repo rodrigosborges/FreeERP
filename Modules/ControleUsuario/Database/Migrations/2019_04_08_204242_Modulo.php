@@ -14,16 +14,11 @@ class Modulo extends Migration
     
     public function up()
     {
-        Schema::create('modulo', function (Bluepint $table){
-            
-            if(!Schema::hasTable('papel')){
-
+        Schema::create('modulo', function (Blueprint $table){
             $table->increments('id');
             $table->string('nome');
             $table->string('icone');
-            $table->timestamps();
             $table->softDeletes();
-            }
         });
     }
 
