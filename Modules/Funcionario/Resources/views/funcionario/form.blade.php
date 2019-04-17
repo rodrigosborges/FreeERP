@@ -55,8 +55,8 @@
                         </div>
                         <select required name="funcionario[sexo]" class="form-control">
                                 <option value="">Selecione</option>
-                                <option value="0">Feminino</option>
-                                <option value="1">Masculino</option>
+                                <option {{ $data['model'] && $data['model']->sexo == 0 ? 'selected' : ''}} value="0">Feminino</option>
+                                <option {{ $data['model'] && $data['model']->sexo == 1 ? 'selected' : ''}} value="1">Masculino</option>
                         </select>
                     </div>
                 </div>
@@ -120,23 +120,23 @@
         <strong><h6 class="mt-5 mb-3">Documentos</h6></strong>
         <hr>
         <div id="documentos">
-            @foreach($documentos as $key => $documento)
-                <div class="row doc">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="tipo" class="control-label">CPF</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="material-icons">description</i>
-                                    </span>
-                                </div>
-                                <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[{{$key}}][cpf]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $data['model']->tipo : old('cpf', '') }}">
-                                <span class="errors"> {{ $errors->first('documentos.cpf') }}</span>
+            <!-- <div class="row doc">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="tipo" class="control-label">CPF</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">description</i>
+                                </span>
                             </div>
+                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[0][numero]" id="" class="form-control documentos" value="{{ $data['model'] ? $data['model']->documentos->first()->numero : old('cpf', '') }}">
+                            <span class="errors"> {{ $errors->first('documentos.cpf') }}</span>
                         </div>
                     </div>
-                </div>        
+                </div>
+            </div>         -->
+            @foreach($documentos as $key => $documento)
                 <div class="row doc">
                     <div class="col-md-3">
                         <div class="form-group">
@@ -147,7 +147,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Nome" name="documentos[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $data['model']->tipo : old('tipo', '') }}">
+                                <input required type="text" placeholder="Nome" name="documentos[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->tipo : old('tipo', '') }}">
                                 <span class="errors"> {{ $errors->first('documentos.tipo') }}</span>
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Número" name="documentos[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $data['model']->numero : old('numero', '') }}">
+                                <input required type="text" placeholder="Número" name="documentos[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->numero : old('numero', '') }}">
                                 <span class="errors"> {{ $errors->first('documentos.numero') }} </span>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                                     </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input required type="file" name="documentos[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $data['model'] ? $data['model']->comprovante : old('comprovante', '') }}">
+                                    <input required type="file" name="documentos[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $data['model'] ? $documento->comprovante : old('comprovante', '') }}">
                                     <label for="comprovante" class="custom-file-label">Comprovante</label>   
                                 </div>
                                 <span class="errors"> {{ $errors->first('documentos.comprovante') }}</span>
@@ -205,7 +205,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ $data['model'] ? $data['model']->cep : old('endereco.cep', '') }}">
+                        <input required type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->cep : old('endereco.cep', '') }}">
                         <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
                     </div>
                 </div>
@@ -219,7 +219,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="UF" name="endereco[uf]" id="uf" class="form-control" value="{{ $data['model'] ? $data['model']->uf : old('endereco.uf', '') }}">
+                        <input required type="text" placeholder="UF" name="endereco[uf]" id="uf" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->uf : old('endereco.uf', '') }}">
                         <span class="errors"> {{ $errors->first('endereco.uf') }} </span>
                     </div>
                 </div>
@@ -233,7 +233,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Cidade" name="endereco[cidade]" id="cidade" class="form-control" value="{{ $data['model'] ? $data['model']->cidade : old('endereco.cidade', '') }}">
+                        <input required type="text" placeholder="Cidade" name="endereco[cidade]" id="cidade" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->cidade : old('endereco.cidade', '') }}">
                         <span class="errors"> {{ $errors->first('endereco.cidade') }} </span>
                     </div>
                 </div>
@@ -247,7 +247,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control" value="{{ $data['model'] ? $data['model']->bairro : old('endereco.bairro', '') }}">
+                        <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->bairro : old('endereco.bairro', '') }}">
                         <span class="errors"> {{ $errors->first('endereco.bairro') }} </span>
                     </div>
                 </div>
@@ -263,7 +263,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control" value="{{ $data['model'] ? $data['model']->logradouro : old('endereco.logradouro', '') }}">
+                        <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->logradouro : old('endereco.logradouro', '') }}">
                         <span class="errors"> {{ $errors->first('endereco.logradouro') }} </span>
                     </div>
                 </div>
@@ -277,7 +277,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control" value="{{ $data['model'] ? $data['model']->numero : old('endereco.numero', '') }}">
+                        <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->numero : old('endereco.numero', '') }}">
                         <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
                     </div>
                 </div>
@@ -291,12 +291,16 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ $data['model'] ? $data['model']->complemento : old('endereco.complemento', '') }}">
+                        <input required type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->complemento : old('endereco.complemento', '') }}">
                         <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
                     </div>
                 </div>
             </div>
         </div>
+
+        <?php
+            $telefones = old('telefones') !== null ? old('telefones') : ($data['model'] ? $data['model']->contato->telefones : ['telefones']);
+        ?>
 
         <strong><h6 class="mt-5 mb-3">Contato</h6></strong>
         <hr>
@@ -310,32 +314,34 @@
                                 <i class="material-icons">email</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="E-mail" name="contato[email]" id="email" class="form-control" value="{{ $data['model'] ? $data['model']->email : old('contato.email', '') }}">
+                        <input required type="text" placeholder="E-mail" name="contato[email]" id="email" class="form-control" value="{{ $data['model'] ? $data['model']->contato->email : old('contato.email', '') }}">
                         <span class="errors"> {{ $errors->first('contato.email') }} </span>
                     </div>
                 </div>
             </div>
         </div>
         <div id="telefones">
-            <div class="row tel">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="material-icons">phone</i>
-                                </span>
+            @foreach($telefones as $telefone)
+                <div class="row tel">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">phone</i>
+                                    </span>
+                                </div>
+                                <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][numero]" class="form-control telefone" value="{{ $data['model'] ? $telefone->numero : old('telefones.numero', '') }}">
+                                <span class="errors"> {{ $errors->first('telefones.numero') }}</span>
                             </div>
-                            <input required type="text" placeholder="Telefone" name="telefone[][numero]" class="form-control telefone" value="{{ $data['model'] ? $data['model']->numero : old('telefone.numero', '') }}">
-                            <span class="errors"> {{ $errors->first('telefone.numero') }}</span>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <i class="btn btn-info border text-center material-icons add-tel">add</i>
+                        <i class="btn btn-danger border text-center material-icons del-tel">delete</i>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <i class="btn btn-info border text-center material-icons add-tel">add</i>
-                    <i class="btn btn-danger border text-center material-icons del-tel">delete</i>
-                </div>
-            </div>
+            @endforeach
         </div>
 
         <!-- <strong><h6 class="mt-4 mb-3">Dependentes</h6></strong>
@@ -409,7 +415,7 @@ function limparUltimoInput(input){
 
 //ADICIONA E REMOVE TELEFONES
 $(document).on("click", ".add-tel", function() {
-    clonar(".tel", "#telefones", false)
+    clonar(".tel", "#telefones", true)
     limparUltimoInput(".tel input")
 })
 
@@ -435,6 +441,15 @@ $("#cep").mask('00000-000')
 $(".telefone").mask('(00) 0000-0000')
 
 $(document).ready(function() {
+
+    $(".sendForm").on('click',function(){
+        if($("#form").valid()){
+            $(".sendForm").prop("disabled",true) 
+            $("#form").submit()  
+            console.log('success')
+        }
+    })
+
     //VALIDAÇÕES
     $('#form').validate({
         rules: {

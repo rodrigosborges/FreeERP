@@ -1,8 +1,9 @@
 <div class="table-responsive">
-    <table class="table table-stripped">
+    <table id="funcionario-table" class="table table-stripped">
         <thead>
             <tr>
                 <th>Nome</th>
+                <th>Cargo</th>
                 <th class="min">Ações</th>
                 @if($status == "ativos")
                     <th class="min"></th>
@@ -13,6 +14,7 @@
             @foreach($funcionarios as $funcionario)
                 <tr>
                     <td>{{$funcionario->nome}}</td>
+                    <td>{{$funcionario->cargo->nome}}</td>
                     <td class="min">                       
                         @if($status == "ativos")
                             <a class="btn btn-warning" href='{{ url("funcionario/funcionario/$funcionario->id/edit") }}'>Editar</a>

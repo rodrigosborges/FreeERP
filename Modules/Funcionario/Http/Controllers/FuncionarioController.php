@@ -23,6 +23,10 @@ class FuncionarioController extends Controller{
     public function list(Request $request, $status) {
         $funcionarios = new Funcionario;
 
+        if($request['pesquisa']) {
+            $funcionarios = $funcionarios->where('nome', 'like', '%'.$request['pesquisa'].'%');
+        }
+
         if($status == 'inativos'){
             $funcionarios = $funcionarios->onlyTrashed();
         }
@@ -98,10 +102,24 @@ class FuncionarioController extends Controller{
     }
 
     public function edit($id){
-        
+        $data = [
+            "url" 	 	=> url("funcionario/funcionario/$id"),
+            'estado_civil' => EstadoCivil::all(),
+            'estados' => [],
+            'cidades' => [],
+            'cargos' => Cargo::all(),
+			"button" 	=> "Atualizar",
+			"model"		=> Funcionario::findOrFail($id),
+			'title'		=> "Atualizar Funcionário"
+		];
+
+	    return view('funcionario::funcionario.form', compact('data'));
     }
 
     public function update(Request $request, $id){
+
+        return $request;
+
         DB::beginTransaction();
 		try{
 
@@ -110,7 +128,7 @@ class FuncionarioController extends Controller{
             $funcionario->endereco()->update($request->input('endereco'));
             $contato = $funcionario->contato()->update($request->input('contato'));
 
-            foreach($request->input('telefone') as $telefone){
+            foreach($request->input('telefones') as $telefone){
                 if($telefone['id'])
                     Telefone::find($telefone['id'])->update($telefone);
                 else
@@ -139,14 +157,6 @@ class FuncionarioController extends Controller{
             return back()->with('success', 'Usuário desativado com sucesso!');
         }
     }
-
-    public function search($valor) {
-
-		$funcionarios = DB::table('funcionario')->join('cargo', 'cargo.id', '=', 'funcionario.cargo_id')->select('funcionario.id', 'funcionario.nome as funcionario_nome', 'cargo.nome as cargo_nome')->where('funcionario.nome', 'like', '%'.$valor.'%')->where('funcionario.deleted_at', null)->limit(10)->get();
-
-		return $funcionarios;
-
-	}
 
     public static function brToEnDate($date) {
         return implode('-', array_reverse(explode('/', $date))) ? : '';

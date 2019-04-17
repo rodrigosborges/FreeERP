@@ -22,6 +22,10 @@ class CargoController extends Controller{
 	public function list(Request $request, $status){
 		$cargos = new Cargo;
 
+		if($request['pesquisa']) {
+            $cargos = $cargos->where('nome', 'like', '%'.$request['pesquisa'].'%');
+        }
+
 		if($status == "inativos")
 			$cargos = $cargos->onlyTrashed();
 

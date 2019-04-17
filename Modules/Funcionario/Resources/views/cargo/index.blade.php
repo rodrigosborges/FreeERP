@@ -5,9 +5,11 @@
 @section('body')
     <div class="row">
         <div class="col-md-4">
-            <div class="form-group">
-                <input id="search-input" class="form-control" type="text" name="pesquisa" />
-            </div>
+            <form id="form">
+                <div class="form-group">
+                    <input id="search-input" class="form-control" type="text" name="pesquisa" />
+                </div>
+            </form>
         </div>
         <div class="col-md-2 pl-0">
             <div class="form-group">
@@ -47,6 +49,9 @@
 @section('script')
 
 <script>
+
+console.log($("#form").serialize())
+
     search = (url, target) => {
         setLoading(target)
         $.ajax({
@@ -78,37 +83,8 @@
         
     }
 
-    function searchFuncionarios() {
-        const valor = $("#search-input").val()
-
-        $.ajax({
-            url: main_url + '/funcionario/cargo/search/'+valor,
-            method: 'GET',
-            type: 'json',
-            success: function(data) {
-                var table = '<table class="table table-striped"><thead><tr><th>Cargo</th><th class="min">Ações</th></thead></tr>'
-
-                $.each(data, function(i, cargo) {
-                    table += '<tr><td>'+cargo['nome']+'</td>'
-                    table += '<td class="min"><a class="btn btn-warning" href="cargo/'+cargo['id']+'/edit">Editar</a></td>'
-                    table += '<td class="min"><a id="desativar-'+cargo['id']+'" class="btn btn-danger desativar" href="#">Desativar</a></td>'
-                    table += '</tr>'
-                })
-
-                table += '</table>'
-
-                Swal.fire({
-                    title: 'Resultados da busca:',
-                    html: '<p>Exibindo os resultados mais relevantes</p>' +
-                    table
-
-                })
-            }
-        })
-    }
-
     $(document).on("click", "#search-button", function() {
-        searchFuncionarios()
+        ativosInativos(`${main_url}/funcionario/cargo/list`)
     })
 
     $(document).ready(function(){
