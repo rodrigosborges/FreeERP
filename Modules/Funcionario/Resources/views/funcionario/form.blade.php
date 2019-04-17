@@ -138,6 +138,9 @@
             </div>         -->
             @foreach($documentos as $key => $documento)
                 <div class="row doc">
+                    @if($data['model'])
+                        <input type="hidden" class="documentos" value="{{$documento->id != '' ? $documento->id : ''}}" name="documentos[{{$key}}][id]">
+                    @endif
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="tipo" class="control-label">Nome</label>
@@ -176,7 +179,7 @@
                                     </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input required type="file" name="documentos[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $data['model'] ? $documento->comprovante : old('comprovante', '') }}">
+                                    <input type="file" name="documentos[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $data['model'] ? $documento->comprovante : old('comprovante', '') }}">
                                     <label for="comprovante" class="custom-file-label">Comprovante</label>   
                                 </div>
                                 <span class="errors"> {{ $errors->first('documentos.comprovante') }}</span>
@@ -291,7 +294,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->complemento : old('endereco.complemento', '') }}">
+                        <input type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->complemento : old('endereco.complemento', '') }}">
                         <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
                     </div>
                 </div>
@@ -321,7 +324,7 @@
             </div>
         </div>
         <div id="telefones">
-            @foreach($telefones as $telefone)
+            @foreach($telefones as $key => $telefone)
                 <div class="row tel">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -331,6 +334,9 @@
                                         <i class="material-icons">phone</i>
                                     </span>
                                 </div>
+                                @if($data['model'])
+                                    <input type="hidden" value="{{$telefone->id != '' ? $telefone->id : ''}}" name="telefones[{{$key}}][id]">
+                                @endif
                                 <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][numero]" class="form-control telefone" value="{{ $data['model'] ? $telefone->numero : old('telefones.numero', '') }}">
                                 <span class="errors"> {{ $errors->first('telefones.numero') }}</span>
                             </div>
@@ -416,7 +422,8 @@ function limparUltimoInput(input){
 //ADICIONA E REMOVE TELEFONES
 $(document).on("click", ".add-tel", function() {
     clonar(".tel", "#telefones", true)
-    limparUltimoInput(".tel input")
+    $(".tel").last().find("input").val("")
+    $(".tel").last().find("input").mask('(00) 0000-0000')
 })
 
 $(document).on("click", ".del-tel", function() {

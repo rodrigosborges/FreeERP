@@ -87,7 +87,7 @@ class FuncionarioController extends Controller{
             }
 
 			DB::commit();
-            return redirect('/funcionario/funcionario')->with('success', 'Funcionário cadastrado com successo');
+            return redirect('/funcionario/funcionario')->with('success', 'Funcionário cadastrado com successo!');
             
 		}catch(Exception $e){
 
@@ -118,25 +118,77 @@ class FuncionarioController extends Controller{
 
     public function update(Request $request, $id){
 
-        return $request;
-
         DB::beginTransaction();
 		try{
 
             $funcionario = Funcionario::findOrFail($id);
             $funcionario->update($request->input('funcionario'));
-            $funcionario->endereco()->update($request->input('endereco'));
+            $funcionario->endereco->update($request->input('endereco'));
             $contato = $funcionario->contato()->update($request->input('contato'));
 
+            //remoção de documentos
+            foreach($request->input('documentos') as $documento) {
+                $documentosRequestIds[] = $documento['id'];
+            }
+
+            foreach($funcionario->documentos as $documento) {
+                $documentosFuncionarioIds[] = $documento->id;
+            }
+
+            $documentosRemovidos = array_diff($documentosFuncionarioIds, $documentosRequestIds);
+
+            foreach($documentosRemovidos as $documentoId) {
+                Documento::find($documentoId)->delete();
+            }
+            //####################
+
+            return $request->input('documentos');
+
+            foreach($request->input('documentos') as $documento){
+                if($documento['id'] != null) {
+                    Documento::find($documento['id'])->update($documento);
+                } else {
+                    // $nome = uniqid(date('HisYmd'));
+                    // $extensao = $documento['comprovante']->extension();
+                    // $nomeArquivo = "{$nome}.{$extensao}";
+                    // $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
+    
+                    // if (!$upload) {
+                    //     return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+                    // }
+    
+                    // $documento['comprovante'] = $nomeArquivo;
+
+                    $funcionario->documentos()->save(new Documento($documento));
+                }
+            }
+
+            //remoção de telefones
+            foreach($request->input('telefones') as $telefone) {
+                $telefonesRequestIds[] = $telefone['id'];
+            }
+
+            foreach($funcionario->contato->telefones as $telefone) {
+                $telefonesFuncionarioIds[] = $telefone->id;
+            }
+
+            $telefonesRemovidos = array_diff($telefonesFuncionarioIds, $telefonesRequestIds);
+
+            foreach($telefonesRemovidos as $telefoneId) {
+                Telefone::find($telefoneId)->delete();
+            }
+            //####################
+
             foreach($request->input('telefones') as $telefone){
-                if($telefone['id'])
+                if($telefone['id'] != null)
                     Telefone::find($telefone['id'])->update($telefone);
-                else
-                    $contato->telefones()->save($telefone);
+                else {
+                    $funcionario->contato->telefones()->save(new Telefone($telefone));
+                }
             }
 
 			DB::commit();
-            return redirect('/funcionario')->with('success', 'Funcionário atualizado com successo');
+            return redirect('/funcionario/funcionario')->with('success', 'Funcionário atualizado com successo!');
             
 		}catch(Exception $e){
 
