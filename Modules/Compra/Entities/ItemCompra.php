@@ -10,7 +10,7 @@ class ItemCompra extends Model
     use SoftDeletes;
     protected $table = 'item_compra';
     public $timestamps = false;
-    protected $fillable = array('id','nome_produto','valor_estimado','quantidade','caracteristicas');
+    protected $fillable = array('id','nome_produto','valor_estimado','caracteristicas');
 
 
     //Relação com tabela Pedido

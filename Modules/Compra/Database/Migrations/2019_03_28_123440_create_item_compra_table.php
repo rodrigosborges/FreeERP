@@ -17,7 +17,6 @@ class CreateItemCompraTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome_produto');
             $table->double('valor_estimado', 8, 2);
-            $table->integer('quantidade');
             $table->string('caracteristicas');
             $table->timestamps();
             $table->softDeletes();

@@ -16,6 +16,7 @@ class CreatePedido extends Migration
         Schema::create('pedido', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('status');
+            $table->integer('quantidade');
             $table->timestamps();
             $table->softDeletes();
         });

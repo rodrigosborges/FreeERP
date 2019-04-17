@@ -19,6 +19,8 @@
                             <option value="{{ $item->id }}" {{ $item->id == $itemPedido['id'] ? 'selected' : '' }}> {{ $item->nome_produto }} </option>
                         @endforeach
                     </select>
+                        <input type="number" placeholder="Quantidade" name="quantidade" id="quantidade" class="form-control" value="{{ $data['model'] ? $data['model']->quantidade : old('quantidade', "") }}">
+                        <label class="errors"> {{ $errors->first('quantidade') }} </label>
                     <button type="button" class="btn btn-danger remover">Remover</button>
                 </div>
             @endforeach
