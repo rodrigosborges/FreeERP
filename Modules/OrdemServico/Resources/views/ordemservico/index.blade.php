@@ -1,0 +1,31 @@
+@extends('template')
+@section('content')
+    <div class="text-center">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Solicitante</th>
+                        <th>Descrição</th>
+                        <th ><a class="btn btn-success center-block" href="{{ url('ordemservico/os/create')  }}">Abrir OS</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($data['ordem_servico'] as $os)
+                    <tr>
+                        <td>{{$os->solicitante_id}}</td>
+                        <td>{{$os->descricao_problema}}</td>
+                        <td>
+                            <form action="{{url('ordemservico/os',[$os->id])}}" method="POST">
+                                {{method_field('DELETE')}}
+                                {{ csrf_field() }}
+                                <a class="btn btn-outline-warning btn-sm" href='{{ url("ordemservico/os/$os->id/") }}'>Detalhes</a> 
+                                <a class="btn btn-outline-info btn-sm" href='{{ url("ordemservico/os/$os->id/edit") }}'>Editar</a> 
+                                <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete"/>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+</div>
+@endsection

@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/ordemservico",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\OrdemServico\\Providers\\OrdemServicoServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\OrdemServico\\": ""
+        }
+    }
+}
