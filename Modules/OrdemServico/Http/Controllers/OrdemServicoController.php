@@ -26,13 +26,29 @@
 
         }
 
-        public function index(){
+        public function index(Request $request){
            $moduleInfo = $this->moduleInfo;
            $menu = $this->menu;
-           $data = [
-                'title' => 'Ordem de servico',
-                'ordem_servico' => OrdemServico::all()
+           if ($request->has('busca')) {
+            $busca = $request->get('busca');
+            $data = [
+                'title' => 'Ordem ',
+                'ordem_servico' =>OrdemServico::where('id', 'like', "%{$busca}%")
+                ->orWhere('marca', 'like', "%{$busca}%")
+                ->orWhere('tipo_aparelho', 'like', "%{$busca}%")
+                ->orWhere('descricao_problema', 'like', "%{$busca}%")
+                ->orWhere('numero_serie', 'like', "%{$busca}%")
+                ->orWhere('solicitante_id', 'like', "%{$busca}%")
+                ->paginate(5)
             ];
+            $data['ordem_servico']->appends(['busca' => $busca]);
+            return view('ordemservico::ordemservico.index', compact('data', 'busca','moduleInfo','menu'));
+        } else {
+            $data = [
+                'title' => 'Ordem de servico',
+                'ordem_servico' => OrdemServico::paginate(5)
+            ];
+        }
             return view('ordemservico::ordemservico.index', compact('data','moduleInfo','menu'));
         }
  

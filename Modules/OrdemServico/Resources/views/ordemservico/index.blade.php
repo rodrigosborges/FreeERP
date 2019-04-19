@@ -1,5 +1,19 @@
 @extends('template')
 @section('content')
+   
+   <form method="GET" action="#">
+    <div class="form-row form-group">
+        {!! Form::label('busca', 'Procurar por', ['class' => 'col-sm-2 col-form-label text-right']) !!}
+        <div class="col-sm-8">
+            {!! Form::text('busca', isset($busca) ? $busca : null, ['class' => 'form-control']) !!}
+        </div>
+
+        <div class="col-sm-2">
+            {!! Form::submit('procurar', ['class'=>'btn btn-primary']) !!}
+        </div>
+    </div>
+</form>
+
     <div class="text-center">
             <table class="table table-striped table-hover">
                 <thead class="thead-dark">
@@ -28,4 +42,8 @@
                 </tbody>
             </table>
 </div>
+        <div  class="row justify-content-center">
+
+ {{ $data['ordem_servico']->links() }}
+ </div>
 @endsection
