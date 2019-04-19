@@ -4,16 +4,16 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Module Exemplo</title>
+        <title>Module Recrutamento</title>
 
        {{-- Laravel Mix - CSS File --}}
-       {{-- <link rel="stylesheet" href="{{ mix('css/exemplo.css') }}"> --}}
+       {{-- <link rel="stylesheet" href="{{ mix('css/recrutamento.css') }}"> --}}
 
     </head>
     <body>
         @yield('content')
 
         {{-- Laravel Mix - JS File --}}
-        {{-- <script src="{{ mix('js/exemplo.js') }}"></script> --}}
+        {{-- <script src="{{ mix('js/recrutamento.js') }}"></script> --}}
     </body>
 </html>

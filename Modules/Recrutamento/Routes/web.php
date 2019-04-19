@@ -11,6 +11,8 @@
 |
 */
 
-Route::prefix('exemplo')->group(function() {
-    Route::get('/', 'ExemploController@index');
+//Módulo de Recrutamento
+Route::prefix('recrutamento')->group(function() {
+	Route::resource('Vaga', 'VagaController');
+
 });

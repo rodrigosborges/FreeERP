@@ -1,12 +1,12 @@
 {
-    "name": "Exemplo",
-    "alias": "exemplo",
+    "name": "Recrutamento",
+    "alias": "recrutamento",
     "description": "",
     "keywords": [],
     "active": 1,
     "order": 0,
     "providers": [
-        "Modules\\Exemplo\\Providers\\ExemploServiceProvider"
+        "Modules\\Recrutamento\\Providers\\RecrutamentoServiceProvider"
     ],
     "aliases": {},
     "files": [],
