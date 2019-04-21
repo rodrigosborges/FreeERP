@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario, Documento, Telefone};
-use Modules\Funcionario\Http\Requests\{CreateCargo};
+use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use DB;
 
 class FuncionarioController extends Controller{
@@ -51,7 +51,7 @@ class FuncionarioController extends Controller{
         return view('funcionario::funcionario.form', compact('data'));
     }
 
-    public function store(CreateCargo $request){
+    public function store(CreateFuncionario $request){
 
         // $validator = $request->validate([
         //     'cpf' => 'unique:documentos,tipo,'.$id.',id,tipo'
@@ -61,19 +61,34 @@ class FuncionarioController extends Controller{
 		try{
 
             $funcionario = Funcionario::create($request->input('funcionario'));
-            
-            foreach($request->documentos as $documento) {
 
-                $nome = uniqid(date('HisYmd'));
-                $extensao = $documento['comprovante']->extension();
-                $nomeArquivo = "{$nome}.{$extensao}";
-                $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
+            foreach($request->documentos as $key => $documento) {
+                
+                $newDoc = [
+                    'tipo'   => $key,
+                    'numero' => $documento
+                ];
 
-                if (!$upload) {
-                    return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+                $funcionario->documentos()->save(new Documento($newDoc));
+
+            }
+
+            foreach($request->docs_outros as $documento) {
+
+                if(isset($documento['comprovante'])) {
+
+                    $nome = uniqid(date('HisYmd'));
+                    $extensao = $documento['comprovante']->extension();
+                    $nomeArquivo = "{$nome}.{$extensao}";
+                    $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
+
+                    if (!$upload) {
+                        return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+                    }
+
+                    $documento['comprovante'] = $nomeArquivo;
+                
                 }
-
-                $documento['comprovante'] = $nomeArquivo;
                 
                 $funcionario->documentos()->save(new Documento($documento));
 
@@ -82,8 +97,8 @@ class FuncionarioController extends Controller{
             $funcionario->endereco()->create($request->input('endereco'));
             $contato = $funcionario->contato()->create($request->input('contato'));
 
-            foreach($request->telefone as $telefone) {
-                $contato->telefones()->save(new Telefone($telefone));
+            foreach($request->telefones as $telefone) {
+                $funcionario->contato->telefones()->save(new Telefone($telefone));
             }
 
 			DB::commit();

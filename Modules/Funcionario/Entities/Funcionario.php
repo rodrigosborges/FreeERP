@@ -45,5 +45,13 @@ class Funcionario extends Model{
     public function getDataAdmissaoAttribute($val){
         return implode('/', array_reverse(explode('-', $val))) ? : '';
     }
+
+    public function cpf() {
+        return $this->documentos()->where('tipo', 'cpf');
+    }
+
+    public function rg() {
+        return $this->documentos()->where('tipo', 'rg');
+    }
     
 }   

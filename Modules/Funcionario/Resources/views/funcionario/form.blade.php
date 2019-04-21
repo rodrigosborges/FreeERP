@@ -38,8 +38,8 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="00/00/0000" name="funcionario[data_nascimento]" id="data_nascimento" class="form-control data" value="{{ $data['model'] ? $data['model']->data_nascimento : old('data_nascimento', '') }}">
+                         <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
                     </div>
-                    <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
                 </div>
             </div>
         </div>
@@ -114,13 +114,13 @@
         </div>
 
         <?php
-            $documentos = old('documentos') !== null ? old('documentos') : ($data['model'] ? $data['model']->documentos : ['documentos']);
+            $documentos = old('documentos') !== null ? old('documentos') : ($data['model'] ? $data['model']->documentos->where('tipo', '<>', 'cpf') : ['documentos']);
         ?>
 
         <strong><h6 class="mt-5 mb-3">Documentos</h6></strong>
         <hr>
         <div id="documentos">
-            <!-- <div class="row doc">
+            <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="tipo" class="control-label">CPF</label>
@@ -130,16 +130,30 @@
                                     <i class="material-icons">description</i>
                                 </span>
                             </div>
-                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[0][numero]" id="" class="form-control documentos" value="{{ $data['model'] ? $data['model']->documentos->first()->numero : old('cpf', '') }}">
+                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf]" id="cpf" class="form-control documentos" value="{{ $data['model'] ? $data['model']->cpf()->first()->numero : old('cpf', '') }}">
                             <span class="errors"> {{ $errors->first('documentos.cpf') }}</span>
                         </div>
                     </div>
                 </div>
-            </div>         -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="tipo" class="control-label">RG</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">description</i>
+                                </span>
+                            </div>
+                            <input required type="text" placeholder="RG" name="documentos[rg]" id="rg" class="form-control documentos" value="{{ $data['model'] ? $data['model']->rg()->first()->numero : old('rg', '') }}">
+                            <span class="errors"> {{ $errors->first('documentos.rg') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>        
             @foreach($documentos as $key => $documento)
-                <div class="row doc">
+                <div class="row doc {{$data['model'] ? '' : 'd-none'}}">
                     @if($data['model'])
-                        <input type="hidden" class="documentos" value="{{$documento->id != '' ? $documento->id : ''}}" name="documentos[{{$key}}][id]">
+                        <input type="hidden" class="documentos" value="{{$documento->id != '' ? $documento->id : ''}}" name="docs_outros[{{$key}}][id]">
                     @endif
                     <div class="col-md-3">
                         <div class="form-group">
@@ -150,7 +164,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Nome" name="documentos[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->tipo : old('tipo', '') }}">
+                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->tipo : old('tipo', '') }}">
                                 <span class="errors"> {{ $errors->first('documentos.tipo') }}</span>
                             </div>
                         </div>
@@ -164,7 +178,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Número" name="documentos[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->numero : old('numero', '') }}">
+                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->numero : old('numero', '') }}">
                                 <span class="errors"> {{ $errors->first('documentos.numero') }} </span>
                             </div>
                         </div>
@@ -179,22 +193,22 @@
                                     </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" name="documentos[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $data['model'] ? $documento->comprovante : old('comprovante', '') }}">
+                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $data['model'] ? $documento->comprovante : old('comprovante', '') }}">
                                     <label for="comprovante" class="custom-file-label">Comprovante</label>   
                                 </div>
                                 <span class="errors"> {{ $errors->first('documentos.comprovante') }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 mt-2">
-                        <br>  
-                        <i class="btn btn-info border text-center material-icons add-doc">add</i>
-                        <i class="btn btn-danger border text-center material-icons del-doc">delete</i>
+                    <div class="col-md-2 mt-4">
+                        <span class="btn btn-danger border text-center material-icons del-doc mt-2">delete</span>
                     </div>
                 </div>
             @endforeach
         </div>
-
+        <div class="mt-2">
+            <i class="btn btn-info border text-center add-doc">ADICIONAR DOCUMENTO</i>
+        </div>
 
         <strong><h6 class="mt-5 mb-3">Endereço</h6></strong>
         <hr>
@@ -342,7 +356,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-8">
                         <i class="btn btn-info border text-center material-icons add-tel">add</i>
                         <i class="btn btn-danger border text-center material-icons del-tel">delete</i>
                     </div>
@@ -387,85 +401,7 @@
 @endsection
 
 @section('script')
-<script>
-
-//FUNÇÃO PARA CLONAR UM ELEMENTO
-function clonar(target, local, indices) {
-    if($(target).length < 4) {
-        $(target).last().clone().appendTo(local)
-
-        if(indices) {
-            $(target).last().find('input').each(function() {
-                var index = $(this).attr('name').split('[')[1].split(']')[0]
-                $(this).attr('name', $(this).attr('name').replace(index, parseInt(index) + 1))
-            })
-        }
-    } else { 
-        alert("Número máximo atingido!")
-    }
-}
-
-//FUNÇÃO PARA REMOVER UM ELEMENTO
-function remover(target, buttonClicked) {
-    if($(target).length > 1) {
-        $(buttonClicked).closest(target).remove()
-    } else {
-        alert("Deve ter pelo menos um!")
-    }
-}
-
-//FUNÇÃO PARA LIMPAR O ÚLTIMO ELEMENTO ADICIONADO
-function limparUltimoInput(input){
-    $(input).last().val("")
-}
-
-//ADICIONA E REMOVE TELEFONES
-$(document).on("click", ".add-tel", function() {
-    clonar(".tel", "#telefones", true)
-    $(".tel").last().find("input").val("")
-    $(".tel").last().find("input").mask('(00) 0000-0000')
-})
-
-$(document).on("click", ".del-tel", function() {
-    remover(".tel", $(this))
-})
-//###########################
-
-//ADICIONA E REMOVE DOCUMENTOS
-$(document).on("click", ".add-doc", function() {
-    clonar(".doc", "#documentos", true)
-    $(".doc").last().find(".documentos").val("")
-})
-
-$(document).on("click", ".del-doc", function() {
-    remover(".doc", $(this))
-})
-//###########################
-
-//MÁSCARAS
-$(".data").mask("00/00/0000")
-$("#cep").mask('00000-000')
-$(".telefone").mask('(00) 0000-0000')
-
-$(document).ready(function() {
-
-    $(".sendForm").on('click',function(){
-        if($("#form").valid()){
-            $(".sendForm").prop("disabled",true) 
-            $("#form").submit()  
-            console.log('success')
-        }
-    })
-
-    //VALIDAÇÕES
-    $('#form').validate({
-        rules: {
-            "endereco[numero]": {
-                number: true
-            }
-        },
-        messages:{}
-    })
-})
-</script>
+    <script src="{{Module::asset('funcionario:js/helpers.js')}}"></script>
+    <script src="{{Module::asset('funcionario:js/views/funcionario/form.js')}}"></script>
+    <script src="{{Module::asset('funcionario:js/views/funcionario/validations.js')}}"></script>
 @endsection

@@ -39,51 +39,5 @@
 @endsection
 
 @section('script')
-
-<script>
-
-    search = (url, target) => {
-        setLoading(target)
-        $.ajax({
-            type: "GET",
-            url: url,
-            data: $("#form").serialize(),
-            success: function (data) {
-                target.html(data)
-            },
-            error: function (jqXHR, exception) {
-                $("#results").html("<div class='alert alert-danger'>Desculpe, ocorreu um erro. <br> Recarregue a página e tente novamente</div>")
-            },
-        })
-    }
-
-    ativosInativos = (url) => {
-        search(`${url}/ativos`, $("#ativos"))
-        search(`${url}/inativos`, $("#inativos"))
-
-        $("#ativos").on('click', 'ul.pagination a', function(e){
-            e.preventDefault()
-            search($(this).attr('href'), $("#ativos"))
-        })
-
-        $("#inativos").on('click', 'ul.pagination a', function(e){
-            e.preventDefault()
-            search($(this).attr('href'), $("#inativos"))
-        })
-    }
-
-    $(document).on("click", "#search-button", function() {
-        ativosInativos(`${main_url}/funcionario/funcionario/list`)
-    })
-
-    $(document).ready(function(){
-        ativosInativos(`${main_url}/funcionario/funcionario/list`)
-        $(document).on('keypress',function(e) {
-            if(e.which == 13) {
-                ativosInativos(`${main_url}/funcionario/funcionario/list`)
-            }
-        });
-    })
-</script>
-
+    <script src="{{Module::asset('funcionario:js/views/funcionario/index.js')}}"></script>
 @endsection

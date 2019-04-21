@@ -40,7 +40,6 @@
     <script src="{{Module::asset('funcionario:js/bibliotecas/jquery.validate.min.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/bibliotecas/localization/messages_pt_BR.min.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/main.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>var main_url="{{url('')}}"</script>
     @yield('script')
 @endsection

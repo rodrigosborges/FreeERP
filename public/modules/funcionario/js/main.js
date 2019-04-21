@@ -35,6 +35,36 @@ function setLoading(target) {
     target.html(loading)
 }
 
+search = (url, target) => {
+    setLoading(target)
+    $.ajax({
+        type: "GET",
+        url: url,
+        data: $("#form").serialize(),
+        success: function (data) {
+            target.html(data)
+        },
+        error: function (jqXHR, exception) {
+            $("#results").html("<div class='alert alert-danger'>Desculpe, ocorreu um erro. <br> Recarregue a página e tente novamente</div>")
+        },
+    })
+}
+
+ativosInativos = (url) => {
+    search(`${url}/ativos`, $("#ativos"))
+    search(`${url}/inativos`, $("#inativos"))
+
+    $("#ativos").on('click', 'ul.pagination a', function(e){
+        e.preventDefault()
+        search($(this).attr('href'), $("#ativos"))
+    })
+
+    $("#inativos").on('click', 'ul.pagination a', function(e){
+        e.preventDefault()
+        search($(this).attr('href'), $("#inativos"))
+    })
+}
+
 $.validator.addMethod(
     "regex",
     function(value, element, regexp) {
