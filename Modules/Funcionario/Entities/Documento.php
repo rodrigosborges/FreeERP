@@ -6,7 +6,7 @@ class Documento extends Model{
 
     protected $table = 'documento';
 
-    protected $fillable = ['tipo', 'numero', 'comprovante', 'cpf'];
+    protected $fillable = ['tipo', 'numero', 'comprovante'];
 
     public $timestamps = false;
 
