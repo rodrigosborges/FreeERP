@@ -149,42 +149,57 @@ class FuncionarioController extends Controller{
             $contato = $funcionario->contato()->update($request->input('contato'));
 
             //remoção de documentos
+            $documentos = $funcionario->documentos->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg');
+
+            $documentosRequestIds[] = '';
+
             if($request->input('docs_outros')) {
                 foreach($request->input('docs_outros') as $documento) {
-                    $documentosRequestIds[] = $documento['id'];
-                }
-            } else {
-                $documentosRequestIds[] = '';
+                    if(isset($documento['id'])) {
+                        $documentosRequestIds[] = $documento['id'];
+                    }
+                }          
             }
-
-            foreach($funcionario->documentos as $documento) {
-                if($documento->tipo != 'rg' && $documento->tipo != 'cpf') {
+        
+            if(count($documentos) > 0) {
+                foreach($documentos as $documento) {
                     $documentosFuncionarioIds[] = $documento->id;
                 }
+            } else {
+                $documentosFuncionarioIds[] = '';
             }
-
+            
             $documentosRemovidos = array_diff($documentosFuncionarioIds, $documentosRequestIds);
 
-            foreach($documentosRemovidos as $documentoId) {
-                Documento::find($documentoId)->delete();
+            if(count($documentosRemovidos) > 0) {
+                foreach($documentosRemovidos as $documentoId) {
+                    Documento::find($documentoId)->delete();
+                }
             }
             //####################
 
+    
+
             if($request->input('docs_outros')) {
                 foreach($request->input('docs_outros') as $documento){
-                    if($documento['id'] != null) {
+                    if(isset($documento['id'])) {
                         Documento::find($documento['id'])->update($documento);
                     } else {
-                        $nome = uniqid(date('HisYmd'));
-                        $extensao = $documento['comprovante']->extension();
-                        $nomeArquivo = "{$nome}.{$extensao}";
-                        $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
-        
-                        if (!$upload) {
-                            return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+
+                        if(isset($documento['comprovante'])) {
+
+                            $nome = uniqid(date('HisYmd'));
+                            $extensao = $documento['comprovante']->extension();
+                            $nomeArquivo = "{$nome}.{$extensao}";
+                            $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
+            
+                            if (!$upload) {
+                                return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+                            }
+            
+                            $documento['comprovante'] = $nomeArquivo;
+
                         }
-        
-                        $documento['comprovante'] = $nomeArquivo;
 
                         $funcionario->documentos()->save(new Documento($documento));
                     }
@@ -236,6 +251,12 @@ class FuncionarioController extends Controller{
             $funcionario->delete();
             return back()->with('success', 'Usuário desativado com sucesso!');
         }
+    }
+
+    //Helpers
+
+    public static function removerTelefones() {
+        
     }
 
     public static function brToEnDate($date) {

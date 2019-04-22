@@ -114,7 +114,21 @@
         </div>
 
         <?php
-            $documentos = old('documentos') !== null ? old('documentos') : ($data['model'] ? $data['model']->documentos->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg') : ['documentos']);
+
+            $documentos = ['vazio'];
+
+            if(old('documentos') !== null) {
+                $documentos = old('documentos');
+            }
+            else if($data['model']) {
+                $documentos = $data['model']->documentos->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg');
+
+                if(count($documentos) == 0) {
+                    $documentos = ['vazio'];
+                }
+            }
+
+            // $documentos = old('documentos') !== null ? old('documentos') : ($data['model'] ? $data['model']->documentos->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg') : ['documentos']);
         ?>
 
         <strong><h6 class="mt-5 mb-3">Documentos</h6></strong>
@@ -157,9 +171,10 @@
                 </div>
             </div>        
             @foreach($documentos as $key => $documento)
-                <div class="row doc {{$data['model'] && count($documentos) > 0  ? '' : 'd-none'}}">
-                    @if($data['model'])
-                        <input type="hidden" class="documentos" value="{{$documento->id != '' ? $documento->id : ''}}" name="docs_outros[{{$key}}][id]">
+
+                <div class="row doc {{ $documento !== 'vazio' ? '' : 'd-none'}}">
+                    @if($documento !== 'vazio')
+                        <input type="hidden" class="documentos" value="{{isset($documento->id) ? $documento->id : ''}}" name="docs_outros[{{$key}}][id]">
                     @endif
                     <div class="col-md-3">
                         <div class="form-group">
@@ -170,7 +185,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->tipo : old('tipo', '') }}" {{($data['model'] && count($documentos) > 0) ? '' : 'disabled'}}>
+                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{isset($documento->tipo) ? $documento->tipo : old('tipo', '') }}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
                                 <span class="errors"> {{ $errors->first('documentos.tipo') }}</span>
                             </div>
                         </div>
@@ -184,7 +199,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->numero : old('numero', '') }}" {{($data['model'] && count($documentos) > 0) ? '' : 'disabled'}}>
+                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{isset($documento->numero) ? $documento->numero : old('numero', '') }}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
                                 <span class="errors"> {{ $errors->first('documentos.numero') }} </span>
                             </div>
                         </div>
@@ -199,7 +214,7 @@
                                     </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $data['model'] ? $documento->comprovante : old('comprovante', '') }}">
+                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{isset($documento->comprovante) ? $documento->comprovante : old('comprovante', '') }}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
                                     <label for="comprovante" class="custom-file-label">Comprovante</label>   
                                 </div>
                                 <span class="errors"> {{ $errors->first('documentos.comprovante') }}</span>
