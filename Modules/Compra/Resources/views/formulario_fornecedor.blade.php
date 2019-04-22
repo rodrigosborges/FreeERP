@@ -15,13 +15,13 @@
         </div>
 
         <div class="form-group">
-            <label for="email" class="control-label">E-mail do Fornecedor</label>
+            <label for="email" class="control-label">E-mail</label>
             <input type="text" name="email" id="email" class="form-control" value="{{ $data['model'] ? $data['model']->email : old('email', "") }}">
             <label class="errors"> {{ $errors->first('email') }} </label>
         </div>
 
         <div class="form-group">
-            <label for="endereco" class="control-label">Endereço do Fornecedor</label>
+            <label for="endereco" class="control-label">Endereço</label>
             <input type="text" name="endereco" id="endereco" class="form-control" value="{{ $data['model'] ? $data['model']->endereco : old('endereco', "") }}">
             <label class="errors"> {{ $errors->first('endereco') }} </label>
         </div>

@@ -7,8 +7,8 @@
                 <thead>
                     <tr>
                         <th>Nome do Fornecedor</th>
-                        <th>E-mail do Fornecedor</th>
-                        <th>Endereço de Fornecedor</th>
+                        <th>E-mail</th>
+                        <th>Endereço</th>
                         <th>Telefone</th>
                     </tr>
                 </thead>
