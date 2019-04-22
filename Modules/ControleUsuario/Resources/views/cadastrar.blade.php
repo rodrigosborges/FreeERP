@@ -14,18 +14,18 @@
                 </i>
             </div>
 
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label for="nome">Nome de usu&aacute;rio</label>
                 <input type="text" class="form-control" id="nome" placeholder="Nome de usu&aacute;rio" required>
             </div>
 
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label for="email">Endereço de email</label>
                 <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Seu email" required>
                 <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
             </div>
 
-            <div class="form-group">
+            <div class="form-group text-center">
                 <label for="password">Senha</label>
                 <input type="password" class="form-control" id="password" placeholder="Senha" required>
             </div>
