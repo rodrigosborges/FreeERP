@@ -116,8 +116,8 @@ class FornecedorController extends Controller
 
     public function destroy($id)
     {
-        $itemCompra = Fornecedor::findOrFail($id);
-		$itemCompra->delete();
+        $fornecedor = Fornecedor::findOrFail($id);
+		$fornecedor->delete();
 		return back()->with('success',  'Fornecedor deletado');    
         
     }
