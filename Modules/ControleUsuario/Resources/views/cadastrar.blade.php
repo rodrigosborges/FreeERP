@@ -2,10 +2,17 @@
 @section('title', 'Cadastrar')
 
 @section('content')
-<div class="d-flex p-2 bd-highlight col justify-content-sm-center border rounded">
+<div class="d-flex p-2 bd-highlight col justify-content-center border rounded">
 
         <form action="#" method="POST">
             {{ csrf_field() }}
+
+            <!-- Imagem adicionada diretamente do google, necessita sobescrever quando o usuario ja tiver -->
+            <div class="form-group text-center rounded-circle">
+                <i class="material-icons" style="font-size: 80px; ">
+                        account_circle
+                </i>
+            </div>
 
             <div class="form-group">
                 <label for="nome">Nome de usu&aacute;rio</label>
