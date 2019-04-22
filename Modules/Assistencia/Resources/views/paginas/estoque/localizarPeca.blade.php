@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="container">
-
+    <a href="{{url('/assistencia')}}"<i class="material-icons mr-2">arrow_back</i></button></a>
     <div class="form-group">
       <div class="form-row">
           <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Nome da peça" aria-label="Search">

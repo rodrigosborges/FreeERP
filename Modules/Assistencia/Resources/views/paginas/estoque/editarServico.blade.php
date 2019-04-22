@@ -8,6 +8,7 @@
 
 @section('content')
 <div class="container">
+  <a href="{{url('/assistencia')}}"<i class="material-icons mr-2">arrow_back</i></button></a>
   <div class="row">
     <form class="" action="{{route('servicos.atualizar',$servico->id)}}" method="post" enctype="multipart/form-data">
       {{ csrf_field() }}

@@ -9,26 +9,34 @@
 
 @section('content')
 
-  <div class="content-body">
+  <div class="container">
     <div class="row">
       <div class="col">
-        <h3>Concertos</h3>
-        <a href="{{route('concertos.index')}}"><img width="100px" src="{{ Module::asset('assistencia:img-assistencia/concerto.png') }}"></a>
-
+        <a href="{{route('concertos.index')}}">
+          <h3>Concertos</h3>
+          LINK CONCERTOS
+        </a>
       </div>
       <div class="col">
-        <h3>Estoque</h3>
-        <a href="{{route('estoque.index')}}"><img width="100px" src="{{ Module::asset('assistencia:img-assistencia/estoque.png') }}"></a>
+        <a href="{{route('cliente.index')}}">
+          <h3>Clientes</h3>
+          LINK CLIENTE
+        </a>
       </div>
       <div class="col">
-        <h3>Pagamentos</h3>
-        <a href="{{route('pagamento.index')}}"><img width="100px" src="{{ Module::asset('assistencia:img-assistencia/pagamento.png') }}"></a>
+        <a href="{{route('estoque.index')}}">
+          <h3>Estoque</h3>
+          LINK ESTOQUE
+        </a>
       </div>
       <div class="col">
-        <h3>Clientes</h3>
-        <a href="{{route('cliente.index')}}"><img width="100px" src="{{ Module::asset('assistencia:img-assistencia/cliente.png') }}"></a>
+        <a href="{{route('pagamento.index')}}">
+          <h3>Pagamentos</h3>
+          LINK PAGAMENTOS
+        </a>
       </div>
     </div>
+
     <div class="row match-height">
       <div class="col-x1-8 col-lg-12">
         grafico1

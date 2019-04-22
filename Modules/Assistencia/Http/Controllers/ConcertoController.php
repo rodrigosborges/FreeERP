@@ -15,7 +15,7 @@ class ConcertoController extends Controller
      public function index()
      {
        $moduleInfo = [
-           'icon' => 'android',
+           'icon' => 'smartphone',
            'name' => 'Assistência Técnica',
        ];
 
