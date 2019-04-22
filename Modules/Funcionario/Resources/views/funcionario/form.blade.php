@@ -114,7 +114,7 @@
         </div>
 
         <?php
-            $documentos = old('documentos') !== null ? old('documentos') : ($data['model'] ? $data['model']->documentos->where('tipo', '<>', 'cpf') : ['documentos']);
+            $documentos = old('documentos') !== null ? old('documentos') : ($data['model'] ? $data['model']->documentos->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg') : ['documentos']);
         ?>
 
         <strong><h6 class="mt-5 mb-3">Documentos</h6></strong>
@@ -130,7 +130,10 @@
                                     <i class="material-icons">description</i>
                                 </span>
                             </div>
-                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf]" id="cpf" class="form-control documentos" value="{{ $data['model'] ? $data['model']->cpf()->first()->numero : old('cpf', '') }}">
+                            @if($data['model'])
+                                <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->cpf()->first()->id}}">
+                            @endif
+                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{ $data['model'] ? $data['model']->cpf()->first()->numero : old('cpf', '') }}">
                             <span class="errors"> {{ $errors->first('documentos.cpf') }}</span>
                         </div>
                     </div>
@@ -144,14 +147,17 @@
                                     <i class="material-icons">description</i>
                                 </span>
                             </div>
-                            <input required type="text" placeholder="RG" name="documentos[rg]" id="rg" class="form-control documentos" value="{{ $data['model'] ? $data['model']->rg()->first()->numero : old('rg', '') }}">
+                            @if($data['model'])
+                                <input type="hidden" name="documentos[rg][id]" value="{{$data['model']->rg()->first()->id}}">
+                            @endif
+                            <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="form-control" value="{{ $data['model'] ? $data['model']->rg()->first()->numero : old('rg', '') }}">
                             <span class="errors"> {{ $errors->first('documentos.rg') }}</span>
                         </div>
                     </div>
                 </div>
             </div>        
             @foreach($documentos as $key => $documento)
-                <div class="row doc {{$data['model'] ? '' : 'd-none'}}">
+                <div class="row doc {{$data['model'] && count($documentos) > 0  ? '' : 'd-none'}}">
                     @if($data['model'])
                         <input type="hidden" class="documentos" value="{{$documento->id != '' ? $documento->id : ''}}" name="docs_outros[{{$key}}][id]">
                     @endif
@@ -164,7 +170,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->tipo : old('tipo', '') }}">
+                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->tipo : old('tipo', '') }}" {{($data['model'] && count($documentos) > 0) ? '' : 'disabled'}}>
                                 <span class="errors"> {{ $errors->first('documentos.tipo') }}</span>
                             </div>
                         </div>
@@ -178,7 +184,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->numero : old('numero', '') }}">
+                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ $data['model'] ? $documento->numero : old('numero', '') }}" {{($data['model'] && count($documentos) > 0) ? '' : 'disabled'}}>
                                 <span class="errors"> {{ $errors->first('documentos.numero') }} </span>
                             </div>
                         </div>

@@ -63,10 +63,10 @@ class FuncionarioController extends Controller{
             $funcionario = Funcionario::create($request->input('funcionario'));
 
             foreach($request->documentos as $key => $documento) {
-                
+
                 $newDoc = [
                     'tipo'   => $key,
-                    'numero' => $documento
+                    'numero' => $documento['numero']
                 ];
 
                 $funcionario->documentos()->save(new Documento($newDoc));
@@ -137,17 +137,30 @@ class FuncionarioController extends Controller{
 		try{
 
             $funcionario = Funcionario::findOrFail($id);
+
             $funcionario->update($request->input('funcionario'));
+
+            foreach($request->documentos as $key => $documento) {
+                Documento::find($documento['id'])->update($documento);
+            }
+
             $funcionario->endereco->update($request->input('endereco'));
+
             $contato = $funcionario->contato()->update($request->input('contato'));
 
             //remoção de documentos
-            foreach($request->input('documentos') as $documento) {
-                $documentosRequestIds[] = $documento['id'];
+            if($request->input('docs_outros')) {
+                foreach($request->input('docs_outros') as $documento) {
+                    $documentosRequestIds[] = $documento['id'];
+                }
+            } else {
+                $documentosRequestIds[] = '';
             }
 
             foreach($funcionario->documentos as $documento) {
-                $documentosFuncionarioIds[] = $documento->id;
+                if($documento->tipo != 'rg' && $documento->tipo != 'cpf') {
+                    $documentosFuncionarioIds[] = $documento->id;
+                }
             }
 
             $documentosRemovidos = array_diff($documentosFuncionarioIds, $documentosRequestIds);
@@ -157,24 +170,24 @@ class FuncionarioController extends Controller{
             }
             //####################
 
-            return $request->input('documentos');
+            if($request->input('docs_outros')) {
+                foreach($request->input('docs_outros') as $documento){
+                    if($documento['id'] != null) {
+                        Documento::find($documento['id'])->update($documento);
+                    } else {
+                        $nome = uniqid(date('HisYmd'));
+                        $extensao = $documento['comprovante']->extension();
+                        $nomeArquivo = "{$nome}.{$extensao}";
+                        $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
+        
+                        if (!$upload) {
+                            return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+                        }
+        
+                        $documento['comprovante'] = $nomeArquivo;
 
-            foreach($request->input('documentos') as $documento){
-                if($documento['id'] != null) {
-                    Documento::find($documento['id'])->update($documento);
-                } else {
-                    // $nome = uniqid(date('HisYmd'));
-                    // $extensao = $documento['comprovante']->extension();
-                    // $nomeArquivo = "{$nome}.{$extensao}";
-                    // $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
-    
-                    // if (!$upload) {
-                    //     return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
-                    // }
-    
-                    // $documento['comprovante'] = $nomeArquivo;
-
-                    $funcionario->documentos()->save(new Documento($documento));
+                        $funcionario->documentos()->save(new Documento($documento));
+                    }
                 }
             }
 

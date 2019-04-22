@@ -14,6 +14,7 @@ class CreateFuncionario extends FormRequest{
             'funcionario.cargo_id'          => 'required',
             'funcionario.data_admissao'     => 'required|date_format:d/m/Y',
             'documentos.cpf'                => 'required|max:14',
+            'documentos.rg'                 => 'required',
             'endereco.logradouro'           => 'required|max:255',
             'endereco.numero'               => 'required|max:5',
             'endereco.bairro'               => 'required|max:100',

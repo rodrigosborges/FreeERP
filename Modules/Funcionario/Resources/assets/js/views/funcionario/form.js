@@ -1,12 +1,20 @@
 //ADICIONA E REMOVE TELEFONES
 $(document).on("click", ".add-tel", function() {
-    clonar(".tel", "#telefones", true)
-    $(".tel").last().find("input").val("")
-    $(".tel").last().find("input").mask('(00) 0000-0000')
+    if($(".tel").length < 4) {
+        clonar(".tel", "#telefones", true)
+        $(".tel").last().find("input").val("")
+        $(".tel").last().find("input").mask('(00) 0000-0000')
+    } else {
+        alert('Podem ser adicionados no máximo '+$(".tel").length+' telefones')
+    }
 })
 
 $(document).on("click", ".del-tel", function() {
-    remover(".tel", $(this))
+    if($(".tel").length > 1) {
+        remover(".tel", $(this))
+    } else {
+        alert('Deve conter no mínimo 1 telefone')
+    }
 })
 //###########################
 
@@ -14,6 +22,7 @@ $(document).on("click", ".del-tel", function() {
 $(document).on("click", ".add-doc", function() {
     if($(".doc").hasClass("d-none")) {
         $(".doc").removeClass("d-none")
+        $(".documentos").removeAttr('disabled')
     }
     else if($(".doc").length < 4) {
         clonar(".doc", "#documentos", true)
@@ -27,6 +36,7 @@ $(document).on("click", ".del-doc", function() {
     if($(".doc").length == 1) {
         $(".doc").last().find(".documentos").val("")
         $('.doc').addClass('d-none')
+        $(".documentos").attr('disabled', 'disabled')
     } else {
         remover(".doc", $(this))
     }
