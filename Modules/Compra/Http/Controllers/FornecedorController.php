@@ -28,7 +28,7 @@ class FornecedorController extends Controller
 			'title'				=> "Lista de Funcionários",
 		]; 
 			
-	    return view('compra::item', compact('data','moduleInfo','menu'));
+	    return view('compra::fornecedor', compact('data','moduleInfo','menu'));
     }
 
     public function create()
@@ -44,12 +44,12 @@ class FornecedorController extends Controller
             ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
 		];
         $data = [
-			"url" 	 	=> url('compra/itemCompra'),
+			"url" 	 	=> url('compra/fornecedor'),
 			"button" 	=> "Salvar",
 			"model"		=> null,
-			'title'		=> "Cadastrar Item Compra"
+			'title'		=> "Cadastrar Fornecedor"
 		];
-	    return view('compra::formulario_item', compact('data','moduleInfo','menu'));
+	    return view('compra::formulario_fornecedor', compact('data','moduleInfo','menu'));
 
     }
 
@@ -57,9 +57,9 @@ class FornecedorController extends Controller
     {
 		DB::beginTransaction();
 		try{
-			$itemCompra = ItemCompra::Create($request->all());
+			$fornecedor = Fornecedor::Create($request->all());
 			DB::commit();
-			return redirect('/compra/itemCompra')->with('success', 'Item cadastrado com successo');
+			return redirect('/compra/fornecedor')->with('success', 'Fornecedor cadastrado com successo');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -69,9 +69,9 @@ class FornecedorController extends Controller
     
     public function show($id)
     {
-        $itemCompra = ItemCompra::findOrFail($id);
+        $itemCompra = Fornecedor::findOrFail($id);
 	    return view('compra::show', [
-            'model' => $itemCompra	    
+            'model' => $fornecedor	    
         ]);
     
     }
@@ -90,12 +90,12 @@ class FornecedorController extends Controller
             
 		];
         $data = [
-			"url" 	 	=> url("compra/itemCompra/$id"),
+			"url" 	 	=> url("compra/fornecedor/$id"),
 			"button" 	=> "Atualizar",
-			"model"		=> ItemCompra::findOrFail($id),
-			'title'		=> "Atualizar Item Compra"
+			"model"		=> Fornecedor::findOrFail($id),
+			'title'		=> "Atualizar Fornecedor"
 		];
-	    return view('compra::formulario_item', compact('data','moduleInfo','menu'));
+	    return view('compra::formulario_fornecedor', compact('data','moduleInfo','menu'));
         
     }
 
@@ -103,10 +103,10 @@ class FornecedorController extends Controller
     {
         DB::beginTransaction();
 		try{
-			$itemCompra = ItemCompra::findOrFail($id);
-			$itemCompra->update($request->all());
+			$fornecedor = Fornecedor::findOrFail($id);
+			$fornecedor->update($request->all());
 			DB::commit();
-			return redirect('compra/itemCompra')->with('success', 'Item atualizado com successo');
+			return redirect('compra/fornecedor')->with('success', 'Fornecedor atualizado com successo');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -116,9 +116,9 @@ class FornecedorController extends Controller
 
     public function destroy($id)
     {
-        $itemCompra = ItemCompra::findOrFail($id);
+        $itemCompra = Fornecedor::findOrFail($id);
 		$itemCompra->delete();
-		return back()->with('success',  'Item deletado');    
+		return back()->with('success',  'Fornecedor deletado');    
         
     }
 }
