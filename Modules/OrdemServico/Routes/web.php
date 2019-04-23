@@ -13,6 +13,7 @@
 
 //Módulo de Ordem de servico
 Route::prefix('ordemservico')->group(function() {
+	 Route::get('os/pdf', 'OrdemServicoController@pdf');
 	Route::resource('os', 'OrdemServicoController');
 
 });

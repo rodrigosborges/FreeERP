@@ -33,6 +33,7 @@
                         {{ csrf_field() }}
                         <a class="btn btn-outline-warning btn-sm" href='{{ url("ordemservico/os/$os->id/") }}'>Detalhes</a>
                         <a class="btn btn-outline-info btn-sm" href='{{ url("ordemservico/os/$os->id/edit") }}'>Editar</a>
+                        <a class="btn btn-outline-dark btn-sm" href='{{ url("ordemservico/os/pdf")}}'>PDF</a>
                         <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" />
                     </form>
                 </td>
