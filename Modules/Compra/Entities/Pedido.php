@@ -19,11 +19,7 @@ class Pedido extends Model
 
     }
 
-    //Relação com a tabela Orcamento
     
-    public function orcamentos(){
-        return $this->belongsToMany('Modules\Compra\Entities\Orcamento','orcamento_has_pedido');
-    }
 
     
    

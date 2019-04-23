@@ -11,4 +11,10 @@ class Fornecedor extends Model
     protected $table = 'fornecedor';
     public $timestamps = true;
     protected $fillable = array('id', 'nome_fornecedor', 'email', 'endereco', 'telefone');
+
+
+    //Relação com a tabela Orcamento
+    public function orcamentos(){
+        return $this->hasMany('Modules\Compra\Entities\Orcamento');
+    }
 }

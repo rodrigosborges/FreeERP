@@ -18,8 +18,8 @@ class CreateItemCompraHasPedido extends Migration
             $table->unsignedBigInteger('item_compra_id');
 
             //referencia chave estrangeira
-            $table->foreign('item_compra_id')->references('id')->on('item_compra')->onDelete();
-            $table->foreign('pedido_id')->references('id')->on('pedido')->onDelete();
+            $table->foreign('item_compra_id')->references('id')->on('item_compra');
+            $table->foreign('pedido_id')->references('id')->on('pedido');
 
             //chave composta
             $table->primary(['pedido_id','item_compra_id']);
