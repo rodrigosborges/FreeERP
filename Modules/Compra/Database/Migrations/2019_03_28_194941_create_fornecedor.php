@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemCompraTable extends Migration
+class CreateFornecedor extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateItemCompraTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_compra', function (Blueprint $table) {
+        Schema::create('fornecedor', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome_produto');
-            $table->double('valor_estimado', 8, 2);
-            $table->string('descricao');
+            $table->string('nome_fornecedor');
+            $table->string('email');
+            $table->string('endereco');
+            $table->string('telefone');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +31,6 @@ class CreateItemCompraTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_compra');
+        Schema::dropIfExists('fornecedor');
     }
 }
