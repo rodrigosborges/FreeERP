@@ -6,16 +6,24 @@
 
 @section('content')
 
-<div class="container">
-  <a href="{{url('/assistencia')}}"<i class="material-icons mr-2">arrow_back</i></button></a>
-  <div class="center-block" style="width:200px">
-    <a href="{{route('cliente.localizar')}}"><button type="button" class="btn btn-info" name="button">Localizar</button></a>
-    <a href="{{route('cliente.cadastrar')}}"><button type="button" class="btn btn-info" name="button">Cadastrar</button></a>
+<div class="container text-center">
+  <div class="card-body">
+    <div class="row text-left">
+      <div class="col">
+          <a href="{{url('/assistencia')}}"<i class="material-icons mr-2">arrow_back</i></button></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <a href="{{route('cliente.localizar')}}"><button type="button" class="btn btn-info" name="button">Localizar</button></a>
+      </div>
+      <div class="col">
+        <a href="{{route('cliente.cadastrar')}}"><button type="button" class="btn btn-info" name="button">Cadastrar</button></a>
+      </div>
 
-
+    </div>
   </div>
 </div>
-
 
 
 @stop
