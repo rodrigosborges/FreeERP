@@ -22,6 +22,7 @@
                                 {{ csrf_field() }}
                                 <a class="btn btn-warning" href='{{ url("compra/itemCompra/$item->id/edit") }}'>Editar</a> 
                                 <input type="submit" class="btn btn-danger" value="Delete"/>
+                                <br>
                             </form>
                         </td>
                     </tr>

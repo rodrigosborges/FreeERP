@@ -30,8 +30,7 @@
             <input type="text" name="caracteristicas" id="caracteristicas" class="form-control" value="{{ $data['model'] ? $data['model']->caracteristicas : old('caracteristicas', "") }}">
             <label class="errors"> {{ $errors->first('caracteristicas') }} </label>
         </div>
-
-
+        
         <div class="form-group">
             <button type="submit" class="btn btn-success"> {{ $data['button'] }} </button> 
             <a class="btn btn-light" href="{{ url('compra/itemCompra') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>

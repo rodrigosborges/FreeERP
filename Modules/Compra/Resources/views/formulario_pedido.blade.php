@@ -1,35 +1,38 @@
 @extends('template')
 @section('content')
-                
-    <form action="{{ $data['url'] }}" method="POST">
-        {{ csrf_field() }}
-        @if($data['model'])
-            @method('PUT')
-        @endif
-       
-        <label for="item" class="control-label">Itens</label>
-        
-        <div class="form-group">
-
-            @foreach($data['itens_pedido'] as $itemPedido)
-                <div class="input-group">
-                    <select required name="itens[]" class="form-control">
-                        <option value="">Selecione uma opção</option>
-                        @foreach($data['itens'] as $item)
-                            <option value="{{ $item->id }}" {{ $item->id == $itemPedido['id'] ? 'selected' : '' }}> {{ $item->nome_produto }} </option>
-                        @endforeach
-                    </select>
-                    <button type="button" class="btn btn-danger remover">Remover</button>
-                </div>
-            @endforeach
-        </div>
-
-        <div class="col-md-12 text-center">
-            <button type="button" class="btn btn-success" id="adicionar">Adicionar</button>
+    <div class="row justify-content-center">
+        <div class="card col-7"> 
             
+                <h2 class="card-title mt-3 ml-2">Itens</h2>
+            
+            <div class="card-body">
+                <form action="{{ $data['url'] }}" method="POST" class="col-12">
+                    {{ csrf_field() }}
+                    @if($data['model'])
+                        @method('PUT')
+                    @endif
+                    <div class="form-group">
+                        @foreach($data['itens_pedido'] as $itemPedido)
+                            <div class="input-group mt-2">
+                                <select required name="itens[]" class="form-control col-10">
+                                    <option value="">Selecione uma opção</option>
+                                    @foreach($data['itens'] as $item)
+                                        <option value="{{ $item->id }}" {{ $item->id == $itemPedido['id'] ? 'selected' : '' }}> {{ $item->nome_produto }} </option>
+                                    @endforeach
+                                </select>
+                                <div class="col-1"></div>
+                                <button type="button" class="btn btn-danger remover">Remover</button>              
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <button type="button" class="btn btn-success" id="adicionar">Adicionar</button>
+                    </div>
+                    <button type="submit" class="btn btn-primary my-1">Enviar</button>
+                </form>
+            </div>     
         </div>
-        <button type="submit" class="btn btn-primary my-1">Enviar</button>
-    </form>
+    </div>
 
 @endsection
 @section('js')
