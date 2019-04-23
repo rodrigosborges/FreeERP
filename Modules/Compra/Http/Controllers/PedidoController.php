@@ -65,7 +65,7 @@ class PedidoController extends Controller
     {
         DB::beginTransaction();
 		try{
-            $pedido = Pedido::Create(['status' => 'iniciado']);
+            $pedido = Pedido::Create(['status' => 'iniciado' ,'quantidade' => $request->input('quantidade')]);
             $pedido->itens()->sync($request->itens);
             DB::commit();
             return redirect('/compra/pedido')->with('success', 'Pedido cadastrado com successo');
@@ -115,6 +115,7 @@ class PedidoController extends Controller
 		try{
             $pedido = Pedido::findOrFail($id);
             if($pedido->status =='iniciado'){
+                $pedido->update($request->all());
                 $pedido->itens()->sync($request->itens);
                 DB::commit();
                 return redirect('compra/pedido')->with('success', 'Pedido atualizado com successo');
