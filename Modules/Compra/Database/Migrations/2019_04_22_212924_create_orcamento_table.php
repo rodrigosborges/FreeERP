@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePedido extends Migration
+class CreateOrcamentoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreatePedido extends Migration
      */
     public function up()
     {
-        Schema::create('pedido', function (Blueprint $table) {
+        Schema::create('orcamento', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('status');
-            $table->integer('quantidade');
+            $table->unsignedBigInteger('fornecedor_id');
+            $table->double('valor_total', 8, 2);
+
             $table->timestamps();
             $table->softDeletes();
+
+             //referencia chave estrangeira
+             $table->foreign('fornecedor_id')->references('id')->on('fornecedor');
         });
     }
 
@@ -29,6 +33,6 @@ class CreatePedido extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedido');
+        Schema::dropIfExists('orcamento');
     }
 }

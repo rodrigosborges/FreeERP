@@ -4,6 +4,7 @@
         <div class="card col-7"> 
             
                 <h2 class="card-title mt-3 ml-2">Itens</h2>
+
             
             <div class="card-body">
                 <form action="{{ $data['url'] }}" method="POST" class="col-12">

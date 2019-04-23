@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePedido extends Migration
+class CreateFornecedor extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreatePedido extends Migration
      */
     public function up()
     {
-        Schema::create('pedido', function (Blueprint $table) {
+        Schema::create('fornecedor', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('status');
-            $table->integer('quantidade');
+            $table->string('nome_fornecedor');
+            $table->string('email');
+            $table->string('endereco');
+            $table->string('telefone');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +31,6 @@ class CreatePedido extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedido');
+        Schema::dropIfExists('fornecedor');
     }
 }

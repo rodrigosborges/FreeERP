@@ -1,19 +1,18 @@
 <?php
 
-
 namespace Modules\Compra\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Modules\Compra\Entities\{Pedido,ItemCompra};
+use Modules\Compra\Entities\{Fornecedor};
 
-
-class PedidoController extends Controller
+class FornecedorController extends Controller
 {
-    
+
     public function index()
     {
+
         $moduleInfo = [
             'icon' => 'store',
             'name' => 'COMPRA',
@@ -25,13 +24,12 @@ class PedidoController extends Controller
             ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
 		];
         $data = [
-			'pedido'		=> Pedido::all(),
-			'title'				=> "Lista de Pedidos",
+			'fornecedor'		=> Fornecedor::all(),
+			'title'				=> "Lista de Funcionários",
 		]; 
 			
-	    return view('compra::pedido', compact('data','moduleInfo','menu'));
+	    return view('compra::fornecedor', compact('data','moduleInfo','menu'));
     }
-
 
     public function create()
     {
@@ -46,46 +44,40 @@ class PedidoController extends Controller
             ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
 		];
         $data = [
-			"url" 	 	=> url('compra/pedido'),
+			"url" 	 	=> url('compra/fornecedor'),
 			"button" 	=> "Salvar",
-            "model"		=> null,
-            "itens"		=> ItemCompra::all(),
-            "itens_pedido"  => [
-                ['id' => '']
-            ],
-            'title'		=> "Cadastrar Pedido"
-            
+			"model"		=> null,
+			'title'		=> "Cadastrar Fornecedor"
 		];
-	    return view('compra::formulario_pedido', compact('data','moduleInfo','menu'));
+	    return view('compra::formulario_fornecedor', compact('data','moduleInfo','menu'));
 
     }
 
-    
     public function store(Request $request)
     {
-        DB::beginTransaction();
+		DB::beginTransaction();
 		try{
-            $pedido = Pedido::Create(['status' => 'iniciado' ,'quantidade' => $request->input('quantidade')]);
-            $pedido->itens()->sync($request->itens);
-            DB::commit();
-            return redirect('/compra/pedido')->with('success', 'Pedido cadastrado com successo');
+			$fornecedor = Fornecedor::Create($request->all());
+			DB::commit();
+			return redirect('/compra/fornecedor')->with('success', 'Fornecedor cadastrado com successo');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
 		}
     }
 
-   
+    
     public function show($id)
     {
-        $pedido = Pedido::findOrFail($id);
+        $itemCompra = Fornecedor::findOrFail($id);
 	    return view('compra::show', [
-            'model' => $pedido	    
+            'model' => $fornecedor	    
         ]);
+    
     }
 
     public function edit($id)
-    {
+    {   
         $moduleInfo = [
             'icon' => 'store',
             'name' => 'COMPRA',
@@ -98,51 +90,35 @@ class PedidoController extends Controller
             
 		];
         $data = [
-			"url" 	 	=> url("compra/pedido/$id"),
+			"url" 	 	=> url("compra/fornecedor/$id"),
 			"button" 	=> "Atualizar",
-            "model"		=> Pedido::findOrFail($id),
-            "itens"		=> ItemCompra::all(),
-            "itens_pedido" => Pedido::findOrFail($id)->itens()->get(),
-			'title'		=> "Atualizar Pedido"
+			"model"		=> Fornecedor::findOrFail($id),
+			'title'		=> "Atualizar Fornecedor"
 		];
-	    return view('compra::formulario_pedido', compact('data','moduleInfo','menu'));
+	    return view('compra::formulario_fornecedor', compact('data','moduleInfo','menu'));
+        
     }
 
-    
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
 		try{
-            $pedido = Pedido::findOrFail($id);
-            if($pedido->status =='iniciado'){
-                $pedido->update($request->all());
-                $pedido->itens()->sync($request->itens);
-                DB::commit();
-                return redirect('compra/pedido')->with('success', 'Pedido atualizado com successo');
-            }
-            else
-            {
-                return back()->with('warning',  'Pedido não pode ser alterado');
-            }
-
+			$fornecedor = Fornecedor::findOrFail($id);
+			$fornecedor->update($request->all());
+			DB::commit();
+			return redirect('compra/fornecedor')->with('success', 'Fornecedor atualizado com successo');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
 		}
+        
     }
 
-  
     public function destroy($id)
     {
-        $pedido = Pedido::findOrFail($id);
-        if($pedido->status =='iniciado')
-        {
-            $pedido->delete();
-            return back()->with('success',  'Pedido deletado');
-        }
-        else
-        {
-            return back()->with('warning',  'Pedido não pode ser deletado');
-        }  
+        $fornecedor = Fornecedor::findOrFail($id);
+		$fornecedor->delete();
+		return back()->with('success',  'Fornecedor deletado');    
+        
     }
 }

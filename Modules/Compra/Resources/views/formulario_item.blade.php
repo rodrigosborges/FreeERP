@@ -13,11 +13,6 @@
             <input type="text" name="nome_produto" id="nome_produto" class="form-control" value="{{ $data['model'] ? $data['model']->nome_produto : old('nome_produto', "") }}">
             <label class="errors"> {{ $errors->first('nome_produto') }} </label>
         </div>
-        <div class="form-group">
-            <label for="quantidade" class="control-label">Quantidade</label>
-            <input type="text" name="quantidade" id="quantidade" class="form-control" value="{{ $data['model'] ? $data['model']->quantidade : old('quantidade', "") }}">
-            <label class="errors"> {{ $errors->first('quantidade') }} </label>
-        </div>
 
         <div class="form-group">
             <label for="valor_estimado" class="control-label">Valor Estimado</label>
@@ -26,9 +21,9 @@
         </div>
 
         <div class="form-group">
-            <label for="quantidade" class="control-label">Caracteristicas</label>
-            <input type="text" name="caracteristicas" id="caracteristicas" class="form-control" value="{{ $data['model'] ? $data['model']->caracteristicas : old('caracteristicas', "") }}">
-            <label class="errors"> {{ $errors->first('caracteristicas') }} </label>
+            <label for="descricao" class="control-label">Descrição</label>
+            <input type="text" name="descricao" id="descricao" class="form-control" value="{{ $data['model'] ? $data['model']->descricao : old('descricao', "") }}">
+            <label class="errors"> {{ $errors->first('descricao') }} </label>
         </div>
         
         <div class="form-group">

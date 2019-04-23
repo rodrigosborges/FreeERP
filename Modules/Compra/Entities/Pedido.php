@@ -11,7 +11,7 @@ class Pedido extends Model
     use SoftDeletes;
     protected $table = 'pedido';
     public $timestamps = true;
-    protected $fillable = array('id','status');
+    protected $fillable = array('id','status','quantidade');
 
     //Relação com a tabela ListaCompra
     public function itens(){
@@ -19,11 +19,7 @@ class Pedido extends Model
 
     }
 
-    //Relação com a tabela Orcamento
     
-    public function orcamentos(){
-        return $this->belongsToMany('Modules\Compra\Entities\Orcamento','orcamento_has_pedido');
-    }
 
     
    
