@@ -13,8 +13,9 @@ class CreateFuncionario extends FormRequest{
             'funcionario.estado_civil_id'   => 'required',
             'funcionario.cargo_id'          => 'required',
             'funcionario.data_admissao'     => 'required|date_format:d/m/Y',
-            'documentos.cpf'                => 'required|max:14',
+            'documentos.cpf.numero'         => 'required|cpf|max:14',
             'documentos.rg'                 => 'required',
+            'docs_outros.*'                 => 'required',
             'endereco.logradouro'           => 'required|max:255',
             'endereco.numero'               => 'required|max:5',
             'endereco.bairro'               => 'required|max:100',
@@ -28,7 +29,8 @@ class CreateFuncionario extends FormRequest{
 
     public function messages() {
         return [
-            'required' => 'Este campo é obrigatório!'
+            'required' => 'Este campo é obrigatório!',
+            'cpf'      => 'CPF inválido!'
         ];
     }
 }

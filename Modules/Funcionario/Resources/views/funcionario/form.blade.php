@@ -24,8 +24,8 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="Nome" name="funcionario[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', '') }}">
-                        <span class="errors"> {{ $errors->first('funcionario.nome') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('funcionario.nome') }} </span>
                 </div>
             </div>
             <div class="col-md-3">
@@ -38,8 +38,8 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="00/00/0000" name="funcionario[data_nascimento]" id="data_nascimento" class="form-control data" value="{{ $data['model'] ? $data['model']->data_nascimento : old('data_nascimento', '') }}">
-                         <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
                 </div>
             </div>
         </div>
@@ -107,18 +107,17 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="00/00/0000" name="funcionario[data_admissao]" id="data_admissao" class="form-control data" value="{{ $data['model'] ? $data['model']->data_admissao : old('data_admissao', '') }}">
-                        <span class="errors"> {{ $errors->first('funcionario.data_admissao') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('funcionario.data_admissao') }} </span>
                 </div>
             </div>
         </div>
 
         <?php
-
             $documentos = ['vazio'];
 
-            if(old('documentos') !== null) {
-                $documentos = old('documentos');
+            if(old('docs_outros') !== null) {
+                $documentos = old('docs_outros');
             }
             else if($data['model']) {
                 $documentos = $data['model']->documentos->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg');
@@ -127,8 +126,6 @@
                     $documentos = ['vazio'];
                 }
             }
-
-            // $documentos = old('documentos') !== null ? old('documentos') : ($data['model'] ? $data['model']->documentos->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg') : ['documentos']);
         ?>
 
         <strong><h6 class="mt-5 mb-3">Documentos</h6></strong>
@@ -147,9 +144,9 @@
                             @if($data['model'])
                                 <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->cpf()->first()->id}}">
                             @endif
-                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{ $data['model'] ? $data['model']->cpf()->first()->numero : old('cpf', '') }}">
-                            <span class="errors"> {{ $errors->first('documentos.cpf') }}</span>
+                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{$data['model'] && old('documentos.cpf.numero') == null ? $data['model']->cpf()->first()->numero : old('documentos.cpf.numero', '') }}">
                         </div>
+                        <span class="errors"> {{ $errors->first('documentos.cpf.numero') }}</span>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -164,9 +161,9 @@
                             @if($data['model'])
                                 <input type="hidden" name="documentos[rg][id]" value="{{$data['model']->rg()->first()->id}}">
                             @endif
-                            <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="form-control" value="{{ $data['model'] ? $data['model']->rg()->first()->numero : old('rg', '') }}">
-                            <span class="errors"> {{ $errors->first('documentos.rg') }}</span>
+                            <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="form-control" value="{{ $data['model'] && old('documentos.rg.numero') == null ? $data['model']->rg()->first()->numero : old('documentos.rg.numero', '') }}">
                         </div>
+                        <span class="errors"> {{ $errors->first('documentos.rg.numero') }}</span>
                     </div>
                 </div>
             </div>        
@@ -185,9 +182,9 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{isset($documento->tipo) ? $documento->tipo : old('tipo', '') }}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
-                                <span class="errors"> {{ $errors->first('documentos.tipo') }}</span>
+                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{($data['model']) ? $documento['tipo'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}> 
                             </div>
+                            <span class="errors"> {{ $errors->first('docs_outros.tipo') }}</span>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -199,9 +196,9 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{isset($documento->numero) ? $documento->numero : old('numero', '') }}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
-                                <span class="errors"> {{ $errors->first('documentos.numero') }} </span>
+                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{($data['model']) ? $documento['numero'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
                             </div>
+                            <span class="errors"> {{ $errors->first('docs_outros.numero') }} </span>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -214,10 +211,10 @@
                                     </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{isset($documento->comprovante) ? $documento->comprovante : old('comprovante', '') }}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
+                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{($data['model'] && isset($documento['comprovante'])) ? $documento['comprovante'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
                                     <label for="comprovante" class="custom-file-label">Comprovante</label>   
                                 </div>
-                                <span class="errors"> {{ $errors->first('documentos.comprovante') }}</span>
+                                <span class="errors"> {{ $errors->first('docs_outros.comprovante') }}</span>
                             </div>
                         </div>
                     </div>
@@ -244,8 +241,8 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->cep : old('endereco.cep', '') }}">
-                        <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
                 </div>
             </div>
             <div class="col-md-2">
@@ -258,8 +255,8 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="UF" name="endereco[uf]" id="uf" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->uf : old('endereco.uf', '') }}">
-                        <span class="errors"> {{ $errors->first('endereco.uf') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('endereco.uf') }} </span>
                 </div>
             </div>
             <div class="col-md-4">
@@ -272,8 +269,8 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="Cidade" name="endereco[cidade]" id="cidade" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->cidade : old('endereco.cidade', '') }}">
-                        <span class="errors"> {{ $errors->first('endereco.cidade') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('endereco.cidade') }} </span>
                 </div>
             </div>
             <div class="col-md-3">
@@ -286,8 +283,8 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->bairro : old('endereco.bairro', '') }}">
-                        <span class="errors"> {{ $errors->first('endereco.bairro') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('endereco.bairro') }} </span>
                 </div>
             </div>
         </div>
@@ -302,8 +299,8 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->logradouro : old('endereco.logradouro', '') }}">
-                        <span class="errors"> {{ $errors->first('endereco.logradouro') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('endereco.logradouro') }} </span>
                 </div>
             </div>
             <div class="col-md-2">
@@ -316,8 +313,8 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->numero : old('endereco.numero', '') }}">
-                        <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
                 </div>
             </div>
             <div class="col-md-5">
@@ -330,8 +327,8 @@
                             </span>
                         </div>
                         <input type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->complemento : old('endereco.complemento', '') }}">
-                        <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
                 </div>
             </div>
         </div>
@@ -353,8 +350,8 @@
                             </span>
                         </div>
                         <input required type="text" placeholder="E-mail" name="contato[email]" id="email" class="form-control" value="{{ $data['model'] ? $data['model']->contato->email : old('contato.email', '') }}">
-                        <span class="errors"> {{ $errors->first('contato.email') }} </span>
                     </div>
+                    <span class="errors"> {{ $errors->first('contato.email') }} </span>
                 </div>
             </div>
         </div>
@@ -370,11 +367,11 @@
                                     </span>
                                 </div>
                                 @if($data['model'])
-                                    <input type="hidden" value="{{$telefone->id != '' ? $telefone->id : ''}}" name="telefones[{{$key}}][id]">
+                                    <input type="hidden" value="{{isset($telefone->id) ? $telefone->id : ''}}" name="telefones[{{$key}}][id]">
                                 @endif
-                                <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][numero]" class="form-control telefone" value="{{ $data['model'] ? $telefone->numero : old('telefones.numero', '') }}">
-                                <span class="errors"> {{ $errors->first('telefones.numero') }}</span>
+                                <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][numero]" class="form-control telefone" value="{{$data['model'] ? $telefone['numero'] : ''}}">
                             </div>
+                            <span class="errors"> {{ $errors->first('telefones.numero') }}</span>
                         </div>
                     </div>
                     <div class="col-md-8">

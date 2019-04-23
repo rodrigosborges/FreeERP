@@ -131,7 +131,7 @@ class FuncionarioController extends Controller{
 	    return view('funcionario::funcionario.form', compact('data'));
     }
 
-    public function update(Request $request, $id){
+    public function update(CreateFuncionario $request, $id){
 
         DB::beginTransaction();
 		try{
@@ -178,8 +178,6 @@ class FuncionarioController extends Controller{
             }
             //####################
 
-    
-
             if($request->input('docs_outros')) {
                 foreach($request->input('docs_outros') as $documento){
                     if(isset($documento['id'])) {
@@ -217,8 +215,10 @@ class FuncionarioController extends Controller{
 
             $telefonesRemovidos = array_diff($telefonesFuncionarioIds, $telefonesRequestIds);
 
-            foreach($telefonesRemovidos as $telefoneId) {
-                Telefone::find($telefoneId)->delete();
+            if(count($telefonesRemovidos) > 0) {
+                foreach($telefonesRemovidos as $telefoneId) {
+                    Telefone::find($telefoneId)->delete();
+                }
             }
             //####################
 
@@ -253,13 +253,4 @@ class FuncionarioController extends Controller{
         }
     }
 
-    //Helpers
-
-    public static function removerTelefones() {
-        
-    }
-
-    public static function brToEnDate($date) {
-        return implode('-', array_reverse(explode('/', $date))) ? : '';
-    }
 }

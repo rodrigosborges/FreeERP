@@ -91,6 +91,7 @@ console.log($("#form").serialize())
         ativosInativos(`${main_url}/funcionario/cargo/list`)
         $(document).on('keypress',function(e) {
             if(e.which == 13) {
+                e.preventDefault()
                 ativosInativos(`${main_url}/funcionario/cargo/list`)
             }
         });

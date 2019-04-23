@@ -4,6 +4,7 @@ namespace Modules\Funcionario\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\Facades\Validator;
 
 class FuncionarioServiceProvider extends ServiceProvider
 {
@@ -14,6 +15,7 @@ class FuncionarioServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Validator::extend('cpf', 'Modules\Funcionario\Validators\CpfValidator@validate');
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
