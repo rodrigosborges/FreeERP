@@ -13,19 +13,25 @@
       <div class="col-md-11 text-left">
           <a href="{{url('/assistencia')}}"<i class="material-icons mr-2">arrow_back</i></button></a>
       </div>
-      <div class="col-md-1 text-right">
-        <a href="{{route('pecas.cadastrar')}}"><button type="button" class="btn btn-info">Cadastrar Peça</button></a>
-      </div>
     </div>
     <div class="row">
-      <div class="col-md-10 text-left">
-          <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Nome da peça" aria-label="Search">
-      </div>
-      <div class="col">
-        <button type="button" class="btn btn-primary" name="button">Buscar</button>
-      </div>
-
-
+        <div class="col-md-4">
+            <form id="form">
+                <div class="form-group">
+                    <input id="search-input" class="form-control" type="text" name="pesquisa" />
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2 pl-0">
+            <div class="form-group">
+                <i id="search-button" class="btn btn-info material-icons">search</i>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-right">
+                <a href="{{route('pecas.cadastrar')}}"><button type="button" class="btn btn-info">Cadastrar Peça</button></a>
+            </div>
+        </div>
     </div>
     <div class="card">
       <table class="table table-striped table-dark">

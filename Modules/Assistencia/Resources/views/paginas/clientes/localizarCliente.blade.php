@@ -8,12 +8,30 @@
 @section('content')
 <div class="container">
 
-    <div class="form-group">
-      <div class="form-row">
-          <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Nome do cliente" aria-label="Search">
-          <button type="button" class="btn btn-primary" name="button">Buscar</button>
-      </div>
+  <div class="row ">
+    <div class="col-md-11 text-left">
+        <a href="{{url('/assistencia')}}"<i class="material-icons mr-2">arrow_back</i></button></a>
     </div>
+  </div>
+  <div class="row">
+      <div class="col-md-4">
+          <form id="form">
+              <div class="form-group">
+                  <input id="search-input" class="form-control" type="text" name="pesquisa" />
+              </div>
+          </form>
+      </div>
+      <div class="col-md-2 pl-0">
+          <div class="form-group">
+              <i id="search-button" class="btn btn-info material-icons">search</i>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="text-right">
+              <a href="{{route('cliente.cadastrar')}}"><button type="button" class="btn btn-info">Cadastrar Cliente</button></a>
+          </div>
+      </div>
+  </div>
 
 
   <table class="table table-striped table-dark">
@@ -49,9 +67,6 @@
     </div>
   </table>
 
-  <div class="row">
-    <a href="{{route('cliente.cadastrar')}}"><button type="button" class="btn btn-info">Cadastrar Cliente</button></a>
-  </div>
 </div>
 
 

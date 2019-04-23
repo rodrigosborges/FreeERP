@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class peca extends Model
 {
-    protected $fillable = ['id','nome','valor'];
+  protected $table = 'peca';
+  protected $fillable = ['id','nome','valor'];
 }
