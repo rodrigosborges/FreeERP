@@ -13,5 +13,6 @@ Route::prefix('controleusuario')->group(function() {
     // rota é composta por: /caminho, ClasseController@nomeMétodo
     Route::get('/', 'UsuarioController@index');
     Route::get('/autenticacao', 'UsuarioController@autenticacao');
+    Route::get('/consulta', 'UsuarioController@consulta');
 
 });

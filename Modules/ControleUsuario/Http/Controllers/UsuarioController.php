@@ -22,7 +22,7 @@ class UsuarioController extends Controller
             case 'administrador':
                 $menu = [
                     ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-                    ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+                    ['icon' => 'search', 'tool' => 'Buscar', 'route' => '/consulta'],
                     ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
                     ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
                 ];
@@ -47,7 +47,7 @@ class UsuarioController extends Controller
     {
         return view('controleusuario::cadastrar', $this->dadosTemplate);
 
-        return view('controleusuario::cadastrar');
+        /*return view('controleusuario::cadastrar');*/
     }
 
     public function autenticacao()
@@ -92,6 +92,11 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         return view('controleusuario::edit');
+    }
+
+    public function consulta(){
+      
+        return view('controleusuario::consulta', $this->dadosTemplate);
     }
 
     /**
