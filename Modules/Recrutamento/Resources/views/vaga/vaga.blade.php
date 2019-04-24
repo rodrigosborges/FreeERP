@@ -8,7 +8,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Cargo</th>
-                        <th></th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>

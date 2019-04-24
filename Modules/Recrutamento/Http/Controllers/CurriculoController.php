@@ -26,8 +26,8 @@ class CurriculoController extends Controller
             ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
 		];
         $data = [
-			'curriculo'		=> Curriculo::all(),
-			'title'		=> "Lista de Curriculo",
+            'curriculo'	=> Curriculo::all(),
+			'title'		=> "Lista de Curriculo"
 		]; 
         return view('recrutamento::curriculo.curriculo', compact('data','moduleInfo','menu'));
     }
@@ -49,7 +49,9 @@ class CurriculoController extends Controller
 			"button" 	=> "Salvar",
 			"model"		=> null,
             'title'		=> "Cadastrar Curriculo",
-            'vaga'      =>  Vaga::where('status', 'disponivel')->get()
+            'vaga'      =>  Vaga::where('status', 'disponivel')->get(),
+            
+
 		];
         return view('recrutamento::curriculo.formulario_curriculo',compact('data','moduleInfo','menu'));
     }
@@ -65,7 +67,7 @@ class CurriculoController extends Controller
 		try{
 			$curriculo = Curriculo::Create($request->all());
 			DB::commit();
-			return redirect('/recrutamento/Curriculo')->with('success', 'Curriculo cadastrada com sucesso');
+			return redirect('/recrutamento/Curriculo')->with('success', 'Curriculo cadastrado com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -90,7 +92,7 @@ class CurriculoController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id,$vaga_id)
+    public function edit($id)
     {
         $moduleInfo = [
             'icon' => 'people',
@@ -103,12 +105,13 @@ class CurriculoController extends Controller
             ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
 		];
         $data = [
-			"url" 	 	=> url("recrutamento/Curriculo/$vaga_id/$id"),
+			"url" 	 	=> url("recrutamento/Curriculo/"),
 			"button" 	=> "Atualizar",
 			"model"		=> Curriculo::findOrFail($id),
-			'title'		=> "Atualizar Curriculo"
+            'title'		=> "Atualizar Curriculo",
+            'vaga'      =>  Vaga::where('status', 'disponivel')->get()
 		];
-        return view('recrutamento::formulario_curriculo',compact('data','moduleInfo','menu'));
+        return view('recrutamento::curriculo.formulario_curriculo',compact('data','moduleInfo','menu'));
     }
 
     /**
