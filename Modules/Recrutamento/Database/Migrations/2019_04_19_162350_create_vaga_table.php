@@ -19,6 +19,7 @@ class CreateVagaTable extends Migration
             $table->double('salario',8,2);
             $table->string('descricao');
             $table->string('escolaridade');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });

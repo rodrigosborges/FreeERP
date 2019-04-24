@@ -5,9 +5,9 @@ namespace Modules\Recrutamento\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Modules\Recrutamento\Entities\{Vaga};
+use Modules\Recrutamento\Entities\{Curriculo,Vaga};
 
-class VagaController extends Controller
+class CurriculoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,16 +26,12 @@ class VagaController extends Controller
             ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
 		];
         $data = [
-			'vaga'		=> Vaga::all(),
-			'title'		=> "Lista de Vagas",
+			'curriculo'		=> Curriculo::all(),
+			'title'		=> "Lista de Curriculo",
 		]; 
-        return view('recrutamento::vaga.vaga', compact('data','moduleInfo','menu'));
+        return view('recrutamento::curriculo.curriculo', compact('data','moduleInfo','menu'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
     public function create()
     {
         $moduleInfo = [
@@ -49,12 +45,13 @@ class VagaController extends Controller
             ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
 		];
         $data = [
-			"url" 	 	=> url('recrutamento/Vaga'),
+			"url" 	 	=> url("recrutamento/Curriculo/"),
 			"button" 	=> "Salvar",
 			"model"		=> null,
-			'title'		=> "Cadastrar Vaga"
+            'title'		=> "Cadastrar Curriculo",
+            'vaga'      =>  Vaga::where('status', 'disponivel')->get()
 		];
-        return view('recrutamento::vaga.formulario_vaga',compact('data','moduleInfo','menu'));
+        return view('recrutamento::curriculo.formulario_curriculo',compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -66,9 +63,9 @@ class VagaController extends Controller
     {
         DB::beginTransaction();
 		try{
-			$vaga = Vaga::Create($request->all());
+			$curriculo = Curriculo::Create($request->all());
 			DB::commit();
-			return redirect('/recrutamento/Vaga')->with('success', 'Vaga cadastrada com sucesso');
+			return redirect('/recrutamento/Curriculo')->with('success', 'Curriculo cadastrada com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -82,9 +79,9 @@ class VagaController extends Controller
      */
     public function show($id)
     {
-        $vaga = Vaga::findOrFail($id);
+        $curriculo = Curriculo::findOrFail($id);
 	    return view('recrutamento::show', [
-            'model' => $vaga	    
+            'model' => $curriculo	    
         ]);
     }
 
@@ -93,7 +90,7 @@ class VagaController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($id,$vaga_id)
     {
         $moduleInfo = [
             'icon' => 'people',
@@ -106,12 +103,12 @@ class VagaController extends Controller
             ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
 		];
         $data = [
-			"url" 	 	=> url("recrutamento/Vaga/$id"),
+			"url" 	 	=> url("recrutamento/Curriculo/$vaga_id/$id"),
 			"button" 	=> "Atualizar",
-			"model"		=> Vaga::findOrFail($id),
-			'title'		=> "Atualizar Vaga"
+			"model"		=> Curriculo::findOrFail($id),
+			'title'		=> "Atualizar Curriculo"
 		];
-        return view('recrutamento::vaga.formulario_vaga',compact('data','moduleInfo','menu'));
+        return view('recrutamento::formulario_curriculo',compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -124,10 +121,10 @@ class VagaController extends Controller
     {
         DB::beginTransaction();
 		try{
-			$vaga = Vaga::findOrFail($id);
-			$vaga->update($request->all());
+			$curriculo = Curriculo::findOrFail($id);
+			$curriculo->update($request->all());
 			DB::commit();
-			return redirect('recrutamento/Vaga')->with('success', 'Vaga atualizada com sucesso');
+			return redirect('recrutamento/Curriculo')->with('success', 'Curriculo atualizado com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -141,29 +138,8 @@ class VagaController extends Controller
      */
     public function destroy($id)
     {
-        $vaga = Vaga::findOrFail($id);
-		$vaga->delete();
-		return back()->with('success',  'Vaga deletada'); 
+        $curriculo = Curriculo::findOrFail($id);
+		$curriculo->delete();
+		return back()->with('success',  'Curriculo deletado'); 
     }
-
-    public function vagas_disponiveis()
-    {
-        $moduleInfo = [
-            'icon' => 'people',
-            'name' => 'RECRUTAMENTO',
-        ];
-        $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-		];
-        $data = [
-			'vaga'		=> Vaga::where('status', 'disponivel')->get(),
-			'title'		=> "Lista de Vagas Disponíveis",
-		]; 
-        return view('recrutamento::vaga.vagas_disponiveis', compact('data','moduleInfo','menu'));
-    }
-
-
 }

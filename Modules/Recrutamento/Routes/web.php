@@ -14,5 +14,7 @@
 //Módulo de Recrutamento
 Route::prefix('recrutamento')->group(function() {
 	Route::resource('Vaga', 'VagaController');
-
+	Route::resource('Curriculo', 'CurriculoController');
+	Route::get('vagasDisponiveis', 'VagaController@vagas_disponiveis');
+	
 });
