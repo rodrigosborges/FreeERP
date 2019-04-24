@@ -10,14 +10,16 @@
 <div class="form-group">
   <div class="form-row">
     <div class="col">
-      <input type="text" class="form-control" name="cpf" placeholder="CPF" value="{{isset($cliente->cpf) ? $cliente->cpf : ''}}">
+
+      <input type="text" class="form-control cpf-mask" name="cpf" placeholder="XXX.XXX.XXX-XX" value="{{isset($cliente->cpf) ? $cliente->cpf : ''}}">
+
     </div>
     <div class="col">
       <div class="input-group">
         <div class="input-group-prepend">
           <span class="input-group-text" id="email"><i class="material-icons">email</i></span>
         </div>
-        <input class="form-control" type="email" name="email" placeholder="E-mail" id="example-email-input" value="{{isset($cliente->email) ? $cliente->email : ''}}">
+        <input class="form-control" type="email" name="email" placeholder="E-mail" id="email-input" value="{{isset($cliente->email) ? $cliente->email : ''}}">
       </div>
 
     </div>
@@ -31,7 +33,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="nascimento"><i class="material-icons">calendar_today</i></span>
         </div>
-        <input class="form-control" name="data_nascimento" type="date" id="example-date-input" value="{{ isset($cliente->data_nascimento) ? $cliente ->data_nascimento : '"2011-08-19'}}">
+        <input class="form-control" name="data_nascimento" type="date" id="example-date-input" value="{{ isset($cliente->data_nascimento) ? $cliente ->data_nascimento : '2011-08-19'}}">
       </div>
 
     </div>

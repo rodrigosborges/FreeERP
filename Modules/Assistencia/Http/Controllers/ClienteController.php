@@ -16,52 +16,22 @@ class ClienteController extends Controller
 
     public function index()
     {
-      $moduleInfo = [
-          'icon' => 'smartphone',
-          'name' => 'Assistência Técnica',
-      ];
-
-      $menu = [
-          ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-          ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-          ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-          ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-      ];
-      return view('assistencia::paginas.clientes',compact('moduleInfo','menu'));
+    
+      return view('assistencia::paginas.clientes');
     }
 
     public function cadastrar()
     {
-      $moduleInfo = [
-          'icon' => 'smartphone',
-          'name' => 'Assistência Técnica',
-      ];
 
-      $menu = [
-          ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-          ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-          ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-          ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-      ];
-      return view('assistencia::paginas.clientes.cadastroCliente',compact('moduleInfo','menu'));
+      return view('assistencia::paginas.clientes.cadastroCliente');
     }
 
     public function localizar()
     {
       $clientes = Cliente::all();
 
-      $moduleInfo = [
-          'icon' => 'smartphone',
-          'name' => 'Assistência Técnica',
-      ];
 
-      $menu = [
-          ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-          ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-          ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-          ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-      ];
-      return view('assistencia::paginas.clientes.localizarCliente',compact('moduleInfo','menu','clientes'));
+      return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
     }
 
     public function salvar(Request $req)
@@ -75,18 +45,8 @@ class ClienteController extends Controller
     {
       $cliente = Cliente::find($id);
 
-      $moduleInfo = [
-          'icon' => 'smartphone',
-          'name' => 'Assistência Técnica',
-      ];
 
-      $menu = [
-          ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-          ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-          ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-          ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-      ];
-      return view('assistencia::paginas.clientes.editarCliente',compact('moduleInfo','menu','cliente'));
+      return view('assistencia::paginas.clientes.editarCliente',compact('cliente'));
     }
 
     public function atualizar(Request $req, $id)
@@ -102,6 +62,14 @@ class ClienteController extends Controller
       return redirect()->route('cliente.localizar');
     }
 
+    public function buscar(Request $req)
+    {
+      $clientes = Cliente::busca($req->busca);
+
+
+      return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
+
+    }
 
 
 }

@@ -11,36 +11,15 @@ class ServicosController extends Controller
 {
     public function cadastrar()
          {
-           $moduleInfo = [
-               'icon' => 'smartphone',
-               'name' => 'Assistência Técnica',
-           ];
-
-           $menu = [
-               ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-               ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-               ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-               ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-           ];
-           return view('assistencia::paginas.estoque.cadastrarServico',compact('moduleInfo','menu'));
+           
+           return view('assistencia::paginas.estoque.cadastrarServico');
          }
 
          public function localizar()
          {
            $servicos = Servico::all();
 
-           $moduleInfo = [
-               'icon' => 'smartphone',
-               'name' => 'Assistência Técnica',
-           ];
-
-           $menu = [
-               ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-               ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-               ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-               ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-           ];
-           return view('assistencia::paginas.estoque.localizarServico',compact('moduleInfo','menu','servicos'));
+           return view('assistencia::paginas.estoque.localizarServico',compact('servicos'));
          }
 
          public function salvar(Request $req)
@@ -54,18 +33,7 @@ class ServicosController extends Controller
          {
            $servico = Servico::find($id);
 
-           $moduleInfo = [
-               'icon' => 'smartphone',
-               'name' => 'Assistência Técnica',
-           ];
-
-           $menu = [
-               ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-               ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-               ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-               ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-           ];
-           return view('assistencia::paginas.estoque.editarServico',compact('moduleInfo','menu','servico'));
+           return view('assistencia::paginas.estoque.editarServico',compact('servico'));
          }
 
          public function atualizar(Request $req, $id)
@@ -79,5 +47,12 @@ class ServicosController extends Controller
          {
            Servico::find($id)->delete();
            return redirect()->route('servicos.localizar');
+         }
+         public function buscar(Request $req)
+         {
+           $servicos = Servico::busca($req->busca);
+
+           return view('assistencia::paginas.estoque.localizarServico',compact('servicos'));
+
          }
 }

@@ -1,19 +1,8 @@
 @extends('assistencia::layouts.master')
 
-@section('title', 'Assistencia')
-
+@section('title','Assistência Técnica')
 
 @section('css')
-  <style media="screen">
-    a {
-      color: black;
-      text-decoration: none;
-    }
-    a:hover {
-      color: black;
-      text-decoration: none;
-    }
-  </style>
 @stop
 
 @section('content')
@@ -48,14 +37,6 @@
       </div>
 
 
-      <div class="row match-height">
-        <div class="col">
-          grafico
-        </div>
-        <div class="col">
-          grafico2
-        </div>
-      </div>
     </div>
 
   </div>

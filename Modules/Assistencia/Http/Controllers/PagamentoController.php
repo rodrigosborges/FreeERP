@@ -14,19 +14,7 @@ class PagamentoController extends Controller
      */
      public function index()
      {
-       $moduleInfo = [
-           'icon' => 'smartphone',
-           'name' => 'Assistência Técnica',
-       ];
-
-       $menu = [
-           ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-           ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-           ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-           ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-       ];
-
-       return view('assistencia::pages.pagamento',compact('moduleInfo','menu'));
+       return view('assistencia::pages.pagamento');
      }
 
     /**
