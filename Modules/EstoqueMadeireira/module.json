@@ -1,0 +1,14 @@
+{
+    "name": "EstoqueMadeireira",
+    "alias": "estoquemadeireira",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\EstoqueMadeireira\\Providers\\EstoqueMadeireiraServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
