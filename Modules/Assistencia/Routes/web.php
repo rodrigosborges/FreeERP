@@ -41,6 +41,11 @@ Route::prefix('assistencia')->group(function() {
     Route::get('estoque/servicos/deletar/{id}',['as'=>'servicos.deletar','uses'=>'ServicosController@deletar']);
     Route::post('estoque/servicos/buscar',['as'=>'servicos.buscar','uses'=>'ServicosController@buscar']);
     /*Estoque (peça e serviço) */
+
+    /*Concertos/ Ordem de servicos*/
+    Route::get('concertos',['as'=>'concertos.index','uses'=>'ConcertoController@index']);
+    Route::get('concertos/cadastrar',['as'=>'concertos.cadastrar','uses'=>'ConcertoController@cadastrar']);
+    Route::post('concertos/salvar',['as'=>'concertos.salvar','uses'=>'ConcertoController@salvar']);
 });
 
 
@@ -49,7 +54,7 @@ Route::prefix('assistencia')->group(function() {
 
 
 
-Route::get('assistencia/concertos',['as'=>'concertos.index','uses'=>'ConcertoController@index']);
+
 
 
 

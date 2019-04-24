@@ -17,7 +17,9 @@ class ConcertoController extends Controller
 
        return view('assistencia::paginas.concerto');
      }
-
+     public function cadastrar() {
+        return view('assistencia::paginas.concertos.cadastrarConcerto');
+     }
     /**
      * Show the form for creating a new resource.
      * @return Response

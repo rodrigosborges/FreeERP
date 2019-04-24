@@ -7,15 +7,21 @@
 @stop
 
 @section('content')
-<div class="container">
-  <a href="{{route('estoque.index')}}"<i class="material-icons mr-2">arrow_back</i></button></a>
-  <div class="row">
-    <form class="" action="{{route('servicos.salvar')}}" method="post" enctype="multipart/form-data">
-      {{ csrf_field() }}
-      @include('assistencia::paginas.estoque._form_serv')
-      <button class="btn btn-success">Cadastrar serviço padrão</button>
-    </form>
-  </div>
+<div class="container text-center">
+	<div class="card-body">
+		<div class="row ">
+		  <div class="col-md-11 text-left">
+		       <a href="{{route('servicos.localizar')}}"><i class="material-icons mr-2">arrow_back</i></button></a>
+		  </div>
+		</div>
+		<div class="row justify-content-center">
+		    <form class="col-md-4" action="{{route('servicos.salvar')}}" method="post" enctype="multipart/form-data">
+		      {{ csrf_field() }}
+		      @include('assistencia::paginas.estoque._form_serv')
+		      <button class="btn btn-success">Cadastrar serviço padrão</button>
+		    </form>
+  		</div>
+	</div>
 </div>
 
 @stop

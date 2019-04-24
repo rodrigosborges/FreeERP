@@ -11,7 +11,7 @@
   <div class="card-body">
     <div class="row ">
       <div class="col-md-11 text-left">
-          <a href="{{route('estoque.index')}}"<i class="material-icons mr-2">arrow_back</i></button></a>
+          <a href="{{route('estoque.index')}}" ><i class="material-icons mr-2">arrow_back</i> </a>
       </div>
 
     </div>
