@@ -5,10 +5,10 @@ namespace Modules\OrdemServico\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
 use Modules\OrdemServico\Entities \ {
     OrdemServico,
-    Solicitante
+    Solicitante,
+    Tecnico
 };
 use DB;
 
@@ -61,7 +61,6 @@ class OrdemServicoController extends Controller
 
     public function create()
     {
-
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
