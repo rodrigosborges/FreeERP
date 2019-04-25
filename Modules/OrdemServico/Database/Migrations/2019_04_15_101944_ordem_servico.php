@@ -21,6 +21,7 @@ class OrdemServico extends Migration
             $table->string('marca');
             $table->string('numero_serie');
             $table->string('descricao_problema');
+			$table->string('status')->default('Em andamento');
 			$table->timestamps();
 			$table->softDeletes();
 		});

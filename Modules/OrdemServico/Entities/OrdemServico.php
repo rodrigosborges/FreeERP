@@ -12,7 +12,7 @@ class OrdemServico extends Model
 
      protected $table = 'ordem_servico';
 
-    protected $fillable = ['solicitante_id','tipo_aparelho','marca','numero_serie','descricao_problema'];
+    protected $fillable = ['solicitante_id','tipo_aparelho','marca','numero_serie','descricao_problema','status'];
 
     public function solicitante(){
         return $this->hasOne('Modules\OrdemServico\Entities\Solicitante');
