@@ -14,4 +14,8 @@ Route::prefix('controleusuario')->group(function() {
     Route::get('/', 'UsuarioController@index');
     Route::get('/autenticacao', 'UsuarioController@autenticacao');
 
+    Route::post('/salvar',['as'=>'usuario.salvar','uses'=> 'UsuarioController@salvarCadastro']);
+    Route::put('/editar/{id}', 'UsuarioController@editar');
+    Route::get('/inativar/{id}', 'UsuarioController@inativar');
+
 });

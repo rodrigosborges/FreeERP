@@ -45,9 +45,10 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return view('controleusuario::cadastrar', $this->dadosTemplate);
+        $data = ['url'=>'usuario.salvar', 'title'=>'Cadastro de Usuario'];
+        return view('controleusuario::cadastrar', $this->dadosTemplate, compact('data'));
 
-        return view('controleusuario::cadastrar');
+       // return view('controleusuario::cadastrar');
     }
 
     public function autenticacao()
@@ -62,6 +63,14 @@ class UsuarioController extends Controller
     public function create()
     {
         return view('controleusuario::create');
+    }
+
+    //Cadastrar Usuário
+
+    public function salvarCadastro(Request $req)
+    {
+        $dados = $req->all();
+        dd($dados);
     }
 
     /**
