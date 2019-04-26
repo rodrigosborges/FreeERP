@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
+
 class UsuarioController extends Controller
 {
     protected $dadosTemplate;
@@ -43,6 +44,11 @@ class UsuarioController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
+
+
+     public function inicio(){
+         echo "pagina inicial";
+     }
     public function index()
     {
         $data = ['url'=>'usuario.salvar', 'title'=>'Cadastro de Usuario'];
@@ -51,15 +57,32 @@ class UsuarioController extends Controller
        // return view('controleusuario::cadastrar');
     }
 
-    public function autenticacao()
+    public function login()
     {
-        return view('controleusuario::login', $this->dadosTemplate);
+        $data= ['url'=>'validar.login', 'title'=>'Pagina de login'];
+        return view('controleusuario::login', $this->dadosTemplate, compact('data'));
     }
+ 
+
 
     /**
      * Show the form for creating a new resource.
      * @return Response
      */
+    public function validaLogin(Request $req){
+        $data = ['email'=>$req->get('email')
+                ,'password'=>$req->get('senha')];
+      
+
+        try{
+            \Auth::attempt($data,false);
+            return redirect()->route('user.dashboard');
+        }catch(\Exception $ex){
+            return $ex->getMessage();
+
+        }
+        // dd($req->all());
+    }
     public function create()
     {
         return view('controleusuario::create');
