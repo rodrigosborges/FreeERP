@@ -22,7 +22,7 @@ class UsuarioController extends Controller
             case 'administrador':
                 $menu = [
                     ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-                    ['icon' => 'search', 'tool' => 'Buscar', 'route' => '/consulta'],
+                    ['icon' => 'search', 'tool' => 'Buscar', 'route' => '/controleusuario/consulta'],
                     ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
                     ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
                 ];

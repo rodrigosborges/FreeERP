@@ -9,7 +9,7 @@
             {{ csrf_field() }}
 
             <div>
-                <h4>Dados Cadastrais</h4>
+                <h4></h4>
             </div>
 
             <!-- Imagem adicionada diretamente do google, necessita sobescrever quando o usuario ja tiver -->
@@ -36,8 +36,8 @@
                 <input type="password" class="form-control" id="password" placeholder="Senha" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Salvar e Definir permiss&otilde;es</button>
-            <button type="clear" class="btn btn-secundary">Limpar Dados</button>
+            <button type="submit" id="btnSalvar" class="btn btn-primary">Salvar e Definir permiss&otilde;es</button>
+            <button type="clear" id ="btn" class="btn btn-secundary">Limpar Dados</button>
 
         </form>
     </div>
@@ -49,4 +49,10 @@
 
 </div>
 
+
 @endsection
+
+
+
+  
+
