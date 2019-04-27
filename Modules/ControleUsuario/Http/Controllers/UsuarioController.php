@@ -32,7 +32,7 @@ class UsuarioController extends Controller
 
         $this->dadosTemplate = [
             'moduleInfo' => [
-                'icon' => 'android',
+                'icon' => 'person',
                 'name' => 'Controle de Usuario'
             ],
             'menu' => $menu,
