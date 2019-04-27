@@ -19,15 +19,14 @@ class Concertos extends Migration
           $table->string('marca_aparelho');
           $table->string('serial_aparelho');
           $table->string('imei_aparelho');
+          $table->text('defeito');
+          $table->text('obs');
           $table->integer('cliente_id')->unsigned();
           $table->integer('peca_id')->unsigned();
           $table->integer('servico_id')->unsigned();
           $table->foreign('cliente_id')->references('id')->on('cliente');
           $table->foreign('peca_id')->references('id')->on('peca');
           $table->foreign('servico_id')->references('id')->on('servico');
-          /*$table->string('cliente_id');
-          $table->string('peca_id');
-          $table->string('servico_id');*/
           $table->timestamps();
       });
 

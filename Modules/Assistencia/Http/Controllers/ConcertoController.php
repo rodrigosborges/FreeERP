@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\Concerto;
+
 class ConcertoController extends Controller
 {
     /**
@@ -17,9 +18,22 @@ class ConcertoController extends Controller
 
        return view('assistencia::paginas.concerto');
      }
-     public function cadastrar() {
-        return view('assistencia::paginas.concertos.cadastrarConcerto');
+
+     public function cadastrar(){
+       /*ATENÇÃO, TALVEZ ESTE IF NÃO SEJA NECESSARIO, APÓS FINALIZAR O FORM, TESTAR SEM A PARTE DE CIMA*/
+       $ordens = Concerto::all();
+       if ($ordens == null):
+         $id = 1;
+         return view('assistencia::paginas.concertos.cadastrarConcerto');
+       else:
+
+         $id = Concerto::max();
+         $id = $id + 1;
+         return view('assistencia::paginas.concertos.cadastrarConcerto',compact('id'));
+      endif;
+
      }
+
     /**
      * Show the form for creating a new resource.
      * @return Response
