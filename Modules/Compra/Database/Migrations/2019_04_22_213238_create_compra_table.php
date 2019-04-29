@@ -21,9 +21,9 @@ class CreateCompraTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-             //referencia chave estrangeira
-             $table->foreign('orcamento_id')->references('id')->on('orcamento');
-              $table->foreign('orcamento_fornecedor_id')->references('fornecedor_id')->on('orcamento');
+            //referencia chave estrangeira
+            $table->foreign('orcamento_id')->references('id')->on('orcamento');
+            $table->foreign('orcamento_fornecedor_id')->references('fornecedor_id')->on('orcamento');
         });
     }
 

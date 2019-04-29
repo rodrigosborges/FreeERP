@@ -14,15 +14,13 @@ class CreateItemCompraHasPedido extends Migration
     public function up()
     {
         Schema::create('item_compra_has_pedido', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('pedido_id');
             $table->unsignedBigInteger('item_compra_id');
 
             //referencia chave estrangeira
             $table->foreign('item_compra_id')->references('id')->on('item_compra');
             $table->foreign('pedido_id')->references('id')->on('pedido');
-
-            //chave composta
-            $table->primary(['pedido_id','item_compra_id']);
 
             $table->timestamps();
             $table->softDeletes();

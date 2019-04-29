@@ -21,9 +21,9 @@
         </div>
 
         <div class="form-group">
-            <label for="descricao" class="control-label">Descrição</label>
-            <input type="text" name="descricao" id="descricao" class="form-control" value="{{ $data['model'] ? $data['model']->descricao : old('descricao', "") }}">
-            <label class="errors"> {{ $errors->first('descricao') }} </label>
+            <label for="caracteristicas" class="control-label">Caracteristicas</label>
+            <input type="text" name="caracteristicas" id="caracteristicas" class="form-control" value="{{ $data['model'] ? $data['model']->caracteristicas : old('caracteristicas', "") }}">
+            <label class="errors"> {{ $errors->first('caracteristicas') }} </label>
         </div>
         
         <div class="form-group">
