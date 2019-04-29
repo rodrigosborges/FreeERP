@@ -54,7 +54,22 @@ class UsuarioController extends Controller
     {
         return view('controleusuario::login', $this->dadosTemplate);
     }
-
+    public function login(){
+        $data = ['url'=>'validar.login','title'=>'Pagina de login'];
+        return view('controleusuario::login',$this->dadosTemplate,compact('data'));
+    }
+    public function validaLogin(Request $req){
+        $data = ['email'=>$req->get('email')
+                ,'password'=>$req->get('senha')];
+      
+        try{
+            \Auth::attempt($data,false);
+            return redirect()->route('user.dashboard');
+        }catch(\Exception $ex){
+            return $ex->getMessage();
+        }
+        // dd($req->all());
+    }
     /**
      * Show the form for creating a new resource.
      * @return Response
