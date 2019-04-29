@@ -70,6 +70,7 @@ class UsuarioController extends Controller
         }
         // dd($req->all());
     }
+ 
     /**
      * Show the form for creating a new resource.
      * @return Response
