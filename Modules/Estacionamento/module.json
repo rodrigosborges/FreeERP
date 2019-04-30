@@ -1,0 +1,14 @@
+{
+    "name": "Estacionamento",
+    "alias": "estacionamento",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Estacionamento\\Providers\\EstacionamentoServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -15,13 +15,13 @@
                     <div class="form-group">
                         @foreach($data['itens_pedido'] as $itemPedido)
                             <div class="input-group mt-2">
-                                <select required name="itens[]" class="form-control col-10">
+                                <select required name="itens[]" class="form-control col-7">
                                     <option value="">Selecione uma opção</option>
                                     @foreach($data['itens'] as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $itemPedido['id'] ? 'selected' : '' }}> {{ $item->nome_produto }} </option>
                                     @endforeach
                                 </select>
-                                <div class="col-1"></div>
+                                <div class="col-3"><input class="form-control" type="number" placeholder="Quantidade" name="quantidade" onKeyPress="PermiteNumeros();"></div>
                                 <button type="button" class="btn btn-danger remover">Remover</button>              
                             </div>
                         @endforeach
@@ -56,3 +56,15 @@
 
     </script>
 @endsection
+
+<SCRIPT LANGUAGE="JavaScript">
+function PermiteNumeros()
+{
+  var tecla = window.event.keyCode;
+  tecla     = String.fromCharCode(tecla);
+  if(!((tecla >= "0") && (tecla <= "9")))
+  {
+    window.event.keyCode = 0;
+  }
+}
+</script>
