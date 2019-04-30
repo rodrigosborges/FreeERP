@@ -50,20 +50,20 @@
                <div class="row pb-2">
                   <div class="col">
                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
+                        <input class="form-check-input" type="checkbox" value="" id="administradores">
+                        <label class="form-check-label" for="administradores">
                            Administradores
                         </label>
                      </div>
                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
+                        <input class="form-check-input" type="checkbox" value="" id="gerentes">
+                        <label class="form-check-label" for="gerentes">
                            Gerentes
                         </label>
                      </div>
                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
+                        <input class="form-check-input" type="checkbox" value="" id="operadores">
+                        <label class="form-check-label" for="operadores">
                            Operadores
                         </label>
                      </div>
