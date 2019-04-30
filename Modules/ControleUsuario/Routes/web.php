@@ -10,12 +10,12 @@
 */
 
 Route::prefix('controleusuario')->group(function() {
-    //rotas de autenticação de usuario 
+    //rotas de autenticação de usuario
     Route::get('/login', 'UsuarioController@login');
     Route::post('/login',['as'=>'validar.login', 'uses'=>'UsuarioController@validaLogin']);
     Route::post('/dashboard',['as'=>'user.dashboard', 'uses'=>'UsuarioController@inicio']);
     // rota é composta por: /caminho, ClasseController@nomeMétodo
-    
+
     Route::get('/', 'UsuarioController@index');
     Route::get('/consulta', 'UsuarioController@consulta');
 
@@ -23,5 +23,6 @@ Route::prefix('controleusuario')->group(function() {
     Route::put('/editar/{id}', 'UsuarioController@editar');
     Route::get('/inativar/{id}', 'UsuarioController@inativar');
 
+    Route::post('/listar',['as'=>'usuario.listar','uses'=> 'UsuarioController@buscar']);
 
 });

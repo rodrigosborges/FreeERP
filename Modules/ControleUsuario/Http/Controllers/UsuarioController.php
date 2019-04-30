@@ -27,7 +27,7 @@ class UsuarioController extends Controller
                     ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
                 ];
             break;
-            default: $menu = []; 
+            default: $menu = [];
         }
 
         $this->dadosTemplate = [
@@ -61,7 +61,7 @@ class UsuarioController extends Controller
     public function validaLogin(Request $req){
         $data = ['email'=>$req->get('email')
                 ,'password'=>$req->get('senha')];
-      
+
         try{
             \Auth::attempt($data,false);
             return redirect()->route('user.dashboard');
@@ -70,7 +70,7 @@ class UsuarioController extends Controller
         }
         // dd($req->all());
     }
- 
+
     /**
      * Show the form for creating a new resource.
      * @return Response
@@ -111,7 +111,12 @@ class UsuarioController extends Controller
     }
 
     public function consulta(){
-      
+
+        return view('controleusuario::consulta', $this->dadosTemplate);
+    }
+
+    public function buscar(){
+
         return view('controleusuario::consulta', $this->dadosTemplate);
     }
 

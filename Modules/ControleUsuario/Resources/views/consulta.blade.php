@@ -10,17 +10,23 @@
             <!-- <h6 class="card-subtitle mb-2 text-muted">Perfil do usuário</h6> -->
          </div>
          <div class="card-body pb-0">
-            <form action="">
+
+            {!! Form::open(['route'=>'usuario.listar','method'=>'post']) !!}
+            {{--  <form action="#">  --}}
+
                <div class="row align-items-end">
                   <div class="col-8">
-                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Nome Usuário">
+                     <div class="form-group"> <!-- trocado email para text ->
+
+                    {!! Form::text('nome', null, ['class'=> 'form-control', 'placeholder'=>'Nome Usuário']) !!}
+                        {{--  <input type="text" class="form-control" placeholder="Nome Usuário">  --}}
                      </div>
                   </div>
                   <div class="col">
                      <div class="form-group">
                         <label for="data">Data de criação</label>
-                        <input class="form-control" type="date" id="data">
+                        {!! Form::date('data', null, ['class'=>'form-control']) !!}
+                        {{--  <input class="form-control" type="date" id="data">  --}}
                      </div>
                   </div>
                </div>
@@ -28,6 +34,10 @@
                   <div class="col">
                      <div class="form-group">
                         <!-- <label for="status">Status</label> -->
+                        {{--  {{ $itens = array("Ativo e inativos", "Somente Ativos", "Somente Inativos") }}
+
+                        {!! Form::select('status', $itens, null,['class'=>'form-control']) !!}  --}}
+
                         <select class="form-control" id="status">
                            <option>Ativos e inativos</option>
                            <option>Somente ativos</option>
@@ -83,7 +93,10 @@
                      </div>
                   </div>
                </div>
-            </form>
+
+        {!! Form::close() !!}
+
+            {{--  </form>  --}}
          </div>
          <ul class="list-group list-group-flush">
             <li class="list-group-item bg-secondary text-light d-flex justify-content-center">
@@ -92,6 +105,7 @@
             <li class="list-group-item">Dapibus ac facilisis in</li>
             <li class="list-group-item">Vestibulum at eros</li>
          </ul>
+
       </div>
    </div>
 </div>
