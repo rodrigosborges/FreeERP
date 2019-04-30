@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/contaapagar",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\ContaAPagar\\Providers\\ContaAPagarServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\ContaAPagar\\": ""
+        }
+    }
+}
