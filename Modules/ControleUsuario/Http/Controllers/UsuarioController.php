@@ -46,8 +46,6 @@ class UsuarioController extends Controller
     public function index()
     {
         return view('controleusuario::cadastrar', $this->dadosTemplate);
-
-        return view('controleusuario::cadastrar');
     }
 
     public function autenticacao()

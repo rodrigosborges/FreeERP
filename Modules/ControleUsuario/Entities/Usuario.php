@@ -14,10 +14,8 @@ class Usuario extends Model
 
     public function atuacoes()
     {
-        return $this-> hasMany('Modules\controleUsuario\Entities\Atuacao');
+        return $this->hasMany('Modules\controleUsuario\Entities\Atuacao');
     }
-
-
     
 }
 
