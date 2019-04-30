@@ -73,25 +73,28 @@ class FuncionarioController extends Controller{
 
             }
 
-            foreach($request->docs_outros as $documento) {
+            if($request->input('docs_outros')) {
 
-                if(isset($documento['comprovante'])) {
+                foreach($request->docs_outros as $documento) {
 
-                    $nome = uniqid(date('HisYmd'));
-                    $extensao = $documento['comprovante']->extension();
-                    $nomeArquivo = "{$nome}.{$extensao}";
-                    $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
+                    if(isset($documento['comprovante'])) {
 
-                    if (!$upload) {
-                        return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+                        $nome = uniqid(date('HisYmd'));
+                        $extensao = $documento['comprovante']->extension();
+                        $nomeArquivo = "{$nome}.{$extensao}";
+                        $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
+
+                        if (!$upload) {
+                            return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+                        }
+
+                        $documento['comprovante'] = $nomeArquivo;
+                    
                     }
+                    
+                    $funcionario->documentos()->save(new Documento($documento));
 
-                    $documento['comprovante'] = $nomeArquivo;
-                
                 }
-                
-                $funcionario->documentos()->save(new Documento($documento));
-
             }
 
             $funcionario->endereco()->create($request->input('endereco'));

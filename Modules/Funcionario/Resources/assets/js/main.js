@@ -7,7 +7,7 @@ $(document).ready(function() {
     jQuery.validator.setDefaults({
         errorPlacement: function (error, element) {
             if(element.parents('form').hasClass('form-inline'))
-            error.attr('hidden','hidden');
+                error.attr('hidden','hidden');
             element.parents('.form-group').append(error);
         },
     

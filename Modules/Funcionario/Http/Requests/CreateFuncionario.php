@@ -11,7 +11,6 @@ class CreateFuncionario extends FormRequest{
             'funcionario.data_nascimento'   => 'required|date_format:"d/m/Y"',
             'funcionario.sexo'              => 'required',
             'funcionario.estado_civil_id'   => 'required',
-            'funcionario.cargo_id'          => 'required',
             'funcionario.data_admissao'     => 'required|date_format:d/m/Y',
             'documentos.cpf.numero'         => 'required|cpf|max:14',
             'documentos.rg'                 => 'required',

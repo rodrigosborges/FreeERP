@@ -8,14 +8,14 @@ class Funcionario extends Model{
 
     protected $table = 'funcionario';
 
-    protected $fillable = ['nome', 'data_nascimento', 'estado_civil_id', 'cargo_id', 'sexo', 'data_admissao'];
+    protected $fillable = ['nome', 'data_nascimento', 'estado_civil_id', 'sexo', 'data_admissao'];
 
     public function estado_civil(){
         return $this->belongsTo('Modules\Funcionario\Entities\EstadoCivil');
     }
 
     public function cargo(){
-        return $this->belongsTo('Modules\Funcionario\Entities\Cargo');
+        return $this->hasMany('Modules\Funcionario\Entities\HistoricoCargo')->last();
     }
 
     public function documentos(){

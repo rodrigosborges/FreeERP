@@ -23,23 +23,9 @@
                                 <i class="material-icons">person</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Nome" name="funcionario[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', '') }}">
+                        <input required type="text" placeholder="Nome" name="funcionario[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('funcionario.nome', '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('funcionario.nome') }} </span>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="data_nascimento" class="control-label">Data de Nascimento</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="material-icons">date_range</i>
-                            </span>
-                        </div>
-                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_nascimento]" id="data_nascimento" class="form-control data" value="{{ $data['model'] ? $data['model']->data_nascimento : old('data_nascimento', '') }}">
-                    </div>
-                    <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
                 </div>
             </div>
         </div>
@@ -81,6 +67,20 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
+                    <label for="data_nascimento" class="control-label">Data de Nascimento</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">date_range</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_nascimento]" id="data_nascimento" class="form-control data" value="{{ $data['model'] ? $data['model']->data_nascimento : old('funcionario.data_nascimento', '') }}">
+                    </div>
+                    <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
+                </div>
+            </div>
+            <!-- <div class="col-md-3">
+                <div class="form-group">
                     <label for="cargo_id" class="control-label">Cargo</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -90,13 +90,13 @@
                         </div>
                         <select required name="funcionario[cargo_id]" class="form-control">
                             <option value="">Selecione</option>
-                            @foreach($data['cargos'] as $item)
-                                <option value="{{ $item->id }}" {{ ($data['model'] && $item->id == $data['model']->cargo_id ) ? 'selected' : '' }}> {{ $item->nome }} </option>
-                            @endforeach 
+                            //@foreach($data['cargos'] as $item)
+                                <option value="//{{ $item->id }}" {{ ($data['model'] && $item->id == $data['model']->cargo_id ) ? 'selected' : '' }}> {{ $item->nome }} </option>
+                            //@endforeach 
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="data_admissao" class="control-label">Data de Admissão</label>
@@ -106,7 +106,7 @@
                                 <i class="material-icons">date_range</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_admissao]" id="data_admissao" class="form-control data" value="{{ $data['model'] ? $data['model']->data_admissao : old('data_admissao', '') }}">
+                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_admissao]" id="data_admissao" class="form-control data" value="{{ $data['model'] ? $data['model']->data_admissao : old('funcionario.data_admissao', '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('funcionario.data_admissao') }} </span>
                 </div>
@@ -182,7 +182,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{($data['model']) ? $documento['tipo'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}> 
+                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{$documento !== 'vazio' ? $documento['tipo'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}> 
                             </div>
                             <span class="errors"> {{ $errors->first('docs_outros.tipo') }}</span>
                         </div>
@@ -196,7 +196,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{($data['model']) ? $documento['numero'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
+                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{($documento !== 'vazio') ? $documento['numero'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
                             </div>
                             <span class="errors"> {{ $errors->first('docs_outros.numero') }} </span>
                         </div>
@@ -211,7 +211,7 @@
                                     </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{($data['model'] && isset($documento['comprovante'])) ? $documento['comprovante'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
+                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{($documento !== 'vazio' && isset($documento['comprovante'])) ? $documento['comprovante'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
                                     <label for="comprovante" class="custom-file-label">Comprovante</label>   
                                 </div>
                                 <span class="errors"> {{ $errors->first('docs_outros.comprovante') }}</span>
@@ -334,7 +334,7 @@
         </div>
 
         <?php
-            $telefones = old('telefones') !== null ? old('telefones') : ($data['model'] ? $data['model']->contato->telefones : ['telefones']);
+            $telefones = old('telefones') !== null ? old('telefones') : ($data['model'] ? $data['model']->contato->telefones : ['vazio']);
         ?>
 
         <strong><h6 class="mt-5 mb-3">Contato</h6></strong>
@@ -369,7 +369,7 @@
                                 @if($data['model'])
                                     <input type="hidden" value="{{isset($telefone->id) ? $telefone->id : ''}}" name="telefones[{{$key}}][id]">
                                 @endif
-                                <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][numero]" class="form-control telefone" value="{{$data['model'] ? $telefone['numero'] : ''}}">
+                                <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][numero]" class="form-control telefone" value="{{$telefone != 'vazio' ? $telefone['numero'] : ''}}">
                             </div>
                             <span class="errors"> {{ $errors->first('telefones.numero') }}</span>
                         </div>
