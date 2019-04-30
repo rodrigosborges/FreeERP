@@ -2,51 +2,46 @@
 @section('title', 'Cadastrar')
 
 @section('content')
-<div class="d-flex p-2 bd-highlight col justify-content-center border rounded">
-
-    <div class="p-2 bd-highlight col justify-content-center text-center border rounded">
-        <form action="#" method="POST">
-            {{ csrf_field() }}
-
-            <div>
-                <h4>Dados Cadastrais</h4>
+<div class="row justify-content-center">
+    <div class="col col-sm-10 col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cadastrar Usuário</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Perfil do usuário</h6>
+                <form>
+                    <div class="form-group">
+                        <div class="row justify-content-center">
+                            <label for="exampleFormControlFile1">
+                                <i class="material-icons text-muted" style="font-size: 100px; cursor:pointer">add_a_photo</i>
+                            </label>
+                            <input type="file" class="form-control-file" id="exampleFormControlFile1" style="display: none">
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-10">
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+                            </div>
+                            <button type="submit" class="btn btn-primary d-flex align-items-center">
+                                <i class="material-icons mr-2">save</i> Salvar dados de perfil
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-            <!-- Imagem adicionada diretamente do google, necessita sobescrever quando o usuario ja tiver -->
-            <div class="form-group rounded-circle">
-                <i class="material-icons" style="font-size: 80px;">
-                        account_circle
-                </i>
-                <small id="fotoHelp" class="form-text text-muted">Imagem usu&aacute;rio</small>
+            <div class="card-footer d-flex justify-content-around align-items-center pt-4">
+                <p class="text-primary d-flex align-items-center">
+                    <i class="material-icons mr-2">edit</i> Perfil do usuário
+                </p>
+                <p class="text-muted d-flex align-items-center">
+                    <i class="material-icons mr-2">timer</i> Módulos e permissões
+                </p>
             </div>
-
-            <div class="form-group">
-                <label for="nome">Nome de usu&aacute;rio</label>
-                <input type="text" class="form-control" id="nome" placeholder="Nome de usu&aacute;rio" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Endereço de email</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Seu email" required>
-                <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Senha</label>
-                <input type="password" class="form-control" id="password" placeholder="Senha" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Salvar e Definir permiss&otilde;es</button>
-            <button type="clear" class="btn btn-secundary">Limpar Dados</button>
-
-        </form>
+        </div>
     </div>
-
-    <div class="p-2 bd-highlight col justify-content-center text-center border rounded">
-        <h4>Permiss&otilde;es</h4>
-    </div>
-
-
 </div>
-
 @endsection

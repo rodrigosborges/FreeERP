@@ -22,17 +22,17 @@ class UsuarioController extends Controller
             case 'administrador':
                 $menu = [
                     ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-                    ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+                    ['icon' => 'search', 'tool' => 'Buscar', 'route' => '/controleusuario/consulta'],
                     ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
                     ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
                 ];
             break;
-            default: $menu = []; 
+            default: $menu = [];
         }
 
         $this->dadosTemplate = [
             'moduleInfo' => [
-                'icon' => 'android',
+                'icon' => 'person',
                 'name' => 'Controle de Usuario'
             ],
             'menu' => $menu,
@@ -51,6 +51,22 @@ class UsuarioController extends Controller
     public function autenticacao()
     {
         return view('controleusuario::login', $this->dadosTemplate);
+    }
+    public function login(){
+        $data = ['url'=>'validar.login','title'=>'Pagina de login'];
+        return view('controleusuario::login',$this->dadosTemplate,compact('data'));
+    }
+    public function validaLogin(Request $req){
+        $data = ['email'=>$req->get('email')
+                ,'password'=>$req->get('senha')];
+
+        try{
+            \Auth::attempt($data,false);
+            return redirect()->route('user.dashboard');
+        }catch(\Exception $ex){
+            return $ex->getMessage();
+        }
+        // dd($req->all());
     }
 
     /**
@@ -90,6 +106,16 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         return view('controleusuario::edit');
+    }
+
+    public function consulta(){
+
+        return view('controleusuario::consulta', $this->dadosTemplate);
+    }
+
+    public function buscar(){
+
+        return view('controleusuario::consulta', $this->dadosTemplate);
     }
 
     /**
