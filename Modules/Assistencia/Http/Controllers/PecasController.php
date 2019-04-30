@@ -5,7 +5,7 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\Peca_assistencia;
+use Modules\Assistencia\Entities\PecaAssistenciaModel;
 
 class PecasController extends Controller
 {
@@ -18,7 +18,7 @@ class PecasController extends Controller
 
          public function localizar()
          {
-           $pecas = Peca::all();
+           $pecas = PecaAssistenciaModel::all();
 
            return view('assistencia::paginas.estoque.localizarPeca',compact('pecas'));
          }
@@ -26,13 +26,13 @@ class PecasController extends Controller
          public function salvar(Request $req)
          {
            $dados  = $req->all();
-           Peca::create($dados);
+           PecaAssistenciaModel::create($dados);
            return redirect()->route('pecas.localizar');
          }
 
          public function editar($id)
          {
-           $peca = Peca::find($id);
+           $peca = PecaAssistenciaModel::find($id);
 
 
            return view('assistencia::paginas.estoque.editarPeca',compact('peca'));
@@ -41,18 +41,18 @@ class PecasController extends Controller
          public function atualizar(Request $req, $id)
          {
            $dados  = $req->all();
-           Peca::find($id)->update($dados);
+           PecaAssistenciaModel::find($id)->update($dados);
            return redirect()->route('pecas.localizar');
          }
 
          public function deletar($id)
          {
-           Peca::find($id)->delete();
+           PecaAssistenciaModel::find($id)->delete();
            return redirect()->route('pecas.localizar');
          }
          public function buscar(Request $req)
          {
-           $pecas = Peca::busca($req->busca);
+           $pecas = PecaAssistenciaModel::busca($req->busca);
 
 
            return view('assistencia::paginas.estoque.localizarPeca',compact('pecas'));

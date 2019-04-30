@@ -5,7 +5,9 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\Conserto_assistencia;
+use Modules\Assistencia\Entities\ConsertoAssistenciaModel;
+use Modules\Assistencia\Entities\PecaAssistenciaModel;
+use Modules\Assistencia\Entities\ServicoAssistenciaModel;
 
 class ConsertoController extends Controller
 {
@@ -21,13 +23,13 @@ class ConsertoController extends Controller
 
      public function cadastrar(){
        /*ATENÇÃO, TALVEZ ESTE IF NÃO SEJA NECESSARIO, APÓS FINALIZAR O FORM, TESTAR SEM A PARTE DE CIMA*/
-       $ordens = conserto::all();
+       $ordens = ConsertoAssistenciaModel::all();
        if ($ordens == null):
          $id = 1;
          return view('assistencia::paginas.consertos.cadastrarconserto');
        else:
 
-         $id = conserto::max();
+         $id = ConsertoAssistenciaModel::max();
          $id = $id + 1;
          return view('assistencia::paginas.consertos.cadastrarconserto',compact('id'));
       endif;

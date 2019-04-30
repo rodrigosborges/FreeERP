@@ -5,7 +5,7 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\Servico_assistencia;
+use Modules\Assistencia\Entities\ServicoAssistenciaModel;
 
 class ServicosController extends Controller
 {
@@ -25,13 +25,13 @@ class ServicosController extends Controller
          public function salvar(Request $req)
          {
            $dados  = $req->all();
-           Servico::create($dados);
+           ServicoAssistenciaModel::create($dados);
            return redirect()->route('servicos.localizar');
          }
 
          public function editar($id)
          {
-           $servico = Servico::find($id);
+           $servico = ServicoAssistenciaModel::find($id);
 
            return view('assistencia::paginas.estoque.editarServico',compact('servico'));
          }
@@ -39,18 +39,18 @@ class ServicosController extends Controller
          public function atualizar(Request $req, $id)
          {
            $dados  = $req->all();
-           Servico::find($id)->update($dados);
+           ServicoAssistenciaModel::find($id)->update($dados);
            return redirect()->route('servicos.localizar');
          }
 
          public function deletar($id)
          {
-           Servico::find($id)->delete();
+           ServicoAssistenciaModel::find($id)->delete();
            return redirect()->route('servicos.localizar');
          }
          public function buscar(Request $req)
          {
-           $servicos = Servico::busca($req->busca);
+           $servicos = ServicoAssistenciaModel::busca($req->busca);
 
            return view('assistencia::paginas.estoque.localizarServico',compact('servicos'));
 

@@ -16,7 +16,7 @@
     </div>
     <div class="row">
       <tbody>
-        @foreach ($pecas as $peca)
+        <!-- @foreach ($pecas as $peca)
           <tr>
             <td scope="row">{{$peca->nome }}</td>
             <td>R$ {{$peca->valor }}</td>
@@ -24,7 +24,7 @@
               <a href="{{route('consertos.peca.retirar',$peca->id)}}"><button type="button" class="btn btn-secondary">Excluir</button></a>
             </td>
           </tr>
-        @endforeach
+        @endforeach -->
       </tbody>
     </div>
 

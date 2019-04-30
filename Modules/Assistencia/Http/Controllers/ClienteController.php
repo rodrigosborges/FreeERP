@@ -5,7 +5,7 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\Cliente_assistencia;
+use Modules\Assistencia\Entities\ClienteAssistenciaModel;
 
 class ClienteController extends Controller
 {
@@ -28,7 +28,7 @@ class ClienteController extends Controller
 
     public function localizar()
     {
-      $clientes = Cliente::all();
+      $clientes = ClienteAssistenciaModel::all();
 
 
       return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
@@ -37,13 +37,13 @@ class ClienteController extends Controller
     public function salvar(Request $req)
     {
       $dados  = $req->all();
-      Cliente::create($dados);
+      ClienteAssistenciaModel::create($dados);
       return redirect()->route('cliente.localizar');
     }
 
     public function editar($id)
     {
-      $cliente = Cliente::find($id);
+      $cliente = ClienteAssistenciaModel::find($id);
 
 
       return view('assistencia::paginas.clientes.editarCliente',compact('cliente'));
@@ -52,19 +52,19 @@ class ClienteController extends Controller
     public function atualizar(Request $req, $id)
     {
       $dados  = $req->all();
-      Cliente::find($id)->update($dados);
+      ClienteAssistenciaModel::find($id)->update($dados);
       return redirect()->route('cliente.localizar');
     }
 
     public function deletar($id)
     {
-      Cliente::find($id)->delete();
+      ClienteAssistenciaModel::find($id)->delete();
       return redirect()->route('cliente.localizar');
     }
 
     public function buscar(Request $req)
     {
-      $clientes = Cliente::busca($req->busca);
+      $clientes = ClienteAssistenciaModel::busca($req->busca);
 
 
       return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));

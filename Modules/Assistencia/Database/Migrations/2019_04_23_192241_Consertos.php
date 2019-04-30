@@ -24,9 +24,9 @@ class Consertos extends Migration
           $table->integer('cliente_id')->unsigned();
           $table->integer('peca_id')->unsigned();
           $table->integer('servico_id')->unsigned();
-          $table->foreign('cliente_id')->references('id')->on('cliente');
-          $table->foreign('peca_id')->references('id')->on('peca');
-          $table->foreign('servico_id')->references('id')->on('servico');
+          $table->foreign('cliente_id')->references('id')->on('cliente_assistencia');
+          $table->foreign('peca_id')->references('id')->on('peca_assistencia');
+          $table->foreign('servico_id')->references('id')->on('servico_assistencia');
           $table->timestamps();
       });
 
