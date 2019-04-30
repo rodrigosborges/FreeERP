@@ -16,7 +16,7 @@ class Servico extends Migration
       Schema::create('servico_assistencia', function (Blueprint $table) {
           $table->increments('id');
           $table->string('nome');
-          $table->decimal('valor',5,2);
+          $table->decimal('valor',6,2);
           $table->timestamps();
       });
     }
