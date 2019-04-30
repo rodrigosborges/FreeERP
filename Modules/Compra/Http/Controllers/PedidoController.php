@@ -145,4 +145,27 @@ class PedidoController extends Controller
             return back()->with('warning',  'Pedido não pode ser deletado');
         }  
     }
-}
+
+    public function pedidos_disponiveis()
+    {
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'COMPRA',
+        ];
+        $menu = [
+            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
+            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+            
+		];
+        $data = [
+			'pedido'		=> Pedido::all(),
+			'title'		=> "Lista de Pedidos Disponíveis",
+		]; 
+        return view('compra::pedidos_disponiveis', compact('data','moduleInfo','menu'));
+    }
+
+
+
+    }
