@@ -5,6 +5,7 @@ namespace Modules\ControleUsuario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\controleUsuario\Http\Requests\{ValidaLoginRequest};
 
 class UsuarioController extends Controller
 {
@@ -56,12 +57,9 @@ class UsuarioController extends Controller
         $data = ['url'=>'validar.login','title'=>'Pagina de login'];
         return view('controleusuario::login',$this->dadosTemplate,compact('data'));
     }
-    public function validaLogin(Request $req){
-        $data = ['email'=>$req->get('email')
-                ,'password'=>$req->get('senha')];
-
+    public function validaLogin(ValidaLoginRequest $req){
         try{
-            \Auth::attempt($data,false);
+            \Auth::attempt($req->only(['email','password']),false);
             return redirect()->route('user.dashboard');
         }catch(\Exception $ex){
             return $ex->getMessage();
@@ -85,7 +83,6 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**

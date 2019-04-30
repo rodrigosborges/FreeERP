@@ -6,22 +6,21 @@
         <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
             <h3>{{$data['title']}}</h3><br>
             {!!Form::open(['route'=>'validar.login' ,'method'=>'post']) !!}
-            <p>acesso ao sistema</p>
+            <p>Acesso ao sistema</p>
             <div class="form-group">
-            <label for='email'>
-          
-            {!! Form::text('email',null,['class'=>'form-control','placeholder'=>'Usuario']) !!}
-            </label>
+                <label for="email">E-mail</label>
+                {!! Form::text('email',null,['class'=>'form-control','placeholder'=>'Usuario']) !!}
+                <span class="errors"> {{ $errors->first('email') }} </span>
             </div>
             <div class="form-group">
-            <label for='password' >
-            {!! Form::password('senha',['class'=>'form-control','placeholder'=>'Senha'])!!}
-            </label>
+                <label for="password">Senha</label>
+                {!! Form::password('password',['class'=>'form-control','placeholder'=>'Senha'])!!}
+                <span class="errors"> {{ $errors->first('password') }} </span>
             </div>
             <div class="form-group">
-            <label>
-            {!!Form::submit('Entrar', ['class'=>'btn btn-primary'])!!}
-            </label>
+                <label>
+                {!!Form::submit('Entrar', ['class'=>'btn btn-primary'])!!}
+                </label>
             </div>
             {!!Form::close()!!}
             
