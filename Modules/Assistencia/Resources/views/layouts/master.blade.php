@@ -5,10 +5,9 @@ $moduleInfo = [
 ];
 
 $menu = [
-    ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-    ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-    ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-    ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+    ['icon' => 'smartphone', 'tool' => 'Opção', 'route' => '#'],
+    ['icon' => 'smartphone', 'tool' => 'Opção', 'route' => '#'],
+    ['icon' => 'smartphone', 'tool' => 'Opção', 'route' => '#']
 ];
 ?>
 <!DOCTYPE html>

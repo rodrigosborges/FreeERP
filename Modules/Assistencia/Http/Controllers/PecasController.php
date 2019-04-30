@@ -5,14 +5,14 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\Peca;
+use Modules\Assistencia\Entities\Peca_assistencia;
 
 class PecasController extends Controller
 {
 
          public function cadastrar()
          {
-           
+
            return view('assistencia::paginas.estoque.cadastrarPeca');
          }
 

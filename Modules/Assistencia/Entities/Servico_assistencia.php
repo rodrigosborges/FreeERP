@@ -4,9 +4,9 @@ namespace Modules\Assistencia\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Servico extends Model
+class ServicoAssistenciaModel extends Model
 {
-  protected $table = 'servico';
+  protected $table = 'servico_assistencia';
   protected $fillable = ['id','nome','valor'];
 
   public static function busca($busca)

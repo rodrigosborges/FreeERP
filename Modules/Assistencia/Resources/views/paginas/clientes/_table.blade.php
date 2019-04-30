@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table id="tabela" class="table table-borderless">
+  <table id="tabela" class="table table-striped">
     <div class="row">
       <thead>
         <tr>

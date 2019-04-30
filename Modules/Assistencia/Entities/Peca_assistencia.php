@@ -4,10 +4,10 @@ namespace Modules\Assistencia\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class cliente extends Model
+class PecaAssistenciaModel extends Model
 {
-  protected $table = 'cliente';
-  protected $fillable = ['id','nome','cpf','email','data_nascimento','sexo','celnumero','telefonenumero'];
+  protected $table = 'peca_assistencia';
+  protected $fillable = ['id','nome','valor_compra','valor_venda'];
 
   public static function busca($busca)
   {

@@ -5,13 +5,13 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\Servico;
+use Modules\Assistencia\Entities\Servico_assistencia;
 
 class ServicosController extends Controller
 {
     public function cadastrar()
          {
-           
+
            return view('assistencia::paginas.estoque.cadastrarServico');
          }
 

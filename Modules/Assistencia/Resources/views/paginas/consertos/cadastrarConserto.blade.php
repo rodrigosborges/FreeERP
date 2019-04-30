@@ -12,11 +12,9 @@
 			<h4>Nova ordem de serviço</h4>
 		</div>
 		<div class="row justify-content-center">
-		    <form class="col-md-8" action="{{route('concertos.salvar')}}" method="post" enctype="multipart/form-data">
+		    <form class="col-md-8" action="{{route('consertos.salvar')}}" method="post" enctype="multipart/form-data">
 		      {{ csrf_field() }}
-		      @include('assistencia::paginas.concertos._form')
-		      
-
+		      @include('assistencia::paginas.consertos._form')
 		      <button class="btn btn-success">Salvar</button>
 		    </form>
   		</div>

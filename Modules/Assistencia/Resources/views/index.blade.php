@@ -11,9 +11,9 @@
     <div class="card-body">
       <div class="row">
         <div class="col">
-          <a href="{{route('concertos.index')}}">
-            <h3>Concertos</h3>
-            LINK CONCERTOS
+          <a href="{{route('consertos.index')}}">
+            <h3>Consertos</h3>
+            LINK CONSERTOS
           </a>
         </div>
         <div class="col">

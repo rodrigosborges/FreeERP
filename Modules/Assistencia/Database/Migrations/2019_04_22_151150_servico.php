@@ -13,7 +13,7 @@ class Servico extends Migration
      */
     public function up()
     {
-      Schema::create('servico', function (Blueprint $table) {
+      Schema::create('servico_assistencia', function (Blueprint $table) {
           $table->increments('id');
           $table->string('nome');
           $table->decimal('valor',5,2);

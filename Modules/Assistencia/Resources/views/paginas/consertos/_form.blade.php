@@ -16,7 +16,7 @@
 
 <div class="form-group row">
   <div class="input-group col">
-    
+
       <label for="situacao">Situação</label>
       <select class="custom-select " id="situacao" name="situacao">
         <option selected>Aguardando autorização do orçamento</option>
@@ -28,5 +28,5 @@
 
 </div>
 <div>
-  @include('assistencia::paginas.concertos._navOS')
+  @include('assistencia::paginas.consertos._navOS')
 </div>

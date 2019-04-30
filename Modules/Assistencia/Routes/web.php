@@ -42,10 +42,10 @@ Route::prefix('assistencia')->group(function() {
     Route::post('estoque/servicos/buscar',['as'=>'servicos.buscar','uses'=>'ServicosController@buscar']);
     /*Estoque (peça e serviço) */
 
-    /*Concertos/ Ordem de servicos*/
-    Route::get('concertos',['as'=>'concertos.index','uses'=>'ConcertoController@index']);
-    Route::get('concertos/cadastrar',['as'=>'concertos.cadastrar','uses'=>'ConcertoController@cadastrar']);
-    Route::post('concertos/salvar',['as'=>'concertos.salvar','uses'=>'ConcertoController@salvar']);
+    /*consertos/ Ordem de servicos*/
+    Route::get('consertos',['as'=>'consertos.index','uses'=>'consertoController@index']);
+    Route::get('consertos/cadastrar',['as'=>'consertos.cadastrar','uses'=>'consertoController@cadastrar']);
+    Route::post('consertos/salvar',['as'=>'consertos.salvar','uses'=>'consertoController@salvar']);
 });
 
 

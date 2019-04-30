@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Concertos extends Migration
+class Consertos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Concertos extends Migration
      */
     public function up()
     {
-      Schema::create('concerto', function (Blueprint $table) {
+      Schema::create('conserto_assistencia', function (Blueprint $table) {
           $table->increments('id');
           $table->string('modelo_aparelho');
           $table->string('marca_aparelho');

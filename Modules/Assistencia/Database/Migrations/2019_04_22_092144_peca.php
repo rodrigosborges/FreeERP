@@ -13,7 +13,7 @@ class Peca extends Migration
      */
     public function up()
     {
-      Schema::create('peca', function (Blueprint $table) {
+      Schema::create('peca_assistencia', function (Blueprint $table) {
           $table->increments('id');
           $table->string('nome');
           $table->decimal('valor',5,2);

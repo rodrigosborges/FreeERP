@@ -5,9 +5,9 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\Concerto;
+use Modules\Assistencia\Entities\Conserto_assistencia;
 
-class ConcertoController extends Controller
+class ConsertoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,20 +16,20 @@ class ConcertoController extends Controller
      public function index()
      {
 
-       return view('assistencia::paginas.concerto');
+       return view('assistencia::paginas.conserto');
      }
 
      public function cadastrar(){
        /*ATENÇÃO, TALVEZ ESTE IF NÃO SEJA NECESSARIO, APÓS FINALIZAR O FORM, TESTAR SEM A PARTE DE CIMA*/
-       $ordens = Concerto::all();
+       $ordens = conserto::all();
        if ($ordens == null):
          $id = 1;
-         return view('assistencia::paginas.concertos.cadastrarConcerto');
+         return view('assistencia::paginas.consertos.cadastrarconserto');
        else:
 
-         $id = Concerto::max();
+         $id = conserto::max();
          $id = $id + 1;
-         return view('assistencia::paginas.concertos.cadastrarConcerto',compact('id'));
+         return view('assistencia::paginas.consertos.cadastrarconserto',compact('id'));
       endif;
 
      }

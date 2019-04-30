@@ -5,9 +5,9 @@ namespace Modules\Assistencia\Entities;
 use Illuminate\Database\Eloquent\Model;
 
 
-class concerto extends Model
+class ConsertoAssistenciaModel extends Model
 {
-    protected $table = 'concerto';
+    protected $table = 'conserto_assistencia';
 
     protected $fillable = ['id','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','cliente_id','peca_id','servico_id'];
 

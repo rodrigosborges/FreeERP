@@ -5,7 +5,7 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\Cliente;
+use Modules\Assistencia\Entities\Cliente_assistencia;
 
 class ClienteController extends Controller
 {
@@ -16,7 +16,7 @@ class ClienteController extends Controller
 
     public function index()
     {
-    
+
       return view('assistencia::paginas.clientes');
     }
 
