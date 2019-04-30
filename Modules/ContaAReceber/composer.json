@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/contaareceber",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\ContaAReceber\\Providers\\ContaAReceberServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\ContaAReceber\\": ""
+        }
+    }
+}
