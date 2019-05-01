@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\ClienteAssistenciaModel;
+use Modules\Assistencia\Http\Requests\StoreClienteRequest;
 
 class ClienteController extends Controller
 {
@@ -34,11 +35,10 @@ class ClienteController extends Controller
       return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
     }
 
-    public function salvar(Request $req)
-    {
+    public function salvar(StoreClienteRequest $req){
       $dados  = $req->all();
       ClienteAssistenciaModel::create($dados);
-      return redirect()->route('cliente.localizar');
+      return redirect()->route('cliente.localizar')->with('success','Cliente cadastrado com sucesso!');
     }
 
     public function editar($id)

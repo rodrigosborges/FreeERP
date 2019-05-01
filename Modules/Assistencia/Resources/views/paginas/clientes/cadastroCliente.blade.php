@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+
 <div class="container text-center">
 	<div class="card-body">
 		<div class="row ">
