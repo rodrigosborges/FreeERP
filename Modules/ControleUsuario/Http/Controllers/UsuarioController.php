@@ -74,7 +74,12 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('controleusuario::create');
+                /** 
+         * Validar campos recebidos do request
+         * inserir dados no db
+         * retornar para tela de cadastro com feedback de sucesso ou erro
+        */
+        return view('cadastrar.create');
     }
 
     /**
@@ -84,6 +89,10 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            
+
+        ]);
     }
 
     /**

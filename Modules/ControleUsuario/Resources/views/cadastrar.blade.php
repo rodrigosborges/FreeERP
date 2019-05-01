@@ -14,17 +14,17 @@
                             <label for="exampleFormControlFile1">
                                 <i class="material-icons text-muted" style="font-size: 100px; cursor:pointer">add_a_photo</i>
                             </label>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1" style="display: none">
+                            <input type="file" class="form-control-file" name="foto" id="exampleFormControlFile1" style="display: none">
                         </div>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-10">
                             <div class="form-group">
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp"
                                     placeholder="Email">
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+                                <input type="password" class="form-control" name="senha" id="exampleInputPassword1" placeholder="Senha">
                             </div>
                             <button type="submit" class="btn btn-primary d-flex align-items-center">
                                 <i class="material-icons mr-2">save</i> Salvar dados de perfil
