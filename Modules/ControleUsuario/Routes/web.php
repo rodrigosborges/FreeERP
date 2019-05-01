@@ -13,7 +13,7 @@ Route::prefix('controleusuario')->group(function() {
     //rotas de autenticação de usuario
     Route::get('/login', 'UsuarioController@login');
     Route::post('/login',['as'=>'validar.login', 'uses'=>'UsuarioController@validaLogin']);
-    Route::post('/dashboard',['as'=>'user.dashboard', 'uses'=>'UsuarioController@inicio']);
+    Route::get('/dashboard',['as'=>'user.dashboard', 'uses'=>'UsuarioController@index']);
     // rota é composta por: /caminho, ClasseController@nomeMétodo
 
     Route::get('/', 'UsuarioController@index');

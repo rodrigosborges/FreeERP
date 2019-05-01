@@ -16,6 +16,7 @@ class ValidaLoginRequest extends FormRequest{
     public function messages() {
         return [
             'required' => 'Este campo é obrigatório!',
+            'email' => 'Informe um email válido'
         ];
     }
 

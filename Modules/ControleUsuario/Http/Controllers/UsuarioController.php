@@ -22,6 +22,7 @@ class UsuarioController extends Controller
         switch ($papel) {
             case 'administrador':
                 $menu = [
+                    ['icon' => 'person', 'tool' => 'Login', 'route' => '/controleusuario/login'],
                     ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
                     ['icon' => 'search', 'tool' => 'Buscar', 'route' => '/controleusuario/consulta'],
                     ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
@@ -57,14 +58,14 @@ class UsuarioController extends Controller
         $data = ['url'=>'validar.login','title'=>'Pagina de login'];
         return view('controleusuario::login',$this->dadosTemplate,compact('data'));
     }
-    public function validaLogin(ValidaLoginRequest $req){
+    
+    public function validaLogin(ValidaLoginRequest $req){        
         try{
-            \Auth::attempt($req->only(['email','password']),false);
+            \Auth::attempt($req->only(['email','password']), false);
             return redirect()->route('user.dashboard');
         }catch(\Exception $ex){
             return $ex->getMessage();
         }
-        // dd($req->all());
     }
 
     /**
