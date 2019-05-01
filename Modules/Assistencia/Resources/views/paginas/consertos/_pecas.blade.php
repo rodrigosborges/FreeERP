@@ -16,15 +16,15 @@
     </div>
     <div class="row">
       <tbody>
-        <!-- @foreach ($pecas as $peca)
+        @foreach ($pecas as $peca)
           <tr>
             <td scope="row">{{$peca->nome }}</td>
-            <td>R$ {{$peca->valor }}</td>
+            <td>R$ {{$peca->valor_venda }}</td>
             <td>
-              <a href="{{route('consertos.peca.retirar',$peca->id)}}"><button type="button" class="btn btn-secondary">Excluir</button></a>
+              <a href="{{route('consertos.peca.retirar',$peca->id)}}"><button type="button" class="btn"><i class="material-icons">clear</i></button></a>
             </td>
           </tr>
-        @endforeach -->
+        @endforeach
       </tbody>
     </div>
 

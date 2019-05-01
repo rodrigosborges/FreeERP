@@ -11,7 +11,8 @@
   <div class="card-body">
     <div class="row ">
       <div class="col-md-11 text-left">
-          <a href="{{route('estoque.index')}}"><i class="material-icons mr-2">arrow_back</i></a>
+        <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
+        <a href="{{route('estoque.index')}}"><i class="material-icons mr-2">arrow_back</i></a>
       </div>
     </div>
     <div class="row">
@@ -46,7 +47,7 @@
               @foreach ($pecas as $peca)
                 <tr>
                   <td scope="row">{{$peca->nome }}</td>
-                  <td>R$ {{$peca->valor }}</td>
+                  <td>R$ {{$peca->valor_venda }}</td>
                   <td>
                     <a href="{{route('pecas.editar',$peca->id)}}"><button type="button" class="btn btn-secondary">Editar</button></a>
                     <a href="{{route('pecas.deletar',$peca->id)}}"><button type="button" class="btn btn-danger">Deletar</button></a>

@@ -13,15 +13,19 @@
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
+
   <div class="tab-pane fade show active" id="cliente" role="tabpanel" aria-labelledby="cliente-tab">
     @include('assistencia::paginas.consertos._cliente')
   </div>
+
   <div class="tab-pane fade" id="sobre" role="tabpanel" aria-labelledby="sobre-tab">
     @include('assistencia::paginas.consertos._sobre')
   </div>
+
   <div class="tab-pane fade" id="pecas" role="tabpanel" aria-labelledby="pecas-tab">
-    @include('assistencia::paginas.consertos._pecas')
+      @include('assistencia::paginas.consertos._pecas')
   </div>
+
   <div class="tab-pane fade" id="maoObra" role="tabpanel" aria-labelledby="maoObra-tab">
     @include('assistencia::paginas.consertos._maoObra')
   </div>

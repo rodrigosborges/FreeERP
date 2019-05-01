@@ -11,7 +11,8 @@
 	<div class="card-body">
 		<div class="row ">
 		  <div class="col-md-11 text-left">
-		      <a href="{{route('cliente.localizar')}}"><i class="material-icons mr-2">arrow_back</i></button></a>
+				<a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
+		    <a href="{{route('cliente.localizar')}}"><i class="material-icons mr-2">arrow_back</i></button></a>
 		  </div>
 		</div>
 		<div class="row justify-content-center">

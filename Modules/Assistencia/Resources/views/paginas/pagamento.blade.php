@@ -5,7 +5,7 @@
 
 @section('content')
 
-  <a href="{{url('/assistencia')}}">Botão voltar</a>
+  <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
 
 
 @stop

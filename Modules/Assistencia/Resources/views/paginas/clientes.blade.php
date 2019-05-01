@@ -10,7 +10,7 @@
   <div class="card-body">
     <div class="row text-left">
       <div class="col">
-          <a href="{{url('/assistencia')}}"<i class="material-icons mr-2">arrow_back</i></button></a>
+          <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
       </div>
     </div>
     <div class="row">

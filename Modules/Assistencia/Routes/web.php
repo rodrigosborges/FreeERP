@@ -43,9 +43,14 @@ Route::prefix('assistencia')->group(function() {
     /*Estoque (peça e serviço) */
 
     /*consertos/ Ordem de servicos*/
-    Route::get('consertos',['as'=>'consertos.index','uses'=>'consertoController@index']);
-    Route::get('consertos/cadastrar',['as'=>'consertos.cadastrar','uses'=>'consertoController@cadastrar']);
-    Route::post('consertos/salvar',['as'=>'consertos.salvar','uses'=>'consertoController@salvar']);
+    Route::get('conserto',['as'=>'consertos.index','uses'=>'ConsertoController@index']);
+    Route::get('conserto/cadastrar',['as'=>'consertos.cadastrar','uses'=>'ConsertoController@cadastrar']);
+    Route::get('conserto/nomeClientes',['as'=>'consertos.nomeClientes','uses'=>'ConsertoController@nomeClientes']);
+    Route::get('conserto/dadosCliente',['as'=>'consertos.dadosCliente','uses'=>'ConsertoController@dadosCliente']);
+    Route::post('conserto/salvar',['as'=>'consertos.salvar','uses'=>'ConsertoController@salvar']);
+    Route::get('conserto/pecas/retirar/{id}',['as'=>'consertos.peca.retirar','uses'=>'ConsertoController@retirarPeca']);
+    Route::get('conserto/servicos/retirar/{id}',['as'=>'consertos.servicos.retirar','uses'=>'ConsertoController@retirarServico']);
+    Route::post('conserto/pecas/buscar',['as'=>'consertos.pecas.buscar','uses'=>'ConsertoController@buscarPeca']);
 });
 
 

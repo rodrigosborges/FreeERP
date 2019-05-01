@@ -17,7 +17,7 @@ class ServicosController extends Controller
 
          public function localizar()
          {
-           $servicos = Servico::all();
+           $servicos = ServicoAssistenciaModel::all();
 
            return view('assistencia::paginas.estoque.localizarServico',compact('servicos'));
          }

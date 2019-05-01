@@ -31,5 +31,8 @@ class ConsertoAssistenciaModel extends Model
         return $this->hasMany('Modules\Assistencia\Entities\Servico');
     }
 
-
+    public static function buscaPeca($busca)
+    {
+      return static::where('nome', 'LIKE', '%'.$busca.'%')->get();
+    }
 }

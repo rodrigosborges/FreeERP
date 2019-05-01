@@ -2,10 +2,13 @@
 
 @section('content')
 <div class="container text-center">
+
 	<div class="card-body">
+
 		<div class="row">
-		  <div class="col-md-11 text-left">
-		      <a href="{{route('cliente.localizar')}}"><i class="material-icons mr-2">arrow_back</i></button></a>
+		  <div class="col-md-12 text-left">
+				<a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
+		    <a href="{{route('consertos.index')}}"><i class="material-icons mr-2">arrow_back</i></button></a>
 		  </div>
 		</div>
 		<div class="row justify-content-center">
@@ -20,4 +23,47 @@
   		</div>
 	</div>
 </div>
+@stop
+
+@section('js')
+	<script>
+		$("[name='nome']").on('keyup',function(){
+
+				$.ajax({
+		        type: "GET",
+		        url: `${main_url}/assistencia/consertos/nomeClientes`,
+		        data: {
+							'nome': $(this).val()
+						},
+		        success: function (data) {
+								$("[name='nome']").autocomplete({
+									source: data,
+									select: function( event, ui ) {
+										inserirDados(ui.item.value)
+									}
+								})
+		        },
+		    })
+
+		})
+
+		function inserirDados(val){
+
+			$.ajax({
+	        type: "GET",
+	        url: `${main_url}/assistencia/consertos/dadosCliente`,
+	        data: {
+						'nome': val
+					},
+	        success: function (data) {
+							$("[name='nome']").val(data.nome)
+							$("[name='cpf']").val(data.cpf)
+							$("[name='celnumero']").val(data.celnumero)
+							$("[name='email']").val(data.email)
+	        },
+	    })
+
+		}
+	</script>
+
 @stop
