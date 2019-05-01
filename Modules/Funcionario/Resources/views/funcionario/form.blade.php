@@ -14,7 +14,7 @@
         <strong><h6 class="mb-3">Dados Básicos</h6></strong>
         <hr>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="nome" class="control-label">Nome</label>
                     <div class="input-group">

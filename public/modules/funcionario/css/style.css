@@ -1,8 +1,10 @@
-.error{
-    color: red
-}
-
 .min{
     width:1%;
     white-space: nowrap;
+}
+
+div.error {
+    color: red;
+    font-weight: bold;
+    font-size:small;
 }
