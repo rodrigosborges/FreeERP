@@ -2,7 +2,15 @@
 
 
 @section('css')
+	<style>
+		.errors {
+			color: red;
+			font-size: 12px;
+			text-align: left;
 
+		}
+
+	</style>
 
 @stop
 
@@ -28,4 +36,13 @@
 	</div>
 </div>
 
+@stop
+@section('js')
+	<script>
+		$(document).ready(function(){
+			console.log()
+			$('.cpf-mask').mask("000.000.000/00")
+			$('.telefone').mask("(00) 9 0000-0000")
+		})
+	</script>
 @stop

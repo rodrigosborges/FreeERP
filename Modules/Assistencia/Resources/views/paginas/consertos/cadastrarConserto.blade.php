@@ -28,10 +28,10 @@
 @section('js')
 	<script>
 		$("[name='nome']").on('keyup',function(){
-
+			
 				$.ajax({
 		        type: "GET",
-		        url: `${main_url}/assistencia/consertos/nomeClientes`,
+		        url: `${main_url}/assistencia/conserto/nomeClientes`,
 		        data: {
 							'nome': $(this).val()
 						},
@@ -51,7 +51,7 @@
 
 			$.ajax({
 	        type: "GET",
-	        url: `${main_url}/assistencia/consertos/dadosCliente`,
+	        url: `${main_url}/assistencia/conserto/dadosCliente`,
 	        data: {
 						'nome': val
 					},

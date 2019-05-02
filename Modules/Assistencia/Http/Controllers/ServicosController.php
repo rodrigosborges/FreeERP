@@ -11,7 +11,6 @@ class ServicosController extends Controller
 {
     public function cadastrar()
          {
-
            return view('assistencia::paginas.estoque.cadastrarServico');
          }
 
@@ -32,7 +31,6 @@ class ServicosController extends Controller
          public function editar($id)
          {
            $servico = ServicoAssistenciaModel::find($id);
-
            return view('assistencia::paginas.estoque.editarServico',compact('servico'));
          }
 

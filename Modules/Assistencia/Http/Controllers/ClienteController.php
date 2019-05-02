@@ -10,28 +10,20 @@ use Modules\Assistencia\Http\Requests\StoreClienteRequest;
 
 class ClienteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
 
     public function index()
     {
-
       return view('assistencia::paginas.clientes');
     }
 
     public function cadastrar()
     {
-
       return view('assistencia::paginas.clientes.cadastroCliente');
     }
 
     public function localizar()
     {
       $clientes = ClienteAssistenciaModel::all();
-
-
       return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
     }
 
@@ -44,8 +36,6 @@ class ClienteController extends Controller
     public function editar($id)
     {
       $cliente = ClienteAssistenciaModel::find($id);
-
-
       return view('assistencia::paginas.clientes.editarCliente',compact('cliente'));
     }
 
@@ -65,10 +55,7 @@ class ClienteController extends Controller
     public function buscar(Request $req)
     {
       $clientes = ClienteAssistenciaModel::busca($req->busca);
-
-
       return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
-
     }
 
 

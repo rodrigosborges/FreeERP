@@ -19,7 +19,7 @@
         {{ csrf_field() }}
           <input type="text" class="form-control" name="busca" placeholder="Nome do cliente" aria-label="Buscar cliente" aria-describedby="button-addon2">
           <div class="input-group-append">
-            <input class="btn btn-outline-secondary" type="submit" id="button-addon2"></input>
+            <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2"></input>
           </div>
     </form>
 

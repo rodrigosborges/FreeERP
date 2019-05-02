@@ -57,11 +57,11 @@ class ConsertoController extends Controller
      }
 
      public function nomeClientes(Request $req){
-       return ClienteAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'/',cpf) AS nomecpf"))->get()->pluck('nomecpf');
+       return ClienteAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',cpf) AS nomecpf"))->get()->pluck('nomecpf');
      }
 
      public function dadosCliente(Request $req){
-       [$nome, $cpf] = explode('/',$req->input('nome'));
+       [$nome, $cpf] = explode('|',$req->input('nome'));
        return ClienteAssistenciaModel::where('nome',$nome)->where('cpf',$cpf)->select('id','nome','email','cpf','celnumero')->first();
      }
 
