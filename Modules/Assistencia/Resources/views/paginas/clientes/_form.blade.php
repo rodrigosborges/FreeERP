@@ -70,8 +70,8 @@
           <div class="input-group-prepend">
             <span class="input-group-text" id="telefone"><i class="material-icons">phone</i></span>
           </div>
-          <input id="celnumber" name="celnumero" class="form-control input-md telefone" placeholder="(XX) X XXXX-XXXX"  type="text" maxlength="11"
-          value="{{isset($cliente->celnumero) ? $cliente->celnumero : old('celnumero', '')}}">
+          <input id="celnumber" name="telefonenumero" class="form-control input-md telefone" placeholder="(XX) X XXXX-XXXX"  type="text" maxlength="11"
+          value="{{isset($cliente->telefonenumero) ? $cliente->telefonenumero : old('telefonenumero', '')}}">
         </div>
       </div>
 

@@ -151,6 +151,8 @@ $menu = [
 
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+        
+        
         <!-- Toggle Menu Script -->
         <script>var main_url="{{url('')}}"</script>
         <script>

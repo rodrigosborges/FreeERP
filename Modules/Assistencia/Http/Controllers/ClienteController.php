@@ -30,6 +30,7 @@ class ClienteController extends Controller
     public function salvar(StoreClienteRequest $req){
       $dados  = $req->all();
       ClienteAssistenciaModel::create($dados);
+
       return redirect()->route('cliente.localizar')->with('success','Cliente cadastrado com sucesso!');
     }
 
