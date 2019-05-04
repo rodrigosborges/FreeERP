@@ -6,7 +6,7 @@ namespace Modules\Compra\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Modules\Compra\Entities\{Pedido,ItemCompra};
+use Modules\Compra\Entities\{Pedido,ItemCompra,Fornecedor};
 
 
 class PedidoController extends Controller
@@ -170,5 +170,29 @@ class PedidoController extends Controller
         Mail::send('teste', ['curso'=>'Eloquent'], function($m){
             $m->from('thofurtado@gmail.com', 'Modulo Compras');
             $m->to('pedrops02@gmail.com');
-        }
+        });
     }
+
+    public function gerar_orcamento($id)
+    {
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'COMPRA',
+        ];
+        $menu = [
+            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
+            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
+            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+            
+		];
+        $data = [
+            'pedido'	=> Pedido::findOrFail($id),
+            'fornecedores'=> Fornecedor::all(),
+            "itens_pedido" => Pedido::findOrFail($id)->itens()->get(),
+			'title'		=> "Lista de Pedidos Disponíveis",
+		]; 
+        return view('compra::gerar_orcamento', compact('data','moduleInfo','menu'));
+    } 
+
+}
