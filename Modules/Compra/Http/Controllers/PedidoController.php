@@ -166,7 +166,7 @@ class PedidoController extends Controller
         return view('compra::pedidos_disponiveis', compact('data','moduleInfo','menu'));
     }
 
-
+    
 
 
 

@@ -20,7 +20,8 @@
                             <form action="{{url('compra/pedido', [$p->id])}}" method="POST">
                                 {{method_field('DELETE')}}
                                 {{ csrf_field() }}
-                                <a class="btn btn-warning" href='{{ url("compra/pedido/$p->id/edit") }}'>Editar</a> 
+                                <a class="btn btn-warning" href='{{ url("compra/pedido/$p->id/edit") }}'>Editar</a>
+                                <a class="btn btn-info" href='{{ url("compra/pedido/$p->id/gerarOrcamento") }}'>Gerar Orçamento</a>  
                                 <input type="submit" class="btn btn-danger" value="Delete"/>
                             </form>
                         </td>

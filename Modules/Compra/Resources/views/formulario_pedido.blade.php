@@ -1,17 +1,14 @@
 @extends('template')
 @section('content')
-    <div class="row justify-content-center">
+    <div class="row justify-content-center">                     
         <div class="card col-7"> 
-            
-                <h2 class="card-title mt-3 ml-2">Itens</h2>
-
-            
             <div class="card-body">
                 <form action="{{ $data['url'] }}" method="POST" class="col-12">
                     {{ csrf_field() }}
                     @if($data['model'])
                         @method('PUT')
                     @endif
+                    <h2 class="card-title mt-3 ml-2">Itens</h2>
                     <div class="form-group">
                         @foreach($data['itens_pedido'] as $itemPedido)
                             <div class="input-group mt-2">
@@ -22,6 +19,7 @@
                                     @endforeach
                                 </select>
                                 <div class="col-3"><input class="form-control" type="number" placeholder="Quantidade" name="quantidade" onKeyPress="PermiteNumeros();"></div>
+                                
                                 <button type="button" class="btn btn-danger remover">Remover</button>              
                             </div>
                         @endforeach
