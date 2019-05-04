@@ -166,10 +166,9 @@ class PedidoController extends Controller
         return view('compra::pedidos_disponiveis', compact('data','moduleInfo','menu'));
     }
 
-
-
-
-
-
-
+    public function enviar_email(Request $request){
+        Mail::send('teste', ['curso'=>'Eloquent'], function($m){
+            $m->from('thofurtado@gmail.com', 'Modulo Compras');
+            $m->to('pedrops02@gmail.com');
+        }
     }
