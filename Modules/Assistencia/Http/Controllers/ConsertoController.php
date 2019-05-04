@@ -19,15 +19,19 @@ class ConsertoController extends Controller
 
        return view('assistencia::paginas.conserto');
      }
-     public function retirarPeca()
+
+     public function selecionarPeca($idos, $pecas, $servicos, $idpeca)
      {
+        $teste =  '{{$id}}{{$pecas}} {{$servicos}}{{$peca->id}}';
 
+       return view('assistencia::paginas.consertos.cadastrarconserto',compact('id','pecas','servicos', 'itens'));
      }
-     public function cadastrar(){
-       $busca = ' ';
 
+     public function cadastrar(){
+       $busca = '';
        $pecas = PecaAssistenciaModel::busca($busca);
        $servicos = ServicoAssistenciaModel::busca($busca);
+
        $ordens = ConsertoAssistenciaModel::all();
        if ($ordens == null):
          /*ATENÇÃO, TALVEZ ESTE IF NÃO SEJA NECESSARIO, APÓS FINALIZAR O FORM, TESTAR SEM A PARTE DE CIMA*/

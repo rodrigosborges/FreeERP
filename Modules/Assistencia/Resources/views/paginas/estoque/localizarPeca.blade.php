@@ -7,12 +7,11 @@
 
 @section('content')
 
-<div class="container">
+<div class="card">
   <div class="card-body">
     <div class="row ">
       <div class="col-md-11 text-left">
         <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
-        <a href="{{route('estoque.index')}}"><i class="material-icons mr-2">arrow_back</i></a>
       </div>
     </div>
     <div class="row">
@@ -20,7 +19,7 @@
           {{ csrf_field() }}
             <input type="text" class="form-control" name="busca" placeholder="Nome da peça" aria-label="Buscar" aria-describedby="button-addon2">
             <div class="input-group-append">
-              <input class="btn btn-outline-secondary" type="submit" id="button-addon2"></input>
+              <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="Localizar"></input>
             </div>
       </form>
         <div class="col-md-6">

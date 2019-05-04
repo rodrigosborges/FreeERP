@@ -4,23 +4,25 @@
 @section('title', 'Assistencia')
 
 @section('content')
-
-<div class="container text-center">
+<div class="card">
   <div class="card-body">
-    <div class="row text-left">
-      <div class="col">
-          <a href="{{url('/assistencia')}}"<i class="material-icons mr-2">home</i></button></a>
+    <div class="row ">
+      <div class="col-md-11 text-left">
+        <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
       </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <a href="{{route('pecas.localizar')}}"><button type="button" class="btn btn-info" name="button">Peças</button></a>
-      </div>
-      <div class="col">
-        <a href="{{route('servicos.localizar')}}"><button type="button" class="btn btn-info" name="button">Mão de Obra</button></a>
-      </div>
-
     </div>
   </div>
+
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link" href="{{route('pecas.localizar')}}"><h3>Peças</h3?></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{route('servicos.localizar')}}"><h3>Mão de Obra</h3?></a>
+  </li>
+
+</ul>
 </div>
+
+
 @stop

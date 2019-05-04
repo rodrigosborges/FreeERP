@@ -13,7 +13,8 @@ class ClienteController extends Controller
 
     public function index()
     {
-      return view('assistencia::paginas.clientes');
+      $clientes = ClienteAssistenciaModel::all();
+      return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
     }
 
     public function cadastrar()

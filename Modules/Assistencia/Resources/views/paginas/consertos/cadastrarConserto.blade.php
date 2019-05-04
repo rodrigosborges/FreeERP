@@ -1,7 +1,7 @@
 @extends('assistencia::layouts.master')
 
 @section('content')
-<div class="container text-center">
+<div class="card text-center">
 
 	<div class="card-body">
 
@@ -28,7 +28,7 @@
 @section('js')
 	<script>
 		$("[name='nome']").on('keyup',function(){
-			
+
 				$.ajax({
 		        type: "GET",
 		        url: `${main_url}/assistencia/conserto/nomeClientes`,

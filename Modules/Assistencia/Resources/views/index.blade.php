@@ -15,8 +15,12 @@
     <li class="nav-item">
       <a class="nav-link" href="{{route('cliente.index')}}"><h3>Clientes</h3?></a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{route('estoque.index')}}"><h3>Estoque</h3?></a>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><h3>Estoque</h3?></a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{{route('pecas.localizar')}}">Peças</a>
+          <a class="dropdown-item" href="{{route('servicos.localizar')}}">Mão de obra</a>
+        </div>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{{route('pagamento.index')}}"><h3>Pagamentos</h3?></a>
@@ -34,7 +38,7 @@
 </div>
 
 
-  
+
 
 
 

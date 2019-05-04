@@ -5,10 +5,10 @@ $moduleInfo = [
 ];
 
 $menu = [
-    ['icon' => 'smartphone', 'tool' => 'Consertos', 'route' => '#'],
-    ['icon' => 'smartphone', 'tool' => 'Clientes', 'route' => '#'],
-    ['icon' => 'smartphone', 'tool' => 'Estoques', 'route' => '#'],
-    ['icon' => 'smartphone', 'tool' => 'Pagamentos', 'route' => '#'],
+    ['icon' => 'settings', 'tool' => 'Consertos', 'route' => 'consertos.index'],
+    ['icon' => 'face', 'tool' => 'Clientes', 'route' => 'cliente.index'],
+    ['icon' => 'shopping_cart', 'tool' => 'Estoques', 'route' => 'estoque.index'],
+    ['icon' => 'payment', 'tool' => 'Pagamentos', 'route' => 'pagamento.index'],
 ];
 ?>
 <!DOCTYPE html>
@@ -90,7 +90,7 @@ $menu = [
                 </div>
                 <nav class="nav flex-column">
                     @foreach ($menu as $item)
-                        <a class="nav-link d-flex align-items-center" href="{{$item['route']}}">
+                        <a class="nav-link d-flex align-items-center" href="{{route($item['route'])}}">
                             <i class="material-icons mr-2">{{$item['icon']}}</i>
                             <span> {{$item['tool']}} </span>
                         </a>
@@ -151,8 +151,8 @@ $menu = [
 
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-        
-        
+
+
         <!-- Toggle Menu Script -->
         <script>var main_url="{{url('')}}"</script>
         <script>
@@ -170,7 +170,7 @@ $menu = [
                 header.style.width = widthHeader;
             }
         </script>
-        
+
         @yield('js')
     </body>
 </html>

@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<div class="container text-center">
+<div class="card text-center">
 	<div class="card-body">
 		<div class="row ">
 		  <div class="col-md-11 text-left">
