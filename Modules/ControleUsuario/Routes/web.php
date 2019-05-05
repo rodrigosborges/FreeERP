@@ -13,10 +13,10 @@ Route::prefix('controleusuario')->group(function() {
     //rotas de autenticação de usuario
     Route::get('/login', 'UsuarioController@login');
     Route::post('/login',['as'=>'validar.login', 'uses'=>'UsuarioController@validaLogin']);
-    Route::get('/dashboard',['as'=>'user.dashboard', 'uses'=>'UsuarioController@index']);
+    Route::get('/',['as'=>'index', 'uses'=>'UsuarioController@index']);
     // rota é composta por: /caminho, ClasseController@nomeMétodo
 
-    Route::get('/', 'UsuarioController@index');
+    Route::post('/cadastro',['as'=>'validar.cadastro', 'uses'=>'UsuarioController@validaCadastro']);
     Route::get('/consulta', 'UsuarioController@consulta');
 
     Route::post('/salvar',['as'=>'usuario.salvar','uses'=> 'UsuarioController@salvarCadastro']);

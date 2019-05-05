@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\controleUsuario\Http\Requests\{ValidaLoginRequest};
+use Modules\controleUsuario\Http\Requests\{ValidaCadastroRequest};
+use Modules\ControleUsuario\Entities\{Usuario};
+use DB;
+use PHPUnit\Runner\Exception;
+use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
@@ -48,23 +53,45 @@ class UsuarioController extends Controller
     public function index()
     {
         return view('controleusuario::cadastrar', $this->dadosTemplate);
+
     }
 
     public function autenticacao()
     {
         return view('controleusuario::login', $this->dadosTemplate);
     }
-    public function login(){
+
+    public function login()
+    {
         $data = ['url'=>'validar.login','title'=>'Pagina de login'];
         return view('controleusuario::login',$this->dadosTemplate,compact('data'));
     }
     
-    public function validaLogin(ValidaLoginRequest $req){        
+    public function validaLogin(ValidaLoginRequest $req)
+    {        
         try{
             \Auth::attempt($req->only(['email','password']), false);
-            return redirect()->route('user.dashboard');
+            return redirect()->route('index');
         }catch(\Exception $ex){
             return $ex->getMessage();
+        } 
+    }
+    
+    public function validaCadastro(ValidaCadastroRequest $req)
+    {
+      $senha=  Hash::make($req->password);
+      
+        $data = ['name'=>$req->name,'email'=>$req->email,'password'=>$senha];
+       
+        try{
+            $usuario = Usuario::create($data);
+            DB::commit();
+            return redirect('/')->with('success', 'Usuario cadastrado com successo');
+        
+        }catch(Exception $e)
+        {
+            DB::rollback();
+            return back()->with('error', $e);
         }
     }
 
@@ -76,10 +103,10 @@ class UsuarioController extends Controller
     {
                 /** 
          * Validar campos recebidos do request
-         * inserir dados no db
+         * inserir dados no db - ok
          * retornar para tela de cadastro com feedback de sucesso ou erro
         */
-        return view('cadastrar.create');
+        return view('usuario.create');
     }
 
     /**
@@ -89,10 +116,11 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            
 
-        ]);
+
+
+
+        
     }
 
     /**
