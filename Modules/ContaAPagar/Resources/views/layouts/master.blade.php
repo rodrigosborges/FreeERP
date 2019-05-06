@@ -1,12 +1,13 @@
 <?php
              $moduleInfo = [
                  'icon' => 'money_off',
-                 'name' => 'Contas a pagar',
+                 'name' => 'Contas a pagar', 
              ];
 
              $menu = [
-                 ['icon' => 'money_off', 'tool' => 'Contas a Pagar', 'route' => '/'],
-                 ['icon' => 'category', 'tool' => 'Categorias', 'route' => '#'],
+                ['icon' => 'add', 'tool' => 'Nova Conta', 'route' => 'novaconta'],
+                 ['icon' => 'money_off', 'tool' => 'Contas a Pagar', 'route' => 'contaapagar'],
+                 ['icon' => 'category', 'tool' => 'Categorias', 'route' => 'categorias'],
              ];
 
 ?>

@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\ContaAPagar\Entities\PagamentoModel;
 use Modules\ContaAPagar\Entities\ContaAPagarModel;
+use Modules\ContaAPagar\Entities\CategoriaModel;
+use Carbon\Carbon;
     
 class ContaAPagarController extends Controller
 {
@@ -15,13 +17,88 @@ class ContaAPagarController extends Controller
      * @return Response
      */
      public function index(){
-
-            $pagamentos = PagamentoModel::all();
+            $data = Carbon::now();
+            $inicio = $data->year.'-'.$data->month.'-01';
+            $fim = $data->year.'-'.$data->month.'-31';
+            $range = [$inicio,$fim];
+            $pagamentos = PagamentoModel::whereBetween('data_vencimento', $range)->get();
             $contas = ContaAPagarModel::all();
-             return view('contaapagar::index',compact('pagamentos', 'contas'));
+            $categorias = CategoriaModel::where('ativo', 1)->get();
+            $total = $this->total();
+            return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias'));
       }
+    public function status(){ 
+        $pagamentos = PagamentoModel::all();
+        $contas = '';
+        foreach($pagamentos as $pagamento){
+            if($pagamento->status_pagamento != 'Pago'){
+                $pagamentos = $pagamento;
+            }
+                
+        }
+        $total = $this->total_filtro($id);
+            
+         return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias'));
+      }
+    
+     public function filtro($id){ 
+        $data = Carbon::now();
+        $inicio = $data->year.'-'.$data->month.'-01';
+        $fim = $data->year.'-'.$data->month.'-31';
+        $range = [$inicio,$fim];
+        $pagamento = PagamentoModel::whereBetween('data_vencimento', $range)->get();
+         $pagamentos = [];
+         
+         foreach($pagamento as $pg){
+             if($pg->categoria_conta($pg->conta_pagar_id) == $id){
+                 array_push($pagamentos, $pg);
+             }
+         }
+         
+        $contas = ContaAPagarModel::where('categoria_pagar_id', $id);
+        $categorias = CategoriaModel::where('ativo', 1)->get();
+        $total = $this->total_filtro($id);
 
 
+
+         return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias'));
+      }
+    public function total(){
+        $data = Carbon::now();
+        $inicio = $data->year.'-'.$data->month.'-01';
+        $fim = $data->year.'-'.$data->month.'-31';
+        $range = [$inicio,$fim];
+        $total = 0;
+        $pagamentos = PagamentoModel::whereBetween('data_vencimento', $range)->get();
+        foreach($pagamentos as $pagamento){
+            $total = $total + $pagamento->valor;
+        }
+        return $total;
+    }
+    
+    public function total_filtro($id){
+        $data = Carbon::now();
+        $inicio = $data->year.'-'.$data->month.'-01';
+        $fim = $data->year.'-'.$data->month.'-31';
+        $range = [$inicio,$fim];
+        $total = 0;
+
+        $pagamento = PagamentoModel::whereBetween('data_vencimento', $range)->get();
+         $pagamentos = [];
+         
+         foreach($pagamento as $pg){
+             if($pg->categoria_conta($pg->conta_pagar_id) == $id){
+                 array_push($pagamentos, $pg);
+             }
+         }        
+        
+        foreach($pagamentos as $pgs){
+            $total = $total + $pgs->valor;
+        }
+        return $total;
+    }    
+    
+    
     public function list(){
         
     }

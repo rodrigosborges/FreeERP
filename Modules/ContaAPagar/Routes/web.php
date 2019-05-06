@@ -1,5 +1,7 @@
 <?php
 
+use \Modules\ContaAPagar\Http\Controllers\ContaAPagarController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,5 +15,18 @@
 
 Route::prefix('contaapagar')->group(function() {
     Route::get('/', 'ContaAPagarController@index');
+    Route::get('/', ['as' => 'contaapagar', 'uses' => 'ContaAPagarController@index']);
+    Route::get('cat={id}', ['as' => 'cat.id', 'uses' => 'ContaAPagarController@filtro']);
+    
+    Route::get('check/teste', ['as' => 'check.status', 'uses' => 'ContaAPagarController@status']);
     
 });
+
+Route::prefix('novaconta')->group(function() {
+   Route::get('/', 'NovaContaController@index'); 
+});
+
+Route::prefix('categoria')->group(function ($id) {
+    Route::get('/', 'CategoriaController@index');
+});
+
