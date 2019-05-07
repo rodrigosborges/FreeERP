@@ -28,8 +28,8 @@ class UsuarioController extends Controller
         switch ($papel) {
             case 'administrador':
                 $menu = [
-                    ['icon' => 'person', 'tool' => 'Login', 'route' => '/controleusuario/login'],
-                    ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+                    ['icon' => 'person', 'tool' => 'Autenticar', 'route' => '/controleusuario/autenticar'],
+                    ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/controleusuario/cadastrar'],
                     ['icon' => 'search', 'tool' => 'Buscar', 'route' => '/controleusuario/consulta'],
                     ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
                     ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
@@ -53,22 +53,20 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return view('controleusuario::cadastrar', $this->dadosTemplate);
-
+        return $this->viewAutenticar(); 
     }
 
-    public function autenticacao()
-    {
-        return view('controleusuario::login', $this->dadosTemplate);
+    public function viewAutenticar() {
+        return view('controleusuario::login',$this->dadosTemplate);
     }
 
-    public function login()
-    {
-        $data = ['url'=>'validar.login','title'=>'Pagina de login'];
-        return view('controleusuario::login',$this->dadosTemplate,compact('data'));
+    public function viewCadastro() {
+        return view('controleusuario::cadastrar',$this->dadosTemplate);
     }
+
     
-    public function validaLogin(ValidaLoginRequest $req)
+    
+    public function autenticar(ValidaLoginRequest $req)
     {        
         try{
             \Auth::attempt($req->only(['email','password']), false);
@@ -78,23 +76,37 @@ class UsuarioController extends Controller
         } 
     }
     
-    public function validaCadastro(ValidaCadastroRequest $req)
+    public function cadastrar(Request $req)
     {
-      $senha=  Hash::make($req->password);
-      
-        $data = ['name'=>$req->name,'email'=>$req->email,'password'=>$senha];
-       
         try{
-            $usuario = Usuario::create($data);
-            DB::commit();
-            return redirect('/')->with('success', 'Usuario cadastrado com successo');
-        
+            $data = $req->all();
+            $data['password'] = Hash::make($req->input('password'));            
+            Usuario::Create($data);
+
+            return back()->with('success', 'Usuário cadastrado com sucesso!');
         }catch(Exception $e)
         {
             DB::rollback();
             return back()->with('error', $e);
         }
     }
+
+    public function validaLogin(ValidaLoginRequest $req){  
+        $senha=  base64_encode($req->password);
+        $user = DB::table('usuario')->where('email', $req->email)->Where('password',$senha)->first();
+        if($user!=null){
+            session_start();
+            echo "bem vindo " . $user->name;
+            $_SESSION['id'] =$user->id;
+            $_SESSION['email']= $user->email;
+          $data=['usuario'=>$user,'url'=>'/','title'=>'Pagina inicial'];
+          return view('controleusuario::index',$this->dadosTemplate, compact('data'));
+          
+        }else{
+          echo "usuario não encontrado<br>";
+          }
+          
+     }
 
     /**
      * Show the form for creating a new resource.
@@ -103,9 +115,9 @@ class UsuarioController extends Controller
     public function create()
     {
                 /** 
-         * Validar campos recebidos do request
+         * Validar campos recebidos do request - ok
          * inserir dados no db - ok
-         * retornar para tela de cadastro com feedback de sucesso ou erro
+         * retornar para tela de cadastro com feedback de sucesso ou erro - ok
         */
         return view('usuario.create');
     }

@@ -14,8 +14,7 @@
                             <label for="exampleFormControlFile1">
                                 <i class="material-icons text-muted" style="font-size: 100px; cursor:pointer">add_a_photo</i>
                             </label>
-                            <input type="file" class="form-control-file" name="foto" id="exampleFormControlFile1" style="display: none">
-                           
+                            <input type="file" class="form-control-file" name="foto" id="exampleFormControlFile1" style="display: none" required>
                         </div>
                     </div>
                     <div class="row justify-content-center">
