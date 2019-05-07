@@ -59,10 +59,19 @@ class ConsertoController extends Controller
        return view('assistencia::paginas.consertos.cadastrarconserto',compact('id','pecas','servicos'));
 
      }
+     public function nomePecas(Request $req){
+       return PecaAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',valor_venda) AS nomevenda"))->get()->pluck('nomevenda');
+     }
+
+     public function dadosPecas(Request $req){
+       [$nome, $valor] = explode('|',$req->input('nome'));
+       return PecaAssistenciaModel::where('nome',$nome)->where('valor_venda',$valor)->select('id','nome','valor_venda')->first();
+     }
 
      public function nomeClientes(Request $req){
        return ClienteAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',cpf) AS nomecpf"))->get()->pluck('nomecpf');
      }
+
 
      public function dadosCliente(Request $req){
        [$nome, $cpf] = explode('|',$req->input('nome'));

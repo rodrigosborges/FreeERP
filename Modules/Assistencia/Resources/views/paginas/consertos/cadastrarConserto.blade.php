@@ -27,6 +27,41 @@
 
 @section('js')
 	<script>
+		$("[name='selecionarPeca']").on('keyup',function(){
+
+				$.ajax({
+						type: "GET",
+						url: `${main_url}/assistencia/conserto/nomePecas`,
+						data: {
+							'selecionarPeca': $(this).val()
+						},
+						success: function (data) {
+								$("[name='selecionarPeca']").autocomplete({
+									source: data,
+									select: function( event, ui ) {
+										inserirPeca(ui.item.value)
+									}
+								})
+						},
+				})
+
+		})
+		function inserirPeca(val){
+
+			$.ajax({
+	        type: "GET",
+	        url: `${main_url}/assistencia/conserto/dadosPecas`,
+	        data: {
+						'nome': val
+					},
+	        success: function (data) {
+							$("[name='nome']").val(data.nome)
+							$("[name='valor_venda']").val(data.valor_venda)
+	        },
+	    })
+
+		}
+
 		$("[name='nome']").on('keyup',function(){
 
 				$.ajax({

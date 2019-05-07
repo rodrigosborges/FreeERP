@@ -155,6 +155,7 @@ $menu = [
 
         <!-- Toggle Menu Script -->
         <script>var main_url="{{url('')}}"</script>
+
         <script>
             function toggleMenu() {
                 var sidebar = document.getElementById('sidebar');
