@@ -8,3 +8,7 @@ div.error {
     font-weight: bold;
     font-size:small;
 }
+
+ul{
+    list-style-type: none !important;
+} 
