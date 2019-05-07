@@ -63,10 +63,7 @@ class UsuarioController extends Controller
         return view('controleusuario::cadastrar',$this->dadosTemplate);
     }
 
-    /*public function autenticacao()
-    {
-        return view('controleusuario::login', $this->dadosTemplate);
-    }*/
+    
     
     public function autenticar(ValidaLoginRequest $req)
     {        
