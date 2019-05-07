@@ -22,10 +22,32 @@ class Funcionario extends Model{
         return $this->hasMany('Modules\Funcionario\Entities\Documento');
     }
 
-    public function endereco(){
-        return $this->hasOne('Modules\Funcionario\Entities\Endereco');
+    //caso seja 1 pra 1
+    public function enderecoRelacao(){
+        return $this->hasOne('Modules\Funcionario\Entities\Relacao', 'origem_id')
+            ->where('tabela_origem','funcionario')
+            ->where('tabela_destino','endereco');
     }
 
+    public function endereco(){
+        return $this->enderecoRelacao->dados;
+    }
+
+    //caso seja 1 pra n
+    // public function enderecoRelacao(){
+    //     return $this->hasMany('Modules\Funcionario\Entities\Relacao', 'origem_id')
+    //         ->where('tabela_origem','funcionario')
+    //         ->where('tabela_destino','endereco');
+    // }
+
+    // public function endereco(){
+    //     $dados = [];
+    //     foreach($this->enderecoRelacao as $relacao){
+    //         $dados[] = $relacao->dados;
+    //     }
+    //     return $dados;
+    // }
+    
     public function contato(){
         return $this->hasOne('Modules\Funcionario\Entities\Contato');
     }
