@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario, Documento, Telefone};
+use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario, Documento, Telefone, Endereco};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use DB;
 
@@ -256,4 +256,8 @@ class FuncionarioController extends Controller{
         }
     }
 
+    public function ficha($id){
+        $funcionario = Funcionario::findOrFail($id);
+        return view('funcionario::funcionario.ficha', compact('funcionario'));
+    }
 }
