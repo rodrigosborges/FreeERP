@@ -18,10 +18,9 @@ class ItemCompraController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
 		];
         $data = [
 			'item_compra'		=> ItemCompra::all(),
@@ -38,10 +37,9 @@ class ItemCompraController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
 		];
         $data = [
 			"url" 	 	=> url('compra/itemCompra'),
@@ -83,11 +81,9 @@ class ItemCompraController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-            
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
 		];
         $data = [
 			"url" 	 	=> url("compra/itemCompra/$id"),

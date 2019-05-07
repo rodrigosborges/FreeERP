@@ -2,9 +2,13 @@
 @section('content')
 <div class="row justify-content-center">                     
    <div class="card col-7">
+      
+
       <h2 class="card-title mt-3 ml-2">Envio de Orçamentos</h2>
 
       <h2 class="card-title mt-3 ml-2">Itens</h2>
+      <form action="{{ $data['url'] }}" method="POST">
+        
 
          @foreach($data['itens_pedido'] as $itemPedido)
          <div class="input-group mt-2">
@@ -16,8 +20,6 @@
          @endforeach
 
       <br>
-      <br>
-
       <h2>Fornecedores</h2>
       <div class="form-group">
          <div class="input-group mt-3">
@@ -29,15 +31,17 @@
             </select>
             <button type="button" class="btn btn-danger remover mb-4 ">Remover</button>
                   
-         </div>
+         
       </div>
 
       <div class="col-md-12 text-center">
          <button type="button" class="btn btn-success" id="adicionar">Adicionar</button>
       </div>
+      </form>
       <button type="submit" class="btn btn-primary">Enviar</button>
          
       </div>
+      
    </div>
 </div>
 

@@ -19,10 +19,9 @@ class PedidoController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
 		];
         $data = [
 			'pedido'		=> Pedido::all(),
@@ -40,10 +39,9 @@ class PedidoController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
 		];
         $data = [
 			"url" 	 	=> url('compra/pedido'),
@@ -91,11 +89,9 @@ class PedidoController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-            
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
 		];
         $data = [
 			"url" 	 	=> url("compra/pedido/$id"),
@@ -153,11 +149,9 @@ class PedidoController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-            
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
 		];
         $data = [
 			'pedido'		=> Pedido::all(),
@@ -180,13 +174,12 @@ class PedidoController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-            
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
 		];
         $data = [
+            'url'   => url("compra/pedido/$id"),
             'pedido'	=> Pedido::findOrFail($id),
             'fornecedores'=> Fornecedor::all(),
             'itens_pedido' => Pedido::findOrFail($id)->itens()->get(),
