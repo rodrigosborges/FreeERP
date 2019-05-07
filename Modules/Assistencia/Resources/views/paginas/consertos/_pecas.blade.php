@@ -10,10 +10,11 @@
 
 
 <div class="form-group row">
+  <input type="hidden" name="idPeca">
   <div class="col">
-    <input class="form-control" name="nome" type="text" placeholder="" value="">
+    <input class="form-control" name="nome_peca" type="text" placeholder="" value="">
   </div>
   <div class="col">
-    <input class="form-control" name="valor_venda" type="text" placeholder="" value="">
+    <input class="form-control" name="valor_peca" type="text" placeholder="" value="">
   </div>
 </div>

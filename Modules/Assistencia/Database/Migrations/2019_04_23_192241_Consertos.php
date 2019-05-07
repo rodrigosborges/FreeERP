@@ -15,18 +15,20 @@ class Consertos extends Migration
     {
       Schema::create('conserto_assistencia', function (Blueprint $table) {
           $table->increments('id');
+          $table->string('data_entrada');
+          $table->string('situacao');
           $table->string('modelo_aparelho');
           $table->string('marca_aparelho');
           $table->string('serial_aparelho');
           $table->string('imei_aparelho');
           $table->text('defeito');
           $table->text('obs');
-          $table->integer('cliente_id')->unsigned();
-          $table->integer('peca_id')->unsigned();
-          $table->integer('servico_id')->unsigned();
-          $table->foreign('cliente_id')->references('id')->on('cliente_assistencia');
-          $table->foreign('peca_id')->references('id')->on('peca_assistencia');
-          $table->foreign('servico_id')->references('id')->on('servico_assistencia');
+          $table->integer('idCliente')->unsigned();
+          $table->integer('idPeca')->unsigned();
+          $table->integer('idMaoObra')->unsigned();
+          $table->foreign('idCliente')->references('id')->on('cliente_assistencia');
+          $table->foreign('idPeca')->references('id')->on('peca_assistencia');
+          $table->foreign('idMaoObra')->references('id')->on('servico_assistencia');
           $table->timestamps();
       });
 

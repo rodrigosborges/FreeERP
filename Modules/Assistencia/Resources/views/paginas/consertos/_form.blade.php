@@ -19,7 +19,7 @@
 
       <label for="situacao">Situação</label>
       <select class="custom-select " id="situacao" name="situacao">
-        <option selected>Aguardando autorização do orçamento</option>
+        <option selected value="0">Aguardando autorização do orçamento</option>
         <option value="1">Autorizado</option>
         <option value="2">Em reparo</option>
         <option value="3">Aguardando retirada do cliente</option>

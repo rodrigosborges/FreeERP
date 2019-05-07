@@ -9,7 +9,7 @@ class ConsertoAssistenciaModel extends Model
 {
     protected $table = 'conserto_assistencia';
 
-    protected $fillable = ['id','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','cliente_id','peca_id','servico_id'];
+    protected $fillable = ['id','situacao','data_entrada','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','idCliente','idPeca','idMaoObra'];
 
     public static function busca($busca)
     {
@@ -31,8 +31,5 @@ class ConsertoAssistenciaModel extends Model
         return $this->hasMany('Modules\Assistencia\Entities\Servico');
     }
 
-    public static function buscaPeca($busca)
-    {
-      return static::where('nome', 'LIKE', '%'.$busca.'%')->get();
-    }
+
 }

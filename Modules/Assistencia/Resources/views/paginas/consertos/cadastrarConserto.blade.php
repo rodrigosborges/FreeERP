@@ -27,6 +27,42 @@
 
 @section('js')
 	<script>
+		$("[name='selecionarMao']").on('keyup',function(){
+
+				$.ajax({
+						type: "GET",
+						url: `${main_url}/assistencia/conserto/nomeServicos`,
+						data: {
+							'selecionarMao': $(this).val()
+						},
+						success: function (data) {
+								$("[name='selecionarMao']").autocomplete({
+									source: data,
+									select: function( event, ui ) {
+										inserirServico(ui.item.value)
+									}
+								})
+						},
+				})
+
+		})
+		function inserirServico(val){
+
+			$.ajax({
+	        type: "GET",
+	        url: `${main_url}/assistencia/conserto/dadosServicos`,
+	        data: {
+						'nome': val
+					},
+	        success: function (data) {
+	        				$("[name='idMaoObra']").val(data.id)
+							$("[name='nome_servico']").val(data.nome)
+							$("[name='valor_servico']").val(data.valor)
+	        },
+	    })
+
+		}
+
 		$("[name='selecionarPeca']").on('keyup',function(){
 
 				$.ajax({
@@ -55,8 +91,9 @@
 						'nome': val
 					},
 	        success: function (data) {
-							$("[name='nome']").val(data.nome)
-							$("[name='valor_venda']").val(data.valor_venda)
+	        				$("[name='idPeca']").val(data.id)
+							$("[name='nome_peca']").val(data.nome)
+							$("[name='valor_peca']").val(data.valor_venda)
 	        },
 	    })
 
@@ -91,6 +128,7 @@
 						'nome': val
 					},
 	        success: function (data) {
+	        				$("[name='idCliente']").val(data.id)
 							$("[name='nome']").val(data.nome)
 							$("[name='cpf']").val(data.cpf)
 							$("[name='celnumero']").val(data.celnumero)

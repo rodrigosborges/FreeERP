@@ -1,32 +1,20 @@
-<div class="input-group">
-  <input type="text" class="form-control col-sm-10" name="busca" placeholder="Pesquisar peça" aria-label="Pesquisar peça" aria-describedby="button-addon2">
-  <div class="input-group-append">
-    <input class="btn btn-outline-secondary" type="submit" value="Pesquisar" id="button-addon2"></input>
+
+<div class="form-group row">
+  <div class="input-group col">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="nome"><i class="material-icons">link_off</i></span>
+    </div>
+    <input class="form-control" name="selecionarMao" type="text" placeholder="Escolha a mão-de-obra">
   </div>
 </div>
-<div class="table-responsive">
-  <table class="table table-borderless">
-    <div class="row">
-      <thead>
-        <tr>
-          <th scope="col">Nome</th>
-          <th scope="col">Valor unitário</th>
-        </tr>
-      </thead>
-    </div>
-    <div class="row">
-      <tbody>
-        @foreach ($servicos as $servico)
-          <tr>
-            <td scope="row">{{$servico->nome }}</td>
-            <td>R$ {{$servico->valor }}</td>
-            <td>
-              <a href="{{route('consertos.servicos.retirar',$servico->id)}}"><button type="button" class="btn"><i class="material-icons">clear</i></button></a>
-            </td>
-          </tr>
-        @endforeach
-      </tbody>
-    </div>
 
-  </table>
+
+<div class="form-group row">
+  <input type="hidden" name="idMaoObra">
+  <div class="col">
+    <input class="form-control" name="nome_servico" type="text" placeholder="" value="">
+  </div>
+  <div class="col">
+    <input class="form-control" name="valor_servico" type="text" placeholder="" value="">
+  </div>
 </div>
