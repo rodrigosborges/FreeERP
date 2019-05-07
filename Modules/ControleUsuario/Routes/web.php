@@ -18,7 +18,7 @@ Route::prefix('controleusuario')->group(function() {
 
     Route::post('/cadastro',['as'=>'validar.cadastro', 'uses'=>'UsuarioController@validaCadastro']);
     Route::get('/consulta', 'UsuarioController@consulta');
-
+    
     Route::post('/salvar',['as'=>'usuario.salvar','uses'=> 'UsuarioController@salvarCadastro']);
     Route::put('/editar/{id}', 'UsuarioController@editar');
     Route::get('/inativar/{id}', 'UsuarioController@inativar');

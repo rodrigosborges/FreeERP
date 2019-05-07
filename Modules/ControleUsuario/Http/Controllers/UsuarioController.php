@@ -5,6 +5,7 @@ namespace Modules\ControleUsuario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\controleUsuario\Entities\Papel;
 use Modules\controleUsuario\Http\Requests\{ValidaLoginRequest};
 use Modules\controleUsuario\Http\Requests\{ValidaCadastroRequest};
 use Modules\ControleUsuario\Entities\{Usuario};
@@ -144,13 +145,17 @@ class UsuarioController extends Controller
     }
 
     public function consulta(){
-
-        return view('controleusuario::consulta', $this->dadosTemplate);
+        $status = ['0'=>"Ativo e inativos", '1'=>"Somente ativos",'2'=>"Somente inativos"];
+        $modulos = ['0'=>"Todos os módulos",'1'=>"Recursos Humanos", '2'=>"Vendas",'3'=>"Estoque"];
+        $cargos = ['0'=>"Administradores",'1'=>"Gerentes",'2'=> "operadores"];
+        return view('controleusuario::consulta', $this->dadosTemplate, compact('status','modulos', 'cargos'));
     }
 
-    public function buscar(){
+    public function buscar(Request $req){
+        
+        dd($req);
 
-        return view('controleusuario::consulta', $this->dadosTemplate);
+        return view('controleusuario::consulta', $this->dadosTemplate, compact('status'));
     }
 
     /**
