@@ -27,18 +27,29 @@ class ContaAPagarController extends Controller
             $total = $this->total();
             return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias'));
       }
-    public function status(){ 
-        $pagamentos = PagamentoModel::all();
-        $contas = '';
-        foreach($pagamentos as $pagamento){
-            if($pagamento->status_pagamento != 'Pago'){
-                $pagamentos = $pagamento;
-            }
-                
-        }
-        $total = $this->total_filtro($id);
+    
+    public function status(){ /*tratar possivel variavel q vir e depois juntar com o filtro de categoria*/
+        
+        $pagamentoss = PagamentoModel::all();
+        $pagamentos = [];
+        
+        foreach($pagamentoss as $pagamento){
             
-         return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias'));
+            if($pagamento->status_pagamento == 'Aguardando'){
+                array_push($pagamentos, $pagamento);
+            }
+
+        }
+        $categorias = CategoriaModel::where('ativo', 1)->get();
+        $contas = ContaAPagarModel::all();
+        
+        $total = 0;
+        foreach($pagamentos as $pagamento){
+            $total = $total + $pagamento->valor;
+        }
+
+        
+        return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias')); 
       }
     
      public function filtro($id){ 
@@ -47,7 +58,7 @@ class ContaAPagarController extends Controller
         $fim = $data->year.'-'.$data->month.'-31';
         $range = [$inicio,$fim];
         $pagamento = PagamentoModel::whereBetween('data_vencimento', $range)->get();
-         $pagamentos = [];
+        $pagamentos = [];
          
          foreach($pagamento as $pg){
              if($pg->categoria_conta($pg->conta_pagar_id) == $id){
@@ -63,6 +74,7 @@ class ContaAPagarController extends Controller
 
          return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias'));
       }
+    
     public function total(){
         $data = Carbon::now();
         $inicio = $data->year.'-'.$data->month.'-01';

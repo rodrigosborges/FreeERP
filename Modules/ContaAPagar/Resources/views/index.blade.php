@@ -78,8 +78,7 @@
 </div>
 
 <section class="row check">
-    <a class="btn btn-primary" href="{{ route('check.status') }}">Teste</a>
-
+    <a class="btn btn-primary" href="{{ route('check.status') }}">Filtrar</a> <!-- falta botao com valores '?'-->
 </section>
     
 @stop
