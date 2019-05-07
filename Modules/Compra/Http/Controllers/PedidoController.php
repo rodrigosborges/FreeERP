@@ -189,7 +189,7 @@ class PedidoController extends Controller
         $data = [
             'pedido'	=> Pedido::findOrFail($id),
             'fornecedores'=> Fornecedor::all(),
-            "itens_pedido" => Pedido::findOrFail($id)->itens()->get(),
+            'itens_pedido' => Pedido::findOrFail($id)->itens()->get(),
 			'title'		=> "Lista de Pedidos Disponíveis",
 		]; 
         return view('compra::gerar_orcamento', compact('data','moduleInfo','menu'));
