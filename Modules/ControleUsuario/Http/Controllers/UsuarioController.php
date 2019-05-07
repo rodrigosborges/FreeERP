@@ -80,7 +80,7 @@ class UsuarioController extends Controller
     {
         try{
             $data = $req->all();
-            $data['password'] = Hash::make($req->input('password'));            
+            $data['password'] =base64_encode($req->input('password'));            
             Usuario::Create($data);
 
             return back()->with('success', 'Usuário cadastrado com sucesso!');
