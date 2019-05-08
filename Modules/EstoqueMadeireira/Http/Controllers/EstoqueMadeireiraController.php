@@ -16,14 +16,14 @@ class EstoqueMadeireiraController extends Controller
     {
         $moduleInfo = [
             'icon' => 'android',
-            'name' => 'Exemplo',
+            'name' => 'Estoque Madeireira',
         ];
 
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+            ['icon' => 'add_box', 'tool' => 'Cadastro', 'route' => '/'],
+            ['icon' => 'search', 'tool' => 'Pedidos', 'route' => '#'],
+            ['icon' => 'edit', 'tool' => 'Estoque', 'route' => '#'],
+            //['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
         ];
 
         return view('estoquemadeireira::index',compact('moduleInfo','menu'));
