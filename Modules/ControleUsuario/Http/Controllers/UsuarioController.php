@@ -92,19 +92,21 @@ class UsuarioController extends Controller
     }
 
     public function validaLogin(ValidaLoginRequest $req){  
+        
+     
         $senha=  base64_encode($req->password);
         $user = DB::table('usuario')->where('email', $req->email)->Where('password',$senha)->first();
         if($user!=null){
             session_start();
-            echo "bem vindo " . $user->name;
+        
             $_SESSION['id'] =$user->id;
             $_SESSION['email']= $user->email;
-          $data=['usuario'=>$user,'url'=>'/','title'=>'Pagina inicial'];
-          return view('controleusuario::index',$this->dadosTemplate, compact('data'));
+          $data=['usuario'=>$user,'url'=>'/dashboard','title'=>'Pagina inicial'];
+          return view('controleusuario::dashboard',$this->dadosTemplate, compact('data'));
           
         }else{
           echo "usuario não encontrado<br>";
-          }
+        }
           
      }
 
@@ -135,6 +137,11 @@ class UsuarioController extends Controller
 
         
     }
+    public function logoff(){
+        session_start();
+        session_destroy();
+        return view('controleusuario::login',$this->dadosTemplate);
+        }
 
     /**
      * Show the specified resource.

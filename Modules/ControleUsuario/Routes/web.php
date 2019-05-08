@@ -15,7 +15,7 @@ Route::prefix('controleusuario')->group(function() {
     Route::post('/autenticar',['as'=>'validar.login', 'uses'=>'UsuarioController@validaLogin']);
     Route::get('/',['as'=>'index', 'uses'=>'UsuarioController@index']);
     // rota é composta por: /caminho, ClasseController@nomeMétodo
-
+    Route::get('/logoff',['as'=>'user.logoff','uses'=>'UsuarioController@logoff']);
     Route::get('/cadastrar', 'UsuarioController@viewCadastro');
     Route::post('/cadastrar',['as'=>'validar.cadastro', 'uses'=>'UsuarioController@cadastrar']);
     
