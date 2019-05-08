@@ -8,15 +8,14 @@
             {{ csrf_field() }}
             @if($data['model'])
             @method('PUT')
-            @endif
-
+            @else
             <div class="form-group">
                 <div class="form-row">
                     <label>Solicitante</label>
                     <input type="text" placeholder="Solicitante" name="solicitante_id" id="solicitante_id" class="form-control" value="{{ $data['model'] ? $data['model']->solicitante_id : old('solicitante_id', "") }}">
                 </div>
             </div>
-
+            @endif
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label>Tipo do Aparelho</label>

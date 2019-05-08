@@ -13,29 +13,31 @@ use DB;
 
 class TecnicoController extends Controller
 {
-    
+
     protected $moduleInfo;
     protected $menu;
 
     public function __construct()
     {
+
+        //construtor para amarzenar irnformações do menu que será enviada para todas as views desse controller
         $this->moduleInfo = [
             'icon' => 'settings',
             'name' => 'Ordem de Serviço',
         ];
         $this->menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+            ['icon' => 'add_box', 'tool' => 'Gerenciar OS', 'route' => 'os'],
+            ['icon' => 'add_box', 'tool' => 'Gerenciar técnico', 'route' => 'tecnico'],
         ];
     }
 
     public function index(Request $request)
-    {   
+    {
+        //setando o menu
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
+        //se houver um request de busca é retornado para a view index os resultados , senão envia todo os dados da tabela
         if ($request->has('busca')) {
             $busca = $request->get('busca');
             $data = [
@@ -61,8 +63,10 @@ class TecnicoController extends Controller
 
     public function create()
     {
+        //setando o menu
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+
         $data = [
             'url' => url("ordemservico/tecnico"),
             'model' => '',
@@ -73,7 +77,7 @@ class TecnicoController extends Controller
     }
 
     public function store(Request $request)
-    {   
+    {
         DB::beginTransaction();
         try {
             $tecnico = Tecnico::create($request->all());
@@ -83,7 +87,6 @@ class TecnicoController extends Controller
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
         }
-        
     }
 
     public function show($id)
@@ -93,6 +96,8 @@ class TecnicoController extends Controller
 
     public function edit($id)
     {
+
+        //setando o menu
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
