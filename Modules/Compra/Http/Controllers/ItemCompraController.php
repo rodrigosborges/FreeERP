@@ -21,6 +21,7 @@ class ItemCompraController extends Controller
             ['icon' => 'shop', 'tool' => 'Itens', 'route' => '/'],
             ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../pedido/'],
             ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../fornecedor/'],
+            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
 		];
         $data = [
 			'item_compra'		=> ItemCompra::all(),
@@ -40,6 +41,7 @@ class ItemCompraController extends Controller
             ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../itemCompra/'],
             ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../pedido/'],
             ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../fornecedor/'],
+            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
 		];
         $data = [
 			"url" 	 	=> url('compra/itemCompra'),
@@ -84,6 +86,7 @@ class ItemCompraController extends Controller
             ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../'],
             ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../../pedido/'],
             ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../../fornecedor/'],
+            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
 		];
         $data = [
 			"url" 	 	=> url("compra/itemCompra/$id"),
