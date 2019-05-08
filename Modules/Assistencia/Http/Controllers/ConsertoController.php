@@ -5,7 +5,7 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\{ConsertoAssistenciaModel, PecaAssistenciaModel, ServicoAssistenciaModel, ClienteAssistenciaModel};
+use Modules\Assistencia\Entities\{ConsertoAssistenciaModel, PecaAssistenciaModel, ServicoAssistenciaModel, ClienteAssistenciaModel, TecnicoAssistenciaModel};
 use DB;
 
 class ConsertoController extends Controller
@@ -71,6 +71,9 @@ class ConsertoController extends Controller
      public function nomeClientes(Request $req){
        return ClienteAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',cpf) AS nomecpf"))->get()->pluck('nomecpf');
      }
+     public function nomeTecnicos(Request $req){
+       return TecnicoAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',cpf) AS nomecpf"))->get()->pluck('nomecpf');
+     }
 
      public function dadosPecas(Request $req){
        [$nome, $valor] = explode('|',$req->input('nome'));
@@ -85,6 +88,10 @@ class ConsertoController extends Controller
      public function dadosCliente(Request $req){
        [$nome, $cpf] = explode('|',$req->input('nome'));
        return ClienteAssistenciaModel::where('nome',$nome)->where('cpf',$cpf)->select('id','nome','email','cpf','celnumero')->first();
+     }
+     public function dadosTecnico(Request $req){
+       [$nome, $cpf] = explode('|',$req->input('nome'));
+       return TecnicoAssistenciaModel::where('nome',$nome)->where('cpf',$cpf)->select('id','nome','cpf')->first();
      }
 
 }

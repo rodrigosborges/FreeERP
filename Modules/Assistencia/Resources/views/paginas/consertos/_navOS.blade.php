@@ -11,6 +11,9 @@
   <li class="nav-item">
     <a class="nav-link" id="maoObra-tab" data-toggle="tab" href="#maoObra" role="tab" aria-controls="maoObra" aria-selected="false">Mão de Obra</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" id="tecnico-tab" data-toggle="tab" href="#tecnico" role="tab" aria-controls="tecnico" aria-selected="true">Cliente</a>
+  </li>
 </ul>
 <div class="tab-content" id="myTabContent">
 
@@ -28,5 +31,9 @@
 
   <div class="tab-pane fade" id="maoObra" role="tabpanel" aria-labelledby="maoObra-tab">
     @include('assistencia::paginas.consertos._maoObra')
+  </div>
+
+  <div class="tab-pane fade show" id="tecnico" role="tabpanel" aria-labelledby="tecnico-tab">
+    @include('assistencia::paginas.consertos._tecnico')
   </div>
 </div>

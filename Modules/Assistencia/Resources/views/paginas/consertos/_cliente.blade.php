@@ -1,19 +1,26 @@
 
+
+<div class="form-group row">
+  <div class="input-group col">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="nome"><i class="material-icons">link_off</i></span>
+    </div>
+    <input class="form-control" name="selecionarCliente" type="text" placeholder="Escolher cliente">
+  </div>
+</div>
+
 <div class="form-group row">
   <div class="input-group col">
     <div class="input-group-prepend">
       <span class="input-group-text" id="nome"><i class="material-icons">person</i></span>
     </div>
-    <input class="form-control" name="nome" type="text" placeholder="Nome completo" value="{{ isset($cliente->nome) ? $cliente->nome : old('nome', '') }}">
+    <input class="form-control" name="nome" type="text" placeholder="Nome completo" readonly value="{{ isset($cliente->nome) ? $cliente->nome : old('nome', '') }}">
   </div>
   <div class="input-group col">
     <div class="input-group-prepend">
       <span class="input-group-text" id="cpf"><i class="material-icons">account_box</i></span>
     </div>
     <input type="text" class="form-control cpf-mask" name="cpf" placeholder="000.000.000-00" readonly value="{{ isset($cliente->cpf) ? $cliente->cpf : old('cpf', '') }}">
-<!--
-    <input type="text" class="form-control input-md" name="cpf" placeholder="XXX.XXX.XXX-XX" readonly value="{{isset($cliente->cpf) ? $cliente->cpf : ''}}">
--->
   </div>
 </div>
 

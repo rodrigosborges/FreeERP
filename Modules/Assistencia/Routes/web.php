@@ -66,6 +66,8 @@ Route::prefix('assistencia')->group(function() {
     Route::get('conserto/dadosPecas',['as'=>'consertos.dadosPecas','uses'=>'ConsertoController@dadosPecas']);
     Route::get('conserto/nomeClientes',['as'=>'consertos.nomeClientes','uses'=>'ConsertoController@nomeClientes']);
     Route::get('conserto/dadosCliente',['as'=>'consertos.dadosCliente','uses'=>'ConsertoController@dadosCliente']);
+    Route::get('conserto/nomeTecnicos',['as'=>'consertos.nomeTecnicos','uses'=>'ConsertoController@nomeTecnicos']);
+    Route::get('conserto/dadosTecnico',['as'=>'consertos.dadosTecnico','uses'=>'ConsertoController@dadosTecnico']);
 
     Route::post('conserto/salvar',['as'=>'consertos.salvar','uses'=>'ConsertoController@salvar']);
 

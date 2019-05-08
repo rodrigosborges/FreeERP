@@ -99,19 +99,20 @@
 
 		}
 
-		$("[name='nome']").on('keyup',function(){
+
+		$("[name='selecionarCliente']").on('keyup',function(){
 
 				$.ajax({
 		        type: "GET",
 		        url: `${main_url}/assistencia/conserto/nomeClientes`,
 		        data: {
-							'nome': $(this).val()
+							'selecionarCliente': $(this).val()
 						},
 		        success: function (data) {
-								$("[name='nome']").autocomplete({
+								$("[name='selecionarCliente']").autocomplete({
 									source: data,
 									select: function( event, ui ) {
-										inserirDados(ui.item.value)
+										inserirDadosCliente(ui.item.value)
 									}
 								})
 		        },
@@ -119,7 +120,7 @@
 
 		})
 
-		function inserirDados(val){
+		function inserirDadosCliente(val){
 
 			$.ajax({
 	        type: "GET",
@@ -137,6 +138,44 @@
 	    })
 
 		}
+
+		$("[name='selecionarTecnico']").on('keyup',function(){
+
+				$.ajax({
+		        type: "GET",
+		        url: `${main_url}/assistencia/conserto/nomeTecnicos`,
+		        data: {
+							'selecionarTecnico': $(this).val()
+						},
+		        success: function (data) {
+								$("[name='selecionarTecnico']").autocomplete({
+									source: data,
+									select: function( event, ui ) {
+										inserirDadosTecnico(ui.item.value)
+									}
+								})
+		        },
+		    })
+
+		})
+
+		function inserirDadosTecnico(val){
+
+			$.ajax({
+	        type: "GET",
+	        url: `${main_url}/assistencia/conserto/dadosTecnico`,
+	        data: {
+						'nome': val
+					},
+	        success: function (data) {
+	        				$("[name='idTecnico']").val(data.id)
+							$("[name='nome-tecnico']").val(data.nome)
+							$("[name='cpf-tecnico']").val(data.cpf)
+	        },
+	    })
+
+		}
+
 	</script>
 
 @stop
