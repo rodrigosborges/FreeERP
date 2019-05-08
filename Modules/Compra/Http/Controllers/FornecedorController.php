@@ -18,9 +18,9 @@ class FornecedorController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../itemCompra/'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../pedido/'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '/'],
 		];
         $data = [
 			'fornecedor'		=> Fornecedor::all(),
@@ -37,9 +37,9 @@ class FornecedorController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../itemCompra/'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../pedido/'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../fornecedor/'],
 		];
         $data = [
 			"url" 	 	=> url('compra/fornecedor'),
@@ -81,9 +81,9 @@ class FornecedorController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../../itemCompra/'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../../pedido'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../'],
 		];
         $data = [
 			"url" 	 	=> url("compra/fornecedor/$id"),

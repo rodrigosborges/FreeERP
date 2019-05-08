@@ -19,9 +19,9 @@ class PedidoController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../itemCompra/'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '/'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../fornecedor/'],
 		];
         $data = [
 			'pedido'		=> Pedido::all(),
@@ -39,9 +39,9 @@ class PedidoController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../itemCompra/'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../pedido/'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../fornecedor/'],
 		];
         $data = [
 			"url" 	 	=> url('compra/pedido'),
@@ -89,9 +89,9 @@ class PedidoController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../../itemCompra/'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../../fornecedor/'],
 		];
         $data = [
 			"url" 	 	=> url("compra/pedido/$id"),
@@ -149,9 +149,9 @@ class PedidoController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../../itemCompra/'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../../fornecedor/'],
 		];
         $data = [
 			'pedido'		=> Pedido::all(),
@@ -174,9 +174,9 @@ class PedidoController extends Controller
             'name' => 'COMPRA',
         ];
         $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => 'itemCompra'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => 'pedido'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => 'fornecedor'],
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../../itemCompra/'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../../fornecedor/'],
 		];
         $data = [
             'url'   => url("compra/pedido/$id"),
