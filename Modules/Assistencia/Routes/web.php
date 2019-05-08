@@ -23,6 +23,16 @@ Route::prefix('assistencia')->group(function() {
     Route::get('cliente/deletar/{id}',['as'=>'cliente.deletar','uses'=>'ClienteController@deletar']);
     Route::post('cliente/buscar',['as'=>'cliente.buscar','uses'=>'ClienteController@buscar']);
     /* /Clientes*/
+    /* tecnicos*/
+    Route::get('tecnico',['as'=>'tecnico.index','uses'=>'TecnicoController@index']);
+    Route::get('tecnico/cadastrar',['as'=>'tecnico.cadastrar','uses'=>'TecnicoController@cadastrar']);
+    Route::post('tecnico/salvar',['as'=>'tecnico.salvar','uses'=>'TecnicoController@salvar']);
+    Route::get('tecnico/localizar',['as'=>'tecnico.localizar','uses'=>'TecnicoController@localizar']);
+    Route::get('tecnico/editar/{id}',['as'=>'tecnico.editar','uses'=>'TecnicoController@editar']);
+    Route::put('tecnico/atualizar/{id}',['as'=>'tecnico.atualizar','uses'=>'TecnicoController@atualizar']);
+    Route::get('tecnico/deletar/{id}',['as'=>'tecnico.deletar','uses'=>'TecnicoController@deletar']);
+    Route::post('tecnico/buscar',['as'=>'tecnico.buscar','uses'=>'TecnicoController@buscar']);
+    /* /tecnicos*/
     /*Estoque (peça e serviço) */
     Route::get('estoque',['as'=>'estoque.index','uses'=>'EstoqueController@index']);
 
@@ -46,6 +56,9 @@ Route::prefix('assistencia')->group(function() {
     /*consertos/ Ordem de servicos*/
     Route::get('conserto',['as'=>'consertos.index','uses'=>'ConsertoController@index']);
     Route::get('conserto/cadastrar',['as'=>'consertos.cadastrar','uses'=>'ConsertoController@cadastrar']);
+    Route::get('conserto/localizar',['as'=>'consertos.localizar','uses'=>'ConsertoController@localizar']);
+    Route::get('conserto/visualizar/{id}',['as'=>'consertos.visualizar','uses'=>'ConsertoController@visualizarConserto']);
+    Route::post('conserto/buscar',['as'=>'consertos.buscar','uses'=>'ConsertoController@buscar']);
 
     Route::get('conserto/nomeServicos',['as'=>'consertos.nomeServicos','uses'=>'ConsertoController@nomeServicos']);
     Route::get('conserto/dadosServicos',['as'=>'consertos.dadosServicos','uses'=>'ConsertoController@dadosServicos']);

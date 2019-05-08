@@ -17,7 +17,7 @@
         <a href="{{route('consertos.cadastrar')}}"><button type="button" class="btn btn-info" name="button">Novo conserto</button></a>
       </div>
       <div class="col">
-        <a href=""><button type="button" class="btn btn-info" name="button">Localizar consertos</button></a>
+        <a href="{{route('consertos.localizar')}}"><button type="button" class="btn btn-info" name="button">Localizar consertos</button></a>
       </div>
       <div class="col">
         <a href=""><button type="button" class="btn btn-info" name="button">Finalizar conserto</button></a>

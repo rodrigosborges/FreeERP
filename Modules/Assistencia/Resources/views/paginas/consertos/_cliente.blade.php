@@ -18,7 +18,7 @@
 </div>
 
 <div class="form-group row">
-  <input type="hidden" name="idCliente">
+  <input type="hidden" name="idCliente" value="{{isset($conserto->idCliente) ? $conserto->idCliente : ''}}">
   <div class="input-group col">
     <div class="input-group-prepend">
       <span class="input-group-text" id="email"><i class="material-icons">email</i></span>

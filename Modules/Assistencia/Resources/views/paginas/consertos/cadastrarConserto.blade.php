@@ -55,7 +55,7 @@
 						'nome': val
 					},
 	        success: function (data) {
-	        				$("[name='idMaoObra']").val(data.id)
+	        		$("[name='idMaoObra']").val(data.id)
 							$("[name='nome_servico']").val(data.nome)
 							$("[name='valor_servico']").val(data.valor)
 	        },

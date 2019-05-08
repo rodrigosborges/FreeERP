@@ -1,10 +1,5 @@
 @extends('assistencia::layouts.master')
 
-
-@section('css')
-
-@stop
-
 @section('content')
 <div class="card">
   <div class="card-body">

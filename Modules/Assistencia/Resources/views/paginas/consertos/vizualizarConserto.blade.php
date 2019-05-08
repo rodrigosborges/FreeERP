@@ -1,0 +1,12 @@
+{{$conserto->id}}<br>
+{{$conserto->situacao}}<br>
+{{$conserto->data_entrada}}<br>
+{{$conserto->modelo_aparelho}}<br>
+{{$conserto->marca_aparelho}}<br>
+{{$conserto->serial_aparelho}}<br>
+{{$conserto->imei_aparelho}}<br>
+{{$conserto->defeito}}<br>
+{{$conserto->obs}}<br>
+{{$conserto->idCliente}}<br>
+{{$conserto->idPeca}}<br>
+{{$conserto->idMaoObra}}<br>

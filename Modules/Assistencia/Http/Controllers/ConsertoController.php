@@ -16,23 +16,8 @@ class ConsertoController extends Controller
      */
      public function index()
      {
-
        return view('assistencia::paginas.conserto');
      }
-
-     public function selecionarPeca($idos, $pecas, $servicos, $idpeca)
-     {
-        $teste =  '{{$id}}{{$pecas}} {{$servicos}}{{$peca->id}}';
-
-       return view('assistencia::paginas.consertos.cadastrarconserto',compact('id','pecas','servicos', 'itens'));
-     }
-     public function salvar(Request $req){
-        $dados  = $req->all();
-        ConsertoAssistenciaModel::create($dados);
-
-        return redirect()->route('consertos.index')->with('success','Ordem salva com sucesso!');
-      }
-
      public function cadastrar(){
        $busca = '';
        $pecas = PecaAssistenciaModel::busca($busca);
@@ -51,7 +36,29 @@ class ConsertoController extends Controller
       endif;
 
      }
-     
+     public function localizar()
+     {
+       $consertos = ConsertoAssistenciaModel::all();
+       return view('assistencia::paginas.consertos.localizarConserto',compact('consertos'));
+     }
+     public function buscar(Request $req)
+     {
+       $consertos = ConsertoAssistenciaModel::busca($req->busca);
+       return view('assistencia::paginas.consertos.localizarConserto',compact('consertos'));
+     }
+     public function visualizarConserto($id)
+     {
+       $conserto = ConsertoAssistenciaModel::find($id);
+       return view('assistencia::paginas.consertos.vizualizarConserto',compact('conserto'));
+     }
+
+
+     public function salvar(Request $req){
+        $dados  = $req->all();
+        ConsertoAssistenciaModel::create($dados);
+
+        return redirect()->route('consertos.index')->with('success','Ordem salva com sucesso!');
+      }
 
      public function nomePecas(Request $req){
        return PecaAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',valor_venda) AS nomevenda"))->get()->pluck('nomevenda');
@@ -64,7 +71,6 @@ class ConsertoController extends Controller
      public function nomeClientes(Request $req){
        return ClienteAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',cpf) AS nomecpf"))->get()->pluck('nomecpf');
      }
-
 
      public function dadosPecas(Request $req){
        [$nome, $valor] = explode('|',$req->input('nome'));

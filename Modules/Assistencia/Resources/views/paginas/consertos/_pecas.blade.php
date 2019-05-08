@@ -10,7 +10,7 @@
 
 
 <div class="form-group row">
-  <input type="hidden" name="idPeca">
+  <input type="hidden" name="idPeca" value="{{isset($conserto->idPeca) ? $conserto->idPeca : ''}}">
   <div class="col">
     <input class="form-control" name="nome_peca" type="text" placeholder="" value="">
   </div>

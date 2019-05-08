@@ -23,6 +23,9 @@
         </div>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="{{route('tecnico.index')}}"><h3>Tecnicos</h3?></a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="{{route('pagamento.index')}}"><h3>Pagamentos</h3?></a>
     </li>
   </ul>
