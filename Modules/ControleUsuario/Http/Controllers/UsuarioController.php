@@ -169,17 +169,17 @@ class UsuarioController extends Controller
         $modulos = ['0'=>"Todos os módulos",'1'=>"Recursos Humanos", '2'=>"Vendas",'3'=>"Estoque"];
         $cargos = ['0'=>"Administradores",'1'=>"Gerentes",'2'=> "operadores"];
 
-        $lista=Usuario::all();
+        $lista = Usuario::all();
 
         return view('controleusuario::consulta', $this->dadosTemplate,
-        compact('status','modulos', 'cargos','lista'));
+        compact('status','modulos', 'cargos','lista') );
     }
 
     public function editar(Request $req){
+        $data = DB::table('usuario')->select('id','name','email','foto')->where('id', $req->ID)->first();
 
 
-
-        return view('controleusuario::editar', $this->dadosTemplate, compact('req'));
+        return view('controleusuario::editar', $this->dadosTemplate, compact('data'));
     }
 
     /**

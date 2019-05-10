@@ -96,7 +96,7 @@
                         <tbody>
                             @foreach ($lista as $user)
                             <tr>
-                            {!!Form::open(['route'=>'usuario.listar', 'method'=>'post']) !!}
+                            {!!Form::open(['route'=>'usuario.abrir', 'method'=>'post']) !!}
                                 <th scope="row">{{ $user->id }}</th>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
@@ -104,10 +104,11 @@
                                         <div class="d-flex justify-content-center">
                                             {!! Form::hidden('ID', $user->id) !!}
                                            {{--  // <button type="reset" class="btn btn-warning d-flex">  --}}
-                                                {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex'])!!}
+                                            {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex'])!!}
                                             </button>
                                         </div>
                                     </td>
+                                    {!!Form::close()!!}
                                 </tr>
                             @endforeach
 

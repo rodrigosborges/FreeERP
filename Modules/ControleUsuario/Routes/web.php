@@ -26,7 +26,7 @@ Route::prefix('controleusuario')->group(function() {
     Route::put('/editar/{id}', 'UsuarioController@edit');
 
     Route::get('/inativar/{id}', 'UsuarioController@inativar');
-    Route::post('/editar',['as'=>'usuario.abrir','uses'=> 'UsuarioController@editar']);
+    Route::post('/editar', ['as'=>'usuario.abrir','uses'=> 'UsuarioController@editar'] );
 
     Route::post('/listar',['as'=>'usuario.listar','uses'=> 'UsuarioController@buscar']);
 
