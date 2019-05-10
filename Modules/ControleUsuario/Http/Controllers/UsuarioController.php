@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\controleUsuario\Entities\Papel;
+use Modules\controleUsuario\Entities\Usuario;
 use Modules\controleUsuario\Http\Requests\{ValidaLoginRequest};
 use Modules\controleUsuario\Http\Requests\{ValidaCadastroRequest};
-use Modules\ControleUsuario\Entities\{Usuario};
+//use Modules\ControleUsuario\Entities\{Usuario};
 use DB;
 use PHPUnit\Runner\Exception;
 use Illuminate\Support\Facades\Hash;
@@ -53,7 +54,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return $this->viewAutenticar(); 
+        return $this->viewAutenticar();
     }
 
     public function viewAutenticar() {
@@ -64,23 +65,23 @@ class UsuarioController extends Controller
         return view('controleusuario::cadastrar',$this->dadosTemplate);
     }
 
-    
-    
+
+
     public function autenticar(ValidaLoginRequest $req)
-    {        
+    {
         try{
             \Auth::attempt($req->only(['email','password']), false);
             return redirect()->route('index');
         }catch(\Exception $ex){
             return $ex->getMessage();
-        } 
+        }
     }
-    
+
     public function cadastrar(Request $req)
     {
         try{
             $data = $req->all();
-            $data['password'] =base64_encode($req->input('password'));            
+            $data['password'] =base64_encode($req->input('password'));
             Usuario::Create($data);
 
             return back()->with('success', 'Usuário cadastrado com sucesso!');
@@ -91,23 +92,23 @@ class UsuarioController extends Controller
         }
     }
 
-    public function validaLogin(ValidaLoginRequest $req){  
-        
-     
+    public function validaLogin(ValidaLoginRequest $req){
+
+
         $senha=  base64_encode($req->password);
         $user = DB::table('usuario')->where('email', $req->email)->Where('password',$senha)->first();
         if($user!=null){
             session_start();
-        
+
             $_SESSION['id'] =$user->id;
             $_SESSION['email']= $user->email;
           $data=['usuario'=>$user,'url'=>'/dashboard','title'=>'Pagina inicial'];
           return view('controleusuario::dashboard',$this->dadosTemplate, compact('data'));
-          
+
         }else{
           echo "usuario não encontrado<br>";
         }
-          
+
      }
 
     /**
@@ -116,7 +117,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-                /** 
+                /**
          * Validar campos recebidos do request - ok
          * inserir dados no db - ok
          * retornar para tela de cadastro com feedback de sucesso ou erro - ok
@@ -135,7 +136,7 @@ class UsuarioController extends Controller
 
 
 
-        
+
     }
     public function logoff(){
         session_start();
@@ -158,23 +159,27 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         return view('controleusuario::edit');
     }
 
     public function consulta(){
+
         $status = ['0'=>"Ativo e inativos", '1'=>"Somente ativos",'2'=>"Somente inativos"];
         $modulos = ['0'=>"Todos os módulos",'1'=>"Recursos Humanos", '2'=>"Vendas",'3'=>"Estoque"];
         $cargos = ['0'=>"Administradores",'1'=>"Gerentes",'2'=> "operadores"];
-        return view('controleusuario::consulta', $this->dadosTemplate, compact('status','modulos', 'cargos'));
+
+        $lista=Usuario::all();
+
+        return view('controleusuario::consulta', $this->dadosTemplate,
+        compact('status','modulos', 'cargos','lista'));
     }
 
-    public function buscar(Request $req){
-        
-        dd($req);
+    public function editar(Request $req){
 
-        return view('controleusuario::consulta', $this->dadosTemplate, compact('status'));
+
+
+        return view('controleusuario::editar', $this->dadosTemplate, compact('req'));
     }
 
     /**

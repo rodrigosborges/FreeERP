@@ -18,12 +18,15 @@ Route::prefix('controleusuario')->group(function() {
     Route::get('/logoff',['as'=>'user.logoff','uses'=>'UsuarioController@logoff']);
     Route::get('/cadastrar', 'UsuarioController@viewCadastro');
     Route::post('/cadastrar',['as'=>'validar.cadastro', 'uses'=>'UsuarioController@cadastrar']);
-    
+
     Route::get('/consulta', 'UsuarioController@consulta');
-    
+
     Route::post('/salvar',['as'=>'usuario.salvar','uses'=> 'UsuarioController@salvarCadastro']);
-    Route::put('/editar/{id}', 'UsuarioController@editar');
+
+    Route::put('/editar/{id}', 'UsuarioController@edit');
+
     Route::get('/inativar/{id}', 'UsuarioController@inativar');
+    Route::post('/editar',['as'=>'usuario.abrir','uses'=> 'UsuarioController@editar']);
 
     Route::post('/listar',['as'=>'usuario.listar','uses'=> 'UsuarioController@buscar']);
 

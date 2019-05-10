@@ -3,8 +3,7 @@
 @section('content')
 
 <div class="row justify-content-center justify-items-center ">
-
-   <div class="col col-sm-10 col-md-8">
+    <div class="col col-sm-10 col-md-8">
 
         <div class="card">
             <div class="card-header">
@@ -84,8 +83,8 @@
                 <div class="row justify-content-center ">
                     <div class="col-12">
 
-                        <table class="table table-sm
-                            table-dark table-striped table-bordered text-center justify-content-center">
+                        <table class="table table-sm table-dark table-striped table-bordered text-center
+                        justify-content-center">
                         <thead>
                             <tr>
                                 <th scope="col-3">ID</th>
@@ -95,25 +94,29 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($lista as $user)
                             <tr>
-                                <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>Larry@email.com</td>
+                            {!!Form::open(['route'=>'usuario.listar', 'method'=>'post']) !!}
+                                <th scope="row">{{ $user->id }}</th>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
                                     <td>
                                         <div class="d-flex justify-content-center">
-                                            <input type="hidden" value="20">
-                                            <button type="reset" class="btn btn-warning d-flex">
-                                                <i class="material-icons mr-2">brush</i> Editar
+                                            {!! Form::hidden('ID', $user->id) !!}
+                                           {{--  // <button type="reset" class="btn btn-warning d-flex">  --}}
+                                                {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex'])!!}
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
+                            @endforeach
+
                         </tbody>
-                    </table>
+                        </table>
                     </div>
                  </div>
 
-            </div>{{--  Fecha Card-Body  --}}
+            </div> {{--  Fecha Card-Body  --}}
 
         </div> {{--  Fecha o Card  --}}
 
