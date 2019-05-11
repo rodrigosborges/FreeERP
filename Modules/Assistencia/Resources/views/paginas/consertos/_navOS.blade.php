@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="cliente-tab" data-toggle="tab" href="#cliente" role="tab" aria-controls="cliente" aria-selected="true">Cliente</a>
   </li>
@@ -12,7 +12,7 @@
     <a class="nav-link" id="maoObra-tab" data-toggle="tab" href="#maoObra" role="tab" aria-controls="maoObra" aria-selected="false">Mão de Obra</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="tecnico-tab" data-toggle="tab" href="#tecnico" role="tab" aria-controls="tecnico" aria-selected="true">Cliente</a>
+    <a class="nav-link" id="tecnico-tab" data-toggle="tab" href="#tecnico" role="tab" aria-controls="tecnico" aria-selected="true">Técnico</a>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">

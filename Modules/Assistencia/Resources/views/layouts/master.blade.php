@@ -133,8 +133,10 @@ $menu = [
                             </button>
                         </div>
                     @endif
+                    <div class="container">
+                      @yield('content')
+                    </div>
 
-                    @yield('content')
 
                 </div>
                 <div class="d-flex align-items-center" id="footer">

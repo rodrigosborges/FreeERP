@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive-xl">
   <table id="tabela" class="table table-striped">
     <div class="row">
       <thead>

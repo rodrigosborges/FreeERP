@@ -24,16 +24,11 @@ class ConsertoController extends Controller
        $servicos = ServicoAssistenciaModel::busca($busca);
 
        $ordens = ConsertoAssistenciaModel::all();
-       if ($ordens == null):
-         /*ATENÇÃO, TALVEZ ESTE IF NÃO SEJA NECESSARIO, APÓS FINALIZAR O FORM, TESTAR SEM A PARTE DE CIMA*/
-         $id = 1;
-         return view('assistencia::paginas.consertos.cadastrarconserto');
-       else:
 
          $id = ConsertoAssistenciaModel::max();
          $id = $id + 1;
          return view('assistencia::paginas.consertos.cadastrarconserto',compact('id','pecas','servicos'));
-      endif;
+
 
      }
      public function localizar()

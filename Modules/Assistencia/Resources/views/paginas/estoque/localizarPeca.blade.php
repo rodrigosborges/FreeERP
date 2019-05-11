@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="row">
-      <form class="input-group mb-3 col-md-6" action="{{route('pecas.buscar')}}" method="post">
+      <form class="input-group col-lg-9 col-sm-12" action="{{route('pecas.buscar')}}" method="post">
           {{ csrf_field() }}
             <input type="text" class="form-control" name="busca" placeholder="Nome da peça" aria-label="Buscar" aria-describedby="button-addon2">
             <div class="input-group-append">
