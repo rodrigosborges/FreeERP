@@ -8,7 +8,18 @@
             <div class="card-body">
                 <h5 class="card-title">Cadastrar Usuário</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Perfil do usuário</h6>
-                {!!Form::open(['route'=>'validar.cadastro', 'method'=>'post']) !!}
+                
+                
+                @if($data['model'])
+                {!!Form::open(array('route'=>'validar.edicao', 'method'=>'post')) !!}
+                    @method('PUT')
+                    edição
+                    @else
+                    {!!Form::open(array('route'=>'validar.cadastro', 'method'=>'post')) !!}
+                  
+                    cadastro
+                @endif
+              
                     <div class="form-group">
                         <div class="row justify-content-center">
                             <label for="exampleFormControlFile1">
@@ -20,12 +31,12 @@
                     <div class="row justify-content-center">
                         <div class="col-10">
                         <div class="form-group">
-                                <input type="text" class="form-control" name="name" id="nome"
+                                <input type="text" class="form-control" value="{{$data['model'] ? $data['model']->name :''}}" name="name" id="nome"
                                     placeholder="Nome">
-                                    <span class="errors alert-danger"> {{ $errors->first('name') }} </span>
+                                    <span class="errors alert-danger">  {{ $errors->first('name') }} </span>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp"
+                                <input type="email" class="form-control" value="{{$data['model'] ? $data['model']->email :''}}" name="email" id="email" aria-describedby="emailHelp"
                                     placeholder="Email">
                                     <span class="errors alert-danger"> {{ $errors->first('email') }} </span>
                             </div>
@@ -34,7 +45,7 @@
                                 <span class="errors alert-danger"> {{ $errors->first('password') }} </span>
                             </div>
                             <button type="submit" class="btn btn-primary d-flex align-items-center">
-                                <i class="material-icons mr-2">save</i> Salvar dados de perfil
+                                <i class="material-icons mr-2">save</i> {{$data['button']}}
                             </button>
                         </div>
                     </div>

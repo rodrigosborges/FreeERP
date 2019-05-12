@@ -1,1 +1,4 @@
-{{ dd($data) }}
+@extends('template')
+@section('title', 'Cadastrar')
+
+

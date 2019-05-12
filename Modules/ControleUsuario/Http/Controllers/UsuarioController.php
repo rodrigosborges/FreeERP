@@ -62,7 +62,9 @@ class UsuarioController extends Controller
     }
 
     public function viewCadastro() {
-        return view('controleusuario::cadastrar',$this->dadosTemplate);
+        $data =['url'=>'/cadastrar', 'model'=>null, 'button'=>'Cadastrar'];
+       
+        return view('controleusuario::cadastrar',$this->dadosTemplate, compact('data'));
     }
 
 
@@ -82,7 +84,12 @@ class UsuarioController extends Controller
         try{
             $data = $req->all();
             $data['password'] =base64_encode($req->input('password'));
+            $data['url'] = 'validar.cadastro';
+            $data['model'] = null;
+            
             Usuario::Create($data);
+            
+            
 
             return back()->with('success', 'Usuário cadastrado com sucesso!');
         }catch(Exception $e)
@@ -176,10 +183,11 @@ class UsuarioController extends Controller
     }
 
     public function editar(Request $req){
-        $data = DB::table('usuario')->select('id','name','email','foto')->where('id', $req->ID)->first();
+        $data['model'] = DB::table('usuario')->select('id','name','email','foto')->where('id', $req->ID)->first();
+        $data['url'] = 'validar.edicao';
+       $data['button']= 'Atualizar';
 
-
-        return view('controleusuario::editar', $this->dadosTemplate, compact('data'));
+        return view('controleusuario::cadastrar', $this->dadosTemplate, compact('data'));
     }
 
     /**
@@ -188,9 +196,9 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function atualizar(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
