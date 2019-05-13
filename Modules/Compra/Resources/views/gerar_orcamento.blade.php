@@ -19,29 +19,25 @@
          </div>
          @endforeach
 
-      <br>
-      <h2>Fornecedores</h2>
-      <div class="form-group">
-         <div class="input-group mt-3">
-            <select required name="fornecedores[]" class="form-control col-7 mx-sm-3">
-            <option value="">Selecione uma opção</option>
-            @foreach($data['fornecedores'] as $fornecedor)
-               <option value="{{ $fornecedor->id }}"> {{ $fornecedor->nome_fornecedor}} </option>
-            @endforeach                                   
-            </select>
-            <button type="button" class="btn btn-danger remover mb-4 ">Remover</button>
-                  
-         
+         <br>
+         <h2>Fornecedores</h2>
+         <div class="form-group">
+            <div class="input-group mt-3">
+               <select required name="fornecedores[]" class="form-control col-7 mx-sm-3">
+               <option value="">Selecione uma opção</option>
+               @foreach($data['fornecedores'] as $fornecedor)
+                  <option value="{{ $fornecedor->id }}"> {{ $fornecedor->nome_fornecedor}} </option>
+               @endforeach                                   
+               </select>
+               <button type="button" class="btn btn-danger remover mb-4 ">Remover</button>
+         </div>
       </div>
 
       <div class="col-md-12 text-center">
          <button type="button" class="btn btn-success" id="adicionar">Adicionar</button>
       </div>
+      <button type="submit" class="btn btn-primary my-1">Enviar</button>
       </form>
-      <button type="submit" class="btn btn-primary">Enviar</button>
-         
-      </div>
-      
    </div>
 </div>
 
