@@ -8,6 +8,9 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false">
+         <!--Há muita informação dentro deste arquivo, entretanto, a seção mais importante, por enquanto,
+          é a definição do diretório testsuite: -->
+         <!--É aqui que você configura as opções específicas para seus testes. -->
     <testsuites>
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
@@ -17,6 +20,7 @@
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
+        <!--Fim testsuite -->
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./app</directory>
