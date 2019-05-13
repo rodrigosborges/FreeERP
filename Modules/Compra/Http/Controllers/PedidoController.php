@@ -11,19 +11,28 @@ use Modules\Compra\Entities\{Pedido,ItemCompra,Fornecedor};
 
 class PedidoController extends Controller
 {
-    
-    public function index()
-    {
-        $moduleInfo = [
+
+    protected $moduleInfo;
+    protected $menu;
+
+    public function  __construct(){
+        $this->moduleInfo = [
             'icon' => 'store',
             'name' => 'COMPRA',
         ];
-        $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../itemCompra/'],
+        $this->menu = [
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '/compra/itemCompra/'],
             ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '/'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../fornecedor/'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '/compra/fornecedor/'],
             ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
 		];
+    }
+    
+    public function index()
+    {
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+
         $data = [
 			'pedido'		=> Pedido::all(),
 			'title'				=> "Lista de Pedidos",
@@ -35,16 +44,9 @@ class PedidoController extends Controller
 
     public function create()
     {
-        $moduleInfo = [
-            'icon' => 'store',
-            'name' => 'COMPRA',
-        ];
-        $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../itemCompra/'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../pedido/'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../fornecedor/'],
-            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
-		];
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+        
         $data = [
 			"url" 	 	=> url('compra/pedido'),
 			"button" 	=> "Salvar",
@@ -86,16 +88,9 @@ class PedidoController extends Controller
 
     public function edit($id)
     {
-        $moduleInfo = [
-            'icon' => 'store',
-            'name' => 'COMPRA',
-        ];
-        $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../../itemCompra/'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../../fornecedor/'],
-            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
-		];
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+        
         $data = [
 			"url" 	 	=> url("compra/pedido/$id"),
 			"button" 	=> "Atualizar",
@@ -147,16 +142,9 @@ class PedidoController extends Controller
 
     public function pedidos_disponiveis()
     {
-        $moduleInfo = [
-            'icon' => 'store',
-            'name' => 'COMPRA',
-        ];
-        $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../../itemCompra/'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../../fornecedor/'],
-            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
-		];
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+        
         $data = [
 			'pedido'		=> Pedido::all(),
 			'title'		=> "Lista de Pedidos Disponíveis",
@@ -173,16 +161,9 @@ class PedidoController extends Controller
 
     public function gerar_orcamento($id)
     {
-        $moduleInfo = [
-            'icon' => 'store',
-            'name' => 'COMPRA',
-        ];
-        $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../../itemCompra/'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../../fornecedor/'],
-            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
-		];
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+        
         $data = [
             'url'   => url("compra/pedido/$id"),
             'pedido'	=> Pedido::findOrFail($id),
