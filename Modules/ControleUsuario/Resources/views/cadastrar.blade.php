@@ -6,7 +6,7 @@
     <div class="col col-sm-10 col-md-8 col-lg-6">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Cadastrar Usuário</h5>
+                <h5 class="card-title">{{$data['title']}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Perfil do usuário</h6>
                 
                 

@@ -62,22 +62,14 @@ class UsuarioController extends Controller
     }
 
     public function viewCadastro() {
-        $data =['url'=>'/cadastrar', 'model'=>null, 'button'=>'Cadastrar'];
+        $data =['url'=>'/cadastrar', 'model'=>null, 'button'=>'Cadastrar', 'title'=>'Cadastrar Usuário'];
        
         return view('controleusuario::cadastrar',$this->dadosTemplate, compact('data'));
     }
 
 
 
-    public function autenticar(ValidaLoginRequest $req)
-    {
-        try{
-            \Auth::attempt($req->only(['email','password']), false);
-            return redirect()->route('index');
-        }catch(\Exception $ex){
-            return $ex->getMessage();
-        }
-    }
+
 
     public function cadastrar(ValidaCadastroRequest $req)
     {
@@ -86,6 +78,8 @@ class UsuarioController extends Controller
             $data['password'] =base64_encode($req->input('password'));
             $data['url'] = 'validar.cadastro';
             $data['model'] = null;
+            
+       $data['title']= 'Cadastrar Usuário';
             
             Usuario::Create($data);
             
@@ -183,9 +177,11 @@ class UsuarioController extends Controller
     }
 
     public function editar(Request $req){
+        
         $data['model'] = DB::table('usuario')->select('id','name','email','foto')->where('id', $req->ID)->first();
         $data['url'] = 'validar.edicao';
        $data['button']= 'Atualizar';
+       $data['title']= 'Editar Usuário';
 
         return view('controleusuario::cadastrar', $this->dadosTemplate, compact('data'));
     }
