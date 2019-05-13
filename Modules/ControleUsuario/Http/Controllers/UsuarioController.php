@@ -192,7 +192,7 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ValidaCadastroRequest $request)
     {
         dd($request);
     }
