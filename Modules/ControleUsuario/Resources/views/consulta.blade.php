@@ -84,7 +84,7 @@
                     <div class="col-12">
 
                         <table class="table table-sm table-dark table-striped table-bordered text-center
-                        justify-content-center">
+                        justify-content-center" >
                         <thead>
                             <tr>
                                 <th scope="col-3">ID</th>
@@ -100,12 +100,18 @@
                                 <th scope="row">{{ $user->id }}</th>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td>
-                                        <div class="d-flex justify-content-center">
+                                    <td class="d-flex justify-content-around">
                                             {!! Form::hidden('ID', $user->id) !!}
-                                           {{--  // <button type="reset" class="btn btn-warning d-flex">  --}}
-                                            {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex'])!!}
-                                            </button>
+                                           
+                                            {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex ','style'=>'float:left'])!!}
+                                            
+                                        
+                                    
+                                    
+                                            {!! Form::hidden('ID', $user->id) !!}
+                                           
+                                            {!!Form::submit('inativar',['class'=>'btn btn-danger d-flex'])!!}
+                                            
                                         </div>
                                     </td>
                                     {!!Form::close()!!}
