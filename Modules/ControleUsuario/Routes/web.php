@@ -18,7 +18,7 @@ Route::prefix('controleusuario')->group(function() {
     Route::get('/logoff',['as'=>'user.logoff','uses'=>'UsuarioController@logoff']);
     Route::get('/cadastrar', 'UsuarioController@viewCadastro');
     Route::post('/cadastrar',['as'=>'validar.cadastro', 'uses'=>'UsuarioController@cadastrar']);
-    Route::put('/cadastrar',['as'=>'validar.edicao', 'uses'=> 'UsuarioController@atualizar']);
+    Route::put('/cadastrar',['as'=>'validar.edicao', 'uses'=> 'UsuarioController@update']);
 
     Route::get('/consulta', 'UsuarioController@consulta');
 

@@ -79,7 +79,7 @@ class UsuarioController extends Controller
         }
     }
 
-    public function cadastrar(Request $req)
+    public function cadastrar(ValidaCadastroRequest $req)
     {
         try{
             $data = $req->all();
@@ -196,7 +196,7 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
-    public function atualizar(Request $request)
+    public function update(Request $request, $id)
     {
         dd($request);
     }
