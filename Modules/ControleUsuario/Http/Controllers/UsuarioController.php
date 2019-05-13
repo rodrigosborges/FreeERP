@@ -64,7 +64,7 @@ class UsuarioController extends Controller
     public function viewCadastro() {
         $data =['url'=>'/cadastrar', 'model'=>null, 'button'=>'Cadastrar', 'title'=>'Cadastrar Usuário'];
        
-        return view('controleusuario::cadastrar',$this->dadosTemplate, compact('data'));
+        return view('controleusuario::form',$this->dadosTemplate, compact('data'));
     }
 
 
@@ -183,7 +183,7 @@ class UsuarioController extends Controller
        $data['button']= 'Atualizar';
        $data['title']= 'Editar Usuário';
 
-        return view('controleusuario::cadastrar', $this->dadosTemplate, compact('data'));
+        return view('controleusuario::form', $this->dadosTemplate, compact('data'));
     }
 
     /**
