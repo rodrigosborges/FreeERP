@@ -11,7 +11,7 @@ class Pedido extends Model
     use SoftDeletes;
     protected $table = 'pedido';
     public $timestamps = true;
-    protected $fillable = array('id','status','quantidade');
+    protected $fillable = array('id','status');
 
     //Relação com a tabela ListaCompra
     public function itens(){

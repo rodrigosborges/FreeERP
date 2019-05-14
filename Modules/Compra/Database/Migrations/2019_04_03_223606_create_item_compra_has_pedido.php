@@ -17,6 +17,7 @@ class CreateItemCompraHasPedido extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('pedido_id');
             $table->unsignedBigInteger('item_compra_id');
+            $table->integer('quantidade');
 
             //referencia chave estrangeira
             $table->foreign('item_compra_id')->references('id')->on('item_compra');

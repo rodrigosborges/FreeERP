@@ -50,11 +50,9 @@ class PedidoController extends Controller
         $data = [
 			"url" 	 	=> url('compra/pedido'),
 			"button" 	=> "Salvar",
-            "model"		=> null,
+            "pedido"		=> null,
             "itens"		=> ItemCompra::all(),
-            "itens_pedido"  => [
-                ['id' => '']
-            ],
+            "itens_pedido"  => [['id' => "",'quantidade'=>""]],
             'title'		=> "Cadastrar Pedido"
             
 		];
@@ -64,11 +62,13 @@ class PedidoController extends Controller
 
     
     public function store(Request $request)
-    {
+    {       
         DB::beginTransaction();
 		try{
-            $pedido = Pedido::Create(['status' => 'iniciado' ,'quantidade' => $request->input('quantidade')]);
-            $pedido->itens()->sync($request->itens);
+            $pedido = Pedido::Create(['status' => 'iniciado']);
+          
+            $pedido->itens()->sync($request->input('itens'));
+    
             DB::commit();
             return redirect('/compra/pedido')->with('success', 'Pedido cadastrado com successo');
 		}catch(Exception $e){
@@ -94,7 +94,7 @@ class PedidoController extends Controller
         $data = [
 			"url" 	 	=> url("compra/pedido/$id"),
 			"button" 	=> "Atualizar",
-            "model"		=> Pedido::findOrFail($id),
+            "pedido"	=> Pedido::findOrFail($id),
             "itens"		=> ItemCompra::all(),
             "itens_pedido" => Pedido::findOrFail($id)->itens()->get(),
 			'title'		=> "Atualizar Pedido"

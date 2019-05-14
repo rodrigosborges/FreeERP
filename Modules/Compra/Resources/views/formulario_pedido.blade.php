@@ -5,20 +5,20 @@
             <div class="card-body">
                 <form action="{{ $data['url'] }}" method="POST" class="col-12">
                     {{ csrf_field() }}
-                    @if($data['model'])
+                    @if($data['pedido'])
                         @method('PUT')
                     @endif
                     <h2 class="card-title mt-3 ml-2">Itens</h2>
                     <div class="form-group">
                         @foreach($data['itens_pedido'] as $itemPedido)
                             <div class="input-group mt-2">
-                                <select required name="itens[]" class="form-control col-7">
+                                <select required name="itens[id]" class="form-control col-7">
                                     <option value="">Selecione uma opção</option>
                                     @foreach($data['itens'] as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $itemPedido['id'] ? 'selected' : '' }}> {{ $item->nome_produto }} </option>
                                     @endforeach
                                 </select>
-                                <div class="col-3"><input class="form-control" type="number" placeholder="Quantidade" name="quantidade" onKeyPress="PermiteNumeros();"></div>
+                                <div class="col-3"><input class="form-control" value="{{ $itemPedido ? $itemPedido['quantidade'] : old('quantidade', "") }}" type="number" placeholder="Quantidade" name="itens[quantidade]" onKeyPress="PermiteNumeros();"></div>
                                 
                                 <button type="button" class="btn btn-danger remover">Remover</button>              
                             </div>

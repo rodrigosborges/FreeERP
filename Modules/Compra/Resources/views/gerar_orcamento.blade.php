@@ -33,9 +33,9 @@
                   
          
       </div>
-
+      <button type="button" class="btn btn-success" id="adicionar">Adicionar</button>
       <div class="col-md-12 text-center">
-         <button type="button" class="btn btn-success" id="adicionar">Adicionar</button>
+         
       </div>
       </form>
       <button type="submit" class="btn btn-primary">Enviar</button>
