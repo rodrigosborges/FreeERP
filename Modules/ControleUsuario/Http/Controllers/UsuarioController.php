@@ -182,10 +182,7 @@ class UsuarioController extends Controller
         $data['url'] = 'validar.edicao';
         $data['button']= 'Atualizar';
         $data['title']= 'Editar Usuário';
-<<<<<<< HEAD
-=======
 
->>>>>>> 44108faf1a28e51af4352f06ef7c3c6c455161f4
 
         return view('controleusuario::form', $this->dadosTemplate, compact('data'));
     }
@@ -196,12 +193,10 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
-<<<<<<< HEAD
 
-    public function update(ValidaCadastroRequest $request)
-=======
+
+
     public function update(Request $request)
->>>>>>> 44108faf1a28e51af4352f06ef7c3c6c455161f4
     {
        dd($request);
     }
