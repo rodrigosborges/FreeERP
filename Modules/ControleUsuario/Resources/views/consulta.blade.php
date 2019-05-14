@@ -80,11 +80,11 @@
                 </div>
                 {!! Form::close() !!}
 
-                <div class="row justify-content-center ">
-                    <div class="col-12">
+                <div class="row justify-content-center " style='min-width:150px'>
+                    <div class="col-12" >
 
                         <table class="table table-sm table-dark table-striped table-bordered text-center
-                        justify-content-center" >
+                        justify-content-center"  >
                         <thead>
                             <tr>
                                 <th scope="col-3">ID</th>
@@ -101,17 +101,9 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td class="d-flex justify-content-around">
-                                            {!! Form::hidden('ID', $user->id) !!}
-                                           
-                                            {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex ','style'=>'float:left'])!!}
-                                            
-                                        
-                                    
-                                    
-                                            {!! Form::hidden('ID', $user->id) !!}
-                                           
+                                            {!! Form::hidden('id', $user->id) !!}
+                                            {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex '])!!}
                                             {!!Form::submit('inativar',['class'=>'btn btn-danger d-flex'])!!}
-                                            
                                         </div>
                                     </td>
                                     {!!Form::close()!!}
