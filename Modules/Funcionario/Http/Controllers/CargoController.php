@@ -4,13 +4,14 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Cargo};
+use Modules\Funcionario\Entities\{Cargo,Funcionario};
 use Modules\Funcionario\Http\Requests\{CreateCargo};
 use DB;
 
 class CargoController extends Controller{
 
     public function index(Request $request){
+		return Funcionario::find(1)->endereco();
         $data = [
 			'cargos'	=> Cargo::all(),
 			'title'		=> "Lista de cargos",

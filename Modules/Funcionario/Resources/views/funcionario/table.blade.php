@@ -25,6 +25,9 @@
                                 <input type="submit" class="btn btn-{{$funcionario->trashed() ? 'success' : 'danger'}}" value="{{$funcionario->trashed() ? 'Restaurar' : 'Deletar'}}"/>
                         </form>
                     </td>
+                    <td class="min">                       
+                        <a class="btn btn-info" href='{{ url("funcionario/funcionario/ficha/$funcionario->id") }}'>Ficha</a>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
