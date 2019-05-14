@@ -93,11 +93,13 @@ class UsuarioController extends Controller
         }
     }
 
-    public function validaLogin(ValidaLoginRequest $req){
+    public function validaLogin(ValidaLoginRequest $req)
+    {
 
 
         $senha=  base64_encode($req->password);
         $user = DB::table('usuario')->where('email', $req->email)->Where('password',$senha)->first();
+
         if($user!=null){
             session_start();
 
@@ -110,7 +112,7 @@ class UsuarioController extends Controller
           echo "usuario não encontrado<br>";
         }
 
-     }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -118,12 +120,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-                /**
-         * Validar campos recebidos do request - ok
-         * inserir dados no db - ok
-         * retornar para tela de cadastro com feedback de sucesso ou erro - ok
-        */
-        return view('usuario.create');
+       return view('usuario.create');
     }
 
     /**
@@ -134,22 +131,21 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
 
-
-
-
-
     }
-    public function logoff(){
+
+    public function logoff()
+    {
         session_start();
         session_destroy();
         return view('controleusuario::login',$this->dadosTemplate);
-        }
+    }
 
     /**
      * Show the specified resource.
      * @param int $id
      * @return Response
      */
+
     public function show($id)
     {
         return view('controleusuario::show');
@@ -160,11 +156,13 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id){
+    public function edit($id)
+    {
         return view('controleusuario::edit');
     }
 
-    public function consulta(){
+    public function consulta()
+    {
 
         $status = ['0'=>"Ativo e inativos", '1'=>"Somente ativos",'2'=>"Somente inativos"];
         $modulos = ['0'=>"Todos os módulos",'1'=>"Recursos Humanos", '2'=>"Vendas",'3'=>"Estoque"];
@@ -176,12 +174,13 @@ class UsuarioController extends Controller
         compact('status','modulos', 'cargos','lista') );
     }
 
-    public function editar(Request $req){
+    public function editar(Request $req)
+    {
         
         $data['model'] = DB::table('usuario')->select('id','name','email','foto')->where('id', $req->ID)->first();
         $data['url'] = 'validar.edicao';
-       $data['button']= 'Atualizar';
-       $data['title']= 'Editar Usuário';
+        $data['button']= 'Atualizar';
+        $data['title']= 'Editar Usuário';
 
         return view('controleusuario::form', $this->dadosTemplate, compact('data'));
     }
@@ -192,6 +191,7 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
+
     public function update(ValidaCadastroRequest $request)
     {
         dd($request);
@@ -202,6 +202,7 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
+    
     public function destroy($id)
     {
         //

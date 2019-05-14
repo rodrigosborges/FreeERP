@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UsuarioTeste extends TestCase
+class UsuarioTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -16,7 +16,7 @@ class UsuarioTeste extends TestCase
   
     public function testValidaLogin()
     {
-        $this->get('/point/create')->assertStatus(200);
+        $this->get('/http/create')->assertStatus(200);
         $this->get('/point/create')->assertViewHas('usuario');
         $this->get('/point')->assertStatus(200);
         $this->get('/point')->assertViewHas('cadastrar');

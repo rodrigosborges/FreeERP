@@ -12,7 +12,7 @@
           é a definição do diretório testsuite: -->
          <!--É aqui que você configura as opções específicas para seus testes. -->
     <testsuites>
-        <testsuite name="Unit">
+        <testsuite name="UsuarioTest">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
 
