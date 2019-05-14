@@ -15,7 +15,7 @@ class Pedido extends Model
 
     //Relação com a tabela ListaCompra
     public function itens(){
-        return $this->belongsToMany('Modules\Compra\Entities\ItemCompra','item_compra_has_pedido');
+        return $this->belongsToMany('Modules\Compra\Entities\ItemCompra','item_compra_has_pedido')->withPivot(['quantidade']);
 
     }
 

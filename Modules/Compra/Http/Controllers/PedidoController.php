@@ -58,6 +58,7 @@ class PedidoController extends Controller
 		];
 	    return view('compra::formulario_pedido', compact('data','moduleInfo','menu'));
 
+
     }
 
     
@@ -66,8 +67,8 @@ class PedidoController extends Controller
         DB::beginTransaction();
 		try{
             $pedido = Pedido::Create(['status' => 'iniciado']);
-          
-            $pedido->itens()->sync($request->input('itens'));
+            
+            $pedido->itens()->attach($request->itens);
     
             DB::commit();
             return redirect('/compra/pedido')->with('success', 'Pedido cadastrado com successo');
@@ -96,7 +97,7 @@ class PedidoController extends Controller
 			"button" 	=> "Atualizar",
             "pedido"	=> Pedido::findOrFail($id),
             "itens"		=> ItemCompra::all(),
-            "itens_pedido" => Pedido::findOrFail($id)->itens()->get(),
+            "itens_pedido" => Pedido::findOrFail($id)->itens,
 			'title'		=> "Atualizar Pedido"
 		];
 	    return view('compra::formulario_pedido', compact('data','moduleInfo','menu'));
@@ -105,13 +106,12 @@ class PedidoController extends Controller
     
     public function update(Request $request, $id)
     {
+        
         DB::beginTransaction();
 		try{
             $pedido = Pedido::findOrFail($id);
             if($pedido->status =='iniciado'){
-                $pedido->update($request->all());
-                $pedido->itens()->sync($request->itens);
-                DB::commit();
+                
                 return redirect('compra/pedido')->with('success', 'Pedido atualizado com successo');
             }
             else
