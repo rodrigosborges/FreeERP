@@ -101,17 +101,9 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td class="d-flex justify-content-around">
-                                            {!! Form::hidden('ID', $user->id) !!}
-                                           
-                                            {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex ','style'=>'float:left'])!!}
-                                        
-                                        
-                                    
-                                    
-                                            {!! Form::hidden('ID', $user->id) !!}
-                                           
+                                            {!! Form::hidden('id', $user->id) !!}
+                                            {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex '])!!}
                                             {!!Form::submit('inativar',['class'=>'btn btn-danger d-flex'])!!}
-                                            
                                         </div>
                                     </td>
                                     {!!Form::close()!!}

@@ -13,12 +13,13 @@
                 @if($data['model'])
                 {!!Form::open(array('route'=>'validar.edicao', 'method'=>'post')) !!}
                     @method('PUT')
-                    edição
+                   
                     @else
                     {!!Form::open(array('route'=>'validar.cadastro', 'method'=>'post')) !!}
                   
-                    cadastro
+                  
                 @endif
+                {!! Form::hidden('id', $data['model']->id) !!}
               
                     <div class="form-group">
                         <div class="row justify-content-center">

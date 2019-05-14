@@ -73,6 +73,7 @@ class UsuarioController extends Controller
 
     public function cadastrar(ValidaCadastroRequest $req)
     {
+       # dd($req);
         try{
             $data = $req->all();
             $data['password'] =base64_encode($req->input('password'));
@@ -178,10 +179,11 @@ class UsuarioController extends Controller
 
     public function editar(Request $req){
         
-        $data['model'] = DB::table('usuario')->select('id','name','email','foto')->where('id', $req->ID)->first();
+        $data['model'] = Usuario::find($req->input('id'));
         $data['url'] = 'validar.edicao';
-       $data['button']= 'Atualizar';
-       $data['title']= 'Editar Usuário';
+        $data['button']= 'Atualizar';
+        $data['title']= 'Editar Usuário';
+
 
         return view('controleusuario::form', $this->dadosTemplate, compact('data'));
     }
@@ -192,9 +194,9 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(ValidaCadastroRequest $request)
+    public function update(Request $request)
     {
-        dd($request);
+       dd($request);
     }
 
     /**
