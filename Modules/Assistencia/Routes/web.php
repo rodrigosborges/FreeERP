@@ -70,7 +70,8 @@ Route::prefix('assistencia')->group(function() {
     Route::get('conserto/dadosTecnico',['as'=>'consertos.dadosTecnico','uses'=>'ConsertoController@dadosTecnico']);
 
     Route::post('conserto/salvar',['as'=>'consertos.salvar','uses'=>'ConsertoController@salvar']);
-
+    Route::get('conserto/editar/{id}',['as'=>'consertos.editar','uses'=>'ConsertoController@editar']);
+    
 
 
 });

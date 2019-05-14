@@ -29,8 +29,8 @@ class ConsertoController extends Controller
          $id = $id + 1;
          return view('assistencia::paginas.consertos.cadastrarconserto',compact('id','pecas','servicos'));
 
-
      }
+
      public function localizar()
      {
        $consertos = ConsertoAssistenciaModel::all();
@@ -41,19 +41,25 @@ class ConsertoController extends Controller
        $consertos = ConsertoAssistenciaModel::busca($req->busca);
        return view('assistencia::paginas.consertos.localizarConserto',compact('consertos'));
      }
+
+
      public function visualizarConserto($id)
      {
        $conserto = ConsertoAssistenciaModel::find($id);
        return view('assistencia::paginas.consertos.vizualizarConserto',compact('conserto'));
      }
-
-
+     public function editar($id)
+     {
+       $conserto = ConsertoAssistenciaModel::find($id);
+       return view('assistencia::paginas.consertos.editarConserto',compact('conserto'));
+     }
      public function salvar(Request $req){
         $dados  = $req->all();
         ConsertoAssistenciaModel::create($dados);
 
         return redirect()->route('consertos.index')->with('success','Ordem salva com sucesso!');
       }
+
 
      public function nomePecas(Request $req){
        return PecaAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',valor_venda) AS nomevenda"))->get()->pluck('nomevenda');

@@ -10,11 +10,13 @@
 
 
 <div class="form-group row">
-  <input type="hidden" name="idMaoObra" value="{{isset($conserto->idMaoObra) ? $conserto->idMaoObra : ''}}">
+  <input type="hidden" name="idMaoObra" value="{{isset($conserto->idMaoObra) ? $conserto->idMaoObra : ''  }}">
   <div class="col">
-    <input class="form-control" name="nome_servico" type="text" placeholder="" value="">
+    <input class="form-control" name="nome_servico" type="text" placeholder="" value="{{ isset($conserto->servico->nome) ? $conserto->servico->nome : old('nome', '') }}">
+    ISSET NAO TA FUNFANDO NO EDITAR
   </div>
   <div class="col">
-    <input class="form-control" name="valor_servico" type="text" placeholder="" value="">
+    <input class="form-control" name="valor_servico" type="text" placeholder="" value="{{ isset($conserto->servico->valor) ? $conserto->servico->valor : old('valor', '') }}">
   </div>
 </div>
+form

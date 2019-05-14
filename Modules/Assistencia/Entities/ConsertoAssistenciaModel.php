@@ -21,17 +21,19 @@ class ConsertoAssistenciaModel extends Model
       return static::where('id')->max('id');
     }
     public function ultimo(){
-      
+
     }
     public function cliente(){
-        return $this->belongsTo('Modules\Assistencia\Entities\Cliente');
+        return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente');
     }
     public function peca(){
-        return $this->belongsTo('Modules\Assistencia\Entities\Peca');
+        return $this->belongsTo('Modules\Assistencia\Entities\PecaAssistenciaModel', 'idPeca');
     }
     public function servico(){
-        return $this->hasMany('Modules\Assistencia\Entities\Servico');
+        return $this->hasMany('Modules\Assistencia\Entities\ServicoAssistenciaModel', 'idMaoObra');
     }
-
+    public function tecnico(){
+        return $this->hasMany('Modules\Assistencia\Entities\TecnicoAssistenciaModel', 'idTecnico');
+    }
 
 }

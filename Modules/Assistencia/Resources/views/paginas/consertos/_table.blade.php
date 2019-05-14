@@ -19,7 +19,7 @@
             <td>{{$conserto->modelo_aparelho }}</td>
             <td>
               <a href="{{route('consertos.visualizar', $conserto->id)}}"><button type="button" class="btn btn-secondary">Vizualizar</button></a>
-              <a href=""><button type="button" class="btn btn-danger">Editar</button></a>
+              <a href="{{route('consertos.editar', $conserto->id)}}"><button type="button" class="btn btn-danger">Editar</button></a>
             </td>
           </tr>
         @endforeach

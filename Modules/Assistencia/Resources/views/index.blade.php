@@ -8,7 +8,7 @@
 @section('content')
 <div class="card">
   <div class="card-body">
-    
+
     <ul class="nav nav-tabs flex-column flex-sm-row">
       <li class="nav-item">
         <a class="nav-link" href="{{route('consertos.index')}}"><h3>Consertos</h3?></a>
@@ -39,12 +39,6 @@
   </div>
 
 </div>
-
-
-
-
-
-
 
 @stop
 @section('js')

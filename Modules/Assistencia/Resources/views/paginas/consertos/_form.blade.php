@@ -2,7 +2,7 @@
 <div class="form-group row">
 
   <div class="form-group col-lg-6 col-sm-12">
-    <input class="form-control form-control-plaintext" name="numeroOrdem" type="text" placeholder="{{ $id }}" readonly>
+    <input class="form-control form-control-plaintext" name="numeroOrdem" type="text" placeholder="{{ isset($conserto->id) ? $conserto->id : old('id', '') }}" readonly>
   </div>
 
   <div class="form-group col-lg-6 col-sm-12">

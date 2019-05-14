@@ -20,7 +20,7 @@
 	  <input type="text" name="defeito" class="form-control" placeholder="Defeito/Reclamação" value="{{ isset($conserto->defeito) ? $conserto->defeito : old('defeito', '') }}">
 	</div>
 	<div class="col">
-	  <textarea class="form-control" name="obs" placeholder="Observações" id="" rows="3" value="{{ isset($conserto->obs) ? $conserto->obs : old('obs', '') }}"></textarea>
+	  <input class="form-control" type="text" name="obs" placeholder="Observações" id="" rows="3" value="{{ isset($conserto->obs) ? $conserto->obs : old('obs', '') }}"></input>
 	</div>
 </div>
 
