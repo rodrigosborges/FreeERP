@@ -79,24 +79,6 @@
                     <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
                 </div>
             </div>
-            <!-- <div class="col-md-3">
-                <div class="form-group">
-                    <label for="cargo_id" class="control-label">Cargo</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="material-icons">work</i>
-                            </span>
-                        </div>
-                        <select required name="funcionario[cargo_id]" class="form-control">
-                            <option value="">Selecione</option>
-                            //@foreach($data['cargos'] as $item)
-                                <option value="//{{ $item->id }}" {{ ($data['model'] && $item->id == $data['model']->cargo_id ) ? 'selected' : '' }}> {{ $item->nome }} </option>
-                            //@endforeach 
-                        </select>
-                    </div>
-                </div>
-            </div> -->
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="data_admissao" class="control-label">Data de Admissão</label>
@@ -329,6 +311,67 @@
                         <input type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ $data['model'] ? $data['model']->endereco->complemento : old('endereco.complemento', '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
+                </div>
+            </div>
+        </div>
+
+        <strong><h6 class="mt-5 mb-3">Cargos</h6></strong>
+        <hr>
+        @if($data['model'])
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table table-striped">
+                        <thead class="thead thead-dark">
+                            <tr>
+                                <th>Cargo</th>
+                                <th>Data de Entrada</th>
+                                <th>Data de Saída</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($data['model']->cargos as $cargo)
+                        <tr>
+                            <td>{{ $cargo->cargo->nome }}</td>
+                            <td>{{ $cargo->data_entrada }}</td>
+                            <td>{{ ($cargo->data_saida) ? $cargo->data_saida : 'X' }}</td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        @endif
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="cargo_id" class="control-label">Cargo Atual</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">work</i>
+                            </span>
+                        </div>
+                        <select required name="cargo[cargo_id]" class="form-control">
+                            <option value="">Selecione</option>
+                            @foreach($data['cargos'] as $item)
+                                <option value="{{ $item->id }}" {{ ($data['model'] && $item->id == $data['model']->cargos->last()->cargo_id ) ? 'selected' : '' }}> {{ $item->nome }} </option>
+                            @endforeach 
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="data_admissao" class="control-label">Data de entrada</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">date_range</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="00/00/0000" name="cargo[data_entrada]" id="data_admissao" class="form-control data" value="{{ $data['model'] ? $data['model']->data_admissao : old('funcionario.data_admissao', '') }}">
+                    </div>
+                    <span class="errors"> {{ $errors->first('funcionario.data_admissao') }} </span>
                 </div>
             </div>
         </div>

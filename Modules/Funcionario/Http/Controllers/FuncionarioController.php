@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario, Documento, Telefone};
+use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario, Documento, Telefone, HistoricoCargo};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use DB;
 
@@ -98,7 +98,8 @@ class FuncionarioController extends Controller{
             }
 
             $funcionario->endereco()->create($request->input('endereco'));
-            $contato = $funcionario->contato()->create($request->input('contato'));
+            $funcionario->cargos()->create($request->input('cargo'));
+            $funcionario->contato()->create($request->input('contato'));
 
             foreach($request->telefones as $telefone) {
                 $funcionario->contato->telefones()->save(new Telefone($telefone));
