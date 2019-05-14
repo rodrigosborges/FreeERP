@@ -16,7 +16,8 @@ class CategoriaMigrate extends Migration
         Schema::create('categoria_pagar', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->text('nome');
-            $table->boolean('ativo');
+            $table->boolean('ativo')->default(1);
+            $table->timestamps();
           });
     }
 

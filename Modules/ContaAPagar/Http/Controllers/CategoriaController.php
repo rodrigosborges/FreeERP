@@ -5,7 +5,7 @@ namespace Modules\ContaAPagar\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Request;
+use Modules\ContaAPagar\Entities\CategoriaModel;
 
 class CategoriaController extends Controller
 {
@@ -15,19 +15,21 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias = CategoriaModel::get();
-        return view('contaapagar::index'));
+        
+        return view('contaapagar::novaCategoria');
+    }
+    public function salvar(Request $request)
+    {
+        $dados = $request->all();
+        CategoriaModel::create($dados);
+        return view('contaapagar::novaCategoria')->with('success','A categoria foi cadastrado com sucesso!');
     }
 
     /**
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
-    {
-        return view('contaapagar::create');
-    }
-
+ 
     /**
      * Store a newly created resource in storage.
      * @param Request $request

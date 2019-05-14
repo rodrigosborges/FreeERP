@@ -7,7 +7,7 @@
              $menu = [
                 ['icon' => 'add', 'tool' => 'Nova Conta', 'route' => 'novaconta'],
                  ['icon' => 'money_off', 'tool' => 'Contas a Pagar', 'route' => 'contaapagar'],
-                 ['icon' => 'category', 'tool' => 'Categorias', 'route' => 'categorias'],
+                 ['icon' => 'category', 'tool' => 'Categorias', 'route' => 'contaapagar/categoria/index'],
              ];
 
 ?>

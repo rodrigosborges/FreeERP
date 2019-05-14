@@ -19,6 +19,9 @@ Route::prefix('contaapagar')->group(function() {
     Route::get('cat={id}', ['as' => 'cat.id', 'uses' => 'ContaAPagarController@filtro']);
     
     Route::get('check/teste', ['as' => 'check.status', 'uses' => 'ContaAPagarController@status']);
+    Route::get('categoria/index', ['as' => 'categoria.index', 'uses' => 'CategoriaController@index']);
+    Route::post('categoria/salvar', ['as' => 'categoria.salvar', 'uses' => 'CategoriaController@salvar']);
+    
     
 });
 
@@ -26,7 +29,5 @@ Route::prefix('novaconta')->group(function() {
    Route::get('/', 'NovaContaController@index'); 
 });
 
-Route::prefix('categoria')->group(function ($id) {
-    Route::get('/', 'CategoriaController@index');
-});
+
 
