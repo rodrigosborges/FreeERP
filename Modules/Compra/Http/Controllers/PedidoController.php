@@ -22,7 +22,7 @@ class PedidoController extends Controller
         ];
         $this->menu = [
             ['icon' => 'shop', 'tool' => 'Itens', 'route' => '/compra/itemCompra/'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '/'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '/compra/pedido/'],
             ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '/compra/fornecedor/'],
             ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
 		];
@@ -111,8 +111,13 @@ class PedidoController extends Controller
 		try{
             $pedido = Pedido::findOrFail($id);
             if($pedido->status =='iniciado'){
+
+                $pedido->itens()->sync($request->itens);
                 
+                DB::commit();
+
                 return redirect('compra/pedido')->with('success', 'Pedido atualizado com successo');
+            
             }
             else
             {
