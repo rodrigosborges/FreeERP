@@ -2,44 +2,45 @@
 @section('content')
 
 <div class="card " style="margin:auto; max-width: 40rem;">
-    <div class="card-header text-white bg-dark">Abrir OS</div>
+    <div class="card-header text-white bg-dark">{{$data['title']}}</div>
     <div class="card-body">
-        <form action="{{ $data['url'] }}" method="POST">
-            {{ csrf_field() }}
+    
+        {{ Form::open(array('url' => $data['url'] , 'method'=>'post')) }}
+        {{Form::token()}}
             @if($data['model'])
             @method('PUT')
             @else
                 <div class="form-group">
                     <div class="form-row">
-                        <label>Nome</label>
-                        <input type="text" placeholder="Nome" name="nome" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', "") }}">
+                    {{Form::label('Nome')}}
+                    {{Form::text('nome',$data['model'] ? $data['model']->nome : old('nome'),array('class' => 'form-control','placeholder'=>'Nome'))}}
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
-                        <label>CPF</label>
-                        <input type="text" placeholder="cpf" name="cpf" id="cpf" class="form-control" value="{{ $data['model'] ? $data['model']->cpf : old('cpf', "") }}">
+                    {{Form::label('CPF')}}
+                    {{Form::text('cpf',$data['model'] ? $data['model']->cpf : old('cpf'),array('class' => 'form-control','placeholder'=>'CPF'))}}
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <label>RG</label>
-                        <input type="text" placeholder="rg" name="rg" id="rg" class="form-control" value="{{ $data['model'] ? $data['model']->rg : old('rg', "") }}">
+                    {{Form::label('RG')}}
+                    {{Form::text('rg',$data['model'] ? $data['model']->rg : old('rg'),array('class' => 'form-control','placeholder'=>'RG'))}}   
                     </div>
                 </div>
             @endif
             
             <div class="form-group">
                 <div class="form-row">
-                        <label>Email</label>
-                        <input placeholder="Email" type="text" name="email" id="email" class="form-control" value="{{ $data['model'] ? $data['model']->email : old('email', "") }}">
+                    {{Form::label('Email')}}
+                    {{Form::email('email',$data['model'] ? $data['model']->email : old('email'),array('class' => 'form-control','placeholder'=>'Email'))}}
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="form-row">
-                        <label>Comissão</label>
-                        <input type="text" placeholder="comissao" name="comissao" id="comissao" class="form-control" value="{{ $data['model'] ? $data['model']->comissao : old('comissao', "") }}">
+                    {{Form::label('Comissão')}}
+                    {{Form::text('comissao',$data['model'] ? $data['model']->comissao : old('comissao'),array('class' => 'form-control','placeholder'=>'Comissão'))}}     
                 </div>
             </div>
                 
