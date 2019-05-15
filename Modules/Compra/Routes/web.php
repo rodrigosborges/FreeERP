@@ -3,12 +3,17 @@
 
 //Módulo de Compras
 Route::prefix('compra')->group(function() {
+
+	//Rotas que não são Resource
+	Route::get('pedido/pedidosDisponiveis',  'PedidoController@pedidos_disponiveis');
+	Route::get('pedido/{id}/gerarOrcamento', 'PedidoController@gerar_orcamento');
+	Route::put('pedido/enviarEmail', 'PedidoController@enviar_email');
+
+
+
 	Route::resource('itemCompra', 'ItemCompraController');
 	Route::resource('pedido', 'PedidoController');
 	Route::resource('fornecedor', 'FornecedorController');
-	Route::get('pedido/pedidosDisponiveis', 'PedidoController@pedidos_disponiveis');
-	Route::get('pedido/{id}/gerarOrcamento', 'PedidoController@gerar_orcamento');
-
 	
 
 

@@ -156,21 +156,14 @@ class PedidoController extends Controller
 		]; 
         return view('compra::pedidos_disponiveis', compact('data','moduleInfo','menu'));
     }
-
-    public function enviar_email(Request $request){
-        Mail::send('teste', ['curso'=>'Eloquent'], function($m){
-            $m->from('thofurtado@gmail.com', 'Modulo Compras');
-            $m->to('pedrops02@gmail.com');
-        });
-    }
-
+    
     public function gerar_orcamento($id)
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         
         $data = [
-            'url'   => url("compra/pedido/$id"),
+            'url'   => url("compra/pedido/enviarEmail/"),
             'pedido'	=> Pedido::findOrFail($id),
             'fornecedores'=> Fornecedor::all(),
             'itens_pedido' => Pedido::findOrFail($id)->itens()->get(),
@@ -178,5 +171,15 @@ class PedidoController extends Controller
 		]; 
         return view('compra::gerar_orcamento', compact('data','moduleInfo','menu'));
     } 
+
+    public function enviar_email(Request $request){
+        return $request->all();
+
+        Mail::send('teste', ['curso'=>'Eloquent'], function($m){
+            $m->from('thofurtado@gmail.com', 'Modulo Compras');
+            $m->to('pedrops02@gmail.com');
+        });
+    }
+
 
 }

@@ -8,12 +8,17 @@
 
       <h2 class="card-title mt-3 ml-2">Itens</h2>
       <form action="{{ $data['url'] }}" method="POST">
+
+      {{ csrf_field() }}
+      @if($data['pedido'])
+         @method('PUT')
+      @endif
         
 
          @foreach($data['itens_pedido'] as $itemPedido)
          <div class="input-group mt-2">
             <div class="form-check form-check-inline mx-sm-3">
-            <input class="form-check-input" type="checkbox" id="{{$itemPedido->nome_produto}}" value="{{$itemPedido->nome_produto}}">
+            <input class="form-check-input" name="itens[]" type="checkbox" id="{{$itemPedido->nome_produto}}" value="{{$itemPedido->id}}">
             <label class="form-check-label" for="{{$itemPedido->nome_produto}}"><h4>{{$itemPedido->nome_produto}}</h4></label>
             </div>
          </div>

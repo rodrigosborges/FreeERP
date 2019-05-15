@@ -9,20 +9,28 @@ use Modules\Compra\Entities\{Fornecedor};
 
 class FornecedorController extends Controller
 {
+    protected $moduleInfo;
+    protected $menu;
 
-    public function index()
-    {
-
-        $moduleInfo = [
+    public function  __construct(){
+        $this->moduleInfo = [
             'icon' => 'store',
             'name' => 'COMPRA',
         ];
-        $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../itemCompra/'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../pedido/'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '/'],
+        $this->menu = [
+            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '/compra/itemCompra/'],
+            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '/compra/pedido/'],
+            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '/compra/fornecedor/'],
             ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
 		];
+    }
+
+
+    public function index()
+    {
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+
         $data = [
 			'fornecedor'		=> Fornecedor::all(),
 			'title'				=> "Lista de Funcionários",
@@ -33,16 +41,8 @@ class FornecedorController extends Controller
 
     public function create()
     {
-        $moduleInfo = [
-            'icon' => 'store',
-            'name' => 'COMPRA',
-        ];
-        $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../itemCompra/'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../pedido/'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../fornecedor/'],
-            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
-		];
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
         $data = [
 			"url" 	 	=> url('compra/fornecedor'),
 			"button" 	=> "Salvar",
@@ -78,16 +78,8 @@ class FornecedorController extends Controller
 
     public function edit($id)
     {   
-        $moduleInfo = [
-            'icon' => 'store',
-            'name' => 'COMPRA',
-        ];
-        $menu = [
-            ['icon' => 'shop', 'tool' => 'Itens', 'route' => '../../itemCompra/'],
-            ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '../../pedido'],
-            ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '../'],
-            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
-		];
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
         $data = [
 			"url" 	 	=> url("compra/fornecedor/$id"),
 			"button" 	=> "Atualizar",
