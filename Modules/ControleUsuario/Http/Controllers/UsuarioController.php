@@ -73,21 +73,28 @@ class UsuarioController extends Controller
 
     public function cadastrar(ValidaCadastroRequest $req)
     {
-       # dd($req);
+      
+       DB::beginTransaction();
         try{
-            $data = $req->all();
-            $data['password'] =base64_encode($req->input('password'));
-            $data['url'] = 'validar.cadastro';
-            $data['model'] = null;
             
-       $data['title']= 'Cadastrar Usuário';
-            
-            Usuario::Create($data);
+            $usuario = DB::table('usuario')->where('email', $req->email)->first();
             
             
-
-            return back()->with('success', 'Usuário cadastrado com sucesso!');
-        }catch(Exception $e)
+            if(!$usuario){
+                DB::commit();
+                $data = $req->all();
+                $data['password'] =base64_encode($req->input('password'));
+                $data['url'] = 'validar.cadastro';
+                $data['model'] = null;
+                
+                $data['title']= 'Cadastrar Usuário';
+                Usuario::Create($data);
+                return back()->with('success', 'Usuário cadastrado com sucesso!');
+            }else{
+                return back()->with('warning', 'Este email já está cadastrado');
+            }
+        }
+        catch(Exception $e)
         {
             DB::rollback();
             return back()->with('error', $e);
