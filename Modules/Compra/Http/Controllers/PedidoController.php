@@ -173,11 +173,12 @@ class PedidoController extends Controller
     } 
 
     public function enviar_email(Request $request){
-        return $request->all();
-
+ 
+        $fornecedor = Fornecedor::findorFail($request->fornecedores);
         Mail::send('teste', ['curso'=>'Eloquent'], function($m){
-            $m->from('thofurtado@gmail.com', 'Modulo Compras');
-            $m->to('pedrops02@gmail.com');
+            $m->from('thofurtado@gmail.com', 'Solicitação de Orçamento');
+            $m->to($fornecedor->pluck('email'));
+            return back()->with('sucess',  'Email Enviado');
         });
     }
 
