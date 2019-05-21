@@ -30,7 +30,7 @@ class Funcionario extends Model{
     }
 
     public function endereco(){
-        return $this->enderecoRelacao->dados;
+        return $this->enderecoRelacao->dados();
     }
 
     //caso seja 1 pra n

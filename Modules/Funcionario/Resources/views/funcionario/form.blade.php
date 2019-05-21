@@ -23,7 +23,7 @@
                                 <i class="material-icons">person</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Nome" name="funcionario[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('funcionario.nome', '') }}">
+                        <input required type="text" placeholder="Nome" name="funcionario[nome]" id="nome" class="form-control" value="{{ old('funcionario.nome', $data['model'] ? $data['model']->nome : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('funcionario.nome') }} </span>
                 </div>
@@ -41,8 +41,8 @@
                         </div>
                         <select required name="funcionario[sexo]" class="form-control">
                                 <option value="">Selecione</option>
-                                <option {{ $data['model'] && $data['model']->sexo == 0 ? 'selected' : ''}} value="0">Feminino</option>
-                                <option {{ $data['model'] && $data['model']->sexo == 1 ? 'selected' : ''}} value="1">Masculino</option>
+                                <option {{ old('funcionario.sexo', $data['model'] ? $data['model']->sexo : '') == 0 ? 'selected' : ''}} value="0">Feminino</option>
+                                <option {{ old('funcionario.sexo', $data['model'] ? $data['model']->sexo : '') == 1 ? 'selected' : ''}} value="1">Masculino</option>
                         </select>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         <select required name="funcionario[estado_civil_id]" class="form-control">
                             <option value="">Selecione</option>
                             @foreach($data['estado_civil'] as $item)
-                                <option value="{{ $item->id }}" {{ ($data['model'] && $item->id == $data['model']->estado_civil_id ) ? 'selected' : '' }}> {{ $item->nome }} </option>
+                                <option value="{{ $item->id }}" {{ old('funcionario.estado_civil_id', $data['model']? $data['model']->estado_civil_id : '') == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
                             @endforeach 
                         </select>
                     </div>
@@ -74,7 +74,7 @@
                                 <i class="material-icons">date_range</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_nascimento]" id="data_nascimento" class="form-control data" value="{{ $data['model'] ? $data['model']->data_nascimento : old('funcionario.data_nascimento', '') }}">
+                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_nascimento]" id="data_nascimento" class="form-control data" value="{{ old('funcionario.data_nascimento', $data['model'] ? $data['model']->data_nascimento : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
                 </div>
@@ -88,7 +88,7 @@
                                 <i class="material-icons">date_range</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_admissao]" id="data_admissao" class="form-control data" value="{{ $data['model'] ? $data['model']->data_admissao : old('funcionario.data_admissao', '') }}">
+                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_admissao]" id="data_admissao" class="form-control data" value="{{ old('funcionario.data_admissao', $data['model'] ? $data['model']->data_admissao : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('funcionario.data_admissao') }} </span>
                 </div>
@@ -96,19 +96,19 @@
         </div>
 
         <?php
-            $documentos = ['vazio'];
+        //     $documentos = ['vazio'];
 
-            if(old('docs_outros') !== null) {
-                $documentos = old('docs_outros');
-            }
-            else if($data['model']) {
-                $documentos = $data['model']->documentos->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg');
+        //     if(old('docs_outros') !== null) {
+        //         $documentos = old('docs_outros');
+        //     }
+        //     else if($data['model']) {
+        //         $documentos = $data['model']->documentos->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg');
 
-                if(count($documentos) == 0) {
-                    $documentos = ['vazio'];
-                }
-            }
-        ?>
+        //         if(count($documentos) == 0) {
+        //             $documentos = ['vazio'];
+        //         }
+        //     }
+        // ?>
 
         <strong><h6 class="mt-5 mb-3">Documentos</h6></strong>
         <hr>
@@ -126,7 +126,7 @@
                             @if($data['model'])
                                 <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->cpf()->first()->id}}">
                             @endif
-                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{$data['model'] && old('documentos.cpf.numero') == null ? $data['model']->cpf()->first()->numero : old('documentos.cpf.numero', '') }}">
+                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{ old('documentos.cpf.numero', $data['model'] ? $data['model']->cpf()->first()->numero : '') }}">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.cpf.numero') }}</span>
                     </div>
@@ -143,16 +143,16 @@
                             @if($data['model'])
                                 <input type="hidden" name="documentos[rg][id]" value="{{$data['model']->rg()->first()->id}}">
                             @endif
-                            <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="form-control" value="{{ $data['model'] && old('documentos.rg.numero') == null ? $data['model']->rg()->first()->numero : old('documentos.rg.numero', '') }}">
+                            <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="form-control" value="{{ old('documentos.rg.numero', $data['model'] ? $data['model']->rg()->first()->numero : '') }}">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.rg.numero') }}</span>
                     </div>
                 </div>
             </div>        
-            @foreach($documentos as $key => $documento)
+            @foreach(old('docs_outros', $data['documentos']) as $key => $documento)
 
-                <div class="row doc {{ $documento !== 'vazio' ? '' : 'd-none'}}">
-                    @if($documento !== 'vazio')
+                <div class="row doc {{ $documento->numero ? '' : 'd-none'}}">
+                    @if($documento->id)
                         <input type="hidden" class="documentos" value="{{isset($documento->id) ? $documento->id : ''}}" name="docs_outros[{{$key}}][id]">
                     @endif
                     <div class="col-md-3">
@@ -164,7 +164,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{$documento !== 'vazio' ? $documento['tipo'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}> 
+                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{$documento['tipo'] ? $documento['tipo'] : ''}}" {{ $documento->tipo ? '' : 'disabled' }}> 
                             </div>
                             <span class="errors"> {{ $errors->first('docs_outros.tipo') }}</span>
                         </div>
@@ -178,7 +178,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{($documento !== 'vazio') ? $documento['numero'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
+                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{$documento['numero'] ? $documento['numero'] : ''}}" {{ $documento->numero ? '' : 'disabled' }}>
                             </div>
                             <span class="errors"> {{ $errors->first('docs_outros.numero') }} </span>
                         </div>
@@ -193,7 +193,7 @@
                                     </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{($documento !== 'vazio' && isset($documento['comprovante'])) ? $documento['comprovante'] : ''}}" {{($documento !== 'vazio') ? '' : 'disabled'}}>
+                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $documento['comprovante'] ? $documento['comprovante'] : ''}}" {{ $documento->comprovante ? '' : 'disabled' }}>
                                     <label for="comprovante" class="custom-file-label">Comprovante</label>   
                                 </div>
                                 <span class="errors"> {{ $errors->first('docs_outros.comprovante') }}</span>

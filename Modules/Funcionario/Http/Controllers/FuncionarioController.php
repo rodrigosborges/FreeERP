@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario, Documento, Telefone};
+use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario, Documento, Telefone, Relacao};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use DB;
 
@@ -40,12 +40,14 @@ class FuncionarioController extends Controller{
         $data = [
             'url' => url("funcionario/funcionario"),
             'model' => '',
+            'documentos' => [new Documento],
             'estado_civil' => EstadoCivil::all(),
             'estados' => [],
             'cidades' => [],
             'cargos' => Cargo::all(),
             'title' => 'Cadastro de Funcionário',
-            'button' => 'Salvar'
+            'button' => 'Salvar',
+            ''
         ];
 
         return view('funcionario::funcionario.form', compact('data'));
@@ -121,6 +123,9 @@ class FuncionarioController extends Controller{
     }
 
     public function edit($id){
+
+        $funcionario = Funcionario::findOrFail($id);
+
         $data = [
             "url" 	 	=> url("funcionario/funcionario/$id"),
             'estado_civil' => EstadoCivil::all(),
@@ -128,9 +133,10 @@ class FuncionarioController extends Controller{
             'cidades' => [],
             'cargos' => Cargo::all(),
 			"button" 	=> "Atualizar",
-			"model"		=> Funcionario::findOrFail($id),
-			'title'		=> "Atualizar Funcionário"
-		];
+            "model"		=> $funcionario,
+            'documentos' => $funcionario->documentos()->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg')->get(),
+            'title'		=> "Atualizar Funcionário"
+        ];
 
 	    return view('funcionario::funcionario.form', compact('data'));
     }
