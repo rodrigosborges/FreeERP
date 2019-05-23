@@ -9,14 +9,14 @@
       </div>
     </div>
     <div class="form-group row">
-      <form class="input-group col-lg-9 col-sm-12" action="{{route('consertos.buscar')}}" method="post">
+      <form class="input-group col-6" action="{{route('consertos.buscar')}}" method="post">
           {{ csrf_field() }}
-            <input type="text" class="form-control" name="busca" placeholder="Numero da ordem" aria-label="Buscar OS" aria-describedby="button-addon2">
-            <div class="input-group-append">
-              <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2"></input>
-            </div>
+          <input type="text" class="form-control" name="busca" placeholder="Numero da ordem" aria-label="Buscar OS" aria-describedby="button-addon2">
+          <div class="input-group-append">
+            <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2"></input>
+          </div>
       </form>
-      <div class="col-lg-6 col-sm-6">
+      <div class="col-6">
         <div class="text-right">
             <a href="{{route('consertos.cadastrar')}}"><button type="button" class="btn btn-info">Nova OS</button></a>
         </div>

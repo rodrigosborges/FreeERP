@@ -14,15 +14,15 @@
         <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
       </div>
     </div>
-    <div class="row">
-      <form class="input-group col-lg-9 col-sm-12" action="{{route('pecas.buscar')}}" method="post">
+    <div class="row form-group">
+      <form class="input-group col-6" action="{{route('pecas.buscar')}}" method="post">
           {{ csrf_field() }}
             <input type="text" class="form-control" name="busca" placeholder="Nome da peça" aria-label="Buscar" aria-describedby="button-addon2">
             <div class="input-group-append">
               <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="Localizar"></input>
             </div>
       </form>
-        <div class="col-md-6">
+        <div class="col-6">
             <div class="text-right">
                 <a href="{{route('pecas.cadastrar')}}"><button type="button" class="btn btn-info">Cadastrar Peça</button></a>
             </div>

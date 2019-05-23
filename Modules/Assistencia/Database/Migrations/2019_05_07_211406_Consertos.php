@@ -15,6 +15,8 @@ class Consertos extends Migration
     {
       Schema::create('conserto_assistencia', function (Blueprint $table) {
           $table->increments('id');
+          $table->integer('numero');
+          $table->decimal('valor', 6,2);
           $table->string('data_entrada');
           $table->string('situacao');
           $table->string('modelo_aparelho');

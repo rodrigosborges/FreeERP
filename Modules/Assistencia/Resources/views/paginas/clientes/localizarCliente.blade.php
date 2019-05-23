@@ -15,7 +15,6 @@
             <div class="input-group-append">
               <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2"> 
             </div>
-            <input type="text" name="" value="">
       </form>
       <div class="col-lg-3 col-sm-12 text-center">
           <a href="{{route('cliente.cadastrar')}}"><button type="button" class="btn btn-info">Cadastrar Cliente</button></a>

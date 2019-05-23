@@ -15,8 +15,8 @@
       </div>
 
     </div>
-    <div class="row">
-        <form class="input-group mb-3 col-md-6" action="{{route('servicos.buscar')}}" method="post">
+    <div class="row form-group">
+        <form class="input-group col-6" action="{{route('servicos.buscar')}}" method="post">
             {{ csrf_field() }}
               <input type="text" class="form-control" name="busca" placeholder="Nome da mão-de-obra" aria-label="Buscar" aria-describedby="button-addon2">
               <div class="input-group-append">
@@ -24,7 +24,7 @@
               </div>
         </form>
 
-        <div class="col-md-6">
+        <div class="col-6">
             <div class="text-right">
                 <a href="{{route('servicos.cadastrar')}}"><button type="button" class="btn btn-info">Cadastrar serviço</button></a>
             </div>
