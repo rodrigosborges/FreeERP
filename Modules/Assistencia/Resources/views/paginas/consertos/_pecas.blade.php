@@ -1,20 +1,25 @@
 
-<div class="form-group row">
-  <div class="input-group col">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="nome"><i class="material-icons">link_off</i></span>
+  <div class="form-group row">
+    <div class="col-12 multi-select">
+      <select name="pecas[]" class="form-control col-12 " multiple="multiple">
+
+        @foreach($pecas as $peca)
+     
+          <option value="{{ $peca->id }}"> {{ $peca->nome }} . "  | " . {{ $peca->valor_venda }}</option>
+
+        @endforeach 
+
+      </select>
     </div>
-    <input class="form-control" name="selecionarPeca" type="text" placeholder="Escolha a peça">
+    
   </div>
-</div>
 
+  <select class="js-example-basic-multiple js-states form-control " id="id_label_multiple" multiple="multiple">
+    
+    @foreach($pecas as $peca)
+     
+          <option value="{{ $peca->id }}"> {{ $peca->nome }} . "  | " . {{ $peca->valor_venda }}</option>
 
-<div class="form-group row">
-  <input type="hidden" name="idPeca" value="{{isset($conserto->idPeca) ? $conserto->idPeca : ''}}">
-  <div class="col">
-    <input class="form-control" name="nome_peca" type="text" placeholder="" value="">
-  </div>
-  <div class="col">
-    <input class="form-control" name="valor_peca" type="text" placeholder="" value="">
-  </div>
-</div>
+    @endforeach 
+
+  </select>

@@ -26,6 +26,22 @@
 @stop
 
 @section('js')
+	<script >
+		
+		$('.multi-select').select2();
+
+		$('.multi-select').on('select2:opening select2:closing', function( event ) {
+		    var $searchfield = $(this).parent().find('.select2-search__field');
+		    $searchfield.prop('disabled', true);
+		});
+
+		$('.multi-select').select2({
+		  matcher: function(term, text, option) {
+		    return text.toUpperCase().indexOf(term.toUpperCase()) >= 0 || option.val().toUpperCase().indexOf(term.toUpperCase())>=0;
+		  }
+		});
+
+	</script>
 	<script>
 		$("[name='selecionarMao']").on('keyup',function(){
 
