@@ -3,11 +3,7 @@
 namespace Modules\Compra\Tests;
 
 use Tests\TestCase;
-use Modules\Compra\Http\Controllers\ItemCompraController;
 use Modules\Compra\Entities\ItemCompra;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 
 class ItemCompraTest extends TestCase
@@ -15,9 +11,13 @@ class ItemCompraTest extends TestCase
     public function testView()
     {
         $this->get('compra/itemCompra')->assertViewIs('compra::item');
+        
+        $this->get('compra/itemCompra/1/edit')->assertViewIs('compra::formulario_item');
+
+        $this->get('compra/itemCompra/create')->assertViewIs('compra::formulario_item');
     }
 
-    public function testCreateItemCompra(){
+       public function testCreateItemCompra(){
         ItemCompra::create([
         'nome_produto' => 'Mouse',
         'valor_estimado' => 40.00,
@@ -28,4 +28,18 @@ class ItemCompraTest extends TestCase
         
     }
 
+    public function testUpdateItemCompra(){
+        $response = $this->get('/compra/itemCompra/1/edit',['nome_produto'=>'Teclado']);
+
+        $response->assertStatus(200);
+
+    }
+
+    public function testDeleteItemCompra(){
+        $response = $this->delete('/compra/itemCompra/1');
+
+        $response->assertStatus(302);
+    }
+
+ 
 }
