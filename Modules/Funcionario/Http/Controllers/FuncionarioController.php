@@ -41,13 +41,13 @@ class FuncionarioController extends Controller{
             'url' => url("funcionario/funcionario"),
             'model' => '',
             'documentos' => [new Documento],
+            'telefones' => [new Telefone],
             'estado_civil' => EstadoCivil::all(),
             'estados' => [],
             'cidades' => [],
             'cargos' => Cargo::all(),
             'title' => 'Cadastro de Funcionário',
             'button' => 'Salvar',
-            ''
         ];
 
         return view('funcionario::funcionario.form', compact('data'));
@@ -135,6 +135,7 @@ class FuncionarioController extends Controller{
 			"button" 	=> "Atualizar",
             "model"		=> $funcionario,
             'documentos' => $funcionario->documentos()->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg')->get(),
+            'telefones' => $funcionario->contato->telefones,
             'title'		=> "Atualizar Funcionário"
         ];
 
@@ -189,6 +190,7 @@ class FuncionarioController extends Controller{
             //####################
 
             if($request->input('docs_outros')) {
+
                 foreach($request->input('docs_outros') as $documento){
                     if(isset($documento['id'])) {
                         Documento::find($documento['id'])->update($documento);

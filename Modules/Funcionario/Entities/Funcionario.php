@@ -14,8 +14,12 @@ class Funcionario extends Model{
         return $this->belongsTo('Modules\Funcionario\Entities\EstadoCivil');
     }
 
+    // public function cargos(){
+    //     return $this->hasMany('Modules\Funcionario\Entities\HistoricoCargo');
+    // }
+
     public function cargos(){
-        return $this->hasMany('Modules\Funcionario\Entities\HistoricoCargo');
+        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo');
     }
 
     public function documentos(){
