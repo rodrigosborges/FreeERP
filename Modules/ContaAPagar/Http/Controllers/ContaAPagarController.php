@@ -27,7 +27,11 @@ class ContaAPagarController extends Controller
             $total = $this->total();
             return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias'));
       }
-    
+      
+    public function novaConta(){
+        
+        return view('contaapagar::novaConta'); 
+    }
     public function status(){ /*tratar possivel variavel q vir e depois juntar com o filtro de categoria*/
         
         $pagamentoss = PagamentoModel::all();

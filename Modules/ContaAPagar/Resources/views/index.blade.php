@@ -32,7 +32,8 @@
         <div class="card col-sm-2 d-flex align-items-center align-content-center"><h3>R${{$total}}</h3></div>
     </div>
     <div class="row teste">
-        <button type="button" class="btn btn-primary" id="novo">+Novo</button>
+        <a class="btn btn-primary" id="novo" href="{{ route('conta.novo') }}">Novo</a>
+
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Categoria
