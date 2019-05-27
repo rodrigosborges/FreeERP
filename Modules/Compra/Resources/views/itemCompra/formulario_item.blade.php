@@ -10,19 +10,19 @@
         <h3>Item</h3>
         <div class="form-group">
             <label for="nome_produto" class="control-label">Nome do Produto</label>
-            <input type="text" name="nome_produto" id="nome_produto" class="form-control" value="{{ $data['model'] ? $data['model']->nome_produto : old('nome_produto', "") }}">
+            <input type="text" required name="nome_produto"  id="nome_produto" class="form-control" value="{{ $data['model'] ? $data['model']->nome_produto : old('nome_produto', "") }}">
             <label class="errors"> {{ $errors->first('nome_produto') }} </label>
         </div>
 
         <div class="form-group">
             <label for="valor_estimado" class="control-label">Valor Estimado</label>
-            <input type="text" name="valor_estimado" id="valor_estimado" class="form-control" value="{{ $data['model'] ? $data['model']->valor_estimado : old('valor_estimado', "") }}">
+            <input type="number"  step="0.01" required name="valor_estimado" id="valor_estimado" class="form-control" value="{{ $data['model'] ? $data['model']->valor_estimado : old('valor_estimado', "") }}">
             <label class="errors"> {{ $errors->first('valor_estimado') }} </label>
         </div>
 
         <div class="form-group">
             <label for="caracteristicas" class="control-label">Caracteristicas</label>
-            <input type="text" name="caracteristicas" id="caracteristicas" class="form-control" value="{{ $data['model'] ? $data['model']->caracteristicas : old('caracteristicas', "") }}">
+            <input type="text" required name="caracteristicas" id="caracteristicas" class="form-control" value="{{ $data['model'] ? $data['model']->caracteristicas : old('caracteristicas', "") }}">
             <label class="errors"> {{ $errors->first('caracteristicas') }} </label>
         </div>
         

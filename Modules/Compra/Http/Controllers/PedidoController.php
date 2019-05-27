@@ -154,10 +154,10 @@ class PedidoController extends Controller
 			'pedido'		=> Pedido::all(),
 			'title'		=> "Lista de Pedidos Disponíveis",
 		]; 
-        return view('compra::pedidos_disponiveis', compact('data','moduleInfo','menu'));
+        return view('compra::pedido.pedidos_disponiveis', compact('data','moduleInfo','menu'));
     }
     
-    public function gerar_orcamento($id)
+    public function solicitar_orcamento($id)
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
@@ -169,7 +169,7 @@ class PedidoController extends Controller
             'itens_pedido' => Pedido::findOrFail($id)->itens()->get(),
 			'title'		=> "Lista de Pedidos Disponíveis",
 		]; 
-        return view('compra::gerar_orcamento', compact('data','moduleInfo','menu'));
+        return view('compra::pedido.solicitar_orcamento', compact('data','moduleInfo','menu'));
     } 
 
     public function enviar_email(Request $request){

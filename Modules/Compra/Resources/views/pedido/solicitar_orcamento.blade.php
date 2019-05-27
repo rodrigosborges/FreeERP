@@ -18,7 +18,7 @@
          @foreach($data['itens_pedido'] as $itemPedido)
          <div class="input-group mt-2">
             <div class="form-check form-check-inline mx-sm-3">
-            <input class="form-check-input" name="itens[]" type="checkbox" id="{{$itemPedido->nome_produto}}" value="{{$itemPedido->id}}">
+            <input required class="form-check-input" name="itens[]" type="checkbox" id="{{$itemPedido->nome_produto}}" value="{{$itemPedido->id}}">
             <label class="form-check-label" for="{{$itemPedido->nome_produto}}"><h4>{{$itemPedido->nome_produto}}</h4></label>
             </div>
          </div>

@@ -18,7 +18,7 @@
                                         <option value="{{ $item->id }}" {{ $item->id == $itemPedido['id'] ? 'selected' : '' }}> {{ $item->nome_produto }} </option>
                                     @endforeach
                                 </select>
-                                <div class="col-3"><input class="form-control" value="{{ $data['pedido'] ? $itemPedido->pivot->quantidade: old('quantidade', "") }}" type="number" placeholder="Quantidade" name="itens[{{$key}}][quantidade]" onKeyPress="PermiteNumeros();"></div>
+                                <div class="col-3"><input class="form-control" required value="{{ $data['pedido'] ? $itemPedido->pivot->quantidade: old('quantidade', "") }}" type="number" placeholder="Quantidade" name="itens[{{$key}}][quantidade]" onKeyPress="PermiteNumeros();"></div>
                                 <button type="button" class="btn btn-danger remover">Remover</button>              
                             </div>
                         @endforeach
