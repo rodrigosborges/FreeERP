@@ -36,7 +36,7 @@ class ItemCompraController extends Controller
 			'title'				=> "Lista de Itens",
 		]; 
 			
-	    return view('compra::item', compact('data','moduleInfo','menu'));
+	    return view('compra::itemCompra.item', compact('data','moduleInfo','menu'));
     }
 
     public function create()
@@ -51,7 +51,7 @@ class ItemCompraController extends Controller
 			"model"		=> null,
 			'title'		=> "Cadastrar Item Compra"
 		];
-	    return view('compra::formulario_item', compact('data','moduleInfo','menu'));
+	    return view('compra::itemCompra.formulario_item', compact('data','moduleInfo','menu'));
 
     }
 
@@ -83,14 +83,14 @@ class ItemCompraController extends Controller
         
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
-        
+
         $data = [
 			"url" 	 	=> url("compra/itemCompra/$id"),
 			"button" 	=> "Atualizar",
 			"model"		=> ItemCompra::findOrFail($id),
 			'title'		=> "Atualizar Item Compra"
 		];
-	    return view('compra::formulario_item', compact('data','moduleInfo','menu'));
+	    return view('compra::itemCompra.formulario_item', compact('data','moduleInfo','menu'));
         
     }
 

@@ -38,7 +38,7 @@ class PedidoController extends Controller
 			'title'				=> "Lista de Pedidos",
 		]; 
 			
-	    return view('compra::pedido', compact('data','moduleInfo','menu'));
+	    return view('compra::pedido.pedido', compact('data','moduleInfo','menu'));
     }
 
 
@@ -56,7 +56,7 @@ class PedidoController extends Controller
             'title'		=> "Cadastrar Pedido"
             
 		];
-	    return view('compra::formulario_pedido', compact('data','moduleInfo','menu'));
+	    return view('compra::pedido.formulario_pedido', compact('data','moduleInfo','menu'));
 
 
     }
@@ -100,7 +100,7 @@ class PedidoController extends Controller
             "itens_pedido" => Pedido::findOrFail($id)->itens,
 			'title'		=> "Atualizar Pedido"
 		];
-	    return view('compra::formulario_pedido', compact('data','moduleInfo','menu'));
+	    return view('compra::pedido.formulario_pedido', compact('data','moduleInfo','menu'));
     }
 
     

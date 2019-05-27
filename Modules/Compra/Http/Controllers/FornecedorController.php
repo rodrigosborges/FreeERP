@@ -36,7 +36,7 @@ class FornecedorController extends Controller
 			'title'				=> "Lista de Funcionários",
 		]; 
 			
-	    return view('compra::fornecedor', compact('data','moduleInfo','menu'));
+	    return view('compra::fornecedor.fornecedor', compact('data','moduleInfo','menu'));
     }
 
     public function create()
@@ -49,7 +49,7 @@ class FornecedorController extends Controller
 			"model"		=> null,
 			'title'		=> "Cadastrar Fornecedor"
 		];
-	    return view('compra::formulario_fornecedor', compact('data','moduleInfo','menu'));
+	    return view('compra::fornecedor.formulario_fornecedor', compact('data','moduleInfo','menu'));
 
     }
 
@@ -86,7 +86,7 @@ class FornecedorController extends Controller
 			"model"		=> Fornecedor::findOrFail($id),
 			'title'		=> "Atualizar Fornecedor"
 		];
-	    return view('compra::formulario_fornecedor', compact('data','moduleInfo','menu'));
+	    return view('compra::fornecedor.formulario_fornecedor', compact('data','moduleInfo','menu'));
         
     }
 
