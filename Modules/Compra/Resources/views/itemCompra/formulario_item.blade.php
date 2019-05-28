@@ -10,7 +10,7 @@
         <h3>Item</h3>
         <div class="form-group">
             <label for="nome_produto" class="control-label">Nome do Produto</label>
-            <input type="text" required name="nome_produto"  id="nome_produto" class="form-control" value="{{ $data['model'] ? $data['model']->nome_produto : old('nome_produto', "") }}">
+            <input type="text" required name="nome"  id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', "") }}">
             <label class="errors"> {{ $errors->first('nome_produto') }} </label>
         </div>
 

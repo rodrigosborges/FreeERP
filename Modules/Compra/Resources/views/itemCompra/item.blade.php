@@ -7,15 +7,15 @@
                 <thead>
                     <tr>
                         <th>Item</th>
-                        <th>Quantidade</th>
+                        <th>Valor Estimado</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach($data['item_compra'] as $item)
                     <tr>
-                        <td>{{$item->nome_produto}}</td>
-                        <td>{{$item->quantidade}}</td>
+                        <td>{{$item->nome}}</td>
+                        <td>{{$item->valor_estimado}}</td>
                         <td>
                             <form action="{{url('compra/itemCompra', [$item->id])}}" method="POST">
                                 {{method_field('DELETE')}}

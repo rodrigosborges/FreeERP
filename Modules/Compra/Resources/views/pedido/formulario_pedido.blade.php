@@ -15,7 +15,7 @@
                                 <select required name="itens[{{$key}}][item_compra_id]" class="form-control col-7">
                                     <option value="">Selecione uma opção</option>
                                     @foreach($data['itens'] as $item)
-                                        <option value="{{ $item->id }}" {{ $item->id == $itemPedido['id'] ? 'selected' : '' }}> {{ $item->nome_produto }} </option>
+                                        <option value="{{ $item->id }}" {{ $item->id == $itemPedido['id'] ? 'selected' : '' }}> {{ $item->nome }} </option>
                                     @endforeach
                                 </select>
                                 <div class="col-3"><input class="form-control" required value="{{ $data['pedido'] ? $itemPedido->pivot->quantidade: old('quantidade', "") }}" type="number" placeholder="Quantidade" name="itens[{{$key}}][quantidade]" onKeyPress="PermiteNumeros();"></div>
