@@ -8,27 +8,39 @@ class Funcionario extends Model{
 
     protected $table = 'funcionario';
 
-    protected $fillable = ['nome', 'data_nascimento', 'estado_civil_id', 'sexo', 'data_admissao'];
-
-    public function estado_civil(){
-        return $this->belongsTo('Modules\Funcionario\Entities\EstadoCivil');
-    }
-
-    // public function cargos(){
-    //     return $this->hasMany('Modules\Funcionario\Entities\HistoricoCargo');
-    // }
+    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao'];
 
     public function cargos(){
         return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo');
     }
 
+    public function estadoCivilRelacao(){
+        return $this->hasOne('App\Entities\Relacao', 'origem_id')
+            ->where('tabela_origem','funcionario')
+            ->where('tabela_destino','estado_civil');
+    }
+
+    public function estado_civil(){
+        return $this->estadoCivilRelacao->dados();
+    }
+
+    public function documentosRelacao(){
+        return $this->hasMany('App\Entities\Relacao', 'origem_id')
+            ->where('tabela_origem','funcionario')
+            ->where('tabela_destino','documento');
+    }
+
     public function documentos(){
-        return $this->hasMany('Modules\Funcionario\Entities\Documento');
+        $dados = [];
+        foreach($this->documentosRelacao as $relacao){
+            $dados[] = $relacao->dados;
+        }
+        return $dados;
     }
 
     //caso seja 1 pra 1
     public function enderecoRelacao(){
-        return $this->hasOne('Modules\Funcionario\Entities\Relacao', 'origem_id')
+        return $this->hasOne('App\Entities\Relacao', 'origem_id')
             ->where('tabela_origem','funcionario')
             ->where('tabela_destino','endereco');
     }
@@ -52,9 +64,9 @@ class Funcionario extends Model{
     //     return $dados;
     // }
     
-    public function contato(){
-        return $this->hasOne('Modules\Funcionario\Entities\Contato');
-    }
+    // public function contato(){
+    //     return $this->hasOne('Modules\Funcionario\Entities\Contato');
+    // }
 
     public function setDataNascimentoAttribute($val){
         $this->attributes['data_nascimento'] = implode('-', array_reverse(explode('/', $val))) ? : '';
