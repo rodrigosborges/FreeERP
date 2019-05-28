@@ -5,7 +5,8 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{EstadoCivil, Cargo, Funcionario, Documento, Telefone, Relacao};
+use Modules\Funcionario\Entities\{Cargo, Funcionario};
+use App\Entities\{EstadoCivil, Documento, Telefone, Relacao};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use DB;
 
@@ -55,14 +56,11 @@ class FuncionarioController extends Controller{
 
     public function store(CreateFuncionario $request){
 
-        // $validator = $request->validate([
-        //     'cpf' => 'unique:documentos,tipo,'.$id.',id,tipo'
-        // ]);
-
 		DB::beginTransaction();
 		try{
 
             $funcionario = Funcionario::create($request->input('funcionario'));
+            $funcionario->cargos()->create($request->input('cargo'));
 
             foreach($request->documentos as $key => $documento) {
 
@@ -93,18 +91,48 @@ class FuncionarioController extends Controller{
                         $documento['comprovante'] = $nomeArquivo;
                     
                     }
-                    
-                    $funcionario->documentos()->save(new Documento($documento));
+                
+                    $doc = Documento::create($documento);
+
+                    Relacao::create([
+                        'tabela_origem' => 'funcionario',
+                        'origem_id' => $funcionario->id,
+                        'tabela_destino' => 'documento',
+                        'destino_id' => $doc->id
+                    ]);
 
                 }
             }
 
-            $funcionario->endereco()->create($request->input('endereco'));
-            $funcionario->cargos()->create($request->input('cargo'));
-            $funcionario->contato()->create($request->input('contato'));
+            $endereco = Endereco::create($request->input('endereco'));
+
+            Relacao::create([
+                'tabela_origem' => 'funcionario',
+                'origem_id' => $funcionario->id,
+                'tabela_destino' => 'endereco',
+                'destino_id' => $endereco->id
+            ]);
+
+            $email = Email::create($request->input('email'));
+
+            Relacao::create([
+                'tabela_origem' => 'funcionario',
+                'origem_id' => $funcionario->id,
+                'tabela_destino' => 'email',
+                'destino_id' => $email->id
+            ]);
 
             foreach($request->telefones as $telefone) {
-                $funcionario->contato->telefones()->save(new Telefone($telefone));
+           
+                $telefone = Telefone::create($telefone);
+
+                Relacao::create([
+                    'tabela_origem' => 'funcionario',
+                    'origem_id' => $funcionario->id,
+                    'tabela_destino' => 'telefone',
+                    'destino_id' => $telefone->id
+                ]);
+
             }
 
 			DB::commit();

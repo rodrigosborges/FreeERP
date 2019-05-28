@@ -386,23 +386,37 @@
         <div id="telefones">
             @foreach(old('telefones', $data['telefones']) as $key => $telefone)
                 <div class="row tel">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="material-icons">phone</i>
-                                    </span>
+                    <div class="col-md-6">
+                        <div class="form-row">
+
+                            @if($data['model'])
+                                <input type="hidden" value="{{isset($telefone->id) ? $telefone->id : ''}}" name="telefones[{{$key}}][id]">
+                            @endif
+
+                            <div class="col-md-6">
+                                <div class="form-group"> 
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">phone</i>
+                                            </span>
+                                        </div>
+                                        <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][tipo]" class="form-control telefone" value="{{$telefone['tipo'] ? $telefone['tipo'] : ''}}">
+                                    </div>
+                                    <span class="errors"> {{ $errors->first('telefones.tipo') }}</span>
                                 </div>
-                                @if($data['model'])
-                                    <input type="hidden" value="{{isset($telefone->id) ? $telefone->id : ''}}" name="telefones[{{$key}}][id]">
-                                @endif
-                                <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][numero]" class="form-control telefone" value="{{$telefone['numero'] ? $telefone['numero'] : ''}}">
                             </div>
-                            <span class="errors"> {{ $errors->first('telefones.numero') }}</span>
+                            <div class="col-md-6">
+                                <div class="form-group"> 
+                                    <div class="input-group">
+                                        <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][numero]" class="form-control telefone" value="{{$telefone['numero'] ? $telefone['numero'] : ''}}">
+                                    </div>
+                                    <span class="errors"> {{ $errors->first('telefones.numero') }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <i class="btn btn-info border text-center material-icons add-tel">add</i>
                         <i class="btn btn-danger border text-center material-icons del-tel">delete</i>
                     </div>

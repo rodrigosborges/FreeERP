@@ -63,10 +63,6 @@ class Funcionario extends Model{
     //     }
     //     return $dados;
     // }
-    
-    // public function contato(){
-    //     return $this->hasOne('Modules\Funcionario\Entities\Contato');
-    // }
 
     public function setDataNascimentoAttribute($val){
         $this->attributes['data_nascimento'] = implode('-', array_reverse(explode('/', $val))) ? : '';
