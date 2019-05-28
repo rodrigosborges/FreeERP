@@ -53,11 +53,11 @@ class ConsertoController extends Controller
        $conserto = ConsertoAssistenciaModel::find($id);
        return view('assistencia::paginas.consertos.editarConserto',compact('conserto'));
      }
-     public function salvar(Request $req){
-        $dados  = $req->all();
-        ConsertoAssistenciaModel::create($dados);
-
-        return redirect()->route('consertos.index')->with('success','Ordem salva com sucesso!');
+     
+     public function SalvarCerto(Request $req){
+      $dados  = $req->all();
+      ConsertoAssistenciaModel::create($dados);
+      return redirect()->route('consertos.index')->with('success','Ordem salva com sucesso!');
       }
 
 

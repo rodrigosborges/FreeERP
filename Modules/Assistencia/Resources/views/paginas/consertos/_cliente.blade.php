@@ -4,7 +4,7 @@
     <div class="input-group-prepend">
       <span class="input-group-text" id="nome"><i class="material-icons">link_off</i></span>
     </div>
-    <input class="form-control" name="selecionarCliente" type="text" placeholder="Escolher cliente">
+    <input class="form-control" name="selecionarCliente" type="text" placeholder="Escolher cliente" >
   </div>
 </div>
 <div class="row">
@@ -13,7 +13,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="nome"><i class="material-icons">person</i></span>
       </div>
-      <input class="form-control" name="nome" type="text" placeholder="Nome completo" readonly value="{{ isset($conserto->cliente->nome) ? $conserto->cliente->nome : old('nome', '') }}">
+      <input required class="form-control" name="nome" type="text" placeholder="Nome completo" readonly value="{{ isset($conserto->cliente->nome) ? $conserto->cliente->nome : old('nome', '') }}">
     </div>
   </div>
   <div class="form-group col-lg-6 col-sm-12">
@@ -21,7 +21,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="cpf"><i class="material-icons">account_box</i></span>
       </div>
-      <input type="text" class="form-control cpf-mask" name="cpf" placeholder="000.000.000-00" readonly value="{{ isset($conserto->cliente->cpf) ? $conserto->cliente->cpf : old('cpf', '') }}">
+      <input required type="text" class="form-control cpf-mask" name="cpf" placeholder="000.000.000-00" readonly value="{{ isset($conserto->cliente->cpf) ? $conserto->cliente->cpf : old('cpf', '') }}">
     </div>
   </div>
 </div>

@@ -1,4 +1,13 @@
-
+<div class="row form-group">
+  <div class="col-12 ">
+    <select style="width:100%;" name="servicos[]" class="form-control multi-select"  multiple="true">
+      @foreach($servicos as $servico) <!-- aqui o retorno é o id da peça -->
+            <option value="{{$servico->id}}">{{ $servico->nome }} |  {{ $servico->valor }}</option>
+      @endforeach 
+    </select>
+  </div>
+</div>
+<!--
 <div class="form-group row">
   <div class="input-group col">
     <div class="input-group-prepend">
@@ -12,7 +21,7 @@
 <div class="form-group row">
   <input type="hidden" name="idMaoObra" value="{{isset($conserto->idMaoObra) ? $conserto->idMaoObra : ''  }}">
   <div class="col">
-    <input class="form-control" name="nome_servico" type="text" placeholder="" value="{{ isset($conserto->servico->nome) ? $conserto->servico->nome : old('nome', '') }}">
+    <input required class="form-control" name="nome_servico" type="text" placeholder="" value="{{ isset($conserto->servico->nome) ? $conserto->servico->nome : old('nome', '') }}">
     ISSET NAO TA FUNFANDO NO EDITAR
   </div>
   <div class="col">
@@ -20,3 +29,4 @@
   </div>
 </div>
 form
+-->
