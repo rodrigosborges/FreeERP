@@ -1012,6 +1012,7 @@
         },
         {
             "name": "nwidart/laravel-modules",
+<<<<<<< HEAD
             "version": "5.0.0",
             "source": {
                 "type": "git",
@@ -1022,6 +1023,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/nWidart/laravel-modules/zipball/88bac6dd213a0fa04d2c6930fcde772d34956939",
                 "reference": "88bac6dd213a0fa04d2c6930fcde772d34956939",
+=======
+            "version": "5.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nWidart/laravel-modules.git",
+                "reference": "52e2e8142cc9f06feb276b6d18af7c98db5b3703"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nWidart/laravel-modules/zipball/52e2e8142cc9f06feb276b6d18af7c98db5b3703",
+                "reference": "52e2e8142cc9f06feb276b6d18af7c98db5b3703",
+>>>>>>> origin/master
                 "shasum": ""
             },
             "require": {
@@ -1033,7 +1046,11 @@
                 "mockery/mockery": "~1.0",
                 "orchestra/testbench": "^3.8",
                 "phpstan/phpstan": "^0.9.2",
+<<<<<<< HEAD
                 "phpunit/phpunit": "~8.0",
+=======
+                "phpunit/phpunit": "~7.0|~8.0",
+>>>>>>> origin/master
                 "spatie/phpunit-snapshot-assertions": "^2.1.0"
             },
             "type": "library",
@@ -1078,7 +1095,11 @@
                 "nwidart",
                 "rad"
             ],
+<<<<<<< HEAD
             "time": "2019-03-18T17:56:24+00:00"
+=======
+            "time": "2019-05-11T15:27:41+00:00"
+>>>>>>> origin/master
         },
         {
             "name": "opis/closure",
@@ -2148,7 +2169,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
