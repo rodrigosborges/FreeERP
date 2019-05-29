@@ -15,7 +15,7 @@
     <div class="input-group-prepend">
       <span class="input-group-text" id="nome"><i class="material-icons">person</i></span>
     </div>
-    <input class="form-control" name="nome-tecnico" type="text" placeholder="Nome completo" value="{{ isset($cliente->nome) ? $cliente->nome : old('nome', '') }}">
+    <input class="form-control" name="nome-tecnico" type="text" placeholder="Nome completo" value="{{ isset($cliente->nome) ? $cliente->nome : old('nome', '') }}" readonly="">
   </div>
   <div class="input-group col">
     <div class="input-group-prepend">

@@ -41,7 +41,21 @@ class ConsertoController extends Controller
        $consertos = ConsertoAssistenciaModel::busca($req->busca);
        return view('assistencia::paginas.consertos.localizarConserto',compact('consertos'));
      }
-
+/*
+     public funcion calculaValor(pecas[], servicos[]) { 
+        $valor = 0;
+        if ( (pecas[] == null) and (servicos[] == null) ){
+          return $valor;
+        } else {
+          foreach($pecas as $peca){
+            $valor = $valor + $peca->valor_venda;
+          }
+          foreach($servicos as $servico) {
+            $valor = $valor + $servico->valor;
+          }
+        }
+       return $valor;
+     }*/  
 
      public function visualizarConserto($id)
      {
