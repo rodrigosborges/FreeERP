@@ -11,7 +11,7 @@
             </div>
 
             <div class="card-body">
-            {!!Form::open(['route'=>'usuario.listar', 'method'=>'post']) !!}
+            {!!Form::open(['route'=>'teste_bt', 'method'=>'post']) !!}
 
                 <div class="row align-items-end">
                   <div class="col-8">
@@ -64,7 +64,7 @@
                     <div class="col-md-8 col-sm-10 d-flex justify-content-around">
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success d-flex">
+                            <button type="submit" class="btn btn-success d-flex" action="/teste_bt">
                                 <i class="material-icons mr-2">search</i> Buscar
                             </button>
                         </div>
@@ -96,17 +96,25 @@
                         <tbody>
                             @foreach ($lista as $user)
                             <tr>
-                            {!!Form::open(['route'=>'usuario.abrir', 'method'=>'post']) !!}
+
                                 <th scope="row">{{ $user->id }}</th>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td class="d-flex justify-content-around">
-                                            {!! Form::hidden('id', $user->id) !!}
-                                            {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex '])!!}
-                                            {!!Form::submit('inativar',['class'=>'btn btn-danger d-flex'])!!}
+                                            {!!Form::open(['route'=>'usuario.abrir', 'method'=>'post']) !!}
+                                                {!! Form::hidden('id', $user->id) !!}
+                                                {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex '])!!}
+                                            {!!Form::close()!!}
+
+                                            {!!Form::open(['route'=>'usuario.delete', 'method'=>'post']) !!}
+                                                {!! Form::hidden('id', $user->id) !!}
+                                                @method('delete')
+                                                {!!Form::submit('inativar',['class'=>'btn btn-danger d-flex'])!!}
+                                            {!!Form::close()!!}
+
                                         </div>
                                     </td>
-                                    {!!Form::close()!!}
+
                                 </tr>
                             @endforeach
 

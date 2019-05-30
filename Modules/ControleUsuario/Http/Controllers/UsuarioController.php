@@ -63,7 +63,7 @@ class UsuarioController extends Controller
 
     public function viewCadastro() {
         $data =['url'=>'/cadastrar', 'model'=>null, 'button'=>'Cadastrar', 'title'=>'Cadastrar Usuário'];
-       
+
         return view('controleusuario::form',$this->dadosTemplate, compact('data'));
     }
 
@@ -73,20 +73,20 @@ class UsuarioController extends Controller
 
     public function cadastrar(ValidaCadastroRequest $req)
     {
-      
+
        DB::beginTransaction();
         try{
-            
+
             $usuario = DB::table('usuario')->where('email', $req->email)->first();
-            
-            
+
+
             if(!$usuario){
                 DB::commit();
                 $data = $req->all();
                 $data['password'] =base64_encode($req->input('password'));
                 $data['url'] = 'validar.cadastro';
                 $data['model'] = null;
-                
+
                 $data['title']= 'Cadastrar Usuário';
                 Usuario::Create($data);
                 return back()->with('success', 'Usuário cadastrado com sucesso!');
@@ -103,7 +103,6 @@ class UsuarioController extends Controller
 
     public function validaLogin(ValidaLoginRequest $req)
     {
-
 
         $senha=  base64_encode($req->password);
         $user = DB::table('usuario')->where('email', $req->email)->Where('password',$senha)->first();
@@ -141,6 +140,11 @@ class UsuarioController extends Controller
 
     }
 
+    public function bt_buscar(Request $post ){
+        dd($post);
+    }
+
+
     public function logoff()
     {
         session_start();
@@ -169,12 +173,12 @@ class UsuarioController extends Controller
         return view('controleusuario::edit');
     }
 
-    public function consulta()
-    {
+    // Metodo utilizado quando a view é aberta a primeira vez
+    public function consulta() {
 
         $status = ['0'=>"Ativo e inativos", '1'=>"Somente ativos",'2'=>"Somente inativos"];
         $modulos = ['0'=>"Todos os módulos",'1'=>"Recursos Humanos", '2'=>"Vendas",'3'=>"Estoque"];
-        $cargos = ['0'=>"Administradores",'1'=>"Gerentes",'2'=> "operadores"];
+        $cargos = ['0'=>"Administradores",'1'=>"Gerentes",'2'=> "Operadores"];
 
         $lista = Usuario::all();
 
@@ -184,7 +188,7 @@ class UsuarioController extends Controller
 
     public function editar(Request $req)
     {
-        
+
         $data['model'] = Usuario::find($req->input('id'));
         $data['url'] = 'validar.edicao';
         $data['button']= 'Atualizar';
@@ -194,7 +198,7 @@ class UsuarioController extends Controller
         return view('controleusuario::form', $this->dadosTemplate, compact('data'));
     }
 
-    /**
+       /**
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
@@ -209,21 +213,21 @@ class UsuarioController extends Controller
      $data = ['title'=>'Editar Usuario',
       'url'=>'validar.edicao',
       'button'=>'Atualizar',
-    ]; 
-    
+    ];
+
      if(!$email){
           // email disponivel
-         
+
           DB::beginTransaction();
           try{
             $usuario = Usuario::findOrFail($request->id);
-        
+
             $usuario->update($request->all());
             $data['model']= $usuario;
-        
-           
+
+
             DB::commit();
-            
+
             return view('controleusuario::form', $this->dadosTemplate, compact('data'))->with('success','Dados atualizados com sucesso');
            // return back()->with('success', 'Usuário cadastrado com sucesso!');
           }catch(Exception $e){
@@ -233,7 +237,7 @@ class UsuarioController extends Controller
           }
       }else{
         return back()->with('warning','Email indisponível');
-          
+
       }
     }
 
@@ -242,9 +246,18 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
-    
-    public function destroy($id)
+
+    public function destroy(Request $req)
     {
-        //
+        $id = $req->input('id');
+        $res=Usuario::where('id',$id)->delete();
+            if ($res){
+            $data=['status'=>'1', 'msg'=>'success' ];
+            }else
+            $data=[ 'status'=>'0', 'msg'=>'fail' ];
+
+            return back()->with('data');
+
     }
+
 }

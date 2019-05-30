@@ -30,4 +30,12 @@ Route::prefix('controleusuario')->group(function() {
 
     Route::post('/listar',['as'=>'usuario.listar','uses'=> 'UsuarioController@buscar']);
 
+
+
+    Route::post('/teste_bt', ['as'=>'teste_bt', 'uses'=>'UsuarioController@bt_buscar']);
+    Route::delete('/delete', ['as'=>'usuario.delete','uses'=> 'UsuarioController@destroy'] );
+
+
+
+
 });
