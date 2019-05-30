@@ -43,19 +43,18 @@
 	</script>
 	<script>
 		$('#valor_peca').change(function(){
-			var idPecas = $(this).val();
-			foreach (idPecas as idPeca){
-				$valorTotal = $valorTotal + $pecas->find(idPeca)->valor_venda;
-			}
-			
-			console.log(arr)
+			var valor = 0;
+			$('#valor_peca > option:checked').each(function(index, element) {
+				valor = valor + Number.parseFloat($(element).attr('data-valor'));
+			});
+			console.log(valor);
 		})
 		$('#valor_servico').change(function(){
-			var idServicos = $(this).val();
-			foreach (idServicos as idServico) {
-				$valorTotal = $valorTotal + $servicos->find(idServico)->valor;
-			}
-			console.log(arr)
+			var valor = 0;
+			$('#valor_peca > option:checked').each(function(index, element) {
+				valor = valor + Number.parseFloat($(element).attr('data-valor'));
+			});
+			console.log(valor);
 		})
 	</script>
 	<script>
