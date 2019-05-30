@@ -5,9 +5,9 @@
              ];
 
              $menu = [
-                ['icon' => 'add', 'tool' => 'Nova Conta', 'route' => 'novaconta'],
+                ['icon' => 'add', 'tool' => 'Nova Conta', 'route' => 'conta.novo'],
                  ['icon' => 'money_off', 'tool' => 'Contas a Pagar', 'route' => 'contaapagar'],
-                 ['icon' => 'category', 'tool' => 'Categorias', 'route' => 'contaapagar/categoria/index'],
+                 ['icon' => 'category', 'tool' => 'Categorias', 'route' => 'categoria.index'],
              ];
 
 ?>
@@ -89,7 +89,7 @@
                 </div>
                 <nav class="nav flex-column">
                     @foreach ($menu as $item)
-                        <a class="nav-link d-flex align-items-center" href="{{$item['route']}}">
+                        <a class="nav-link d-flex align-items-center" href="{{route($item['route'])}}">
                             <i class="material-icons mr-2">{{$item['icon']}}</i>
                             <span> {{$item['tool']}} </span>
                         </a>

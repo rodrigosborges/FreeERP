@@ -13,7 +13,11 @@ class CategoriaController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(){
+        $categorias = CategoriaModel::where('ativo', 1)->get();
+        return view('contaapagar::categorias', compact('categorias'));
+    }
+    public function nova()
     {
         
         return view('contaapagar::novaCategoria');
@@ -22,7 +26,9 @@ class CategoriaController extends Controller
     {
         $dados = $request->all();
         CategoriaModel::create($dados);
-        return view('contaapagar::novaCategoria')->with('success','A categoria foi cadastrado com sucesso!');
+
+        $categorias = CategoriaModel::where('ativo', 1)->get();
+        return view('contaapagar::categorias', compact('categorias'))->with('success','A categoria foi cadastrado com sucesso!');
     }
 
     /**
