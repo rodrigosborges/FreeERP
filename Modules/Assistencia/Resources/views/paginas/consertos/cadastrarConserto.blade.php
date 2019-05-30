@@ -3,6 +3,10 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
 @stop
 @section('content')
+	<?php 
+		$valorTotal = 0;
+	?> 
+
 	<div class="card text-center">
 
 		<div class="card-body">
@@ -37,7 +41,23 @@
 		});
 		
 	</script>
-
+	<script>
+		$('#valor_peca').change(function(){
+			var idPecas = $(this).val();
+			foreach (idPecas as idPeca){
+				$valorTotal = $valorTotal + $pecas->find(idPeca)->valor_venda;
+			}
+			
+			console.log(arr)
+		})
+		$('#valor_servico').change(function(){
+			var idServicos = $(this).val();
+			foreach (idServicos as idServico) {
+				$valorTotal = $valorTotal + $servicos->find(idServico)->valor;
+			}
+			console.log(arr)
+		})
+	</script>
 	<script>
 		$("[name='selecionarMao']").on('keyup',function(){
 

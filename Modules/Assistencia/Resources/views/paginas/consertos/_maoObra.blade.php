@@ -1,12 +1,14 @@
 <div class="row form-group">
   <div class="col-12 ">
-    <select style="width:100%;" name="servicos[]" class="form-control multi-select"  multiple="true">
+  <label for="">Selecione a mão de obra</label>
+    <select style="width:100%;" name="servicos[]" id="valor_servico" class="form-control multi-select"  multiple="true">
       @foreach($servicos as $servico) <!-- aqui o retorno é o id da peça -->
             <option value="{{$servico->id}}">{{ $servico->nome }} |  {{ $servico->valor }}</option>
       @endforeach 
     </select>
   </div>
 </div>
+
 <!--
 <div class="form-group row">
   <div class="input-group col">

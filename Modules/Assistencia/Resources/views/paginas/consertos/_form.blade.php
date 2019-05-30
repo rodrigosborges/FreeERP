@@ -15,7 +15,7 @@
   <div class="form-group col-lg-4  col-sm-12">
     <div class="input-group-prepend">
       <span class="input-group-text" id="nascimento"><i class="material-icons">attach_money</i></span>
-      <input class="form-control" name="data_entrada" type="text" value="{{$conserto}}" readonly>
+      <input class="form-control" name="data_entrada" type="text" value="{{$valorTotal}}" readonly>
     </div>
   </div>
 
