@@ -27,7 +27,7 @@
 @section('content')
     <h1>Despesa total no período</h1>
     
-<header>        
+<header> 
     <div class="row" style="padding-left: 15px;">
         <div class="card col-sm-2 d-flex align-items-center align-content-center"><h3>R${{$total}}</h3></div>
     </div>
