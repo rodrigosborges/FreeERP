@@ -42,94 +42,29 @@
 		
 	</script>
 	<script>
+
 		$('#valor_peca').change(function(){
 			var valor = 0;
-			$('#valor_peca > option:checked').each(function(index, element) {
-				valor = valor + Number.parseFloat($(element).attr('data-valor'));
+			$('#valor_peca > option:selected').each(function(index, element) {
+				valor = valor + Number.parseFloat( $(element).attr('data-valor'));
+				$('#valorTotal').val(valor);
 			});
-			console.log(valor);
-		})
+
+		});
+
 		$('#valor_servico').change(function(){
 			var valor = 0;
-			$('#valor_peca > option:checked').each(function(index, element) {
-				valor = valor + Number.parseFloat($(element).attr('data-valor'));
+			$('#valor_servico > option:checked').each(function(index, element) {
+				valor = valor + Number.parseFloat( $(element).attr('data-valor'));
+				var valorTotal = 
+				$('#valorTotal').val(valor);
 			});
-			console.log(valor);
-		})
+			 
+		});
+
 	</script>
 	<script>
-		$("[name='selecionarMao']").on('keyup',function(){
-
-				$.ajax({
-						type: "GET",
-						url: `${main_url}/assistencia/conserto/nomeServicos`,
-						data: {
-							'selecionarMao': $(this).val()
-						},
-						success: function (data) {
-								$("[name='selecionarMao']").autocomplete({
-									source: data,
-									select: function( event, ui ) {
-										inserirServico(ui.item.value)
-									}
-								})
-						},
-				})
-
-		})
-		function inserirServico(val){
-
-			$.ajax({
-	        type: "GET",
-	        url: `${main_url}/assistencia/conserto/dadosServicos`,
-	        data: {
-						'nome': val
-					},
-	        success: function (data) {
-	        		$("[name='idMaoObra']").val(data.id)
-							$("[name='nome_servico']").val(data.nome)
-							$("[name='valor_servico']").val(data.valor)
-	        },
-	    })
-
-		}
-
-		$("[name='selecionarPeca']").on('keyup',function(){
-
-				$.ajax({
-						type: "GET",
-						url: `${main_url}/assistencia/conserto/nomePecas`,
-						data: {
-							'selecionarPeca': $(this).val()
-						},
-						success: function (data) {
-								$("[name='selecionarPeca']").autocomplete({
-									source: data,
-									select: function( event, ui ) {
-										inserirPeca(ui.item.value)
-									}
-								})
-						},
-				})
-
-		})
-		function inserirPeca(val){
-
-			$.ajax({
-	        type: "GET",
-	        url: `${main_url}/assistencia/conserto/dadosPecas`,
-	        data: {
-						'nome': val
-					},
-	        success: function (data) {
-	        				$("[name='idPeca']").val(data.id)
-							$("[name='nome_peca']").val(data.nome)
-							$("[name='valor_peca']").val(data.valor_venda)
-	        },
-	    })
-
-		}
-
+		
 
 		$("[name='selecionarCliente']").on('keyup',function(){
 

@@ -27,12 +27,15 @@ class Consertos extends Migration
           $table->text('obs');
           $table->integer('idCliente')->unsigned();
           $table->integer('idTecnico')->unsigned();
-          $table->integer('idPeca')->unsigned();
-          $table->integer('idMaoObra')->unsigned();
+
+          $table->integer('idPeca')->unsigned(); // vai receber um array aqui bro
+          $table->integer('idMaoObra')->unsigned(); // vai receber um array aqui bro
+
           $table->foreign('idCliente')->references('id')->on('cliente_assistencia');
           $table->foreign('idTecnico')->references('id')->on('tecnico_assistencia');
-          $table->foreign('idPeca')->references('id')->on('peca_assistencia');
-          $table->foreign('idMaoObra')->references('id')->on('servico_assistencia');
+
+          $table->foreign('idPeca')->references('id')->on('peca_assistencia'); // vai receber um array aqui bro
+          $table->foreign('idMaoObra')->references('id')->on('servico_assistencia'); // vai receber um array aqui bro
           $table->timestamps();
       });
 

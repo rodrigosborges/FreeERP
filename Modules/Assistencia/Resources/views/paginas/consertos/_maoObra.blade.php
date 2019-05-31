@@ -3,7 +3,7 @@
   <label for="">Selecione a mão de obra</label>
     <select style="width:100%;" name="servicos[]" id="valor_servico" class="form-control multi-select"  multiple="true">
       @foreach($servicos as $servico) <!-- aqui o retorno é o id da peça -->
-            <option value="{{$servico->id}}">{{ $servico->nome }} |  {{ $servico->valor }}</option>
+            <option data-valor="{{ $servico->valor }}" value="{{$servico->id}}">{{ $servico->nome }} |  {{ $servico->valor }}</option>
       @endforeach 
     </select>
   </div>
