@@ -19,7 +19,6 @@ Route::prefix('contaapagar')->group(function() {
     Route::get('cat={id}', ['as' => 'cat.id', 'uses' => 'ContaAPagarController@filtro']);
     
     Route::get('check/teste', ['as' => 'check.status', 'uses' => 'ContaAPagarController@status']);
-    Route::get('categoria/nova', ['as' => 'categoria.nova', 'uses' => 'CategoriaController@nova']);
     Route::post('categoria/salvar', ['as' => 'categoria.salvar', 'uses' => 'CategoriaController@salvar']);
     Route::get('categoria/index',['as' => 'categoria.index', 'uses' => 'CategoriaController@index']);
 

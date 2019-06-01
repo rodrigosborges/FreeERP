@@ -17,11 +17,7 @@ class CategoriaController extends Controller
         $categorias = CategoriaModel::where('ativo', 1)->get();
         return view('contaapagar::categorias', compact('categorias'));
     }
-    public function nova()
-    {
-        
-        return view('contaapagar::novaCategoria');
-    }
+
     public function salvar(Request $request)
     {
         $dados = $request->all();
