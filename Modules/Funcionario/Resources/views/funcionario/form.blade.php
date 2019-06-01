@@ -142,14 +142,18 @@
                     @endif
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="tipo" class="control-label">Nome</label>
+                            <label for="tipo" class="control-label">Tipo</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Nome" name="docs_outros[{{$key}}][tipo]" id="tipo_{{$key}}" class="form-control documentos" value="{{$documento['tipo'] ? $documento['tipo'] : ''}}" {{ $documento->tipo ? '' : 'disabled' }}> 
+                                <select name="docs_outros[{{$key}}][tipo]" class="form-control documentos" {{$documento ? '' : 'disabled'}}>
+                                    @foreach(old('tipo_documentos', $data['tipo_documentos']) as $tipo)
+                                        <option value="{{$tipo['id']}}">{{$tipo->nome}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <span class="errors"> {{ $errors->first('docs_outros.tipo') }}</span>
                         </div>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Cargo, Funcionario};
-use App\Entities\{EstadoCivil, Documento, Telefone, Relacao};
+use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Relacao};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use DB;
 
@@ -41,6 +41,7 @@ class FuncionarioController extends Controller{
         $data = [
             'url' => url("funcionario/funcionario"),
             'model' => '',
+            'tipo_documentos' => TipoDocumento::all(),
             'documentos' => [new Documento],
             'telefones' => [new Telefone],
             'estado_civil' => EstadoCivil::all(),
@@ -60,7 +61,10 @@ class FuncionarioController extends Controller{
 		try{
 
             $funcionario = Funcionario::create($request->input('funcionario'));
-            $funcionario->cargos()->create($request->input('cargo'));
+            $funcionario->cargos()->attach(
+                $request['cargo']['cargo_id'],
+                ['data_entrada' => date_format(date_create($request['cargo']['data_entrada']), 'Y-m-d')]
+            );
 
             foreach($request->documentos as $key => $documento) {
 
@@ -69,9 +73,18 @@ class FuncionarioController extends Controller{
                     'numero' => $documento['numero']
                 ];
 
-                $funcionario->documentos()->save(new Documento($newDoc));
+                $doc = Documento::create($newDoc);
+
+                Relacao::create([
+                    'tabela_origem' => 'funcionario',
+                    'origem_id' => $funcionario->id,
+                    'tabela_destino' => 'documento',
+                    'destino_id' => $doc->id
+                ]);
 
             }
+
+            return $funcionario->documentos;
 
             if($request->input('docs_outros')) {
 
