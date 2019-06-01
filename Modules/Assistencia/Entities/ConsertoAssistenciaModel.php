@@ -20,9 +20,7 @@ class ConsertoAssistenciaModel extends Model
 
       return static::where('id')->max('id');
     }
-    public function ultimo(){
 
-    }
     public function cliente(){
         return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente');
     }
