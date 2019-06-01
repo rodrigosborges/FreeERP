@@ -15,8 +15,7 @@ class CreatePedidoTable extends Migration {
 		Schema::create('pedido', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('status');
-			$table->integer('quantidade');
+			$table->string('status')->default('Iniciado');
 			$table->dateTime('created_at')->nullable();
 			$table->dateTime('update_at')->nullable();
 			$table->softDeletes();

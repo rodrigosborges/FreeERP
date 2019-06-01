@@ -10,7 +10,7 @@ class Pedido extends Model
 {
     use SoftDeletes;
     protected $table = 'pedido';
-    public $timestamps = true;
+    public $timestamps = false;
     protected $fillable = array('id','status');
 
     //Relação com a tabela ListaCompra

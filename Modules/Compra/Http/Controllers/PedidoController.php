@@ -66,7 +66,7 @@ class PedidoController extends Controller
     {       
         DB::beginTransaction();
 		try{
-            $pedido = Pedido::Create(['status' => 'iniciado']);
+            $pedido = Pedido::Create(); 
             
             $pedido->itens()->attach($request->itens);
     

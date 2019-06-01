@@ -15,6 +15,7 @@ class CreateItemCompraHasPedidoTable extends Migration {
 		Schema::create('item_compra_has_pedido', function(Blueprint $table)
 		{
 			$table->integer('id', true);
+			$table->integer('quantidade');
 			$table->integer('item_compra_id')->index('fk_item_compra_has_pedido_item_compra1');
 			$table->integer('pedido_id')->index('fk_item_compra_has_pedido_pedido1');
 			$table->dateTime('created_at')->nullable();
