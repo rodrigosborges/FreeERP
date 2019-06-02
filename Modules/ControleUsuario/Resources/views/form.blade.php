@@ -8,19 +8,16 @@
             <div class="card-body">
                 <h5 class="card-title">{{$data['title']}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Perfil do usuário</h6>
-                
-                
                 @if($data['model'])
                 {!!Form::open(array('route'=>'validar.edicao', 'method'=>'post')) !!}
                 {!! Form::hidden('id', $data['model']->id) !!}
                     @method('PUT')
-                   
                     @else
                     {!!Form::open(array('route'=>'validar.cadastro', 'method'=>'post')) !!}
-                  
-                  
                 @endif
-               
+
+                {{ csrf_field() }}
+
               
                     <div class="form-group">
                         <div class="row justify-content-center">
