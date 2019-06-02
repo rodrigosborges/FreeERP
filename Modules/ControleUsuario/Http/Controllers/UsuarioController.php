@@ -198,7 +198,40 @@ class UsuarioController extends Controller
 
     public function update(Request $request)
     {
-       dd($request);
+     //  dd($request);
+    
+     $email = DB::table('usuario')->where('email', $request->email)->where('id', '<>', $request->id)->first();
+    
+     $data = ['title'=>'Editar Usuario',
+      'url'=>'validar.edicao',
+      'button'=>'Atualizar',
+    ]; 
+    
+     if(!$email){
+          // email disponivel
+          $data['password'] =base64_encode($request->input('password'));
+         
+          DB::beginTransaction();
+          try{
+            $usuario = Usuario::findOrFail($request->id);
+        
+            $usuario->update($request->all());
+            $data['model']= $usuario;
+        
+           
+            DB::commit();
+            
+            return view('controleusuario::form', $this->dadosTemplate, compact('data'))->with('success','Dados atualizados com sucesso');
+           // return back()->with('success', 'Usuário cadastrado com sucesso!');
+          }catch(Exception $e){
+              DB::rollback();
+              echo "não foi";
+              return back()->with('error','Erro ao atualizar :'.$e->getMessage());
+          }
+      }else{
+        return back()->with('warning','Email indisponível');
+          
+      }
     }
 
     /**

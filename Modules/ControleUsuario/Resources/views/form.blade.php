@@ -12,6 +12,7 @@
                 
                 @if($data['model'])
                 {!!Form::open(array('route'=>'validar.edicao', 'method'=>'post')) !!}
+                {!! Form::hidden('id', $data['model']->id) !!}
                     @method('PUT')
                    
                     @else
@@ -19,7 +20,7 @@
                   
                   
                 @endif
-                {!! Form::hidden('id', $data['model']->id) !!}
+               
               
                     <div class="form-group">
                         <div class="row justify-content-center">
