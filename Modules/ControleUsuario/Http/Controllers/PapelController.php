@@ -43,7 +43,7 @@ class PapelController extends Controller
             ],
             'menu' => $menu,
         ];
-    }    
+    }
 
     //FIM MÉTODO CONTRUTOR
     /**
@@ -52,10 +52,9 @@ class PapelController extends Controller
      */
     public function index()
     {
-        $papeis =Papel::all();
-        
+        $papeis = Papel::all();
+
         return view('controleusuario::papel.index', $this->dadosTemplate, compact('papeis'));
-        
     }
 
     /**
@@ -75,6 +74,23 @@ class PapelController extends Controller
     public function store(Request $request)
     {
         //
+
+        $papel = new Papel;
+        $papel->nome = $request->nome;
+        $papel->descricao = $request->descricao;
+        $papel->save();
+        return response()->jason($papel);
+    }
+    public function add(Request $request)
+    {
+        $retorno = array();
+        $papel = new Papel;
+        $papel->nome = $request->nome;
+        $papel->descricao = $request->descricao;
+        $papel->save();
+     
+       $retorno="Papel cadastrado com sucesso";
+        return json_encode($retorno);
     }
 
     /**

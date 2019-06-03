@@ -39,5 +39,6 @@ Route::prefix('controleusuario')->group(function() {
 /*ROTAS DE PAPÉIS (PAPEL)*/
 
     Route::resource('/papel', 'PapelController');
+    Route::post('/papel/add', 'PapelController@add');
 
 });
