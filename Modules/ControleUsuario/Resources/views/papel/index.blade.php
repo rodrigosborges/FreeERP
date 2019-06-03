@@ -32,7 +32,7 @@
                 <td>{{ $papel->nome }}</td>
                 <td>{{ $papel->descricao }}</td>
                 <td>{{ $papel->created_at }}</td>
-                <td></td>
+                <td>{{$papel->usuario->name}}</td>
                 <td>
                     <a href="#" class="show-modal btn btn-info btn-sm" data-id="{{$papel->id}}" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
                         <i class="material-icons">remove_red_eye</i>
@@ -67,14 +67,14 @@
                         <label class="control-label col-sm-2" for="nome">Nome:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do cargo" required>
-                            <p class="error text-center alert alert-danger hidden"></p>
+                            <p class="error text-center alert alert-danger hidden" id="msg-nome"></p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="descricao">Descrição:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição do cargo" required>
-                            <p class="error text-center alert alert-danger hiden"></p>
+                            <p class="error text-center alert alert-danger hiden" id="msg-desc"></p>
                         </div>
                     </div>
                 </form>
@@ -102,9 +102,31 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('.error').hide();
+        $('#create').click(function(){
+        $('.error').removeClass('alert-success');
+        $('#msg').val('');
+        $('#msg').hide();
+    })  
     })
 
-$('#add').click(function(){
+$('#add').click(function(e){
+    e.preventDefault();
+    $('.error').fadeOut("slow");
+    var nome = $('#nome').val();
+    var desc = $('#descricao').val();
+    if(nome==""){
+        
+        $('#msg-nome').html('O campo "Nome" é obrigatório');
+        $('#msg-nome').fadeIn();
+        $('#nome').focus();
+
+    }else if(desc==""){
+        console.log('descrição em branco');
+        $('#msg-desc').html('O campo "Descrição" é obrigatório');
+        $('#msg-desc').fadeIn();
+        $('#descricao').focus();
+    }else{
+
     $.ajax({
         type:'POST',
         url:'papel/add',
@@ -113,23 +135,26 @@ $('#add').click(function(){
         'descricao':$('input[name=descricao]').val(),
         },
         success:function(data){
-        console.log('foi: '+ data);
-       ;
+            console.log('foi: '+ data);
+            var msg = $.parseJSON(data)['mensagem'];
+            var sucesso=$.parseJSON(data)['sucesso'];
+            console.log("Mensagem ->"+ msg);
+       
+            
       
-        $('#msg').html(data);
+       if(sucesso)
+         $('#msg').addClass('alert-success')
+       else
+        $('#msg').addClass('alert-warning')       
+            $('#msg').html(msg);
         $("#msg").fadeIn("slow");
-        $('#msg').addClass('alert-success')
+        
         $('#nome').val('');
         $('#descricao').val('');
     }
-    }
-    
-    )
-    $('#create').click(function(){
-        $('.error').removeClass('alert-success');
-        $('#msg').val('');
-        $('#msg').hide();
     })
+}
+  
      
 })
 /*TESTE*/

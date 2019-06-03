@@ -4,6 +4,7 @@ namespace Modules\ControleUsuario\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Modules\controleUsuario\Entities\Papel;
+use Modules\controleUsuario\Entities\Usuario;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use DB;
@@ -53,8 +54,9 @@ class PapelController extends Controller
     public function index()
     {
         $papeis = Papel::all();
+       
 
-        return view('controleusuario::papel.index', $this->dadosTemplate, compact('papeis'));
+        return view('controleusuario::papel.index', $this->dadosTemplate, compact('papeis',));
     }
 
     /**
@@ -83,14 +85,39 @@ class PapelController extends Controller
     }
     public function add(Request $request)
     {
+        $retorno= array();
+        $retorno['sucesso']=false;
+        session_start();
+        if(isset($_SESSION['id'])){
+           
         $retorno = array();
+        
         $papel = new Papel;
         $papel->nome = $request->nome;
         $papel->descricao = $request->descricao;
-        $papel->save();
+        
+        $usuario= Usuario::findOrFail($_SESSION['id']);
+        $papel->usuario()->associate($usuario);
+
+    
+      
+        $resultado =$papel->save();
+        if($resultado){
+            $retorno['mensagem']= "Papel cadastrado com sucesso";
+            $retorno['sucesso']=true;
+        }else
+            $retorno['mensagem']= "Erro ao cadastrar papel";
+        
+       
+        
+    }else{
+        $retorno['mensagem'] = "Você precisa estar logado para realizar esta ação";
+       
+    }
+    return json_encode($retorno);
      
-       $retorno="Papel cadastrado com sucesso";
-        return json_encode($retorno);
+    
+        
     }
 
     /**

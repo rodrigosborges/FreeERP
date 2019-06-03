@@ -16,7 +16,7 @@ class Papel extends Model
         return $this->hasMany('Modules\controleUsuario\Entities\Atuacao');
     }
 
-    public function usuarios()
+    public function usuario()
     {
         return $this->belongsTo('Modules\controleUsuario\Entities\Usuario');
     }
