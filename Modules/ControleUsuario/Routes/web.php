@@ -36,6 +36,8 @@ Route::prefix('controleusuario')->group(function() {
     Route::delete('/delete', ['as'=>'usuario.delete','uses'=> 'UsuarioController@destroy'] );
 
 
+/*ROTAS DE PAPÉIS (PAPEL)*/
 
+    Route::resource('/papel', 'PapelController');
 
 });
