@@ -3,35 +3,45 @@
 @section('title','Assistência Técnica')
 
 @section('css')
+<style type="text/css">
+  .caixa {
+    display:flex;
+    justify-content: space-around;
+  }
+
+</style>
 @stop
 
 @section('content')
 <div class="card">
-  <div class="card-body">
 
+  <div class="card-header caixa" >
     <ul class="nav nav-tabs flex-column flex-sm-row">
       <li class="nav-item">
-        <a class="nav-link" href="{{route('consertos.index')}}"><h3>Consertos</h3?></a>
+        <a class="nav-link" href="{{route('consertos.index')}}"><h3>Consertos</h3></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{route('cliente.index')}}"><h3>Clientes</h3?></a>
+        <a class="nav-link" href="{{route('cliente.index')}}"><h3>Clientes</h3></a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><h3>Estoque</h3?></a>
+        <a class="nav-link dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><h3>Estoque</h3></a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="{{route('pecas.localizar')}}">Peças</a>
             <a class="dropdown-item" href="{{route('servicos.localizar')}}">Mão de obra</a>
           </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{route('tecnico.index')}}"><h3>Tecnicos</h3?></a>
+        <a class="nav-link" href="{{route('tecnico.index')}}"><h3>Tecnicos</h3></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{route('pagamento.index')}}"><h3>Pagamentos</h3?></a>
+        <a class="nav-link" href="{{route('pagamento.index')}}"><h3>Pagamentos</h3></a>
       </li>
     </ul>
+  </div>
+
+  <div class="card-body">
     <div class="row">
-      <div id="curve_chart" style="width: 500px; height: 300px"></div>
+      <div id="curve_chart" style="width: 600px; height: 300px"></div>
     </div>
     <div class="row">
       <div id="donutchart" style="width: 500px; height: 300px;"></div>

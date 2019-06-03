@@ -9,7 +9,7 @@ class ConsertoAssistenciaModel extends Model
 {
     protected $table = 'conserto_assistencia';
 
-    protected $fillable = ['id','numero', 'valor','situacao','data_entrada','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','idCliente','idTecnico','idPeca','idMaoObra'];
+    protected $fillable = ['id','numero', 'valor','situacao','data_entrada','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','idCliente','idTecnico','idPeca[]','idMaoObra[]'];
 
     public static function busca($busca)
     {
@@ -20,9 +20,7 @@ class ConsertoAssistenciaModel extends Model
 
       return static::where('id')->max('id');
     }
-    public function ultimo(){
 
-    }
     public function cliente(){
         return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente');
     }

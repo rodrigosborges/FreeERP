@@ -4,7 +4,11 @@
     <select style="width:100%;" name="servicos[]" id="valor_servico" class="form-control multi-select"  multiple="true">
       @foreach($servicos as $servico) <!-- aqui o retorno é o id da peça -->
             <option data-valor="{{ $servico->valor }}" value="{{$servico->id}}">{{ $servico->nome }} |  {{ $servico->valor }}</option>
+<<<<<<< HEAD
       @endforeach
+=======
+      @endforeach 
+>>>>>>> 2f95fd17cdc24aa54391a3b05ffcf855608ac1c4
     </select>
   </div>
 </div>
@@ -29,4 +33,8 @@
   </div>
 </div>
 form
+<<<<<<< HEAD
 -->
+=======
+-->
+>>>>>>> 2f95fd17cdc24aa54391a3b05ffcf855608ac1c4

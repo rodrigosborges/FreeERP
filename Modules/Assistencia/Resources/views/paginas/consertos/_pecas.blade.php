@@ -1,25 +1,11 @@
-
-  <div class="form-group row">
-    <div class="col-12 multi-select">
-      <select name="pecas[]" class="form-control col-12 " multiple="multiple">
-
-        @foreach($pecas as $peca)
-     
-          <option value="{{ $peca->id }}"> {{ $peca->nome }} . "  | " . {{ $peca->valor_venda }}</option>
-
-        @endforeach 
-
-      </select>
-    </div>
-    
+<div class="row form-group">
+  <div class="col-12 ">
+  <label for="">Selecione as peças</label>
+    <select style="width:100%;" name="pecas[]" id="valor_peca" class="form-control multi-select"  multiple="true">
+      @foreach($pecas as $peca) <!-- aqui o retorno é o id da peça -->
+            <option data-valor="{{$peca->valor_venda}}" value="{{ $peca->id }}">{{ $peca->nome }} |  {{ $peca->valor_venda }}</option>
+      @endforeach 
+    </select>
   </div>
-
-  <select class="js-example-basic-multiple js-states form-control " id="id_label_multiple" multiple="multiple">
+</div>
     
-    @foreach($pecas as $peca)
-     
-          <option value="{{ $peca->id }}"> {{ $peca->nome }} . "  | " . {{ $peca->valor_venda }}</option>
-
-    @endforeach 
-
-  </select>
