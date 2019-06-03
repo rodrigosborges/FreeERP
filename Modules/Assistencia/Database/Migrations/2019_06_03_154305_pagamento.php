@@ -17,7 +17,7 @@ class Pagamento extends Migration
             $table->increments('id');
             $table->decimal('desconto', 6,2);
             $table->decimal('valor', 6,2);
-            $table->boolean('status')->default('false');
+            $table->boolean('status');
             $table->integer('idConserto')->unsigned();
             $table->foreign('idConserto')->references('id')->on('conserto_assistencia');
             $table->timestamps();

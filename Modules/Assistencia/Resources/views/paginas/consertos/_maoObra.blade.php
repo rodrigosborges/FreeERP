@@ -4,11 +4,9 @@
     <select style="width:100%;" name="servicos[]" id="valor_servico" class="form-control multi-select"  multiple="true">
       @foreach($servicos as $servico) <!-- aqui o retorno é o id da peça -->
             <option data-valor="{{ $servico->valor }}" value="{{$servico->id}}">{{ $servico->nome }} |  {{ $servico->valor }}</option>
-<<<<<<< HEAD
       @endforeach
-=======
-      @endforeach 
->>>>>>> 2f95fd17cdc24aa54391a3b05ffcf855608ac1c4
+
+
     </select>
   </div>
 </div>
@@ -35,6 +33,28 @@
 form
 <<<<<<< HEAD
 -->
-=======
--->
->>>>>>> 2f95fd17cdc24aa54391a3b05ffcf855608ac1c4
+
+
+array(22) { ["_token"]=> string(40) "cjzuRgHokaizmhk6mgxd1Bd6Y7SbZrk7bJrZbCFO" 
+  ["numeroOrdem"]=> NULL 
+  ["data_entrada"]=> string(2) "50" 
+  ["situacao"]=> string(10) "Autorizado" 
+  ["idCliente"]=> string(1) "1" 
+  ["selecionarCliente"]=> string(27) "Rafael Alves|123.456.789/77" 
+  ["nome"]=> string(12) "Rafael Alves" 
+  ["cpf"]=> string(14) "123.456.789/77" 
+  ["email"]=> string(25) "alvesrafael17@hotmail.com" 
+  ["celnumero"]=> string(14) "(12) 1212-1212" 
+  ["modelo_aparelho"]=> string(4) "asas" 
+  ["marca_aparelho"]=> string(7) "fasfasf" 
+  ["serial_aparelho"]=> string(9) "asfasfasf" 
+  ["imei_aparelho"]=> string(4) "asfa" 
+  ["defeito"]=> string(3) "asf" 
+  ["obs"]=> string(5) "sfasf" 
+  ["pecas"]=> array(2) { [0]=> string(1) "1" [1]=> string(1) "2" } 
+  ["servicos"]=> array(1) { [0]=> string(1) "1" } 
+  ["selecionarTecnico"]=> string(22) "tecnico|454.545.454/54" 
+  ["idTecnico"]=> string(1) "1" 
+  ["nome-tecnico"]=> string(7) "tecnico" 
+  ["cpf-tecnico"]=> string(14) "454.545.454/54" 
+}

@@ -70,10 +70,11 @@ class ConsertoController extends Controller
      
      public function salvar(Request $req){
       $dados  = $req->all();
-      ConsertoAssistenciaModel::create($dados);
+     /* ConsertoAssistenciaModel::create($dados);
       $idConserto = $dados->id;
       PagamentoAssistenciaModel::create($idConserto);
-      return redirect()->route('consertos.index')->with('success','Ordem salva com sucesso!');
+      return redirect()->route('consertos.index')->with('success','Ordem salva com sucesso!');*/
+      return var_dump($dados);
       }
 
      public function nomeClientes(Request $req){

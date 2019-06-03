@@ -54,25 +54,22 @@ Route::prefix('assistencia')->group(function() {
     /*Estoque (peça e serviço) */
 
     /*consertos/ Ordem de servicos*/
-    Route::get('conserto',['as'=>'consertos.index','uses'=>'ConsertoController@index']);
+    Route::get('conserto', ['as'=>'consertos.index','uses'=>'ConsertoController@index']);
     Route::get('conserto/cadastrar',['as'=>'consertos.cadastrar','uses'=>'ConsertoController@cadastrar']);
     Route::get('conserto/localizar',['as'=>'consertos.localizar','uses'=>'ConsertoController@localizar']);
     Route::get('conserto/visualizar/{id}',['as'=>'consertos.visualizar','uses'=>'ConsertoController@visualizarConserto']);
     Route::post('conserto/buscar',['as'=>'consertos.buscar','uses'=>'ConsertoController@buscar']);
 
-    Route::get('conserto/nomeServicos',['as'=>'consertos.nomeServicos','uses'=>'ConsertoController@nomeServicos']);
-    Route::get('conserto/dadosServicos',['as'=>'consertos.dadosServicos','uses'=>'ConsertoController@dadosServicos']);
-    Route::get('conserto/nomePecas',['as'=>'consertos.nomePecas','uses'=>'ConsertoController@NomePecas']);
-    Route::get('conserto/dadosPecas',['as'=>'consertos.dadosPecas','uses'=>'ConsertoController@dadosPecas']);
+
     Route::get('conserto/nomeClientes',['as'=>'consertos.nomeClientes','uses'=>'ConsertoController@nomeClientes']);
     Route::get('conserto/dadosCliente',['as'=>'consertos.dadosCliente','uses'=>'ConsertoController@dadosCliente']);
     Route::get('conserto/nomeTecnicos',['as'=>'consertos.nomeTecnicos','uses'=>'ConsertoController@nomeTecnicos']);
     Route::get('conserto/dadosTecnico',['as'=>'consertos.dadosTecnico','uses'=>'ConsertoController@dadosTecnico']);
 
-    Route::post('conserto/salvar',['as'=>'consertos.salvar','uses'=>'ConsertoController@salvar']);
-    Route::get('conserto/editar/{id}',['as'=>'consertos.editar','uses'=>'ConsertoController@editar']);
+    Route::post('conserto/salvar',['as' => 'consertos.salvar','uses' => 'ConsertoController@salvar']);
+    Route::get('conserto/editar/{id}',[ 'as' =>'consertos.editar','uses' => 'ConsertoController@editar']);
     
-
+    Route::get('pagamento',['as'=>'pagamento.index','uses'=>'PagamentoController@index']);
 
 });
 
@@ -80,10 +77,9 @@ Route::prefix('assistencia')->group(function() {
 
 
 
-
-
-
-
-
-
-Route::get('assistencia/pagamento',['as'=>'pagamento.index','uses'=>'PagamentoController@index']);
+/*
+    Route::get('conserto/nomeServicos',['as'=>'consertos.nomeServicos','uses'=>'ConsertoController@nomeServicos']);
+    Route::get('conserto/dadosServicos',['as'=>'consertos.dadosServicos','uses'=>'ConsertoController@dadosServicos']);
+    Route::get('conserto/nomePecas',['as'=>'consertos.nomePecas','uses'=>'ConsertoController@NomePecas']);
+    Route::get('conserto/dadosPecas',['as'=>'consertos.dadosPecas','uses'=>'ConsertoController@dadosPecas']);
+*/

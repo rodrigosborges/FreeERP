@@ -14,13 +14,12 @@ class ItemPeca extends Migration
     public function up()
     {
   
-          Schema::table('item_peca_assistencia', function (Blueprint $table) {
+          Schema::create('item_peca_assistencia', function (Blueprint $table) {
               $table->increments('id');
               $table->integer('idPeca')->unsigned();
-              $table->integer('idConserto')->unsigned();
+              $table->integer('idConserto');
               $table->integer('quantidade');
               $table->foreign('idPeca')->references('id')->on('peca_assistencia');
-              $table->foreign('idConserto')->references('id')->on('conserto_assistencia');
               $table->timestamps();
           });
 
