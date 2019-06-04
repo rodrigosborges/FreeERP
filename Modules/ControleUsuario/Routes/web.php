@@ -41,5 +41,6 @@ Route::prefix('controleusuario')->group(function() {
     Route::post('/papel/add', 'PapelController@add');
     Route::post('/papel/atualizar', 'PapelController@atualizar');
     Route::post('/papel/update', 'PapelController@update');
+    Route::POST('/papel/delete', 'PapelController@destroy');
 
 });

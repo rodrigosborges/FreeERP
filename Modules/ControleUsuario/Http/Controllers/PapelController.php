@@ -161,8 +161,10 @@ class PapelController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy()
     {
+        $res =Papel::where('id',$_POST['id'])->delete();
+        return $res;
         //
     }
     public function atualizar(){
