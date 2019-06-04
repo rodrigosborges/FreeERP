@@ -99,7 +99,6 @@
 
 <!-- Modal de remoção depapel -->
 
-
 <div id="dropPapel" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -156,13 +155,13 @@
             $('.error').fadeOut("slow");
             var nome = $('#nome').val();
             var desc = $('#descricao').val();
-            if(nome==""){
+            if(nome.trim()==""){
         
                 $('#msg-nome').html('O campo "Nome" é obrigatório');
                 $('#msg-nome').fadeIn();
                 $('#nome').focus();
 
-            }else if(desc==""){
+            }else if(desc.trim()==""){
                 console.log('descrição em branco');
                 $('#msg-desc').html('O campo "Descrição" é obrigatório');
                 $('#msg-desc').fadeIn();
@@ -174,7 +173,7 @@
                         type:'POST',
                         url:'papel/add',
                         data:{'_token':$('input[name=_token]').val(),
-                        'nome':$('input[name=nome]').val(),
+                        'coco':$('input[name=nome]').val(),
                         'descricao':$('input[name=descricao]').val(),
                         },
                         success:function(data){
