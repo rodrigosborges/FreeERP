@@ -93,10 +93,11 @@
             var linha = $(e.relatedTarget).closest("tr");
             var id = linha.find("td:eq(0)").text().trim();
             var prioridade = linha.find("td:eq(3)").text().trim();
-
+           
             $("#form").attr("action", '/ordemservico/os/prioridade/' + id);
             $("#campo").remove();
-            $('#prioridade').append("<select required name='prioridade' class='custom-select mr-sm-2'><option value='3' {{"+ prioridade + "== 3 ? 'selected' : '' }}> Baixa </option><option value='2' {{ " + prioridade +" == 2 ? 'selected' : '' }}> Média </option><option value='1' {{"+ prioridade +" == 1 ? 'selected' : '' }}> Alta </option><option value='0' {{"+ prioridade + "== 0 ? 'selected' : '' }}> A Definir </option></select>");
+            $('#prioridade').append("<select id='campo' required name='prioridade' class='custom-select mr-sm-2'><option value='3'> Baixa </option><option value='2'> Média </option><option value='1'> Alta </option><option value='0'> A Definir </option></select>");
+            $('#campo').val(prioridade);
         });
     });
 </script>

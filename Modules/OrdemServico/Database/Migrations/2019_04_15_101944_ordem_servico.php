@@ -22,7 +22,7 @@ class OrdemServico extends Migration
             $table->string('numero_serie');
             $table->string('descricao_problema');
 			$table->string('status')->default('Em andamento');
-			$table->integer('prioridade');
+			$table->integer('prioridade')->default(0);
 			$table->timestamps();
 			$table->softDeletes();
 		});
