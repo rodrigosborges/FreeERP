@@ -11,7 +11,6 @@ use DB;
 class CargoController extends Controller{
 
     public function index(Request $request){
-		return Funcionario::find(1)->endereco();
         $data = [
 			'cargos'	=> Cargo::all(),
 			'title'		=> "Lista de cargos",
@@ -50,7 +49,7 @@ class CargoController extends Controller{
 		try{
 			$cargo = Cargo::Create($request->all());
 			DB::commit();
-			return redirect('funcionario/cargo');
+			return redirect('funcionario/cargo')->with('success', 'Cargo cadastrado com sucesso!');
 		}catch(Exception $e){
 			DB::rollback();
 			return back();
@@ -74,7 +73,7 @@ class CargoController extends Controller{
 			$cargo = Cargo::findOrFail($id);
 			$cargo->update($request->all());
 			DB::commit();
-			return redirect('funcionario/cargo');
+			return redirect('funcionario/cargo')->with('success', 'Cargo atualizado com sucesso!');
 		}catch(Exception $e){
 			DB::rollback();
 			return back();
@@ -90,11 +89,14 @@ class CargoController extends Controller{
     
 	public function destroy(Request $request, $id) {
 		$cargo = Cargo::withTrashed()->find($id);
-		if($cargo->trashed())
+		if($cargo->trashed()){
 			$cargo->restore();
-		else
+			return back()->with('success', 'Cargo ativado com sucesso!');
+		}
+		else{
 			$cargo->delete();
-		return back();    
+			return back()->with('success', 'Cargo desativado com sucesso!');
+		}
 	}
 
 	public function search($valor) {

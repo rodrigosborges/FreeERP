@@ -41,8 +41,8 @@
                         </div>
                         <select required name="funcionario[sexo]" class="form-control">
                                 <option value="">Selecione</option>
-                                <option {{ old('funcionario.sexo', $data['model'] ? $data['model']->sexo : '') == 0 ? 'selected' : ''}} value="0">Feminino</option>
-                                <option {{ old('funcionario.sexo', $data['model'] ? $data['model']->sexo : '') == 1 ? 'selected' : ''}} value="1">Masculino</option>
+                                <option {{ old('funcionario.sexo', $data['model'] ? $data['model']->sexo : '') == '0' ? 'selected' : ''}} value='0'>Feminino</option>
+                                <option {{ old('funcionario.sexo', $data['model'] ? $data['model']->sexo : '') == '1' ? 'selected' : ''}} value='1'>Masculino</option>
                         </select>
                     </div>
                 </div>
@@ -136,9 +136,9 @@
             </div>        
             @foreach(old('docs_outros', $data['documentos']) as $key => $documento)
 
-                <div class="row doc {{ $documento->numero ? '' : 'd-none'}}">
-                    @if($documento->id)
-                        <input type="hidden" class="documentos" value="{{isset($documento->id) ? $documento->id : ''}}" name="docs_outros[{{$key}}][id]">
+                <div class="row doc {{ isset($documento['numero']) ? '' : 'd-none'}}">
+                    @if(isset($documento['id']))
+                        <input type="hidden" class="documentos" value="{{isset($documento['id']) ? $documento['id'] : ''}}" name="docs_outros[{{$key}}][id]">
                     @endif
                     <div class="col-md-3">
                         <div class="form-group">
@@ -150,6 +150,7 @@
                                     </span>
                                 </div>
                                 <select name="docs_outros[{{$key}}][tipo]" class="form-control documentos" {{$documento ? '' : 'disabled'}}>
+                                    <option value="">Selecione</option>
                                     @foreach(old('tipo_documentos', $data['tipo_documentos']) as $tipo)
                                         <option value="{{$tipo['id']}}">{{$tipo->nome}}</option>
                                     @endforeach
@@ -167,7 +168,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{$documento['numero'] ? $documento['numero'] : ''}}" {{ $documento->numero ? '' : 'disabled' }}>
+                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ isset($documento['numero']) ? $documento['numero'] : ''}}" {{ isset($documento['numero']) ? '' : 'disabled' }}>
                             </div>
                             <span class="errors"> {{ $errors->first('docs_outros.numero') }} </span>
                         </div>
@@ -182,7 +183,7 @@
                                     </span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos" value="{{ $documento['comprovante'] ? $documento['comprovante'] : ''}}" {{ $documento->comprovante ? '' : 'disabled' }}>
+                                    <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos">
                                     <label for="comprovante" class="custom-file-label">Comprovante</label>   
                                 </div>
                                 <span class="errors"> {{ $errors->first('docs_outros.comprovante') }}</span>
@@ -202,7 +203,7 @@
         <strong><h6 class="mt-5 mb-3">Endereço</h6></strong>
         <hr>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="cep" class="control-label">CEP</label>
                     <div class="input-group">
@@ -216,7 +217,7 @@
                     <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="uf" class="control-label">UF</label>
                     <div class="input-group">
@@ -225,7 +226,12 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="UF" name="endereco[uf]" id="uf" class="form-control" value="{{ old('endereco.uf', $data['model'] ? $data['model']->endereco->uf : '') }}">
+                        <select name="endereco[estado_id]" id="estado_id" class="form-control">
+                            <option value="">Selecione</option>
+                            @foreach($data['estados'] as $estado))
+                                <option value="{{ $estado->id }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.uf') }} </span>
                 </div>
@@ -239,9 +245,14 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Cidade" name="endereco[cidade]" id="cidade" class="form-control" value="{{ old('endereco.cidade', $data['model'] ? $data['model']->endereco->cidade : '') }}">
+                        <select name="endereco[cidade_id]" id="cidade_id" class="form-control">
+                            <option value="">Selecione</option>
+                            @foreach($data['cidades'] as $cidade))
+                                <option value="{{ $cidade->id }}" {{ old('endereco.cidade_id', $data['model'] ? $data['model']->endereco->cidade_id : '') == $cidade->id ? 'selected' : '' }}>{{ $cidade->nome }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <span class="errors"> {{ $errors->first('endereco.cidade') }} </span>
+                    <span class="errors"> {{ $errors->first('endereco.cidade_id') }} </span>
                 </div>
             </div>
             <div class="col-md-3">
@@ -342,8 +353,9 @@
                         </div>
                         <select required name="cargo[cargo_id]" class="form-control">
                             <option value="">Selecione</option>
-                            @foreach(old('cargos', $data['cargos']) as $item)
-                                <option value="{{ $item->id }}" {{ ($data['model'] && $item['id'] == $data['model']->cargos->last()->pivot->cargo_id ) ? 'selected' : '' }}> {{ $item->nome }} </option>
+                            @foreach($data['cargos'] as $item)
+                            {{ old('endereco.cidade_id', $data['model'] ? $data['model']->endereco->cidade_id : '') == $cidade->id ? 'selected' : '' }}
+                                <option value="{{ $item->id }}" {{ old('cargo.cargo_id', $data['model'] ? $data['model']->cargos->last()->pivot->cargo_id : '' ) ? 'selected' : '' }}> {{ $item->nome }} </option>
                             @endforeach 
                         </select>
                     </div>
@@ -405,7 +417,12 @@
                                                 <i class="material-icons">phone</i>
                                             </span>
                                         </div>
-                                        <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][tipo]" class="form-control telefone" value="{{$telefone['tipo'] ? $telefone['tipo'] : ''}}">
+                                        <select required name="telefones[{{$key}}][tipo_id]" class="form-control">
+                                            <option value="">Selecione</option>
+                                            @foreach($data['tipos_telefone'] as $item)
+                                                <option value="{{ $item->id }}" {{ isset($telefone['tipo_id']) && $telefone['tipo_id'] == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <span class="errors"> {{ $errors->first('telefones.tipo') }}</span>
                                 </div>

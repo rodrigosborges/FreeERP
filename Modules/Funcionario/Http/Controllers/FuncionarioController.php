@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Cargo, Funcionario};
-use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Relacao};
+use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Relacao, Cidade, Estado,TipoTelefone};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use DB;
 
@@ -39,24 +39,25 @@ class FuncionarioController extends Controller{
     
     public function create(){
         $data = [
-            'url' => url("funcionario/funcionario"),
-            'model' => '',
-            'tipo_documentos' => TipoDocumento::all(),
-            'documentos' => [new Documento],
-            'telefones' => [new Telefone],
-            'estado_civil' => EstadoCivil::all(),
-            'estados' => [],
-            'cidades' => [],
-            'cargos' => Cargo::all(),
-            'title' => 'Cadastro de Funcionário',
-            'button' => 'Salvar',
+            'url'               => url("funcionario/funcionario"),
+            'model'             => '',
+            'tipo_documentos'   => TipoDocumento::all(),
+            'documentos'        => [new Documento],
+            'telefones'         => [new Telefone],
+            'tipos_telefone'     => TipoTelefone::all(),
+            'estado_civil'      => EstadoCivil::all(),
+            'estados'           => Estado::all(),
+            'cidades'           => Cidade::all(),
+            'cargos'            => Cargo::all(),
+            'title'             => 'Cadastro de Funcionário',
+            'button'            => 'Salvar',
         ];
 
         return view('funcionario::funcionario.form', compact('data'));
     }
 
     public function store(CreateFuncionario $request){
-
+        return back()->withInput();
 		DB::beginTransaction();
 		try{
 
