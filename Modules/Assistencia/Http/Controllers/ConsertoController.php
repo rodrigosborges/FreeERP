@@ -42,7 +42,7 @@ class ConsertoController extends Controller
        return view('assistencia::paginas.consertos.localizarConserto',compact('consertos'));
      }
 /*
-     public funcion calculaValor(pecas[], servicos[]) { 
+     public funcion calculaValor(pecas[], servicos[]) {
         $valor = 0;
         if ( (pecas[] == null) and (servicos[] == null) ){
           return $valor;
@@ -55,7 +55,7 @@ class ConsertoController extends Controller
           }
         }
        return $valor;
-     }*/  
+     }*/
 
      public function visualizarConserto($id)
      {
@@ -67,14 +67,19 @@ class ConsertoController extends Controller
        $conserto = ConsertoAssistenciaModel::find($id);
        return view('assistencia::paginas.consertos.editarConserto',compact('conserto'));
      }
-     
+
      public function salvar(Request $req){
       $dados  = $req->all();
-     /* ConsertoAssistenciaModel::create($dados);
+      $pecas = $dados->pecas;
+
+     /*
+      ConsertoAssistenciaModel::create($dados);
       $idConserto = $dados->id;
       PagamentoAssistenciaModel::create($idConserto);
-      return redirect()->route('consertos.index')->with('success','Ordem salva com sucesso!');*/
-      return var_dump($dados);
+      return redirect()->route('consertos.index')->with('success','Ordem salva com sucesso!');
+    */
+
+      return var_dump($pecas);
       }
 
      public function nomeClientes(Request $req){
@@ -93,14 +98,14 @@ class ConsertoController extends Controller
      }
 
 }
-/* 
+/*
 public function nomePecas(Request $req){
        return PecaAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',valor_venda) AS nomevenda"))->get()->pluck('nomevenda');
      }
 
      public function nomeServicos(Request $req){
        return ServicoAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',valor) AS nomemao"))->get()->pluck('nomemao');
-     } 
+     }
 public function dadosPecas(Request $req){
        [$nome, $valor] = explode('|',$req->input('nome'));
        return PecaAssistenciaModel::where('nome',$nome)->where('valor_venda',$valor)->select('id','nome','valor_venda')->first();
