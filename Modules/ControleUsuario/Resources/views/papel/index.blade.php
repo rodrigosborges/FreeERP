@@ -1,7 +1,8 @@
 @extends('template')
 @section('title', 'Papéis')
 @section('content')
-
+<?php session_start()?>
+@if($_SESSION)
 <div class="row">
     <div class="col-md-12">
         <h1 class="text-center">Página de Papéis</h1>
@@ -125,6 +126,10 @@
         </div>
     </div>
 </div>
+@else
+<div class="container"><p class="alert alert-warning">Você não tem permissão para acessar essa página!</p></div>
+
+@endif
 @endsection
 
 <!--Ajax para o formulário de criação de papéis -->
@@ -278,7 +283,7 @@
             $('.msgRemove').addClass('alert-success');
             $('.msgRemove').fadeIn('slow');
             $('#btnDeletePapel').attr('disabled','true');
-            div.fadeOut();
+            div.fadeOut("slow");
         }).fail(function(){
             console.log("delete fail");
 
