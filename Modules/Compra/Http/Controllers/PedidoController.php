@@ -107,21 +107,30 @@ class PedidoController extends Controller
     public function update(Request $request, $id)
     {
         
+        
         DB::beginTransaction();
 		try{
             $pedido = Pedido::findOrFail($id);
             if($pedido->status =='Iniciado'){
-               $pedido->itens()->detach();
-               $pedido->itens()->attach($request->itens);
+
+                
                 
                 DB::commit();
+
+                return $pedido = Pedido::findOrFail($id)->itens()->get();
+
                 return redirect('compra/pedido')->with('success', 'Pedido atualizado com successo');
+
+               
+
+               
             
             }
             else
             {
                 return back()->with('warning',  'Pedido não pode ser alterado');
             }
+
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
