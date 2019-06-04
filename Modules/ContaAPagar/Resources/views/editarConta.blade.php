@@ -4,7 +4,7 @@
 @section('content')
     <div class="card ">
         <div class="card-body ">
-            <form action="{{route('conta.cadastrar')}}" method="POST">
+            <form action="" method="POST">
                 {{csrf_field()}}
                 @include('contaapagar::_formConta')
                 

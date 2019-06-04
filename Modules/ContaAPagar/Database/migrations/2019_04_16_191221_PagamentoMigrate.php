@@ -25,6 +25,8 @@ class PagamentoMigrate extends Migration
         $table->decimal('juros',9,2);
         $table->decimal('multa',9,2);
         $table->text('status_pagamento');
+        $table->boolean('ativo')->default(1);
+        $table->timestamps();
       });
     }
 

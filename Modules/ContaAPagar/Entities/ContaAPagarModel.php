@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class ContaAPagarModel extends Model
 {
     public $table = 'conta_pagar';
-    protected $fillable = ['id', 'descricao', 'valor', 'parcelas', 'categoria_id'];
+    protected $fillable = ['id', 'descricao', 'valor', 'parcelas', 'categoria_pagar_id', 'ativo'];
     
 }

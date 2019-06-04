@@ -21,20 +21,83 @@ class ContaAPagarController extends Controller
             $inicio = $data->year.'-'.$data->month.'-01';
             $fim = $data->year.'-'.$data->month.'-31';
             $range = [$inicio,$fim];
-            $pagamentos = PagamentoModel::whereBetween('data_vencimento', $range)->get();
-            $contas = ContaAPagarModel::all();
+            $pagamentos = PagamentoModel::whereBetween('data_vencimento', $range)->where('ativo', 1)->get();
+            $contas = ContaAPagarModel::where('ativo', 1)->get();
             $categorias = CategoriaModel::where('ativo', 1)->get();
             $total = $this->total();
             return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias'));
       }
+    
+    public function deletar($id){
+        $conta = ContaAPagarModel::find($id);
+        $conta->ativo = false;
+        $conta->update();
+        
+        $pagamentos = PagamentoModel::where('conta_pagar_id', $conta->id)->get();
+        foreach($pagamentos as $pagamento){
+            $pagamento->ativo = false;
+            $pagamento->update();
+        }
+        return $this->index();
+    }
+    public function editar($id){
+        $conta = ContaAPagarModel::find($id);
+
+        $pagamento = PagamentoModel::where('conta_pagar_id', $id)->get();
+        $categorias = CategoriaModel::where('ativo', 1)->get();
+        
+        return view('contaapagar::editarConta',compact('conta', 'pagamento','categorias'));
+    }
+    
+    public function cadastrarConta(Request $req){
+        
+        $dados = $req->all();
+
+        ContaAPagarModel::create($dados);
+        $conta_pagar_id = ContaAPagarModel::latest()->first();
+            
+        
+        for ($i=0; $i < $dados['parcelas'] ; $i++) {
+            if($i >= 1){
+                $pagamento = new PagamentoModel;
+                $pagamento->numero_parcela = $i;
+                $pagamento->juros = $dados['juros'];
+                $pagamento->multa = $dados['multa'];
+                $pagamento->conta_pagar_id = $conta_pagar_id->id;
+                $pagamento->data_vencimento = date('Y-m-d', strtotime($dados['data_vencimento']. ' + '. $i .'months'));
+                $pagamento->data_pagamento = date('Y-m-d', strtotime($dados['data_pagamento']. ' + '. $i .'months'));
+                $pagamento->status_pagamento = "Aguardando";   
+                $pagamento->valor = $dados['valor']/$dados['parcelas'];
+                $pagamento->save();                
+            }else{
+                $pagamento = new PagamentoModel;
+                $pagamento->numero_parcela = $i;
+                $pagamento->juros = $dados['juros'];
+                $pagamento->multa = $dados['multa'];
+                $pagamento->conta_pagar_id = $conta_pagar_id->id;
+                $pagamento->data_vencimento = $dados['data_vencimento'];
+                $pagamento->data_pagamento = $dados['data_pagamento'];
+                if($dados['status_pagamento'] == 'on'){
+                    $pagamento->status_pagamento = "Pago";    
+                }else{
+                    $pagamento->status_pagamento = "Aguardando";   
+                }
+                $pagamento->valor = $dados['valor'];
+                $pagamento->save();
+            }
+        }
+        
+        return $this->index();
+    }
+    
       
     public function novaConta(){
-        
-        return view('contaapagar::novaConta'); 
+            $categorias = CategoriaModel::where('ativo', 1)->get();        
+        return view('contaapagar::novaConta', compact('categorias')); 
     }
     public function status(){ /*tratar possivel variavel q vir e depois juntar com o filtro de categoria*/
         
-        $pagamentoss = PagamentoModel::all();
+        $pagamentoss = PagamentoModel::where('ativo', 1)->get();
         $pagamentos = [];
         
         foreach($pagamentoss as $pagamento){
@@ -85,7 +148,7 @@ class ContaAPagarController extends Controller
         $fim = $data->year.'-'.$data->month.'-31';
         $range = [$inicio,$fim];
         $total = 0;
-        $pagamentos = PagamentoModel::whereBetween('data_vencimento', $range)->get();
+        $pagamentos = PagamentoModel::whereBetween('data_vencimento', $range)->where('ativo', 1)->get();
         foreach($pagamentos as $pagamento){
             $total = $total + $pagamento->valor;
         }

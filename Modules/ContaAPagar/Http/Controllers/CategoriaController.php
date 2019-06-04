@@ -27,6 +27,13 @@ class CategoriaController extends Controller
         return view('contaapagar::categorias', compact('categorias'))->with('success','A categoria foi cadastrado com sucesso!');
     }
 
+    
+    public function deletar($id){
+        $categoria = CategoriaModel::find($id);
+        $categoria->ativo = false;
+        $categoria->update();
+        return $this->index();
+    }    
     /**
      * Show the form for creating a new resource.
      * @return Response

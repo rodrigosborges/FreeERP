@@ -49,7 +49,7 @@
            @foreach ($categorias as $categoria)
             <tr>
                     <td>{{$categoria->nome}}</td>
-                    <td><i class='material-icons'>delete</i></td>
+                    <td><a href="{{Route('categoria.deletar', $categoria->id)}}"><i class='material-icons'>delete</i></a></td>
             </tr>
             @endforeach
         </tbody>

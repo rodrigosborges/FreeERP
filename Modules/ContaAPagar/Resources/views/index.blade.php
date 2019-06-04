@@ -60,7 +60,7 @@
                 <th scope="col">Valor</th>
                 <th scope="col">Status</th>
                 <th scope="col">Detalhes</th>
-
+                
             </tr>
         </thead>
         <tbody>
@@ -71,7 +71,7 @@
                     <td>{{$pagamento->data_pagamento}}</td>
                     <td>{{$pagamento->valor}}</td>
                     <td>{{$pagamento->status_pagamento}}</td>
-                    <td><i class='material-icons'>search</i></td>
+                    <td><a href="{{route('conta.editar', $pagamento->conta_pagar_id)}}" ><i class='material-icons'>search</i></a> <a href="{{Route('conta.deletar', $pagamento->conta_pagar_id)}}"><i class='material-icons'>delete</i></a></td>
             </tr>
             @endforeach
         </tbody>

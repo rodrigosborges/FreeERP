@@ -20,6 +20,8 @@ class ContaMigrate extends Migration
         $table->integer('parcelas'); 
         $table->integer('categoria_pagar_id')->unsigned();
         $table->foreign('categoria_pagar_id')->references('id')->on('categoria_pagar');
+        $table->boolean('ativo')->default(1);
+        $table->timestamps();
       });
     }
 
