@@ -41,7 +41,7 @@
                      </div>
                   </div>
                </div>
-
+        <!--
                <div class="row pb-3 align-items-center justify-content-center">
                    <div class="col col-md-10 col-sm-10 d-flex justify-content-between">
 
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-
+        -->
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-sm-10 d-flex justify-content-around">
 
@@ -90,7 +90,8 @@
                                 <th scope="col-3">ID</th>
                                 <th scope="col-3">Nome</th>
                                 <th scope="col-5">E-mail</th>
-                                <th scope="col">Editar</th>
+                                <th scope="col-3">Status</th>                                                                
+                                <th scope="col">Opções</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,6 +101,13 @@
                                 <th scope="row">{{ $user->id }}</th>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
+                                    <td>
+                                        @if( is_null($user->deleted_at) )
+                                            {{ "Ativo" }}
+                                        @else
+                                            {{ "Inativo" }}
+                                        @endif
+                                    
                                     <td class="d-flex justify-content-around">
                                             {!!Form::open(['route'=>'usuario.abrir', 'method'=>'post']) !!}
                                                 {!! Form::hidden('id', $user->id) !!}
@@ -108,8 +116,16 @@
 
                                             {!!Form::open(['route'=>'usuario.delete', 'method'=>'post']) !!}
                                                 {!! Form::hidden('id', $user->id) !!}
-                                                @method('delete')
-                                                {!!Form::submit('inativar',['class'=>'btn btn-danger d-flex'])!!}
+
+                                                    @if( is_null($user->deleted_at) )
+                                                        @method('delete')
+                                                    @else
+                                                                                                                
+                                                    @endif
+
+                                                    {!!Form::submit(
+                                                        ( is_null($user->deleted_at) )?"Desativar":"Reativar"
+                                                    ,['class'=>'btn btn-danger d-flex'])!!}
                                             {!!Form::close()!!}
 
                                         </div>

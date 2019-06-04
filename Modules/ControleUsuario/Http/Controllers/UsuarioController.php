@@ -142,11 +142,6 @@ class UsuarioController extends Controller
     public function store(Request $request)
     { }
 
-    public function bt_buscar(Request $post)
-    {
-        dd($post);
-    }
-
 
     public function logoff()
     {
@@ -176,21 +171,52 @@ class UsuarioController extends Controller
         return view('controleusuario::edit');
     }
 
+
+
+
     // Metodo utilizado quando a view é aberta a primeira vez
     public function consulta()
     {
-
         $status = ['0' => "Ativo e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
         $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
 
-        $lista = Usuario::all();
+        $lista = Usuario::withTrashed()->get();
 
         return view(
             'controleusuario::consulta',
             $this->dadosTemplate,
             compact('status', 'modulos', 'cargos', 'lista')
         );
+    }
+
+    public function buscar(Request $req){
+        $status = ['0' => "Ativo e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
+        $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
+        $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
+
+        $lista = DB::table('usuario')->where(
+            ['name', $req->nome],
+            ['data','=',$req->data]
+        )->get();
+
+
+         return view(
+            'controleusuario::consulta',
+            $this->dadosTemplate,
+            compact('status', 'modulos', 'cargos', 'lista')
+        );
+
+    }
+
+    public function recovery(Request $req){
+        $user = Usuario::onlyTrashed()
+                ->where('id', $req->id );
+
+        
+        $user->restore();
+        return redirect()->back()->with('Success','IT WORKS!');
+
     }
 
     public function editar(Request $req)

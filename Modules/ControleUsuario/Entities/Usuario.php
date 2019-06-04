@@ -13,7 +13,7 @@ class Usuario extends Authenticatable
     protected $table='usuario';
     public $timestamps = false;
     protected $fillable = ['foto', 'name', 'email', 'password'];
-
+    use SoftDeletes;
 
     protected $hidden = [
         'password', 'remember_token',
