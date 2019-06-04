@@ -39,5 +39,7 @@ Route::prefix('controleusuario')->group(function() {
 
     Route::resource('/papel', 'PapelController');
     Route::post('/papel/add', 'PapelController@add');
+    Route::post('/papel/atualizar', 'PapelController@atualizar');
+    Route::post('/papel/update', 'PapelController@update');
 
 });

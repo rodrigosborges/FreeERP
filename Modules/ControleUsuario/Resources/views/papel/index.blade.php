@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1>Página de Papéis</h1>
+        <h1 class="text-center">Página de Papéis</h1>
     </div>
 </div>
 
@@ -19,7 +19,7 @@
                 <th>Criado em:</th>
                 <th>Criado por:</th>
                 <th class="text.center" width="250px">
-                    <a href="#" class=" create-modal btn btn-success btn-sm" data-toggle="modal" data-target="#create">
+                    <a href="#" class=" create-modal btn btn-success btn-sm" id="btnCreate" data-toggle="modal"data-target="#create">
                         <i class="material-icons">note_add</i>
                     </a>
                 </th>
@@ -37,7 +37,7 @@
                     <a href="#" class="show-modal btn btn-info btn-sm" data-id="{{$papel->id}}" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
                         <i class="material-icons">remove_red_eye</i>
                     </a>
-                    <a href="#" class="edit-modal btn btn-warning btn-sm" data-id="{{$papel->id}}" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
+                    <a href="#" class="edit-modal btn btn-warning btn-sm btnEdit"  data-toggle="modal"data-target="#create" data-id="{{$papel->id}}" id="btnEdit" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
                         <i class="material-icons" style="color:white">edit</i>
                     </a>
                     <a href="#" class="delete-modal btn btn-danger btn-sm" data-id="{{$papel->id}}" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
@@ -101,62 +101,117 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
+        var valor = $('#add').html();
+        var id;
         $('.error').hide();
-        $('#create').click(function(){
-        $('.error').removeClass('alert-success');
-        $('#msg').val('');
-        $('#msg').hide();
-    })  
-    })
 
-$('#add').click(function(e){
-    e.preventDefault();
-    $('.error').fadeOut("slow");
-    var nome = $('#nome').val();
-    var desc = $('#descricao').val();
-    if(nome==""){
-        
-        $('#msg-nome').html('O campo "Nome" é obrigatório');
-        $('#msg-nome').fadeIn();
-        $('#nome').focus();
-
-    }else if(desc==""){
-        console.log('descrição em branco');
-        $('#msg-desc').html('O campo "Descrição" é obrigatório');
-        $('#msg-desc').fadeIn();
-        $('#descricao').focus();
-    }else{
-
-    $.ajax({
-        type:'POST',
-        url:'papel/add',
-        data:{'_token':$('input[name=_token]').val(),
-        'nome':$('input[name=nome]').val(),
-        'descricao':$('input[name=descricao]').val(),
-        },
-        success:function(data){
-            console.log('foi: '+ data);
-            var msg = $.parseJSON(data)['mensagem'];
-            var sucesso=$.parseJSON(data)['sucesso'];
-            console.log("Mensagem ->"+ msg);
-       
-            
+        //Função que ao clicar no botão de adicionar, remove a classe alert e oculta a mensagem de feedback
+        $('#btnCreate').click(function(){
+            $('#add').html("Salvar");
+         //var valor = $('#add').html();
+        // alert(valor)
+            $('.error').removeClass('alert-success');
+            $('#msg').val('');
+            $('#msg').hide();
+        })
+    //Função disparada no botão de adicionar do modal. Ao clicar, valida os campos e envia os dados para o controller via ajax e retorna as mensagens de feedback para o usuário
+        $('#add').click(function(e){
       
-       if(sucesso)
-         $('#msg').addClass('alert-success')
-       else
-        $('#msg').addClass('alert-warning')       
-            $('#msg').html(msg);
-        $("#msg").fadeIn("slow");
+            e.preventDefault();
+            $('.error').fadeOut("slow");
+            var nome = $('#nome').val();
+            var desc = $('#descricao').val();
+            if(nome==""){
         
-        $('#nome').val('');
-        $('#descricao').val('');
-    }
+                $('#msg-nome').html('O campo "Nome" é obrigatório');
+                $('#msg-nome').fadeIn();
+                $('#nome').focus();
+
+            }else if(desc==""){
+                console.log('descrição em branco');
+                $('#msg-desc').html('O campo "Descrição" é obrigatório');
+                $('#msg-desc').fadeIn();
+                $('#descricao').focus();
+            }else{
+                if(valor=="Salvar"){
+                    $.ajax({
+                        type:'POST',
+                        url:'papel/add',
+                        data:{'_token':$('input[name=_token]').val(),
+                        'nome':$('input[name=nome]').val(),
+                        'descricao':$('input[name=descricao]').val(),
+                        },
+                        success:function(data){
+                            console.log('foi: '+ data);
+                            var msg = $.parseJSON(data)['mensagem'];
+                            var sucesso=$.parseJSON(data)['sucesso'];
+                            console.log("Mensagem ->"+ msg);
+                            if(sucesso)
+                                $('#msg').addClass('alert-success')
+                            else
+                                $('#msg').addClass('alert-warning')       
+                            $('#msg').html(msg);
+                            $("#msg").fadeIn("slow");
+                            $('#nome').val('');
+                            $('#descricao').val('');
+                        }
+                    })
+                }else{
+                    var nome = $('#nome').val()
+                    var desc =$('#descricao').val();
+                    $.ajax({
+                        url:"papel/update",
+                        data:{
+                                '_token':$('input[name=_token]').val(),
+                                'nome':nome,
+                                'descricao':desc,
+                                'id':id
+                            },
+                        datatype:"json",
+                        type:"POST"
+
+                    }).done(function(data){
+                        console.log("update->"+data);
+                       var sucesso = $.parseJSON(data)
+                       if(sucesso){
+                            $('#msg').addClass('alert-success')
+                            $('#msg').html("Papel Atualizado com sucesso!");
+                        }else{
+                            $('#msg').addClass('alert-warning')
+                            $('#msg').html("Erro de atualização :/");         
+                        }
+                        $("#msg").fadeIn("slow");
+                       
+                    }).fail(function(){
+                        console.log("fail update");
+                    })
+                }
+
+            }     
+        })
+        $('.btnEdit').click(function(){
+            $('#add').html('Atualizar')
+            id= (this).dataset.id;
+            $.ajax({
+                url:"papel/atualizar",
+                type:"POST",
+                datatype:"json",
+                data:{'_token':$('input[name=_token]').val(),
+                        'id': id}
+            }).done(function(data){
+                console.log("foi ->" +data)
+                var nome = $.parseJSON(data)['nome'];
+                var desc =$.parseJSON(data)['descricao'];
+                $('#nome').val(nome);
+                $('#descricao').val(desc)
+
+            }).fail(function(){ 
+                console.log("fail")
+            })
+        })  
     })
-}
-  
-     
-})
+
+
 /*TESTE*/
 </script>
 @endsection

@@ -146,9 +146,14 @@ class PapelController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update()
     {
-        //
+    $papel = Papel::findOrFail($_POST['id']);
+    $papel->nome =$_POST['nome'];
+    $papel->descricao= $_POST['descricao'];
+    $success =$papel->save();
+    return json_encode($success);
+
     }
 
     /**
@@ -159,5 +164,9 @@ class PapelController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function atualizar(){
+        $papel = Papel::findOrFail($_POST['id']);
+        return json_encode($papel);
     }
 }
