@@ -34,11 +34,11 @@ class UsuarioController extends Controller
         switch ($papel) {
             case 'administrador':
                 $menu = [
-                    ['icon' => 'person', 'tool' => 'Autenticar', 'route' => '/controleusuario/autenticar'],
-                    ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/controleusuario/cadastrar'],
+                    ['icon' => 'person', 'tool' => 'Login', 'route' => '/controleusuario/autenticar'],
+                    ['icon' => 'add_box', 'tool' => 'Cadastrar Usuario', 'route' => '/controleusuario/cadastrar'],
                     ['icon' => 'search', 'tool' => 'Buscar', 'route' => '/controleusuario/consulta'],
-                    ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-                    ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+                    ['icon' => 'event_note', 'tool' => 'Papel', 'route' => '#'],
+                    ['icon' => 'toggle_off', 'tool' => 'Sair', 'route' => '#'],
                 ];
                 break;
             default:
