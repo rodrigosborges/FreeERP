@@ -139,6 +139,8 @@
 
         //Função que ao clicar no botão de adicionar, remove a classe alert e oculta a mensagem de feedback
         $('#btnCreate').click(function(){
+            div = $('#table');
+           
             $('#add').html("Salvar");
          //var valor = $('#add').html();
         // alert(valor)
@@ -148,6 +150,7 @@
         })
     //Função disparada no botão de adicionar do modal. Ao clicar, valida os campos e envia os dados para o controller via ajax e retorna as mensagens de feedback para o usuário
         $('#add').click(function(e){
+            
       
             e.preventDefault();
             $('.error').fadeOut("slow");
@@ -179,7 +182,12 @@
                             console.log('foi: '+ data);
                             var msg = $.parseJSON(data)['mensagem'];
                             var sucesso=$.parseJSON(data)['sucesso'];
+                            var papel = $.parseJSON(data)['papel'];
+                           
                             console.log("Mensagem ->"+ msg);
+                   
+
+
                            if(sucesso)
                                 $('#msg').addClass('alert-success')
                            else
@@ -244,8 +252,15 @@
             })
         })
         $('.btnRemove').click(function(){
+            $('.msgRemove').removeClass('alert-success');
+            $('.msgRemove').html("Você tem certeza que deseja remover este papel?")
+            $('.msgRemove').addClass('alert-warning');
+            $('.msgRemove').fadeIn('slow');
+            $('#btnDeletePapel').removeAttr('disabled');
+            $('')
            id = (this).dataset.id;
            div = $(this).parent().parent();
+          
            
         })
         $('#btnDeletePapel').click(function(){
@@ -260,7 +275,7 @@
             console.log("delete ok->"+e);
             $('.msgRemove').removeClass('alert-warning');
            
-            $('.msgRemove').html("Usuário removido com sucesso")
+            $('.msgRemove').html("Papel removido com sucesso")
             $('.msgRemove').addClass('alert-success');
             $('.msgRemove').fadeIn('slow');
             $('#btnDeletePapel').attr('disabled','true');

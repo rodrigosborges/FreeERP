@@ -18,7 +18,11 @@ class Papel extends Migration
             if(!Schema::hasTable('papel')){
                 $table->increments('id');
                 $table->string('nome');
+                $table->text('descricao');
+                $table->integer('usuario_id');
                 $table->softDeletes();
+
+                $table->foreign('usuario_id')->references('id')->on('usuario');
             }
         });
     }

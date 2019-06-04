@@ -105,6 +105,7 @@ class PapelController extends Controller
         if($resultado){
             $retorno['mensagem']= "Papel cadastrado com sucesso";
             $retorno['sucesso']=true;
+            $retorno['papel']= $papel;
         }else
             $retorno['mensagem']= "Erro ao cadastrar papel";
         
