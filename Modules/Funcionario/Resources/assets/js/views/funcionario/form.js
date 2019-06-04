@@ -44,7 +44,8 @@ $(document).on("click", ".del-doc", function() {
 //###########################
 
 //MÁSCARAS
-$(".data").mask("00/00/0000")
+$(".data").mask('00/00/0000')
 $("#cep").mask('00000-000')
+$("#numero").mask('99999')
 $("#cpf").mask('000.000.000-00')
 $(".telefone").mask('(00) 0000-0000')
