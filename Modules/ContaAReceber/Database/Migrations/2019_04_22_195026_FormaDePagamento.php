@@ -18,6 +18,7 @@ class FormaDePagamento extends Migration
             $table->text('nome');
             $table->float('taxa');
             $table->integer('prazo_recebimento');
+            $table->boolean('ativo')->default(1);
             $table->rememberToken();
             $table->timestamps();
           });

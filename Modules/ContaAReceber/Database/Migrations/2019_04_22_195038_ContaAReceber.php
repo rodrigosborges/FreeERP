@@ -17,9 +17,10 @@ class ContaAReceber extends Migration
         $table->increments('id');
         $table->text('descricao');
         $table->decimal('valor', 9, 2);
-        $table->integer('parcelas'); 
         $table->integer('categoria_receber_id')->unsigned();
         $table->foreign('categoria_receber_id')->references('id')->on('categoria_receber');
+        $table->boolean('ativo')->default(1);
+        $table->timestamps();
       });
     }
 

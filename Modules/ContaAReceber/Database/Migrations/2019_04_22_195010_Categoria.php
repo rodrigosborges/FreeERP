@@ -17,6 +17,7 @@ class Categoria extends Migration
             $table->increments('id')->unsigned();
             $table->text('nome');
             $table->rememberToken();
+            $table->boolean('ativo')->default(1);
             $table->timestamps();
           });
     }
