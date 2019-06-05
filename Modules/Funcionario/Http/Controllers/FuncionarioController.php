@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Cargo, Funcionario};
-use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Relacao, Cidade, Estado,TipoTelefone};
+use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Relacao, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use DB;
 
@@ -44,7 +44,7 @@ class FuncionarioController extends Controller{
             'tipo_documentos'   => TipoDocumento::all(),
             'documentos'        => [new Documento],
             'telefones'         => [new Telefone],
-            'tipos_telefone'     => TipoTelefone::all(),
+            'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
             'estados'           => Estado::all(),
             'cidades'           => Cidade::all(),
@@ -57,36 +57,34 @@ class FuncionarioController extends Controller{
     }
 
     public function store(CreateFuncionario $request){
-        return back()->withInput();
 		DB::beginTransaction();
 		try{
 
             $funcionario = Funcionario::create($request->input('funcionario'));
             $funcionario->cargos()->attach(
                 $request['cargo']['cargo_id'],
-                ['data_entrada' => date_format(date_create($request['cargo']['data_entrada']), 'Y-m-d')]
+                ['data_entrada' => date('Y-m-d', strtotime($request['cargo']['data_entrada']))]
             );
 
             foreach($request->documentos as $key => $documento) {
 
                 $newDoc = [
-                    'tipo'   => $key,
+                    'tipo_documento_id'   => $documento['tipo_documento_id'],
                     'numero' => $documento['numero']
                 ];
 
                 $doc = Documento::create($newDoc);
 
                 Relacao::create([
-                    'tabela_origem' => 'funcionario',
-                    'origem_id' => $funcionario->id,
-                    'tabela_destino' => 'documento',
-                    'destino_id' => $doc->id
+                    'tabela_origem'     => 'funcionario',
+                    'origem_id'         => $funcionario->id,
+                    'tabela_destino'    => 'documento',
+                    'destino_id'        => $doc->id,
+                    'modelo'            => 'Documento'
                 ]);
 
             }
-
-            return $funcionario->documentos;
-
+            
             if($request->input('docs_outros')) {
 
                 foreach($request->docs_outros as $documento) {
@@ -109,10 +107,11 @@ class FuncionarioController extends Controller{
                     $doc = Documento::create($documento);
 
                     Relacao::create([
-                        'tabela_origem' => 'funcionario',
-                        'origem_id' => $funcionario->id,
-                        'tabela_destino' => 'documento',
-                        'destino_id' => $doc->id
+                        'tabela_origem'     => 'funcionario',
+                        'origem_id'         => $funcionario->id,
+                        'tabela_destino'    => 'documento',
+                        'destino_id'        => $doc->id,
+                        'modelo'            => 'Documento'
                     ]);
 
                 }
@@ -121,19 +120,21 @@ class FuncionarioController extends Controller{
             $endereco = Endereco::create($request->input('endereco'));
 
             Relacao::create([
-                'tabela_origem' => 'funcionario',
-                'origem_id' => $funcionario->id,
-                'tabela_destino' => 'endereco',
-                'destino_id' => $endereco->id
+                'tabela_origem'     => 'funcionario',
+                'origem_id'         => $funcionario->id,
+                'tabela_destino'    => 'endereco',
+                'destino_id'        => $endereco->id,
+                'modelo'            => 'Endereco'
             ]);
 
-            $email = Email::create($request->input('email'));
+            $email = Email::create($request->email);
 
             Relacao::create([
-                'tabela_origem' => 'funcionario',
-                'origem_id' => $funcionario->id,
-                'tabela_destino' => 'email',
-                'destino_id' => $email->id
+                'tabela_origem'     => 'funcionario',
+                'origem_id'         => $funcionario->id,
+                'tabela_destino'    => 'email',
+                'destino_id'        => $email->id,
+                'modelo'            => 'Email'
             ]);
 
             foreach($request->telefones as $telefone) {
@@ -141,10 +142,11 @@ class FuncionarioController extends Controller{
                 $telefone = Telefone::create($telefone);
 
                 Relacao::create([
-                    'tabela_origem' => 'funcionario',
-                    'origem_id' => $funcionario->id,
-                    'tabela_destino' => 'telefone',
-                    'destino_id' => $telefone->id
+                    'tabela_origem'     => 'funcionario',
+                    'origem_id'         => $funcionario->id,
+                    'tabela_destino'    => 'telefone',
+                    'destino_id'        => $telefone->id,
+                    'modelo'            => 'Telefone'
                 ]);
 
             }

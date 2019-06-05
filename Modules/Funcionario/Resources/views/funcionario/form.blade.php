@@ -112,6 +112,7 @@
                                 <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->cpf()->first()->id}}">
                             @endif
                             <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{ old('documentos.cpf.numero', $data['model'] ? $data['model']->cpf()->first()->numero : '') }}">
+                            <input required type="hidden" name="documentos[cpf][tipo_documento_id]" value="1">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.cpf.numero') }}</span>
                     </div>
@@ -129,6 +130,7 @@
                                 <input type="hidden" name="documentos[rg][id]" value="{{$data['model']->rg()->first()->id}}">
                             @endif
                             <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="form-control" value="{{ old('documentos.rg.numero', $data['model'] ? $data['model']->rg()->first()->numero : '') }}">
+                            <input required type="hidden" name="documentos[rg][tipo_documento_id]" value="2">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.rg.numero') }}</span>
                     </div>
@@ -149,14 +151,14 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <select name="docs_outros[{{$key}}][tipo]" class="form-control documentos" {{$documento ? '' : 'disabled'}}>
+                                <select name="docs_outros[{{$key}}][tipo_documento_id]" class="form-control documentos" {{isset($documento['tipo_documento_id']) ? '' : 'disabled'}}>
                                     <option value="">Selecione</option>
-                                    @foreach(old('tipo_documentos', $data['tipo_documentos']) as $tipo)
-                                        <option value="{{$tipo['id']}}">{{$tipo->nome}}</option>
+                                    @foreach($data['tipo_documentos']) as $tipo)
+                                        <option value="{{$tipo['id']}}" {{ $documento['tipo_documento_id'] == $tipo['id'] ? 'selected' : '' }}>{{$tipo->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <span class="errors"> {{ $errors->first('docs_outros.tipo') }}</span>
+                            <span class="errors"> {{ $errors->first('docs_outros.tipo_documento_id') }}</span>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -354,7 +356,6 @@
                         <select required name="cargo[cargo_id]" class="form-control">
                             <option value="">Selecione</option>
                             @foreach($data['cargos'] as $item)
-                            {{ old('endereco.cidade_id', $data['model'] ? $data['model']->endereco->cidade_id : '') == $cidade->id ? 'selected' : '' }}
                                 <option value="{{ $item->id }}" {{ old('cargo.cargo_id', $data['model'] ? $data['model']->cargos->last()->pivot->cargo_id : '' ) ? 'selected' : '' }}> {{ $item->nome }} </option>
                             @endforeach 
                         </select>
@@ -393,9 +394,9 @@
                                 <i class="material-icons">email</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="E-mail" name="contato[email]" id="email" class="form-control" value="{{ old('contato.email', $data['model'] ? $data['model']->contato->email : '') }}">
+                        <input required type="text" placeholder="E-mail" name="email" id="email" class="form-control" value="{{ old('email', $data['model'] ? $data['model']->email->email : '') }}">
                     </div>
-                    <span class="errors"> {{ $errors->first('contato.email') }} </span>
+                    <span class="errors"> {{ $errors->first('email') }} </span>
                 </div>
             </div>
         </div>
