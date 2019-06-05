@@ -43,12 +43,26 @@ class ContaAPagarController extends Controller
     public function editar($id){
         $conta = ContaAPagarModel::find($id);
 
-        $pagamento = PagamentoModel::where('conta_pagar_id', $id)->get();
+        $pagamentos = PagamentoModel::where('conta_pagar_id', $id)->get();
+
         $categorias = CategoriaModel::where('ativo', 1)->get();
-        
-        return view('contaapagar::editarConta',compact('conta', 'pagamento','categorias'));
+
+
+
+        return view('contaapagar::editarConta',compact('conta', 'pagamentos','categorias'));
     }
-    
+    public function salvar(Request $req){
+        
+        $dados = $req->all();
+ 
+        ContaAPagarModel::update($dados);
+        $conta_pagar_id = ContaAPagarModel::latest()->first();
+            
+        
+        
+        
+        return 'foi?';
+    }
     public function cadastrarConta(Request $req){
         
         $dados = $req->all();
@@ -82,7 +96,7 @@ class ContaAPagarController extends Controller
                 }else{
                     $pagamento->status_pagamento = "Aguardando";   
                 }
-                $pagamento->valor = $dados['valor'];
+                $pagamento->valor = $dados['valor']/$dados['parcelas'];
                 $pagamento->save();
             }
         }

@@ -17,13 +17,15 @@ Route::prefix('contaapagar')->group(function() {
     Route::get('/', 'ContaAPagarController@index');
     Route::get('/', ['as' => 'contaapagar', 'uses' => 'ContaAPagarController@index']);
     Route::get('cat={id}', ['as' => 'cat.id', 'uses' => 'ContaAPagarController@filtro']);
-    Route::get('deletar={id}', ['as' => 'conta.deletar', 'uses' => 'ContaAPagarController@deletar']);
-    Route::get('editar={id}', ['as' => 'conta.editar', 'uses' => 'ContaAPagarController@editar']);
+    Route::get('deletar/{id}', ['as' => 'conta.deletar', 'uses' => 'ContaAPagarController@deletar']);
+    Route::get('editar/{id}', ['as' => 'conta.editar', 'uses' => 'ContaAPagarController@editar']);
+    Route::post('editar/pagamento/{id}/salvar', ['as' => 'pagamento.salvar', 'uses' => 'PagamentoController@salvar']);
+    Route::post('editar/salvar', ['as' => 'conta.salvar', 'uses' => 'ContaAPagarController@salvar']);
     Route::get('deletar_categoria={id}', ['as' => 'categoria.deletar', 'uses' => 'CategoriaController@deletar']);    
     
     Route::get('check/teste', ['as' => 'check.status', 'uses' => 'ContaAPagarController@status']);
     Route::post('categoria/salvar', ['as' => 'categoria.salvar', 'uses' => 'CategoriaController@salvar']);
-    Route::get('categoria/index',['as' => 'categoria.index', 'uses' => 'CategoriaController@index']);
+    Route::get('categoria',['as' => 'categoria.index', 'uses' => 'CategoriaController@index']);
 
     Route::get('conta/novo', ['as' => 'conta.novo' , 'uses' => 'ContaAPagarController@novaConta']);
     Route::post('cadastrar', ['as' => 'conta.cadastrar' , 'uses' => 'ContaAPagarController@cadastrarConta']);

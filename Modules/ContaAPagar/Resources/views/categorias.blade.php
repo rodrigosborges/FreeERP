@@ -73,7 +73,7 @@
                         @include('contaapagar::_form')
                     </div>
                     <div class="col-12 text-center"> 
-                        <a class="btn btn-primary">Salvar Categoria</a>
+                        <button class="btn btn-primary" type="submit">Salvar Categoria</button>
                     </div>
                     
                 </form>

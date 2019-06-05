@@ -5,7 +5,7 @@ namespace Modules\ContaAPagar\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\ContaAPagar\Entities\ContaAPagarModel;
+use Modules\ContaAPagar\Entities\{ContaAPagarModel,PagamentoModel,CategoriaModel};
 
 class PagamentoController extends Controller
 {
@@ -22,6 +22,23 @@ class PagamentoController extends Controller
     public function index()
     {
         return view('contaapagar::index');
+    }
+    public function salvar(Request $req, $id) {
+
+        $dados = $req->all();
+
+        if($dados['status_pagamento'] == 'on'){
+            $dados['status_pagamento'] = "Pago";    
+        }else{
+            $dados['status_pagamento'] = "Aguardando";   
+        }
+        $pagamento = PagamentoModel::find($id)->update($dados);
+
+        $categorias = CategoriaModel::where('ativo', 1)->get();
+        $pagamentos = PagamentoModel::where('conta_pagar_id', $id)->get();
+        $conta = ContaAPagarModel::find($id);
+
+        return redirect()->route('conta.editar', compact('id','pagamentos','categorias','conta'));
     }
 
     /**

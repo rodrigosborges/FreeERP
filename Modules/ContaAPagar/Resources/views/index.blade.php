@@ -32,7 +32,29 @@
         <div class="card col-sm-2 d-flex align-items-center align-content-center"><h3>R${{$total}}</h3></div>
     </div>
     <div class="row teste">
-        <a class="btn btn-primary" id="novo" href="{{ route('conta.novo') }}">Novo</a>
+
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nova Conta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('conta.cadastrar')}}" method="POST">
+                        {{csrf_field()}}
+                        @include('contaapagar::_formConta')
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Nova</button>
+
 
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -70,7 +92,7 @@
                     <td>{{$pagamento->data_vencimento}}</td>
                     <td>{{$pagamento->data_pagamento}}</td>
                     <td>{{$pagamento->valor}}</td>
-                    <td>{{$pagamento->status_pagamento}}</td>
+                    <td>{{$pagamento->status_pagamento }}</td>
                     <td><a href="{{route('conta.editar', $pagamento->conta_pagar_id)}}" ><i class='material-icons'>search</i></a> <a href="{{Route('conta.deletar', $pagamento->conta_pagar_id)}}"><i class='material-icons'>delete</i></a></td>
             </tr>
             @endforeach
@@ -82,4 +104,9 @@
     <a class="btn btn-primary" href="{{ route('check.status') }}">Filtrar</a> <!-- falta botao com valores '?'-->
 </section>
     
+
+
+
+
+
 @stop
