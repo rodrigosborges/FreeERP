@@ -7,18 +7,13 @@
                 <thead>
                     <tr>
                         <th>Nome do Fornecedor</th>
-                        <th>E-mail</th>
-                        <th>Endereço</th>
-                        <th>Telefone</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                 @foreach($data['fornecedor'] as $fornecedor)
                     <tr>
-                        <td>{{$fornecedor->nome_fornecedor}}</td>
-                        <td>{{$fornecedor->email}}</td>
-                        <td>{{$fornecedor->endereco}}</td>
-                        <td>{{$fornecedor->telefone}}</td>
+                        <td>{{$fornecedor->nome}}</td>
                         <td>
                             <form action="{{url('compra/fornecedor', [$fornecedor->id])}}" method="POST">
                                 {{method_field('DELETE')}}

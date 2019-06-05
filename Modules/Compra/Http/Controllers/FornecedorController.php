@@ -5,7 +5,10 @@ namespace Modules\Compra\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Entities\{Relacao};
 use Modules\Compra\Entities\{Fornecedor};
+
+
 
 class FornecedorController extends Controller
 {
@@ -57,7 +60,11 @@ class FornecedorController extends Controller
     {
 		DB::beginTransaction();
 		try{
-			$fornecedor = Fornecedor::Create($request->all());
+
+            $fornecedor = Fornecedor::Create($request->fornecedor);
+            $fornecedor->enderecoRelacao()->insert($request->endereco);
+            $fornecedor->telefoneRelacao()->insert($request->telefone);
+            $fornecedor->emailRelacao()->insert($request->email);
 			DB::commit();
 			return redirect('/compra/fornecedor')->with('success', 'Fornecedor cadastrado com successo');
 		}catch(Exception $e){

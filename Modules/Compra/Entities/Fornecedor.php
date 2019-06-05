@@ -2,8 +2,10 @@
 
 namespace Modules\Compra\Entities;
 
+use App\Entities\{Relacao};
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Fornecedor extends Model
 {
@@ -21,7 +23,7 @@ class Fornecedor extends Model
     //Relação com tabela endereço
 
     public function enderecoRelacao(){
-        return $this->hasOne('app\Entities\Relacao', 'origem_id')
+        return $this->hasOne('App\Entities\Relacao', 'origem_id')
             ->where('tabela_origem','fornecedor')
             ->where('tabela_destino','endereco');
     }
@@ -32,7 +34,7 @@ class Fornecedor extends Model
     
     //Relação com tabela Telefone
     public function telefoneRelacao(){
-        return $this->hasOne('app\Entities\Relacao', 'origem_id')
+        return $this->hasOne('App\Entities\Relacao', 'origem_id')
             ->where('tabela_origem','fornecedor')
             ->where('tabela_destino','telefone');
     }
@@ -42,7 +44,7 @@ class Fornecedor extends Model
 
     //Relação com tabela Email
     public function emailRelacao(){
-        return $this->hasOne('app\Entities\Relacao', 'origem_id')
+        return $this->hasOne('App\Entities\Relacao', 'origem_id')
             ->where('tabela_origem','fornecedor')
             ->where('tabela_destino','email');
     }
