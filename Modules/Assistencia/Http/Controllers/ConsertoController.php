@@ -5,7 +5,7 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\{ConsertoAssistenciaModel, PagamentoAssistenciaModel, PecaAssistenciaModel, ServicoAssistenciaModel, ClienteAssistenciaModel, TecnicoAssistenciaModel};
+use Modules\Assistencia\Entities\{ConsertoAssistenciaModel, PagamentoAssistenciaModel, PecaAssistenciaModel, ServicoAssistenciaModel, ClienteAssistenciaModel, TecnicoAssistenciaModel, ItemPeca, ItemServico};
 use DB;
 
 class ConsertoController extends Controller
@@ -41,21 +41,7 @@ class ConsertoController extends Controller
        $consertos = ConsertoAssistenciaModel::busca($req->busca);
        return view('assistencia::paginas.consertos.localizarConserto',compact('consertos'));
      }
-/*
-     public funcion calculaValor(pecas[], servicos[]) {
-        $valor = 0;
-        if ( (pecas[] == null) and (servicos[] == null) ){
-          return $valor;
-        } else {
-          foreach($pecas as $peca){
-            $valor = $valor + $peca->valor_venda;
-          }
-          foreach($servicos as $servico) {
-            $valor = $valor + $servico->valor;
-          }
-        }
-       return $valor;
-     }*/
+
 
      public function visualizarConserto($id)
      {
@@ -70,16 +56,32 @@ class ConsertoController extends Controller
 
      public function salvar(Request $req){
       $dados  = $req->all();
-      $pecas = $dados->pecas;
 
-     /*
       ConsertoAssistenciaModel::create($dados);
-      $idConserto = $dados->id;
-      PagamentoAssistenciaModel::create($idConserto);
-      return redirect()->route('consertos.index')->with('success','Ordem salva com sucesso!');
-    */
+      $conserto = ConsertoAssistenciaModel::latest()->first();
+      $idConserto = $conserto->id;
 
-      return var_dump($pecas);
+      for ($i=0; $i < count($dados['pecas']); $i++) { 
+
+        $pecas = new ItemPeca;
+        $pecas->idConserto = $idConserto;
+        $pecas->idPeca = $dados['pecas'][$i];
+
+        $pecas->save(); 
+
+      }
+ 
+
+      for ($i=0; $i < count($dados['servicos']); $i++) { 
+        $servicos = new ItemServico;
+        $servicos->idConserto = $idConserto;
+        $servicos->idMaoObra = $dados['servicos'][$i];
+        $servicos->save(); 
+      }
+      
+
+
+      return $dados;
       }
 
      public function nomeClientes(Request $req){
