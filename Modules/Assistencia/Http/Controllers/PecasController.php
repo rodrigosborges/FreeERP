@@ -18,7 +18,7 @@ class PecasController extends Controller
 
          public function localizar()
          {
-           $pecas = PecaAssistenciaModel::all();
+           $pecas = PecaAssistenciaModel::where('ativo', 1)->get();;
 
            return view('assistencia::paginas.estoque.localizarPeca',compact('pecas'));
          }
@@ -47,7 +47,10 @@ class PecasController extends Controller
 
          public function deletar($id)
          {
-           PecaAssistenciaModel::find($id)->delete();
+            $peca = PecaAssistenciaModel::find($id);
+            $peca->ativo = 0;
+            $peca->update();
+
            return redirect()->route('pecas.localizar');
          }
          public function buscar(Request $req)

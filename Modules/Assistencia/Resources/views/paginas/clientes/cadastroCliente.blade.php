@@ -45,8 +45,8 @@
 @section('js')
 	<script>
 		$(document).ready(function(){
-			console.log()
-			$('.cpf-mask').mask("000.000.000/00")
+
+			$('.cpf-mask').mask("000.000.000-00")
 			
 			var phone = document.querySelector(".telefone");
 			if(phone.length > 10) {

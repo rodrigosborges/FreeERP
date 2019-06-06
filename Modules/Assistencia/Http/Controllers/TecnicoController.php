@@ -11,12 +11,12 @@ class TecnicoController extends Controller
 
   public function index()
   {
-    $tecnicos = TecnicoAssistenciaModel::all();
+    $tecnicos = TecnicoAssistenciaModel::where('ativo', 1)->get();;
     return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos'));
   }
   public function localizar()
   {
-    $tecnicos = TecnicoAssistenciaModel::all();
+    $tecnicos = TecnicoAssistenciaModel::where('ativo', 1)->get();;
     return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos'));
   }
   public function cadastrar()
@@ -29,13 +29,13 @@ class TecnicoController extends Controller
     $dados  = $req->all();
     TecnicoAssistenciaModel::create($dados);
 
-    return redirect()->route('tecnico.localizar')->with('success','tecnico cadastrado com sucesso!');
+    return redirect()->route('tecnico.localizar')->with('success','Técnico cadastrado com sucesso!');
   }
 
   public function editar($id)
   {
     $tecnico = TecnicoAssistenciaModel::find($id);
-    return view('assistencia::paginas.tecnicos.editarTecnico',compact('tecnico'));
+    return view('assistencia::paginas.tecnicos.editarTecnico',compact('tecnico'))->with('success','Técnico atualizado com sucesso!');
   }
 
   public function atualizar(Request $req, $id)
@@ -47,7 +47,10 @@ class TecnicoController extends Controller
 
   public function deletar($id)
   {
-    TecnicoAssistenciaModel::find($id)->delete();
+    $tecnico = TecnicoAssistenciaModel::find($id);
+    $tecnico->ativo = 0;
+    $tecnico->update();
+
     return redirect()->route('tecnico.localizar');
   }
 

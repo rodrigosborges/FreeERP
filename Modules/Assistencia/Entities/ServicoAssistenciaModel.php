@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ServicoAssistenciaModel extends Model
 {
   protected $table = 'servico_assistencia';
-  protected $fillable = ['id','nome','valor'];
+  protected $fillable = ['id','nome','valor','ativo'];
 
   public static function busca($busca)
   {

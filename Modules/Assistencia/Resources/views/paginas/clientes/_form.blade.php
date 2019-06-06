@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="form-group col-lg-6 col-sm-12">
-      <input required type="text" class="form-control cpf-mask" name="cpf" placeholder="000.000.000-00" value="{{ isset($cliente->cpf) ? $cliente->cpf : old('cpf', '') }}">
+      <input required type="text" class="form-control cpf-mask" minlength=11 name="cpf" placeholder="000.000.000-00" value="{{ isset($cliente->cpf) ? $cliente->cpf : old('cpf', '') }}">
       <span class="errors"> {{ $errors->first('cpf') }} </span>
     </div>
     <div class="form-group col-lg-6 col-sm-12">

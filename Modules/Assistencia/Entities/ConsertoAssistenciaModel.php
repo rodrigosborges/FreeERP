@@ -9,7 +9,7 @@ class ConsertoAssistenciaModel extends Model
 {
     protected $table = 'conserto_assistencia';
 
-    protected $fillable = ['id','numeroOrdem', 'valor','situacao','data_entrada','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','idCliente','idTecnico','idPeca[]','idMaoObra[]'];
+    protected $fillable = ['id','numeroOrdem', 'valor','situacao','data_entrada','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','idCliente','idTecnico','idPeca[]','idMaoObra[]','ativo'];
 
     public static function busca($busca)
     {

@@ -13,6 +13,7 @@ class Tecnico extends Migration
           $table->increments('id');
           $table->string('nome');
           $table->string('cpf');
+          $table->boolean('ativo')->default(1);
           $table->timestamps();
       });
     }

@@ -22,6 +22,7 @@ class Cliente extends Migration
           $table->string('sexo');
           $table->string('celnumero');
           $table->string('telefonenumero');
+          $table->boolean('ativo')->default(1);
           $table->timestamps();
       });
     }

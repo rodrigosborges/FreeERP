@@ -40,9 +40,9 @@
 @section('js')
 	<script>
 		$(document).ready(function(){
-			console.log()
-			$('.cpf-mask').mask("000.000.000/00")
-			$('.telefone').mask("(00) 9 0000-0000")
+
+			$('.cpf-mask').mask("000.000.000-00")
+
 		})
 	</script>
 @stop

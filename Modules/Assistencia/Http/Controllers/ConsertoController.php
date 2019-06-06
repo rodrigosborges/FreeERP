@@ -19,21 +19,26 @@ class ConsertoController extends Controller
        return view('assistencia::paginas.conserto');
      }
      public function cadastrar(){
-       $busca = '';
-       $pecas = PecaAssistenciaModel::busca($busca);
-       $servicos = ServicoAssistenciaModel::busca($busca);
 
-       $ordens = ConsertoAssistenciaModel::all();
+       $pecas = PecaAssistenciaModel::where('ativo', 1)->get();
+       $servicos = ServicoAssistenciaModel::where('ativo', 1)->get();
 
-         $id = ConsertoAssistenciaModel::max();
-         $id = $id + 1;
-         return view('assistencia::paginas.consertos.cadastrarconserto',compact('id','pecas','servicos'));
+       $ultimo = ConsertoAssistenciaModel::latest()->first();
+
+       $id = 0;
+       if($ultimo == null){
+        $id = 1;
+       } else {
+        $id = 1 + $ultimo->id;
+       }
+
+      return view('assistencia::paginas.consertos.cadastrarconserto',compact('id','pecas','servicos'));
 
      }
 
      public function localizar()
      {
-       $consertos = ConsertoAssistenciaModel::all();
+       $consertos = ConsertoAssistenciaModel::where('ativo', 1)->get();
        return view('assistencia::paginas.consertos.localizarConserto',compact('consertos'));
      }
      public function buscar(Request $req)
@@ -81,7 +86,7 @@ class ConsertoController extends Controller
       
 
 
-      return $dados;
+      return redirect()->route('consertos.localizar')->with('success','Ordem de serviço iniciada!');
       }
 
      public function nomeClientes(Request $req){
