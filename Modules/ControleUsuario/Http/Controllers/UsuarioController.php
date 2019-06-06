@@ -8,10 +8,10 @@ use Illuminate\Routing\Controller;
 use Modules\controleUsuario\Entities\Papel;
 use Modules\controleUsuario\Entities\Usuario;
 use Modules\controleUsuario\Http\Requests \ {
-ValidaLoginRequest
+    ValidaLoginRequest
 };
 use Modules\controleUsuario\Http\Requests \ {
-ValidaCadastroRequest
+    ValidaCadastroRequest
 };
 //use Modules\ControleUsuario\Entities\{Usuario};
 use DB;
@@ -33,16 +33,16 @@ class UsuarioController extends Controller
 
         switch ($papel) {
             case 'administrador':
-                $menu = [
-                    ['icon' => 'person', 'tool' => 'Login', 'route' => '/controleusuario/autenticar'],
-                    ['icon' => 'add_box', 'tool' => 'Cadastrar Usuario', 'route' => '/controleusuario/cadastrar'],
-                    ['icon' => 'search', 'tool' => 'Buscar', 'route' => '/controleusuario/consulta'],
-                    ['icon' => 'event_note', 'tool' => 'Papel', 'route' => '#'],
-                    ['icon' => 'toggle_off', 'tool' => 'Sair', 'route' => '#'],
-                ];
-                break;
+            $menu = [
+                ['icon' => 'vpn_key', 'tool' => 'Login', 'route' => '/controleusuario/autenticar'],
+                ['icon' => 'people', 'tool' => 'Usuarios', 'route' => '/controleusuario/cadastrar'],
+                ['icon' => 'event_note', 'tool' => 'Papéis', 'route' => '/controleusuario/papel'],
+                 ['icon' => 'list_alt', 'tool' => 'Relatórios', 'route' => '/controleusuario/consulta'],
+                ['icon' => 'toggle_off', 'tool' => 'Sair', 'route' => '#'],
+            ];
+            break;
             default:
-                $menu = [];
+            $menu = [];
         }
 
         $this->dadosTemplate = [
@@ -90,11 +90,14 @@ class UsuarioController extends Controller
 
             if (!$usuario) {
                 DB::commit();
-                $data = $req->all();
-                $data['password'] = base64_encode($req->input('password'));
+                $data =array();
+                $data['nome']= $req->input('name');
+                $data['email']= $req->input('email');  
+                $data['senha']=  base64_encode($req->input('password'));
+
                 $data['url'] = 'validar.cadastro';
                 $data['model'] = null;
-
+                
                 $data['title'] = 'Cadastrar Usuário';
                 Usuario::Create($data);
                 return back()->with('success', 'Usuário cadastrado com sucesso!');
@@ -111,7 +114,7 @@ class UsuarioController extends Controller
     {
 
         $senha =  base64_encode($req->password);
-        $user = DB::table('usuario')->where('email', $req->email)->Where('password', $senha)->first();
+        $user = DB::table('usuario')->where('email', $req->email)->Where('senha', $senha)->first();
 
         if ($user != null) {
             session_start();
@@ -196,12 +199,12 @@ class UsuarioController extends Controller
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
 
         $lista = DB::table('usuario')->where(
-            ['name', $req->nome],
+            ['nome', $req->nome],
             ['data','=',$req->data]
         )->get();
 
 
-         return view(
+        return view(
             'controleusuario::consulta',
             $this->dadosTemplate,
             compact('status', 'modulos', 'cargos', 'lista')
@@ -211,7 +214,7 @@ class UsuarioController extends Controller
 
     public function recovery(Request $req){
         $user = Usuario::onlyTrashed()
-                ->where('id', $req->id );
+        ->where('id', $req->id );
 
         
         $user->restore();
@@ -263,22 +266,21 @@ class UsuarioController extends Controller
                 if ($request->password == "") {
                     echo "senha vazia";
 
-                    $usuario->password = $usuario->password;
+                    $usuario->senha = $usuario->senha;
                     $usuario->save();
                 } else {
-                    echo "senha não vazia";
-                    $usuario->password = base64_encode($request->password);
+                    $usuario->senha = base64_encode($request->password);
                 }
                 $usuario->email = $request->email;
-                $usuario->name = $request->name;
+                $usuario->nome = $request->name;
                 $usuario->save();
                 return view('controleusuario::form', $this->dadosTemplate, compact('data'))->with('success','Dados atualizados com sucesso');
             } catch (Exception $e) {
                 DB::rollback();
-              echo "não foi";
-              return back()->with('error','Erro ao atualizar :'.$e->getMessage());
+                echo "não foi";
+                return back()->with('error','Erro ao atualizar :'.$e->getMessage());
 
-             }
+            }
         }else{
             return back()->with('warning','Email indisponível');
         }
@@ -297,7 +299,7 @@ class UsuarioController extends Controller
         if ($res) {
             $data = ['status' => '1', 'msg' => 'success'];
         } else
-            $data = ['status' => '0', 'msg' => 'fail'];
+        $data = ['status' => '0', 'msg' => 'fail'];
 
         return back()->with('data');
     }

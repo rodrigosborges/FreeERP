@@ -99,7 +99,7 @@
                             <tr>
 
                                 <th scope="row">{{ $user->id }}</th>
-                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->nome}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>
                                         @if( is_null($user->deleted_at) )

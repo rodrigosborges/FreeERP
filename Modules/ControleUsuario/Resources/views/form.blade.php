@@ -11,43 +11,43 @@
                 @if($data['model'])
                 {!!Form::open(array('route'=>'validar.edicao', 'method'=>'post')) !!}
                 {!! Form::hidden('id', $data['model']->id) !!}
-                    @method('PUT')
-                    @else
-                    {!!Form::open(array('route'=>'validar.cadastro', 'method'=>'post')) !!}
+                @method('PUT')
+                @else
+                {!!Form::open(array('route'=>'validar.cadastro', 'method'=>'post')) !!}
                 @endif
 
                 {{ csrf_field() }}
 
-              
-                    <div class="form-group">
-                        <div class="row justify-content-center">
-                            <label for="exampleFormControlFile1">
-                                <i class="material-icons text-muted" style="font-size: 100px; cursor:pointer">add_a_photo</i>
-                            </label>
-                            <input type="file" class="form-control-file" name="foto" id="exampleFormControlFile1" style="display: none">
-                        </div>
-                    </div>
+
+                <div class="form-group">
                     <div class="row justify-content-center">
-                        <div class="col-10">
-                        <div class="form-group">
-                                <input type="text" class="form-control" value="{{$data['model'] ? $data['model']->name :''}}" name="name" id="nome"
-                                    placeholder="Nome">
-                                    <span class="errors alert-danger">  {{ $errors->first('name') }} </span>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" value="{{$data['model'] ? $data['model']->email :''}}" name="email" id="email" aria-describedby="emailHelp"
-                                    placeholder="Email">
-                                    <span class="errors alert-danger"> {{ $errors->first('email') }} </span>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Senha">
-                                <span class="errors alert-danger"> {{ $errors->first('password') }} </span>
-                            </div>
-                            <button type="submit" class="btn btn-primary d-flex align-items-center">
-                                <i class="material-icons mr-2">save</i> {{$data['button']}}
-                            </button>
-                        </div>
+                        <label for="exampleFormControlFile1">
+                            <i class="material-icons text-muted" style="font-size: 100px; cursor:pointer">add_a_photo</i>
+                        </label>
+                        <input type="file" class="form-control-file" name="foto" id="exampleFormControlFile1" style="display: none">
                     </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="{{$data['model'] ? $data['model']->nome :''}}" name="name" id="nome"
+                            placeholder="Nome">
+                            <span class="errors alert-danger">  {{ $errors->first('name') }} </span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" value="{{$data['model'] ? $data['model']->email :''}}" name="email" id="email" aria-describedby="emailHelp"
+                            placeholder="Email">
+                            <span class="errors alert-danger"> {{ $errors->first('email') }} </span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Senha">
+                            <span class="errors alert-danger"> {{ $errors->first('password') }} </span>
+                        </div>
+                        <button type="submit" class="btn btn-primary d-flex align-items-center">
+                            <i class="material-icons mr-2">save</i> {{$data['button']}}
+                        </button>
+                    </div>
+                </div>
                 {!! Form::close() !!}
             </div>
             <div class="card-footer d-flex justify-content-around align-items-center pt-4">
