@@ -90,12 +90,13 @@ class PapelController extends Controller
         session_start();
         if(isset($_SESSION['id'])){
            
-        $retorno = array();
+       
         
         $papel = new Papel;
         $papel->nome = $request->nome;
+
         $papel->descricao = $request->descricao;
-        
+         
         $usuario= Usuario::findOrFail($_SESSION['id']);
         $papel->usuario()->associate($usuario);
 

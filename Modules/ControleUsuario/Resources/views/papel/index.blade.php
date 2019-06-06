@@ -178,11 +178,10 @@
                         type:'POST',
                         url:'papel/add',
                         data:{'_token':$('input[name=_token]').val(),
-                        'coco':$('input[name=nome]').val(),
+                        'nome':$('input[name=nome]').val(),
                         'descricao':$('input[name=descricao]').val(),
                         },
                         success:function(data){
-                            console.log("buceta->"+data)
                             console.log('foi: '+ data);
                             var msg = $.parseJSON(data)['mensagem'];
                             var sucesso=$.parseJSON(data)['sucesso'];

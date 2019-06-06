@@ -9,9 +9,10 @@ class Papel extends Model
 {
     use SoftDeletes;
     protected $table='papel';
-    protected $fillable = ['nome','descricao'];
+    protected $fillable = ['nome','descricao','created_at','deleted_at'];
     public $timestamps=false;
-
+    protected $dates = ['data'=> 'm-d-Y'];
+   
     public function atuacoes()
     {
         return $this->hasMany('Modules\controleUsuario\Entities\Atuacao');
