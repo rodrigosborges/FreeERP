@@ -33,10 +33,7 @@ Route::prefix('controleusuario')->group(function() {
     Route::post('/teste_bt', ['as'=>'teste_bt', 'uses'=>'UsuarioController@buscar']);
     Route::delete('/delete', ['as'=>'usuario.delete','uses'=> 'UsuarioController@destroy'] );
     Route::post('/delete', ['as'=>'usuario.delete','uses'=> 'UsuarioController@recovery'] );
-Route::get('/teste', function(){
-      $data = ['usuario' => $user, 'url' => '/dashboard', 'title' => 'Pagina inicial'];
-    return view('controleusuario::dashboard');
-});
+    Route::get('/sair','UsuarioController@logoff');
 
 /*ROTAS DE PAPÉIS (PAPEL)*/
 

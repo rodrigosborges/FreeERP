@@ -30,7 +30,7 @@ class PapelController extends Controller
                 ['icon' => 'people', 'tool' => 'Usuarios', 'route' => '/controleusuario/cadastrar'],
                 ['icon' => 'event_note', 'tool' => 'Papéis', 'route' => '/controleusuario/papel'],
                  ['icon' => 'list_alt', 'tool' => 'Relatórios', 'route' => '/controleusuario/consulta'],
-                ['icon' => 'toggle_off', 'tool' => 'Sair', 'route' => '#'],
+                ['icon' => 'toggle_off', 'tool' => 'Sair', 'route' => '/controleusuario/sair'],
             ];
                 break;
             default:
