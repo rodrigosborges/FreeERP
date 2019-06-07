@@ -73,6 +73,7 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Descrição</th>
+                <th scope="col">Categoria</th>                
                 <th scope="col">Data de Pagamento</th>
                 <th scope="col">Forma de Pagamento</th>
                 <th scope="col">Valor</th>
@@ -87,13 +88,14 @@
            @foreach ($pagamentos as $pagamento)
             <tr>
                     <td>{{$pagamento->nome()}}</td>
+                    <td>{{$pagamento->categoria()}}</td>                    
                     <td>{{$pagamento->data_pagamento}}</td>
                     <td>{{$pagamento->formapg()}}</td>
                     <td>{{$pagamento->valor}}</td>
                     <td>{{$pagamento->valorPrevisto()}}</td>
                     <td>{{$pagamento->data_recebimento}}</td>
                     <td>{{$pagamento->status_pagamento}}</td>
-                    <td><a href="" ><i class='material-icons'>search</i></a> <a href="{{Route('conta.deletar', $pagamento->conta_receber_id)}}"><i class='material-icons'>delete</i></a></td>
+                    <td><a href="{{route('conta.editar', $pagamento->conta_receber_id)}}" ><i class='material-icons'>search</i></a> <a href="{{Route('conta.deletar', $pagamento->conta_receber_id)}}"><i class='material-icons'>delete</i></a></td>
             </tr>
             @endforeach
         </tbody>

@@ -19,29 +19,72 @@ class ContaAReceberController extends Controller
      */
      public function index(){
             $data = Carbon::now();
-            $inicio = $data->year.'-'.$data->month.'-01';
-            $fim = $data->year.'-'.$data->month.'-31';
-            $range = [$inicio,$fim];
-            $pagamentos = PagamentoModel::whereBetween('data_pagamento', $range)->where('ativo', 1)->get();
+            $pagamentos = PagamentoModel::whereMonth('data_pagamento', $data->month)->whereYear('data_pagamento', $data->year)->where('ativo', 1)->get();
             $contas = ContaAReceberModel::where('ativo', 1)->get();
             $categorias = CategoriaModel::where('ativo', 1)->get();
             $formapgs = FormaPagamentoModel::where('ativo', 1)->get();
             $total = $this->total();
-            return view('contaareceber::index',compact('pagamentos', 'contas', 'total', 'categorias', 'formapgs'));
+            return view('contaareceber::index',compact('pagamentos', 'contas', 'total', 'categorias', 'formapgs', 'data'));
       }
     
+    public function editar($id){
+        $conta = ContaAReceberModel::find($id);
+
+        $pagamento = PagamentoModel::where('conta_receber_id', $id)->get()->first();
+        $categorias = CategoriaModel::where('ativo', 1)->get();
+        $formapgs = FormaPagamentoModel::where('ativo', 1)->get();
+
+        return view('contaareceber::editarConta',compact('conta', 'pagamento','categorias', 'formapgs'));
+    }
+
+    public function salvar(Request $req, $id){
+        $dados = $req->all();
+
+        $conta = ContaAReceberModel::find($id);
+        $conta->descricao = $dados['descricao'];
+        $conta->valor = $dados['valor'];
+        $conta->categoria_receber_id = $dados['categoria_receber_id'];
+
+        $pagamento = PagamentoModel::where('conta_receber_id', $conta->id)->first();
+        $pagamento->valor = $conta->valor;
+        $pagamento->data_pagamento = $dados['data_pagamento'];
+        $forma_pagamento_id = $dados['forma_pagamento_id'];
+        if($dados['status_pagamento'] == 'on'){
+            $pagamento->status_pagamento = "Pago";    
+        }else{
+            $pagamento->status_pagamento = "Aguardando";   
+        }
+        $pagamento->forma_pagamento_id = $dados['forma_pagamento_id'];
+        $formapg = FormaPagamentoModel::find($dados['forma_pagamento_id']);
+        $pagamento->taxa = $formapg->taxa;
+        $pagamento->data_recebimento = date('Y-m-d', strtotime($dados['data_pagamento']. ' + '. $formapg->prazo_recebimento .'days'));
+
+
+        $conta->update();
+        $pagamento->update();
+
+        return redirect()->route('contaareceber');
+    }
+
     public function total(){
         $data = Carbon::now();
-        $inicio = $data->year.'-'.$data->month.'-01';
-        $fim = $data->year.'-'.$data->month.'-31';
-        $range = [$inicio,$fim];
         $total = 0;
-        $pagamentos = PagamentoModel::whereBetween('data_pagamento', $range)->where('ativo', 1)->get();
+        $pagamentos = PagamentoModel::whereMonth('data_pagamento', $data->month)->whereYear('data_pagamento', $data->year)->where('ativo', 1)->get();
         foreach($pagamentos as $pagamento){
-            $total = $total + $pagamento->valor;
+            $total = $total + ($pagamento->valor-($pagamento->valor*$pagamento->taxa/100));
         }
         return $total;
     }
+
+    public function totalFiltro($range){
+        $data = Carbon::now();
+        $total = 0;
+        $pagamentos = PagamentoModel::whereBetween('data_pagamento', $range)->where('ativo', 1)->get();
+        foreach($pagamentos as $pagamento){
+            $total = $total + ($pagamento->valor-($pagamento->valor*$pagamento->taxa/100));
+        }
+        return $total;
+    }    
     
     public function filtrar(Request $req){
         $dados = $req->all();
@@ -51,7 +94,7 @@ class ContaAReceberController extends Controller
             $contas = ContaAReceberModel::where('ativo', 1)->get();
             $categorias = CategoriaModel::where('ativo', 1)->get();
             $formapgs = FormaPagamentoModel::where('ativo', 1)->get();
-            $total = $this->total();
+            $total = $this->totalFiltro($range);
             return view('contaareceber::index',compact('pagamentos', 'contas', 'total', 'categorias', 'formapgs'));        
     }
     
@@ -82,8 +125,6 @@ class ContaAReceberController extends Controller
   
         return $this->index();
     }    
-    
-    
     
     public function deletar($id){
         $conta = ContaAReceberModel::find($id);

@@ -24,6 +24,10 @@ Route::prefix('contaareceber')->group(function() {
     Route::post('cadastrar', ['as' => 'conta.cadastrar' , 'uses' => 'ContaAReceberController@cadastrarConta']);
     Route::get('deletar={id}', ['as' => 'conta.deletar', 'uses' => 'ContaAReceberController@deletar']);
     Route::post('filtrar', ['as' => 'conta.filtrar', 'uses' => 'ContaAReceberController@filtrar']);
+
+    /* EDICAO DE CONTAS */
+    Route::get('editar/{id}', ['as' => 'conta.editar', 'uses' => 'ContaAReceberController@editar']);    
+    Route::post('editar/{id}/salvar', ['as' => 'conta.salvar', 'uses' => 'ContaAReceberController@salvar']);    
     
     /* ROTAS FORMAS DE PAGAMENTO */
     Route::get('formapagamento',['as' => 'formapagamento.index', 'uses' => 'FormaPagamentoController@index']);

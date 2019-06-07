@@ -18,7 +18,7 @@
                 </i>
             </div>
                 <input type="date" class="form-control" placeholder="Pagamento" aria-label="dataVencimento"
-                aria-describedby="basic-addon1", name="data_inicial">
+                aria-describedby="basic-addon1", name="data_inicial" value ="">
         </div>
             </div>
         Data final
@@ -30,7 +30,7 @@
                 </i>
             </div>
                 <input type="date" class="form-control" placeholder="Pagamento" aria-label="dataVencimento"
-                aria-describedby="basic-addon1", name="data_final">
+                aria-describedby="basic-addon1", name="data_final" value ="">
         </div>
             </div>
         <div class="col-md-1">

@@ -20,6 +20,12 @@ class PagamentoModel extends Model
         $conta = ContaAReceberModel::where('id', $this->conta_receber_id)->first();
         return $conta["descricao"];
     }
+
+    public function categoria(){
+        $conta = ContaAReceberModel::where('id', $this->conta_receber_id)->first();
+        $categoria = CategoriaModel::where('id', $conta->categoria_receber_id)->first();
+        return $categoria->nome;
+    }
     
     public function formapg(){
         $formapg = FormaPagamentoModel::where('id', $this->forma_pagamento_id)->get()->first();
