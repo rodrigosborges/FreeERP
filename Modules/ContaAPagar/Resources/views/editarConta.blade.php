@@ -5,12 +5,13 @@
     <div class="card ">
         <div class="card-header ">
             <h5>Editar conta</h5>
-            <form action="{{route('conta.salvar')}}" method="POST">
+            <form action="{{route('conta.salvar', $conta->id)}}" method="POST">
                 {{csrf_field()}}
                 @include('contaapagar::_formEditarConta')
                 
             </form>
         </div>
+
         <div class="card-body">
         <div class="table-responsive">
             <table class="table table-striped">
@@ -19,7 +20,10 @@
                         <th scope="col">Descrição</th>
                         <th scope="col">Data de Vencimento</th>
                         <th scope="col">Data de Pagamento</th>
+                        <th scope="col">Multa</th>
+                        <th scope="col">Juros</th>
                         <th scope="col">Valor</th>
+                        <th scope="col">Total</th>
                         <th scope="col">Status</th>
                         <th scope="col">Ações</th>
                         
@@ -31,11 +35,14 @@
                         <td>{{$pagamento->nome()}}</td>
                         <td>{{$pagamento->data_vencimento}}</td>
                         <td>{{$pagamento->data_pagamento}}</td>
-                        <td>{{$pagamento->valor}}</td>
+                        <td>R${{$pagamento->juros}}</td>
+                        <td>R${{$pagamento->multa}}</td>
+                        <td>R${{$pagamento->valor}}</td>
+                        <td>R${{($pagamento->juros + $pagamento->multa + $pagamento->valor)}}</td>
                         <td>{{$pagamento->status_pagamento}}</td>
                         <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class='material-icons'>search</i></button> 
-                        <a href="{{Route('conta.deletar', $pagamento->conta_pagar_id)}}"><i class='material-icons'>delete</i></a>
+                        <a href="{{Route('pagamento.deletar', $pagamento->id)}}"><i class='material-icons'>delete</i></a>
                         
                         </td>
 
@@ -68,8 +75,9 @@
 
                 @endforeach
                 </tbody>
-            </table>
+            </table>            
         </div>
+
         </div>
     </div>
     

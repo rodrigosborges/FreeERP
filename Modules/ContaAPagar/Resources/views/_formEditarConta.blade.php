@@ -15,7 +15,7 @@
     <div class="form-group col-md-4">
         <select id="inputState" class="form-control" name="categoria_pagar_id">
             @foreach ($categorias as $categoria)
-        <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+        <option value="{{$categoria->id}}" {{ isset($conta->categoria_pagar_id) && $categoria->id == $conta->categoria_pagar_id ? 'selected' : '' }}>{{$categoria->nome}}</option>
             @endforeach
         </select>
     </div>

@@ -68,7 +68,7 @@
     Conta Paga?
         <div class="form-check form-group">
             <input name="status_pagamento" value="0" type="hidden" >
-            <input class="form-check-input" type="checkbox" name="status_pagamento" id="gridCheck1" {{isset($pagamento->status_pagamento) && $pagamento->status_pagamento == 'Pago' ? 'checked' : ''}} >
+            <input class="form-check-input" type="checkbox" name="status_pagamento" id="gridCheck1" {{isset($pagamento->status_pagamento) && $pagamento->status_pagamento == 'Pago' ? 'checked' : ''}}>
             <label class="form-check-label" for="gridCheck1">
             
             </label>

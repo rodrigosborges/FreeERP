@@ -23,20 +23,39 @@ class PagamentoController extends Controller
     {
         return view('contaapagar::index');
     }
+
+    public function deletar($id){
+
+        $pagamento = PagamentoModel::find($id);
+        $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
+        $pagamento->ativo = false;
+        $pagamento->update();
+
+        $categorias = CategoriaModel::where('ativo', 1)->get();
+        $pagamentos = PagamentoModel::where('conta_pagar_id', $pagamento->conta_pagar_id)->where('ativo', 1)->get();
+        $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
+        $n_parcelas = PagamentoModel::where('ativo', 1)->where('conta_pagar_id', $conta->id)->count();
+        $conta->parcelas = $n_parcelas;
+        $conta->update();
+
+        $id = $conta->id;        
+        
+        return redirect()->route('conta.editar', compact('id', 'pagamentos', 'categorias', 'conta'));
+    }
     public function salvar(Request $req, $id) {
 
         $dados = $req->all();
-
         if($dados['status_pagamento'] == 'on'){
             $dados['status_pagamento'] = "Pago";    
         }else{
             $dados['status_pagamento'] = "Aguardando";   
         }
         $pagamento = PagamentoModel::find($id)->update($dados);
-
+        $pagamento = PagamentoModel::find($id);
         $categorias = CategoriaModel::where('ativo', 1)->get();
-        $pagamentos = PagamentoModel::where('conta_pagar_id', $id)->get();
-        $conta = ContaAPagarModel::find($id);
+        $pagamentos = PagamentoModel::where('conta_pagar_id', $pagamento->conta_pagar_id)->where('ativo', 1)->get();
+        $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
+        $id = $conta->id;
 
         return redirect()->route('conta.editar', compact('id','pagamentos','categorias','conta'));
     }
