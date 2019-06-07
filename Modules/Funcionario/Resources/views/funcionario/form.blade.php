@@ -153,8 +153,8 @@
                                 </div>
                                 <select name="docs_outros[{{$key}}][tipo_documento_id]" class="form-control documentos" {{isset($documento['tipo_documento_id']) ? '' : 'disabled'}}>
                                     <option value="">Selecione</option>
-                                    @foreach($data['tipo_documentos']) as $tipo)
-                                        <option value="{{$tipo['id']}}" {{ $documento['tipo_documento_id'] == $tipo['id'] ? 'selected' : '' }}>{{$tipo->nome}}</option>
+                                    @foreach($data['tipo_documentos'] as $tipo)
+                                        <option value="{{$tipo->id}}" {{ isset($documento['tipo_documento_id']) && $documento['tipo_documento_id'] == $tipo['id'] ? 'selected' : '' }}>{{$tipo->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -378,10 +378,6 @@
             </div>
         </div>
 
-        <?php
-            // $telefones = old('telefones') !== null ? old('telefones') : ($data['model'] ? $data['model']->contato->telefones : ['vazio']);
-        ?>
-
         <strong><h6 class="mt-5 mb-3">Contato</h6></strong>
         <hr>
         <div class="row">
@@ -418,14 +414,14 @@
                                                 <i class="material-icons">phone</i>
                                             </span>
                                         </div>
-                                        <select required name="telefones[{{$key}}][tipo_id]" class="form-control">
+                                        <select required name="telefones[{{$key}}][tipo_telefone_id]" class="form-control">
                                             <option value="">Selecione</option>
                                             @foreach($data['tipos_telefone'] as $item)
-                                                <option value="{{ $item->id }}" {{ isset($telefone['tipo_id']) && $telefone['tipo_id'] == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
+                                                <option value="{{ $item->id }}" {{ isset($telefone['tipo_telefone_id']) && $telefone['tipo_telefone_id'] == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <span class="errors"> {{ $errors->first('telefones.tipo') }}</span>
+                                    <span class="errors"> {{ $errors->first('telefones.tipo_telefone_id') }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">

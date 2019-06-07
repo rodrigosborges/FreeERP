@@ -57,7 +57,8 @@ class FuncionarioController extends Controller{
     }
 
     public function store(CreateFuncionario $request){
-		DB::beginTransaction();
+        DB::beginTransaction();
+
 		try{
 
             $funcionario = Funcionario::create($request->input('funcionario'));
@@ -127,7 +128,7 @@ class FuncionarioController extends Controller{
                 'modelo'            => 'Endereco'
             ]);
 
-            $email = Email::create($request->email);
+            $email = Email::create(['email' => $request->email]);
 
             Relacao::create([
                 'tabela_origem'     => 'funcionario',
