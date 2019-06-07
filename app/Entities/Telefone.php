@@ -6,7 +6,7 @@ class Telefone extends Model{
 
     protected $table = 'telefone';
 
-    protected $fillable = ['numero', 'tipo_id'];
+    protected $fillable = ['numero', 'tipo_telefone_id'];
 
     public $timestamps = false;
     
