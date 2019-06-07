@@ -16,7 +16,6 @@ class PagamentoMigrate extends Migration
     {
         Schema::create('pagamento_conta', function (Blueprint $table) {
         $table->increments('id');
-        $table->integer('numero_parcela');
         $table->integer('conta_pagar_id')->unsigned();
         $table->foreign('conta_pagar_id')->references('id')->on('conta_pagar');
         $table->date('data_vencimento');

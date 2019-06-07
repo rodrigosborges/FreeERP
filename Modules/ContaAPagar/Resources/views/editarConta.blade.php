@@ -2,6 +2,30 @@
 
 
 @section('content')
+<div class="modal fade modalpagamento" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Nova parcela</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('pagamento.adicionar', $conta->id)}}" method="POST">
+                    {{csrf_field()}}
+                    @include('contaapagar::_formPagamento')
+
+                    <div class="form-group col-md-2">
+                        <button class="btn btn-primary">Salvar</button>
+                    </div>
+                    
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
     <div class="card ">
         <div class="card-header ">
             <h5>Editar conta</h5>
@@ -41,13 +65,13 @@
                         <td>R${{($pagamento->juros + $pagamento->multa + $pagamento->valor)}}</td>
                         <td>{{$pagamento->status_pagamento}}</td>
                         <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class='material-icons'>search</i></button> 
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg{{$pagamento->id}}"><i class='material-icons'>search</i></button> 
                         <a href="{{Route('pagamento.deletar', $pagamento->id)}}"><i class='material-icons'>delete</i></a>
                         
                         </td>
 
                         <!-- Modal do pagamento-->
-                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal fade bd-example-modal-lg{{$pagamento->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -59,7 +83,7 @@
                                     <div class="modal-body">
                                         <form action="{{route('pagamento.salvar',$pagamento->id)}}" method="POST">
                                             {{csrf_field()}}
-                                            @include('contaapagar::_formEditarPagamento')
+                                            @include('contaapagar::_formPagamento')
 
                                             <div class="form-group col-md-2">
                                                 <button class="btn btn-primary">Salvar</button>
@@ -77,11 +101,17 @@
                 </tbody>
             </table>            
         </div>
-
+        <div class="row">
+            <div class="col-12 text-right">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".modalpagamento">Adicionar pagamento</button>
+            </div>
+        </div>
+        
         </div>
     </div>
     
     
 
+    
 @stop
 

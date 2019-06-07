@@ -43,7 +43,7 @@
                 </i>
             </div>
             <input type="text" class="form-control" placeholder="1"
-                aria-describedby="basic-addon1" name="parcelas" value="{{ isset($conta->parcelas) ? $conta->parcelas : old('parcelas', '') }}">
+                aria-describedby="basic-addon1" name="parcelas" value="{{ isset($conta->parcelas) ? $conta->parcelas : old('parcelas', '') }}" readonly>
         </div>
     </div>
 

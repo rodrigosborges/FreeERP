@@ -59,6 +59,30 @@ class PagamentoController extends Controller
 
         return redirect()->route('conta.editar', compact('id','pagamentos','categorias','conta'));
     }
+    public function adicionar(Request $req, $id){
+
+        $dados = $req->all();
+        $pagamento = new PagamentoModel;
+        $pagamento->juros = $dados['juros'];
+        $pagamento->multa = $dados['multa'];
+        $pagamento->conta_pagar_id = $id;
+        $pagamento->data_vencimento = $dados['data_vencimento'];
+        $pagamento->data_pagamento = $dados['data_pagamento'];
+        if($dados['status_pagamento'] == 'on'){
+            $pagamento->status_pagamento = "Pago";    
+        }else{
+            $pagamento->status_pagamento = "Aguardando";   
+        }
+        $pagamento->valor = $dados['valor'];
+        $pagamento->save();
+        
+        $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
+        $n_parcelas = PagamentoModel::where('ativo', 1)->where('conta_pagar_id', $conta->id)->count();
+        $conta->parcelas = $n_parcelas;
+        $conta->update();
+
+        return redirect()->route('conta.editar', $id);
+    }
 
     /**
      * Show the form for creating a new resource.

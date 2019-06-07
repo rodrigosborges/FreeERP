@@ -8,7 +8,7 @@ use Modules\ContaAPagar\Entities\ContaAPagarModel;
 class PagamentoModel extends Model
 {
     public $table = 'pagamento_conta';
-    protected $fillable = ['id', 'numero_parcela', 'conta_pagar_id', 'data_vencimento', 'valor', 'data_pagamento', 'juros','multa','status_pagamento', 'ativo'];
+    protected $fillable = ['id', 'conta_pagar_id', 'data_vencimento', 'valor', 'data_pagamento', 'juros','multa','status_pagamento', 'ativo'];
 
     
     public function id(){

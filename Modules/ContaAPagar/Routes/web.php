@@ -32,7 +32,8 @@ Route::prefix('contaapagar')->group(function() {
     
     Route::post('filtrar', ['as' => 'conta.filtrar', 'uses' => 'ContaAPagarController@filtrar']);
 
-    Route::get('deletar_pagamento={id}', ['as' => 'pagamento.deletar', 'uses' => 'PagamentoController@deletar']);    
+    Route::get('deletar_pagamento={id}', ['as' => 'pagamento.deletar', 'uses' => 'PagamentoController@deletar']);
+    Route::post('adicionar_pagamento/{id}', ['as' => 'pagamento.adicionar', 'uses' => 'PagamentoController@adicionar']);    
 });
 
 Route::prefix('novaconta')->group(function() {

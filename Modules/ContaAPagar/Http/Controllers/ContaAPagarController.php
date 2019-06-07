@@ -77,7 +77,7 @@ class ContaAPagarController extends Controller
         for ($i=0; $i < $dados['parcelas'] ; $i++) {
             if($i >= 1){
                 $pagamento = new PagamentoModel;
-                $pagamento->numero_parcela = $i;
+                
                 $pagamento->juros = $dados['juros'];
                 $pagamento->multa = $dados['multa'];
                 $pagamento->conta_pagar_id = $conta_pagar_id->id;
@@ -88,7 +88,7 @@ class ContaAPagarController extends Controller
                 $pagamento->save();                
             }else{
                 $pagamento = new PagamentoModel;
-                $pagamento->numero_parcela = $i;
+          
                 $pagamento->juros = $dados['juros'];
                 $pagamento->multa = $dados['multa'];
                 $pagamento->conta_pagar_id = $conta_pagar_id->id;
