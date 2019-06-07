@@ -25,13 +25,13 @@ class PapelController extends Controller
 
         switch ($papel) {
             case 'administrador':
-                $menu = [
-                    ['icon' => 'person', 'tool' => 'Autenticar', 'route' => '/controleusuario/autenticar'],
-                    ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/controleusuario/cadastrar'],
-                    ['icon' => 'search', 'tool' => 'Buscar', 'route' => '/controleusuario/consulta'],
-                    ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-                    ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-                ];
+            $menu = [
+                ['icon' => 'vpn_key', 'tool' => 'Login', 'route' => '/controleusuario/autenticar'],
+                ['icon' => 'people', 'tool' => 'Usuarios', 'route' => '/controleusuario/cadastrar'],
+                ['icon' => 'event_note', 'tool' => 'Papéis', 'route' => '/controleusuario/papel'],
+                 ['icon' => 'list_alt', 'tool' => 'Relatórios', 'route' => '/controleusuario/consulta'],
+                ['icon' => 'toggle_off', 'tool' => 'Sair', 'route' => '#'],
+            ];
                 break;
             default:
                 $menu = [];
