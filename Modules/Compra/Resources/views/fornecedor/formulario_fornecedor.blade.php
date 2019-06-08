@@ -11,13 +11,13 @@
         <div class="form-group">
             <label for="nome" class="control-label">Nome do Fornecedor</label>
             <input type="text" required name="fornecedor[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', "") }}">
-            <label class="errors"> {{ $errors->first('nome') }} </label>
+            <label class="errors"> {{ $errors->first('fornecedor.nome') }} </label>
         </div>
 
         <div class="form-group">
             <label for="email" class="control-label">E-mail</label>
             <input type="email" required name="email[email]" id="email" class="form-control" value="{{ $data['model'] ? $data['model']->email : old('email', "") }}">
-            <label class="errors"> {{ $errors->first('email') }} </label>
+            <label class="errors"> {{ $errors->first('email.email') }} </label>
         </div>
 
         <h2>Endereço</h2>
