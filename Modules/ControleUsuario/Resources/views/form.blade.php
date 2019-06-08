@@ -54,12 +54,83 @@
                 <p class="text-primary d-flex align-items-center">
                     <i class="material-icons mr-2">edit</i> Perfil do usuário
                 </p>
-                <p class="text-muted d-flex align-items-center">
+                <a href="#" class="text-muted d-flex align-items-center" data-toggle="modal"data-target="#formPapel">
                     <i class="material-icons mr-2">timer</i> Módulos e permissões
-                </p>
+                </a>
             </div>
         </div>
     </div>
     <!-- agora vai -->
 </div>
+@endsection
+
+<!-- MODAL -->
+<div id="formPapel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> <i class="material-icons mr-2">timer</i> Módulos e permissões</h4>
+                <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+        <div >
+         
+        </div>
+        <div class="modal-body">
+         <div class="conteudo" >
+         <a href="#" id="addPapel" >
+                    <i class=" text-center material-icons mr-2">note_add</i> Adicionar Papel
+                </a>
+         </div>
+      
+         <div class="form-group " id="divModulo">
+         <label for="selectModulo"><span><a class="material-icons" data-toggle="voltar" data-placement="top">
+            keyboard_backspace</a ></span>
+            Módulo de atuação
+        </label>
+        <select class="form-control" id="selectModulo">
+            <option selected>Selecione</option>
+            <option>Compras</option>
+            <option>Funcionários</option>
+            <option>Frota</option>
+        </select>
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio" >Definir validade
+            </label>
+        </div>
+
+        <div class="form-check-inline">
+            <label class="form-check-label" display="none">
+                <input type="radio" class="form-check-input" name="optradio" checked>Tempo indeterminado
+            </label>
+        </div>
+        <div class="form-group"><input class="form-control" type="date"></div>
+
+    </div>
+         
+        </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="submit" id="btnDeletePapel">
+                    <span class="glyphicon glyphicon-plus"></span>Excluir
+                </button>
+                <button class="btn btn-info" type="button" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remobe"></span>Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@section('js')
+<script>
+$(document).ready(function(){
+$('#divModulo').hide();
+$('#addPapel').click(function(){
+ 
+    $('#addPapel').hide();
+    $('#divModulo').fadeIn(150);
+    
+})
+});
+
+</script>
 @endsection
