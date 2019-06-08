@@ -5,7 +5,7 @@ namespace Modules\Compra\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Entities\{Relacao,Endereco, Email, Telefone};
+use App\Entities\{Relacao,Endereco, Email, Telefone, TipoTelefone, Cidade, Estado};
 use Modules\Compra\Entities\{Fornecedor};
 
 
@@ -36,7 +36,11 @@ class FornecedorController extends Controller
 
         $data = [
 			'fornecedor'		=> Fornecedor::all(),
-			'title'				=> "Lista de Funcionários",
+            'title'				=> "Lista de Funcionários",
+            'telefones'         => [new Telefone],
+            'tipos_telefone'    => TipoTelefone::all(),
+            'estados'           => Estado::all(),
+            'cidades'           => Cidade::all(),
 		]; 
 			
 	    return view('compra::fornecedor.fornecedor', compact('data','moduleInfo','menu'));

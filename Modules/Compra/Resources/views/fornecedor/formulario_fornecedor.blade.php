@@ -20,49 +20,119 @@
             <label class="errors"> {{ $errors->first('email.email') }} </label>
         </div>
 
-        <h2>Endereço</h2>
-
-        <div class="form-group">
-            <label for="logradouro" class="control-label">Logradouro</label>
-            <input type="text" required name="endereco[logradouro]" id="logradouro" class="form-control" value="{{ $data['model'] ? $data['model']->logradouro : old('logradouro', "") }}">
-            <label class="errors"> {{ $errors->first('logradouro') }} </label>
+        <strong><h6 class="mt-5 mb-3">Endereço</h6></strong>
+        <hr>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="cep" class="control-label">CEP</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ old('endereco.cep', $data['model'] ? $data['model']->endereco()->cep : '') }}">
+                    </div>
+                    <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="uf" class="control-label">UF</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <select name="endereco[estado_id]" id="estado_id" class="form-control">
+                            <option value="">Selecione</option>
+                            @foreach($data['estados'] as $estado))
+                                <option value="{{ $estado->id }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco()->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <span class="errors"> {{ $errors->first('endereco.uf') }} </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="cidade" class="control-label">Cidade</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <select name="endereco[cidade_id]" id="cidade_id" class="form-control">
+                            <option value="">Selecione</option>
+                            @foreach($data['cidades'] as $cidade))
+                                <option value="{{ $cidade->id }}" {{ old('endereco.cidade_id', $data['model'] ? $data['model']->endereco()->cidade_id : '') == $cidade->id ? 'selected' : '' }}>{{ $cidade->nome }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <span class="errors"> {{ $errors->first('endereco.cidade_id') }} </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="bairro" class="control-label">Bairro</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control" value="{{ old('endereco.bairro', $data['model'] ? $data['model']->endereco()->bairro : '') }}">
+                    </div>
+                    <span class="errors"> {{ $errors->first('endereco.bairro') }} </span>
+                </div>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="numero" class="control-label">Número</label>
-            <input type="text" required name="endereco[numero]" id="numero" class="form-control" value="{{ $data['model'] ? $data['model']->numero : old('numero', "") }}">
-            <label class="errors"> {{ $errors->first('numero') }} </label>
-        </div>
-
-        <div class="form-group">
-            <label for="bairro" class="control-label">Bairro</label>
-            <input type="text" required name="endereco[bairro]" id="bairro" class="form-control" value="{{ $data['model'] ? $data['model']->bairro : old('bairro', "") }}">
-            <label class="errors"> {{ $errors->first('bairro') }} </label>
-        </div>
-
-
-        <div class="form-group">
-            <label for="cidade" class="control-label">Cidade</label>
-            <input type="text" required name="endereco[cidade]" id="cidade" class="form-control" value="{{ $data['model'] ? $data['model']->cidade : old('cidade', "") }}">
-            <label class="errors"> {{ $errors->first('cidade') }} </label>
-        </div>
-
-        <div class="form-group">
-            <label for="uf" class="control-label">UF</label>
-            <input type="text" required name="endereco[uf]" id="uf" class="form-control" value="{{ $data['model'] ? $data['model']->uf : old('uf', "") }}">
-            <label class="errors"> {{ $errors->first('uf') }} </label>
-        </div>
-
-        <div class="form-group">
-            <label for="cep" class="control-label">CEP</label>
-            <input type="text" required name="endereco[cep]" id="cep" class="form-control" value="{{ $data['model'] ? $data['model']->cep : old('cep', "") }}">
-            <label class="errors"> {{ $errors->first('cep') }} </label>
-        </div>
-
-        <div class="form-group">
-            <label for="complemento" class="control-label">Complemento</label>
-            <input type="text" required name="endereco[complemento]" id="complemento" class="form-control" value="{{ $data['model'] ? $data['model']->complemento : old('complemento', "") }}">
-            <label class="errors"> {{ $errors->first('complemento') }} </label>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="logradouro" class="control-label">Logradouro</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control" value="{{ old('endereco.logradouro', $data['model'] ? $data['model']->endereco()->logradouro : '') }}">
+                    </div>
+                    <span class="errors"> {{ $errors->first('endereco.logradouro') }} </span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="numero" class="control-label">Número</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control" value="{{ old('endereco.numero', $data['model'] ? $data['model']->endereco()->numero : '') }}">
+                    </div>
+                    <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="complemento" class="control-label">Complemento</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">location_on</i>
+                            </span>
+                        </div>
+                        <input type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ old('endereco.complemento', $data['model'] ? $data['model']->endereco()->complemento : '') }}">
+                    </div>
+                    <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
+                </div>
+            </div>
         </div>
         
         <div class="form-group">
