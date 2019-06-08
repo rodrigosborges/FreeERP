@@ -62,10 +62,19 @@ class FuncionarioController extends Controller{
 		try{
 
             $funcionario = Funcionario::create($request->input('funcionario'));
+
             $funcionario->cargos()->attach(
                 $request['cargo']['cargo_id'],
                 ['data_entrada' => date('Y-m-d', strtotime($request['cargo']['data_entrada']))]
             );
+
+            Relacao::create([
+                'tabela_origem'     => 'funcionario',
+                'origem_id'         => $funcionario->id,
+                'tabela_destino'    => 'documento',
+                'destino_id'        => $request->funcionario['estado_civil_id'],
+                'modelo'            => 'EstadoCivil'
+            ]);
 
             foreach($request->documentos as $key => $documento) {
 
@@ -174,16 +183,20 @@ class FuncionarioController extends Controller{
         return $funcionario->endereco()->get();
 
         $data = [
-            "url" 	 	=> url("funcionario/funcionario/$id"),
-            'estado_civil' => EstadoCivil::all(),
-            'estados' => [],
-            'cidades' => [],
-            'cargos' => Cargo::all(),
-			"button" 	=> "Atualizar",
-            "model"		=> $funcionario,
-            'documentos' => $funcionario->documentos()->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg')->get(),
-            'telefones' => $funcionario->contato->telefones,
-            'title'		=> "Atualizar Funcionário"
+            "url" 	 	        => url("funcionario/funcionario/$id"),
+            "model"		        => $funcionario,
+            'tipo_documentos'   => TipoDocumento::all(),
+            'documentos'        => 
+                Documento::whereNotIn('tipo_documento_id', [1,2])->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$id)->where('relacao.tabela_origem','funcionario')->get()
+            ,
+            'tipos_telefone'    => TipoTelefone::all(),
+            'estado_civil'      => EstadoCivil::all(),
+            'telefones'         => $funcionario->telefones(),
+            'estados'           => Estado::all(),
+            'cidades'           => Cidade::where('estado_id', $funcionario->endereco()->cidade->estado_id)->get(),
+            'cargos'            => Cargo::all(),
+            'title'		        => "Atualizar Funcionário",
+			"button" 	        => "Atualizar",
         ];
 
 	    return view('funcionario::funcionario.form', compact('data'));
