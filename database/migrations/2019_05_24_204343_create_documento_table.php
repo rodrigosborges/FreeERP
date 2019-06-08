@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTelefoneTable extends Migration {
+class CreateDocumentoTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,12 @@ class CreateTelefoneTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('telefone', function(Blueprint $table)
+		Schema::create('documento', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('tipo_telefone_id')->index('fk_telefone_tipo_telefone1');
-			$table->string('numero', 11);
+			$table->string('numero', 50);
+            $table->string('comprovante', 100)->nullable();
+            $table->integer('tipo_documento_id')->index('fk_documento_tipo_documento');
 		});
 	}
 
@@ -28,7 +29,7 @@ class CreateTelefoneTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('telefone');
+		Schema::drop('documento');
 	}
 
 }
