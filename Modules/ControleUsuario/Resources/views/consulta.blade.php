@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="reset" class="btn btn-light d-flex">
+                            <button type="reset" class="btn btn-light d-flex" id="bt1">
                                 <i class="material-icons mr-2">brush</i> Limpar
                             </button>
                         </div>
@@ -95,7 +95,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($lista as $user)
+                            @foreach($lista as $user)
                             <tr>
 
                                 <th scope="row">{{ $user->id }}</th>
@@ -119,13 +119,16 @@
 
                                                     @if( is_null($user->deleted_at) )
                                                         @method('delete')
-                                                    @else
-                                                                                                                
                                                     @endif
 
-                                                    {!!Form::submit(
+                                          <input type="submit" class="id btn d-flex" style="visibility: hidden"
+                                                value="{{( is_null($user->deleted_at) )?'Desativar':'Reativar' }}" > 
+
+                                                    <!-- {!!Form::submit(
                                                         ( is_null($user->deleted_at) )?"Desativar":"Reativar"
-                                                    ,['class'=>'btn btn-danger d-flex'])!!}
+                                                    ,
+                                                    ['class'=>'btn btn-danger d-flex']
+                                                    )!!} -->
                                             {!!Form::close()!!}
 
                                         </div>
@@ -147,4 +150,28 @@
 
 </div> {{--  :Fecha a linha  --}}
 
+@endsection
+@section('js')
+<script>
+   $(document).ready(function(){
+    //$('.id').css("visibility","hidden");
+       
+       
+       $( ".id" ).each(function(index) {
+            
+            if( $( this ).val() == "Reativar" ){
+                $( this ).addClass("btn-info");
+            }else{
+                $( this ).addClass("btn-danger");
+            }
+            var hid = $( this ).css('visibility');
+            
+            if( hid == "hidden" ){
+                $(this).css("visibility","visible");
+            }
+        });
+
+       
+   });
+</script>
 @endsection
