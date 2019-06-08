@@ -11,7 +11,7 @@ class Relacao extends Model{
     public $timestamps = false;
 
     public function dados(){
-        return $this->belongsTo("app\Entities\\$this->modelo", 'destino_id');
+        return $this->belongsTo("App\Entities\\$this->modelo", 'destino_id');
     }
 
 }

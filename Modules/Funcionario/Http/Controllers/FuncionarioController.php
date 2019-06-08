@@ -57,8 +57,8 @@ class FuncionarioController extends Controller{
     }
 
     public function store(CreateFuncionario $request){
-        DB::beginTransaction();
 
+        DB::beginTransaction();
 		try{
 
             $funcionario = Funcionario::create($request->input('funcionario'));
@@ -170,6 +170,8 @@ class FuncionarioController extends Controller{
     public function edit($id){
 
         $funcionario = Funcionario::findOrFail($id);
+
+        return $funcionario->endereco()->get();
 
         $data = [
             "url" 	 	=> url("funcionario/funcionario/$id"),
