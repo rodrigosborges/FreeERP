@@ -4,9 +4,11 @@ namespace Modules\Compra\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Entities\{Relacao,Endereco, Email, Telefone, TipoTelefone, Cidade, Estado};
 use Modules\Compra\Entities\{Fornecedor};
+use Modules\Compra\Http\Requests\CreateFornecedor;
 
 
 
@@ -35,6 +37,7 @@ class FornecedorController extends Controller
         $menu = $this->menu;
 
         $data = [
+            'model'             => '',
 			'fornecedor'		=> Fornecedor::all(),
             'title'				=> "Lista de Funcionários",
             'telefones'         => [new Telefone],
