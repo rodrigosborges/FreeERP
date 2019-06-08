@@ -121,6 +121,7 @@ class UsuarioController extends Controller
 
             $_SESSION['id'] = $user->id;
             $_SESSION['email'] = $user->email;
+            $_SESSION['nome'] = $user->nome;
             $data = ['usuario' => $user, 'url' => '/dashboard', 'title' => 'Pagina inicial'];
             return view('controleusuario::dashboard', $this->dadosTemplate, compact('data'));
         } else {
