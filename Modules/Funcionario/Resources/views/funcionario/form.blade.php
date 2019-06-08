@@ -59,7 +59,7 @@
                         <select required name="funcionario[estado_civil_id]" class="form-control">
                             <option value="">Selecione</option>
                             @foreach($data['estado_civil'] as $item)
-                                <option value="{{ $item->id }}" {{ old('funcionario.estado_civil_id', $data['model']? $data['model']->estado_civil_id : '') == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
+                                <option value="{{ $item->id }}" {{ old('funcionario.estado_civil_id', $data['model']? $data['model']->estado_civil()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
                             @endforeach 
                         </select>
                     </div>
@@ -214,7 +214,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ old('endereco.cep', $data['model'] ? $data['model']->endereco->cep : '') }}">
+                        <input required type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ old('endereco.cep', $data['model'] ? $data['model']->endereco()->cep : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
                 </div>
@@ -231,7 +231,7 @@
                         <select name="endereco[estado_id]" id="estado_id" class="form-control">
                             <option value="">Selecione</option>
                             @foreach($data['estados'] as $estado))
-                                <option value="{{ $estado->id }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                                <option value="{{ $estado->id }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco()->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -250,7 +250,7 @@
                         <select name="endereco[cidade_id]" id="cidade_id" class="form-control">
                             <option value="">Selecione</option>
                             @foreach($data['cidades'] as $cidade))
-                                <option value="{{ $cidade->id }}" {{ old('endereco.cidade_id', $data['model'] ? $data['model']->endereco->cidade_id : '') == $cidade->id ? 'selected' : '' }}>{{ $cidade->nome }}</option>
+                                <option value="{{ $cidade->id }}" {{ old('endereco.cidade_id', $data['model'] ? $data['model']->endereco()->cidade_id : '') == $cidade->id ? 'selected' : '' }}>{{ $cidade->nome }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -266,7 +266,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control" value="{{ old('endereco.bairro', $data['model'] ? $data['model']->endereco->bairro : '') }}">
+                        <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control" value="{{ old('endereco.bairro', $data['model'] ? $data['model']->endereco()->bairro : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.bairro') }} </span>
                 </div>
@@ -282,7 +282,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control" value="{{ old('endereco.logradouro', $data['model'] ? $data['model']->endereco->logradouro : '') }}">
+                        <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control" value="{{ old('endereco.logradouro', $data['model'] ? $data['model']->endereco()->logradouro : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.logradouro') }} </span>
                 </div>
@@ -296,7 +296,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control" value="{{ old('endereco.numero', $data['model'] ? $data['model']->endereco->numero : '') }}">
+                        <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control" value="{{ old('endereco.numero', $data['model'] ? $data['model']->endereco()->numero : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
                 </div>
@@ -310,7 +310,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ old('endereco.complemento', $data['model'] ? $data['model']->endereco->complemento : '') }}">
+                        <input type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ old('endereco.complemento', $data['model'] ? $data['model']->endereco()->complemento : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
                 </div>
@@ -332,9 +332,9 @@
                         </thead>
                         <tbody>
                         @foreach($data['model']->cargos as $cargo)
-                        <tr>
+                        <tr>   
                             <td>{{ $cargo->nome }}</td>
-                            <td>{{ $cargo->data_entrada }}</td>
+                            <td>{{ $cargo->pivot->data_entrada }}</td>
                             <td>{{ ($cargo->data_saida) ? $cargo->data_saida : 'X' }}</td>
                         </tr>
                         @endforeach
@@ -390,7 +390,7 @@
                                 <i class="material-icons">email</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="E-mail" name="email" id="email" class="form-control" value="{{ old('email', $data['model'] ? $data['model']->email->email : '') }}">
+                        <input required type="text" placeholder="E-mail" name="email" id="email" class="form-control" value="{{ old('email', $data['model'] ? $data['model']->email()->email : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('email') }} </span>
                 </div>
@@ -442,33 +442,7 @@
             @endforeach
         </div>
 
-        <!-- <strong><h6 class="mt-4 mb-3">Dependentes</h6></strong>
-        <hr>
-        <div class="form-group row">
-            <div class="col-md-8">
-                <label for="nome_dependente" class="control-label">Nome</label>
-                <input type="text" placeholder="Nome" name="dependentes[nome]" id="nome_dependente" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('dependentes.nome', '') }}">
-                <label class="errors"> {{ $errors->first('dependentes.nome') }} </label>
-            </div>
-            <div class="col-md-4">
-                <label for="data_nascimento_dependente" class="control-label">Data de Nascimento</label>
-                <input type="text" placeholder="00/00/0000" name="dependentes[data_nascimento]" id="data_nascimento_dependente" class="form-control" value="{{ $data['model'] ? $data['model']->data_nascimento : old('dependentes.data_nascimento', '') }}">
-                <label class="errors"> {{ $errors->first('dependentes.data_nascimento') }} </label>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-4">
-                <label for="cpf_dependente" class="control-label">CPF</label>
-                <input type="text" placeholder="E-mail" name="dependentes[cpf]" id="cpf_dependente" class="form-control" value="{{ $data['model'] ? $data['model']->cpf : old('dependentes.cpf', '') }}">
-                <label class="errors"> {{ $errors->first('dependentes.cpf') }} </label>
-            </div>
-            <div class="col-md-6">
-                <label for="comprovante_dependente" class="control-label">Carteira de Vacinação</label>
-                <input type="file" placeholder="E-mail" name="dependentes[comprovante]" id="comprovante_dependente" class="form-control-file" value="{{ $data['model'] ? $data['model']->comprovante : old('dependentes.comprovante', '') }}">
-                <label class="errors"> {{ $errors->first('dependentes.comprovante') }} </label>
-            </div>
-        </div>
-        -->
+
     </form>
 @endsection
 

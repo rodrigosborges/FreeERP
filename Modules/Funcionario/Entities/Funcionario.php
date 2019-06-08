@@ -2,6 +2,7 @@
 namespace Modules\Funcionario\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Entities\{Documento};
 
 class Funcionario extends Model{
     use SoftDeletes;
@@ -21,7 +22,7 @@ class Funcionario extends Model{
     }
 
     public function estado_civil(){
-        return $this->estadoCivilRelacao->dados();
+        return $this->estadoCivilRelacao->dados;
     }
 
     public function documentosRelacao(){
@@ -38,7 +39,6 @@ class Funcionario extends Model{
         return $dados;
     }
 
-    //caso seja 1 pra 1
     public function enderecoRelacao(){
         return $this->hasOne('App\Entities\Relacao', 'origem_id')
             ->where('tabela_origem','funcionario')
@@ -46,23 +46,32 @@ class Funcionario extends Model{
     }
 
     public function endereco(){
-        return $this->enderecoRelacao->dados();
+        return $this->enderecoRelacao->dados;
     }
 
-    //caso seja 1 pra n
-    // public function enderecoRelacao(){
-    //     return $this->hasMany('Modules\Funcionario\Entities\Relacao', 'origem_id')
-    //         ->where('tabela_origem','funcionario')
-    //         ->where('tabela_destino','endereco');
-    // }
+    public function emailRelacao(){
+        return $this->hasOne('App\Entities\Relacao', 'origem_id')
+            ->where('tabela_origem','funcionario')
+            ->where('tabela_destino','email');
+    }
 
-    // public function endereco(){
-    //     $dados = [];
-    //     foreach($this->enderecoRelacao as $relacao){
-    //         $dados[] = $relacao->dados;
-    //     }
-    //     return $dados;
-    // }
+    public function email(){
+        return $this->emailRelacao->dados;
+    }
+
+    public function telefoneRelacao(){
+        return $this->hasMany('App\Entities\Relacao', 'origem_id')
+            ->where('tabela_origem','funcionario')
+            ->where('tabela_destino','telefone');
+    }
+
+    public function telefones(){
+        $dados = [];
+        foreach($this->telefoneRelacao as $relacao){
+            $dados[] = $relacao->dados;
+        }
+        return $dados;
+    }
 
     public function setDataNascimentoAttribute($val){
         $this->attributes['data_nascimento'] = implode('-', array_reverse(explode('/', $val))) ? : '';
@@ -81,11 +90,11 @@ class Funcionario extends Model{
     }
 
     public function cpf() {
-        return $this->documentos()->where('tipo', 'cpf');
+        return Documento::where('tipo_documento_id', 1)->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$this->id)->where('relacao.tabela_origem','funcionario')->first();
     }
 
     public function rg() {
-        return $this->documentos()->where('tipo', 'rg');
+        return Documento::where('tipo_documento_id', 2)->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$this->id)->where('relacao.tabela_origem','funcionario')->first();
     }
     
 }   
