@@ -6,7 +6,7 @@ class Exemplo extends Model{
 
     //caso seja 1 pra 1
     public function enderecoRelacao(){
-        return $this->hasOne('app\Entities\Relacao', 'origem_id')
+        return $this->hasOne('App\Entities\Relacao', 'origem_id')
             ->where('tabela_origem','exemplo')
             ->where('tabela_destino','endereco');
     }
@@ -17,7 +17,7 @@ class Exemplo extends Model{
 
     //caso seja 1 pra n
     // public function enderecoRelacao(){
-    //     return $this->hasMany('app\Entities\Relacao', 'origem_id')
+    //     return $this->hasMany('App\Entities\Relacao', 'origem_id')
     //         ->where('tabela_origem','exemplo')
     //         ->where('tabela_destino','endereco');
     // }
