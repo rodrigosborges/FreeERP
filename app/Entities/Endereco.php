@@ -11,7 +11,7 @@ class Endereco extends Model{
     public $timestamps = false;
 
     public function cidade(){
-        return $this->belongsTo('app\Entities\Cidade','cidade_id');
+        return $this->belongsTo('App\Entities\Cidade','cidade_id');
     }
 
     public function setCepAttribute($val) {

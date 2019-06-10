@@ -11,7 +11,7 @@ class Documento extends Model{
     public $timestamps = false;
 
     public function tipo_documento(){
-        return $this->belongsTo('app\Entities\TipoDocumento','tipo_documento_id');
+        return $this->belongsTo('App\Entities\TipoDocumento','tipo_documento_id');
     }
     
 }   
