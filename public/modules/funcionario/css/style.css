@@ -3,7 +3,7 @@
     white-space: nowrap;
 }
 
-div.error {
+div.error, .errors {
     color: red;
     font-weight: bold;
     font-size:small;
