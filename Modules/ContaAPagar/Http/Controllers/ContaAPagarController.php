@@ -12,17 +12,17 @@ use Carbon\Carbon;
     
 class ContaAPagarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
+    
      public function index(){
             $data = Carbon::now();
+            $dataFiltro = date("Y-m-d", strtotime($data));
+
+
             $pagamentos = PagamentoModel::whereMonth('data_vencimento', $data->month)->whereYear('data_vencimento', $data->year)->where('ativo', 1)->get();
             $contas = ContaAPagarModel::where('ativo', 1)->get();
             $categorias = CategoriaModel::where('ativo', 1)->get();
             $total = $this->total();
-            return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias'));
+            return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias', 'data'));
       }
     
     public function deletar($id){
@@ -52,6 +52,7 @@ class ContaAPagarController extends Controller
             $contas = ContaAPagarModel::where('ativo', 1)->get();
             $categorias = CategoriaModel::where('ativo', 1)->get();
             $total = $this->totalFiltro($range);
+
             return view('contaapagar::index',compact('pagamentos', 'contas', 'total', 'categorias'));        
     }
 
@@ -112,7 +113,7 @@ class ContaAPagarController extends Controller
             $categorias = CategoriaModel::where('ativo', 1)->get();        
         return view('contaapagar::novaConta', compact('categorias')); 
     }
-    public function status(){ /*tratar possivel variavel q vir e depois juntar com o filtro de categoria*/
+    public function status(){ /*    tratar possivel variavel q vir e depois juntar com o filtro de categoria    */
         
         $pagamentoss = PagamentoModel::where('ativo', 1)->get();
         $pagamentos = [];

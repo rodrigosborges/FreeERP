@@ -9,7 +9,7 @@
                 </i>
             </div>
                 <input type="date" class="form-control" placeholder="Pagamento" aria-label="dataVencimento"
-                aria-describedby="basic-addon1", name="data_pagamento" value="{{ isset($pagamento->data_pagamento) ? $pagamento->data_pagamento : old('data_pagamento', '10-10-2000') }}">
+                aria-describedby="basic-addon1", name="data_pagamento" value="{{ isset($pagamento->data_pagamento) ? $pagamento->data_pagamento : old('data_pagamento', '10-10-2000') }}" required>
         </div>
     </div>
 
@@ -22,7 +22,7 @@
                 </i>
             </div>
             <input type="date" class="form-control" placeholder="Vencimento" aria-label="dataVencimento"
-                aria-describedby="basic-addon1" name="data_vencimento" value="{{ isset($pagamento->data_vencimento) ? $pagamento->data_vencimento : old('data_vencimento', '10-10-2000') }}">
+                aria-describedby="basic-addon1" name="data_vencimento" value="{{ isset($pagamento->data_vencimento) ? $pagamento->data_vencimento : old('data_vencimento', '10-10-2000') }}" required>
         </div>
     </div>
     <div class="col-md-4">
@@ -33,8 +33,8 @@
                     attach_money
                 </i>
             </div>
-            <input type="text" class="form-control" placeholder="100.00"
-                aria-describedby="basic-addon1" name="valor" value="{{ isset($pagamento->valor) ? $pagamento->valor : old('valor', '') }}">
+            <input type="number" class="form-control" placeholder="100.00"
+                aria-describedby="basic-addon1" name="valor" min="1" step="any" value="{{ isset($pagamento->valor) ? $pagamento->valor : old('valor', '') }}" required>
         </div>
     </div>
 
@@ -46,8 +46,8 @@
                     attach_money
                 </i>
             </div>
-            <input type="text" class="form-control" placeholder="0.00"
-                aria-describedby="basic-addon1" name="juros" value="{{ isset($pagamento->juros) ? $pagamento->juros : old('juros', '') }}">
+            <input type="number" class="form-control" placeholder="0.00"
+                aria-describedby="basic-addon1" name="juros"  step="any" value="{{ isset($pagamento->juros) ? $pagamento->juros : old('juros', '') }}" required>
         </div>
     </div>
 
@@ -59,8 +59,8 @@
                     attach_money
                 </i>
             </div>
-            <input type="text" class="form-control" placeholder="0.00"
-                aria-describedby="basic-addon1" name="multa" value="{{ isset($pagamento->multa) ? $pagamento->multa : old('multa', '') }}">
+            <input type="number" class="form-control" placeholder="0.00"
+                aria-describedby="basic-addon1" name="multa"  step="any" value="{{ isset($pagamento->multa) ? $pagamento->multa : old('multa', '') }}" required>
         </div>
     </div>
 

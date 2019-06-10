@@ -2,7 +2,7 @@
         Categoria
 <div class="form-group col-md-3">
 
-            <select id="inputState" class="form-control" name="categoria_id">
+            <select id="inputState" class="form-control" name="categoria_id" required>
                 <option value="todas">Todas opções</option>
             @foreach ($categorias as $categoria)
                 <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
@@ -18,7 +18,7 @@
                 </i>
             </div>
                 <input type="date" class="form-control" placeholder="Pagamento" aria-label="dataVencimento"
-                aria-describedby="basic-addon1", name="data_inicial">
+                aria-describedby="basic-addon1", name="data_inicial" value="{{date('Y-m-01')}}" required>
         </div>
             </div>
         Data final
@@ -30,7 +30,7 @@
                 </i>
             </div>
                 <input type="date" class="form-control" placeholder="Pagamento" aria-label="dataVencimento"
-                aria-describedby="basic-addon1", name="data_final">
+                aria-describedby="basic-addon1", name="data_final" value="{{date('Y-m-t')}}" required>
         </div>
             </div>
         <div class="col-md-1">
