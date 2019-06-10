@@ -137,7 +137,12 @@
         
         <div class="form-group">
             <label for="tipo" class="control-label">Tipo de Telefone</label>
-            <input type="text" required name="telefone[tipo]" id="tipo" class="form-control" value="{{ $data['model'] ? $data['model']->tipo : old('tipo', "") }}">
+            <select required name="telefone[tipo_telefone_id]" class="form-control tipo_telefones">
+                <option value="">Selecione</option>
+                @foreach($data['tipos_telefone'] as $item)
+                    <option value="{{ $item->id }}" {{ isset($telefone['tipo_telefone_id']) && $telefone['tipo_telefone_id'] == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
+                @endforeach
+            </select>
             <label class="errors"> {{ $errors->first('tipo') }} </label>
         </div>
 
@@ -148,6 +153,15 @@
             <input type="text" required name="telefone[numero]" id="numero" class="form-control" value="{{ $data['model'] ? $data['model']->numero : old('numero', "") }}">
             <label class="errors"> {{ $errors->first('numero') }} </label>
         </div>
+
+
+
+
+
+
+
+
+
 
         <div class="form-group">
             <button type="submit" class="btn btn-success"> {{ $data['button'] }} </button> 

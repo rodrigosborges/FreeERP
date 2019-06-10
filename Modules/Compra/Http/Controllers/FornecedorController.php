@@ -54,10 +54,18 @@ class FornecedorController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-			"url" 	 	=> url('compra/fornecedor'),
+            "url" 	 	=> url('compra/fornecedor'),
 			"button" 	=> "Salvar",
 			"model"		=> null,
-			'title'		=> "Cadastrar Fornecedor"
+			'title'		=> "Cadastrar Fornecedor",
+            'model'             => '',
+			'fornecedor'		=> Fornecedor::all(),
+            'title'				=> "Lista de Funcionários",
+            'telefones'         => [new Telefone],
+            'tipos_telefone'    => TipoTelefone::all(),
+            'estados'           => Estado::all(),
+            'cidades'           => Cidade::all()
+			
 		];
 	    return view('compra::fornecedor.formulario_fornecedor', compact('data','moduleInfo','menu'));
 
@@ -99,7 +107,8 @@ class FornecedorController extends Controller
                 'destino_id'        => $telefone->id,
                 'modelo'            => 'Telefone'
             ]);
-
+                
+        
 
 
 			DB::commit();
