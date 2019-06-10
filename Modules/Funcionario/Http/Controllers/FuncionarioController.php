@@ -41,7 +41,7 @@ class FuncionarioController extends Controller{
         $data = [
             'url'               => url("funcionario/funcionario"),
             'model'             => '',
-            'tipo_documentos'   => TipoDocumento::all(),
+            'tipo_documentos'   => TipoDocumento::whereNotIn('id', [1,2])->get(),
             'documentos'        => [new Documento],
             'telefones'         => [new Telefone],
             'tipos_telefone'    => TipoTelefone::all(),
@@ -71,7 +71,7 @@ class FuncionarioController extends Controller{
             Relacao::create([
                 'tabela_origem'     => 'funcionario',
                 'origem_id'         => $funcionario->id,
-                'tabela_destino'    => 'documento',
+                'tabela_destino'    => 'estado_civil',
                 'destino_id'        => $request->funcionario['estado_civil_id'],
                 'modelo'            => 'EstadoCivil'
             ]);
@@ -180,12 +180,10 @@ class FuncionarioController extends Controller{
 
         $funcionario = Funcionario::findOrFail($id);
 
-        return $funcionario->endereco()->get();
-
         $data = [
             "url" 	 	        => url("funcionario/funcionario/$id"),
             "model"		        => $funcionario,
-            'tipo_documentos'   => TipoDocumento::all(),
+            'tipo_documentos'   => TipoDocumento::whereNotIn('id', [1,2])->get(),
             'documentos'        => 
                 Documento::whereNotIn('tipo_documento_id', [1,2])->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$id)->where('relacao.tabela_origem','funcionario')->get()
             ,
@@ -329,4 +327,17 @@ class FuncionarioController extends Controller{
         $funcionario = Funcionario::findOrFail($id);
         return view('funcionario::funcionario.ficha', compact('funcionario'));
     }
+
+    public function getCidades($uf) {
+
+        $estado = Estado::where('nome', $uf)->first();
+
+        $cidades = Cidade::where('estado_id', $estado->id)->select('id', 'nome')->get();
+
+        if(count($cidades) > 0){
+            return $cidades;
+        }          
+ 
+    }
+
 }

@@ -16,6 +16,7 @@ Route::prefix('funcionario')->group(function() {
     Route::get('cargo/search/{valor}', 'CargoController@search');
     Route::get('cargo/list/{status}', 'CargoController@list');
     Route::get('funcionario/ficha/{id}', 'FuncionarioController@ficha');
+    Route::get('get-cidades/{uf}', 'FuncionarioController@getCidades');
 
 
     Route::resource('funcionario', 'FuncionarioController');

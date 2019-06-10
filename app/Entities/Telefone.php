@@ -18,13 +18,15 @@ class Telefone extends Model{
         $this->attributes['numero'] = $val;
     }
 
-    public function getNumeroAttribute($val) {
-        return Self::formataTelefone($val);
-    }
+    //ESSE MUTATOR ESTÁ COLOCANDO MÁSCARA QUANDO O TELEFONE ESTÁ VAZIO
+    //
+    // public function getNumeroAttribute($val) {
+    //     return Self::formataTelefone($val);
+    // }
 
-    function formataTelefone($number){
-        $number="(".substr($number,0,2).") ".substr($number,2,-4)."-".substr($number,-4);
-        return $number;
-    }
+    // function formataTelefone($number){
+    //     $number="(".substr($number,0,2).") ".substr($number,2,-4)."-".substr($number,-4);
+    //     return $number;
+    // }
     
 }   

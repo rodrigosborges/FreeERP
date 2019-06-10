@@ -81,7 +81,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="data_admissao" class="control-label">Data de Admissão</label>
+                    <label for="data_f" class="control-label">Data de Admissão</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -109,9 +109,9 @@
                                 </span>
                             </div>
                             @if($data['model'])
-                                <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->cpf()->first()->id}}">
+                                <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->cpf()->id}}">
                             @endif
-                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{ old('documentos.cpf.numero', $data['model'] ? $data['model']->cpf()->first()->numero : '') }}">
+                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{ old('documentos.cpf.numero', $data['model'] ? $data['model']->cpf()->numero : '') }}">
                             <input required type="hidden" name="documentos[cpf][tipo_documento_id]" value="1">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.cpf.numero') }}</span>
@@ -127,9 +127,9 @@
                                 </span>
                             </div>
                             @if($data['model'])
-                                <input type="hidden" name="documentos[rg][id]" value="{{$data['model']->rg()->first()->id}}">
+                                <input type="hidden" name="documentos[rg][id]" value="{{$data['model']->rg()->id}}">
                             @endif
-                            <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="form-control" value="{{ old('documentos.rg.numero', $data['model'] ? $data['model']->rg()->first()->numero : '') }}">
+                            <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="form-control" value="{{ old('documentos.rg.numero', $data['model'] ? $data['model']->rg()->numero : '') }}">
                             <input required type="hidden" name="documentos[rg][tipo_documento_id]" value="2">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.rg.numero') }}</span>
@@ -228,7 +228,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <select name="endereco[estado_id]" id="estado_id" class="form-control">
+                        <select name="endereco[estado_id]" id="estado_id" class="form-control estados">
                             <option value="">Selecione</option>
                             @foreach($data['estados'] as $estado))
                                 <option value="{{ $estado->id }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco()->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
@@ -247,7 +247,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <select name="endereco[cidade_id]" id="cidade_id" class="form-control">
+                        <select name="endereco[cidade_id]" id="cidade_id" class="form-control cidades">
                             <option value="">Selecione</option>
                             @foreach($data['cidades'] as $cidade))
                                 <option value="{{ $cidade->id }}" {{ old('endereco.cidade_id', $data['model'] ? $data['model']->endereco()->cidade_id : '') == $cidade->id ? 'selected' : '' }}>{{ $cidade->nome }}</option>
@@ -282,7 +282,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control" value="{{ old('endereco.logradouro', $data['model'] ? $data['model']->endereco()->logradouro : '') }}">
+                        <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control logradouro" value="{{ old('endereco.logradouro', $data['model'] ? $data['model']->endereco()->logradouro : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.logradouro') }} </span>
                 </div>
@@ -414,8 +414,7 @@
                                                 <i class="material-icons">phone</i>
                                             </span>
                                         </div>
-                                        <select required name="telefones[{{$key}}][tipo_telefone_id]" class="form-control">
-                                            <option value="">Selecione</option>
+                                        <select required name="telefones[{{$key}}][tipo_telefone_id]" class="form-control tipo_telefones">
                                             @foreach($data['tipos_telefone'] as $item)
                                                 <option value="{{ $item->id }}" {{ isset($telefone['tipo_telefone_id']) && $telefone['tipo_telefone_id'] == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
                                             @endforeach
@@ -441,8 +440,6 @@
                 </div>
             @endforeach
         </div>
-
-
     </form>
 @endsection
 
@@ -453,6 +450,7 @@
 @endsection
 
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="{{Module::asset('funcionario:js/helpers.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/form.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/validations.js')}}"></script>

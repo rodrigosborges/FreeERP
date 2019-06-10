@@ -6,16 +6,19 @@ $('#form').validate({
             maxlength: 100
         },
         "funcionario[data_nascimento]":{
-            dataBR: true,
+            dataBR: true
         },
         "funcionario[data_admissao]":{
-            dataBR: true,
+            dataBR: true
         },
         "documentos[cpf][numero]": {
             cpf: true
         },
         "documentos[rg][numero]": {
             maxlength: 15
+        },
+        "cargo[data_entrada]": {
+            dataBR: true
         },
         "endereco[logradouro]": {
             maxlength: 200

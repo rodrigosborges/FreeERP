@@ -3,7 +3,7 @@ function clonar(target, local, indices) {
     $(target).last().clone().appendTo(local)
 
     if(indices) {
-        $(target).last().find('input').each(function() {
+        $(target).last().find('input, select').each(function() {
             var index = $(this).attr('name').split('[')[1].split(']')[0]
             $(this).attr('name', $(this).attr('name').replace(index, parseInt(index) + 1))
         })
