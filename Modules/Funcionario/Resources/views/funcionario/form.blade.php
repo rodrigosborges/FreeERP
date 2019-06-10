@@ -286,7 +286,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control" value="{{ old('endereco.bairro', $data['model'] ? $data['model']->endereco()->bairro : '') }}">
+                        <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control bairro" value="{{ old('endereco.bairro', $data['model'] ? $data['model']->endereco()->bairro : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.bairro') }} </span>
                 </div>
@@ -316,7 +316,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control" value="{{ old('endereco.numero', $data['model'] ? $data['model']->endereco()->numero : '') }}">
+                        <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control numero" value="{{ old('endereco.numero', $data['model'] ? $data['model']->endereco()->numero : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
                 </div>

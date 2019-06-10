@@ -164,9 +164,12 @@ $('#cep').blur(function(){
             type: 'GET',
             dataType: "json",
             success: function(dados){
+                console.log(dados)
                 //Atualiza os campos com os valores da consulta.
                 $(".logradouro").val(dados.logradouro);
+                $(".bairro").val(dados.bairro);
                 atualizarCamposEndereco(dados)
+                $(".numero").focus()
             }
         })
 

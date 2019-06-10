@@ -166,7 +166,9 @@ $('#cep').blur(function(){
             success: function(dados){
                 //Atualiza os campos com os valores da consulta.
                 $(".logradouro").val(dados.logradouro);
+                $(".bairro").val(dados.bairro);
                 atualizarCamposEndereco(dados)
+                $(".numero").focus()
             }
         })
 
