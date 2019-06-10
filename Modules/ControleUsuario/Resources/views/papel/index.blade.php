@@ -179,7 +179,7 @@
                         url:'papel/add',
                         data:{'_token':$('input[name=_token]').val(),
                         'nome':$('input[name=nome]').val(),
-                        'descricao':$('input[name=descricao]').val(),
+                        'descricao':desc,
                         },
                         success:function(data){
                             console.log('foi: '+ data);
