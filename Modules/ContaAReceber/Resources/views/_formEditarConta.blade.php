@@ -8,12 +8,12 @@
                 </i>
             </div>
             <input type="text" class="form-control" placeholder="Descrição" aria-label="descricao"
-                aria-describedby="basic-addon1" name="descricao" value="{{ isset($conta->descricao) ? $conta->descricao : old('descricao', '') }}">
+                aria-describedby="basic-addon1" name="descricao" value="{{ isset($conta->descricao) ? $conta->descricao : old('descricao', '') }}" required>
         </div>
     </div>
 
     <div class="form-group col-md-3">
-        <select id="inputState" class="form-control" name="forma_pagamento_id">
+        <select id="inputState" class="form-control" name="forma_pagamento_id" required>
             @foreach ($formapgs as $formapg)
         <option value="{{$formapg->id}}" {{ isset($pagamento->forma_pagamento_id) && $formapg->id == $pagamento->forma_pagamento_id ? 'selected' : '' }}>{{$formapg->nome}}</option>
             @endforeach
@@ -21,7 +21,7 @@
     </div>    
     
     <div class="form-group col-md-3">
-        <select id="inputState" class="form-control" name="categoria_receber_id">
+        <select id="inputState" class="form-control" name="categoria_receber_id" required>
             @foreach ($categorias as $categoria)
         <option value="{{$categoria->id}}" {{ isset($conta->categoria_receber_id) && $categoria->id == $conta->categoria_receber_id ? 'selected' : '' }}>{{$categoria->nome}}</option>
             @endforeach
@@ -37,7 +37,7 @@
                 </i>
             </div>
                 <input type="date" class="form-control" placeholder="Pagamento" aria-label="dataVencimento"
-                aria-describedby="basic-addon1", name="data_pagamento" value="{{$pagamento->data_pagamento}}">
+                aria-describedby="basic-addon1", name="data_pagamento" value="{{$pagamento->data_pagamento}}" required>
         </div>
     </div>
 
@@ -49,8 +49,8 @@
                     attach_money
                 </i>
             </div>
-            <input type="text" class="form-control" placeholder="100.00"
-                aria-describedby="basic-addon1" name="valor" value="{{ isset($conta->valor) ? $conta->valor : old('valor', '') }}">
+            <input type="number" class="form-control" min="1" step="any" placeholder="100.00"
+                aria-describedby="basic-addon1" name="valor" value="{{ isset($conta->valor) ? $conta->valor : old('valor', '') }}" required>
         </div>
     </div>
 
