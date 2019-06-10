@@ -65,7 +65,7 @@ class FuncionarioController extends Controller{
 
             $funcionario->cargos()->attach(
                 $request['cargo']['cargo_id'],
-                ['data_entrada' => date('Y-m-d', strtotime($request['cargo']['data_entrada']))]
+                ['data_entrada' => implode('-', array_reverse(explode('/', $request['funcionario']['data_admissao']))) ? : '']
             );
 
             Relacao::create([
@@ -79,8 +79,8 @@ class FuncionarioController extends Controller{
             foreach($request->documentos as $key => $documento) {
 
                 $newDoc = [
-                    'tipo_documento_id'   => $documento['tipo_documento_id'],
-                    'numero' => $documento['numero']
+                    'tipo_documento_id'     => $documento['tipo_documento_id'],
+                    'numero'                => $documento['numero']
                 ];
 
                 $doc = Documento::create($newDoc);
@@ -180,13 +180,13 @@ class FuncionarioController extends Controller{
 
         $funcionario = Funcionario::findOrFail($id);
 
+        $documentos = Documento::whereNotIn('tipo_documento_id', [1,2])->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$id)->where('relacao.tabela_origem','funcionario')->get();
+
         $data = [
             "url" 	 	        => url("funcionario/funcionario/$id"),
             "model"		        => $funcionario,
             'tipo_documentos'   => TipoDocumento::whereNotIn('id', [1,2])->get(),
-            'documentos'        => 
-                Documento::whereNotIn('tipo_documento_id', [1,2])->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$id)->where('relacao.tabela_origem','funcionario')->get()
-            ,
+            'documentos'        => count($documentos) ? $documentos : [new Documento],
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
             'telefones'         => $funcionario->telefones(),
@@ -209,18 +209,17 @@ class FuncionarioController extends Controller{
 
             $funcionario->update($request->input('funcionario'));
 
+            $funcionario->estadoCivilRelacao()->update(['destino_id' => $request->funcionario['estado_civil_id']]);
+
             foreach($request->documentos as $key => $documento) {
                 Documento::find($documento['id'])->update($documento);
             }
 
-            $funcionario->endereco->update($request->input('endereco'));
-
-            $contato = $funcionario->contato()->update($request->input('contato'));
+            $funcionario->endereco()->update($request->input('endereco'));
 
             //remoção de documentos
-            $documentos = $funcionario->documentos->where('tipo', '<>', 'cpf')->where('tipo', '<>', 'rg');
 
-            $documentosRequestIds[] = '';
+            $documentosRequestIds = [];
 
             if($request->input('docs_outros')) {
                 foreach($request->input('docs_outros') as $documento) {
@@ -229,13 +228,13 @@ class FuncionarioController extends Controller{
                     }
                 }          
             }
-        
-            if(count($documentos) > 0) {
-                foreach($documentos as $documento) {
+
+            $documentosFuncionarioIds = [];
+
+            foreach($funcionario->documentos() as $documento) {
+                if($documento->tipo_documento_id != 1 && $documento->tipo_documento_id != 2){
                     $documentosFuncionarioIds[] = $documento->id;
                 }
-            } else {
-                $documentosFuncionarioIds[] = '';
             }
             
             $documentosRemovidos = array_diff($documentosFuncionarioIds, $documentosRequestIds);
@@ -243,6 +242,7 @@ class FuncionarioController extends Controller{
             if(count($documentosRemovidos) > 0) {
                 foreach($documentosRemovidos as $documentoId) {
                     Documento::find($documentoId)->delete();
+                    Relacao::where('tabela_origem','funcionario')->where('origem_id',$funcionario->id)->where('tabela_destino','documento')->where('destino_id',$documentoId)->delete();
                 }
             }
             //####################
@@ -269,7 +269,16 @@ class FuncionarioController extends Controller{
 
                         }
 
-                        $funcionario->documentos()->save(new Documento($documento));
+                        $documento = Documento::create($documento);
+
+                                            
+                        Relacao::create([
+                            'tabela_origem'     => 'funcionario',
+                            'origem_id'         => $funcionario->id,
+                            'tabela_destino'    => 'documento',
+                            'destino_id'        => $documento->id,
+                            'modelo'            => 'Documento'
+                        ]);
                     }
                 }
             }
@@ -279,7 +288,7 @@ class FuncionarioController extends Controller{
                 $telefonesRequestIds[] = $telefone['id'];
             }
 
-            foreach($funcionario->contato->telefones as $telefone) {
+            foreach($funcionario->telefones() as $telefone) {
                 $telefonesFuncionarioIds[] = $telefone->id;
             }
 
@@ -288,6 +297,7 @@ class FuncionarioController extends Controller{
             if(count($telefonesRemovidos) > 0) {
                 foreach($telefonesRemovidos as $telefoneId) {
                     Telefone::find($telefoneId)->delete();
+                    Relacao::where('tabela_origem','funcionario')->where('origem_id',$funcionario->id)->where('tabela_destino','telefone')->where('destino_id',$telefoneId)->delete();
                 }
             }
             //####################
@@ -296,7 +306,15 @@ class FuncionarioController extends Controller{
                 if($telefone['id'] != null)
                     Telefone::find($telefone['id'])->update($telefone);
                 else {
-                    $funcionario->contato->telefones()->save(new Telefone($telefone));
+                    $telefone = Telefone::create($telefone);
+                    
+                    Relacao::create([
+                        'tabela_origem'     => 'funcionario',
+                        'origem_id'         => $funcionario->id,
+                        'tabela_destino'    => 'telefone',
+                        'destino_id'        => $telefone->id,
+                        'modelo'            => 'Telefone'
+                    ]);
                 }
             }
 
@@ -338,6 +356,45 @@ class FuncionarioController extends Controller{
             return $cidades;
         }          
  
+    }
+
+    public function editCargo($id){
+        $funcionario = Funcionario::findOrFail($id);
+        $cargoAtual = $funcionario->cargos->last()->id;
+        $data = [
+            'url'               => url("funcionario/funcionario/editCargo/$id"),
+            'model'             => $funcionario,
+            'cargos'            => Cargo::where('id','<>',$cargoAtual)->get(),
+            'title'             => 'Edição de cargos',
+            'button'            => 'Salvar',
+        ];
+
+        return view('funcionario::funcionario.cargo', compact('data'));
+    }
+
+    public function updateCargo($id, Request $request){
+        DB::beginTransaction();
+		try{
+            $funcionario = Funcionario::findOrFail($id);
+            $data = implode('-', array_reverse(explode('/', $request['cargo']['data_entrada'])));
+            $cargo = $funcionario->cargos->last();
+            $cargo->pivot->data_saida = $data;
+            $cargo->pivot->save();
+            
+            $funcionario->cargos()->attach(
+                $request['cargo']['cargo_id'],
+                ['data_entrada' => $data]
+            );
+            
+			DB::commit();
+            return redirect('/funcionario/funcionario')->with('success', 'Cargo do funcionário atualizado com successo!');
+            
+		}catch(Exception $e){
+
+			DB::rollback();
+            return back()->with('error', 'Erro no servidor');
+            
+		}
     }
 
 }

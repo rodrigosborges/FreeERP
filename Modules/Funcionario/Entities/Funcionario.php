@@ -12,7 +12,7 @@ class Funcionario extends Model{
     protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao'];
 
     public function cargos(){
-        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada');
+        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada','data_saida');
     }
 
     public function estadoCivilRelacao(){
@@ -90,11 +90,11 @@ class Funcionario extends Model{
     }
 
     public function cpf() {
-        return Documento::where('tipo_documento_id', 1)->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$this->id)->where('relacao.tabela_origem','funcionario')->first();
+        return Documento::where('tipo_documento_id', 1)->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$this->id)->where('relacao.tabela_origem','funcionario')->select('documento.*')->first();
     }
 
     public function rg() {
-        return Documento::where('tipo_documento_id', 2)->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$this->id)->where('relacao.tabela_origem','funcionario')->first();
+        return Documento::where('tipo_documento_id', 2)->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$this->id)->where('relacao.tabela_origem','funcionario')->select('documento.*')->first();
     }
     
 }   

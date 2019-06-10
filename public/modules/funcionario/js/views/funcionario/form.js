@@ -3,7 +3,7 @@ $(document).on("click", ".add-tel", function() {
     if($(".tel").length < 4) {
         clonar(".tel", "#telefones", true)
         $(".tel").last().find("input").val("")
-        //$(".tel").last().find("input").mask('(00) 0000-0000')
+        $(".tel").last().find("select").val("")
     } else {
         Swal.fire({
             type: 'warning',
