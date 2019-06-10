@@ -34,6 +34,8 @@ Route::prefix('controleusuario')->group(function() {
     Route::delete('/delete', ['as'=>'usuario.delete','uses'=> 'UsuarioController@destroy'] );
     Route::post('/delete', ['as'=>'usuario.delete','uses'=> 'UsuarioController@recovery'] );
     Route::get('/sair','UsuarioController@logoff');
+    Route::POST('/buscarModulos', "UsuarioController@buscarModulos");
+    Route::POST('/vsf', "UsuarioController@buscarModulos");
 
 /*ROTAS DE PAPÉIS (PAPEL)*/
 
@@ -42,5 +44,6 @@ Route::prefix('controleusuario')->group(function() {
     Route::post('/papel/atualizar', 'PapelController@atualizar');
     Route::post('/papel/update', 'PapelController@update');
     Route::POST('/papel/delete', 'PapelController@destroy');
+    
 
 });

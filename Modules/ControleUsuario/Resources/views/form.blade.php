@@ -54,7 +54,7 @@
                 <p class="text-primary d-flex align-items-center">
                     <i class="material-icons mr-2">edit</i> Perfil do usuário
                 </p>
-                <a href="#" class="text-muted d-flex align-items-center" data-toggle="modal"data-target="#formPapel">
+                <a href="#" class="text-muted d-flex align-items-center" id="moduloPermissao" data-toggle="modal"data-target="#formPapel">
                     <i class="material-icons mr-2">timer</i> Módulos e permissões
                 </a>
             </div>
@@ -87,33 +87,38 @@
             keyboard_backspace</a ></span>
             Módulo de atuação
         </label>
+        <div class="form-group">
         <select class="form-control" id="selectModulo">
-            <option selected>Selecione</option>
-            <option>Compras</option>
-            <option>Funcionários</option>
-            <option>Frota</option>
+           
         </select>
+        </div>
+        <div class="form-group">
+        <select class="form-control" id="selectPapel">
+           
+        </select>
+        </div>
+        <div class="form-check-inline">
+            <label class="form-check-label" display="none">
+                <input type="radio" id="dataIndeterminada" class="form-check-input" value="indefinido" name="optionVencimento" checked>Tempo indeterminado
+            </label>
+        </div>
         <div class="form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optradio" >Definir validade
+                <input type="radio" class="form-check-input" id="definirData" value="definido" name="optionVencimento" >Definir validade
             </label>
         </div>
 
-        <div class="form-check-inline">
-            <label class="form-check-label" display="none">
-                <input type="radio" class="form-check-input" name="optradio" checked>Tempo indeterminado
-            </label>
-        </div>
-        <div class="form-group"><input class="form-control" type="date"></div>
+        
+        <div class="form-group" id="vencimento"><input class="form-control" id="dataVencimento" type="date"></div>
 
     </div>
          
         </div>
             <div class="modal-footer">
-                <button class="btn btn-danger" type="submit" id="btnDeletePapel">
-                    <span class="glyphicon glyphicon-plus"></span>Excluir
+                <button class="btn btn-success" type="submit" id="btnSalvarAtuacao">
+                    <span class="glyphicon glyphicon-plus"></span>Salvar
                 </button>
-                <button class="btn btn-info" type="button" data-dismiss="modal">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">
                     <span class="glyphicon glyphicon-remobe"></span>Fechar
                 </button>
             </div>
@@ -124,12 +129,66 @@
 <script>
 $(document).ready(function(){
 $('#divModulo').hide();
+$('#moduloPermissao').click(function(){
+    $.ajax({
+        url:'buscarModulos',
+        type:'POST',
+        data:{'_token':$('input[name=_token]').val()}
+    }).done(function(e){
+      //  console.log("done->"+e)
+      console.log(e)
+        var modulos = $.parseJSON(e)['modulos'];
+        var papeis = $.parseJSON(e)['papeis'];
+        var options1 ="<option value='-1' selected>Selecione</option>";
+        var options2 ="<option value='-1' selected>Selecione</option>";
+        $.each(modulos, function(chave,valor){
+            options1+='<option value="'+ valor['id'] + '">'+valor['nome'] +"</option>"
+
+        });
+        $.each(papeis,function(chave,valor){
+            options2 += '<option value="'+ valor['id'] + '">'+valor['nome'] +"</option>"
+        })
+        $('#selectModulo').html(options1)
+        $('#selectPapel').html(options2)
+       // console.log(options1);
+    }).fail(function(){
+       // console.log("falha")
+    })
+})
 $('#addPapel').click(function(){
  
-    $('#addPapel').hide();
+ 
+    $('#addPapel').hide();  
     $('#divModulo').fadeIn(150);
+    $("#vencimento").hide();
     
+});
+$('#definirData').click(function(){
+    $('#vencimento').fadeIn("slow");
+   
 })
+$('#dataIndeterminada').click(function(){
+    $('#vencimento').fadeOut("slow");
+});
+$('#btnSalvarAtuacao').click(function(){
+   // alert($("input[type=radio][name='optionVencimento']:checked").val());
+   var modulo = $('#selectModulo').val();
+   var papel = $('#selectPapel').val();
+   var vencimento=""
+   var validadeAtuacao =$("input[type=radio][name='optionVencimento']:checked").val();
+   if(validadeAtuacao=="indefinido"){
+      
+   }else {
+     vencimento = $("#dataVencimento").val()
+    
+   }
+   if(vencimento==""){
+       alert("DATA Vazia")
+   }else{
+       alert("data de vencimento:"+ vencimento)
+   }
+});
+
 });
 
 </script>

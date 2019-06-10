@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\controleUsuario\Entities\Papel;
+use Modules\controleUsuario\Entities\Modulo;
 use Modules\controleUsuario\Entities\Usuario;
 use Modules\controleUsuario\Http\Requests \ {
     ValidaLoginRequest
@@ -303,5 +304,15 @@ class UsuarioController extends Controller
         $data = ['status' => '0', 'msg' => 'fail'];
 
         return back()->with('data');
+    }
+    public function buscarModulos(){
+        $modulos = Modulo::all();
+        $papeis = Papel::all();
+
+        $retorno=array();
+        $retorno['modulos']=$modulos;
+        $retorno['papeis']=$papeis;
+        return json_encode($retorno);
+        
     }
 }

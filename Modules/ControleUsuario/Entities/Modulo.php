@@ -9,7 +9,7 @@ class Modulo extends Model
     use SoftDeletes;
     protected $table='modulo';
     protected $fillable = ['nome', 'icone'];
-    protected $timestamps=false;
+    public $timestamps=false;
 
     public function atuacoes()
     {
