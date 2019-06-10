@@ -379,7 +379,7 @@ class FuncionarioController extends Controller{
             $data = implode('-', array_reverse(explode('/', $request['cargo']['data_entrada'])));
             $cargo = $funcionario->cargos->last();
             $cargo->pivot->data_saida = $data;
-            $cargo->pivot->save();
+            $cargo->pivot->update();
             
             $funcionario->cargos()->attach(
                 $request['cargo']['cargo_id'],
