@@ -26,7 +26,7 @@ class FornecedorController extends Controller
             ['icon' => 'shop', 'tool' => 'Itens', 'route' => '/compra/itemCompra/'],
             ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '/compra/pedido/'],
             ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '/compra/fornecedor/'],
-            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
+           
 		];
     }
 
@@ -37,13 +37,9 @@ class FornecedorController extends Controller
         $menu = $this->menu;
 
         $data = [
-            'model'             => '',
 			'fornecedor'		=> Fornecedor::all(),
             'title'				=> "Lista de Funcionários",
-            'telefones'         => [new Telefone],
-            'tipos_telefone'    => TipoTelefone::all(),
-            'estados'           => Estado::all(),
-            'cidades'           => Cidade::all(),
+           
 		]; 
 			
 	    return view('compra::fornecedor.fornecedor', compact('data','moduleInfo','menu'));
@@ -61,7 +57,9 @@ class FornecedorController extends Controller
             'model'             => '',
 			'fornecedor'		=> Fornecedor::all(),
             'title'				=> "Lista de Funcionários",
-            'telefones'         => [new Telefone],
+            'telefone'         => [
+                'tipo_telefone_id' => 0
+            ],
             'tipos_telefone'    => TipoTelefone::all(),
             'estados'           => Estado::all(),
             'cidades'           => Cidade::all()
@@ -131,13 +129,23 @@ class FornecedorController extends Controller
 
     public function edit($id)
     {   
+        $fornecedor = Fornecedor::findOrFail($id);
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
 			"url" 	 	=> url("compra/fornecedor/$id"),
 			"button" 	=> "Atualizar",
-			"model"		=> Fornecedor::findOrFail($id),
-			'title'		=> "Atualizar Fornecedor"
+			"model"		=> $fornecedor,
+            'title'		=> "Atualizar Fornecedor",
+            'fornecedor'		=> Fornecedor::all(),
+            'title'				=> "Lista de Funcionários",
+            'tipos_telefone'    => TipoTelefone::all(),
+            'telefone'         => $fornecedor->telefones,
+            'estados'           => Estado::all(),
+            'cidades'           => Cidade::where('estado_id', $fornecedor->endereco->cidade->estado_id)->get(),
+
+
+
 		];
 	    return view('compra::fornecedor.formulario_fornecedor', compact('data','moduleInfo','menu'));
         
@@ -147,8 +155,14 @@ class FornecedorController extends Controller
     {
         DB::beginTransaction();
 		try{
-			$fornecedor = Fornecedor::findOrFail($id);
-			$fornecedor->update($request->all());
+            $fornecedor = Fornecedor::findOrFail($id);
+            
+            $fornecedor->update($request->fornecedor);
+            $fornecedor->endereco()->update($request->endereco);
+            $fornecedor->telefones()->update($request->telefone);
+            $fornecedor->email()->update($request->email);
+
+            
 			DB::commit();
 			return redirect('compra/fornecedor')->with('success', 'Fornecedor atualizado com successo');
 		}catch(Exception $e){

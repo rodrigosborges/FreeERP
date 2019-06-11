@@ -18,8 +18,8 @@
          @foreach($data['itens_pedido'] as $itemPedido)
          <div class="input-group mt-2">
             <div class="form-check form-check-inline mx-sm-3">
-            <input required class="form-check-input" name="itens[]" type="checkbox" id="{{$itemPedido->nome_produto}}" value="{{$itemPedido->id}}">
-            <label class="form-check-label" for="{{$itemPedido->nome_produto}}"><h4>{{$itemPedido->nome_produto}}</h4></label>
+            <input  class="form-check-input" name="itens[]" type="checkbox" id="{{$itemPedido->nome_produto}}" value="{{$itemPedido->id}}">
+            <label class="form-check-label" for="{{$itemPedido->nome_produto}}"><h4>{{$itemPedido->nome}}</h4></label>
             </div>
          </div>
          @endforeach
@@ -31,7 +31,7 @@
                <select required name="fornecedores[]" class="form-control col-7 mx-sm-3">
                <option value="">Selecione uma opção</option>
                @foreach($data['fornecedores'] as $fornecedor)
-                  <option value="{{ $fornecedor->id }}"> {{ $fornecedor->nome_fornecedor}} </option>
+                  <option value="{{ $fornecedor->id }}"> {{ $fornecedor->nome}} </option>
                @endforeach                                   
                </select>
                <button type="button" class="btn btn-danger remover mb-4 ">Remover</button>

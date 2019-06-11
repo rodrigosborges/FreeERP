@@ -27,6 +27,7 @@ class Fornecedor extends Model
             ->where('tabela_origem','fornecedor')
             ->where('tabela_destino','endereco');
     }
+    
     public function endereco(){
         return $this->enderecoRelacao->dados();
     }
@@ -38,7 +39,7 @@ class Fornecedor extends Model
             ->where('tabela_origem','fornecedor')
             ->where('tabela_destino','telefone');
     }
-    public function telefone(){
+    public function telefones(){
         return $this->telefoneRelacao->dados();
     }
 
