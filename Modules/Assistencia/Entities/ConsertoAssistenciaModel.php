@@ -24,14 +24,14 @@ class ConsertoAssistenciaModel extends Model
     public function cliente(){
         return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente');
     }
+    public function tecnico(){
+        return $this->belongsTo('Modules\Assistencia\Entities\TecnicoAssistenciaModel', 'idTecnico');
+    }
     public function peca(){
         return $this->belongsTo('Modules\Assistencia\Entities\PecaAssistenciaModel', 'idPeca');
     }
     public function servico(){
         return $this->hasMany('Modules\Assistencia\Entities\ServicoAssistenciaModel', 'idMaoObra');
-    }
-    public function tecnico(){
-        return $this->hasMany('Modules\Assistencia\Entities\TecnicoAssistenciaModel', 'idTecnico');
     }
 
 }

@@ -53,12 +53,26 @@ class ConsertoController extends Controller
        $conserto = ConsertoAssistenciaModel::find($id);
        return view('assistencia::paginas.consertos.vizualizarConserto',compact('conserto'));
      }
-     public function editar($id)
-     {
-       $conserto = ConsertoAssistenciaModel::find($id);
-       return view('assistencia::paginas.consertos.editarConserto',compact('conserto'));
-     }
 
+     public function editar($id) {
+      $conserto = ConsertoAssistenciaModel::find($id);
+      $pecas = PecaAssistenciaModel::where('ativo', 1)->get();
+      $servicos = ServicoAssistenciaModel::where('ativo', 1)->get();
+
+      $itemPeca = ItemPeca::where('idConserto', $id)->get();
+      
+      $itemServico = itemServico::where('idConserto', $id)->get();
+
+
+
+      return view('assistencia::paginas.consertos.editarConserto',compact('conserto', 'id', 'pecas', 'servicos','itemPeca','itemServico'));
+     }
+      public function atualizar(Request $req, $id){
+        $dados  = $req->all();
+
+      ConsertoAssistenciaModel::find($id)->update($dados);
+      return redirect()->route('consertos.localizar')->with('success','Ordem de serviço alterada com sucesso');
+      }
      public function salvar(Request $req){
       $dados  = $req->all();
 

@@ -68,6 +68,7 @@ Route::prefix('assistencia')->group(function() {
 
     Route::post('conserto/salvar',['as' => 'consertos.salvar','uses' => 'ConsertoController@salvar']);
     Route::get('conserto/editar/{id}',[ 'as' =>'consertos.editar','uses' => 'ConsertoController@editar']);
+    Route::post('conserto/editar/{id}/salvar',[ 'as' =>'consertos.atualizar','uses' => 'ConsertoController@atualizar']);
     
     Route::get('pagamento',['as'=>'pagamento.index','uses'=>'PagamentoController@index']);
 

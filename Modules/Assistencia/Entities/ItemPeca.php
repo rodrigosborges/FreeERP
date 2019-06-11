@@ -8,4 +8,10 @@ class ItemPeca extends Model
 {
     protected $table = 'item_peca_assistencia';
     protected $fillable = ['id','idConserto','idPeca'];
+
+
+    public function peca(){
+        return $this->belongsTo('Modules\Assistencia\Entities\PecaAssistenciaModel', 'idPeca');
+    }
 }
+    
