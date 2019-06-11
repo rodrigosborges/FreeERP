@@ -180,7 +180,7 @@ class FuncionarioController extends Controller{
 
         $funcionario = Funcionario::findOrFail($id);
 
-        $documentos = Documento::whereNotIn('tipo_documento_id', [1,2])->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$id)->where('relacao.tabela_origem','funcionario')->get();
+        $documentos = Documento::whereNotIn('tipo_documento_id', [1,2])->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$id)->where('relacao.tabela_origem','funcionario')->select('documento.*')->get();
 
         $data = [
             "url" 	 	        => url("funcionario/funcionario/$id"),
