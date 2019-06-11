@@ -196,48 +196,74 @@ class UsuarioController extends Controller
     }
 
     public function buscar(Request $req){
-        $status = ['0' => "Ativo e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
+        $status = ['0' => "Ativos e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
         $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
-        $lista = Usuario::withTrashed()->get();
-
-        $texto = "";
+        $lista = DB::table('usuario')->select();
+        
 
         foreach ($req->request as $key => $value) {
-            switch($key){
-                case 'nome':
-                    if( isset($value) ){
-                        $texto = $texto. $value;
-                        echo($texto);
+            
+            if($key !="_token"){
+                if(isset($value) ){
+                    if($key=="status"){
+                        if($value == "1"){
+                            $lista = whereNull("deleted_at");
+                        }else{
+                            if($value == "2" || $value == "0'"){
+                                $lista = whereNotNull("deleted_at");;
+                            }
+                        }
                     }
-                break;
-                case 'data':
-                if( isset($value) ){
-                    $texto = $texto. $value;
-                    echo($texto);
-                }
-                break;
-                case 'status':
-                if( isset($value) ){
-                    $texto = $texto. $value;
-                    echo($texto);
-                }
-                break;
-                case 'modulo':
-                if( isset($value) ){
-                    $texto = $texto. $value;
-                    echo($texto);
-                }
+                    if($key=="modulos"){
+                        $teste = $modulos[$value];
+                        dd($teste);
+                        $lista -> where($key, $teste);
+                    }
+                    if($key=="cargos"){
+                        $teste = $cargos[$value];
+                        $lista -> where($key, $teste);
+                    }
+                        $lista -> where($key, $value);
+                }            
             }
         }
+        $lista->get();
         
-        if( isset($req->nome)){
-            $lista = DB::table('usuario')->select()->where(
-                'nome', $req->nome
-            )->get();
-        }else{
-            echo("TB");
-        }
+        //     switch($key){
+        //         case 'nome':
+        //             if( isset($value) ){
+        //                 $texto = [$texto. $value];
+        //                 echo($texto);
+        //             }
+        //         break;
+        //         case 'data':
+        //         if( isset($value) ){
+        //             $texto = $texto. $value;
+        //             echo($texto);
+        //         }
+        //         break;
+        //         case 'status':
+        //         if( isset($value) ){
+        //             $texto = $texto. $value;
+        //             echo($texto);
+        //         }
+        //         break;
+        //         case 'modulo':
+        //         if( isset($value) ){
+        //             $texto = $texto. $value;
+        //             echo($texto);
+        //         }
+        //     }
+        // }
+        
+        // if( isset($req->nome)){
+        //     $lista = DB::table('usuario')->select()->where(
+        //         'nome', $req->nome
+        //     )->get();
+        // }else{
+        //     echo("TB");
+        // }
 
         return view(
             'controleusuario::consulta',
