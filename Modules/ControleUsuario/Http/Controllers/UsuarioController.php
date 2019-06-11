@@ -199,12 +199,45 @@ class UsuarioController extends Controller
         $status = ['0' => "Ativo e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
         $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
+        $lista = Usuario::withTrashed()->get();
 
-        $lista = DB::table('usuario')->where(
-            ['nome', $req->nome],
-            ['data','=',$req->data]
-        )->get();
+        $texto = "";
 
+        foreach ($req->request as $key => $value) {
+            switch($key){
+                case 'nome':
+                    if( isset($value) ){
+                        $texto = $texto. $value;
+                        echo($texto);
+                    }
+                break;
+                case 'data':
+                if( isset($value) ){
+                    $texto = $texto. $value;
+                    echo($texto);
+                }
+                break;
+                case 'status':
+                if( isset($value) ){
+                    $texto = $texto. $value;
+                    echo($texto);
+                }
+                break;
+                case 'modulo':
+                if( isset($value) ){
+                    $texto = $texto. $value;
+                    echo($texto);
+                }
+            }
+        }
+        
+        if( isset($req->nome)){
+            $lista = DB::table('usuario')->select()->where(
+                'nome', $req->nome
+            )->get();
+        }else{
+            echo("TB");
+        }
 
         return view(
             'controleusuario::consulta',
