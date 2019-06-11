@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\controleUsuario\Entities\Papel;
+use Modules\controleUsuario\Entities\Atuacao;
 use Modules\controleUsuario\Entities\Modulo;
 use Modules\controleUsuario\Entities\Usuario;
 use Modules\controleUsuario\Http\Requests \ {
@@ -90,7 +91,7 @@ class UsuarioController extends Controller
 
 
             if (!$usuario) {
-                DB::commit();
+               
                 $data =array();
                 $data['nome']= $req->input('name');
                 $data['email']= $req->input('email');  
@@ -101,6 +102,7 @@ class UsuarioController extends Controller
                 
                 $data['title'] = 'Cadastrar Usuário';
                 Usuario::Create($data);
+                DB::commit();
                 return back()->with('success', 'Usuário cadastrado com sucesso!');
             } else {
                 return back()->with('warning', 'Este email já está cadastrado');
@@ -145,7 +147,44 @@ class UsuarioController extends Controller
      * @return Response
      */
     public function store(Request $request)
-    { }
+    {
+        $retorno = array();
+        $retorno['sucesso']=false;
+        DB::beginTransaction();
+        try{
+            $data = array();
+            $email = DB::table('usuario')->where('email', $request->email)->first();
+            if(!$email){
+                
+               $usuario = new Usuario();
+               $usuario->nome =$request->nome;
+               $usuario->email =$request->email;
+               $usuario->senha = base64_encode($request->senha);
+               $usuario->save();
+               
+               if($request->modulo!=null && $request->modulo!=""){
+                   $atuacao = new Atuacao();
+                   $atuacao->usuario_id =$usuario->id;
+                   $atuacao->modulo_id = $request->modulo;
+                   $atuacao->papel_id = $request->papel;
+                   $atuacao->save();
+                   
+               }
+               DB::commit();
+               $retorno['mensagem']="Usuário Cadastrado com sucesso";
+               $retorno['sucesso']=true;
+                
+
+            }else{
+                $retorno['mensagem']="Este email já está em uso no momento";
+            }
+        }catch(Exception $ex){
+            $retorno['mensagem']= "Erro ->". $ex;
+            
+            DB::rollback();
+        }
+        return json_encode($retorno);
+    }
 
 
     public function logoff()

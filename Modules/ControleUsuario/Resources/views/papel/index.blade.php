@@ -50,7 +50,7 @@
         </table>
     </div>
 </div>
-<!--Formulário modal de criação de papéis -->
+<!--Formulário modal de criação e edição de papéis -->
 <div id="create" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">

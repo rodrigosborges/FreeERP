@@ -6,6 +6,7 @@
     <div class="col col-sm-10 col-md-8 col-lg-6">
         <div class="card">
             <div class="card-body">
+            <p class="feedback feedback-done alert "></p>
                 <h5 class="card-title">{{$data['title']}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Perfil do usuário</h6>
                 @if($data['model'])
@@ -32,20 +33,21 @@
                         <div class="form-group">
                             <input type="text" class="form-control" value="{{$data['model'] ? $data['model']->nome :''}}" name="name" id="nome"
                             placeholder="Nome">
+                            <p class="feedback alert-nome alert "></p>
                             <span class="errors alert-danger">  {{ $errors->first('name') }} </span>
                         </div>
                         <div class="form-group">
                             <input type="email" class="form-control" value="{{$data['model'] ? $data['model']->email :''}}" name="email" id="email" aria-describedby="emailHelp"
                             placeholder="Email">
+                            <p class="feedback alert-email alert"></p>
                             <span class="errors alert-danger"> {{ $errors->first('email') }} </span>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" name="password" id="password" placeholder="Senha">
+                            <p class="feedback alert-senha alert"></p>
                             <span class="errors alert-danger"> {{ $errors->first('password') }} </span>
                         </div>
-                        <button type="submit" class="btn btn-primary d-flex align-items-center">
-                            <i class="material-icons mr-2">save</i> {{$data['button']}}
-                        </button>
+                        <button type="submit" id="btnCadastrar" class="btn btn-primary d-flex align-items-center">{{$data['button']}}</button>
                     </div>
                 </div>
                 {!! Form::close() !!}
@@ -128,6 +130,67 @@
 @section('js')
 <script>
 $(document).ready(function(){
+    var modulo=""
+    var papel=""
+    var atuacao=""
+    var vencimento="";
+    
+    $('#btnCadastrar').click(function(e){
+        $('#feedback-done').removeClass("alert-danger");
+        
+        $('.feedback').hide();
+        e.preventDefault()
+        var nome= $('#nome').val()
+        var email=$('#email').val()
+        var senha= $('#password').val();
+        var regex_email = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+     //  alert("nome:"+ nome +" - Email:" +email +" - senha:"+ senha)
+     if(nome==""){
+        $('.alert-nome').html("O campo <b>Nome</b> não pode ser vazio");
+        $('.alert-nome').addClass('alert-warning');
+        $('.alert-nome').fadeIn();
+        $('#nome').focus();
+         }
+     else if(nome.length <4){
+         $('.alert-nome').html("O campo <b>Nome</b> deve possuir mais de 3 caracteres");
+         $('.alert-nome').addClass('alert-warning');
+         $('.alert-nome').fadeIn();
+        $('#nome').focus()
+         //nome curto
+     }else if(email==""){
+        $('.alert-email').html("O campo <b>Email</b> Não pode ser vazio");
+        $('.alert-email').addClass('alert-warning');
+        $('.alert-email').fadeIn();
+        $('#email').focus()
+     }else if(!regex_email.test(email)){
+        $('.alert-email').html("O <b>Email</b> inserido não é um email válido");
+        $('.alert-email').addClass('alert-warning');
+        $('.alert-email').fadeIn();
+
+     }
+     else if(senha==""){
+        $('.alert-senha').html("O campo <b>Senha</b> Não pode ser vazio");
+        $('.alert-senha').addClass('alert-warning');
+        $('.alert-senha').fadeIn();
+        $('#password').focus()
+             //senha vazia
+      }
+     else if(senha.length<6){
+        $('.alert-senha').html("O campo <b>Senha</b> deve conter no mínimo 6 caracteres");
+        $('.alert-senha').addClass('alert-warning');
+        $('.alert-senha').fadeIn();
+        $('#password').focus()
+        
+         //senha curta
+     }else{
+         
+         if($('#btnCadastrar').html()=="Cadastrar")
+            cadastrarUsuario(nome,email,senha);
+         else
+           atualizarUsuario(nome,email,senha);
+         
+     }
+    });
 $('#divModulo').hide();
 $('#moduloPermissao').click(function(){
     $.ajax({
@@ -172,23 +235,56 @@ $('#dataIndeterminada').click(function(){
 });
 $('#btnSalvarAtuacao').click(function(){
    // alert($("input[type=radio][name='optionVencimento']:checked").val());
-   var modulo = $('#selectModulo').val();
-   var papel = $('#selectPapel').val();
-   var vencimento=""
-   var validadeAtuacao =$("input[type=radio][name='optionVencimento']:checked").val();
-   if(validadeAtuacao=="indefinido"){
-      
-   }else {
-     vencimento = $("#dataVencimento").val()
-    
-   }
-   if(vencimento==""){
+    modulo = $('#selectModulo').val();
+    papel = $('#selectPapel').val();
+    vencimento=""
+    validadeAtuacao =$("input[type=radio][name='optionVencimento']:checked").val();
+   if(validadeAtuacao!="indefinido"){
+    vencimento = $("#dataVencimento").val()
+    if(vencimento==""){
        alert("DATA Vazia")
    }else{
        alert("data de vencimento:"+ vencimento)
    }
+   }
+   
 });
-
+function cadastrarUsuario(nome,email,senha){
+    $.ajax({
+        url:'cadastrarUsuario',
+        data:{'_token':$('input[name=_token]').val(),
+              'nome': nome,
+              'email':email,
+              'senha':senha,
+              'papel':papel,
+              'modulo':modulo,
+              'vencimento':vencimento
+              },
+        type:"POST",
+        datatype:"JSON"
+    }).done(function(e){
+        var sucesso = $.parseJSON(e)['sucesso'];
+        var mensagem = $.parseJSON(e)['mensagem'];
+        if(sucesso){
+            $('.feedback-done').addClass('alert-success')
+            $('.feedback-done').removeClass('alert-danger')
+        }
+        else{
+            $('.feedback-done').addClass('alert-danger')
+            $('.feedback-done').removeClass('alert-success')
+        }
+        $('.feedback-done').fadeIn('slow');
+        $('.feedback-done').html(mensagem);
+        console.log("done->"+e)
+    }).fail(function(){
+        console.log("Falha")
+    })
+    
+  //  console.log("papel"+ papel +" modulo"+ modulo+ " e vencimento"+ vencimento)
+}
+function atualizarUsuario(nome,email,senha){
+    
+}
 });
 
 </script>
