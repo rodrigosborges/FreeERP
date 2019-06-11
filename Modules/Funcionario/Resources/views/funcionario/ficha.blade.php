@@ -3,58 +3,105 @@
 @section('body')
 <div class="container">
   <div class="row">
-    <div class="col-sm">
-    
-        <ul class="lista-ficha">
-            <li><h5>Dados Pessoais</h5></li>
-            <ul class="lista-ficha">
-                <li>Nome: {{$funcionario->nome}}</li>
-                <li>Data de Nascimento: {{$funcionario->data_nascimento}}</li>
-                <li>Estado Civil: {{$funcionario->estado_civil()->nome}}</li>
-                <li>Data Admissão: {{$funcionario->data_admissao}}</li>
-            </ul>
-        </ul>
+    <div class="col-sm-2 text-center">
+        <img class="img-fluid" src="{{ URL::to('/') }}/img/user-img.jpg" height=130>
     </div>
-    <div class="col-sm">
-        <ul class="lista-ficha">
-            <li><h5>Endereço</h5></li>
-            <ul class="lista-ficha">
-                <li>Logradouro: {{$funcionario->endereco()->logradouro}}</li>
-                <li>Bairro: {{$funcionario->endereco()->bairro}}</li>
-                <li>Cidade: {{$funcionario->endereco()->cidade->nome}}</li>
-                <li>Estado: {{$funcionario->endereco()->cidade->estado->nome}}</li>
-                <li>CEP: {{$funcionario->endereco()->cep}}</li>
-                <li>Complemento: {{$funcionario->endereco()->complemento}}</li>
-            </ul>
-        </ul>
+    <div class="col-sm-10">
+            <div class="row">
+                <div class="col">
+                <span class="titulo_cargo">Nome:</span> {{$funcionario->nome}} 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="titulo_cargo">Data de Nascimento:</span> {{$funcionario->data_nascimento}}
+                </div>
+                <div class="col">
+                    <span class="titulo_cargo">Estado Civil:</span> {{$funcionario->estado_civil()->nome}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                   <span class="titulo_cargo">Data Admissão:</span> {{$funcionario->data_admissao}}
+                </div>
+                <div class="col">
+                    <span class="titulo_cargo">Email:</span> {{$funcionario->email()->email}}
+                </div>
+            </div>
+            <div class="row">
+            @foreach($funcionario->documentos() as $documento)
+                <div class="col">
+                   <span class="titulo_cargo">{{$documento->tipo_documento->nome}}:</span> {{$documento->numero}}
+                </div>
+            @endforeach    
+            </div>            
+            <div class="row">
+                @foreach($funcionario->telefones() as $telefone)    
+                <div class="col">
+                    <span class="titulo_cargo">Telefone:</span> {{$telefone->numero}}
+                </div>
+                @endforeach
+                <div class="col">
+                    @if($funcionario->sexo == 1)
+                        <span class="titulo_cargo">Sexo:</span> Masculino
+                    @else
+                        <span class="titulo_cargo">Sexo:</span> Feminino
+                    @endif
+                </div>
+            </div>
     </div>
   </div>
   <hr>
   <div class="row">
     <div class="col-sm">
-    <ul class="lista-ficha">
-      <li><h5>Contato</h5></li>
-      <ul class="lista-ficha">
-          <li>Email: {{$funcionario->email()->email}}</li>
-          @foreach($funcionario->telefones() as $telefone)
-            <li>Telefone: {{$telefone->numero}}</li>
-          @endforeach
-    </ul>
-  </ul>
+        @foreach($funcionario->cargos as $cargo)
+            <div class="row">
+                <div class="col">
+                   <span class="titulo_cargo">Cargo:</span> {{$cargo->nome}}
+                </div>
+                <div class="col">
+                    <span class="titulo_cargo">Cargo:</span> {{$cargo->salario}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                   <span class="titulo_cargo">Data Entrada:</span> {{$cargo->pivot->data_entrada}}
+                </div>
+                <div class="col">
+                   <span class="titulo_cargo"> Data Saida:</span> {{$cargo->pivot->data_saida}}
+                </div>
+            </div>
+        @endforeach        
     </div>
+    </div>
+    <hr>
+    <div class="row">
     <div class="col-sm">
-        <ul class="lista-ficha">
-            <li><h5>Documentos</h5></li>
-            <ul class="lista-ficha">
-            @foreach($funcionario->documentos() as $documento)
-                <li>{{$documento->tipo_documento->nome}}: {{$documento->numero}} </li>
-            @endforeach
-            </ul>
-        </ul>
+        <div class="row">
+            <div class="col">
+               <span class="titulo_cargo">Logradouro:</span> {{$funcionario->endereco()->logradouro}}
+            </div>
+            <div class="col">
+                <span class="titulo_cargo">Bairro:</span> {{$funcionario->endereco()->bairro}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <span class="titulo_cargo">Cidade:</span> {{$funcionario->endereco()->cidade->nome}}
+            </div>
+            <div class="col">
+                <span class="titulo_cargo">Estado:</span> {{$funcionario->endereco()->cidade->estado->nome}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <span class="titulo_cargo">CEP:</span> {{$funcionario->endereco()->cep}}
+            </div>
+            <div class="col">
+                <span class="titulo_cargo">Complemento:</span> {{$funcionario->endereco()->complemento}}
+            </div>
+        </div>
     </div>
   </div>
 </div>
-
-
-
 @endsection

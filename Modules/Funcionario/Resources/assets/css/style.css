@@ -9,6 +9,10 @@ div.error {
     font-size:small;
 }
 
-.lista-ficha ul{
+.lista-ficha li{
     list-style-type: none !important;
 } 
+
+.titulo_cargo{
+    font-weight: 500;
+}
