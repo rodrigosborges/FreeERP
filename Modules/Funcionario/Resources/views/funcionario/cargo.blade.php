@@ -79,6 +79,7 @@
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="{{Module::asset('funcionario:js/views/funcionario/form.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/helpers.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/validations.js')}}"></script>
 @endsection

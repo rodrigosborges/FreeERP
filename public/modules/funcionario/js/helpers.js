@@ -1,6 +1,8 @@
 //FUNÇÃO PARA CLONAR UM ELEMENTO
 function clonar(target, local, indices) {
-    $(target).last().clone().appendTo(local)
+    var clone = $(target).last().clone()
+    clone.find(".errors").remove()
+    clone.appendTo(local)
 
     if(indices) {
         $(target).last().find('input, select').each(function() {

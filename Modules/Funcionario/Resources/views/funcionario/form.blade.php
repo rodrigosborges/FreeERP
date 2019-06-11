@@ -162,6 +162,7 @@
                     @if(isset($documento['id']))
                         <input type="hidden" class="documentos" value="{{isset($documento['id']) ? $documento['id'] : ''}}" name="docs_outros[{{$key}}][id]">
                     @endif
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="tipo" class="control-label">Tipo</label>
@@ -171,14 +172,14 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <select name="docs_outros[{{$key}}][tipo_documento_id]" class="form-control documentos" {{isset($documento['tipo_documento_id']) ? '' : 'disabled'}}>
+                                <select name="docs_outros[{{$key}}][tipo_documento_id]" class="form-control documentos" {{isset($documento) ? '' : 'disabled'}}>
                                     <option value="">Selecione</option>
                                     @foreach($data['tipo_documentos'] as $tipo)
                                         <option value="{{$tipo->id}}" {{ isset($documento['tipo_documento_id']) && $documento['tipo_documento_id'] == $tipo['id'] ? 'selected' : '' }}>{{$tipo->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <span class="errors"> {{ $errors->first('docs_outros.tipo_documento_id') }}</span>
+                            <span class="errors"> {{ $errors->first('docs_outros.'.$key.'.tipo_documento_id') }}</span>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -190,9 +191,9 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ isset($documento['numero']) ? $documento['numero'] : ''}}" {{ isset($documento['numero']) ? '' : 'disabled' }}>
+                                <input required type="text" placeholder="Número" name="docs_outros[{{$key}}][numero]" id="numero_documento_{{$key}}" class="form-control documentos" value="{{ isset($documento['numero']) ? $documento['numero'] : ''}}" {{ isset($documento) ? '' : 'disabled' }}>
                             </div>
-                            <span class="errors"> {{ $errors->first('docs_outros.numero') }} </span>
+                            <span class="errors"> {{ $errors->first('docs_outros.'.$key.'.numero') }} </span>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -208,7 +209,7 @@
                                     <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos">
                                     <label for="comprovante" class="custom-file-label">Comprovante</label>   
                                 </div>
-                                <span class="errors"> {{ $errors->first('docs_outros.comprovante') }}</span>
+                                <span class="errors"> {{ $errors->first('docs_outros.'.$key.'.comprovante') }}</span>
                             </div>
                         </div>
                     </div>
@@ -380,7 +381,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <span class="errors"> {{ $errors->first('telefones.tipo_telefone_id') }}</span>
+                                    <span class="errors"> {{ $errors->first('telefones.'.$key.'.tipo_telefone_id') }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -388,7 +389,7 @@
                                     <div class="input-group">
                                         <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][numero]" class="form-control telefone" value="{{$telefone['numero'] ? $telefone['numero'] : ''}}">
                                     </div>
-                                    <span class="errors"> {{ $errors->first('telefones.numero') }}</span>
+                                    <span class="errors"> {{ $errors->first('telefones.'.$key.'.numero') }}</span>
                                 </div>
                             </div>
                         </div>

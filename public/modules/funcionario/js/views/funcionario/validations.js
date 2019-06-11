@@ -28,6 +28,10 @@ $('#form').validate({
         },
         "contato[email]": {
             email:true
+        },
+        "telefones[][numero]": {
+            digits: true,
+            maxlength: 4
         }
     },
     messages:{}
