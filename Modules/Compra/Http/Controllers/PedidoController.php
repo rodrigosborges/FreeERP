@@ -113,17 +113,10 @@ class PedidoController extends Controller
             $pedido = Pedido::findOrFail($id);
             if($pedido->status =='Iniciado'){
 
-                
-                
+                $pedido->itens()->detach();
+                $pedido->itens()->attach($request->itens);
                 DB::commit();
-
-                return $pedido = Pedido::findOrFail($id)->itens()->get();
-
                 return redirect('compra/pedido')->with('success', 'Pedido atualizado com successo');
-
-               
-
-               
             
             }
             else
@@ -141,7 +134,7 @@ class PedidoController extends Controller
     public function destroy($id)
     {
         $pedido = Pedido::findOrFail($id);
-        if($pedido->status =='iniciado')
+        if($pedido->status =='Iniciado')
         {
             $pedido->delete();
             return back()->with('success',  'Pedido deletado');

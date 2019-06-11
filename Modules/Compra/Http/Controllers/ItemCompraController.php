@@ -22,7 +22,7 @@ class ItemCompraController extends Controller
             ['icon' => 'shop', 'tool' => 'Itens', 'route' => '/compra/itemCompra/'],
             ['icon' => 'library_books', 'tool' => 'Pedidos', 'route' => '/compra/pedido/'],
             ['icon' => 'local_shipping', 'tool' => 'Fornecedores', 'route' => '/compra/fornecedor/'],
-            ['icon' => 'search', 'tool' => 'Busca', 'route' => '#'],
+            
 		];
     }
     public function index()
