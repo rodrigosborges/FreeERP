@@ -43,7 +43,7 @@
                             <span class="errors alert-danger"> {{ $errors->first('email') }} </span>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Senha">
+                            <input type="password" class="form-control" value="{{$data['model'] ? $data['model']->senha :''}} name="password" id="password" placeholder="Senha">
                             <p class="feedback alert-senha alert"></p>
                             <span class="errors alert-danger"> {{ $errors->first('password') }} </span>
                         </div>
@@ -250,6 +250,7 @@ $('#btnSalvarAtuacao').click(function(){
    
 });
 function cadastrarUsuario(nome,email,senha){
+    
     $.ajax({
         url:'cadastrarUsuario',
         data:{'_token':$('input[name=_token]').val(),
@@ -283,6 +284,40 @@ function cadastrarUsuario(nome,email,senha){
   //  console.log("papel"+ papel +" modulo"+ modulo+ " e vencimento"+ vencimento)
 }
 function atualizarUsuario(nome,email,senha){
+    
+    $.ajax({
+        url:'updateUsuario',
+        data:{'_token':$('input[name=_token]').val(),
+            'nome':nome,
+            'email': email,
+            'senha':senha,
+            'id':$("input[type=hidden][name=id").val(),
+            'papel':papel,
+              'modulo':modulo,
+              'vencimento':vencimento
+            },
+            type:"POST",
+            datatype:"json"
+
+    }).done(function(e){
+        console.log("done->"+e)
+        var sucesso = $.parseJSON(e)['sucesso'];
+        var mensagem = $.parseJSON(e)['mensagem'];
+        if(sucesso){
+            $('.feedback-done').addClass('alert-success')
+            $('.feedback-done').removeClass('alert-danger')
+        }
+        else{
+            $('.feedback-done').addClass('alert-danger')
+            $('.feedback-done').removeClass('alert-success')
+        }
+        $('.feedback-done').fadeIn('slow');
+        $('.feedback-done').html(mensagem);
+        console.log("done->"+e)
+
+    }).fail(function(){
+        console.log("fail");
+    })
     
 }
 });

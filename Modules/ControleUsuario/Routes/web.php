@@ -36,6 +36,7 @@ Route::prefix('controleusuario')->group(function() {
     Route::get('/sair','UsuarioController@logoff');
     Route::POST('/buscarModulos', "UsuarioController@buscarModulos");
     Route::POST('/cadastrarUsuario', 'UsuarioController@store');
+    Route::POST('/updateUsuario', 'UsuarioController@update');
 
 /*ROTAS DE PAPÉIS (PAPEL)*/
 
