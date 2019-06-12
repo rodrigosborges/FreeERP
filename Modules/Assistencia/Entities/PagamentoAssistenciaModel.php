@@ -9,4 +9,8 @@ class PagamentoAssistenciaModel extends Model
     protected $table = 'pagamento_assistencia';
     protected $fillable = ['id','desconto','valor', 'status','idConserto']; 
 
+
+    public function conserto(){
+        return $this->belongsTo('Modules\Assistencia\Entities\ConsertoAssistenciaModel', 'idConserto');
+    }
 }

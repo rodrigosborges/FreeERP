@@ -42,8 +42,20 @@
 		
 	</script>
 	<script>
+		$(document).ready(function(){
+			$(document).click(function(){
+				var valor = 0;
+				$('#valor_peca > option:selected').each(function(ondex, element){
+					valor = valor + Number.parseFloat($(element).attr('data-valor'));
+				});
+				$('#valor_servico > option:selected').each(function(ondex, element){
+					valor = valor + Number.parseFloat($(element).attr('data-valor'));
+				});
+				$('#valorTotal').val(valor);
+			});
+		})
 
-		$('#valor_peca').change(function(){
+		/*$('#valor_peca').change(function(){
 			var valor = 0;
 			$('#valor_peca > option:selected').each(function(index, element) {
 				valor = valor + Number.parseFloat( $(element).attr('data-valor'));
@@ -60,7 +72,7 @@
 				$('#valorTotal').val(valor);
 			});
 			 
-		});
+		});*/
 
 	</script>
 	<script>

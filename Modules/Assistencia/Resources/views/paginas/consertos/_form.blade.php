@@ -8,7 +8,7 @@
   <div class="form-group col-lg-4 col-sm-12">
     <div class="input-group-prepend">
       <span class="input-group-text" id="nascimento"><i class="material-icons">calendar_today</i></span>
-      <input class="form-control" name="data_entrada" type="text" value="{{ date('d/m/Y') }}" readonly>
+      <input class="form-control" name="data_entrada" id="teste" type="text" value="{{ date('d/m/Y') }}" readonly>
     </div>
   </div>
 

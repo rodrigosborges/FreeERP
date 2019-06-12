@@ -14,7 +14,7 @@ class PagamentoController extends Controller
      */
      public function index()
      {
-       return view('assistencia::pages.pagamento');
+       return view('assistencia::paginas.pagamento');
      }
 
     /**
