@@ -43,7 +43,7 @@
                             <span class="errors alert-danger"> {{ $errors->first('email') }} </span>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" value="{{$data['model'] ? $data['model']->senha :''}} name="password" id="password" placeholder="Senha">
+                            <input type="password" class="form-control" value="{{$data['model'] ? base64_decode($data['model']->senha) :''}}" name="password" id="password" placeholder="Senha">
                             <p class="feedback alert-senha alert"></p>
                             <span class="errors alert-danger"> {{ $errors->first('password') }} </span>
                         </div>
