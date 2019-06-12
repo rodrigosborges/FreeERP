@@ -288,27 +288,17 @@ class UsuarioController extends Controller
     {
         $retorno=array();
         $retorno['sucesso']=false;
-       
-
         $usuario = Usuario::findOrFail($request->id);
-
         $email = DB::table('usuario')->where('email', $request->email)->where('id', '<>', $request->id)->first();
-
-      
-
         if (!$email) {
             // email disponivel
             try {
-              
-
                 if ($request->senha == "") {
-                   
-
                     $usuario->senha = $usuario->senha;
                     $usuario->save();
-                } else {
+                }else
                     $usuario->senha = base64_encode($request->senha);
-                }
+                
                 $usuario->email = $request->email;
                 $usuario->nome = $request->nome;
                 $usuario->save();
@@ -317,12 +307,10 @@ class UsuarioController extends Controller
                     $atuacao->usuario_id =$usuario->id;
                     $atuacao->modulo_id = $request->modulo;
                     $atuacao->papel_id = $request->papel;
-                    $atuacao->save();
-                    
-                    
+                    $atuacao->save();                     
                 }
-              $retorno['mensagem']="Usuario atualizado com sucesso";
-              $retorno['sucesso']=true;
+                $retorno['mensagem']="Usuario atualizado com sucesso";
+                $retorno['sucesso']=true;
             } catch (Exception $e) {
                 DB::rollback();
              
@@ -361,43 +349,5 @@ class UsuarioController extends Controller
         $retorno['papeis']=$papeis;
         return json_encode($retorno);
         
-    }
-    public function updateUsuario(Request $request){
-     
-        $retorno= array();
-        $retorno['sucesso']=false;
-        
-       
-        try{
-            $email = DB::table('usuario')->where('email', $request->email)->where('id', '<>', $request->id)->first();
-            if(!$email){
-                
-                $usuario = new Usuario();
-                $usuario->nome =$request->nome;
-                $usuario->email =$request->email;
-                $usuario->senha = base64_encode($request->senha);
-                $usuario->save();
-                if($request->modulo!=null && $request->modulo!=""){
-                    $atuacao = new Atuacao();
-                    $atuacao->usuario_id =$usuario->id;
-                    $atuacao->modulo_id = $request->modulo;
-                    $atuacao->papel_id = $request->papel;
-                    $atuacao->save();
-                    
-                    
-                }
-                $retorno['sucesso']=true;
-                $retorno['usuario']= $usuario;
-                $retorno['mensagem']="Usuario Atualizado com sucesso";
-              
-            }else{
-                $retorno['mensagem']="O email digitado já está em uso";
-            }
-
-        }catch(Exception $e){
-            $retorno['mensagem'] = "Erro: ".$e;
- 
-        }
-        return json_encode($retorno);
     }
 }

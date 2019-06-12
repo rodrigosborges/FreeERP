@@ -78,26 +78,31 @@
          
         </div>
         <div class="modal-body">
-         <div class="conteudo" >
-         <a href="#" id="addPapel" >
+            <div class="conteudo" >
+            <p id="alert-modulo" class='alert '></p>
+                <a href="#" id="addPapel" >
                     <i class=" text-center material-icons mr-2">note_add</i> Adicionar Papel
                 </a>
-         </div>
+            </div>
       
-         <div class="form-group " id="divModulo">
-         <label for="selectModulo"><span><a class="material-icons" data-toggle="voltar" data-placement="top">
-            keyboard_backspace</a ></span>
-            Módulo de atuação
-        </label>
-        <div class="form-group">
-        <select class="form-control" id="selectModulo">
+            <div class="form-group " id="divModulo">
+            <a class="material-icons" id="voltar" href="#" data-toggle="tooltip" data-placement="top" title="voltar" >
+                <span>
+                    keyboard_backspace
+                </span>
+            </a>   
            
-        </select>
+
+        <div class="row">
+            <p> Módulo de atuação</p>
         </div>
         <div class="form-group">
-        <select class="form-control" id="selectPapel">
-           
-        </select>
+            <select class="form-control" id="selectModulo">
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" id="selectPapel">   
+            </select>
         </div>
         <div class="form-check-inline">
             <label class="form-check-label" display="none">
@@ -193,6 +198,8 @@ $(document).ready(function(){
     });
 $('#divModulo').hide();
 $('#moduloPermissao').click(function(){
+     $('#alert-modulo').addClass('alert-warning')
+    $('#alert-modulo').hide();
     $.ajax({
         url:'buscarModulos',
         type:'POST',
@@ -218,9 +225,13 @@ $('#moduloPermissao').click(function(){
        // console.log("falha")
     })
 })
+$('#voltar').click(function(){  
+    $('#divModulo').hide();
+    $('#addPapel').fadeIn('slow');  
+});
 $('#addPapel').click(function(){
  
- 
+    
     $('#addPapel').hide();  
     $('#divModulo').fadeIn(150);
     $("#vencimento").hide();
@@ -239,13 +250,28 @@ $('#btnSalvarAtuacao').click(function(){
     papel = $('#selectPapel').val();
     vencimento=""
     validadeAtuacao =$("input[type=radio][name='optionVencimento']:checked").val();
-   if(validadeAtuacao!="indefinido"){
+   
+   if(modulo==-1){
+        $('#alert-modulo').html("O campo <b>modulo</b> não pode ser vazio");
+        $('#alert-modulo').addClass("alert-warning") 
+        $('#alert-modulo').fadeIn('slow')
+
+   }else if(papel==-1){
+        $('#alert-modulo').html("O campo <b>Papel</b> não pode ser vazio");
+        $('#alert-modulo').addClass("alert-warning") 
+        $('#alert-modulo').fadeIn('slow')
+
+   }else if(validadeAtuacao!="indefinido"){
     vencimento = $("#dataVencimento").val()
     if(vencimento==""){
-       alert("DATA Vazia")
-   }else{
-       alert("data de vencimento:"+ vencimento)
+      $('#alert-modulo').html("O campo data não pode ser vazio");
+      $('#alert-modulo').addClass("alert-warning") 
+      $('#alert-modulo').fadeIn('slow');
    }
+   }else{
+       // fechar modal
+       $('#formPapel').modal('hide');
+       
    }
    
 });
@@ -320,7 +346,11 @@ function atualizarUsuario(nome,email,senha){
     })
     
 }
+//TOOLTIP
+
 });
 
+
 </script>
+
 @endsection
