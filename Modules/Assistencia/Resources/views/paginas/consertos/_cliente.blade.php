@@ -1,4 +1,4 @@
-<input type="hidden" name="idCliente" value="{{isset($conserto->idCliente) ? $conserto->idCliente : ''}}">
+<input type="hidden" name="idCliente" value="{{isset($conserto->idCliente) ? $conserto->idCliente : old('idCliente', '')}}">
 <div class="form-group row">
   <div class="input-group col-12">
     <div class="input-group-prepend">

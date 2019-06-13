@@ -48,8 +48,10 @@ class ConsertoController extends Controller
 
     public function visualizarConserto($id) {
        $conserto = ConsertoAssistenciaModel::find($id);
+       $itemPeca = ItemPeca::where('idConserto', $id)->get();
+       $itemServico = itemServico::where('idConserto', $id)->get();
 
-       return view('assistencia::paginas.consertos.vizualizarConserto',compact('conserto'));
+       return view('assistencia::paginas.consertos.vizualizarConserto',compact('conserto', 'itemPeca','itemServico'));
     }
 
     public function editar($id) {
@@ -80,28 +82,28 @@ class ConsertoController extends Controller
       $pagamento->save();
 
 
-      for ($i=0; $i < count($dados['pecas']); $i++) { 
+      for ($i=0; $i < count($dados['pecas']); $i++) {
         $pecas = new ItemPeca;
         $pecas->idConserto = $idConserto;
         $pecas->idPeca = $dados['pecas'][$i];
-        $pecas->save(); 
+        $pecas->save();
       }
-      for ($i=0; $i < count($dados['servicos']); $i++) { 
+      for ($i=0; $i < count($dados['servicos']); $i++) {
         $servicos = new ItemServico;
         $servicos->idConserto = $idConserto;
         $servicos->idMaoObra = $dados['servicos'][$i];
-        $servicos->save(); 
+        $servicos->save();
       }
 
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço iniciada!');
     }
 
     public function nomeClientes(Request $req){
-      
+
       return ClienteAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',cpf) AS nomecpf"))->get()->pluck('nomecpf');
     }
     public function nomeTecnicos(Request $req){
-       
+
       return TecnicoAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',cpf) AS nomecpf"))->get()->pluck('nomecpf');
     }
     public function dadosCliente(Request $req){
@@ -116,7 +118,7 @@ class ConsertoController extends Controller
 
     public function finalizar($id){
       $pagamento =  PagamentoAssistenciaModel::where('idConserto', $id)->get();
-      
+
       return view('assistencia::paginas.pagamentos.finalizarPagamento', compact('pagamento'));
     }
 

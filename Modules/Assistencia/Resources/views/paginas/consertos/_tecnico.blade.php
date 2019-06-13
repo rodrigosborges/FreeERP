@@ -10,7 +10,7 @@
 </div>
 
 <div class="form-group row">
-	<input type="hidden" name="idTecnico" value="{{isset($conserto->idTecnico) ? $conserto->idTecnico : ''}}">
+	<input type="hidden" name="idTecnico" value="{{isset($conserto->idTecnico) ? $conserto->idTecnico : old('idTecnico', '')}}">
   <div class="input-group col">
     <div class="input-group-prepend">
       <span class="input-group-text" id="nome"><i class="material-icons">person</i></span>
@@ -24,7 +24,3 @@
     <input type="text" class="form-control cpf-mask" name="cpf-tecnico" placeholder="000.000.000-00" readonly value="{{ isset($conserto->tecnico->cpf) ? $conserto->tecnico->cpf : old('cpf', '') }}">
   </div>
 </div>
-
-
-
-
