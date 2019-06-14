@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class PagamentoAssistenciaModel extends Model
 {
     protected $table = 'pagamento_assistencia';
-    protected $fillable = ['id','desconto','valor', 'status','idConserto']; 
+    protected $fillable = ['id','valor', 'status','forma','idConserto', 'idCliente']; 
 
 
     public function conserto(){
         return $this->belongsTo('Modules\Assistencia\Entities\ConsertoAssistenciaModel', 'idConserto');
     }
+    public function cliente(){
+        return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente');
+    }
+
 }

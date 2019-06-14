@@ -10,10 +10,6 @@ use DB;
 
 class ConsertoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
     public function index() {
 
       return view('assistencia::paginas.conserto');
@@ -31,19 +27,19 @@ class ConsertoController extends Controller
         $id = 1 + $ultimo->id;
       }
 
-      return view('assistencia::paginas.consertos.cadastrarconserto',compact('id','pecas','servicos'));
+      return view('assistencia::paginas.consertos.cadastrarconserto', compact('id','pecas','servicos'));
     }
 
     public function localizar() {
        $consertos = ConsertoAssistenciaModel::where('ativo', 1)->get();
 
-       return view('assistencia::paginas.consertos.localizarConserto',compact('consertos'));
+       return view('assistencia::paginas.consertos.localizarConserto', compact('consertos'));
     }
 
     public function buscar(Request $req) {
        $consertos = ConsertoAssistenciaModel::busca($req->busca);
 
-       return view('assistencia::paginas.consertos.localizarConserto',compact('consertos'));
+       return view('assistencia::paginas.consertos.localizarConserto', compact('consertos'));
     }
 
     public function visualizarConserto($id) {
@@ -51,7 +47,7 @@ class ConsertoController extends Controller
        $itemPeca = ItemPeca::where('idConserto', $id)->get();
        $itemServico = itemServico::where('idConserto', $id)->get();
 
-       return view('assistencia::paginas.consertos.vizualizarConserto',compact('conserto', 'itemPeca','itemServico'));
+       return view('assistencia::paginas.consertos.vizualizarConserto', compact('conserto', 'itemPeca','itemServico'));
     }
 
     public function editar($id) {
@@ -61,7 +57,7 @@ class ConsertoController extends Controller
       $itemPeca = ItemPeca::where('idConserto', $id)->get();
       $itemServico = itemServico::where('idConserto', $id)->get();
 
-      return view('assistencia::paginas.consertos.editarConserto',compact('conserto', 'id', 'pecas', 'servicos','itemPeca','itemServico'));
+      return view('assistencia::paginas.consertos.editarConserto', compact('conserto', 'id', 'pecas', 'servicos','itemPeca','itemServico'));
     }
     public function atualizar(Request $req, $id){
       $dados  = $req->all();
@@ -71,14 +67,19 @@ class ConsertoController extends Controller
     }
 
     public function salvar(Request $req){
+
       $dados  = $req->all();
+
       ConsertoAssistenciaModel::create($dados);
       $conserto = ConsertoAssistenciaModel::latest()->first();
       $idConserto = $conserto->id;
+
       $pagamento = new PagamentoAssistenciaModel;
-      $pagamento->idConserto = $idConserto;
-      $pagamento->desconto = 0;
+      $pagamento->idConserto = $conserto->id;
+      $pagamento->idCliente = $conserto->idCliente;
       $pagamento->valor = $conserto->valor;
+      $pagamento->status = 'Pendente';
+      $pagamento->forma = 'Não pago';
       $pagamento->save();
 
 
@@ -117,7 +118,8 @@ class ConsertoController extends Controller
     }
 
     public function finalizar($id){
-      $pagamento =  PagamentoAssistenciaModel::where('idConserto', $id)->get();
+
+      $pagamento =  PagamentoAssistenciaModel::where('idConserto', $id)->get()->first();
 
       return view('assistencia::paginas.pagamentos.finalizarPagamento', compact('pagamento'));
     }

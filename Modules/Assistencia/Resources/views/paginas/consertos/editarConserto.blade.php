@@ -39,24 +39,18 @@
 	</script>
 	<script>
 
-		$('#valor_peca').change(function(){
-			var valor = 0;
-			$('#valor_peca > option:selected').each(function(index, element) {
-				valor = valor + Number.parseFloat( $(element).attr('data-valor'));
+		$(document).ready(function(){
+			$(document).click(function(){
+				var valor = 0;
+				$('#valor_peca > option:selected').each(function(ondex, element){
+					valor = valor + Number.parseFloat($(element).attr('data-valor'));
+				});
+				$('#valor_servico > option:selected').each(function(ondex, element){
+					valor = valor + Number.parseFloat($(element).attr('data-valor'));
+				});
 				$('#valorTotal').val(valor);
 			});
-
-		});
-
-		$('#valor_servico').change(function(){
-			var valor = 0;
-			$('#valor_servico > option:checked').each(function(index, element) {
-				valor = valor + Number.parseFloat( $(element).attr('data-valor'));
-				var valorTotal = 
-				$('#valorTotal').val(valor);
-			});
-			 
-		});
+		})
 
 	</script>
 

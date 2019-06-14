@@ -51,7 +51,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="celnumber"><i class="material-icons">smartphone</i></span>
       </div>
-      <input required id="celnumber" name="celnumero" class="form-control input-md telefone" placeholder="(XX) X XXXX-XXXX"  type="text" maxlength="11"
+      <input required id="celnumber" name="celnumero" class="form-control input-md cel_sp" placeholder="(XX) X XXXX-XXXX"  type="text" maxlength="11"
       value="{{isset($cliente->celnumero) ? $cliente->celnumero : old('celnumero', '')}}">
     </div>
   </div>
@@ -60,7 +60,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="telefone"><i class="material-icons">phone</i></span>
       </div>
-      <input id="celnumber" name="telefonenumero" class="form-control input-md telefone" placeholder="(XX) X XXXX-XXXX"  type="text" maxlength="11"
+      <input id="celnumber" name="telefonenumero" class="form-control input-md cel_sp" placeholder="(XX) X XXXX-XXXX"  type="text" maxlength="11"
       value="{{isset($cliente->telefonenumero) ? $cliente->telefonenumero : old('telefonenumero', '')}}">
     </div>
   </div>

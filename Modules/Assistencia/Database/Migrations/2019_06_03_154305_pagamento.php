@@ -15,11 +15,13 @@ class Pagamento extends Migration
     {
         Schema::create('pagamento_assistencia', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('desconto', 6,2);
             $table->decimal('valor', 6,2);
-            $table->boolean('status')->default(1);
+            $table->text('status');
+            $table->text('forma');
             $table->integer('idConserto')->unsigned();
             $table->foreign('idConserto')->references('id')->on('conserto_assistencia');
+            $table->integer('idCliente')->unsigned();
+            $table->foreign('idCliente')->references('id')->on('conserto_assistencia');
             $table->timestamps();
         });
     }

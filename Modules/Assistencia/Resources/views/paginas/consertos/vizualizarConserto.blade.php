@@ -1,24 +1,46 @@
 @extends('assistencia::layouts.master')
-
+@section('css')
+	<style type="text/css">
+		.header{
+			display:flex;
+			justify-content: space-between;
+			align-items: center; 
+		}
+		.header img {
+			width: 60%;
+		}
+		.pequeno {
+			font-size: 12px;
+		}
+	</style>
+@stop
 @section('content')
 <div class="container">
   <div class="card">
     <div class="card-header">
-      <h4>Ordem de serviço</h4>
+    	<div class="row">
+    		<div class="col-11">
+	    		<h4>Vizualização da ordem de serviço</h4>
+	    	</div>
+      
+      		<div class="col-1"><i class="material-icons">local_printshop</i></div>
+    	</div>
+    	
     </div>
     <div class="card-body">
-      <div class="row">
-        <div class="col-6">
-          Logo da empresa
+      <div class="header">
+        <div class="">
+          <img class="img-fluid" src="{{ URL::to('/') }}/img/logo.png">
         </div>
-        <div class="col-6 text">
-          Numero {{$conserto->numeroOrdem}}
+        <div class="">
+        	<h4>Ordem de serviço nº {{$conserto->numeroOrdem}}</h4>
+          
         </div>
       </div>
       <hr>
       <div class="row">
-        <div class="col-6 row">
-          <div class="col-12 text-center">
+        <div class="col-lg-6 col-md-12 row text-center">
+          <div class="col-12">
             <h5>Cliente</h5>
             <hr>
           </div>
@@ -36,8 +58,8 @@
           </div>
 
         </div>
-        <div class="col-6 row">
-          <div class="col-12 text-center">
+        <div class="col-lg-6 col-md-12 row  text-center">
+          <div class="col-12">
             <h5>Aparelho</h5>
             <hr>
           </div>
@@ -56,30 +78,65 @@
 
         </div>
       </div>
+      
       <hr>
-      <div class="row">
-        <div class="col-12 text-center">
-          <h3>Defeito/Reclamação</h3>
+      <div class="row text-center">
+        <div class="col-12 ">
+          <h4>Valor a ser pago</h4>
+          <hr>
+        </div>
+        <div class="col-4">
+        	<?php 
+        		$val_peças = 0;
+        		$val_servicos = 0;
+        	?>
+        	@foreach ($itemPeca as $peca)
+        	<?php 
+        		$val_peças += $peca->peca->valor_venda;
+        	?>
+        	@endforeach
+        	@foreach ($itemServico as $servico)
+        	<?php 
+        		$val_servicos += $servico->servico->valor;
+        	?>	
+        	@endforeach
+          Peças: R${{$val_peças}}
+        </div>
+        <div class="col-4">
+          Mão de obra: R${{$val_servicos}}
+        </div>
+        <div class="col-4">
+          Valor total: R${{$conserto->valor}}
+        </div>
+      </div>
+    </div>
+    <hr>
+      <div class="row text-center ">
+        <div class="col-12">
+          <h4>Defeito/Reclamação</h4>
           <hr>
         </div>
         <div class="col-6">
-          Defeito: {{$conserto->defeito}}
+          <h5>Defeito:<br></h5>
+          {{$conserto->defeito}}
         </div>
         <div class="col-6">
-          Observações: {{$conserto->obs}}
+        	<h5>Observações:<br></h5>
+
+          {{$conserto->obs}}
         </div>
 
       </div>
       <hr>
       <div class="row">
         <div class="col-12 text-center">
-          <h4>Montagem</h4>
+          <h4>Serviços</h4>
           <hr>
         </div>
-        <div class="col-6 row text-center">
+        <div class="col-lg-6 col-md-12 row text-center">
           <div class="col-12">
             <h5>Peças</h5>
-            <hr>
+
           </div>
           @foreach ($itemPeca as $peca)
           <div class="col-12 text-center">
@@ -88,10 +145,10 @@
 
           @endforeach
         </div>
-        <div class="col-6 row">
+        <div class="col-lg-6 col-md-12 row">
           <div class="col-12 text-center">
             <h5>Mão de obra</h5>
-            <hr>
+
           </div>
           @foreach ($itemServico as $servico)
             <div class="col-12 text-center">
@@ -103,22 +160,9 @@
       </div>
 
       <hr>
-      <div class="row text-center">
-        <div class="col-12 ">
-          <h4>Valor a ser pago</h4>
-          <hr>
-        </div>
-        <div class="col-4">
-          Peças:
-        </div>
-        <div class="col-4">
-          Mão de obra:
-        </div>
-        <div class="col-4">
-          Valor total:
-        </div>
+      <div class="pequeno">
+      	Data da ultima alteração: {{$conserto->data_entrada}}
       </div>
-    </div>
   </div>
 </div>
 
