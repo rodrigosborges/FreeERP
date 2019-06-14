@@ -15,7 +15,11 @@ class CreateEventoTable extends Migration
     {
         Schema::create('evento', function (Blueprint $table) {
             $table->bigIncrements('id');
-
+            $table->string('nome');
+            $table->dateTime('data_hora');
+            $table->string('descricao')->nullable();
+            $table->unsignedBigInteger('calendario_id');
+            $table->foreign('calendario_id')->references('id')->on('calendario');
             $table->timestamps();
         });
     }
