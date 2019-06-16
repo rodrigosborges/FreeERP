@@ -14,7 +14,7 @@ class CreateCategoriaReceberTable extends Migration {
 	{
 		Schema::create('categoria_receber', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->integer('id', true);
 			$table->string('nome', 100);
 			$table->string('remember_token', 64)->nullable();
 			$table->timestamps();

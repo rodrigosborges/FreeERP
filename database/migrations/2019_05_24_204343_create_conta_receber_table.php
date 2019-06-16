@@ -14,11 +14,12 @@ class CreateContaReceberTable extends Migration {
 	{
 		Schema::create('conta_receber', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->integer('id',true);
 			$table->text('descricao', 65535);
-			$table->decimal('valor', 9);
-			$table->integer('parcelas');
-			$table->integer('categoria_receber_id')->unsigned()->index('fk_conta_receber_categoria_receber1');
+			$table->decimal('valor', 9, 2);
+			$table->integer('categoria_receber_id')->index('fk_conta_receber_categoria_receber1');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
