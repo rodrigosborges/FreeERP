@@ -19,12 +19,12 @@ class EstadoSeeder extends Seeder
             [
                 "id"    => "3",
                 "nome"  => "Amazonas",
-                "uf"    => "AP"
+                "uf"    => "AM"
             ],
             [
                 "id"    => "4",
                 "nome"  => "Amapá",
-                "uf"    => "AM"
+                "uf"    => "AP"
             ],
             [
                 "id"    => "5",
