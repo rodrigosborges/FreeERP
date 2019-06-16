@@ -81,11 +81,18 @@ $(document).on("click", ".del-doc", function() {
 
 //ENDEREÇO
 $('.estados').change(function() {
+    
+    //errado
     $(".estados option").each(function() {
         if($(this).is(':selected')){
             atualizarCidades($(this).text())
         }
     })
+
+    //certo
+    atualizarCidades($(".estados option:selected").data("uf"))
+
+
 })
 
 function atualizarCamposEndereco(dados) {
@@ -117,7 +124,7 @@ function atualizarCamposEndereco(dados) {
 function selecionarEstado(uf) {
     $(".estados option").removeAttr('selected')
     $(".estados option").each(function() {
-        if($(this).text() == uf){
+        if($(this).data("uf") == uf){
             $(this).attr('selected', 'selected')
         }
     })

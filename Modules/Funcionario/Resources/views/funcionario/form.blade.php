@@ -242,7 +242,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="uf" class="control-label">UF</label>
+                    <label for="uf" class="control-label">Estado</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -252,7 +252,7 @@
                         <select name="endereco[estado_id]" id="estado_id" class="form-control estados">
                             <option value="">Selecione</option>
                             @foreach($data['estados'] as $estado))
-                                <option value="{{ $estado->id }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco()->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                                <option data-uf="{{$estado->uf}}" value="{{ $estado->id }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco()->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
                             @endforeach
                         </select>
                     </div>

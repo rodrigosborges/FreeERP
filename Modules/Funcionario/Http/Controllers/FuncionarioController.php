@@ -47,7 +47,7 @@ class FuncionarioController extends Controller{
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
             'estados'           => Estado::all(),
-            'cidades'           => Cidade::all(),
+            'cidades'           => [],
             'cargos'            => Cargo::all(),
             'title'             => 'Cadastro de Funcionário',
             'button'            => 'Salvar',
@@ -348,13 +348,9 @@ class FuncionarioController extends Controller{
 
     public function getCidades($uf) {
 
-        $estado = Estado::where('nome', $uf)->first();
+        $estado = Estado::where('uf', $uf)->first();
 
-        $cidades = Cidade::where('estado_id', $estado->id)->select('id', 'nome')->get();
-
-        if(count($cidades) > 0){
-            return $cidades;
-        }          
+        return $estado ? $estado->cidades()->select('id','nome')->get() : [];
  
     }
 
