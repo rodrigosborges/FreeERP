@@ -16,6 +16,7 @@ class CreateEstadoTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('nome', 100);
+			$table->string('uf', 2);
 		});
 	}
 
