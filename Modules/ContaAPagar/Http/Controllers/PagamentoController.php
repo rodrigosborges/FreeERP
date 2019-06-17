@@ -9,12 +9,12 @@ use Modules\ContaAPagar\Entities\{ContaAPagarModel,PagamentoModel,CategoriaModel
 
 class PagamentoController extends Controller
 {
-    
+
     public function categoria_conta($id_conta){
         $conta = ContaAPagarModel::where('id', $id_conta)->first();
         return $conta->categoria_pagar_id;
     }
-    
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -28,32 +28,32 @@ class PagamentoController extends Controller
 
         $pagamento = PagamentoModel::find($id);
         $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
-        $pagamento->ativo = false;
+        $pagamento->delete();
         $pagamento->update();
 
-        $categorias = CategoriaModel::where('ativo', 1)->get();
-        $pagamentos = PagamentoModel::where('conta_pagar_id', $pagamento->conta_pagar_id)->where('ativo', 1)->get();
+        $categorias = CategoriaModel::all();
+        $pagamentos = PagamentoModel::where('conta_pagar_id', $pagamento->conta_pagar_id)->get();
         $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
-        $n_parcelas = PagamentoModel::where('ativo', 1)->where('conta_pagar_id', $conta->id)->count();
+        $n_parcelas = PagamentoModel::where('conta_pagar_id', $conta->id)->count();
         $conta->parcelas = $n_parcelas;
         $conta->update();
 
-        $id = $conta->id;        
-        
+        $id = $conta->id;
+
         return redirect()->route('conta.editar', compact('id', 'pagamentos', 'categorias', 'conta'));
     }
     public function salvar(Request $req, $id) {
 
         $dados = $req->all();
         if($dados['status_pagamento'] == 'on'){
-            $dados['status_pagamento'] = "Pago";    
+            $dados['status_pagamento'] = "Pago";
         }else{
-            $dados['status_pagamento'] = "Aguardando";   
+            $dados['status_pagamento'] = "Aguardando";
         }
         $pagamento = PagamentoModel::find($id)->update($dados);
         $pagamento = PagamentoModel::find($id);
-        $categorias = CategoriaModel::where('ativo', 1)->get();
-        $pagamentos = PagamentoModel::where('conta_pagar_id', $pagamento->conta_pagar_id)->where('ativo', 1)->get();
+        $categorias = CategoriaModel::all();
+        $pagamentos = PagamentoModel::where('conta_pagar_id', $pagamento->conta_pagar_id)->get();
         $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
         $id = $conta->id;
 
@@ -69,15 +69,15 @@ class PagamentoController extends Controller
         $pagamento->data_vencimento = $dados['data_vencimento'];
         $pagamento->data_pagamento = $dados['data_pagamento'];
         if($dados['status_pagamento'] == 'on'){
-            $pagamento->status_pagamento = "Pago";    
+            $pagamento->status_pagamento = "Pago";
         }else{
-            $pagamento->status_pagamento = "Aguardando";   
+            $pagamento->status_pagamento = "Aguardando";
         }
         $pagamento->valor = $dados['valor'];
         $pagamento->save();
-        
+
         $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
-        $n_parcelas = PagamentoModel::where('ativo', 1)->where('conta_pagar_id', $conta->id)->count();
+        $n_parcelas = PagamentoModel::where('conta_pagar_id', $conta->id)->count();
         $conta->parcelas = $n_parcelas;
         $conta->update();
 

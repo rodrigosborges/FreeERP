@@ -11,7 +11,7 @@ class CategoriaController extends Controller
 {
 
     public function index(){
-        $categorias = CategoriaModel::where('ativo', 1)->get();
+        $categorias = CategoriaModel::all();
         return view('contaapagar::categorias', compact('categorias'));
     }
 
@@ -20,18 +20,22 @@ class CategoriaController extends Controller
         $dados = $request->all();
         CategoriaModel::create($dados);
 
-        $categorias = CategoriaModel::where('ativo', 1)->get();
+        $categorias = CategoriaModel::all();
         return view('contaapagar::categorias', compact('categorias'))->with('success','A categoria foi cadastrado com sucesso!');
     }
 
-    
+
     public function deletar($id){
-        $categoria = CategoriaModel::find($id);
-        $categoria->ativo = false;
-        $categoria->update();
+        $categoria = CategoriaModel::withTrashed()->findOrFail($id);
+
+        if($categoria->trashed())
+            $categoria->restore();
+        else
+            $categoria->delete();
+
         return $this->index();
-    }    
-    
+    }
+
     public function store(Request $request)
     {
         //
@@ -42,13 +46,13 @@ class CategoriaController extends Controller
         return view('contaapagar::show');
     }
 
-    
+
     public function edit($id)
     {
         return view('contaapagar::edit');
     }
 
-   
+
     public function update(Request $request, $id)
     {
         //
