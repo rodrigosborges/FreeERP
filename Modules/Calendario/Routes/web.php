@@ -13,4 +13,5 @@
 
 Route::prefix('calendario')->group(function() {
     Route::get('/', 'CalendarioController@index');
+    Route::get('/agenda/criar', 'CalendarioController@create')->name('agenda.criar');
 });
