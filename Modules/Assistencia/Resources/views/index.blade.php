@@ -9,6 +9,8 @@
     justify-content: space-around;
   }
 
+
+
 </style>
 @stop
 
@@ -17,7 +19,7 @@
 
   <div class="card-header caixa" >
     <ul class="nav nav-tabs flex-column flex-sm-row">
-      <li class="nav-item">
+      <li class="nav-item" >
         <a class="nav-link" href="{{route('consertos.index')}}"><h3>Consertos</h3></a>
       </li>
       <li class="nav-item">
@@ -39,14 +41,24 @@
     </ul>
   </div>
 
-  <div class="card-body">
-    <div class="row">
-      <div id="curve_chart" style="width: 600px; height: 300px"></div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+          <div class="card-body text-center">
+            <div id="curve_chart" style="width: 300px; height: 200px"></div>
+          </div>
+        </div>
     </div>
-    <div class="row">
-      <div id="donutchart" style="width: 500px; height: 300px;"></div>
+    <div class="col-lg-6">
+      <div class="card">
+          <div class="card-body text-center">
+            <div id="donutchart" style="width: 300px; height: 200px;"></div>
+          </div>
+        </div>
     </div>
   </div>
+
+
 
 </div>
 

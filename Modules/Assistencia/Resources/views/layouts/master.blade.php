@@ -138,7 +138,6 @@ $menu = [
                       @yield('content')
                     </div>
 
-
                 </div>
                 <div class="d-flex align-items-center" id="footer">
                     Desenvolvido por IFSP Caraguatatuba &copy
@@ -160,9 +159,11 @@ $menu = [
 
         <script>
             function toggleMenu() {
+                console.log('#sidebar');
                 var sidebar = document.getElementById('sidebar');
                 var workspace = document.getElementById('workspace');
                 var header = document.getElementById('header');
+          
 
                 var displaySidebar = sidebar.style.display === "none" ? "block" : "none";
                 var marginLeftWorkspace = workspace.style.marginLeft === "0px" ? "210px" : "0px";
@@ -171,9 +172,10 @@ $menu = [
                 sidebar.style.display = displaySidebar;
                 workspace.style.marginLeft = marginLeftWorkspace;
                 header.style.width = widthHeader;
+
             }
         </script>
-
         @yield('js')
+
     </body>
 </html>

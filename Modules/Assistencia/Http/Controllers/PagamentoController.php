@@ -13,9 +13,18 @@ class PagamentoController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-     public function index()
-     {
-       return view('assistencia::paginas.pagamento');
+     public function index(){
+        $pagamentos = PagamentoAssistenciaModel::paginate(10);
+        
+        return view('assistencia::paginas.pagamentos.localizarPagamentos', compact('pagamentos'));
+    }
+     public function recibo($id){
+        $pagamento =  PagamentoAssistenciaModel::find($id);
+        if($pagamento->status == 'Pago'){
+            return view('assistencia::paginas.pagamentos.recibo', compact('pagamento'));
+        } else {
+            return view('assistencia::paginas.pagamento')->with('error', 'Pagamento do serviço não realizado');
+        }
      }
 
  
@@ -32,12 +41,16 @@ class PagamentoController extends Controller
         $pagamento->status = 'Pago';
         $pagamento->forma = $forma;
         $pagamento->save();
-        $ativo = 0;
         $conserto = ConsertoAssistenciaModel::find($id);
-        $conserto->ativo = $ativo;
+        $conserto->ativo = 0;
         $conserto->save();
 
-        return redirect()->route('consertos.localizar');
+        if ($dados['recibo']=='N') {
+            return redirect()->route('consertos.localizar');
+        } else if ($dados['recibo']=='S') {
+             return redirect()->route('pagamento.recibo', $pagamento->id);
+        }
+        
     }
 
     /**
