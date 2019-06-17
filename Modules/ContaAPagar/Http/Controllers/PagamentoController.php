@@ -34,7 +34,11 @@ class PagamentoController extends Controller
         $categorias = CategoriaModel::all();
         $pagamentos = PagamentoModel::where('conta_pagar_id', $pagamento->conta_pagar_id)->get();
         $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
+        /* Atualiza número de parcelas da conta */
         $n_parcelas = PagamentoModel::where('conta_pagar_id', $conta->id)->count();
+        /* Atualiza valor total da conta baseado nas parcelas */
+        $total_conta = PagamentoModel::where('conta_pagar_id', $conta->id)->sum('valor');
+        $conta->valor = $total_conta;
         $conta->parcelas = $n_parcelas;
         $conta->update();
 
@@ -42,6 +46,7 @@ class PagamentoController extends Controller
 
         return redirect()->route('conta.editar', compact('id', 'pagamentos', 'categorias', 'conta'));
     }
+    
     public function salvar(Request $req, $id) {
 
         $dados = $req->all();
@@ -56,6 +61,13 @@ class PagamentoController extends Controller
         $pagamentos = PagamentoModel::where('conta_pagar_id', $pagamento->conta_pagar_id)->get();
         $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
         $id = $conta->id;
+        
+        /* Atualiza número de parcelas da conta */
+        $n_parcelas = PagamentoModel::where('conta_pagar_id', $conta->id)->count();
+        /* Atualiza valor total da conta baseado nas parcelas */
+        $total_conta = PagamentoModel::where('conta_pagar_id', $conta->id)->sum('valor');
+        $conta->valor = $total_conta;
+        $conta->update();
 
         return redirect()->route('conta.editar', compact('id','pagamentos','categorias','conta'));
     }
@@ -77,7 +89,12 @@ class PagamentoController extends Controller
         $pagamento->save();
 
         $conta = ContaAPagarModel::find($pagamento->conta_pagar_id);
+        
+        /* Atualiza número de parcelas da conta */
         $n_parcelas = PagamentoModel::where('conta_pagar_id', $conta->id)->count();
+        /* Atualiza valor total da conta baseado nas parcelas */
+        $total_conta = PagamentoModel::where('conta_pagar_id', $conta->id)->sum('valor');
+        $conta->valor = $total_conta;
         $conta->parcelas = $n_parcelas;
         $conta->update();
 
