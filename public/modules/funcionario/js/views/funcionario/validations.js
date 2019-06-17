@@ -32,6 +32,10 @@ $('#form').validate({
         "telefones[][numero]": {
             digits: true,
             maxlength: 4
+        },
+        "telefones[][tipo_telefone_id]": {
+            digits: true,
+            maxlength: 4
         }
     },
     messages:{}

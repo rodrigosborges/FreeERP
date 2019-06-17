@@ -132,7 +132,7 @@
                                 <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->cpf()->id}}">
                             @endif
                             <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{ old('documentos.cpf.numero', $data['model'] ? $data['model']->cpf()->numero : '') }}">
-                            <input required type="hidden" name="documentos[cpf][tipo_documento_id]" value="{{$data['cpf_id']}}">
+                            <input required type="hidden" name="documentos[cpf][tipo_documento_id]" value="1">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.cpf.numero') }}</span>
                     </div>
@@ -150,7 +150,7 @@
                                 <input type="hidden" name="documentos[rg][id]" value="{{$data['model']->rg()->id}}">
                             @endif
                             <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="form-control" value="{{ old('documentos.rg.numero', $data['model'] ? $data['model']->rg()->numero : '') }}">
-                            <input required type="hidden" name="documentos[rg][tipo_documento_id]" value="{{$data['rg_id']}}">
+                            <input required type="hidden" name="documentos[rg][tipo_documento_id]" value="2">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.rg.numero') }}</span>
                     </div>
@@ -172,7 +172,7 @@
                                         <i class="material-icons">description</i>
                                     </span>
                                 </div>
-                                <select name="docs_outros[{{$key}}][tipo_documento_id]" class="form-control documentos" {{isset($documento) ? '' : 'disabled'}}>
+                                <select required name="docs_outros[{{$key}}][tipo_documento_id]" class="form-control documentos" {{isset($documento) ? '' : 'disabled'}}>
                                     <option value="">Selecione</option>
                                     @foreach($data['tipo_documentos'] as $tipo)
                                         <option value="{{$tipo->id}}" {{ isset($documento['tipo_documento_id']) && $documento['tipo_documento_id'] == $tipo['id'] ? 'selected' : '' }}>{{$tipo->nome}}</option>
@@ -210,7 +210,7 @@
                                     <label for="comprovante_{{$key}}" class="custom-file-label">Selecione</label>   
                                 </div>
                                 <span class="errors"> {{ $errors->first('docs_outros.'.$key.'.comprovante') }}</span>
-                                @if($documento->comprovante)
+                                @if(isset($documento->comprovante))
                                     <a target="_blank" href='{{ url("funcionario/funcionario/downloadComprovante/".$documento["id"]) }}' class="input-group-text file_download">
                                         <i class="material-icons">cloud_download</i>
                                     </a>

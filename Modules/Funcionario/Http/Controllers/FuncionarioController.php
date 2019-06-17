@@ -42,9 +42,7 @@ class FuncionarioController extends Controller{
         $data = [
             'url'               => url("funcionario/funcionario"),
             'model'             => '',
-            'tipo_documentos'   => TipoDocumento::where('nome', '<>', "CPF")->where('nome', '<>', "RG")->get(),
-            'cpf_id'            => TipoDocumento::where('nome','CPF')->first()->id,
-            'rg_id'             => TipoDocumento::where('nome','RG')->first()->id,
+            'tipo_documentos'   => TipoDocumento::whereNotIn("id",[1,2])->get(),
             'documentos'        => [new Documento],
             'telefones'         => [new Telefone],
             'tipos_telefone'    => TipoTelefone::all(),
@@ -99,34 +97,35 @@ class FuncionarioController extends Controller{
             }
             
             if($request->input('docs_outros')) {
-
                 foreach($request->docs_outros as $documento) {
+                    if($documento['numero']){
 
-                    if(isset($documento['comprovante'])) {
+                        if(isset($documento['comprovante'])) {
 
-                        $nome = uniqid(date('HisYmd'));
-                        $extensao = $documento['comprovante']->extension();
-                        $nomeArquivo = "{$nome}.{$extensao}";
-                        $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
+                            $nome = uniqid(date('HisYmd'));
+                            $extensao = $documento['comprovante']->extension();
+                            $nomeArquivo = "{$nome}.{$extensao}";
+                            $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
 
-                        if (!$upload) {
-                            return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+                            if (!$upload) {
+                                return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
+                            }
+
+                            $documento['comprovante'] = $nomeArquivo;
+                        
                         }
-
-                        $documento['comprovante'] = $nomeArquivo;
                     
+                        $doc = Documento::create($documento);
+
+                        Relacao::create([
+                            'tabela_origem'     => 'funcionario',
+                            'origem_id'         => $funcionario->id,
+                            'tabela_destino'    => 'documento',
+                            'destino_id'        => $doc->id,
+                            'modelo'            => 'Documento'
+                        ]);
+
                     }
-                
-                    $doc = Documento::create($documento);
-
-                    Relacao::create([
-                        'tabela_origem'     => 'funcionario',
-                        'origem_id'         => $funcionario->id,
-                        'tabela_destino'    => 'documento',
-                        'destino_id'        => $doc->id,
-                        'modelo'            => 'Documento'
-                    ]);
-
                 }
             }
 
@@ -183,12 +182,12 @@ class FuncionarioController extends Controller{
 
         $funcionario = Funcionario::findOrFail($id);
 
-        $documentos = Documento::whereNotIn('tipo_documento_id', [1,2])->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$id)->where('relacao.tabela_origem','funcionario')->select('documento.*')->get();
+        $documentos = Documento::whereNotIn('tipo_documento_id', [1,2])->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$id)->where('relacao.tabela_origem','funcionario')->where('relacao.tabela_destino','documento')->select('documento.*')->get();
 
         $data = [
             "url" 	 	        => url("funcionario/funcionario/$id"),
             "model"		        => $funcionario,
-            'tipo_documentos'   => TipoDocumento::where('nome', '<>', "CPF")->where('nome', '<>', "RG")->get(),
+            'tipo_documentos'   => TipoDocumento::whereNotIn("id",[1,2])->get(),
             'documentos'        => count($documentos) ? $documentos : [new Documento],
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
@@ -196,8 +195,6 @@ class FuncionarioController extends Controller{
             'estados'           => Estado::all(),
             'cidades'           => Cidade::where('estado_id', $funcionario->endereco()->cidade->estado_id)->get(),
             'cargos'            => Cargo::all(),
-            'cpf_id'            => TipoDocumento::where('nome','CPF')->first()->id,
-            'rg_id'             => TipoDocumento::where('nome','RG')->first()->id,
             'title'		        => "Atualizar Funcionário",
 			"button" 	        => "Atualizar",
         ];
@@ -241,12 +238,16 @@ class FuncionarioController extends Controller{
                     $documentosFuncionarioIds[] = $documento->id;
                 }
             }
+
+            $documentosExcluir = [];
             
             $documentosRemovidos = array_diff($documentosFuncionarioIds, $documentosRequestIds);
 
             if(count($documentosRemovidos) > 0) {
                 foreach($documentosRemovidos as $documentoId) {
-                    Documento::find($documentoId)->delete();
+                    $documento = Documento::find($documentoId);
+                    $documentosExcluir[] = "funcionario/documentos/".$documento->comprovante; 
+                    $documento->delete();
                     Relacao::where('tabela_origem','funcionario')->where('origem_id',$funcionario->id)->where('tabela_destino','documento')->where('destino_id',$documentoId)->delete();
                 }
             }
@@ -254,11 +255,8 @@ class FuncionarioController extends Controller{
 
             if($request->input('docs_outros')) {
 
-                foreach($request->input('docs_outros') as $documento){
-                    if(isset($documento['id'])) {
-                        Documento::find($documento['id'])->update($documento);
-                    } else {
-
+                foreach($request->docs_outros as $documento){
+                    if($documento['numero']){
                         if(isset($documento['comprovante'])) {
 
                             $nome = uniqid(date('HisYmd'));
@@ -269,23 +267,36 @@ class FuncionarioController extends Controller{
                             if (!$upload) {
                                 return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
                             }
-            
-                            $documento['comprovante'] = $nomeArquivo;
 
+                            $documento['comprovante'] = $nomeArquivo;
+                        
                         }
 
-                        $documento = Documento::create($documento);
+                        if(isset($documento['id'])){
 
-                                            
-                        Relacao::create([
-                            'tabela_origem'     => 'funcionario',
-                            'origem_id'         => $funcionario->id,
-                            'tabela_destino'    => 'documento',
-                            'destino_id'        => $documento->id,
-                            'modelo'            => 'Documento'
-                        ]);
+                            $documentoModel = Documento::find($documento['id']);
+
+                            if(isset($documento['comprovante']) && $documentoModel->comprovante)
+                                $documentosExcluir[] = "funcionario/documentos/".$documentoModel->comprovante;
+
+                            $documentoModel->update($documento);
+
+                        }else{
+                            $documentoModel = Documento::create($documento);
+                        }
+
+                        if(!isset($documento['id'])){
+                            Relacao::create([
+                                'tabela_origem'     => 'funcionario',
+                                'origem_id'         => $funcionario->id,
+                                'tabela_destino'    => 'documento',
+                                'destino_id'        => $documentoModel->id,
+                                'modelo'            => 'Documento'
+                            ]);
+                        }
                     }
                 }
+
             }
 
             //remoção de telefones
@@ -322,6 +333,9 @@ class FuncionarioController extends Controller{
                     ]);
                 }
             }
+
+            #caso tudo dê certo acima, ele excluir os arquivos inutilizados
+            Storage::delete($documentosExcluir);
 
 			DB::commit();
             return redirect('/funcionario/funcionario')->with('success', 'Funcionário atualizado com successo!');

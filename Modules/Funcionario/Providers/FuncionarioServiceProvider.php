@@ -16,6 +16,8 @@ class FuncionarioServiceProvider extends ServiceProvider
     public function boot()
     {
         Validator::extend('cpf', 'Modules\Funcionario\Validators\CpfValidator@validate');
+        Validator::extend('telefone', 'Modules\Funcionario\Validators\TelefoneValidator@validate');
+        Validator::extend('cpfUnico', 'Modules\Funcionario\Validators\CpfUnicoValidator@validate');
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
