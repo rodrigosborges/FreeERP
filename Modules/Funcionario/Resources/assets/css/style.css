@@ -16,3 +16,11 @@ div.error, .errors {
 .titulo_cargo{
     font-weight: 500;
 }
+
+.custom-file-input ~ .custom-file-label::after {
+    content: "Procurar";
+}
+
+.required-symbol{
+    color: red;
+}

@@ -19,6 +19,7 @@ Route::prefix('funcionario')->group(function() {
     Route::get('get-cidades/{uf}', 'FuncionarioController@getCidades');
     Route::get('funcionario/editCargo/{id}','FuncionarioController@editCargo');
     Route::post('funcionario/editCargo/{id}','FuncionarioController@updateCargo');
+    Route::get('funcionario/downloadComprovante/{id}','FuncionarioController@downloadComprovante');
 
     Route::resource('funcionario', 'FuncionarioController');
     Route::resource('cargo', 'CargoController');

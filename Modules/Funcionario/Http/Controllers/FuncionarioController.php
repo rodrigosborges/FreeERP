@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Cargo, Funcionario};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Relacao, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
+use Illuminate\Support\Facades\Storage;
 use DB;
 
 class FuncionarioController extends Controller{
@@ -41,7 +42,9 @@ class FuncionarioController extends Controller{
         $data = [
             'url'               => url("funcionario/funcionario"),
             'model'             => '',
-            'tipo_documentos'   => TipoDocumento::whereNotIn('id', [1,2])->get(),
+            'tipo_documentos'   => TipoDocumento::where('nome', '<>', "CPF")->where('nome', '<>', "RG")->get(),
+            'cpf_id'            => TipoDocumento::where('nome','CPF')->first()->id,
+            'rg_id'             => TipoDocumento::where('nome','RG')->first()->id,
             'documentos'        => [new Documento],
             'telefones'         => [new Telefone],
             'tipos_telefone'    => TipoTelefone::all(),
@@ -185,7 +188,7 @@ class FuncionarioController extends Controller{
         $data = [
             "url" 	 	        => url("funcionario/funcionario/$id"),
             "model"		        => $funcionario,
-            'tipo_documentos'   => TipoDocumento::whereNotIn('id', [1,2])->get(),
+            'tipo_documentos'   => TipoDocumento::where('nome', '<>', "CPF")->where('nome', '<>', "RG")->get(),
             'documentos'        => count($documentos) ? $documentos : [new Documento],
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
@@ -193,6 +196,8 @@ class FuncionarioController extends Controller{
             'estados'           => Estado::all(),
             'cidades'           => Cidade::where('estado_id', $funcionario->endereco()->cidade->estado_id)->get(),
             'cargos'            => Cargo::all(),
+            'cpf_id'            => TipoDocumento::where('nome','CPF')->first()->id,
+            'rg_id'             => TipoDocumento::where('nome','RG')->first()->id,
             'title'		        => "Atualizar Funcionário",
 			"button" 	        => "Atualizar",
         ];
@@ -391,6 +396,13 @@ class FuncionarioController extends Controller{
             return back()->with('error', 'Erro no servidor');
             
 		}
+    }
+
+    public function downloadComprovante($id){
+        $documento = Documento::findOrFail($id);
+        if($documento->comprovante){
+            return Storage::download('funcionario/documentos/'.$documento->comprovante);
+        }
     }
 
 }

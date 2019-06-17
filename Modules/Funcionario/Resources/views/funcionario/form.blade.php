@@ -14,9 +14,9 @@
         <strong><h6 class="mb-3">Dados Básicos</h6></strong>
         <hr>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-lg-9">
                 <div class="form-group">
-                    <label for="nome" class="control-label">Nome</label>
+                    <label for="nome" class="control-label">Nome <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -28,9 +28,9 @@
                     <span class="errors"> {{ $errors->first('funcionario.nome') }} </span>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-3">
                 <div class="form-group">
-                    <label for="sexo" class="control-label">Sexo</label>
+                    <label for="sexo" class="control-label">Sexo <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -38,18 +38,18 @@
                             </span>
                         </div>
                         <select required name="funcionario[sexo]" class="form-control">
-                                <option value="">Selecione</option>
-                                <option {{ old('funcionario.sexo', $data['model'] ? $data['model']->sexo : '') == '0' ? 'selected' : ''}} value='0'>Feminino</option>
-                                <option {{ old('funcionario.sexo', $data['model'] ? $data['model']->sexo : '') == '1' ? 'selected' : ''}} value='1'>Masculino</option>
+                            <option value="">Selecione</option>
+                            <option {{ old('funcionario.sexo', $data['model'] ? $data['model']->sexo : '') == '0' ? 'selected' : ''}} value='0'>Feminino</option>
+                            <option {{ old('funcionario.sexo', $data['model'] ? $data['model']->sexo : '') == '1' ? 'selected' : ''}} value='1'>Masculino</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-{{$data['model'] ? '4' : 3}}">
+            <div class="col-lg-{{$data['model'] ? '4' : 3}}">
                 <div class="form-group">
-                    <label for="estado_civil_id" class="control-label">Estado Civil</label>
+                    <label for="estado_civil_id" class="control-label">Estado Civil <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -65,9 +65,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-{{$data['model'] ? '4' : 3}}">
+            <div class="col-lg-{{$data['model'] ? '4' : 3}}">
                 <div class="form-group">
-                    <label for="data_nascimento" class="control-label">Data de Nascimento</label>
+                    <label for="data_nascimento" class="control-label">Data de Nascimento <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -79,9 +79,9 @@
                     <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
                 </div>
             </div>
-            <div class="col-md-{{$data['model'] ? '4' : 3}}">
+            <div class="col-lg-{{$data['model'] ? '4' : 3}}">
                 <div class="form-group">
-                    <label for="data_f" class="control-label">Data de Admissão</label>
+                    <label for="data_f" class="control-label">Data de Admissão <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -94,9 +94,9 @@
                 </div>
             </div>
             @if(!$data['model'])
-                <div class="col-md-3">
+                <div class="col-lg-3">
                     <div class="form-group">
-                        <label for="cargo_id" class="control-label">Cargo</label>
+                        <label for="cargo_id" class="control-label">Cargo <span class="required-symbol">*</span></label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -119,9 +119,9 @@
         <hr>
         <div id="documentos">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-lg-3">
                     <div class="form-group">
-                        <label for="tipo" class="control-label">CPF</label>
+                        <label for="tipo" class="control-label">CPF <span class="required-symbol">*</span></label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -132,14 +132,14 @@
                                 <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->cpf()->id}}">
                             @endif
                             <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{ old('documentos.cpf.numero', $data['model'] ? $data['model']->cpf()->numero : '') }}">
-                            <input required type="hidden" name="documentos[cpf][tipo_documento_id]" value="1">
+                            <input required type="hidden" name="documentos[cpf][tipo_documento_id]" value="{{$data['cpf_id']}}">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.cpf.numero') }}</span>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3">
                     <div class="form-group">
-                        <label for="tipo" class="control-label">RG</label>
+                        <label for="tipo" class="control-label">RG <span class="required-symbol">*</span></label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -150,7 +150,7 @@
                                 <input type="hidden" name="documentos[rg][id]" value="{{$data['model']->rg()->id}}">
                             @endif
                             <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="form-control" value="{{ old('documentos.rg.numero', $data['model'] ? $data['model']->rg()->numero : '') }}">
-                            <input required type="hidden" name="documentos[rg][tipo_documento_id]" value="2">
+                            <input required type="hidden" name="documentos[rg][tipo_documento_id]" value="{{$data['rg_id']}}">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.rg.numero') }}</span>
                     </div>
@@ -163,9 +163,9 @@
                         <input type="hidden" class="documentos" value="{{isset($documento['id']) ? $documento['id'] : ''}}" name="docs_outros[{{$key}}][id]">
                     @endif
 
-                    <div class="col-md-3">
+                    <div class="col-lg-3">
                         <div class="form-group">
-                            <label for="tipo" class="control-label">Tipo</label>
+                            <label for="tipo" class="control-label">Tipo <span class="required-symbol">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
@@ -182,9 +182,9 @@
                             <span class="errors"> {{ $errors->first('docs_outros.'.$key.'.tipo_documento_id') }}</span>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-lg-3">
                         <div class="form-group">
-                            <label for="numero_documento" class="control-label">Número</label>
+                            <label for="numero_documento" class="control-label">Número <span class="required-symbol">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
@@ -196,7 +196,7 @@
                             <span class="errors"> {{ $errors->first('docs_outros.'.$key.'.numero') }} </span>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-lg-5">
                         <div class="form-group">
                             <label class="control-label">Comprovante</label>
                             <div class="input-group">
@@ -205,15 +205,20 @@
                                         <i class="material-icons">archive</i>
                                     </span>
                                 </div>
-                                <div class="custom-file">
+                                <div class="custom-file" lang="pt-br">
                                     <input type="file" name="docs_outros[{{$key}}][comprovante]" id="comprovante_{{$key}}" class="custom-file-input documentos">
-                                    <label for="comprovante" class="custom-file-label">Comprovante</label>   
+                                    <label for="comprovante_{{$key}}" class="custom-file-label">Selecione</label>   
                                 </div>
                                 <span class="errors"> {{ $errors->first('docs_outros.'.$key.'.comprovante') }}</span>
+                                @if($documento->comprovante)
+                                    <a target="_blank" href='{{ url("funcionario/funcionario/downloadComprovante/".$documento["id"]) }}' class="input-group-text file_download">
+                                        <i class="material-icons">cloud_download</i>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 mt-4">
+                    <div class="col-lg-1 mt-4">
                         <span class="btn btn-danger border text-center material-icons del-doc mt-2">delete</span>
                     </div>
                 </div>
@@ -226,7 +231,7 @@
         <strong><h6 class="mt-5 mb-3">Endereço</h6></strong>
         <hr>
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-lg-3">
                 <div class="form-group">
                     <label for="cep" class="control-label">CEP</label>
                     <div class="input-group">
@@ -240,9 +245,9 @@
                     <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-4">
                 <div class="form-group">
-                    <label for="uf" class="control-label">Estado</label>
+                    <label for="uf" class="control-label">Estado <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -259,9 +264,9 @@
                     <span class="errors"> {{ $errors->first('endereco.uf') }} </span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-5">
                 <div class="form-group">
-                    <label for="cidade" class="control-label">Cidade</label>
+                    <label for="cidade" class="control-label">Cidade <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -278,9 +283,11 @@
                     <span class="errors"> {{ $errors->first('endereco.cidade_id') }} </span>
                 </div>
             </div>
-            <div class="col-md-3">
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
                 <div class="form-group">
-                    <label for="bairro" class="control-label">Bairro</label>
+                    <label for="bairro" class="control-label">Bairro <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -292,11 +299,9 @@
                     <span class="errors"> {{ $errors->first('endereco.bairro') }} </span>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5">
+            <div class="col-lg-6">
                 <div class="form-group">
-                    <label for="logradouro" class="control-label">Logradouro</label>
+                    <label for="logradouro" class="control-label">Logradouro <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -308,9 +313,9 @@
                     <span class="errors"> {{ $errors->first('endereco.logradouro') }} </span>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-lg-3">
                 <div class="form-group">
-                    <label for="numero" class="control-label">Número</label>
+                    <label for="numero" class="control-label">Número <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -322,7 +327,9 @@
                     <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
                 </div>
             </div>
-            <div class="col-md-5">
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="form-group">
                     <label for="complemento" class="control-label">Complemento</label>
                     <div class="input-group">
@@ -341,9 +348,9 @@
         <strong><h6 class="mt-5 mb-3">Contato</h6></strong>
         <hr>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6">
                 <div class="form-group">
-                    <label for="email" class="control-label">E-mail</label>
+                    <label for="email" class="control-label">E-mail <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -359,15 +366,16 @@
         <div id="telefones">
             @foreach(old('telefones', $data['telefones']) as $key => $telefone)
                 <div class="row tel">
-                    <div class="col-md-6">
+                    <div class="col-lg-6">
                         <div class="form-row">
 
                             @if($data['model'])
                                 <input type="hidden" value="{{isset($telefone->id) ? $telefone->id : ''}}" name="telefones[{{$key}}][id]">
                             @endif
 
-                            <div class="col-md-6">
+                            <div class="col-lg-6">
                                 <div class="form-group"> 
+                                    <label for="tipo_telefone" class="control-label">Tipo de telefone <span class="required-symbol">*</span></label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">
@@ -384,8 +392,9 @@
                                     <span class="errors"> {{ $errors->first('telefones.'.$key.'.tipo_telefone_id') }}</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-lg-6">
                                 <div class="form-group"> 
+                                    <label for="numero_telefone" class="control-label">Número <span class="required-symbol">*</span></label>
                                     <div class="input-group">
                                         <input required type="text" placeholder="Telefone" name="telefones[{{$key}}][numero]" class="form-control telefone" value="{{$telefone['numero'] ? $telefone['numero'] : ''}}">
                                     </div>
@@ -394,7 +403,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-6 mt-2">
+                        <br>
                         <i class="btn btn-info border text-center material-icons add-tel">add</i>
                         <i class="btn btn-danger border text-center material-icons del-tel">delete</i>
                     </div>

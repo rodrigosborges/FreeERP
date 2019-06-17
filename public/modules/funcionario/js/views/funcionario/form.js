@@ -38,12 +38,17 @@ $(document).on("change", ".tipo_telefones", function() {
 })
 
 function escolheMascaraTel(element) {
-    console.log($(element).find('option:selected').val())
-    if($(element).find('option:selected').val() == 1) {
-        $(element).closest('.tel').find(".telefone").mask('(00) 0000-0000')
-    } else {
-        $(element).closest('.tel').find(".telefone").mask('(00) 00000-0000')
-    }
+
+    var SPMaskBehavior = function (val) {
+        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+    },
+    spOptions = {
+        onKeyPress: function(val, e, field, options) {
+            field.mask(SPMaskBehavior.apply({}, arguments), options);
+        }
+    };
+    
+    $(element).closest('.tel').find(".telefone").mask(SPMaskBehavior, spOptions);
 }
 
 //###########################
@@ -73,26 +78,22 @@ $(document).on("click", ".del-doc", function() {
         $(".doc").last().find(".documentos").val("")
         $('.doc').addClass('d-none')
         $(".documentos").attr('disabled', 'disabled')
+        $(".doc").last().find(".custom-file-label").html("Selecione");
+        $(".file_download").remove()
     } else {
         remover(".doc", $(this))
     }
+})
+
+$(document).on('change', '.custom-file-input',function(e){
+    var fileName = e.target.files[0].name
+    $(this).parent().find(".custom-file-label").html(fileName);
 })
 //###########################
 
 //ENDEREÇO
 $('.estados').change(function() {
-    
-    //errado
-    $(".estados option").each(function() {
-        if($(this).is(':selected')){
-            atualizarCidades($(this).text())
-        }
-    })
-
-    //certo
     atualizarCidades($(".estados option:selected").data("uf"))
-
-
 })
 
 function atualizarCamposEndereco(dados) {
