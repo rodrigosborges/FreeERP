@@ -8,8 +8,7 @@ class FormaPagamentoReceberSeeder extends Seeder
         [
           'nome' => 'Dinheiro',
           'taxa' => 0,
-          'prazo_recebimento' => 0,
-          'ativo' => 1
+          'prazo_recebimento' => 0
         ]
       ]);
     }
