@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             CategoriaReceberSeeder::class,
             TipoClienteSeeder::class,
             TipoDocumentoSeeder::class,
+            FormaPagamentoReceberSeeder::class,
         ]);
     }
 }
