@@ -11,7 +11,6 @@ class CpfUnicoValidator
     }
 
     protected function isValidate($attribute, $value, $parameters){
-        return false;
         $id = intval($parameters[0]);
         $cpf = preg_replace('/[^0-9]/', '', $value);
         $documento = Documento::where("numero",$cpf)->where("tipo_documento_id", 1)->first();
