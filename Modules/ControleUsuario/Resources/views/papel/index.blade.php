@@ -33,7 +33,7 @@
                 <td>{{ $papel->nome }}</td>
                 <td>{{ $papel->descricao }}</td>
                 <td>{{ $papel->created_at }}</td>
-                <td>{{ ($papel->usuario)?$papel->usuario->nome:$papel->id."\nDesativado" }}</td>
+                <td>{{ ( $papel->usuario )?$papel->usuario->nome:$papel->id."\nDesativado" }}</td>
                 <td>
                     <a href="#" class="show-modal btn btn-info btn-sm" data-id="{{$papel->id}}" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
                         <i class="material-icons">remove_red_eye</i>
