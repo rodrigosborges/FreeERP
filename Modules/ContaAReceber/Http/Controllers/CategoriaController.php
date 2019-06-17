@@ -10,7 +10,7 @@ use Modules\ContaAReceber\Entities\CategoriaModel;
 class CategoriaController extends Controller
 {
      public function index(){
-        $categorias = CategoriaModel::where('ativo', 1)->get();
+        $categorias = CategoriaModel::all();
         return view('contaareceber::categorias', compact('categorias'));
     }
 
@@ -19,14 +19,14 @@ class CategoriaController extends Controller
         $dados = $request->all();
         CategoriaModel::create($dados);
 
-        $categorias = CategoriaModel::where('ativo', 1)->get();
+        $categorias = CategoriaModel::all();
         return view('contaareceber::categorias', compact('categorias'))->with('success','A categoria foi cadastrado com sucesso!');
-    }   
-    
+    }
+
     public function deletar($id){
         $categoria = CategoriaModel::find($id);
-        $categoria->ativo = false;
+        $categoria->delete();
         $categoria->update();
         return $this->index();
-    }     
+    }
 }

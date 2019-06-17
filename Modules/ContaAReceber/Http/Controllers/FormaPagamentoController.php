@@ -18,14 +18,14 @@ class FormaPagamentoController extends Controller
     {
         $dados = $request->all();
         FormaPagamentoModel::create($dados);
-        $formapgs = FormaPagamentoModel::where('ativo', 1)->get();
+        $formapgs = FormaPagamentoModel::all();
         return view('contaareceber::formapagamento', compact('formapgs'))->with('success','A categoria foi cadastrado com sucesso!');
-    }   
-    
+    }
+
     public function deletar($id){
         $formapg = FormaPagamentoModel::find($id);
-        $formapg->ativo = false;
+        $formapg->delete();
         $formapg->update();
         return $this->index();
-    }     
+    }
 }
