@@ -174,14 +174,18 @@ class PedidoController extends Controller
     } 
 
     public function enviar_email(Request $request){
- 
+        
         $fornecedores = Fornecedor::findorFail($request->fornecedores);
-        $fornecedor =  $fornecedores->get(0)->email->email;
-  
-        Mail::send('compra::pedido.teste',['produtos'=> 'bala'], function($mensagem) use($fornecedor){
+
+        foreach ($fornecedores as $key => $fornecedor) {
+
+        Mail::send('compra::pedido.teste',['link'=> 'link'], function($mensagem) use($fornecedor){
             $mensagem->from('comprateste06@gmail.com', 'Pedro');
-            $mensagem->to($fornecedor);
+            $mensagem->to($fornecedor->email->email);
         });
+
+        }
+
         return 'deu bom';
 
     }
