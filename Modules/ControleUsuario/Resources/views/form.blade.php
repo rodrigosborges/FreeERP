@@ -242,25 +242,24 @@ $('#definirData').click(function(){
    
 })
 $('#dataIndeterminada').click(function(){
+    
     $('#vencimento').fadeOut("slow");
 });
 $('#btnSalvarAtuacao').click(function(){
+ 
    // alert($("input[type=radio][name='optionVencimento']:checked").val());
     modulo = $('#selectModulo').val();
     papel = $('#selectPapel').val();
     vencimento=""
     validadeAtuacao =$("input[type=radio][name='optionVencimento']:checked").val();
-   
    if(modulo==-1){
         $('#alert-modulo').html("O campo <b>modulo</b> não pode ser vazio");
         $('#alert-modulo').addClass("alert-warning") 
         $('#alert-modulo').fadeIn('slow')
-
    }else if(papel==-1){
         $('#alert-modulo').html("O campo <b>Papel</b> não pode ser vazio");
         $('#alert-modulo').addClass("alert-warning") 
         $('#alert-modulo').fadeIn('slow')
-
    }else if(validadeAtuacao!="indefinido"){
     vencimento = $("#dataVencimento").val()
     if(vencimento==""){
@@ -271,7 +270,11 @@ $('#btnSalvarAtuacao').click(function(){
    }else{
        // fechar modal
     //   $('#formPapel').modal('hide');
-       
+    $('#alert-modulo').html('Dados Salvos!')
+    $('#alert-modulo').removeClass('alert-warning')
+    $('#alert-modulo').addClass('alert-success')
+    $('#alert-modulo').fadeIn()
+    $('#btnSalvarAtuacao').attr('disabled', 'disabled');      
    }
    
 });
@@ -295,6 +298,7 @@ function cadastrarUsuario(nome,email,senha){
         if(sucesso){
             $('.feedback-done').addClass('alert-success')
             $('.feedback-done').removeClass('alert-danger')
+            $('#btnCadastrar').attr('disabled','disabled')
         }
         else{
             $('.feedback-done').addClass('alert-danger')
@@ -310,7 +314,6 @@ function cadastrarUsuario(nome,email,senha){
   //  console.log("papel"+ papel +" modulo"+ modulo+ " e vencimento"+ vencimento)
 }
 function atualizarUsuario(nome,email,senha){
-    
     $.ajax({
         url:'updateUsuario',
         data:{'_token':$('input[name=_token]').val(),
@@ -332,6 +335,7 @@ function atualizarUsuario(nome,email,senha){
         if(sucesso){
             $('.feedback-done').addClass('alert-success')
             $('.feedback-done').removeClass('alert-danger')
+            $('#btnCadastrar').attr('disabled','disabled')
         }
         else{
             $('.feedback-done').addClass('alert-danger')
