@@ -16,9 +16,11 @@ class CreateContaPagarTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->text('descricao', 65535);
-			$table->decimal('valor', 9);
+			$table->decimal('valor', 9, 2);
 			$table->integer('parcelas');
 			$table->integer('categoria_pagar_id')->index('fk_conta_pagar_categoria_pagar1');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
