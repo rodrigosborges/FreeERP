@@ -1,1 +1,1 @@
-Bem Vindo Ao Curso {{$curso}}
+Os produtos necessários são 

@@ -4,6 +4,7 @@
 namespace Modules\Compra\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Modules\Compra\Entities\{Pedido,ItemCompra,Fornecedor};
@@ -174,12 +175,15 @@ class PedidoController extends Controller
 
     public function enviar_email(Request $request){
  
-        $fornecedor = Fornecedor::findorFail($request->fornecedores);
-        Mail::send('teste', ['curso'=>'Eloquent'], function($m){
-            $m->from('thofurtado@gmail.com', 'Solicitação de Orçamento');
-            $m->to($fornecedor->pluck('email'));
-            return back()->with('sucess',  'Email Enviado');
+        $fornecedores = Fornecedor::findorFail($request->fornecedores);
+        $fornecedor =  $fornecedores->get(0)->email->email;
+  
+        Mail::send('compra::pedido.teste',['produtos'=> 'bala'], function($mensagem) use($fornecedor){
+            $mensagem->from('comprateste06@gmail.com', 'Pedro');
+            $mensagem->to($fornecedor);
         });
+        return 'deu bom';
+
     }
 
 
