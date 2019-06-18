@@ -270,7 +270,7 @@ $('#btnSalvarAtuacao').click(function(){
    }
    }else{
        // fechar modal
-       $('#formPapel').modal('hide');
+    //   $('#formPapel').modal('hide');
        
    }
    

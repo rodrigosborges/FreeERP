@@ -125,10 +125,11 @@ class UsuarioController extends Controller
             $_SESSION['id'] = $user->id;
             $_SESSION['email'] = $user->email;
             $_SESSION['nome'] = $user->nome;
+            $usuario = Usuario::findOrFail($user->id);
             $data = ['usuario' => $user, 'url' => '/dashboard', 'title' => 'Pagina inicial'];
-            return view('controleusuario::dashboard', $this->dadosTemplate, compact('data'));
+            return view('controleusuario::dashboard', $this->dadosTemplate, compact('data','usuario'));
         } else {
-            echo "usuario não encontrado<br>";
+            echo "usuario não encontrado";
         }
     }
 
