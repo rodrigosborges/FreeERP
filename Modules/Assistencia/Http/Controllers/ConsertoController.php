@@ -31,7 +31,7 @@ class ConsertoController extends Controller
     }
 
     public function localizar() {
-       $consertos = ConsertoAssistenciaModel::all();
+       $consertos = ConsertoAssistenciaModel::paginate(10);
 
        return view('assistencia::paginas.consertos.localizarConserto', compact('consertos'));
     }

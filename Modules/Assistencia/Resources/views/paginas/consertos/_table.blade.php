@@ -27,6 +27,24 @@
           </tr>
         @endforeach
       </tbody>
+      <tfoot>
+          <tr>
+              <td colspan="100%" class="text-center">
+              <p class="text-center">
+                  Página {{$consertos->currentPage()}} de {{$consertos->lastPage()}}
+                  - Exibindo {{$consertos->perPage()}} registro(s) por página de {{$consertos->total()}}
+                  registro(s) no total
+              </p>
+              </td>
+          </tr>
+          @if($consertos->lastPage() > 1)
+          <tr>
+              <td colspan="100%">
+                  {{ $consertos->links() }}
+              </td>
+          </tr>
+          @endif
+      </tfoot>
     </div>
   </table>
 </div>

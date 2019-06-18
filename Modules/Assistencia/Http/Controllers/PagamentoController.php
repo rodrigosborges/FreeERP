@@ -42,7 +42,9 @@ class PagamentoController extends Controller
         $pagamento =  PagamentoAssistenciaModel::find($id);
         $pagamento->status = 'Pago';
         $pagamento->forma = $forma;
+        $pagamento->delete();
         $pagamento->save();
+        
         $conserto = ConsertoAssistenciaModel::find($id);
         $conserto->delete();
         $conserto->save();

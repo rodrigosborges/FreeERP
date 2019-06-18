@@ -54,6 +54,24 @@
                 </tr>
               @endforeach
             </tbody>
+            <tfoot>
+              <tr>
+                  <td colspan="100%" class="text-center">
+                  <p class="text-center">
+                      Página {{$pecas->currentPage()}} de {{$pecas->lastPage()}}
+                      - Exibindo {{$pecas->perPage()}} registro(s) por página de {{$pecas->total()}}
+                      registro(s) no total
+                  </p>
+                  </td>
+              </tr>
+              @if($pecas->lastPage() > 1)
+              <tr>
+                  <td colspan="100%">
+                      {{ $pecas->links() }}
+                  </td>
+              </tr>
+              @endif
+          </tfoot>
           </div>
         </table>
       </div>

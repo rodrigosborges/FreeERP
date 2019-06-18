@@ -1,6 +1,7 @@
 @extends('assistencia::layouts.master')
 
 @section('content')
+
 <div class="card">
   <div class="card-body">
     <div class="row ">
@@ -23,7 +24,11 @@
     <div class="row-center">
       @include('assistencia::paginas.clientes._table')
     </div>
+
   </div>
 </div>
 
+
+    
+    
 @stop
