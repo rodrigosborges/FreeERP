@@ -6,7 +6,7 @@ $moduleInfo = [
 ];
 
 $menu = [
-    ['icon' => 'people', 'tool' => 'Criar Agenda', 'route' => route('agenda.criar')],
+    ['icon' => 'people', 'tool' => 'Criar Agenda', 'route' => route('agendas.criar')],
 ];
 
 ?>
