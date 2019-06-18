@@ -17,6 +17,7 @@ class CreateCalendarioTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome');
             $table->string('descricao')->nullable();
+            $table->string('cor', 6)->default('FFFFFF');
             $table->unsignedBigInteger('funcionario_id');
             $table->foreign('funcionario_id')->references('id')->on('funcionario');
             $table->softDeletes();
