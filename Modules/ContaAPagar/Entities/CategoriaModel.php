@@ -11,4 +11,9 @@ class CategoriaModel extends Model
 
     public $table = 'categoria_pagar';
     protected $fillable = ['id', 'nome'];
+    
+     public function ContaAPagarModel(){ 
+        return $this->hasMany('Modules\ContaAPagar\Entities\ContaAPagarModel');
+    }    
+    
 }

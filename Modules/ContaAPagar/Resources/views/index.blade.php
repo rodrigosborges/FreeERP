@@ -99,6 +99,24 @@
             </tr>
             @endforeach
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="100%" class="text-center">
+                <p class="text-center">
+                    Página {{$pagamentos->currentPage()}} de {{$pagamentos->lastPage()}}
+                    - Exibindo {{$pagamentos->perPage()}} registro(s) por página de {{$pagamentos->total()}}
+                    registro(s) no total
+                </p>
+                </td>     
+            </tr>
+            @if($pagamentos->lastPage() > 1)
+            <tr>
+                <td colspan="100%">
+                {{ $pagamentos->links() }}
+                </td>
+            </tr>
+            @endif
+        </tfoot>        
     </table>
 </div>
     

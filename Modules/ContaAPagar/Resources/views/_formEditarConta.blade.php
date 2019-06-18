@@ -14,8 +14,11 @@
 
     <div class="form-group col-md-4">
         <select id="inputState" class="form-control" name="categoria_pagar_id" required>
+                <option value="{{$conta->categoria_pagar_id}}" selected>{{$conta->categoria->nome}}</option>
             @foreach ($categorias as $categoria)
-        <option value="{{$categoria->id}}" {{ isset($conta->categoria_pagar_id) && $categoria->id == $conta->categoria_pagar_id ? 'selected' : '' }}>{{$categoria->nome}}</option>
+                @if($categoria->nome <> $conta->categoria->nome)
+                <option value="{{$categoria->id}}" {{ isset($conta->categoria_pagar_id) && $categoria->id == $conta->categoria_pagar_id ? 'selected' : '' }}>{{$categoria->nome}}</option>
+                @endif
             @endforeach
         </select>
     </div>

@@ -26,7 +26,7 @@ class PagamentoModel extends Model
 
     public function categoria(){
         $conta = ContaAPagarModel::where('id', $this->conta_pagar_id)->first();
-        $categoria = CategoriaModel::where('id', $conta->categoria_pagar_id)->first();
+        $categoria = CategoriaModel::withTrashed()->where('id', $conta->categoria_pagar_id)->first();
         return $categoria->nome;
     }
 

@@ -18,7 +18,7 @@ class ContaAPagarController extends Controller
             $dataFiltro = date("Y-m-d", strtotime($data));
 
 
-            $pagamentos = PagamentoModel::whereMonth('data_vencimento', $data->month)->whereYear('data_vencimento', $data->year)->get();
+            $pagamentos = PagamentoModel::whereMonth('data_vencimento', $data->month)->whereYear('data_vencimento', $data->year)->paginate(15);
             $contas = ContaAPagarModel::all();
             $categorias = CategoriaModel::all();
             $total = $this->total();
@@ -45,6 +45,7 @@ class ContaAPagarController extends Controller
         $conta = ContaAPagarModel::find($id);
         $pagamentos = PagamentoModel::where('conta_pagar_id', $id)->get();
         $categorias = CategoriaModel::all();
+        
         return view('contaapagar::editarConta',compact('conta', 'pagamentos','categorias'));
     }
 

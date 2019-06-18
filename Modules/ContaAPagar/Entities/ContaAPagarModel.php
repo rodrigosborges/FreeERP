@@ -11,5 +11,10 @@ class ContaAPagarModel extends Model
 
     public $table = 'conta_pagar';
     protected $fillable = ['id', 'descricao', 'valor', 'parcelas', 'categoria_pagar_id'];
+    
+    
+     public function categoria(){ 
+        return $this->hasOne('Modules\ContaAPagar\Entities\CategoriaModel', 'id', 'categoria_pagar_id')->withTrashed();
+    }
 
 }

@@ -98,7 +98,7 @@ class PagamentoController extends Controller
         $conta->parcelas = $n_parcelas;
         $conta->update();
 
-        return redirect()->route('conta.editar', $id);
+        return back()->with('sucess', 'Pagamento adicionado com sucesso.');
     }
 
     /**
