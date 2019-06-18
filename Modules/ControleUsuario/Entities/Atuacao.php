@@ -9,7 +9,9 @@ class Atuacao extends Model
 {
     use SoftDeletes;
     protected $table='atuacao';
-    protected $timestamps=false;
+    public $timestamps=false;
+
+    protected $with = ['papel', 'modulo'];
 
     public function usuario()
     {

@@ -53,8 +53,7 @@ class PapelController extends Controller
      */
     public function index()
     {
-        $papeis = Papel::all();
-       
+        $papeis = Papel::withTrashed()->get();
 
         return view('controleusuario::papel.index', $this->dadosTemplate, compact('papeis',));
     }

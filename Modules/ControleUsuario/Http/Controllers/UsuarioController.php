@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\controleUsuario\Entities\Papel;
+use Modules\controleUsuario\Entities\Atuacao;
 use Modules\controleUsuario\Entities\Modulo;
 use Modules\controleUsuario\Entities\Usuario;
 use Modules\controleUsuario\Http\Requests \ {
@@ -90,7 +91,7 @@ class UsuarioController extends Controller
 
 
             if (!$usuario) {
-                DB::commit();
+               
                 $data =array();
                 $data['nome']= $req->input('name');
                 $data['email']= $req->input('email');  
@@ -101,6 +102,7 @@ class UsuarioController extends Controller
                 
                 $data['title'] = 'Cadastrar Usuário';
                 Usuario::Create($data);
+                DB::commit();
                 return back()->with('success', 'Usuário cadastrado com sucesso!');
             } else {
                 return back()->with('warning', 'Este email já está cadastrado');
@@ -145,7 +147,44 @@ class UsuarioController extends Controller
      * @return Response
      */
     public function store(Request $request)
-    { }
+    {
+        $retorno = array();
+        $retorno['sucesso']=false;
+        DB::beginTransaction();
+        try{
+            $data = array();
+            $email = DB::table('usuario')->where('email', $request->email)->first();
+            if(!$email){
+                
+               $usuario = new Usuario();
+               $usuario->nome =$request->nome;
+               $usuario->email =$request->email;
+               $usuario->senha = base64_encode($request->senha);
+               $usuario->save();
+               
+               if($request->modulo!=null && $request->modulo!=""){
+                   $atuacao = new Atuacao();
+                   $atuacao->usuario_id =$usuario->id;
+                   $atuacao->modulo_id = $request->modulo;
+                   $atuacao->papel_id = $request->papel;
+                   $atuacao->save();
+                   
+               }
+               DB::commit();
+               $retorno['mensagem']="Usuário Cadastrado com sucesso";
+               $retorno['sucesso']=true;
+                
+
+            }else{
+                $retorno['mensagem']="Este email já está em uso no momento";
+            }
+        }catch(Exception $ex){
+            $retorno['mensagem']= "Erro ->". $ex;
+            
+            DB::rollback();
+        }
+        return json_encode($retorno);
+    }
 
 
     public function logoff()
@@ -306,45 +345,41 @@ class UsuarioController extends Controller
 
     public function update(Request $request)
     {
-
+        $retorno=array();
+        $retorno['sucesso']=false;
         $usuario = Usuario::findOrFail($request->id);
-
         $email = DB::table('usuario')->where('email', $request->email)->where('id', '<>', $request->id)->first();
-
-        $data = [
-            'title' => 'Editar Usuario',
-            'url' => 'validar.edicao',
-            'button' => 'Atualizar',
-        ];
-        $data['model'] = $usuario;
-
         if (!$email) {
             // email disponivel
             try {
-                echo "email valido";
-
-
-                if ($request->password == "") {
-                    echo "senha vazia";
-
+                if ($request->senha == "") {
                     $usuario->senha = $usuario->senha;
                     $usuario->save();
-                } else {
-                    $usuario->senha = base64_encode($request->password);
-                }
+                }else
+                    $usuario->senha = base64_encode($request->senha);
+                
                 $usuario->email = $request->email;
-                $usuario->nome = $request->name;
+                $usuario->nome = $request->nome;
                 $usuario->save();
-                return view('controleusuario::form', $this->dadosTemplate, compact('data'))->with('success','Dados atualizados com sucesso');
+                if($request->modulo!=null && $request->modulo!=""){
+                    $atuacao = new Atuacao();
+                    $atuacao->usuario_id =$usuario->id;
+                    $atuacao->modulo_id = $request->modulo;
+                    $atuacao->papel_id = $request->papel;
+                    $atuacao->save();                     
+                }
+                $retorno['mensagem']="Usuario atualizado com sucesso";
+                $retorno['sucesso']=true;
             } catch (Exception $e) {
                 DB::rollback();
-                echo "não foi";
-                return back()->with('error','Erro ao atualizar :'.$e->getMessage());
+             
+                $retorno['mensagem'] = "erro" . $e->getMessage();
 
             }
         }else{
-            return back()->with('warning','Email indisponível');
+           $retorno['mensagem']='Email indisponível';
         }
+        return json_encode($retorno);
     }
 
     /**

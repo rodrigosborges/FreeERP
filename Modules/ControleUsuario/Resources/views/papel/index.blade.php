@@ -33,7 +33,7 @@
                 <td>{{ $papel->nome }}</td>
                 <td>{{ $papel->descricao }}</td>
                 <td>{{ $papel->created_at }}</td>
-                <td>{{$papel->usuario->nome}}</td>
+                <td>{{ ( $papel->usuario )?$papel->usuario->nome: $papel->usuario_id."\nDesativado" }}</td>
                 <td>
                     <a href="#" class="show-modal btn btn-info btn-sm" data-id="{{$papel->id}}" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
                         <i class="material-icons">remove_red_eye</i>
@@ -50,7 +50,7 @@
         </table>
     </div>
 </div>
-<!--Formulário modal de criação de papéis -->
+<!--Formulário modal de criação e edição de papéis -->
 <div id="create" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
