@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreatePagamentoReceberTable extends Migration {
+class CreatePagamentoPagarTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,16 +12,16 @@ class CreatePagamentoReceberTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('pagamento_receber', function(Blueprint $table)
+		Schema::create('pagamento_pagar', function(Blueprint $table)
 		{
 			$table->integer('id', true);
+			$table->date('data_vencimento');
 			$table->decimal('valor', 9,2);
 			$table->date('data_pagamento');
-			$table->float('taxa');
-			$table->date('data_recebimento');
+			$table->decimal('juros',9,2);
+			$table->decimal('multa',9,2);
 			$table->text('status_pagamento');
-			$table->integer('conta_receber_id')->index('fk_pagamento_receber_conta_receber1');
-			$table->integer('forma_pagamento_id')->index('fk_pagamento_receber_forma_pagamento1');
+			$table->integer('conta_pagar_id')->index('fk_pagamento_pagar_conta_pagar1');
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -35,7 +35,7 @@ class CreatePagamentoReceberTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('pagamento_receber');
+		Schema::drop('pagamento_pagar');
 	}
 
 }
