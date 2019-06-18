@@ -8,23 +8,11 @@ class CategoriaReceberSeeder extends Seeder
     {
         DB::table('categoria_receber')->insert([
           [
-            'nome' => 'Energia Elétrica'
+            'nome' => 'Clientes'
            
           ],
           [
-            'nome' => 'Internet'
-          ],
-          [
-            'nome' => 'Telefone'
-          ],
-          [
-            'nome' => 'TV por assinatura'
-          ],
-          [
-            'nome' => 'Água'
-          ],
-          [
-            'nome' => 'Impostos'
+            'nome' => 'Funcionário'
           ]
         ]);
     }
