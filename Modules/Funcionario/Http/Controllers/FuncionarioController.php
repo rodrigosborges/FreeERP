@@ -79,6 +79,9 @@ class FuncionarioController extends Controller{
 
             foreach($request->documentos as $key => $documento) {
 
+                if($documento['tipo_documento_id'] == 1)
+                    $documento['numero'] = str_replace([".","-"],"",$documento['numero']);
+
                 $newDoc = [
                     'tipo_documento_id'     => $documento['tipo_documento_id'],
                     'numero'                => $documento['numero']
@@ -99,6 +102,9 @@ class FuncionarioController extends Controller{
             if($request->input('docs_outros')) {
                 foreach($request->docs_outros as $documento) {
                     if($documento['numero']){
+
+                        if($documento['tipo_documento_id'] == 1)
+                            $documento['numero'] = str_replace([".","-"],"",$documento['numero']);
 
                         if(isset($documento['comprovante'])) {
 
