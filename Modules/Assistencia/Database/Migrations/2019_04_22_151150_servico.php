@@ -17,8 +17,8 @@ class Servico extends Migration
           $table->increments('id');
           $table->string('nome');
           $table->decimal('valor',6,2);
-          $table->boolean('ativo')->default(1);
           $table->timestamps();
+			    $table->softDeletes();
       });
     }
 

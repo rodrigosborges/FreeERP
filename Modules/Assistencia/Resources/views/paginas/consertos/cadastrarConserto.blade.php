@@ -3,9 +3,9 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
 @stop
 @section('content')
-	<?php 
+	<?php
 		$valorTotal = 0;
-	?> 
+	?>
 
 	<div class="card text-center">
 
@@ -33,22 +33,22 @@
 
 @section('js')
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
-	
+
 	<script>
 		$(document).ready(function() {
 			$('.multi-select').select2();
-			
+
 		});
-		
+
 	</script>
 	<script>
 		$(document).ready(function(){
-			$(document).click(function(){
+			$(document).mouseover(function(){
 				var valor = 0;
-				$('#valor_peca > option:selected').each(function(ondex, element){
+				$('#valor_peca > option:selected').each(function(index, element){
 					valor = valor + Number.parseFloat($(element).attr('data-valor'));
 				});
-				$('#valor_servico > option:selected').each(function(ondex, element){
+				$('#valor_servico > option:selected').each(function(index, element){
 					valor = valor + Number.parseFloat($(element).attr('data-valor'));
 				});
 				$('#valorTotal').val(valor);
@@ -68,15 +68,15 @@
 			var valor = 0;
 			$('#valor_servico > option:checked').each(function(index, element) {
 				valor = valor + Number.parseFloat( $(element).attr('data-valor'));
-				var valorTotal = 
+				var valorTotal =
 				$('#valorTotal').val(valor);
 			});
-			 
+
 		});*/
 
 	</script>
 	<script>
-		
+
 
 		$("[name='selecionarCliente']").on('keyup',function(){
 

@@ -15,9 +15,10 @@ class PagamentoController extends Controller
      */
      public function index(){
         $pagamentos = PagamentoAssistenciaModel::paginate(10);
-        
+
         return view('assistencia::paginas.pagamentos.localizarPagamentos', compact('pagamentos'));
     }
+
      public function recibo($id){
         $pagamento =  PagamentoAssistenciaModel::find($id);
         if($pagamento->status == 'Pago'){
@@ -27,7 +28,7 @@ class PagamentoController extends Controller
         }
      }
 
- 
+
     public function salvar(Request $req, $id) {
 
         $dados = $req->all();
@@ -37,12 +38,13 @@ class PagamentoController extends Controller
         } else if ($dados['forma']==2) {
             $forma = 'Cartão';
         }
+
         $pagamento =  PagamentoAssistenciaModel::find($id);
         $pagamento->status = 'Pago';
         $pagamento->forma = $forma;
         $pagamento->save();
         $conserto = ConsertoAssistenciaModel::find($id);
-        $conserto->ativo = 0;
+        $conserto->delete();
         $conserto->save();
 
         if ($dados['recibo']=='N') {
@@ -50,7 +52,7 @@ class PagamentoController extends Controller
         } else if ($dados['recibo']=='S') {
              return redirect()->route('pagamento.recibo', $pagamento->id);
         }
-        
+
     }
 
     /**

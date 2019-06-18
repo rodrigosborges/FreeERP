@@ -3,13 +3,15 @@
 namespace Modules\Assistencia\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class ConsertoAssistenciaModel extends Model
 {
+    use SoftDeletes;
     protected $table = 'conserto_assistencia';
 
-    protected $fillable = ['id','numeroOrdem', 'valor','situacao','data_entrada','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','idCliente','idTecnico','idPeca[]','idMaoObra[]','ativo'];
+    protected $fillable = ['id','numeroOrdem', 'valor','situacao','data_entrada','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','idCliente','idTecnico','idPeca[]','idMaoObra[]'];
 
     public static function busca($busca){
       return static::where('id', 'LIKE', '%'.$busca.'%')->get();

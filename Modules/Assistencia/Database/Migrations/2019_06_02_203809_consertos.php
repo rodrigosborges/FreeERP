@@ -29,8 +29,8 @@ class Consertos extends Migration
           $table->integer('idTecnico')->unsigned();
           $table->foreign('idCliente')->references('id')->on('cliente_assistencia');
           $table->foreign('idTecnico')->references('id')->on('tecnico_assistencia');
-          $table->boolean('ativo')->default(1);
           $table->timestamps();
+          $table->softDeletes();
       });
     }
 

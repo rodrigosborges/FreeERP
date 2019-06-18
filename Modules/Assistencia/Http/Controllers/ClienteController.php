@@ -13,7 +13,7 @@ class ClienteController extends Controller
 
     public function index()
     {
-      $clientes = ClienteAssistenciaModel::where('ativo', 1)->get();;
+      $clientes = ClienteAssistenciaModel::all();
       return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
     }
 
@@ -24,7 +24,7 @@ class ClienteController extends Controller
 
     public function localizar()
     {
-      $clientes = ClienteAssistenciaModel::where('ativo', 1)->get();;
+      $clientes = ClienteAssistenciaModel::all();
       return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
     }
 
@@ -51,7 +51,7 @@ class ClienteController extends Controller
     public function deletar($id)
     {
       $cliente = ClienteAssistenciaModel::find($id);
-      $cliente->ativo = 0;
+      $cliente->delete();
       $cliente->update();
 
       return redirect()->route('cliente.localizar');

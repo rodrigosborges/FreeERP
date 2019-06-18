@@ -23,8 +23,8 @@
                     @foreach ($pagamentos as $pagamento)
                       <tr>
                         <td scope="row">{{$pagamento->id }}</td>
-                        <td>{{$pagamento->conserto->cliente->nome }}</td> 
-                        <td>{{ $pagamento->conserto->valor }}</td>
+                        <td>{{$pagamento->cliente->nome }}</td>
+                        <td> {{$pagamento->valor}} </td>
                         <td>{{$pagamento->status}}</td>
                       </tr>
                     @endforeach
@@ -38,22 +38,22 @@
                             - Exibindo {{$pagamentos->perPage()}} registro(s) por página de {{$pagamentos->total()}}
                             registro(s) no total
                         </p>
-                        </td>     
+                        </td>
                     </tr>
                     @if($pagamentos->lastPage() > 1)
                     <tr>
-                        <td colspan="100%"> 
+                        <td colspan="100%">
                             {{ $pagamentos->links() }}
                         </td>
                     </tr>
                     @endif
                 </tfoot>
-                
+
               </table>
-            
+
         </div>
     </div>
-    
+
 </div>
-    
+
 @stop

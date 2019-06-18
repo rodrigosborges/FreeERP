@@ -16,8 +16,8 @@ class ConsertoController extends Controller
     }
 
     public function cadastrar(){
-      $pecas = PecaAssistenciaModel::where('ativo', 1)->get();
-      $servicos = ServicoAssistenciaModel::where('ativo', 1)->get();
+      $pecas = PecaAssistenciaModel::all();
+      $servicos = ServicoAssistenciaModel::all();
       $ultimo = ConsertoAssistenciaModel::latest()->first();
 
       $id = 0;
@@ -31,7 +31,7 @@ class ConsertoController extends Controller
     }
 
     public function localizar() {
-       $consertos = ConsertoAssistenciaModel::where('ativo', 1)->get();
+       $consertos = ConsertoAssistenciaModel::all();
 
        return view('assistencia::paginas.consertos.localizarConserto', compact('consertos'));
     }
@@ -52,8 +52,8 @@ class ConsertoController extends Controller
 
     public function editar($id) {
       $conserto = ConsertoAssistenciaModel::find($id);
-      $pecas = PecaAssistenciaModel::where('ativo', 1)->get();
-      $servicos = ServicoAssistenciaModel::where('ativo', 1)->get();
+      $pecas = PecaAssistenciaModel::all();
+      $servicos = ServicoAssistenciaModel::all();
       $itemPeca = ItemPeca::where('idConserto', $id)->get();
       $itemServico = itemServico::where('idConserto', $id)->get();
 

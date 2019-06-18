@@ -11,12 +11,12 @@ class TecnicoController extends Controller
 
   public function index()
   {
-    $tecnicos = TecnicoAssistenciaModel::where('ativo', 1)->get();;
+    $tecnicos = TecnicoAssistenciaModel::all();
     return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos'));
   }
   public function localizar()
   {
-    $tecnicos = TecnicoAssistenciaModel::where('ativo', 1)->get();;
+    $tecnicos = TecnicoAssistenciaModel::all();
     return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos'));
   }
   public function cadastrar()
@@ -48,7 +48,7 @@ class TecnicoController extends Controller
   public function deletar($id)
   {
     $tecnico = TecnicoAssistenciaModel::find($id);
-    $tecnico->ativo = 0;
+    $tecnico->all();
     $tecnico->update();
 
     return redirect()->route('tecnico.localizar');

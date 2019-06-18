@@ -16,7 +16,7 @@ class ServicosController extends Controller
 
          public function localizar()
          {
-           $servicos = ServicoAssistenciaModel::where('ativo', 1)->get();;
+           $servicos = ServicoAssistenciaModel::all();
 
            return view('assistencia::paginas.estoque.localizarServico',compact('servicos'));
          }
@@ -44,7 +44,7 @@ class ServicosController extends Controller
          public function deletar($id)
          {
           $servico = ServicoAssistenciaModel::find($id);
-          $servico->ativo = 0;
+          $servico->delete();
           $servico->update();
 
           return redirect()->route('servicos.localizar');

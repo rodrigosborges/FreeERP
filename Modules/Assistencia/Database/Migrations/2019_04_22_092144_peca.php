@@ -18,8 +18,8 @@ class Peca extends Migration
           $table->string('nome');
           $table->decimal('valor_compra',6,2);
           $table->decimal('valor_venda',6,2);
-          $table->boolean('ativo')->default(1);
           $table->timestamps();
+          $table->softDeletes();
       });
     }
 
