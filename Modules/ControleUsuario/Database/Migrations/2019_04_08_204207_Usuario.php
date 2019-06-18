@@ -16,9 +16,9 @@ class Usuario extends Migration
         Schema::create('usuario', function (Blueprint $table){
             $table->increments('id');
             $table->string('foto');
-            $table->string('name',50);
+            $table->string('nome',50);
             $table->string('email',80)->unique();
-            $table->string('password',254);
+            $table->string('senha',254);
             $table->softDeletes();
         });
     }

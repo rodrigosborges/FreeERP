@@ -14,6 +14,7 @@ class Atuacao extends Migration
     public function up()
     {
         Schema::create('atuacao', function (Blueprint $table){
+            $table->increments('id');
             $table->integer('usuario_id')->unsigned();
             $table->integer('papel_id')->unsigned();
             $table->integer('modulo_id')->unsigned();
