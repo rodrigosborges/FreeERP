@@ -13,8 +13,8 @@
 
 Route::prefix('calendario')->group(function() {
     Route::get('/', 'CalendarioController@index');
-    Route::get('/agendas/criar', 'CalendarioController@create')->name('agendas.criar');
+    Route::get('/agendas/criar', 'AgendaController@create')->name('agendas.criar');
     Route::get('/eventos', 'CalendarioController@eventos')->name('eventos');
-    Route::post('/eventos/criar', 'CalendarioController@create')->name('eventos.criar');
+    Route::post('/eventos/criar', 'EventoController@create')->name('eventos.criar');
 
 });
