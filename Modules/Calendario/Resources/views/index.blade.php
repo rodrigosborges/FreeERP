@@ -15,7 +15,8 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{route('eventos.criar')}}" id="novoEventoForm" method="post">
-                        Data: <input type="date" id="novoEventoData" readonly>
+                        Data: <input id="novoEventoData" readonly>
+                        Hora:
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -29,16 +30,15 @@
 @stop
 
 @section('css')
-    @parent
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/main.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/daygrid/main.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/timegrid/main.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/list/main.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/bootstrap/main.min.css')}}">
+    @parent
 @endsection
 
 @section('js')
-    @parent
     <script src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/main.min.js')}}"></script>
     <script src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/daygrid/main.min.js')}}"></script>
     <script src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/interaction/main.min.js')}}"></script>
@@ -58,19 +58,22 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
                 },
-                defaultDate: '2019-06-12',
                 navLinks: true, // can click day/week names to navigate views
                 businessHours: true, // display business hours
-                editable: true,
+                events: '{{route('eventos')}}',
                 dateClick: function(info) {
-                    //alert('Date: ' + info.dateStr);
-                    //lert('Resource ID: ' + info.resource.id);
-                    $('#novoEventoData').val(info.dateStr);
+                    //console.log(info);
+                    $('#novoEventoData').val(info.date.getDate());
                     $('#novoEventoModal').modal('show');
+                },
+                eventClick: function(info) {
+                    console.log(info.event.start);
+                    alert('Event: ' + info.event.id);
                 }
             });
 
             calendar.render();
         });
     </script>
+    @parent
 @endsection

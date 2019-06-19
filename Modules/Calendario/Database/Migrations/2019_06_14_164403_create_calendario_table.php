@@ -15,9 +15,9 @@ class CreateCalendarioTable extends Migration
     {
         Schema::create('calendario', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome');
-            $table->string('descricao')->nullable();
-            $table->string('cor', 6)->default('FFFFFF');
+            $table->string('titulo');
+            $table->string('nota')->nullable();
+            $table->string('cor', 7)->nullable();
             $table->unsignedBigInteger('funcionario_id');
             $table->foreign('funcionario_id')->references('id')->on('funcionario');
             $table->softDeletes();

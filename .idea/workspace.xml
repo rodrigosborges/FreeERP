@@ -3,40 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="48ae4e59-69a2-421e-bdf1-a202ed6860cc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164403_create_calendario_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164403_create_calendario_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/assets/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/assets/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Config/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Config/config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Console/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Database/Migrations/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Database/Seeders/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Database/Seeders/ExemploDatabaseSeeder.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Database/factories/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Entities/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Entities/ExemploModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Http/Controllers/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Http/Controllers/ExemploController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Http/Middleware/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Http/Requests/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Providers/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Providers/ExemploServiceProvider.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Providers/RouteServiceProvider.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Resources/assets/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Resources/assets/js/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Resources/assets/sass/app.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Resources/lang/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Resources/views/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Resources/views/index.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Resources/views/layouts/master.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Routes/api.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Routes/web.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/Tests/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/composer.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/module.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Exemplo/webpack.mix.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/modules/calendario/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/modules/calendario/css/app.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,36 +24,21 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php">
+        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" column="117" selection-start-line="32" selection-start-column="117" selection-end-line="32" selection-end-column="117" />
-              <folding>
-                <element signature="e#610#617#1#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/template.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="76" selection-start-line="8" selection-start-column="76" selection-end-line="8" selection-end-column="76" />
+            <state relative-caret-position="135">
+              <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Routes/web.php">
+        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164403_create_calendario_table.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-              <folding>
-                <element signature="e#7#389#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="270">
+              <caret line="20" column="54" selection-start-line="20" selection-start-column="54" selection-end-line="20" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -124,16 +82,17 @@
         <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/template.blade.php.html" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Resources/assets/js/app.js" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Config/config.php" />
-        <option value="$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php" />
-        <option value="$PROJECT_DIR$/Modules/Calendario/Resources/assets/css/app.css" />
-        <option value="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164403_create_calendario_table.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Entities/Calendario.php" />
         <option value="$PROJECT_DIR$/resources/views/template.blade.php" />
-        <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/template.blade.php" />
-        <option value="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" />
+        <option value="$PROJECT_DIR$/Modules/Calendario/Resources/assets/css/app.css" />
+        <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" />
+        <option value="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" />
+        <option value="$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php" />
+        <option value="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php" />
+        <option value="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164403_create_calendario_table.php" />
       </list>
     </option>
   </component>
@@ -252,17 +211,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="freeerp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="freeerp" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -286,6 +234,28 @@
               <item name="~/dev/freeerp" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="Modules" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="Calendario" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Database" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="freeerp" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/dev/freeerp" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="Modules" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Calendario" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Database" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Migrations" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="freeerp" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/dev/freeerp" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="Modules" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Calendario" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Entities" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="freeerp" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/dev/freeerp" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="Modules" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Calendario" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="Http" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
@@ -296,33 +266,16 @@
               <item name="Http" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="Controllers" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
             <path>
-              <item name="freeerp" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/dev/freeerp" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="Modules" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Calendario" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Routes" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="freeerp" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/dev/freeerp" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="freeerp" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/dev/freeerp" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="resources" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="freeerp" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/dev/freeerp" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="resources" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="views" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="freeerp" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/dev/freeerp" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="routes" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="freeerp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="freeerp" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -376,7 +329,10 @@
       <workItem from="1560204911809" duration="2569000" />
       <workItem from="1560290816967" duration="5547000" />
       <workItem from="1560798503156" duration="8089000" />
-      <workItem from="1560875199196" duration="11457000" />
+      <workItem from="1560875199196" duration="12448000" />
+      <workItem from="1560962276438" duration="3090000" />
+      <workItem from="1560965398662" duration="4931000" />
+      <workItem from="1560978792184" duration="3797000" />
     </task>
     <task id="LOCAL-00001" summary="Ajeitando o gitignore">
       <created>1560876426039</created>
@@ -392,17 +348,24 @@
       <option name="project" value="LOCAL" />
       <updated>1560876665283</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Calendário adicionado ao index">
+      <created>1560887931318</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1560887931318</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27662000" />
+    <option name="totallyTimeSpent" value="40471000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1003" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13569683" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22982885" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -416,8 +379,8 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50183374" side_tool="true" visible="true" weight="0.18325792" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49816626" visible="true" weight="0.18325792" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50488997" side_tool="true" visible="true" weight="0.24208145" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49511003" visible="true" weight="0.24208145" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -428,8 +391,11 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Ajeitando o gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajeitando o gitignore" />
+    <MESSAGE value="Calendário adicionado ao index" />
+    <option name="LAST_COMMIT_MESSAGE" value="Calendário adicionado ao index" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/package.json">
@@ -439,15 +405,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/composer.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/module.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/package.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/composer.json" />
+    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/module.json" />
+    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/package.json" />
     <entry file="file://$PROJECT_DIR$/.env.example">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -467,26 +427,9 @@
     <entry file="file://$PROJECT_DIR$/Modules/Calendario/module.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="14" column="38" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Resources/views/layouts/master.blade.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Http/Controllers/ExemploController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="23" selection-end-column="67" />
-          <folding>
-            <element signature="e#52#80#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Routes/web.php" />
+    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Resources/views/layouts/master.blade.php" />
+    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Http/Controllers/ExemploController.php" />
     <entry file="file://$PROJECT_DIR$/resources/views/example.blade.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -501,12 +444,8 @@
         <state relative-caret-position="-369" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Resources/assets/js/app.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Config/config.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Resources/assets/js/app.js" />
+    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Config/config.php" />
     <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/assets/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -521,42 +460,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Resources/views/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="52" selection-start-line="6" selection-start-column="52" selection-end-line="6" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Exemplo/Resources/views/index.blade.php" />
     <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/layouts/master.blade.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/app.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/public/css/style.css">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/assets/css/app.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164403_create_calendario_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="13" column="24" lean-forward="true" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
@@ -565,29 +474,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Calendario.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="58" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/template.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="123" column="17" selection-start-line="123" selection-start-column="17" selection-end-line="123" selection-end-column="17" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/modules/calendario/fullcalendar-4.2.0/packages/core/main.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -603,40 +491,88 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php">
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="117" selection-start-line="32" selection-start-column="117" selection-end-line="32" selection-end-column="117" />
+        <state relative-caret-position="240">
+          <caret line="16" column="73" selection-start-line="16" selection-start-column="66" selection-end-line="16" selection-end-column="73" />
           <folding>
-            <element signature="e#610#617#1#HTML" expanded="true" />
+            <element signature="e#7#389#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/template.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/template.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="76" selection-start-line="8" selection-start-column="76" selection-end-line="8" selection-end-column="76" />
+        <state relative-caret-position="1845">
+          <caret line="123" column="17" selection-start-line="123" selection-start-column="17" selection-end-line="123" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php">
+    <entry file="file://$PROJECT_DIR$/public/css/app.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/assets/css/app.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/template.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+        <state relative-caret-position="225">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
           <folding>
             <element signature="e#55#83#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Routes/web.php">
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        <state relative-caret-position="1050">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
           <folding>
-            <element signature="e#7#389#0#PHP" expanded="true" />
+            <element signature="e#55#83#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="62" column="47" lean-forward="true" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Calendario.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="22" column="56" lean-forward="true" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164403_create_calendario_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="20" column="54" selection-start-line="20" selection-start-column="54" selection-end-line="20" selection-end-column="54" />
         </state>
       </provider>
     </entry>
