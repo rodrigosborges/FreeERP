@@ -58,9 +58,8 @@
               <tr>
                   <td colspan="100%" class="text-center">
                   <p class="text-center">
-                      Página {{$pecas->currentPage()}} de {{$pecas->lastPage()}}
-                      - Exibindo {{$pecas->perPage()}} registro(s) por página de {{$pecas->total()}}
-                      registro(s) no total
+                      Página {{$pecas->currentPage()}} de {{$pecas->lastPage()}} páginas
+                      
                   </p>
                   </td>
               </tr>

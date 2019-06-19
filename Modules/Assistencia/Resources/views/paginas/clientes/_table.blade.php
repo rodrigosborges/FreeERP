@@ -33,9 +33,9 @@
           <tr>
               <td colspan="100%" class="text-center">
               <p class="text-center">
-                  Página {{$clientes->currentPage()}} de {{$clientes->lastPage()}}
-                  - Exibindo {{$clientes->perPage()}} registro(s) por página de {{$clientes->total()}}
-                  registro(s) no total
+                
+                  Página {{$clientes->currentPage()}} de {{$clientes->lastPage()}} páginas
+                  
               </p>
               </td>
           </tr>

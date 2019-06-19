@@ -11,11 +11,11 @@ class PagamentoAssistenciaModel extends Model
 
 
     public function conserto(){
-      return $this->belongsTo('Modules\Assistencia\Entities\ConsertoAssistenciaModel', 'idConserto');
+      return $this->belongsTo('Modules\Assistencia\Entities\ConsertoAssistenciaModel', 'idConserto')->withTrashed();
     }
 
     public function cliente(){
-        return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente');
+        return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente')->withTrashed();
     }
 
 }

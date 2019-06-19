@@ -18,7 +18,7 @@ class ConsertoController extends Controller
     public function cadastrar(){
       $pecas = PecaAssistenciaModel::all();
       $servicos = ServicoAssistenciaModel::all();
-      $ultimo = ConsertoAssistenciaModel::latest()->first();
+      $ultimo = ConsertoAssistenciaModel::withTrashed()->latest()->first();
 
       $id = 0;
       if($ultimo == null){

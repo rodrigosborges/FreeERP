@@ -17,16 +17,16 @@ class ConsertoAssistenciaModel extends Model
       return static::where('id', 'LIKE', '%'.$busca.'%')->get();
     }
     public function cliente(){
-        return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente');
+        return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente')->withTrashed();
     }
     public function tecnico(){
-        return $this->belongsTo('Modules\Assistencia\Entities\TecnicoAssistenciaModel', 'idTecnico');
+        return $this->belongsTo('Modules\Assistencia\Entities\TecnicoAssistenciaModel', 'idTecnico')->withTrashed();
     }
     public function peca(){
-        return $this->belongsTo('Modules\Assistencia\Entities\PecaAssistenciaModel', 'idPeca');
+        return $this->belongsTo('Modules\Assistencia\Entities\PecaAssistenciaModel', 'idPeca')->withTrashed();
     }
     public function servico(){
-        return $this->hasMany('Modules\Assistencia\Entities\ServicoAssistenciaModel', 'idMaoObra');
+        return $this->hasMany('Modules\Assistencia\Entities\ServicoAssistenciaModel', 'idMaoObra')->withTrashed();
     }
 
 }

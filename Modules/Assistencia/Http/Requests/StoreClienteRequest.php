@@ -7,9 +7,13 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreClienteRequest extends FormRequest{
     public function rules(){
         return [
-          'nome' => 'required|min:3',
+          'nome' => 'required|min:3|max:100',
           'cpf' => 'required',
-          'email' => 'email'
+          'email' => 'required|email|max:100',
+          'data_nascimento' => 'required|date_format:d/m/Y',
+          'sexo' => 'required',
+          'celnumero' => 'required',
+          'telefonenumero' => 'required|telefone'
 
         ];
     }

@@ -60,9 +60,8 @@
               <tr>
                   <td colspan="100%" class="text-center">
                   <p class="text-center">
-                      Página {{$servicos->currentPage()}} de {{$servicos->lastPage()}}
-                      - Exibindo {{$servicos->perPage()}} registro(s) por página de {{$servicos->total()}}
-                      registro(s) no total
+                      Página {{$servicos->currentPage()}} de {{$servicos->lastPage()}} páginas
+                      
                   </p>
                   </td>
               </tr>

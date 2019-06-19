@@ -31,9 +31,8 @@
           <tr>
               <td colspan="100%" class="text-center">
               <p class="text-center">
-                  Página {{$consertos->currentPage()}} de {{$consertos->lastPage()}}
-                  - Exibindo {{$consertos->perPage()}} registro(s) por página de {{$consertos->total()}}
-                  registro(s) no total
+                  Página {{$consertos->currentPage()}} de {{$consertos->lastPage()}} páginas
+                  
               </p>
               </td>
           </tr>

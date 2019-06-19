@@ -12,7 +12,7 @@ class ClienteController extends Controller
 {
 
     public function index(){
-      $clientes = ClienteAssistenciaModel::>paginate(10);
+      $clientes = ClienteAssistenciaModel::paginate(10);
       return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
     }
 
