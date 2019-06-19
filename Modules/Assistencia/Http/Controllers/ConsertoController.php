@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\{ConsertoAssistenciaModel, PagamentoAssistenciaModel, PecaAssistenciaModel, ServicoAssistenciaModel, ClienteAssistenciaModel, TecnicoAssistenciaModel, ItemPeca, ItemServico};
 use DB;
+use Modules\Assistencia\Http\Requests\StoreConsertosRequest;
 
 class ConsertoController extends Controller
 {
@@ -66,7 +67,7 @@ class ConsertoController extends Controller
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço alterada com sucesso');
     }
 
-    public function salvar(Request $req){
+    public function salvar(StoreConsertosRequest $req){
 
       $dados  = $req->all();
 

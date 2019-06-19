@@ -1,6 +1,19 @@
 @extends('assistencia::layouts.master')
 @section('css')
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+
+	<style>
+		.errors {
+			color: red;
+			font-size: 12px;
+			text-align: left;
+			font-weight: bold;
+		}
+
+	</style>
+
+
+
 @stop
 @section('content')
 	<?php

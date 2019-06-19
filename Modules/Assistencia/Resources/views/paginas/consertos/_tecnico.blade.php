@@ -6,10 +6,14 @@
       <span class="input-group-text" id="nome"><i class="material-icons">link_off</i></span>
     </div>
     <input class="form-control" name="selecionarTecnico" type="text" placeholder="Tecnico responsavel">
+    <div class="col-12">
+      <span class="errors"> {{ $errors->first('idTecnico') }} </span>
+    </div>
   </div>
 </div>
 
 <div class="form-group row">
+  
 	<input type="hidden" name="idTecnico" value="{{isset($conserto->idTecnico) ? $conserto->idTecnico : old('idTecnico', '')}}">
   <div class="input-group col">
     <div class="input-group-prepend">

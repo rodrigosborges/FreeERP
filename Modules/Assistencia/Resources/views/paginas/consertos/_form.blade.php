@@ -10,14 +10,18 @@
       <span class="input-group-text" id="nascimento"><i class="material-icons">calendar_today</i></span>
       <input class="form-control" name="data_entrada" type="text" value="{{ date('d/m/Y') }}" readonly>
     </div>
+    <div class="col-12 form-group">
+      <span class="errors"> {{ $errors->first('data_entrada') }} </span>
+    </div>
   </div>
-
   <div class="form-group col-lg-4  col-sm-12">
     <div class="input-group-prepend">
       <span class="input-group-text" id="nascimento"><i class="material-icons">attach_money</i></span>
       <input class="form-control" name="valor" id="valorTotal" type="text" value="" readonly>
     </div>
+    
   </div>
+
 
 </div>
 

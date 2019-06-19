@@ -5,7 +5,10 @@
     </div>
     <input required class="form-control" name="nome" type="text" placeholder="Nome completo" value="{{ isset($cliente->nome) ? $cliente->nome : old('nome', '') }}">
   </div>
-  <span class="errors"> {{ $errors->first('nome') }} </span>
+  <div class="col-12 form-group">
+    <span class="errors"> {{ $errors->first('nome') }} </span>
+  </div>
+  
 </div>
 
 

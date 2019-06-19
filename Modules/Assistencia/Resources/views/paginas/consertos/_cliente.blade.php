@@ -5,6 +5,9 @@
       <span class="input-group-text" id="nome"><i class="material-icons">link_off</i></span>
     </div>
     <input class="form-control" name="selecionarCliente" type="text" placeholder="Escolher cliente" >
+    <div class="col-12">
+      <span class="errors"> {{ $errors->first('idCliente') }} </span>
+    </div>
   </div>
 </div>
 <div class="row">
@@ -43,5 +46,16 @@
       <input id="celnumber" name="celnumero" class="form-control input-md telefone" readonly placeholder="(XX) X XXXX-XXXX"  type="text" maxlength="11"
       value="{{ isset($conserto->cliente->celnumero) ? $conserto->cliente->celnumero : old('celnumero', '') }}">
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <span class="errors"> {{ $errors->first('modelo_aparelho') }} </span><br>
+    <span class="errors"> {{ $errors->first('serial_aparelho') }} </span><br>
+    <span class="errors"> {{ $errors->first('marca_aparelho') }} </span><br>
+    <span class="errors"> {{ $errors->first('imei_aparelho') }} </span><br>
+    <span class="errors"> {{ $errors->first('defeito') }} </span><br>
+    <span class="errors"> {{ $errors->first('obs') }} </span><br>
+    <span class="errors"> {{ $errors->first('idTecnico') }} </span><br> 
   </div>
 </div>
