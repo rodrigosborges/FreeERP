@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             TipoClienteSeeder::class,
             TipoDocumentoSeeder::class,
             FormaPagamentoReceberSeeder::class,
+            // UsuarioSeeder::class,
+            // PapelSeeder::class,
+            ParentescoSeeder::class,
         ]);
     }
 }

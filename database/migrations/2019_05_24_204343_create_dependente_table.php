@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUsuarioTable extends Migration {
+class CreateDependenteTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,15 +12,12 @@ class CreateUsuarioTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('usuario', function(Blueprint $table)
+		Schema::create('dependente', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('foto')->nullable();
-			$table->string('nome', 50);
-			$table->string('email', 45);
-			$table->string('password', 64);
-			$table->timestamps();
-			$table->softDeletes();
+			$table->string('nome', 100);
+            $table->boolean('mora_junto');
+			$table->integer('parentesco_id')->index('fk_dependente_parentesco');
 		});
 	}
 
@@ -32,7 +29,7 @@ class CreateUsuarioTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('usuario');
+		Schema::drop('dependente');
 	}
 
 }
