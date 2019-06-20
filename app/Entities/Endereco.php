@@ -21,6 +21,5 @@ class Endereco extends Model{
     public function getCepAttribute($val) {
         return substr($val,0,5).'-'.substr($val,5,8);
     }
-
     
 }   
