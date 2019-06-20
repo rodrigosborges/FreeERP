@@ -12,10 +12,6 @@ class Cargo extends Model{
 
     public $timestamps = false;
 
-    // public function funcionarios(){
-    //     return $this->belongsToMany('Modules\Funcionario\Entities\Funcionario', 'historico_cargo')->using('Modules\Funcionario\Entities\HistoricoCargo');
-    // }
-
     public function funcionarios(){
         return $this->belongsToMany('Modules\Funcionario\Entities\Funcionario', 'historico_cargo');
     }

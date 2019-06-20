@@ -240,7 +240,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ old('endereco.cep', $data['model'] ? $data['model']->endereco()->cep : '') }}">
+                        <input type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ old('endereco.cep', $data['model'] ? $data['model']->endereco()->cep : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
                 </div>
@@ -254,7 +254,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <select name="endereco[estado_id]" id="estado_id" class="form-control estados">
+                        <select required data-cidade="{{old('endereco.cidade_id', $data['model'] ? $data['model']->endereco()->cidade_id : '')}}" name="endereco[estado_id]" id="estado_id" class="form-control estados">
                             <option value="">Selecione</option>
                             @foreach($data['estados'] as $estado))
                                 <option data-uf="{{$estado->uf}}" value="{{ $estado->id }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco()->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
@@ -273,11 +273,8 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <select name="endereco[cidade_id]" id="cidade_id" class="form-control cidades">
+                        <select required name="endereco[cidade_id]" id="cidade_id" class="form-control cidades">
                             <option value="">Selecione</option>
-                            @foreach($data['cidades'] as $cidade))
-                                <option value="{{ $cidade->id }}" {{ old('endereco.cidade_id', $data['model'] ? $data['model']->endereco()->cidade_id : '') == $cidade->id ? 'selected' : '' }}>{{ $cidade->nome }}</option>
-                            @endforeach
                         </select>
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.cidade_id') }} </span>

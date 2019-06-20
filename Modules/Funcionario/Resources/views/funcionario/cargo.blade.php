@@ -25,8 +25,8 @@
                         @foreach($data['model']->cargos as $cargo)
                         <tr>   
                             <td>{{ $cargo->nome }}</td>
-                            <td>{{ $cargo->pivot->data_entrada }}</td>
-                            <td>{{ $cargo->pivot->data_saida ? $cargo->pivot->data_saida : 'X' }}</td>
+                            <td>{{ date("d/m/Y", strtotime($cargo->pivot->data_entrada)) }}</td>
+                            <td>{{ $cargo->pivot->data_saida ? enToBrDate($cargo->pivot->data_saida) : 'X' }}</td>
                         </tr>
                         @endforeach
                         </tbody>

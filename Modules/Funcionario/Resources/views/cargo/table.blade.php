@@ -13,11 +13,11 @@
             @foreach($cargos as $cargo)
                 <tr>
                     <td>{{$cargo->nome}}</td>
-                    <td class="min">                       
-                        @if($status == "ativos")
+                    @if($status == "ativos")
+                        <td class="min">                       
                             <a class="btn btn-warning" href='{{ url("funcionario/cargo/$cargo->id/edit") }}'>Editar</a>
-                        @endif
-                    </td>
+                        </td>
+                    @endif
                     <td class="min">
                         <form action="{{url('funcionario/cargo', [$cargo->id])}}" class="input-group" method="POST">
                             {{method_field('DELETE')}}

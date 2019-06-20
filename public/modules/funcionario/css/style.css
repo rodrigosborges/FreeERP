@@ -24,3 +24,14 @@ div.error, .errors {
 .required-symbol{
     color: red;
 }
+
+.imprimir-button{
+    position: absolute;
+    top:6px;
+    right:6px;
+}
+
+@media print {
+    @page { margin: 0; }
+    body { margin: 1.6cm; }
+}

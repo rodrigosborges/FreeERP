@@ -48,7 +48,6 @@ class FuncionarioController extends Controller{
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
             'estados'           => Estado::all(),
-            'cidades'           => [],
             'cargos'            => Cargo::all(),
             'title'             => 'Cadastro de Funcionário',
             'button'            => 'Salvar',
@@ -66,7 +65,7 @@ class FuncionarioController extends Controller{
 
             $funcionario->cargos()->attach(
                 $request['cargo']['cargo_id'],
-                ['data_entrada' => implode('-', array_reverse(explode('/', $request['funcionario']['data_admissao']))) ? : '']
+                ['data_entrada' => brToEnDate($request['funcionario']['data_admissao'])]
             );
 
             Relacao::create([
@@ -199,7 +198,6 @@ class FuncionarioController extends Controller{
             'estado_civil'      => EstadoCivil::all(),
             'telefones'         => $funcionario->telefones(),
             'estados'           => Estado::all(),
-            'cidades'           => Cidade::where('estado_id', $funcionario->endereco()->cidade->estado_id)->get(),
             'cargos'            => Cargo::all(),
             'title'		        => "Atualizar Funcionário",
 			"button" 	        => "Atualizar",
@@ -220,6 +218,9 @@ class FuncionarioController extends Controller{
             $funcionario->estadoCivilRelacao()->update(['destino_id' => $request->funcionario['estado_civil_id']]);
 
             foreach($request->documentos as $key => $documento) {
+                if($documento['tipo_documento_id'] == 1)
+                    $documento['numero'] = str_replace([".","-"],"",$documento['numero']);
+
                 Documento::find($documento['id'])->update($documento);
             }
 

@@ -31,6 +31,9 @@ $(document).ready(function(){
     $(".tipo_telefones").each(function(){
         escolheMascaraTel($(this))
     })
+    
+    //alterar a cidade quando precisar
+    $(".estados").change()
 })
 
 $(document).on("change", ".tipo_telefones", function() {
@@ -93,7 +96,8 @@ $(document).on('change', '.custom-file-input',function(e){
 
 //ENDEREÇO
 $('.estados').change(function() {
-    atualizarCidades($(".estados option:selected").data("uf"))
+    atualizarCidades($(".estados option:selected").data("uf"), $(".estados").data('cidade'))
+    $(".estados").data('cidade','')
 })
 
 function atualizarCamposEndereco(dados) {
@@ -131,7 +135,7 @@ function selecionarEstado(uf) {
     })
 }
 
-function atualizarCidades(uf) {
+function atualizarCidades(uf, selected_id = null) {
     $.ajax({
         url: main_url + "/funcionario/get-cidades/"+uf,
         type: 'GET',
@@ -139,7 +143,7 @@ function atualizarCidades(uf) {
             $(".cidades option").remove();
             $(".cidades").append("<option value=''>Selecione</option>")
             $.each(data, function(i, cidade) {
-                $(".cidades").append("<option value="+cidade.id+">"+cidade.nome+"</option>")
+                $(".cidades").append(`<option ${selected_id == cidade.id ? 'selected' : ''} value=${cidade.id}>${cidade.nome}</option>`)
             })
         }
     })
