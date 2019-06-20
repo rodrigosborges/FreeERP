@@ -123,9 +123,16 @@
         $(document).on('click','.imprimir-button', function(){
             $(".change-class-2").toggleClass("col-lg-2").toggleClass("col-2");
             $(".change-class-10").toggleClass("col-lg-10").toggleClass("col-10");
-            
+            var dNow = new Date();
+            var day = dNow.getDate() < 10 ? "0"+dNow.getDate() : dNow.getDate()
+            var month = dNow.getMonth() < 9 ? "0"+dNow.getMonth() : dNow.getMonth()
+            var hours = dNow.getHours() < 10 ? "0"+dNow.getHours() : dNow.getHours()
+            var minutes = dNow.getMinutes() < 10 ? "0"+dNow.getMinutes() : dNow.getMinutes()
+            var localdate = day + '/' + month + '/' + dNow.getFullYear() + ' ' + hours + ':' + minutes;
+
             $("#ficha").printThis({
                 header: "<h1 class='text-center'>Ficha de funcionário<h1><hr><br>",
+                footer: `<span class='text-center bottom-center-absolute titulo_cargo'>${localdate}<span><hr><br>`,
                 afterPrint: function(){
                     $(".change-class-2").toggleClass("col-lg-2").toggleClass("col-2");
                     $(".change-class-10").toggleClass("col-lg-10").toggleClass("col-10");

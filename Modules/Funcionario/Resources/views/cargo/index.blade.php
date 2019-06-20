@@ -4,46 +4,34 @@
 
 @section('body')
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-8">
             <form id="form">
                 <div class="form-group">
-                    <input id="search-input" class="form-control" type="text" name="pesquisa" />
+                    <div class="input-group">
+                        <input id="search-input" class="form-control" type="text" name="pesquisa" />
+                        <i id="search-button" class="btn btn-info material-icons ml-2">search</i>
+                    </div>
                 </div>
             </form>
         </div>
-        <div class="col-md-2 pl-0">
-            <div class="form-group">
-                <i id="search-button" class="btn btn-info material-icons">search</i>
-            </div>
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="text-right">
                 <a class="btn btn-success" href="{{ url('funcionario/cargo/create') }}">Novo Cargo</a>
             </div>
         </div>
     </div>
-    <!-- <div class="form-group col-md-8">
-        <label>Nome</label>
-        <div class="input-group">
-            <input type="text" name="nome" class="form-control">
-        </div>
+    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="ativos-tab" data-toggle="tab" href="#ativos" role="tab" aria-controls="ativos" aria-selected="true">Ativos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="inativos-tab" data-toggle="tab" href="#inativos" role="tab" aria-controls="inativos" aria-selected="false">Inativos</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="ativos" role="tabpanel"></div>
+        <div class="tab-pane fade" id="inativos" role="tabpanel"></div>
     </div>
-    <button type="button" class="btn btn-mapes btn-block" id="sendForm">Pesquisar</button> -->
-    <!-- <br> -->
-    <!-- <div class="container"> -->
-        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="ativos-tab" data-toggle="tab" href="#ativos" role="tab" aria-controls="ativos" aria-selected="true">Ativos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="inativos-tab" data-toggle="tab" href="#inativos" role="tab" aria-controls="inativos" aria-selected="false">Inativos</a>
-            </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="ativos" role="tabpanel"></div>
-            <div class="tab-pane fade" id="inativos" role="tabpanel"></div>
-        </div>
-    <!-- </div> -->
 @endsection
 
 @section('script')
