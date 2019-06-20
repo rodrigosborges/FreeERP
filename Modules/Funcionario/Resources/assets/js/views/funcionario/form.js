@@ -115,8 +115,6 @@ function atualizarCamposEndereco(dados) {
             selecionarCidade(dados.localidade)
         },
         error: function() {
-            //CEP pesquisado não foi encontrado.
-            limpa_formulario_cep();
             Swal.fire({
                 type: 'warning',
                 title: 'Desculpe...',
@@ -159,41 +157,32 @@ function selecionarCidade(cidade) {
 
 }
 
-//BUSCA CEP
-function limpa_formulario_cep(){
-    $('.logradouro').val('');
-}
-
 $('#cep').blur(function(){
     var cep = $(this).val().replace(/\D/g, '');
-    if(cep !=""){
-     var validacep = /^[0-9]{8}$/;   
-     if(validacep.test(cep)) {
-        $('.logradouro').val('...');
+    if(cep != ""){
+        var validacep = /^[0-9]{8}$/;   
+        if(validacep.test(cep)) {
+            $('.logradouro').val('...');
 
-        $.ajax({
-            url: "https://viacep.com.br/ws/"+ cep +"/json/",
-            type: 'GET',
-            dataType: "json",
-            success: function(dados){
-                //Atualiza os campos com os valores da consulta.
-                $(".logradouro").val(dados.logradouro);
-                $(".bairro").val(dados.bairro);
-                atualizarCamposEndereco(dados)
-                $(".numero").focus()
-            }
-        })
-
+            $.ajax({
+                url: "https://viacep.com.br/ws/"+ cep +"/json/",
+                type: 'GET',
+                dataType: "json",
+                success: function(dados){
+                    //Atualiza os campos com os valores da consulta.
+                    $(".logradouro").val(dados.logradouro);
+                    $(".bairro").val(dados.bairro);
+                    atualizarCamposEndereco(dados)
+                    $(".numero").focus()
+                }
+            })
         }else{
-            limpa_formulario_cep();
             Swal.fire({
                 type: 'warning',
                 title: 'Atenção!',
                 text: 'Formato de CEP inválido!',
             })
         }
-    }else{
-        limpa_formulario_cep();
     }
 });
 
