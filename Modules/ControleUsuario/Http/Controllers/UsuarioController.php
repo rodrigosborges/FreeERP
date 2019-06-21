@@ -91,15 +91,15 @@ class UsuarioController extends Controller
 
 
             if (!$usuario) {
-               
+
                 $data =array();
                 $data['nome']= $req->input('name');
-                $data['email']= $req->input('email');  
+                $data['email']= $req->input('email');
                 $data['senha']=  base64_encode($req->input('password'));
 
                 $data['url'] = 'validar.cadastro';
                 $data['model'] = null;
-                
+
                 $data['title'] = 'Cadastrar Usuário';
                 Usuario::Create($data);
                 DB::commit();
@@ -156,32 +156,32 @@ class UsuarioController extends Controller
             $data = array();
             $email = DB::table('usuario')->where('email', $request->email)->first();
             if(!$email){
-                
+
                $usuario = new Usuario();
                $usuario->nome =$request->nome;
                $usuario->email =$request->email;
                $usuario->senha = base64_encode($request->senha);
                $usuario->save();
-               
+
                if($request->modulo!=null && $request->modulo!=""){
                    $atuacao = new Atuacao();
                    $atuacao->usuario_id =$usuario->id;
                    $atuacao->modulo_id = $request->modulo;
                    $atuacao->papel_id = $request->papel;
                    $atuacao->save();
-                   
+
                }
                DB::commit();
                $retorno['mensagem']="Usuário Cadastrado com sucesso";
                $retorno['sucesso']=true;
-                
+
 
             }else{
                 $retorno['mensagem']="Este email já está em uso no momento";
             }
         }catch(Exception $ex){
             $retorno['mensagem']= "Erro ->". $ex;
-            
+
             DB::rollback();
         }
         return json_encode($retorno);
@@ -235,75 +235,59 @@ class UsuarioController extends Controller
         );
     }
 
+
     public function buscar(Request $req){
         $status = ['0' => "Ativos e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
         $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
-        $lista = DB::table('usuario')->select();
-        
+
+
+        $lista = DB::table('usuario')->select("*");
 
         foreach ($req->request as $key => $value) {
-            
-            if($key !="_token"){
-                if(isset($value) ){
-                    if($key=="status"){
-                        if($value == "1"){
-                            $lista = whereNull("deleted_at");
-                        }else{
-                            if($value == "2" || $value == "0'"){
-                                $lista = whereNotNull("deleted_at");;
+            if( $key !="_token" ){
+                //DB::table('usuario')->where('email', $request->email)->first();
+                if( isset($value) ){
+                    switch ($key){
+                        case "nome":
+                            $lista -> where('nome', $value);
+                            break;
+                        case "data":
+                            //$lista->where('created_at', $value) -> get();
+                            break;
+                        case "status":
+                            switch ($value){
+                                case "0":
+                                    $lista->whereNull("deleted_at")->orWhereNotNull("deleted_at");
+                                    dd($lista->toSql());
+                                break;
+                                case "1":
+                                    $lista->whereNull("deleted_at");
+                                break;
+                                case "2":
+                                    $lista->whereNotNull("deleted_at");
+                                break;
                             }
-                        }
+                        break;
+                        case "modulos":
+                        /*switch ($value){
+                            case "0":
+                                $lista->withTrashed()->get();
+                            break;
+                            case "1":
+                                $lista->whereNull("deleted_at");
+                            break;
+                            case "2":
+                                $lista->whereNotNull("deleted_at");
+                            break;
+                        }*/
+                        break;
+
                     }
-                    if($key=="modulos"){
-                        $teste = $modulos[$value];
-                        dd($teste);
-                        $lista -> where($key, $teste);
-                    }
-                    if($key=="cargos"){
-                        $teste = $cargos[$value];
-                        $lista -> where($key, $teste);
-                    }
-                        $lista -> where($key, $value);
-                }            
+                }
             }
         }
-        $lista->get();
-        
-        //     switch($key){
-        //         case 'nome':
-        //             if( isset($value) ){
-        //                 $texto = [$texto. $value];
-        //                 echo($texto);
-        //             }
-        //         break;
-        //         case 'data':
-        //         if( isset($value) ){
-        //             $texto = $texto. $value;
-        //             echo($texto);
-        //         }
-        //         break;
-        //         case 'status':
-        //         if( isset($value) ){
-        //             $texto = $texto. $value;
-        //             echo($texto);
-        //         }
-        //         break;
-        //         case 'modulo':
-        //         if( isset($value) ){
-        //             $texto = $texto. $value;
-        //             echo($texto);
-        //         }
-        //     }
-        // }
-        
-        // if( isset($req->nome)){
-        //     $lista = DB::table('usuario')->select()->where(
-        //         'nome', $req->nome
-        //     )->get();
-        // }else{
-        //     echo("TB");
-        // }
+        $lista = $lista->get();
 
         return view(
             'controleusuario::consulta',
@@ -317,7 +301,7 @@ class UsuarioController extends Controller
         $user = Usuario::onlyTrashed()
         ->where('id', $req->id );
 
-        
+
         $user->restore();
         return redirect()->back()->with('Success','IT WORKS!');
 
@@ -358,7 +342,7 @@ class UsuarioController extends Controller
                     $usuario->save();
                 }else
                     $usuario->senha = base64_encode($request->senha);
-                
+
                 $usuario->email = $request->email;
                 $usuario->nome = $request->nome;
                 $usuario->save();
@@ -367,13 +351,13 @@ class UsuarioController extends Controller
                     $atuacao->usuario_id =$usuario->id;
                     $atuacao->modulo_id = $request->modulo;
                     $atuacao->papel_id = $request->papel;
-                    $atuacao->save();                     
+                    $atuacao->save();
                 }
                 $retorno['mensagem']="Usuario atualizado com sucesso";
                 $retorno['sucesso']=true;
             } catch (Exception $e) {
                 DB::rollback();
-             
+
                 $retorno['mensagem'] = "erro" . $e->getMessage();
 
             }
@@ -408,6 +392,6 @@ class UsuarioController extends Controller
         $retorno['modulos']=$modulos;
         $retorno['papeis']=$papeis;
         return json_encode($retorno);
-        
+
     }
 }
