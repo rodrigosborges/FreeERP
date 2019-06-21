@@ -18,29 +18,31 @@
                 <div class="modal-body">
                     <form action="{{route('eventos.criar')}}" id="eventoForm" method="post">
                         <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-11">
-                                    <input type="text" class="form-control" id="eventoTitulo" placeholder="Título">
-                                </div>
-                                <div class="col-1">
-                                    <select id="eventoCor">
-                                        <option value="A0522D" data-color="#A0522D">sienna</option>
-                                        <option value="CD5C5C" data-color="#CD5C5C">indianred</option>
-                                        <option value="FF4500" data-color="#FF4500">orangered</option>
-                                        <option value="DC143C" data-color="#DC143C">crimson</option>
-                                        <option value="FF8C00" data-color="#FF8C00">darkorange</option>
-                                        <option value="C71585" data-color="#C71585">mediumvioletred</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <label for="eventoTitulo">Título</label>
+                            <input type="text" class="form-control" id="eventoTitulo">
                         </div>
                         <div class="form-group">
+                            <label>Data</label>
                             <div class="form-row">
                                 <div class="col-6">
-                                    <input type="date" class="form-control" id="eventoDataInicio" placeholder="Início">
+                                    <div class="input-group date" id="eventoDataInicio" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input"
+                                               data-target="#eventoDataInicio"/>
+                                        <div class="input-group-append" data-target="#eventoDataInicio"
+                                             data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-5">
-                                    <input type="date" class="form-control" id="eventoDataInicio" placeholder="Início">
+                                    <div class="input-group date" id="eventoDataFim" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input"
+                                               data-target="#eventoDataFim"/>
+                                        <div class="input-group-append" data-target="#eventoDataFim"
+                                             data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-1">
                                     <i class="material-icons">alarm</i>
@@ -50,14 +52,29 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col">
-                                    <input type="time" class="form-control" id="eventoHoraInicio">
+                                    <div class="input-group date" id="eventoHoraInicio" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input"
+                                               data-target="#eventoHoraInicio"/>
+                                        <div class="input-group-append" data-target="#eventoHoraInicio"
+                                             data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col">
-                                    <input type="time" class="form-control" id="eventoHoraFim">
+                                    <div class="input-group date" id="eventoHoraFim" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input"
+                                               data-target="#eventoHoraFim"/>
+                                        <div class="input-group-append" data-target="#eventoHoraFim"
+                                             data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="eventoAgenda">Agenda</label>
                             <select id="eventoAgenda" class="form-control">
                                 <option value="Pessoal">Pessoal</option>
                                 <option value="Pessoal">Pessoal</option>
@@ -87,24 +104,43 @@
           href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/list/main.min.css')}}">
     <link rel="stylesheet" type="text/css"
           href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/bootstrap/main.min.css')}}">
-    <link rel="stylesheet" type="text/css"
-          href="{{Module::asset(config('calendario.id').':bootstrap-colorselector-0.2.0/css/bootstrap-colorselector.css')}}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     @parent
 @endsection
 
 @section('js')
-    <script src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/main.min.js')}}"></script>
-    <script src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/daygrid/main.min.js')}}"></script>
-    <script src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/interaction/main.min.js')}}"></script>
-    <script src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/timegrid/main.min.js')}}"></script>
-    <script src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/list/main.min.js')}}"></script>
-    <script src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/locales/pt-br.js')}}"></script>
-    <script src="{{Module::asset(config('calendario.id').':bootstrap-colorselector-0.2.0/js/bootstrap-colorselector.js')}}"></script>
-    <script>
-        $('#eventoCor').colorselector({
-            callback: function (value, color, title) {
+    <script type="text/javascript"
+            src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/main.min.js')}}"></script>
+    <script type="text/javascript"
+            src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/daygrid/main.min.js')}}"></script>
+    <script type="text/javascript"
+            src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/interaction/main.min.js')}}"></script>
+    <script type="text/javascript"
+            src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/timegrid/main.min.js')}}"></script>
+    <script type="text/javascript"
+            src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/list/main.min.js')}}"></script>
+    <script type="text/javascript"
+            src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/locales/pt-br.js')}}"></script>
+    <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 
-            }
+    <script>
+        $(function () {
+            $('#eventoDataInicio, #eventoDataFim').datetimepicker({
+                format: 'L',
+                locale: 'pt-br',
+            });
+            $("#eventoDataInicio").on("change.datetimepicker", function (e) {
+                $('#eventoDataFim').datetimepicker('minDate', e.date);
+                $('#eventoDataFim').datetimepicker('date', e.date);
+            });
+            $('#eventoHoraInicio, #eventoHoraFim').datetimepicker({
+                format: 'HH:mm'
+            });
+
         });
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -123,7 +159,9 @@
                 businessHours: true, // display business hours
                 events: '{{route('eventos')}}',
                 dateClick: function (info) {
-                    //console.log(info);
+                    console.log(info.dateStr);
+                    $('#eventoDataInicio').val(info.dateStr);
+                    $('#eventoDataFim').val(info.dateStr);
                     $('#eventoModal').modal('show');
                 },
                 eventClick: function (info) {
