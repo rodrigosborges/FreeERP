@@ -24,7 +24,7 @@ class CalendarioController extends Controller
                 'id' => 1,
                 'title' => 'Curso',
                 'start' => '2019-06-20 08:00',
-                'end' => '2019-06-22 19:00',
+                'end' => '2019-06-20 08:00',
                 'backgroundColor' => 'red',
                 'borderColor' => 'red',
                 'classNames' => 'calendario01'

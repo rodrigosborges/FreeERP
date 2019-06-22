@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <label>Data</label>
                             <div class="form-row">
-                                <div class="col-6">
+                                <div class="col-5">
                                     <div class="input-group date" id="eventoDataInicio" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
                                                data-target="#eventoDataInicio"/>
@@ -33,6 +33,9 @@
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-1">
+                                    <span>até</span>
                                 </div>
                                 <div class="col-5">
                                     <div class="input-group date" id="eventoDataFim" data-target-input="nearest">
@@ -45,13 +48,13 @@
                                     </div>
                                 </div>
                                 <div class="col-1">
-                                    <i class="material-icons">alarm</i>
+                                    <a href="#"><i class="material-icons" id="icone-relogio">access_time</i></a>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="eventoHora">
                             <div class="form-row">
-                                <div class="col">
+                                <div class="col-5">
                                     <div class="input-group date" id="eventoHoraInicio" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
                                                data-target="#eventoHoraInicio"/>
@@ -61,7 +64,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-1">
+                                    <span>até</span>
+                                </div>
+                                <div class="col-5">
                                     <div class="input-group date" id="eventoHoraFim" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
                                                data-target="#eventoHoraFim"/>
@@ -71,6 +77,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-1">
+                                    <a href="#" class="form-inline"><i class="material-icons" id="icone-relogio">add_alert</i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label for="eventoNotificacao">Notificação</label>
+                                <input id="eventoNotificacao" class="form-control">
+                                <input type="checkbox" id="eventoNotificacaoEmail">
+                                <label for="eventoNotificacaoEmail">Também notificar via e-mail</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -107,6 +124,8 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <style type="text/css">
+    </style>
     @parent
 @endsection
 
@@ -140,7 +159,6 @@
             $('#eventoHoraInicio, #eventoHoraFim').datetimepicker({
                 format: 'HH:mm'
             });
-
         });
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -159,9 +177,13 @@
                 businessHours: true, // display business hours
                 events: '{{route('eventos')}}',
                 dateClick: function (info) {
-                    console.log(info.dateStr);
-                    $('#eventoDataInicio').val(info.dateStr);
-                    $('#eventoDataFim').val(info.dateStr);
+                    $('#eventoDataInicio').datetimepicker('date', info.date);
+                    if (info.view.type != 'dayGridMonth') {
+                        $('#eventoHoraInicio').datetimepicker('date', info.date);
+                        $('#eventoHora').show()
+                    } else {
+                        $('#eventoHora').hide();
+                    }
                     $('#eventoModal').modal('show');
                 },
                 eventClick: function (info) {

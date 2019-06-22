@@ -1,12 +1,12 @@
 <?php
 
 $moduleInfo = [
-    'icon' => 'calendar_today',
+    'icon' => 'today',
     'name' => config('calendario.name')
 ];
 
 $menu = [
-    ['icon' => 'people', 'tool' => 'Criar Agenda', 'route' => route('agendas.criar')],
+    ['icon' => 'add_box', 'tool' => 'Criar Agenda', 'route' => route('agendas.criar')],
 ];
 
 ?>
