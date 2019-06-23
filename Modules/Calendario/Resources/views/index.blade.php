@@ -17,9 +17,10 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{route('eventos.criar')}}" id="eventoForm" method="post">
+                        @csrf
                         <div class="form-group">
                             <label for="eventoTitulo">Título</label>
-                            <input type="text" class="form-control" id="eventoTitulo">
+                            <input type="text" class="form-control" id="eventoTitulo" name="eventoTitulo" required>
                         </div>
                         <div class="form-group">
                             <label>Data</label>
@@ -27,7 +28,7 @@
                                 <div class="col-5">
                                     <div class="input-group date" id="eventoDataInicio" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
-                                               data-target="#eventoDataInicio"/>
+                                               data-target="#eventoDataInicio" name="eventoDataInicio" required/>
                                         <div class="input-group-append" data-target="#eventoDataInicio"
                                              data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -40,7 +41,7 @@
                                 <div class="col-5">
                                     <div class="input-group date" id="eventoDataFim" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
-                                               data-target="#eventoDataFim"/>
+                                               data-target="#eventoDataFim" name="eventoDataFim"/>
                                         <div class="input-group-append" data-target="#eventoDataFim"
                                              data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -57,7 +58,7 @@
                                 <div class="col-5">
                                     <div class="input-group date" id="eventoHoraInicio" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
-                                               data-target="#eventoHoraInicio"/>
+                                               data-target="#eventoHoraInicio" name="eventoHoraInicio"/>
                                         <div class="input-group-append" data-target="#eventoHoraInicio"
                                              data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
@@ -70,7 +71,7 @@
                                 <div class="col-5">
                                     <div class="input-group date" id="eventoHoraFim" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
-                                               data-target="#eventoHoraFim"/>
+                                               data-target="#eventoHoraFim" name="eventoHoraFim"/>
                                         <div class="input-group-append" data-target="#eventoHoraFim"
                                              data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
@@ -85,17 +86,17 @@
                         <div>
                             <div class="form-group">
                                 <label for="eventoNotificacao">Notificação</label>
-                                <input id="eventoNotificacao" class="form-control">
-                                <input type="checkbox" id="eventoNotificacaoEmail">
+                                <input id="eventoNotificacao" class="form-control" name="eventoNotificacao">
+                                <input type="checkbox" id="eventoNotificacaoEmail" name="eventoNotificacaoEmail">
                                 <label for="eventoNotificacaoEmail">Também notificar via e-mail</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="eventoAgenda">Agenda</label>
-                            <select id="eventoAgenda" class="form-control">
-                                <option value="Pessoal">Pessoal</option>
-                                <option value="Pessoal">Pessoal</option>
-                                <option value="Pessoal">Pessoal</option>
+                            <select id="eventoAgenda" class="form-control" name="eventoAgenda" required>
+                                <option value="1">Pessoal</option>
+                                <option value="2">Pessoal</option>
+                                <option value="3">Pessoal</option>
                             </select>
                         </div>
                     </form>

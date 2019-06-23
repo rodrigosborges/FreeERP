@@ -21,8 +21,9 @@ class EventoController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        dd($request->all());
         return view('calendario::create');
     }
 
