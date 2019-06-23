@@ -19,6 +19,7 @@ class CreateFuncionarioTable extends Migration {
 			$table->date('data_nascimento');
 			$table->boolean('sexo');
 			$table->date('data_admissao');
+			$table->text('biometria')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
