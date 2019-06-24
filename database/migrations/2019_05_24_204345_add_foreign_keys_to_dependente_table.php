@@ -30,6 +30,7 @@ class AddForeignKeysToDependenteTable extends Migration {
 		Schema::table('dependente', function(Blueprint $table)
 		{
 			$table->dropForeign('fk_dependente_parentesco');
+			$table->dropForeign('fk_dependente_funcionario');
 		});
 	}
 
