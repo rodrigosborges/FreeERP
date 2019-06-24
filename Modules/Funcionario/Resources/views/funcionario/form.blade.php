@@ -413,12 +413,12 @@
         <div id="dependentes">
             @foreach(old('dependentes', $data['dependentes']) as $key => $dependente)
 
-                <div class="dep {{ isset($dependente['nome']) ? '' : 'd-none'}} mb-4">
+                <div class="dep {{ old('dependentes.$key.nome', isset($dependente->nome) ? $dependente->nome : '') ? '' : 'd-none'}} mb-4">
                     
                     <div class="form-row">
 
-                        @if(isset($dependente['id']))
-                            <input type="hidden" class="dependentes" value="{{isset($dependente['id']) ? $dependente['id'] : ''}}" name="dependentes[{{$key}}][id]">
+                        @if(isset($dependente->id))
+                            <input type="hidden" class="dependentes" value="{{ isset($dependente->id) ? $dependente->id : ''}}" name="dependentes[{{$key}}][id]">
                         @endif
 
                         <div class="col-lg-3">
@@ -433,7 +433,7 @@
                                     <select required name="dependentes[{{$key}}][parentesco_id]" id="tipo_parentesco_{{$key}}" class="form-control dependentes">
                                         <option value="">Selecione</option>
                                         @foreach($data['parentescos'] as $parentesco)
-                                            <option value="{{$parentesco->id}}" {{ isset($dependente['parentesco_id']) && $dependente['parentesco_id'] == $parentesco['id'] ? 'selected' : '' }}>{{$parentesco->nome}}</option>
+                                            <option value="{{$parentesco->id}}" {{ old('dependentes.$key.parentesco_id', isset($dependente->parentesco_id) ? $dependente->parentesco_id : '') == $parentesco['id'] ? 'selected' : '' }}>{{$parentesco->nome}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -452,8 +452,8 @@
                                     </div>
                                     <select required name="dependentes[{{$key}}][mora_junto]" id="mora_junto_{{$key}}" class="form-control dependentes">
                                         <option value="">Selecione</option>
-                                        <option value="1" {{ isset($dependente['mora_junto']) && $dependente['mora_junto'] == '1' ? 'selected' : '' }}>Sim</option>
-                                        <option value="0" {{ isset($dependente['mora_junto']) && $dependente['mora_junto'] == '0' ? 'selected' : '' }}>Não</option>
+                                        <option value="1" {{ old('dependentes.$key.mora_junto', isset($dependente->mora_junto) ? $dependente->mora_junto : '') == '1' ? 'selected' : '' }}>Sim</option>
+                                        <option value="0" {{ old('dependentes.$key.mora_junto', isset($dependente->mora_junto) ? $dependente->mora_junto : '') == '0' ? 'selected' : '' }}>Não</option>
                                     </select>
                                 </div>
                                 <span class="errors"> {{ $errors->first('dependentes.'.$key.'.mora_junto') }}</span>
@@ -473,7 +473,7 @@
                                             <i class="material-icons">person</i>
                                         </span>
                                     </div>
-                                    <input required type="text" placeholder="Nome" name="dependentes[{{$key}}][nome]"  class="form-control dependentes" id="nome_dep_{{$key}}" value="{{ old('dependentes.$key.numero', $data['model'] ? $dependente->nome : '') }}">
+                                    <input required type="text" placeholder="Nome" name="dependentes[{{$key}}][nome]"  class="form-control dependentes" id="nome_dep_{{$key}}" value="{{ old('dependentes.$key.nome', isset($dependente->nome) ? $dependente->nome : '') }}">
                                 </div>
                                 <span class="errors"> {{ $errors->first('dependentes.'.$key.'.nome') }}</span>
                             </div>
@@ -488,7 +488,7 @@
                                             <i class="material-icons">description</i>
                                         </span>
                                     </div>
-                                    <input required type="text" placeholder="XXX.XXX.XXX-XX" name="dependentes[{{$key}}][cpf]"  class="form-control dependentes cpf" id="cpf_dep_{{$key}}" value="{{ old('dependentes.$key.cpf', $data['model'] ? $dependente->cpf()->numero : '') }}">
+                                    <input required type="text" placeholder="XXX.XXX.XXX-XX" name="dependentes[{{$key}}][cpf]"  class="form-control dependentes cpf" id="cpf_dep_{{$key}}" value="{{ old('dependentes.$key.cpf', isset($dependente->id) ? $dependente->cpf()->numero : '') }}">
                                 </div>
                                 <span class="errors"> {{ $errors->first('dependentes.'.$key.'.cpf') }}</span>
                             </div>

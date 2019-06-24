@@ -170,27 +170,29 @@ class FuncionarioController extends Controller{
 
             }
 
-            foreach($request->dependentes as $dependente) {
+            if($request->input('dependentes')) {
+                foreach($request->dependentes as $dependente) {
 
-                $dependente['funcionario_id'] = $funcionario['id'];
+                    $dependente['funcionario_id'] = $funcionario['id'];
 
-                $newDep = Dependente::create($dependente);
+                    $newDep = Dependente::create($dependente);
 
-                $doc = [
-                    'tipo_documento_id'   => '1',
-                    'numero'              => $dependente['cpf']
-                ];
-                
-                $cpf = Documento::create($doc);
+                    $doc = [
+                        'tipo_documento_id'   => '1',
+                        'numero'              => $dependente['cpf']
+                    ];
+                    
+                    $cpf = Documento::create($doc);
 
-                Relacao::create([
-                    'tabela_origem'     => 'dependente',
-                    'origem_id'         => $newDep->id,
-                    'tabela_destino'    => 'documento',
-                    'destino_id'        => $cpf->id,
-                    'modelo'            => 'Telefone'
-                ]);
+                    Relacao::create([
+                        'tabela_origem'     => 'dependente',
+                        'origem_id'         => $newDep->id,
+                        'tabela_destino'    => 'documento',
+                        'destino_id'        => $cpf->id,
+                        'modelo'            => 'Telefone'
+                    ]);
 
+                }
             }
 
 			DB::commit();
@@ -397,7 +399,7 @@ class FuncionarioController extends Controller{
             }
             //####################
 
-            if($request->input('dependentes')) {
+            if($request->dependentes) {
 
                 foreach($request->dependentes as $dependente){
 
