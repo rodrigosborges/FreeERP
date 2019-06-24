@@ -26,7 +26,7 @@ class UsuarioController extends Controller
 
     public function __construct()
     {
-
+        
         /* Inicializa com o icone e nome padrao */
 
         // $papel = Papel::find()->where('idUsuario', '=', $idUsuario);
@@ -46,6 +46,7 @@ class UsuarioController extends Controller
             default:
             $menu = [];
         }
+        
 
         $this->dadosTemplate = [
             'moduleInfo' => [
@@ -54,6 +55,7 @@ class UsuarioController extends Controller
             ],
             'menu' => $menu,
         ];
+          
     }
 
     /**
@@ -72,8 +74,13 @@ class UsuarioController extends Controller
 
     public function viewCadastro()
     {
+        
+        session_start();
+        $this->verificaLogado();
+     
         $data = ['url' => '/cadastrar', 'model' => null, 'button' => 'Cadastrar', 'title' => 'Cadastrar Usuário'];
-
+    
+        
         return view('controleusuario::form', $this->dadosTemplate, compact('data'));
     }
 
@@ -83,7 +90,6 @@ class UsuarioController extends Controller
 
     public function cadastrar(ValidaCadastroRequest $req)
     {
-
         DB::beginTransaction();
         try {
 
@@ -115,17 +121,28 @@ class UsuarioController extends Controller
 
     public function validaLogin(ValidaLoginRequest $req)
     {
-
+/*
+ $menu = [
+                ['icon' => 'vpn_key', 'tool' => 'Login', 'route' => '/controleusuario/autenticar'],
+                ['icon' => 'people', 'tool' => 'Usuarios', 'route' => '/controleusuario/cadastrar'],
+                ['icon' => 'event_note', 'tool' => 'Papéis', 'route' => '/controleusuario/papel'],
+                 ['icon' => 'list_alt', 'tool' => 'Relatórios', 'route' => '/controleusuario/consulta'],
+                ['icon' => 'toggle_off', 'tool' => 'Sair', 'route' => '/controleusuario/sair'],
+            ];
+*/
         $senha =  base64_encode($req->password);
         $user = DB::table('usuario')->where('email', $req->email)->Where('senha', $senha)->first();
 
         if ($user != null) {
+           $this->verificaLogado();
+         //   dd($this->dadosTemplate['menu']);
             session_start();
 
             $_SESSION['id'] = $user->id;
             $_SESSION['email'] = $user->email;
             $_SESSION['nome'] = $user->nome;
             $usuario = Usuario::findOrFail($user->id);
+            $this->verificaLogado();
             $data = ['usuario' => $user, 'url' => '/dashboard', 'title' => 'Pagina inicial'];
             return view('controleusuario::dashboard', $this->dadosTemplate, compact('data','usuario'));
         } else {
@@ -139,6 +156,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
+        $this->verificaLogado();
         return view('usuario.create');
     }
 
@@ -149,7 +167,7 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $retorno = array();
+$retorno = array();
         $retorno['sucesso']=false;
         DB::beginTransaction();
         try{
@@ -194,7 +212,13 @@ class UsuarioController extends Controller
         session_destroy();
         return view('controleusuario::login', $this->dadosTemplate);
     }
-
+    public function dashboard(){
+        session_start();
+       $usuario = Usuario::find($_SESSION['id']);
+        $data = [ 'title' => 'Pagina inicial'];
+        $this->verificaLogado();
+        return view('controleusuario::dashboard', $this->dadosTemplate, compact('data','usuario'));
+    }
     /**
      * Show the specified resource.
      * @param int $id
@@ -222,6 +246,8 @@ class UsuarioController extends Controller
     // Metodo utilizado quando a view é aberta a primeira vez
     public function consulta()
     {
+       session_start();
+        $this->verificaLogado();
         $status = ['0' => "Ativo e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
         // $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
@@ -309,7 +335,6 @@ class UsuarioController extends Controller
             }
         }
         $lista = $lista->get();
-
         return view(
             'controleusuario::consulta',
             $this->dadosTemplate,
@@ -330,7 +355,6 @@ class UsuarioController extends Controller
 
     public function editar(Request $req)
     {
-
         $data['model'] = Usuario::find($req->input('id'));
         $data['url'] = 'validar.edicao';
         $data['button'] = 'Atualizar';
@@ -414,5 +438,12 @@ class UsuarioController extends Controller
         $retorno['papeis']=$papeis;
         return json_encode($retorno);
 
+    }
+    public function verificaLogado(){
+        
+        if(isset($_SESSION['id'])){
+            array_shift($this->dadosTemplate['menu']);
+            array_unshift($this->dadosTemplate['menu'], ['icon'=>'assignment_ind', 'tool'=>$_SESSION['nome'], 'route'=>'/controleusuario/dashboard']);
+        }
     }
 }

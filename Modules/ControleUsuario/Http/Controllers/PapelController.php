@@ -53,7 +53,9 @@ class PapelController extends Controller
      */
     public function index()
     {
+
         $papeis = Papel::withTrashed()->get();
+        $this->verificaLogado();
 
         return view('controleusuario::papel.index', $this->dadosTemplate, compact('papeis',));
     }
@@ -87,37 +89,29 @@ class PapelController extends Controller
         $retorno= array();
         $retorno['sucesso']=false;
         session_start();
-        if(isset($_SESSION['id'])){
-           
-       
-        
-        $papel = new Papel;
-        $papel->nome = $request->nome;
+        if(isset($_SESSION['id'])){      
+            $papel = new Papel;
+            $papel->nome = $request->nome;
 
-        $papel->descricao = $request->descricao;
-         
-        $usuario= Usuario::findOrFail($_SESSION['id']);
-        $papel->usuario()->associate($usuario);
+            $papel->descricao = $request->descricao;
+            
+            $usuario= Usuario::findOrFail($_SESSION['id']);
+            $papel->usuario()->associate($usuario);
 
-    
-      
-        $resultado =$papel->save();
-        if($resultado){
-            $retorno['mensagem']= "Papel cadastrado com sucesso";
-            $retorno['sucesso']=true;
-            $retorno['papel']= $papel;
-        }else
-            $retorno['mensagem']= "Erro ao cadastrar papel";
         
-       
         
-    }else{
-        $retorno['mensagem'] = "Você precisa estar logado para realizar esta ação";
+            $resultado =$papel->save();
+            if($resultado){
+                $retorno['mensagem']= "Papel cadastrado com sucesso";
+                $retorno['sucesso']=true;
+                $retorno['papel']= $papel;
+            }else
+                $retorno['mensagem']= "Erro ao cadastrar papel";  
+        }else{
+            $retorno['mensagem'] = "Você precisa estar logado para realizar esta ação";
        
-    }
-    return json_encode($retorno);
-     
-    
+        }
+        return json_encode($retorno);
         
     }
 
@@ -171,5 +165,12 @@ class PapelController extends Controller
     public function atualizar(){
         $papel = Papel::findOrFail($_POST['id']);
         return json_encode($papel);
+    }
+    public function verificaLogado(){
+        session_start();
+        if(isset($_SESSION['id'])){
+            array_shift($this->dadosTemplate['menu']);
+            array_unshift($this->dadosTemplate['menu'], ['icon'=>'assignment_ind', 'tool'=>$_SESSION['nome'], 'route'=>'/controleusuario/dashboard']);
+        }
     }
 }

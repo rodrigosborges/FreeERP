@@ -1,7 +1,6 @@
 @extends('template')
 @section('title', 'Papéis')
 @section('content')
-<?php session_start()?>
 @if($_SESSION)
 <div class="row">
     <div class="col-md-12">
@@ -20,9 +19,10 @@
                 <th>Criado em:</th>
                 <th>Criado por:</th>
                 <th class="text.center" width="250px">
-                    <a href="#" class=" create-modal btn btn-success btn-sm" id="btnCreate" data-toggle="modal"data-target="#create">
-                        <i class="material-icons">note_add</i>
-                    </a>
+                    <h3  class=" create-modal " id="btnCreate" >
+                    <!-- togle para chamada de modal de criação de papel (apenas para usuer adm do modulo):  data-toggle="modal"data-target="#create" -->
+                        Opões
+                    </h3>
                 </th>
             </tr>
             {{ csrf_field() }}
