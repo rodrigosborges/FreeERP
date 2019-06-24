@@ -16,7 +16,8 @@ class CreateDependenteTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('nome', 100);
-            $table->boolean('mora_junto');
+			$table->boolean('mora_junto');
+			$table->integer('funcionario_id')->index('fk_dependente_funcionario');
 			$table->integer('parentesco_id')->index('fk_dependente_parentesco');
 		});
 	}
