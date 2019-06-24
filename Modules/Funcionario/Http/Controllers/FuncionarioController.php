@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Cargo, Funcionario};
+use Modules\Funcionario\Entities\{Cargo, Funcionario, Dependente, Parentesco};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Relacao, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
@@ -45,6 +45,8 @@ class FuncionarioController extends Controller{
             'tipo_documentos'   => TipoDocumento::whereNotIn("id",[1,2])->get(),
             'documentos'        => [new Documento],
             'telefones'         => [new Telefone],
+            'dependentes'       => [new Dependente],
+            'parentescos'       => Parentesco::all(),
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
             'estados'           => Estado::all(),
@@ -168,6 +170,29 @@ class FuncionarioController extends Controller{
 
             }
 
+            foreach($request->dependentes as $dependente) {
+
+                $dependente['funcionario_id'] = $funcionario['id'];
+
+                $newDep = Dependente::create($dependente);
+
+                $doc = [
+                    'tipo_documento_id'   => '1',
+                    'numero'              => $dependente['cpf']
+                ];
+                
+                $cpf = Documento::create($doc);
+
+                Relacao::create([
+                    'tabela_origem'     => 'dependente',
+                    'origem_id'         => $newDep->id,
+                    'tabela_destino'    => 'documento',
+                    'destino_id'        => $cpf->id,
+                    'modelo'            => 'Telefone'
+                ]);
+
+            }
+
 			DB::commit();
             return redirect('/funcionario/funcionario')->with('success', 'Funcionário cadastrado com successo!');
             
@@ -188,12 +213,14 @@ class FuncionarioController extends Controller{
         $funcionario = Funcionario::findOrFail($id);
 
         $documentos = Documento::whereNotIn('tipo_documento_id', [1,2])->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$id)->where('relacao.tabela_origem','funcionario')->where('relacao.tabela_destino','documento')->select('documento.*')->get();
-
+        
         $data = [
             "url" 	 	        => url("funcionario/funcionario/$id"),
             "model"		        => $funcionario,
             'tipo_documentos'   => TipoDocumento::whereNotIn("id",[1,2])->get(),
             'documentos'        => count($documentos) ? $documentos : [new Documento],
+            'dependentes'       => count($funcionario->dependentes) ? $funcionario->dependentes : [new Dependente],
+            'parentescos'       => Parentesco::all(),
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
             'telefones'         => $funcionario->telefones(),
@@ -341,7 +368,74 @@ class FuncionarioController extends Controller{
                 }
             }
 
-            #caso tudo dê certo acima, ele excluir os arquivos inutilizados
+            //remoção de dependentes
+
+            $dependentesRequestIds = [];
+
+            if($request->input('dependentes')) {
+                foreach($request->input('dependentes') as $dependente) {
+                    if(isset($dependente['id'])) {
+                        $dependentesRequestIds[] = $dependente['id'];
+                    }
+                }          
+            }
+
+            $dependentesFuncionarioIds = [];
+
+            foreach($funcionario->dependentes as $dependente) {
+                $dependentesFuncionarioIds[] = $dependente->id;
+            }
+            
+            $dependentesRemovidos = array_diff($dependentesFuncionarioIds, $dependentesRequestIds);
+
+            if(count($dependentesRemovidos) > 0) {
+                foreach($dependentesRemovidos as $dependenteId) {
+                    $dependente = Dependente::find($dependenteId);
+                    $dependente->delete();
+                    Relacao::where('tabela_origem','dependente')->where('origem_id',$dependente->id)->where('tabela_destino','documento')->where('destino_id',$dependente->cpf()->id)->delete();
+                }
+            }
+            //####################
+
+            if($request->input('dependentes')) {
+
+                foreach($request->dependentes as $dependente){
+
+                    if(isset($dependente['id'])){
+
+                        $dep = Dependente::find($dependente['id']);
+                        $dep->update([$dependente]);
+                        
+                        $cpf = str_replace([".","-"],"",$dependente['cpf']);
+                        $dep->cpf()->update(['numero' => $cpf]);
+
+                    }else{
+
+                        $dependente['funcionario_id'] = $funcionario['id'];
+                        $newDep = Dependente::create($dependente);
+
+                        $doc = [
+                            'tipo_documento_id'   => '1',
+                            'numero'              => str_replace([".","-"],"",$dependente['cpf'])
+                        ];
+                        
+                        $cpf = Documento::create($doc);
+        
+                        Relacao::create([
+                            'tabela_origem'     => 'dependente',
+                            'origem_id'         => $newDep->id,
+                            'tabela_destino'    => 'documento',
+                            'destino_id'        => $cpf->id,
+                            'modelo'            => 'Telefone'
+                        ]);
+
+                    }
+
+                }
+
+            }
+
+            #caso tudo dê certo acima, ele exclui os arquivos inutilizados
             Storage::delete($documentosExcluir);
 
 			DB::commit();

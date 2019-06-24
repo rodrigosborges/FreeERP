@@ -24,7 +24,11 @@ class CreateFuncionario extends FormRequest{
             'endereco.complemento'            => 'max:255',
             'email'                           => 'required|email|max:100',
             'telefones.*.tipo_telefone_id'    => 'required',
-            'telefones.*.numero'              => 'required|telefone'
+            'telefones.*.numero'              => 'required|telefone',
+            'dependentes.*.parentesco_id'     => 'required_with:dependentes.0.parentesco_id',
+            'dependentes.*.parentesco_id'     => 'required_with:dependentes.0.mora_junto',
+            'dependentes.*.parentesco_id'     => 'required_with:dependentes.0.nome',
+            'dependentes.*.parentesco_id'     => 'required_with:dependentes.0.cpf|cpf'
         ];
     }
 

@@ -94,6 +94,38 @@ $(document).on('change', '.custom-file-input',function(e){
 })
 //###########################
 
+//ADICIONA E REMOVE DEPENDENTES
+$(document).on("click", ".add-dep", function() {
+    if($(".dep").hasClass("d-none")) {
+        $(".dep").removeClass("d-none")
+        $(".dependentes").removeAttr('disabled')
+    }
+    else if($(".dep").length < 4) {
+        clonar(".dep", "#dependentes", true)
+        $(".dep").last().find(".dependentes").val("")
+        $(".dep").last().find(".cpf").mask('000.000.000-00')
+    } else {
+
+        Swal.fire({
+            type: 'warning',
+            title: 'Atenção!',
+            text: 'Podem ser adicionados no máximo '+$(".dep").length+' dependentes',
+        })
+ 
+    }
+})
+
+$(document).on("click", ".del-dep", function() {
+    if($(".dep").length == 1) {
+        $(".dep").last().find(".dependentes").val("")
+        $('.dep').addClass('d-none')
+        $(".dependentes").attr('disabled', 'disabled')
+    } else {
+        remover(".dep", $(this))
+    }
+})
+//############################
+
 //ENDEREÇO
 $('.estados').change(function() {
     atualizarCidades($(".estados option:selected").data("uf"), $(".estados").data('cidade'))
@@ -190,4 +222,4 @@ $('#cep').blur(function(){
 $(".data").mask('00/00/0000')
 $("#cep").mask('00000-000')
 $("#numero").mask('99999')
-$("#cpf").mask('000.000.000-00')
+$(".cpf").mask('000.000.000-00')
