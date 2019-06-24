@@ -249,7 +249,7 @@ $retorno = array();
        session_start();
         $this->verificaLogado();
         $status = ['0' => "Ativo e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
-        // $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
+        $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
         
         $modulos = Modulo::pluck('nome');
@@ -273,6 +273,7 @@ $retorno = array();
 
     public function buscar(Request $req){
         $status = ['0' => "Ativos e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
+        
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
         
         $modulos = Modulo::pluck('nome');
