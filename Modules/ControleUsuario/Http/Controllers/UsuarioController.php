@@ -223,11 +223,20 @@ class UsuarioController extends Controller
     public function consulta()
     {
         $status = ['0' => "Ativo e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
-        $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
+        // $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
+        
+        $modulos = Modulo::pluck('nome');
+            
+            if( $modulos->isEmpty() )
+                $modulos = ['Sem modulos cadastrados'];
+            else{
+                $modulos->prepend("Todos os Módulos");
+            }
 
         $lista = Usuario::withTrashed()->get();
 
+            
         return view(
             'controleusuario::consulta',
             $this->dadosTemplate,
@@ -238,17 +247,24 @@ class UsuarioController extends Controller
 
     public function buscar(Request $req){
         $status = ['0' => "Ativos e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
-        $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
+        
+        $modulos = Modulo::pluck('nome');
+            
+            if( $modulos->isEmpty() )
+                $modulos = ['Sem modulos cadastrados'];
+            else{
+                $modulos->prepend("Todos os Módulos");
+            }
 
         $lista = DB::table('usuario')->select("*");
-
+        
+        
         foreach ($req->request as $key => $value) {
             if( $key !="_token" ){
-                //DB::table('usuario')->where('email', $request->email)->first();
                 if( isset($value) ){
+                    
                     switch ($key){
-
                         case "nome":
                             $lista -> where('nome', 'like', '%'.$value.'%');
                             break;
@@ -258,28 +274,34 @@ class UsuarioController extends Controller
                         case "status":
                             switch ($value){
                                 case "0":
-                                    
+                                    // dd($value. '    '.$key);                                    
                                 break;
                                 case "1":
                                     $lista->whereNull("deleted_at");
+                                    // dd($key);
                                 break;
                                 case "2":
+                                dd($key);
                                     $lista->whereNotNull("deleted_at");
                                 break;
                             }
                         break;
-                        case "modulos":
-                        /*switch ($value){
-                            case "0":
-                                $lista->withTrashed()->get();
-                            break;
-                            case "1":
-                                $lista->whereNull("deleted_at");
-                            break;
-                            case "2":
-                                $lista->whereNotNull("deleted_at");
-                            break;
-                        }*/
+                            case "modulo":
+                                switch ($value){
+                                    case "0":
+                                        // Padrao. Todos os modulos
+                                    break;
+                                        
+                                    case "1":
+                                    dd($modulos[$value]);                                     
+                                    $lista-> rightJoin('atuacao','usuario.id','=','atuacao.usuario_id');
+                                    break;
+
+                                    case "2":
+                                    dd($value. '    '.$key);                                    
+                                    $lista-> leftJoin('atuacao','usuario.id','=','atuacao.usuario_id');
+                                    break;
+                                }
                         break;
 
                     }
