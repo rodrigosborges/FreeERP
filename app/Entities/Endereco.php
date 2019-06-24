@@ -13,5 +13,13 @@ class Endereco extends Model{
     public function cidade(){
         return $this->belongsTo('App\Entities\Cidade','cidade_id');
     }
+
+    public function setCepAttribute($val) {
+        $this->attributes['cep'] = str_replace('-', '', $val);
+    }
+
+    public function getCepAttribute($val) {
+        return $val ? substr($val,0,5).'-'.substr($val,5,8) : $val;
+    }
     
 }   

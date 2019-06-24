@@ -15,6 +15,7 @@ class AddForeignKeysToPagamentoReceberTable extends Migration {
 		Schema::table('pagamento_receber', function(Blueprint $table)
 		{
 			$table->foreign('conta_receber_id', 'fk_pagamento_receber_conta_receber1')->references('id')->on('conta_receber')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('forma_pagamento_id', 'fk_pagamento_receber_forma_pagamento1')->references('id')->on('forma_pagamento_receber')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -29,6 +30,7 @@ class AddForeignKeysToPagamentoReceberTable extends Migration {
 		Schema::table('pagamento_receber', function(Blueprint $table)
 		{
 			$table->dropForeign('fk_pagamento_receber_conta_receber1');
+			$table->dropForeign('fk_pagamento_receber_forma_pagamento1');
 		});
 	}
 

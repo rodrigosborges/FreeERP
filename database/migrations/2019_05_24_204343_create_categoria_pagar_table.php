@@ -16,7 +16,8 @@ class CreateCategoriaPagarTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('nome', 100);
-			$table->boolean('ativo');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
