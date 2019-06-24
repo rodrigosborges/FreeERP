@@ -241,7 +241,6 @@ class UsuarioController extends Controller
         $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
 
-
         $lista = DB::table('usuario')->select("*");
 
         foreach ($req->request as $key => $value) {
@@ -249,8 +248,9 @@ class UsuarioController extends Controller
                 //DB::table('usuario')->where('email', $request->email)->first();
                 if( isset($value) ){
                     switch ($key){
+
                         case "nome":
-                            $lista -> where('nome', $value);
+                            $lista -> where('nome', 'like', '%'.$value.'%');
                             break;
                         case "data":
                             //$lista->where('created_at', $value) -> get();
@@ -258,8 +258,7 @@ class UsuarioController extends Controller
                         case "status":
                             switch ($value){
                                 case "0":
-                                    $lista->whereNull("deleted_at")->orWhereNotNull("deleted_at");
-                                    dd($lista->toSql());
+                                    
                                 break;
                                 case "1":
                                     $lista->whereNull("deleted_at");
