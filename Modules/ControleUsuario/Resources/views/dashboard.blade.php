@@ -1,31 +1,21 @@
 @extends('template')
 
 @section('content')
-<div class="row justify-content-center text-center" style="width:100%">
-  <div class="col-md-8">
-    <div class="card ">
-      <div class="row card-body justify-content-between">
-        <h1>{{$data['title']}}</h1>
-        <h4> Bem Vindo!! {{$_SESSION['nome']}}</h4>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row justify-content-center">
+<div class="row justify-content-center text-center">
   <div class="col-md-8">
     <div class="card">
       <div class="card-header">
-        <p>Card Title</p>
+        <p>Bem vindo <b>{{$usuario->nome}}</b></p>
     </div>
     <div class="card-body">
-      <h5 class="card-title"> Papeis - {{$usuario->nome}}</h5>
+      <h5 class="card-title">Meus Papéis</h5>
       <div class="table-responsive-md">
       <table class="table text-center" >
       <thead class="thead-dark">
       <tr>
         <th scope="col">Modulo</th>
         <th scope="col">Papel</th>
-        <th scope="col" colspan="3"><a class="btn btn-success"><i class="material-icons">note_add</i></a></th>
+        <th scope="col" colspan="3"><p>Opções</p></th>
       </tr>
       </thead>
       

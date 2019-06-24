@@ -51,13 +51,26 @@ class PapelController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
-    {
+    public function index(){
+        
+        if(!isset($_SESSION))
+            session_start();
+        $atuacoes = $this->getAtuacao();
+      //  dd($atuacoes);
+      $admin= false;
+        foreach($atuacoes as $atuacao){
+            if($atuacao['modulo'] =="Controle de Usuários" && $atuacao['papel']="Administrador"){
+                $admin=true;
+                break;
 
+            }
+        }
+        $usuario = Usuario::find($_SESSION['id']);
+      //  dd($usuario);
         $papeis = Papel::withTrashed()->get();
         $this->verificaLogado();
 
-        return view('controleusuario::papel.index', $this->dadosTemplate, compact('papeis',));
+        return view('controleusuario::papel.index', $this->dadosTemplate, compact('papeis','admin'));
     }
 
     /**
@@ -167,10 +180,23 @@ class PapelController extends Controller
         return json_encode($papel);
     }
     public function verificaLogado(){
-        session_start();
+       // session_start();
         if(isset($_SESSION['id'])){
             array_shift($this->dadosTemplate['menu']);
             array_unshift($this->dadosTemplate['menu'], ['icon'=>'assignment_ind', 'tool'=>$_SESSION['nome'], 'route'=>'/controleusuario/dashboard']);
         }
+    }
+    public function getAtuacao(){
+        if(!isset($_SESSION))
+            session_start();
+        $retorno = array();
+       
+        $usuario = Usuario::find($_SESSION['id']);
+        foreach($usuario->atuacoes as $atuacao){
+            $retorno[]= array('modulo' => $atuacao->modulo->nome, 'papel'=>$atuacao->papel->nome); 
+            
+        }
+        return $retorno;
+        
     }
 }
