@@ -358,6 +358,8 @@ $retorno = array();
         $data['url'] = 'validar.edicao';
         $data['button'] = 'Atualizar';
         $data['title'] = 'Editar Usuário';
+        session_start();
+        $this->verificaLogado();
 
 
         return view('controleusuario::form', $this->dadosTemplate, compact('data'));
