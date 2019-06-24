@@ -2,7 +2,7 @@
 function clonar(target, local, indices) {
     var clone = $(target).last().clone()
     clone.find(".errors").remove()
-    clone.appendTo(local)
+    clone.hide().fadeIn("slow").appendTo(local)
 
     if(indices) {
         $(target).last().find('input, select').each(function(i, input) {

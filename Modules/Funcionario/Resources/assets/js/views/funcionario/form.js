@@ -60,7 +60,7 @@ function escolheMascaraTel(element) {
 $(document).on("click", ".add-doc", function() {
     if($(".doc").hasClass("d-none")) {
         $(".doc").removeClass("d-none")
-        $(".documentos").removeAttr('disabled')
+        $(".documentos").hide().removeAttr('disabled').fadeIn("slow")
     }
     else if($(".doc").length < 4) {
         clonar(".doc", "#documentos", true)
@@ -98,7 +98,7 @@ $(document).on('change', '.custom-file-input',function(e){
 $(document).on("click", ".add-dep", function() {
     if($(".dep").hasClass("d-none")) {
         $(".dep").removeClass("d-none")
-        $(".dependentes").removeAttr('disabled')
+        $(".dependentes").hide().removeAttr('disabled').fadeIn()
     }
     else if($(".dep").length < 4) {
         clonar(".dep", "#dependentes", true)
