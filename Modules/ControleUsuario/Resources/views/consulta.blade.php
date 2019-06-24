@@ -37,7 +37,7 @@
                   <div class="col">
                      <div class="form-group">
                         <label for="modulo">Módulo</label>
-                        {!! form::select('modulo',$modulos, null, ['class'=>'form-control']) !!}
+                        {!! form::select('modulo',$modulos , null, ['class'=>'form-control']) !!}
                      </div>
                   </div>
                </div>
@@ -107,13 +107,14 @@
                                         @else
                                             {{ "Inativo" }}
                                         @endif
-                                    
+                                    </td>
                                     <td class="d-flex justify-content-around">
-                                            {!!Form::open(['route'=>'usuario.abrir', 'method'=>'post']) !!}
+                                            
+                                        {!!Form::open(['route'=>'usuario.abrir', 'method'=>'post']) !!}
                                                 {!! Form::hidden('id', $user->id) !!}
-                                                {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex '])!!}
+                                                    {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex '])!!}
                                             {!!Form::close()!!}
-
+.
                                             {!!Form::open(['route'=>'usuario.delete', 'method'=>'post']) !!}
                                                 {!! Form::hidden('id', $user->id) !!}
 
@@ -124,19 +125,10 @@
                                           <input type="submit" class="id btn d-flex" style="visibility: hidden"
                                                 value="{{( is_null($user->deleted_at) )?'Desativar':'Reativar' }}" > 
 
-                                                    <!-- {!!Form::submit(
-                                                        ( is_null($user->deleted_at) )?"Desativar":"Reativar"
-                                                    ,
-                                                    ['class'=>'btn btn-danger d-flex']
-                                                    )!!} -->
                                             {!!Form::close()!!}
-
-                                        </div>
                                     </td>
-
                                 </tr>
                             @endforeach
-
                         </tbody>
                         </table>
                     </div>
