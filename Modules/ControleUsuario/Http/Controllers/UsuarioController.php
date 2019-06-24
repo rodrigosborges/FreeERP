@@ -285,7 +285,6 @@ $retorno = array();
 
         $lista = DB::table('usuario')->select("*");
         
-        
         foreach ($req->request as $key => $value) {
             if( $key !="_token" ){
                 if( isset($value) ){
@@ -304,7 +303,6 @@ $retorno = array();
                                 break;
                                 case "1":
                                     $lista->whereNull("deleted_at");
-                                    // dd($key);
                                 break;
                                 case "2":
                                 dd($key);
