@@ -17,4 +17,9 @@ class Orcamento extends Model
         return $this->belongsToMany('App\Compra\Pedido','orcamento_has_pedido');
     }
 
+    //Relação com a tabela item_orcamento
+    public function itens(){
+        return $this->belongsToMany('App\Compra\ItemCompra','item_orcamento');
+    }
+
 }

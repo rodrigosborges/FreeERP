@@ -2,7 +2,7 @@
 @section('content')
 
 <h1>Itens solicitados</h1>
-<form>
+<form action="{{ $data['url'] }}" method="POST" class="col-12">
     <!--<div class="row ml-3 mr-3">
         <div class="col-sm-6">
             <div class="card">
@@ -103,8 +103,12 @@
             </div>
             <span class="col-md-1"></span>
             <div class="form-group col-md-3">
+                <label for="inputZip">Valor Unitário</label>
+                <input type="number" class="form-control" id="inputZip">
+            </div>
+            <div class="form-group col-md-3">
                 <label for="inputZip">Valor Total</label>
-                <input type="text" class="form-control" id="inputZip">
+                <input type="number" class="form-control" id="inputZip">
             </div>
         </div>
     </div>               
