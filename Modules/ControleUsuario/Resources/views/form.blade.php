@@ -192,6 +192,7 @@ $(document).ready(function(){
          if($('#btnCadastrar').html()=="Cadastrar")
             cadastrarUsuario(nome,email,senha);
          else
+      //   alert('atualizar');
            atualizarUsuario(nome,email,senha);
          
      }

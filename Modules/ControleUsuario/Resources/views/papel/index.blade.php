@@ -36,15 +36,15 @@
                 <td>{{ $papel->created_at }}</td>
                 <td>{{ ( $papel->usuario )?$papel->usuario->nome: $papel->usuario_id."\nDesativado" }}</td>
                 <td>
-                    <a href="#" class="show-modal btn btn-info btn-sm btnShow" data-id="{{$papel->id}}" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
+                    <button  class="show-modal btn btn-info btn-sm btnShow" data-id="{{$papel->id}}" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
                         <i class="material-icons">remove_red_eye</i>
-                    </a>
-                    <a href="#" class="edit-modal btn btn-warning btn-sm btnEdit"   data-toggle="modal"data-target="#create" data-id="{{$papel->id}}" id="btnEdit" data-nome="{{$papel->nome}}" disabled>
+                    </button>
+                    <button class="edit-modal btn btn-warning btn-sm btnEdit"   data-toggle="modal"data-target="#create" data-id="{{$papel->id}}" id="btnEdit" data-nome="{{$papel->nome}}" >
                         <i class="material-icons" style="color:white">edit</i>
-                    </a>
-                    <a href="#" data-toggle="modal"data-target="#dropPapel" class="delete-modal btn btn-danger btn-sm btnRemove" data-id="{{$papel->id}}" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
+                    </button>
+                    <button  data-toggle="modal"data-target="#dropPapel" class="delete-modal btn btn-danger btn-sm btnRemove" data-id="{{$papel->id}}" data-nome="{{$papel->nome}}" data-descricao="{{$papel->descricao}}" data-usuario="">
                         <i class="material-icons">delete</i>
-                    </a>
+                    </button>
                 </td>
             </tr>
             @endforeach
@@ -140,9 +140,10 @@
         
     if($('#userAdmin').val()!=1){
         console.log('não é admin')
+       // $('.btnEdit').unbind('click')
+       
+        $('.btnEdit').attr('disabled','disabled')
         $('.btnRemove').attr('disabled','disabled')
-        $('.btnShow').attr('disabled','disabled')
-        $('.btnEdit').attr('disabled','disabled') 
     }
         var valor = $('#add').html();
         var id;

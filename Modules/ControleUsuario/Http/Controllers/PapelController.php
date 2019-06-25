@@ -52,10 +52,13 @@ class PapelController extends Controller
      * @return Response
      */
     public function index(){
-        
+        $atuacaoes;
+        $usuario;
+        $admin=false;
         if(!isset($_SESSION))
             session_start();
-        $atuacoes = $this->getAtuacao();
+        if(isset($_SESSION['id'])){
+            $atuacoes = $this->getAtuacao();
       //  dd($atuacoes);
       $admin= false;
         foreach($atuacoes as $atuacao){
@@ -65,7 +68,9 @@ class PapelController extends Controller
 
             }
         }
+        
         $usuario = Usuario::find($_SESSION['id']);
+    }
       //  dd($usuario);
         $papeis = Papel::withTrashed()->get();
         $this->verificaLogado();
@@ -187,8 +192,7 @@ class PapelController extends Controller
         }
     }
     public function getAtuacao(){
-        if(!isset($_SESSION))
-            session_start();
+      
         $retorno = array();
        
         $usuario = Usuario::find($_SESSION['id']);
