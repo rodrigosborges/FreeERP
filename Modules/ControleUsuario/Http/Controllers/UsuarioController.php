@@ -273,9 +273,7 @@ $retorno = array();
 
     public function buscar(Request $req){
         $status = ['0' => "Ativos e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
-        
         $cargos = ['0' => "Administradores", '1' => "Gerentes", '2' => "Operadores"];
-        
         $modulos = Modulo::pluck('nome');
             
             if( $modulos->isEmpty() )
@@ -284,7 +282,7 @@ $retorno = array();
                 $modulos->prepend("Todos os Módulos");
             }
 
-        $lista = DB::table('usuario')->select("*");
+        $lista = DB::table('usuario')->select();
         
         foreach ($req->request as $key => $value) {
             if( $key !="_token" ){
@@ -300,13 +298,12 @@ $retorno = array();
                         case "status":
                             switch ($value){
                                 case "0":
-                                    // dd($value. '    '.$key);                                    
+                                                                        
                                 break;
                                 case "1":
                                     $lista->whereNull("deleted_at");
                                 break;
                                 case "2":
-                                dd($key);
                                     $lista->whereNotNull("deleted_at");
                                 break;
                             }
@@ -316,15 +313,12 @@ $retorno = array();
                                     case "0":
                                         // Padrao. Todos os modulos
                                     break;
-                                        
                                     case "1":
-                                    dd($modulos[$value]);                                     
-                                    $lista-> rightJoin('atuacao','usuario.id','=','atuacao.usuario_id');
+                                    // $lista-> rightJoin('atuacao','usuario.id','=','atuacao.usuario_id');
                                     break;
 
                                     case "2":
-                                    dd($value. '    '.$key);                                    
-                                    $lista-> leftJoin('atuacao','usuario.id','=','atuacao.usuario_id');
+                                    // $lista-> leftJoin('atuacao','usuario.id','=','atuacao.usuario_id');
                                     break;
                                 }
                         break;
@@ -339,7 +333,6 @@ $retorno = array();
             $this->dadosTemplate,
             compact('status', 'modulos', 'cargos', 'lista')
         );
-
     }
 
     public function recovery(Request $req){

@@ -21,7 +21,7 @@ Route::prefix('controleusuario')->group(function() {
     Route::put('/cadastrar',['as'=>'validar.edicao', 'uses'=> 'UsuarioController@update']);
     Route::get('/dashboard', 'UsuarioController@dashboard');
 
-    Route::get('/consulta', 'UsuarioController@consulta');
+    Route::get('/consulta', ['as'=>'usuario.consulta', 'uses' => 'UsuarioController@consulta']);
 
     Route::post('/salvar',['as'=>'usuario.salvar','uses'=> 'UsuarioController@salvarCadastro']);
 
@@ -29,9 +29,9 @@ Route::prefix('controleusuario')->group(function() {
     Route::get('/inativar/{id}', 'UsuarioController@inativar');
     Route::post('/editar', ['as'=>'usuario.abrir','uses'=> 'UsuarioController@editar'] );
 
-    Route::post('/listar',['as'=>'usuario.listar','uses'=> 'UsuarioController@buscar']);
+    Route::post('/consulta',['as'=>'usuario.listar','uses'=> 'UsuarioController@buscar']);
+    // Route::post('/teste_bt', ['as'=>'teste_bt', 'uses'=>'UsuarioController@buscar']);
 
-    Route::post('/teste_bt', ['as'=>'teste_bt', 'uses'=>'UsuarioController@buscar']);
     Route::delete('/delete', ['as'=>'usuario.delete','uses'=> 'UsuarioController@destroy'] );
     Route::post('/delete', ['as'=>'usuario.delete','uses'=> 'UsuarioController@recovery'] );
     Route::get('/sair','UsuarioController@logoff');

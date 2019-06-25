@@ -11,7 +11,7 @@
             </div>
 
             <div class="card-body">
-            {!!Form::open(['route'=>'teste_bt', 'method'=>'post']) !!}
+            {!!Form::open(['route'=>'usuario.listar', 'method'=>'post']) !!}
 
                 <div class="row align-items-end">
                   <div class="col-8">
@@ -95,9 +95,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                                
                             @foreach($lista as $user)
                             <tr>
-
+                                
                                 <th scope="row">{{ $user->id }}</th>
                                     <td>{{$user->nome}}</td>
                                     <td>{{$user->email}}</td>
@@ -109,7 +110,7 @@
                                         @endif
                                     </td>
                                     <td class="d-flex justify-content-around">
-                                            
+
                                         {!!Form::open(['route'=>'usuario.abrir', 'method'=>'post']) !!}
                                                 {!! Form::hidden('id', $user->id) !!}
                                                     {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex '])!!}
