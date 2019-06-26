@@ -35,7 +35,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-1 form-inline">
                                     <span>até</span>
                                 </div>
                                 <div class="col-5">
@@ -48,7 +48,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-1 form-inline">
                                     <a href="#"><i class="material-icons" id="icone-relogio">access_time</i></a>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-1 form-inline">
                                     <span>até</span>
                                 </div>
                                 <div class="col-5">
@@ -78,25 +78,37 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-1">
-                                    <a href="#" class="form-inline"><i class="material-icons" id="icone-relogio">add_alert</i></a>
-                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="form-group">
-                                <label for="eventoNotificacao">Notificação</label>
-                                <input id="eventoNotificacao" class="form-control" name="eventoNotificacao">
-                                <input type="checkbox" id="eventoNotificacaoEmail" name="eventoNotificacaoEmail">
+
+                        <div class="form-group" id="eventoNotificacao">
+                            <label>Notificação</label>
+                            <div class="form-row">
+                                <div class="col-5">
+                                    <input type="text" class="form-control" name="eventoNotificacaoTempo" value="10">
+                                </div>
+                                <div class="col-6">
+                                    <select name="eventoNotificacaoPeriodo" class="form-control">
+                                        <option>minutos</option>
+                                        <option>horas</option>
+                                        <option>dias</option>
+                                    </select>
+                                </div>
+                                <div class="col-1 form-inline">
+                                    <a href="#"><i class="material-icons"
+                                                   id="icone-notificacao">notifications_on</i></a>
+                                </div>
+                            </div>
+                            <div class="form-row form-inline small">
+                                <input type="checkbox" id="eventoNotificacaoEmail" name="eventoNotificacaoEmail" checked>
                                 <label for="eventoNotificacaoEmail">Também notificar via e-mail</label>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="eventoAgenda">Agenda</label>
                             <select id="eventoAgenda" class="form-control" name="eventoAgenda" required>
                                 <option value="1">Pessoal</option>
-                                <option value="2">Pessoal</option>
-                                <option value="3">Pessoal</option>
                             </select>
                         </div>
                     </form>
@@ -149,6 +161,19 @@
 
     <script>
         $(function () {
+            $('#icone-relogio').on('click', function () {
+                $('#eventoHora').toggle();
+            });
+
+            $('#icone-notificacao').on('click', function () {
+                $('#eventoNotificacao :input').prop('disabled', function (i, v) {
+                    return !v;
+                });
+                $(this).text(function (i, v) {
+                    return v === 'notifications_on' ? 'notifications_off' : 'notifications_on';
+                });
+            });
+
             $('#eventoDataInicio, #eventoDataFim').datetimepicker({
                 format: 'L',
                 locale: 'pt-br',
