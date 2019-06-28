@@ -246,7 +246,24 @@ $retorno = array();
     // Metodo utilizado quando a view é aberta a primeira vez
     public function consulta()
     {
-       session_start();
+    session_start();
+    $atuacoes = $this->getAtuacao();
+    $papel=0;
+  
+    // dd($atuacoes);
+    if(count($atuacoes)>0){
+        foreach($atuacoes as $atuacao){
+            if($atuacao['modulo']=="Controle de Usuários" && $atuacao['papel']>1){
+                if($papel< $atuacao['papel'])
+                    $papel= $atuacao['papel'];
+               
+            
+            
+            }
+        }
+    }else{
+        return "<p class='alert alert-danger'>Acesso Negado!</p>";
+    }
         $this->verificaLogado();
         $status = ['0' => "Ativo e inativos", '1' => "Somente ativos", '2' => "Somente inativos"];
         $modulos = ['0' => "Todos os módulos", '1' => "Recursos Humanos", '2' => "Vendas", '3' => "Estoque"];
@@ -266,7 +283,7 @@ $retorno = array();
         return view(
             'controleusuario::consulta',
             $this->dadosTemplate,
-            compact('status', 'modulos', 'cargos', 'lista')
+            compact('status', 'modulos', 'cargos', 'lista','papel')
         );
     }
 
@@ -347,6 +364,7 @@ $retorno = array();
 
     public function editar(Request $req)
     {
+      
         $data['model'] = Usuario::find($req->input('id'));
         $data['url'] = 'validar.edicao';
         $data['button'] = 'Atualizar';
@@ -432,6 +450,16 @@ $retorno = array();
         $retorno['papeis']=$papeis;
         return json_encode($retorno);
 
+    }
+    public function getAtuacao(){
+        if(!isset($_SESSION['id']))
+            session_start();
+        $retorno = array();
+        $usuario = Usuario::find($_SESSION['id']);
+        foreach($usuario->atuacoes as $atuacao){
+            $retorno[]= array('modulo' => $atuacao->modulo->nome, 'papel'=>$atuacao->papel->id); 
+        }
+        return $retorno;   
     }
     public function verificaLogado(){
         

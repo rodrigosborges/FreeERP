@@ -192,15 +192,11 @@ class PapelController extends Controller
         }
     }
     public function getAtuacao(){
-      
         $retorno = array();
-       
         $usuario = Usuario::find($_SESSION['id']);
         foreach($usuario->atuacoes as $atuacao){
             $retorno[]= array('modulo' => $atuacao->modulo->nome, 'papel'=>$atuacao->papel->nome); 
-            
         }
-        return $retorno;
-        
+        return $retorno;   
     }
 }

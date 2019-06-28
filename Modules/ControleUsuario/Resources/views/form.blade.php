@@ -247,27 +247,41 @@ $('#dataIndeterminada').click(function(){
     $('#vencimento').fadeOut("slow");
 });
 $('#btnSalvarAtuacao').click(function(){
+    $('#alert-modulo').hide();
+ 
  
    // alert($("input[type=radio][name='optionVencimento']:checked").val());
-    modulo = $('#selectModulo').val();
-    papel = $('#selectPapel').val();
+    modulo = $('#selectModulo').val()
+    papel = $('#selectPapel').val()
     vencimento=""
-    validadeAtuacao =$("input[type=radio][name='optionVencimento']:checked").val();
+    validadeAtuacao =$("input[type=radio][name='optionVencimento']:checked").val()
    if(modulo==-1){
-        $('#alert-modulo').html("O campo <b>modulo</b> não pode ser vazio");
+        $('#alert-modulo').html("O campo <b>modulo</b> não pode ser vazio")
         $('#alert-modulo').addClass("alert-warning") 
         $('#alert-modulo').fadeIn('slow')
+        $('#selectModulo').focus();
    }else if(papel==-1){
         $('#alert-modulo').html("O campo <b>Papel</b> não pode ser vazio");
         $('#alert-modulo').addClass("alert-warning") 
         $('#alert-modulo').fadeIn('slow')
+        $('#selectPapel').focus();
    }else if(validadeAtuacao!="indefinido"){
-    vencimento = $("#dataVencimento").val()
-    if(vencimento==""){
-      $('#alert-modulo').html("O campo data não pode ser vazio");
-      $('#alert-modulo').addClass("alert-warning") 
-      $('#alert-modulo').fadeIn('slow');
-   }
+        vencimento = $("#dataVencimento").val()
+    
+        if(vencimento==""){
+            $('#alert-modulo').html("O campo data não pode ser vazio")
+            $('#alert-modulo').addClass("alert-warning") 
+            $('#alert-modulo').fadeIn('slow')
+            $('#dataVencimento').focus()
+        }
+        else{
+            $('#alert-modulo').html('Dados Salvos!')
+            $('#alert-modulo').removeClass('alert-warning')
+            $('#alert-modulo').addClass('alert-success')
+            $('#alert-modulo').fadeIn()
+            $('#btnSalvarAtuacao').attr('disabled', 'disabled')
+
+        }
    }else{
        // fechar modal
     //   $('#formPapel').modal('hide');

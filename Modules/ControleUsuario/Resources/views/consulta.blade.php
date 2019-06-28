@@ -12,7 +12,8 @@
 
             <div class="card-body">
             {!!Form::open(['route'=>'usuario.listar', 'method'=>'post']) !!}
-
+            <input type="hidden" value ='{{$papel}}' id="papel">
+    
                 <div class="row align-items-end">
                   <div class="col-8">
                      <div class="form-group">
@@ -113,7 +114,7 @@
 
                                         {!!Form::open(['route'=>'usuario.abrir', 'method'=>'post']) !!}
                                                 {!! Form::hidden('id', $user->id) !!}
-                                                    {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex '])!!}
+                                                    {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex btnEditar'])!!}
                                             {!!Form::close()!!}
 .
                                             {!!Form::open(['route'=>'usuario.delete', 'method'=>'post']) !!}
@@ -123,7 +124,7 @@
                                                         @method('delete')
                                                     @endif
 
-                                          <input type="submit" class="id btn d-flex" style="visibility: hidden"
+                                          <input type="submit" class="id btn d-flex btnAtivaDesativa"  style="visibility: hidden"
                                                 value="{{( is_null($user->deleted_at) )?'Desativar':'Reativar' }}" > 
 
                                             {!!Form::close()!!}
@@ -148,8 +149,14 @@
 <script>
    $(document).ready(function(){
     //$('.id').css("visibility","hidden");
-       
-       
+     
+       $nivel = $('#papel').val();
+       if($nivel<3){
+           $('.btnAtivaDesativa').attr('disabled','disabled');
+           $('.btnEditar').attr('disabled','disabled');
+       }else if ($nivel<4){
+            $('.btnAtivaDesativa').attr('disabled','disabled');
+       }
        $( ".id" ).each(function(index) {
             
             if( $( this ).val() == "Reativar" ){
