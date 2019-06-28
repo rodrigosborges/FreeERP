@@ -2,79 +2,23 @@
 
 namespace Modules\Calendario\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Calendario\Entities\Evento;
 
 class EventoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function index()
-    {
-        return view('calendario::index');
-    }
+    public function salvar(Request $request){
+        try{
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create(Request $request)
-    {
-        dd($request->all());
-        return view('calendario::create');
-    }
+            $evento = new Evento();
+            $evento->titulo = $request->eventoTitulo;
+            $evento->data_inicio = $request->eventoDataInicio;
+            $evento->save();
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('calendario::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('calendario::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        }catch (QueryException $e){
+            dd($e);
+        }
     }
 }

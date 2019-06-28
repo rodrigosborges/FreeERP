@@ -22,8 +22,8 @@ class CreateEventoTable extends Migration
             $table->time('hora_fim')->nullable();
             $table->dateTime('notificacao')->nullable();
             $table->string('nota')->nullable();
-            $table->unsignedBigInteger('calendario_id');
-            $table->foreign('calendario_id')->references('id')->on('calendario');
+            $table->unsignedBigInteger('calendario_id')->nullable();
+            //$table->foreign('calendario_id')->references('id')->on('calendario');
             $table->timestamps();
         });
     }

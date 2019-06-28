@@ -18,8 +18,8 @@ class CreateCalendarioTable extends Migration
             $table->string('titulo');
             $table->string('nota')->nullable();
             $table->string('cor', 7)->nullable();
-            $table->unsignedBigInteger('funcionario_id');
-            $table->foreign('funcionario_id')->references('id')->on('funcionario');
+            $table->unsignedBigInteger('funcionario_id')->nullable();
+            //$table->foreign('funcionario_id')->references('id')->on('funcionario');
             $table->softDeletes();
             $table->timestamps();
         });
