@@ -14,6 +14,7 @@
 
     <div class="form-group col-md-3">
         <select id="inputState" class="form-control" name="forma_pagamento_id" required>
+            <option value="">Forma de pagamento</option>
             @foreach ($formapgs as $formapg)
         <option value="{{$formapg->id}}">{{$formapg->nome}}</option>
             @endforeach
@@ -22,6 +23,7 @@
     
     <div class="form-group col-md-3">
         <select id="inputState" class="form-control" name="categoria_receber_id" required>
+            <option value="" >Categoria</option>
             @foreach ($categorias as $categoria)
         <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
             @endforeach

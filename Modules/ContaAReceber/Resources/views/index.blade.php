@@ -95,7 +95,7 @@
                     <td>R${{$pagamento->valorPrevisto()}}</td>
                     <td>{{$pagamento->data_recebimento}}</td>
                     <td>{{$pagamento->status_pagamento}}</td>
-                    <td><a href="{{route('conta.editar', $pagamento->conta_receber_id)}}" ><i class='material-icons'>search</i></a> <a href="{{Route('conta.deletar', $pagamento->conta_receber_id)}}"><i class='material-icons'>delete</i></a></td>
+                    <td><a href="{{route('conta.editar', $pagamento->conta_receber_id)}}" ><i class='material-icons'>create</i></a> <a href="{{Route('conta.deletar', $pagamento->conta_receber_id)}}"><i class='material-icons'>delete</i></a></td>
             </tr>
             @endforeach
         </tbody>

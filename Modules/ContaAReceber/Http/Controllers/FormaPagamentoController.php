@@ -10,7 +10,7 @@ use Modules\ContaAReceber\Entities\FormaPagamentoModel;
 class FormaPagamentoController extends Controller
 {
      public function index(){
-        $formapgs = FormaPagamentoModel::where('ativo', 1)->get();
+        $formapgs = FormaPagamentoModel::all();
         return view('contaareceber::formapagamento', compact('formapgs'));
     }
 
