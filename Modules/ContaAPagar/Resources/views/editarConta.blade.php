@@ -65,7 +65,7 @@
                         <td>R${{($pagamento->juros + $pagamento->multa + $pagamento->valor)}}</td>
                         <td>{{$pagamento->status_pagamento}}</td>
                         <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg{{$pagamento->id}}"><i class='material-icons'>search</i></button> 
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg{{$pagamento->id}}"><i class='material-icons'>create</i></button> 
                         <a href="{{Route('pagamento.deletar', $pagamento->id)}}"><i class='material-icons'>delete</i></a>
                         
                         </td>

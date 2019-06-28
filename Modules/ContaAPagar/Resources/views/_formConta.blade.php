@@ -11,9 +11,9 @@
                 aria-describedby="basic-addon1" name="descricao" value="{{ isset($conta->descricao) ? $conta->descricao : old('descricao', '') }}" required>
         </div>
     </div>
-
     <div class="form-group col-md-4">
         <select id="inputState" class="form-control" name="categoria_pagar_id" required>
+            <option value="">Selecione a categoria</option>
             @foreach ($categorias as $categoria)
         <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
             @endforeach
