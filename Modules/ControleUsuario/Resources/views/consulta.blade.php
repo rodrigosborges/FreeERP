@@ -83,10 +83,10 @@
 
                 <div class="row justify-content-center " style='min-width:150px'>
                     <div class="col-12" >
-
-                        <table class="table table-sm table-dark table-striped table-bordered text-center
-                        justify-content-center"  >
-                        <thead>
+                        <div class="table-responsive-md">
+                        <table class="table text-center
+                        "  >
+                        <thead class="thead-dark">
                             <tr>
                                 <th scope="col-3">ID</th>
                                 <th scope="col-3">Nome</th>
@@ -114,9 +114,9 @@
 
                                         {!!Form::open(['route'=>'usuario.abrir', 'method'=>'post']) !!}
                                                 {!! Form::hidden('id', $user->id) !!}
-                                                    {!!Form::submit('Editar',['class'=>'btn btn-warning d-flex btnEditar'])!!}
+                                                    {!!Form::submit('Editar',['class'=>'btn btn-sm btn-warning d-flex btnEditar'])!!}
                                             {!!Form::close()!!}
-.
+
                                             {!!Form::open(['route'=>'usuario.delete', 'method'=>'post']) !!}
                                                 {!! Form::hidden('id', $user->id) !!}
 
@@ -124,7 +124,7 @@
                                                         @method('delete')
                                                     @endif
 
-                                          <input type="submit" class="id btn d-flex btnAtivaDesativa"  style="visibility: hidden"
+                                          <input type="submit" class="id btn btn-sm d-flex btnAtivaDesativa"  style="visibility: hidden"
                                                 value="{{( is_null($user->deleted_at) )?'Desativar':'Reativar' }}" > 
 
                                             {!!Form::close()!!}
@@ -133,6 +133,7 @@
                             @endforeach
                         </tbody>
                         </table>
+                        </div>
                     </div>
                  </div>
 

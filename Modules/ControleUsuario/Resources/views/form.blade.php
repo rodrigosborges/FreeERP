@@ -308,6 +308,7 @@ function cadastrarUsuario(nome,email,senha){
         type:"POST",
         datatype:"JSON"
     }).done(function(e){
+        console.log("ok->"+e)
         var sucesso = $.parseJSON(e)['sucesso'];
         var mensagem = $.parseJSON(e)['mensagem'];
         if(sucesso){

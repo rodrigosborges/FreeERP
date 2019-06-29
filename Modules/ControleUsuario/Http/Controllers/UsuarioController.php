@@ -169,18 +169,23 @@ class UsuarioController extends Controller
     {
 $retorno = array();
         $retorno['sucesso']=false;
+  
         DB::beginTransaction();
         try{
             $data = array();
             $email = DB::table('usuario')->where('email', $request->email)->first();
+    
             if(!$email){
 
                $usuario = new Usuario();
+               
                $usuario->nome =$request->nome;
                $usuario->email =$request->email;
                $usuario->senha = base64_encode($request->senha);
+               
                $usuario->save();
-
+        
+               
                if($request->modulo!=null && $request->modulo!=""){
                    $atuacao = new Atuacao();
                    $atuacao->usuario_id =$usuario->id;
@@ -246,10 +251,13 @@ $retorno = array();
     // Metodo utilizado quando a view é aberta a primeira vez
     public function consulta()
     {
-    session_start();
+        session_start();
+       if(!isset($_SESSION)){
+        return "você precisa estar logado";
+       }
     $atuacoes = $this->getAtuacao();
     $papel=0;
-  
+
     // dd($atuacoes);
     if(count($atuacoes)>0){
         foreach($atuacoes as $atuacao){
@@ -452,9 +460,10 @@ $retorno = array();
 
     }
     public function getAtuacao(){
-        if(!isset($_SESSION['id']))
-            session_start();
         $retorno = array();
+        if(!isset($_SESSION))
+            session_start();
+       
         $usuario = Usuario::find($_SESSION['id']);
         foreach($usuario->atuacoes as $atuacao){
             $retorno[]= array('modulo' => $atuacao->modulo->nome, 'papel'=>$atuacao->papel->id); 

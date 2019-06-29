@@ -16,7 +16,7 @@ class Usuario extends Authenticatable
     use SoftDeletes;
 
     protected $hidden = [
-        'password', 'remember_token',
+        'senha', 'remember_token',
     ];
     protected $casts = [
         'email_verified_at' => 'datetime',
