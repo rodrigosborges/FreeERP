@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateEstadoTable extends Migration {
+class CreateDependenteTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,13 @@ class CreateEstadoTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('estado', function(Blueprint $table)
+		Schema::create('dependente', function(Blueprint $table)
 		{
 			$table->integer('id', true);
 			$table->string('nome', 100);
-			$table->string('uf', 2);
+			$table->boolean('mora_junto');
+			$table->integer('funcionario_id')->index('fk_dependente_funcionario');
+			$table->integer('parentesco_id')->index('fk_dependente_parentesco');
 		});
 	}
 
@@ -28,7 +30,7 @@ class CreateEstadoTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('estado');
+		Schema::drop('dependente');
 	}
 
 }

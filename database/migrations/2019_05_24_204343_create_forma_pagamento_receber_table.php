@@ -16,9 +16,9 @@ class CreateFormaPagamentoReceberTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('nome', 100);
-			$table->float('taxa', 10, 0);
+			$table->float('taxa');
 			$table->integer('prazo_recebimento');
-			$table->string('remeber_token', 64)->nullable();
+			$table->rememberToken();
 			$table->timestamps();
 			$table->softDeletes();
 		});

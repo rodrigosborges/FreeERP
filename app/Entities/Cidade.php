@@ -11,7 +11,7 @@ class Cidade extends Model{
     public $timestamps = false;
 
     public function estado(){
-        return $this->belongsTo('app\Entities\Estado','estado_id');
+        return $this->belongsTo('App\Entities\Estado','estado_id');
     }
     
 }   

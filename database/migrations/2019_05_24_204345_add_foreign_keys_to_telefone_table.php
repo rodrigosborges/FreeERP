@@ -14,7 +14,7 @@ class AddForeignKeysToTelefoneTable extends Migration {
 	{
 		Schema::table('telefone', function(Blueprint $table)
 		{
-			$table->foreign('tipo_id', 'fk_telefone_tipo_telefone1')->references('id')->on('tipo_telefone')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('tipo_telefone_id', 'fk_telefone_tipo_telefone1')->references('id')->on('tipo_telefone')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
