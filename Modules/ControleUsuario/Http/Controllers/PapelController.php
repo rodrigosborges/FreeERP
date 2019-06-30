@@ -25,13 +25,13 @@ class PapelController extends Controller
 
         switch ($papel) {
             case 'administrador':
-            $menu = [
-                ['icon' => 'vpn_key', 'tool' => 'Login', 'route' => '/controleusuario/autenticar'],
-                ['icon' => 'people', 'tool' => 'Usuarios', 'route' => '/controleusuario/cadastrar'],
-                ['icon' => 'event_note', 'tool' => 'Papéis', 'route' => '/controleusuario/papel'],
-                 ['icon' => 'list_alt', 'tool' => 'Relatórios', 'route' => '/controleusuario/consulta'],
-                ['icon' => 'toggle_off', 'tool' => 'Sair', 'route' => '/controleusuario/sair'],
-            ];
+                $menu = [
+                    ['icon' => 'vpn_key', 'tool' => 'Login', 'route' => '/controleusuario/autenticar'],
+                    ['icon' => 'people', 'tool' => 'Usuarios', 'route' => '/controleusuario/cadastrar'],
+                    ['icon' => 'event_note', 'tool' => 'Papéis', 'route' => '/controleusuario/papel'],
+                    ['icon' => 'list_alt', 'tool' => 'Relatórios', 'route' => '/controleusuario/consulta'],
+                    ['icon' => 'toggle_off', 'tool' => 'Sair', 'route' => '/controleusuario/sair'],
+                ];
                 break;
             default:
                 $menu = [];
@@ -51,31 +51,33 @@ class PapelController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index(){
+    public function index()
+    {
         $atuacaoes;
         $usuario;
-        $admin=false;
-        if(!isset($_SESSION))
+        $admin = false;
+        if (!isset($_SESSION))
             session_start();
-        if(isset($_SESSION['id'])){
+        if (isset($_SESSION['id'])) {
             $atuacoes = $this->getAtuacao();
-      //  dd($atuacoes);
-      $admin= false;
-        foreach($atuacoes as $atuacao){
-            if($atuacao['modulo'] =="Controle de Usuários" && $atuacao['papel']="Administrador"){
-                $admin=true;
-                break;
 
+
+            $admin = false;
+            foreach ($atuacoes as $atuacao) {
+                if ($atuacao['modulo'] == "Controle de Usuários" && $atuacao['papel'] == "Administrador") {
+                    $admin = true;
+                    break;
+                }
             }
+
+
+            $usuario = Usuario::find($_SESSION['id']);
         }
-        
-        $usuario = Usuario::find($_SESSION['id']);
-    }
-      //  dd($usuario);
+        //  dd($usuario);
         $papeis = Papel::withTrashed()->get();
         $this->verificaLogado();
 
-        return view('controleusuario::papel.index', $this->dadosTemplate, compact('papeis','admin'));
+        return view('controleusuario::papel.index', $this->dadosTemplate, compact('papeis', 'admin'));
     }
 
     /**
@@ -104,33 +106,31 @@ class PapelController extends Controller
     }
     public function add(Request $request)
     {
-        $retorno= array();
-        $retorno['sucesso']=false;
+        $retorno = array();
+        $retorno['sucesso'] = false;
         session_start();
-        if(isset($_SESSION['id'])){      
+        if (isset($_SESSION['id'])) {
             $papel = new Papel;
             $papel->nome = $request->nome;
 
             $papel->descricao = $request->descricao;
-            
-            $usuario= Usuario::findOrFail($_SESSION['id']);
+
+            $usuario = Usuario::findOrFail($_SESSION['id']);
             $papel->usuario()->associate($usuario);
 
-        
-        
-            $resultado =$papel->save();
-            if($resultado){
-                $retorno['mensagem']= "Papel cadastrado com sucesso";
-                $retorno['sucesso']=true;
-                $retorno['papel']= $papel;
-            }else
-                $retorno['mensagem']= "Erro ao cadastrar papel";  
-        }else{
+
+
+            $resultado = $papel->save();
+            if ($resultado) {
+                $retorno['mensagem'] = "Papel cadastrado com sucesso";
+                $retorno['sucesso'] = true;
+                $retorno['papel'] = $papel;
+            } else
+                $retorno['mensagem'] = "Erro ao cadastrar papel";
+        } else {
             $retorno['mensagem'] = "Você precisa estar logado para realizar esta ação";
-       
         }
         return json_encode($retorno);
-        
     }
 
     /**
@@ -161,12 +161,11 @@ class PapelController extends Controller
      */
     public function update()
     {
-    $papel = Papel::findOrFail($_POST['id']);
-    $papel->nome =$_POST['nome'];
-    $papel->descricao= $_POST['descricao'];
-    $success =$papel->save();
-    return json_encode($success);
-
+        $papel = Papel::findOrFail($_POST['id']);
+        $papel->nome = $_POST['nome'];
+        $papel->descricao = $_POST['descricao'];
+        $success = $papel->save();
+        return json_encode($success);
     }
 
     /**
@@ -176,27 +175,30 @@ class PapelController extends Controller
      */
     public function destroy()
     {
-        $res =Papel::where('id',$_POST['id'])->delete();
+        $res = Papel::where('id', $_POST['id'])->delete();
         return $res;
         //
     }
-    public function atualizar(){
+    public function atualizar()
+    {
         $papel = Papel::findOrFail($_POST['id']);
         return json_encode($papel);
     }
-    public function verificaLogado(){
-       // session_start();
-        if(isset($_SESSION['id'])){
+    public function verificaLogado()
+    {
+        // session_start();
+        if (isset($_SESSION['id'])) {
             array_shift($this->dadosTemplate['menu']);
-            array_unshift($this->dadosTemplate['menu'], ['icon'=>'assignment_ind', 'tool'=>$_SESSION['nome'], 'route'=>'/controleusuario/dashboard']);
+            array_unshift($this->dadosTemplate['menu'], ['icon' => 'assignment_ind', 'tool' => $_SESSION['nome'], 'route' => '/controleusuario/dashboard']);
         }
     }
-    public function getAtuacao(){
+    public function getAtuacao()
+    {
         $retorno = array();
         $usuario = Usuario::find($_SESSION['id']);
-        foreach($usuario->atuacoes as $atuacao){
-            $retorno[]= array('modulo' => $atuacao->modulo->nome, 'papel'=>$atuacao->papel->nome); 
+        foreach ($usuario->atuacoes as $atuacao) {
+            $retorno[] = array('modulo' => $atuacao->modulo->nome, 'papel' => $atuacao->papel->nome);
         }
-        return $retorno;   
+        return $retorno;
     }
 }

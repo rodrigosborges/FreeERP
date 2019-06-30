@@ -21,10 +21,10 @@
                     <th>Criado em:</th>
                     <th>Criado por:</th>
                     <th class="text.center" width="250px">
-                        
-                            <!-- togle para chamada de modal de criação de papel (apenas para usuer adm do modulo):  data-toggle="modal"data-target="#create" -->
-                            Opões
-                  
+
+                        <!-- togle para chamada de modal de criação de papel (apenas para usuer adm do modulo):  data-toggle="modal"data-target="#create" -->
+                        Opões
+
                     </th>
                 </tr>
             </thead>
@@ -142,13 +142,15 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-
+        alert($('#userAdmin').val())
         if ($('#userAdmin').val() != 1) {
             console.log('não é admin')
             // $('.btnEdit').unbind('click')
 
             $('.btnEdit').attr('disabled', 'disabled')
             $('.btnRemove').attr('disabled', 'disabled')
+        } else {
+            console.log("é admin");
         }
         var valor = $('#add').html();
         var id;
