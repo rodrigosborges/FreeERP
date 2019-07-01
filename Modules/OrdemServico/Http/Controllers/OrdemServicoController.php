@@ -154,20 +154,6 @@ class OrdemServicoController extends Controller
         $pdf->loadView('ordemservico::ordemservico.pdf');
         return $pdf->stream();
     }
-
-    public function definir_prioridade(Request $request,$id){
-        DB::beginTransaction();
-        try {
-            $ordem_servico = OrdemServico::findOrFail($id);
-            $ordem_servico->update($request->all());
-            DB::commit();
-            return redirect('/ordemservico/os')->with('success', 'Prioridade atualizada com successo');
-        } catch (Exception $e) {
-            DB::rollback();
-            return back()->with('error', 'Erro no servidor');
-        }
-    }
-        
-
-    }
+   
+}
 

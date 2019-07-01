@@ -14,7 +14,6 @@
 //Módulo de Ordem de servico
 Route::prefix('ordemservico')->group(function() {
 	Route::get('os/pdf', 'OrdemServicoController@pdf');
-	Route::get('os/prioridade/{id}', 'OrdemServicoController@definir_prioridade');
 	Route::resource('os', 'OrdemServicoController');
 	Route::resource('tecnico', 'TecnicoController');
 	

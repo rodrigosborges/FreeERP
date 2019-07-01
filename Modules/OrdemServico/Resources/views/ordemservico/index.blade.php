@@ -59,7 +59,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{ Form::open(array('id' => 'form' , 'method'=>'get')) }}
+                {{ Form::open(array('id' => 'form' , 'method'=>'put')) }}
                 {{Form::token()}}
 
 
@@ -94,7 +94,7 @@
             var id = linha.find("td:eq(0)").text().trim();
             var prioridade = linha.find("td:eq(3)").text().trim();
            
-            $("#form").attr("action", '/ordemservico/os/prioridade/' + id);
+            $("#form").attr("action", '/ordemservico/os/' + id);
             $("#campo").remove();
             $('#prioridade').append("<select id='campo' required name='prioridade' class='custom-select mr-sm-2'><option value='3'> Baixa </option><option value='2'> Média </option><option value='1'> Alta </option><option value='0'> A Definir </option></select>");
             $('#campo').val(prioridade);
