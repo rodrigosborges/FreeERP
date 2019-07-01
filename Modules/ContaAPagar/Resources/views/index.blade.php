@@ -98,25 +98,7 @@
                     <td><a href="{{route('conta.editar', $pagamento->conta_pagar_id)}}" ><i class='material-icons'>create</i></a> <a href="{{Route('conta.deletar', $pagamento->conta_pagar_id)}}"><i class='material-icons'>delete</i></a></td>
             </tr>
             @endforeach
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="100%" class="text-center">
-                <p class="text-center">
-                    Página {{$pagamentos->currentPage()}} de {{$pagamentos->lastPage()}}
-                    - Exibindo {{$pagamentos->perPage()}} registro(s) por página de {{$pagamentos->total()}}
-                    registro(s) no total
-                </p>
-                </td>     
-            </tr>
-            @if($pagamentos->lastPage() > 1)
-            <tr>
-                <td colspan="100%">
-                {{ $pagamentos->links() }}
-                </td>
-            </tr>
-            @endif
-        </tfoot>        
+        </tbody>      
     </table>
 </div>
     

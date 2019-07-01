@@ -18,7 +18,7 @@ class ContaAPagarController extends Controller
             $dataFiltro = date("Y-m-d", strtotime($data));
 
 
-            $pagamentos = PagamentoModel::whereMonth('data_vencimento', $data->month)->whereYear('data_vencimento', $data->year)->paginate(15);
+            $pagamentos = PagamentoModel::whereMonth('data_vencimento', $data->month)->whereYear('data_vencimento', $data->year)->get();
             $contas = ContaAPagarModel::all();
             $categorias = CategoriaModel::all();
             $total = $this->total();
