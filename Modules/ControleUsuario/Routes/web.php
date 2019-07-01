@@ -36,6 +36,7 @@ Route::prefix('controleusuario')->group(function() {
     Route::post('/delete', ['as'=>'usuario.delete','uses'=> 'UsuarioController@recovery'] );
     Route::get('/sair','UsuarioController@logoff');
     Route::POST('/buscarModulos', "UsuarioController@buscarModulos");
+  
     Route::POST('/cadastrarUsuario', 'UsuarioController@store');
     Route::POST('/updateUsuario', 'UsuarioController@update');
 

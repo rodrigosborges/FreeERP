@@ -26,8 +26,8 @@
               <td>{{$atuacao->modulo->nome}}</td>
               <td>{{$atuacao->papel->nome}}</td>
               <td><a href="#" class="btn btn-info btn-sm"><i class="material-icons">remove_red_eye</i></a></td>
-              <td><a href="#" data-id="{{$atuacao->id}}" data-toggle="modal" data-target="#editModal" class="btn btn-warning btn-sm"><i class="material-icons">edit</i></a></td>
-              <td><a href="#" class="btn btn-danger btn-sm"><i class="material-icons">delete</i></a></td>
+              <td><a href="#" data-id="{{$atuacao->id}}" id="btnEdit" data-toggle="modal" data-target="#editModal" data-id="{{$atuacao->id}}" class="btnEdit btn btn-warning btn-sm"><i class="material-icons">edit</i></a></td>
+              <td><a href="#" class="btn btn-danger btn-sm" data-id="{{$atuacao->id}}" id="btnEdit" data-toggle="modal" data-target="#deleteModal"><i class="material-icons">delete</i></a></td>
               @endforeach
           </table>
         </div>
@@ -96,11 +96,81 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+      <p class="msg alert alert-success">Dados salvos</p>
+      <form action="">
+        <div class="form-group">
+          <label for="modulo-atuacao">Módulo</label>
+          <select name="" id="moduloSelect" class="form-control">
+           
+          </select>
+        </div>
+        <div class="form-group">
+        <label for="papel-atuacao">Papel</label>
+        <select name="" id="papelSelect" class="form-control">
+       
+        </select>
+        </div>
+        <div class="form-check-inline">
+            <label class="form-check-label" display="none">
+                <input type="radio" id="dataIndeterminada" class="form-check-input" value="indefinido" name="optionVencimento" >Tempo indeterminado
+            </label>
+        </div>
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" id="definirData" value="definido" name="optionVencimento" checked >Definir validade
+            </label>
+        </div>
+
+        
+        <div class="form-group" id="vencimento"><input class="form-control" id="dataVencimento" type="date"></div>
+      </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <button type="button" class="btn btn-success" disabled>Salvar mudanças</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal 2 -->
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remover Atuação</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <p class="alert alert-warning">Você relmente deseja remover esta atuação?</p>
+      <div class="table-responsive-md">
+      <table class="table text-center">
+      <thead class="thead-dark"></thead>
+      <tr>
+        <td colspan="2">Dados da Atuação</td>
+      </tr>
+        <tr>
+          <th scope="col">Modulo</th>
+          <th scope="col">Papel</th>
+          
+        </tr>
+        </thead>
+        <tr>
+        <td>Vendas</td>
+        <td>Operador</td>
+        </tr>
+        </table>
+      </div>
+        
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-danger" >Sim, excluir</button>
+      
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        
       </div>
     </div>
   </div>
@@ -111,6 +181,8 @@
 @section('js')
 <script type="text/javascript">
   $(document).ready(function() {
+    var id;
+    //função de atualizar usuário
     $('#btnCadastrar').click(function(e){
       e.preventDefault()
       $('.msg').removeClass("alert-warning");
@@ -170,6 +242,35 @@
             console.log("fail");
           })
         }
+    })
+    $('.btnEdit').click(function(){
+    
+      id =(this).dataset.id;
+      $.ajax({
+        url:'buscarModulos',
+        type:'POST',
+        data:{'_token':$('input[name=_token]').val()}
+      }).done(function(e){
+        console.log("ok:->"+e);
+        var modulos = $.parseJSON(e)['modulos'];
+        var papeis = $.parseJSON(e)['papeis'];
+        var options1 ="<option value='-1' selected>Selecione</option>";
+        var options2 ="<option value='-1' selected>Selecione</option>";
+        $.each(modulos, function(chave,valor){
+            options1+='<option value="'+ valor['id'] + '">'+valor['nome'] +"</option>"
+
+        });
+        $.each(papeis,function(chave,valor){
+            options2 += '<option value="'+ valor['id'] + '">'+valor['nome'] +"</option>"
+        })
+        console.log("option 1 ->" + options1);
+        console.log("option 2 ->" + options2);
+        $('#moduloSelect').html(options1)
+        $('#papelSelect').html(options2)
+      }).fail(function(){
+        console.log(falha)
+      })
+
     })
     
   });

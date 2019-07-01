@@ -476,6 +476,7 @@ $retorno = array();
         }
         return $retorno;   
     }
+
     public function verificaLogado(){
         
         if(isset($_SESSION['id'])){
