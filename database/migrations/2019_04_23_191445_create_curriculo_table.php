@@ -14,19 +14,17 @@ class CreateCurriculoTable extends Migration
     public function up()
     {
         Schema::create('curriculo', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('vaga_id');
+            $table->integer('id');
             $table->string('nome');
             $table->string('email');
             $table->string('formacao');
             $table->string('endereco');
             $table->string('telefone');
             $table->string('experiencia');
+            $table->integer('vaga_id')->index('fk_curriculo_vaga1');
             $table->softDeletes();
             $table->timestamps();
 
-            //chave estrangeira
-            $table->foreign('vaga_id')->references('id')->on('vaga');
 
         });
     }
@@ -38,6 +36,6 @@ class CreateCurriculoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('curriculo');
+        Schema::drop('curriculo');
     }
 }

@@ -14,7 +14,7 @@ class CreateVagaTable extends Migration
     public function up()
     {
         Schema::create('vaga', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->integer('id');
             $table->string('cargo');
             $table->double('salario',8,2);
             $table->string('descricao');
@@ -32,6 +32,6 @@ class CreateVagaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vaga');
+        Schema::drop('vaga');
     }
 }
