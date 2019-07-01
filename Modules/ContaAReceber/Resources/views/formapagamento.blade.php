@@ -24,7 +24,7 @@
     </style>
 @stop
 @section('content')
-    <h1>Categorias</h1>
+    <h1>Formas de Pagamento</h1>
     
 <header>        
     <div class="row teste">

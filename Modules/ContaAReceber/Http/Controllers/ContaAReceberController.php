@@ -87,13 +87,13 @@ class ContaAReceberController extends Controller
     }
 
     public function filtrar(Request $req){
-        $dados = $req->all();
+            $dados = $req->all();
             $data = Carbon::now();
             $range = [$dados['data_inicial'],$dados['data_final']];
             $pagamentos = PagamentoModel::whereBetween('data_pagamento', $range)->get();
-            $contas = ContaAReceberModel::all()->get();
-            $categorias = CategoriaModel::all()->get();
-            $formapgs = FormaPagamentoModel::all()->get();
+            $contas = ContaAReceberModel::all();
+            $categorias = CategoriaModel::all();
+            $formapgs = FormaPagamentoModel::all();
             $total = $this->totalFiltro($range);
             return view('contaareceber::index',compact('pagamentos', 'contas', 'total', 'categorias', 'formapgs'));
     }

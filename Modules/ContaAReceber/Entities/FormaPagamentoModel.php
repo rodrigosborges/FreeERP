@@ -9,4 +9,5 @@ class FormaPagamentoModel extends Model
     use SoftDeletes;
     public $table = 'forma_pagamento_receber';
     protected $fillable = ['id', 'nome', 'taxa','prazo_recebimento', 'forma_pagamento_id'];
+
 }
