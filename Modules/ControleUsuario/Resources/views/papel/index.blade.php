@@ -142,7 +142,6 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        alert($('#userAdmin').val())
         if ($('#userAdmin').val() != 1) {
             console.log('não é admin')
             // $('.btnEdit').unbind('click')

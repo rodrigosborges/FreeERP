@@ -44,12 +44,17 @@
       </div>
       <div class="card-body">
         <div class="form-group">
+        
+        <p class="msg alert"></p>
           <div class="row justify-content-center">
+          
+          {{ csrf_field() }}
             <label for="exampleFormControlFile1">
               <i class="material-icons text-muted" style="font-size: 100px; cursor:pointer" id='foto_pefil'>add_a_photo</i>
             </label>
             <input type="file" class="form-control-file" name="foto" id="exampleFormControlFile1" style="display: none">
           </div>
+          <input type="hidden" name="id" value="{{$_SESSION['id']}}">
         </div>
         <div class="row justify-content-center">
           <div class="col-10">
@@ -71,7 +76,7 @@
             <button type="submit" id="btnCadastrar" class="btn btn-primary d-flex align-items-center">Atualizar</button>
           </div>
         </div>
-
+      
       </div>
     </div>
   </div>
@@ -106,6 +111,66 @@
 @section('js')
 <script type="text/javascript">
   $(document).ready(function() {
+    $('#btnCadastrar').click(function(e){
+      e.preventDefault()
+      $('.msg').removeClass("alert-warning");
+      $('.msg').removeClass("alert-danger");
+      $('.msg').removeClass("alert-success");
+        $('.msg').hide()
+        var nome = $('#nome').val().trim()
+        var email = $('#email').val().trim()
+        var senha= $('#password').val();
+        var regex_email = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+        if(nome.length<4){
+          $('.msg').html("O campo <b>nome</b> deve conter mais de 3 caracteres")
+          $('.msg').fadeIn()
+          $('.msg').addClass("alert-warning");
+          $('#nome').focus();
+        }else if(!regex_email.test(email)){
+          $('.msg').html("O  <b>email</b> inserido não é um email válido")
+          $('.msg').fadeIn()
+          $('.msg').addClass("alert-warning");
+          $('#email').focus();
+        }else if(senha.length<6){
+          $('.msg').html("A <b>senha</b> deve conter no mínimo 6 caracteres")
+          $('.msg').fadeIn()
+          $('.msg').addClass("alert-warning");
+          $('#password').focus();
+
+        } else{
+          $.ajax({
+            url:'updateUsuario',
+            data:{'_token':$('input[name=_token]').val(),
+            'nome':nome,
+            'email': email,
+            'senha':senha,
+            'id':$("input[type=hidden][name=id").val()
+           
+            },
+            type:"POST",
+            datatype:"json"
+          }).done(function(e){
+            console.log("foi"+e)
+            var mensagem = $.parseJSON(e)['mensagem'];
+            var sucesso = $.parseJSON(e)['sucesso'];
+            if(sucesso){
+           
+            $('.msg').removeClass('alert-warning')
+            $('.msg').addClass('alert-success')
+            $('#btnCadastrar').attr('disabled','disabled');
+          }else{
+            $('.msg').addClass('alert-danger')
+            $('.msg').removeClass('alert-success')
+            $('.msg').removeClass('alert-warning')
+
+          }
+          $('.msg').html(mensagem);
+          $('.msg').fadeIn();
+          }).fail(function(){
+            console.log("fail");
+          })
+        }
+    })
     
   });
 </script>

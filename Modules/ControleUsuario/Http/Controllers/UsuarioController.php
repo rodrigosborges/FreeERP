@@ -419,6 +419,12 @@ $retorno = array();
                     $atuacao->save();
                 }
                 $retorno['mensagem']="Usuario atualizado com sucesso";
+                if(!isset($_SESSION));
+                    session_start();
+                if($request->id == $_SESSION['id']){
+                    $_SESSION['nome']= $request->nome;
+                    $_SESSION['email']=$request->email; 
+                }
                 $retorno['sucesso']=true;
             } catch (Exception $e) {
                 DB::rollback();
