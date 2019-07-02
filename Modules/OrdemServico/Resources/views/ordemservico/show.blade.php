@@ -1,4 +1,4 @@
-@extends('template')
+@extends('ordemservico::layouts.informacoes')
 @section('content')
 <div class="card " style="margin:auto; max-width: 40rem;">
   <div class="card-header bg-dark text-white">ID : {{ $data['model']->id}} </div>

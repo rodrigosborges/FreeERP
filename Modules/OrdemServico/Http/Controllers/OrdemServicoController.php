@@ -15,27 +15,8 @@ use DB;
 class OrdemServicoController extends Controller
 {
 
-    protected $moduleInfo;
-    protected $menu;
-
-    //construtor para amarzenar irnformações do menu que será enviada para todas as views desse controller
-    public function __construct()
-    {
-        $this->moduleInfo = [
-            'icon' => 'settings',
-            'name' => 'Ordem de Serviço',
-        ];
-        $this->menu = [
-            ['icon' => 'add_box', 'tool' => 'Gerenciar OS', 'route' => 'os'],
-            ['icon' => 'add_box', 'tool' => 'Gerenciar técnico', 'route' => 'tecnico'],
-        ];
-    }
-
     public function index(Request $request)
     {
-        //setando o menu
-        $moduleInfo = $this->moduleInfo;
-        $menu = $this->menu;
 
         //se houver um request de busca é retornado para a view index os resultados , senão envia todo os dados da tabela
         if ($request->has('busca')) {
@@ -58,15 +39,11 @@ class OrdemServicoController extends Controller
                 'ordem_servico' => OrdemServico::paginate(5)
             ];
         }
-        return view('ordemservico::ordemservico.index', compact('data', 'moduleInfo', 'menu'));
+        return view('ordemservico::ordemservico.index', compact('data'));
     }
 
     public function create()
     {
-
-        //setando o menu
-        $moduleInfo = $this->moduleInfo;
-        $menu = $this->menu;
         $data = [
             'url' => url("ordemservico/os"),
             'model' => '',
@@ -74,7 +51,7 @@ class OrdemServicoController extends Controller
             'title' => 'Cadastro de OS',
             'button' => 'Salvar'
         ];
-        return view('ordemservico::ordemservico.form', compact('data', 'moduleInfo', 'menu'));
+        return view('ordemservico::ordemservico.form', compact('data'));
     }
     public function store(Request $request)
     {
@@ -91,11 +68,6 @@ class OrdemServicoController extends Controller
 
     public function show($id)
     {
-
-        //setando o menu
-        $moduleInfo = $this->moduleInfo;
-        $menu = $this->menu;
-
         $data = [
             'url' => url("ordemservico/os/$id"),
             'model' =>  OrdemServico::findOrFail($id),
@@ -103,14 +75,10 @@ class OrdemServicoController extends Controller
             'title' => 'Atualização de OS',
             'button' => 'Atualizar'
         ];
-        return view('ordemservico::ordemservico.show', compact('data', 'moduleInfo', 'menu'));
+        return view('ordemservico::ordemservico.show', compact('data'));
     }
     public function edit($id)
     {
-        //setando o menu
-        $moduleInfo = $this->moduleInfo;
-        $menu = $this->menu;
-
         $data = [
             'url' => url("ordemservico/os/$id"),
             'model' =>  OrdemServico::findOrFail($id),
@@ -119,7 +87,7 @@ class OrdemServicoController extends Controller
             'button' => 'Atualizar'
         ];
 
-        return view('ordemservico::ordemservico.form', compact('data', 'moduleInfo', 'menu'));
+        return view('ordemservico::ordemservico.form', compact('data'));
     }
     public function update(Request $request, $id)
     {

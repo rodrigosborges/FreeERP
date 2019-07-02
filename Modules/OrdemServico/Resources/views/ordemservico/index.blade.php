@@ -1,4 +1,4 @@
-@extends('template')
+@extends('ordemservico::layouts.informacoes')
 @section('content')
 
 <form method="GET" action="#">
