@@ -4,8 +4,8 @@
         'name' => 'Ordem de Serviço',
     ];
     $menu = [
-        ['icon' => 'add_box', 'tool' => 'Gerenciar OS', 'route' => 'os'],
-        ['icon' => 'add_box', 'tool' => 'Gerenciar técnico', 'route' => 'tecnico'],
+        ['icon' => 'add_box', 'tool' => 'Gerenciar OS', 'route' => url('ordemservico/os')],
+        ['icon' => 'add_box', 'tool' => 'Gerenciar técnico', 'route' => url('ordemservico/tecnico')],
     ];
 ?>
 
