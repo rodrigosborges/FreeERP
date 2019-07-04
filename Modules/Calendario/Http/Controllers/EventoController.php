@@ -15,7 +15,10 @@ class EventoController extends Controller
             $evento = new Evento();
             $evento->titulo = $request->eventoTitulo;
             $evento->data_inicio = $request->eventoDataInicio;
-            $evento->save();
+            $evento->data_fim = $request->eventoDataFim;
+            $evento->dia_todo = $request->eventoDiaTodo;
+            //$evento->save();
+            dd($evento);
 
         }catch (QueryException $e){
             dd($e);

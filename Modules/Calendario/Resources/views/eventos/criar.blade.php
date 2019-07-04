@@ -22,18 +22,16 @@
                     <div class="form-group">
                         <label for="eventoDataInicio">Período</label>
                         <div class="input-group">
-                            <input type="text" class="form-control datetimepicker-input" id="eventoDataInicio"
-                                   data-toggle="datetimepicker" data-target="#eventoDataInicio"/>
+                            <input type="text" class="form-control datetimepicker-input" name="eventoDataInicio" id="eventoDataInicio" data-toggle="datetimepicker" data-target="#eventoDataInicio"/>
                             <div class="input-group-prepend input-group-append">
                                 <span class="input-group-text">
                                     <i class="material-icons">date_range</i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control datetimepicker-input" id="eventoDataFim"
-                                   data-toggle="datetimepicker" data-target="#eventoDataFim"/>
+                            <input type="text" class="form-control datetimepicker-input" name="eventoDataFim" id="eventoDataFim" data-toggle="datetimepicker" data-target="#eventoDataFim"/>
                         </div>
                         <div class="small custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="eventoDiaTodo">
+                            <input type="checkbox" class="custom-control-input" id="eventoDiaTodo" name="eventoDiaTodo">
                             <label class="custom-control-label" for="eventoDiaTodo">Dia todo</label>
                         </div>
                     </div>
