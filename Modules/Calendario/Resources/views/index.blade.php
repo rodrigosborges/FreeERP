@@ -45,10 +45,6 @@
 
     <script>
         $(function () {
-            $('#icone-relogio').on('click', function () {
-                $('#eventoHora').toggle();
-            });
-
             $('#icone-notificacao').on('click', function () {
                 $('#eventoNotificacao :input').prop('disabled', function (i, v) {
                     return !v;
@@ -59,15 +55,20 @@
             });
 
             $('#eventoDataInicio, #eventoDataFim').datetimepicker({
-                format: 'L',
                 locale: 'pt-br',
             });
+
             $("#eventoDataInicio").on("change.datetimepicker", function (e) {
                 $('#eventoDataFim').datetimepicker('minDate', e.date);
                 $('#eventoDataFim').datetimepicker('date', e.date);
             });
-            $('#eventoHoraInicio, #eventoHoraFim').datetimepicker({
-                format: 'HH:mm'
+
+            $('#eventoDiaTodo').on('change', function () {
+                if (this.checked) {
+                    $('#eventoDataInicio, #eventoDataFim').datetimepicker('format', 'L');
+                } else {
+                    $('#eventoDataInicio, #eventoDataFim').datetimepicker('format', false);
+                }
             });
         });
 
@@ -88,12 +89,6 @@
                 events: '{{route('eventos.index')}}',
                 dateClick: function (info) {
                     $('#eventoDataInicio').datetimepicker('date', info.date);
-                    if (info.view.type != 'dayGridMonth') {
-                        $('#eventoHoraInicio').datetimepicker('date', info.date);
-                        $('#eventoHora').show()
-                    } else {
-                        $('#eventoHora').hide();
-                    }
                     $('#eventoModal').modal('show');
                 },
                 eventClick: function (info) {

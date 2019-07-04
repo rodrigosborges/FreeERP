@@ -19,65 +19,22 @@
                     </div>
 
                     <!-- Data -->
-
                     <div class="form-group">
-                        <label>Data</label>
-                        <div class="form-row">
-                            <div class="col-4">
-                                <div class="input-group date" id="eventoDataInicio" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input"
-                                           data-target="#eventoDataInicio" name="eventoDataInicio" required/>
-                                    <div class="input-group-append" data-target="#eventoDataInicio"
-                                         data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
+                        <label for="eventoDataInicio">Período</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control datetimepicker-input" id="eventoDataInicio"
+                                   data-toggle="datetimepicker" data-target="#eventoDataInicio"/>
+                            <div class="input-group-prepend input-group-append">
+                                <span class="input-group-text">
+                                    <i class="material-icons">date_range</i>
+                                </span>
                             </div>
-                            <div class="form-inline">
-                                <span>até</span>
-                            </div>
-                            <div class="col-4">
-                                <div class="input-group date" id="eventoDataFim" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input"
-                                           data-target="#eventoDataFim" name="eventoDataFim"/>
-                                    <div class="input-group-append" data-target="#eventoDataFim"
-                                         data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-inline">
-                                <a href="#"><i class="material-icons" id="icone-relogio">access_time</i></a>
-                            </div>
+                            <input type="text" class="form-control datetimepicker-input" id="eventoDataFim"
+                                   data-toggle="datetimepicker" data-target="#eventoDataFim"/>
                         </div>
-                    </div>
-
-                    <!-- Hora -->
-                    <div class="form-group" id="eventoHora">
-                        <div class="form-row">
-                            <div class="col-4">
-                                <div class="input-group date" id="eventoHoraInicio" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input text-center"
-                                           data-target="#eventoHoraInicio" name="eventoHoraInicio"/>
-                                    <div class="input-group-append" data-target="#eventoHoraInicio"
-                                         data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-inline">
-                                <span>até</span>
-                            </div>
-                            <div class="col-4">
-                                <div class="input-group date" id="eventoHoraFim" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input text-center"
-                                           data-target="#eventoHoraFim" name="eventoHoraFim"/>
-                                    <div class="input-group-append" data-target="#eventoHoraFim"
-                                         data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="small custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="eventoDiaTodo">
+                            <label class="custom-control-label" for="eventoDiaTodo">Dia todo</label>
                         </div>
                     </div>
 
@@ -97,14 +54,14 @@
                                 </select>
                             </div>
                             <div class="form-inline">
-                                <a href="#"><i class="material-icons"
-                                               id="icone-notificacao">notifications_on</i></a>
+                                <a href="#">
+                                    <i class="material-icons" id="icone-notificacao">notifications_on</i></a>
                             </div>
                         </div>
-                        <small class="text-muted">
-                            <input type="checkbox" name="eventoNotificacaoEmail">
-                            <label for="eventoNotificacaoEmail">Também notificar via e-mail</label>
-                        </small>
+                        <div class="small custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="eventoNotificacaoEmail">
+                            <label class="custom-control-label" for="eventoNotificacaoEmail">Também notificar via e-mail</label>
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
