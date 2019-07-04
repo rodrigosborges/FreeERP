@@ -5,7 +5,7 @@
 @section('content')
     @include('calendario::eventos/criar')
     <div id="calendario"></div>
-@stop
+@endsection
 
 @section('css')
     <link rel="stylesheet" type="text/css"
@@ -21,9 +21,6 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <style type="text/css">
-    </style>
-    @parent
 @endsection
 
 @section('js')
@@ -43,7 +40,7 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <script>
+    <script type="text/javascript">
         $(function () {
             $('#icone-notificacao').on('click', function () {
                 $('#eventoNotificacao :input').prop('disabled', function (i, v) {
@@ -99,5 +96,4 @@
             calendar.render();
         });
     </script>
-    @parent
 @endsection

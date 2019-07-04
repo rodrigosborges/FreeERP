@@ -8,7 +8,7 @@ use Modules\Calendario\Entities\Agenda;
 class AgendaController extends Controller
 {
     public function criar(){
-
+        return view('calendario::agendas.criar');
     }
 
     public function teste(){
@@ -55,6 +55,8 @@ class AgendaController extends Controller
             ]
         ];
 
-        $this->teste();
+        //$this->teste();
+
+        return $calendario;
     }
 }
