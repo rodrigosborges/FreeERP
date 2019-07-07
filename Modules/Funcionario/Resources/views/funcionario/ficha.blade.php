@@ -110,6 +110,32 @@
                 @endif
             @endforeach
         </div>
+    </div>
+    <hr>
+    <h4 class="d-flex align-items-end mb-4"><i class="material-icons mr-2">person </i> Dependentes</h4>
+    <div class="row">
+        <div class="col-sm">
+            @foreach($funcionario->dependentes as $dependente)
+                <div class="row">
+                    <div class="col">
+                    <span class="titulo_cargo">Nome:</span> {{$dependente->nome}}
+                    </div>
+                    <div class="col">
+                        <span class="titulo_cargo">Parentesco:</span> {{$dependente->getNomeParentesco()}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span class="titulo_cargo">CPF:</span> {{mask("###.###.###-##", $dependente->cpf()->numero)}}
+                        </div>
+                        <div class="col">  
+                        <span class="titulo_cargo"> Mora Junto?</span> {{$dependente->mora_junto == 1 ? 'Sim' : 'Não'}}
+                    </div>
+                </div>
+                @if(!$loop->last)
+                    <hr>
+                @endif
+            @endforeach
         </div>
     </div>
 </div>

@@ -131,7 +131,7 @@
                             @if($data['model'])
                                 <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->cpf()->id}}">
                             @endif
-                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control" value="{{ old('documentos.cpf.numero', $data['model'] ? $data['model']->cpf()->numero : '') }}">
+                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control cpf" value="{{ old('documentos.cpf.numero', $data['model'] ? $data['model']->cpf()->numero : '') }}">
                             <input required type="hidden" name="documentos[cpf][tipo_documento_id]" value="1">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.cpf.numero') }}</span>
@@ -407,6 +407,106 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+        <strong><h6 class="mt-5 mb-3">Dependentes</h6></strong>
+        <hr>
+        <div id="dependentes">
+            @foreach(old('dependentes', $data['dependentes']) as $key => $dependente)
+
+                <div class="dep {{ old('dependentes.$key.nome', isset($dependente->nome) ? $dependente->nome : '') ? '' : 'd-none'}} mb-4">
+                    
+                    <div class="form-row">
+
+                        @if(isset($dependente->id))
+                            <input type="hidden" class="dependentes" value="{{ isset($dependente->id) ? $dependente->id : ''}}" name="dependentes[{{$key}}][id]">
+                        @endif
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="tipo_parentesco_{{$key}}" class="control-label">Tipo <span class="required-symbol">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">description</i>
+                                        </span>
+                                    </div>
+                                    <select required name="dependentes[{{$key}}][parentesco_id]" id="tipo_parentesco_{{$key}}" class="form-control dependentes">
+                                        <option value="">Selecione</option>
+                                        @foreach($data['parentescos'] as $parentesco)
+                                            <option value="{{$parentesco->id}}" {{ old('dependentes.$key.parentesco_id', isset($dependente->parentesco_id) ? $dependente->parentesco_id : '') == $parentesco['id'] ? 'selected' : '' }}>{{$parentesco->nome}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <span class="errors"> {{ $errors->first('dependentes.'.$key.'.parentesco_id') }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label">Mora Junto? <span class="required-symbol">*</span></label><br>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">description</i>
+                                        </span>
+                                    </div>
+                                    <select required name="dependentes[{{$key}}][mora_junto]" id="mora_junto_{{$key}}" class="form-control dependentes">
+                                        <option value="">Selecione</option>
+                                        <option value="1" {{ old('dependentes.$key.mora_junto', isset($dependente->mora_junto) ? $dependente->mora_junto : '') == '1' ? 'selected' : '' }}>Sim</option>
+                                        <option value="0" {{ old('dependentes.$key.mora_junto', isset($dependente->mora_junto) ? $dependente->mora_junto : '') == '0' ? 'selected' : '' }}>Não</option>
+                                    </select>
+                                </div>
+                                <span class="errors"> {{ $errors->first('dependentes.'.$key.'.mora_junto') }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                <label for="nome_dep_{{$key}}" class="control-label">Nome <span class="required-symbol">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                    </div>
+                                    <input required type="text" placeholder="Nome" name="dependentes[{{$key}}][nome]"  class="form-control dependentes" id="nome_dep_{{$key}}" value="{{ old('dependentes.$key.nome', isset($dependente->nome) ? $dependente->nome : '') }}">
+                                </div>
+                                <span class="errors"> {{ $errors->first('dependentes.'.$key.'.nome') }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="cpf_dep_{{$key}}" class="control-label">CPF <span class="required-symbol">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">description</i>
+                                        </span>
+                                    </div>
+                                    <input required type="text" placeholder="XXX.XXX.XXX-XX" name="dependentes[{{$key}}][cpf]"  class="form-control dependentes cpf" id="cpf_dep_{{$key}}" value="{{ old('dependentes.$key.cpf', isset($dependente->id) ? $dependente->cpf()->numero : '') }}">
+                                </div>
+                                <span class="errors"> {{ $errors->first('dependentes.'.$key.'.cpf') }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 mt-2">
+                            <br>
+                            <i class="btn btn-danger border text-center material-icons del-dep">delete</i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            @endforeach
+        </div>
+        <div class="mt-2">
+            <i class="btn btn-info border text-center add-dep">ADICIONAR DEPENDENTE</i>
         </div>
     </form>
 @endsection

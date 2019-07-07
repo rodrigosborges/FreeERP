@@ -12,6 +12,8 @@ class CpfValidator
     protected function isValidate($attribute, $value)
     {
         $c = preg_replace('/\D/', '', $value);
+        if(strlen($c) == 0)
+            return true;
         if (strlen($c) != 11 || preg_match("/^{$c[0]}{11}$/", $c)) {
             return false;
         }

@@ -19,19 +19,23 @@ class Funcionario extends Model{
         return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada','data_saida')->withTrashed();
     }
 
-    public function dependentesRelacao(){
-        return $this->hasMany('App\Entities\Relacao', 'origem_id')
-            ->where('tabela_origem','funcionario')
-            ->where('tabela_destino','dependente');
+    public function dependentes(){
+        return $this->hasMany('Modules\Funcionario\Entities\Dependente');
     }
 
-    public function dependentes(){
-        $dados = [];
-        foreach($this->dependentesRelacao as $relacao){
-            $dados[] = $relacao->dados;
-        }
-        return $dados;
-    }
+    // public function dependentesRelacao(){
+    //     return $this->hasMany('App\Entities\Relacao', 'origem_id')
+    //         ->where('tabela_origem','funcionario')
+    //         ->where('tabela_destino','dependente');
+    // }
+
+    // public function dependentes(){
+    //     $dados = [];
+    //     foreach($this->dependentesRelacao as $relacao){
+    //         $dados[] = $relacao->dados;
+    //     }
+    //     return $dados;
+    // }
 
     public function estadoCivilRelacao(){
         return $this->hasOne('App\Entities\Relacao', 'origem_id')
