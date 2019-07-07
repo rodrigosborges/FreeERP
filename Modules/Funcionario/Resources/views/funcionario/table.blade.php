@@ -15,13 +15,16 @@
                     <td>{{$funcionario->nome}}</td>
                     @if($status == "ativos")
                     <td class="min">         
-                            <a class="btn btn-warning" href='{{ url("funcionario/funcionario/$funcionario->id/edit") }}'>Editar</a>
+                        <a class="btn btn-warning" href='{{ url("funcionario/funcionario/$funcionario->id/edit") }}'>Editar</a>
                     </td>
                     <td class="min">
                         <a class="btn btn-secondary" href='{{ url("funcionario/funcionario/editCargo/$funcionario->id") }}'>Cargo</a>              
                     </td>
                     <td class="min">                       
                         <a class="btn btn-info" href='{{ url("funcionario/funcionario/ficha/$funcionario->id") }}'>Ficha</a>
+                    </td>
+                    <td class="min">         
+                        <a class="btn btn-light" href='{{ url("funcionario/frequencia/$funcionario->id") }}'>Ponto</a>
                     </td>
                     @endif
                     <td class="min">

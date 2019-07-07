@@ -7,6 +7,7 @@
     $menu = [
         ['icon' => 'people', 'tool' => 'Funcionario', 'route' => url('funcionario/funcionario')],
         ['icon' => 'work', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
+        ['icon' => 'access_time', 'tool' => 'Banco de horas', 'route' => url('funcionario/frequencia')],
     ];
 ?>
 

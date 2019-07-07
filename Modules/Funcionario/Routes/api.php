@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('funcionario/frequencia/biometricUsers','FrequenciaController@biometricUsers');
+Route::get('funcionario/frequencia/list','FrequenciaController@list');
+Route::post('funcionario/frequencia/biometry/{id}','FrequenciaController@biometry');
+Route::post('funcionario/frequencia/ponto/{id}','FrequenciaController@ponto');
+
 Route::middleware('auth:api')->get('/funcionario', function (Request $request) {
     return $request->user();
 });

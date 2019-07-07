@@ -23,4 +23,6 @@ Route::prefix('funcionario')->group(function() {
 
     Route::resource('funcionario', 'FuncionarioController');
     Route::resource('cargo', 'CargoController');
+
+    Route::get('frequencia/{id}', 'FrequenciaController@index');
 });

@@ -11,6 +11,10 @@ class Funcionario extends Model{
 
     protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao'];
 
+    public function pontos(){
+        return $this->hasMany('Modules\Funcionario\Entities\Ponto');
+    }
+
     public function cargos(){
         return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada','data_saida')->withTrashed();
     }

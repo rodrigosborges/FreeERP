@@ -29,7 +29,7 @@ class CargoController extends Controller{
 		if($status == "inativos")
 			$cargos = $cargos->onlyTrashed();
 
-		$cargos = $cargos->paginate(10);
+		$cargos = $cargos->paginate(1);
 		return view('funcionario::cargo.table', compact('cargos','status'));
 	}
     
