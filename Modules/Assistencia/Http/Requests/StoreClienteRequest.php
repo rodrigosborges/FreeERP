@@ -10,9 +10,7 @@ class StoreClienteRequest extends FormRequest{
           'nome' => 'required|min:3|max:100',
           'cpf' => 'required|cpf',
           'email' => 'required|email|max:100',
-          'sexo' => 'required',
-          'celnumero' => 'required|telefone',
-          'telefonenumero' => 'required|telefone'
+          'sexo' => 'required'
         ];
     }
 
@@ -21,8 +19,7 @@ class StoreClienteRequest extends FormRequest{
           'nome.required' => 'Por favor, digite o nome do cliente',
           'cpf.required' => 'Por favor, digite o CPF do cliente',
           'cpf.cpf' => 'Por favor, difite um CPF valido',
-          'celnumero.telefone' => 'Digine um numero de celular valido',
-          'telefonenumero.telefone' => 'Digite um numero de telefone valido'
+          'sexo.required' => 'Selecione o sexo do cliente'
         ];
     }
 
