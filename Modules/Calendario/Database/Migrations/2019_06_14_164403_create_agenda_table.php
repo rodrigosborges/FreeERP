@@ -4,20 +4,23 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCalendarioTable extends Migration
+class CreateAgendaTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
+
+    //TODO ajustar a relação com o criador
+
     public function up()
     {
-        Schema::create('calendario', function (Blueprint $table) {
+        Schema::create('agenda', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('titulo');
-            $table->string('nota')->nullable();
-            $table->string('cor', 7)->nullable();
+            $table->string('descricao')->nullable();
+            $table->string('cor', 6)->nullable();
             $table->unsignedBigInteger('funcionario_id')->nullable();
             //$table->foreign('funcionario_id')->references('id')->on('funcionario');
             $table->softDeletes();
@@ -32,6 +35,6 @@ class CreateCalendarioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('calendario');
+        Schema::dropIfExists('agenda');
     }
 }

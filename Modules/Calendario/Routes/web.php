@@ -11,14 +11,10 @@
 |
 */
 
-Route::prefix('calendario')->group(function() {
-    Route::get('/', 'CalendarioController@index')->name('calendario.index');
-    Route::prefix('agendas')->group(function(){
-        Route::post('/', 'AgendaController@salvar')->name('agendas.salvar');
-        Route::get('criar', 'AgendaController@criar')->name('agendas.criar');
-        Route::prefix('eventos')->group(function (){
-            Route::get('/', 'AgendaController@eventos')->name('eventos.index');
-            Route::post('/', 'EventoController@salvar')->name('eventos.salvar');
-        });
-    });
-});
+Route::get('/calendario', 'CalendarioController@index')->name('calendario.index');
+
+Route::post('/calendario/agendas', 'AgendaController@salvar')->name('agendas.salvar');
+Route::get('/calendario/agendas/criar', 'AgendaController@criar')->name('agendas.criar');
+Route::get('/calendario/agendas/eventos', 'AgendaController@eventos')->name('eventos.index');
+
+Route::post('/calendario/agendas/eventos', 'EventoController@salvar')->name('eventos.salvar');

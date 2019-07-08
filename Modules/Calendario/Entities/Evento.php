@@ -8,7 +8,11 @@ use DateTime;
 class Evento extends Model
 {
     protected $table = 'evento';
-    protected $fillable = ['titulo', 'data_inicio', 'data_fim', 'dia_todo', 'nota'];
+
+    public function setDiaTodoAttribute($value){
+        if($value == null)
+            $this->attributes['dia_todo'] = 0;
+    }
 
     public function setDataInicioAttribute($value){
         $tags = explode(' ', $value);

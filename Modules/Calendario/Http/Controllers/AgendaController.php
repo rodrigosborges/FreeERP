@@ -2,6 +2,8 @@
 
 namespace Modules\Calendario\Http\Controllers;
 
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Calendario\Entities\Agenda;
 
@@ -9,6 +11,19 @@ class AgendaController extends Controller
 {
     public function criar(){
         return view('calendario::agendas.criar');
+    }
+
+    public function salvar(Request $request){
+        try{
+            $agenda = new Agenda();
+            $agenda->titulo = $request->agendaNome;
+            $agenda->descricao = $request->agendaDescricao;
+            $agenda->cor = $request->agendaCor;
+            $agenda->save();
+        }catch (QueryException $e){
+            dd($e);
+        }
+        return redirect()->route('agendas.criar')->with('success', 'Agenda ' . $agenda->titulo . ' criada com sucesso.');
     }
 
     public function teste(){

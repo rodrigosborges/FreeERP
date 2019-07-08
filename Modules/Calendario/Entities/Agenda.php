@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agenda extends Model
 {
-    protected $table = 'calendario';
-    protected $fillable = ['nome', 'descricao', 'cor'];
+    protected $table = 'agenda';
 
     public function eventos(){
         return $this->hasMany('Modules\Calendario\Entities\Evento');

@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return back()->with('success', 'Cadastrado com sucesso!');
+    //return back()->with('success', 'Cadastrado com sucesso!');
 });
 
 

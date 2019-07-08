@@ -11,17 +11,16 @@ class EventoController extends Controller
 {
     public function salvar(Request $request){
         try{
-
             $evento = new Evento();
             $evento->titulo = $request->eventoTitulo;
             $evento->data_inicio = $request->eventoDataInicio;
             $evento->data_fim = $request->eventoDataFim;
             $evento->dia_todo = $request->eventoDiaTodo;
-            //$evento->save();
-            dd($evento);
-
+            $evento->nota = $request->eventoNota;
+            $evento->save();
         }catch (QueryException $e){
-            dd($e);
+            return back()->with('error', 'Falha ao criar evento.');
         }
+        return back()->with('success', 'Evento ' . $evento->titulo . ' criado com sucesso.');
     }
 }

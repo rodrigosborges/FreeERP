@@ -11,16 +11,17 @@ class CreateEventoTable extends Migration
      *
      * @return void
      */
+
+    //TODO ajustar a relação com a agenda
     public function up()
     {
         Schema::create('evento', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('titulo');
-            $table->date('data_inicio');
-            $table->time('hora_inicio')->nullable();
-            $table->date('data_fim')->nullable();
-            $table->time('hora_fim')->nullable();
+            $table->datetime('data_inicio');
+            $table->datetime('data_fim');
             $table->dateTime('notificacao')->nullable();
+            $table->boolean('dia_todo')->default(0);
             $table->string('nota')->nullable();
             $table->unsignedBigInteger('calendario_id')->nullable();
             //$table->foreign('calendario_id')->references('id')->on('calendario');

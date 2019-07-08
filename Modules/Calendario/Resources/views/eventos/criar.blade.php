@@ -31,7 +31,7 @@
                             <input type="text" class="form-control datetimepicker-input" name="eventoDataFim" id="eventoDataFim" data-toggle="datetimepicker" data-target="#eventoDataFim"/>
                         </div>
                         <div class="small custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="eventoDiaTodo" name="eventoDiaTodo">
+                            <input type="checkbox" class="custom-control-input" id="eventoDiaTodo" name="eventoDiaTodo" value="1">
                             <label class="custom-control-label" for="eventoDiaTodo">Dia todo</label>
                         </div>
                     </div>
@@ -61,6 +61,8 @@
                             <label class="custom-control-label" for="eventoNotificacaoEmail">Também notificar via e-mail</label>
                         </div>
                     </div>
+
+                    <!-- Agenda -->
                     <div class="form-row">
                         <div class="form-group">
                             <label for="eventoAgenda">Agenda</label>
@@ -69,6 +71,14 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- Nota -->
+
+                        <div class="form-group">
+                            <label for="eventoNota">Nota</label>
+                            <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3"></textarea>
+                        </div>
+
                 </form>
             </div>
             <div class="modal-footer">

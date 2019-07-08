@@ -41,7 +41,8 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <script type="text/javascript">
-        $(function () {
+        //TODO resolver erro de stackoverflow quando a página é exibida pelo back do navegador
+        $(function() {
             $('#icone-notificacao').on('click', function () {
                 $('#eventoNotificacao :input').prop('disabled', function (i, v) {
                     return !v;
@@ -51,8 +52,12 @@
                 });
             });
 
-            $('#eventoDataInicio, #eventoDataFim').datetimepicker({
-                locale: 'pt-br',
+            $('#eventoDataInicio').datetimepicker({
+                locale: 'pt-br'
+            });
+
+            $('#eventoDataFim').datetimepicker({
+                locale: 'pt-br'
             });
 
             $("#eventoDataInicio").on("change.datetimepicker", function (e) {
@@ -60,11 +65,13 @@
                 $('#eventoDataFim').datetimepicker('date', e.date);
             });
 
-            $('#eventoDiaTodo').on('change', function () {
+            $('#eventoDiaTodo').change(function () {
                 if (this.checked) {
-                    $('#eventoDataInicio, #eventoDataFim').datetimepicker('format', 'L');
+                    $('#eventoDataInicio').datetimepicker('format', 'L');
+                    $('#eventoDataFim').datetimepicker('format', 'L');
                 } else {
-                    $('#eventoDataInicio, #eventoDataFim').datetimepicker('format', false);
+                    $('#eventoDataInicio').datetimepicker('format', false);
+                    $('#eventoDataFim').datetimepicker('format', false);
                 }
             });
         });
