@@ -4,17 +4,7 @@
     <list default="true" id="b84905e5-ba51-4cac-9254-655e0db8a3b8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/FreeERP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FreeERP.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164403_create_calendario_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164403_create_agenda_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,35 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-              <folding>
-                <element signature="e#55#94#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php">
+        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="9" selection-start-line="9" selection-end-line="9" selection-end-column="32" />
-              <folding>
-                <element signature="e#47#86#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="204">
+              <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -95,10 +61,10 @@
         <option value="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164403_create_agenda_table.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" />
         <option value="$PROJECT_DIR$/storage/logs/laravel-2019-07-07.log" />
-        <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php" />
+        <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php" />
       </list>
     </option>
   </component>
@@ -201,17 +167,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="FreeERP" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\Hugo\PhpstormProjects\FreeERP" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -242,28 +197,6 @@
               <item name="FreeERP" type="462c0819:PsiDirectoryNode" />
               <item name="Modules" type="462c0819:PsiDirectoryNode" />
               <item name="Calendario" type="462c0819:PsiDirectoryNode" />
-              <item name="Entities" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FreeERP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="FreeERP" type="462c0819:PsiDirectoryNode" />
-              <item name="Modules" type="462c0819:PsiDirectoryNode" />
-              <item name="Calendario" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FreeERP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="FreeERP" type="462c0819:PsiDirectoryNode" />
-              <item name="Modules" type="462c0819:PsiDirectoryNode" />
-              <item name="Calendario" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FreeERP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="FreeERP" type="462c0819:PsiDirectoryNode" />
-              <item name="Modules" type="462c0819:PsiDirectoryNode" />
-              <item name="Calendario" type="462c0819:PsiDirectoryNode" />
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -282,6 +215,17 @@
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="agendas" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="FreeERP" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\Hugo\PhpstormProjects\FreeERP" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
           </expand>
           <select />
@@ -325,7 +269,8 @@
       <option name="presentableId" value="Default" />
       <updated>1562260210322</updated>
       <workItem from="1562260213222" duration="11027000" />
-      <workItem from="1562545495172" duration="671000" />
+      <workItem from="1562545495172" duration="901000" />
+      <workItem from="1562707403151" duration="1319000" />
     </task>
     <task id="LOCAL-00001" summary="Modal de novo evento finalizado (por enquanto)">
       <created>1562266723617</created>
@@ -334,11 +279,18 @@
       <option name="project" value="LOCAL" />
       <updated>1562266723617</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Controller de agenda inserindo no bd e diversos ajustes">
+      <created>1562546408084</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1562546408084</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17635000" />
+    <option name="totallyTimeSpent" value="19184000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -355,7 +307,7 @@
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.17910448" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.17697228" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -366,7 +318,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49840087" weight="0.29252437" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49840087" visible="true" weight="0.25568798" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49840087" visible="true" weight="0.26760563" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50159913" side_tool="true" weight="0.25568798" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32924107" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -421,7 +373,8 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="Modal de novo evento finalizado (por enquanto)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modal de novo evento finalizado (por enquanto)" />
+    <MESSAGE value="Controller de agenda inserindo no bd e diversos ajustes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Controller de agenda inserindo no bd e diversos ajustes" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php">
@@ -488,8 +441,8 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-07-07.log">
-      <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="LogFileEditorProvider" />
+      <provider editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
@@ -498,17 +451,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Modules/Calendario/Routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="9" selection-start-line="9" selection-end-line="9" selection-end-column="32" />
+          <folding>
+            <element signature="e#47#86#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -522,20 +485,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php">
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="9" selection-start-line="9" selection-end-line="9" selection-end-column="32" />
-          <folding>
-            <element signature="e#47#86#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="204">
+          <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
         </state>
       </provider>
     </entry>

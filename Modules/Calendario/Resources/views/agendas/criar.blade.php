@@ -17,12 +17,21 @@
         <div class="form-group">
             <label for="agendaCor">Cor</label>
             <select id="agendaCor" name="agendaCor">
-                <option value="A0522D" data-color="#A0522D">sienna</option>
-                <option value="CD5C5C" data-color="#CD5C5C" selected="selected">indianred</option>
-                <option value="FF4500" data-color="#FF4500">orangered</option>
-                <option value="DC143C" data-color="#DC143C">crimson</option>
-                <option value="FF8C00" data-color="#FF8C00">darkorange</option>
-                <option value="C71585" data-color="#C71585">mediumvioletred</option>
+                <option value="C0C0C0" data-color="#C0C0C0">Prata</option>
+                <option value="808080" data-color="#808080">Cinza</option>
+                <option value="000000" data-color="#000000">Preto</option>
+                <option value="FF0000" data-color="#FF0000">Vermelho</option>
+                <option value="800000" data-color="#800000">Marrom</option>
+                <option value="FFFF00" data-color="#FFFF00">Amarelo</option>
+                <option value="808000" data-color="#808000" selected="selected">Oliva</option>
+                <option value="00FF00" data-color="#00FF00">Lima</option>
+                <option value="008000" data-color="#008000">Verde</option>
+                <option value="00FFFF" data-color="#00FFFF">Água</option>
+                <option value="008080" data-color="#008080">Verde-azulado</option>
+                <option value="0000FF" data-color="#0000FF">Azul</option>
+                <option value="000080" data-color="#000080">Azul-marinho</option>
+                <option value="FF00FF" data-color="#FF00FF">Magenta</option>
+                <option value="800080" data-color="#800080">Roxo</option>
             </select>
         </div>
         <button type="submit" form="agendaForm" class="btn btn-primary">Salvar</button>
