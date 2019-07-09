@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\ServicoAssistenciaModel;
+use Modules\Assistencia\Http\Requests\StoreServicoRequest;
 
 class ServicosController extends Controller
 {
@@ -19,7 +20,7 @@ class ServicosController extends Controller
      return view('assistencia::paginas.estoque.localizarServico',compact('servicos'));
    }
 
-   public function salvar(Request $req){
+   public function salvar(StoreServicoRequest $req){
      $dados  = $req->all();
      ServicoAssistenciaModel::create($dados);
      return redirect()->route('servicos.localizar');
@@ -30,7 +31,7 @@ class ServicosController extends Controller
      return view('assistencia::paginas.estoque.editarServico',compact('servico'));
    }
 
-   public function atualizar(Request $req, $id){
+   public function atualizar(StoreServicoRequest $req, $id){
      $dados  = $req->all();
      ServicoAssistenciaModel::find($id)->update($dados);
      return redirect()->route('servicos.localizar');

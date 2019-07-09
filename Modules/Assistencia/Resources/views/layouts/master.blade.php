@@ -78,6 +78,14 @@ $menu = [
                 padding: 10px;
             }
             .btn-circle:hover { background: #ededed; }
+
+                .errors {
+                    color: red;
+                    font-size: 12px;
+                    text-align: left;
+
+                }
+
         </style>
 
         @yield('css')

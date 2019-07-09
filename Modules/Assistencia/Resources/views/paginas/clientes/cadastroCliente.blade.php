@@ -1,19 +1,5 @@
 @extends('assistencia::layouts.master')
 
-
-@section('css')
-	<style>
-		.errors {
-			color: red;
-			font-size: 12px;
-			text-align: left;
-
-		}
-
-	</style>
-
-@stop
-
 @section('content')
 
 <div class="card">

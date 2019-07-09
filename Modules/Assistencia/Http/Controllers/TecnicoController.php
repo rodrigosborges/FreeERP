@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\TecnicoAssistenciaModel;
+use Modules\Assistencia\Http\Requests\StoreTecnicoRequest;
+
 class TecnicoController extends Controller
 {
 
@@ -20,7 +22,7 @@ class TecnicoController extends Controller
   public function cadastrar(){
     return view('assistencia::paginas.tecnicos.cadastrotecnico');
   }
-  public function salvar(Request $req){
+  public function salvar(StoreTecnicoRequest $req){
     $dados  = $req->all();
     TecnicoAssistenciaModel::create($dados);
 
@@ -32,7 +34,7 @@ class TecnicoController extends Controller
     return view('assistencia::paginas.tecnicos.editarTecnico',compact('tecnico'))->with('success','Técnico atualizado com sucesso!');
   }
 
-  public function atualizar(Request $req, $id){
+  public function atualizar(StoreTecnicoRequest $req, $id){
     $dados  = $req->all();
     TecnicoAssistenciaModel::find($id)->update($dados);
     return redirect()->route('tecnico.localizar');

@@ -48,14 +48,5 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-12">
-    <span class="errors"> {{ $errors->first('modelo_aparelho') }} </span><br>
-    <span class="errors"> {{ $errors->first('serial_aparelho') }} </span><br>
-    <span class="errors"> {{ $errors->first('marca_aparelho') }} </span><br>
-    <span class="errors"> {{ $errors->first('imei_aparelho') }} </span><br>
-    <span class="errors"> {{ $errors->first('defeito') }} </span><br>
-    <span class="errors"> {{ $errors->first('obs') }} </span><br>
-    <span class="errors"> {{ $errors->first('idTecnico') }} </span><br> 
-  </div>
-</div>
+
+

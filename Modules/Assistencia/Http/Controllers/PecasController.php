@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\PecaAssistenciaModel;
+use Modules\Assistencia\Http\Requests\StorePecaRequest;
 
 class PecasController extends Controller
 {
@@ -21,7 +22,7 @@ class PecasController extends Controller
      return view('assistencia::paginas.estoque.localizarPeca',compact('pecas'));
    }
 
-   public function salvar(Request $req){
+   public function salvar(StorePecaRequest $req){
      $dados  = $req->all();
      PecaAssistenciaModel::create($dados);
      return redirect()->route('pecas.localizar');
@@ -34,7 +35,7 @@ class PecasController extends Controller
      return view('assistencia::paginas.estoque.editarPeca',compact('peca'));
    }
 
-   public function atualizar(Request $req, $id){
+   public function atualizar(StorePecaRequest $req, $id){
      $dados  = $req->all();
      PecaAssistenciaModel::find($id)->update($dados);
      return redirect()->route('pecas.localizar');

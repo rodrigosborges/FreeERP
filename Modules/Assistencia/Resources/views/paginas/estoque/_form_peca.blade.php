@@ -3,7 +3,11 @@
     <div class="input-group-prepend">
       <span class="input-group-text" id="cliente"><i class="material-icons">person</i></span>
     </div>
-    <input class="form-control" name="nome" type="text" placeholder="Nome da peça" value="{{isset($peca->nome) ? $peca->nome : ''}}">
+    <input class="form-control" name="nome" type="text" placeholder="Nome da peça" value="{{isset($peca->nome) ? $peca->nome : old('nome', '')}}">
+
+    <div class="col-12">
+      <span class="errors"> {{ $errors->first('nome') }} </span>
+    </div>
   </div>
 
 </div>
@@ -12,7 +16,10 @@
     <div class="input-group-prepend">
       <span class="input-group-text" id="cliente"><i class="material-icons">money_off</i></span>
     </div>
-    <input class="form-control" name="valor_compra" type="text" placeholder="Valor de compra" value="{{isset($peca->valor_compra) ? $peca->valor_compra : ''}}">
+    <input class="form-control" name="valor_compra" type="text" placeholder="Valor de compra" value="{{isset($peca->valor_compra) ? $peca->valor_compra : old('valor_compra', '')}}">
+    <div class="col-12">
+      <span class="errors"> {{ $errors->first('valor_compra') }} </span>
+    </div>
   </div>
 
 </div>
@@ -21,7 +28,10 @@
     <div class="input-group-prepend">
       <span class="input-group-text" id="cliente"><i class="material-icons">money</i></span>
     </div>
-    <input class="form-control" name="valor_venda" type="text" placeholder="Valor para venda" value="{{isset($peca->valor_venda) ? $peca->valor_venda : ''}}">
+    <input class="form-control" name="valor_venda" type="text" placeholder="Valor para venda" value="{{isset($peca->valor_venda) ? $peca->valor_venda : old('valor_venda', '')}}">
+    <div class="col-12">
+      <span class="errors"> {{ $errors->first('valor_venda') }} </span>
+    </div>
   </div>
 
 </div>

@@ -37,7 +37,7 @@
 				<form class="col-md-8" action="{{route('consertos.salvar')}}" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
 				@include('assistencia::paginas.consertos._form')
-				<button class="btn btn-success">Salvar</button>
+				<button id="salvar" class="btn btn-success">Salvar</button>
 				</form>
 			</div>
 		</div>
@@ -54,6 +54,15 @@
 		});
 
 	</script>
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+			var pecas = $('#valor_peca').val()
+			$('#valor_peca').click(function(){
+				console.log(pecas);
+			})
+		})
+	</script>
 	<script>
 		$(document).ready(function(){
 			$(document).mouseover(function(){
@@ -65,7 +74,20 @@
 					valor = valor + Number.parseFloat($(element).attr('data-valor'));
 				});
 				$('#valorTotal').val(valor);
+
+				
 			});
+
+			$('#salvar').click(function(){
+				if($('#valor_peca').val() == null) {
+					$('#valor_peca').val(0)
+
+				}
+				if($('#valor_servico').val() == null) {
+					$('#valor_servico').val(0)
+					console.log($('valor_servico').val())
+				}
+			})
 		})
 
 		/*$('#valor_peca').change(function(){

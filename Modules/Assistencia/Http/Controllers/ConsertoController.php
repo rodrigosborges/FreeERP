@@ -70,7 +70,7 @@ class ConsertoController extends Controller
     public function salvar(StoreConsertosRequest $req){
 
       $dados  = $req->all();
-
+      return $dados;
       ConsertoAssistenciaModel::create($dados);
       $conserto = ConsertoAssistenciaModel::latest()->first();
       $idConserto = $conserto->id;
