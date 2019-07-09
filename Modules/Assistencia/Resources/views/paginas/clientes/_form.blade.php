@@ -8,7 +8,7 @@
   <div class="col-12 form-group">
     <span class="errors"> {{ $errors->first('nome') }} </span>
   </div>
-  
+
 </div>
 
 
@@ -51,7 +51,9 @@
       <input name="sexo" id="sexo" value="masculino" type="radio" {{isset($cliente->sexo) && $cliente->sexo == 'masculino' ? 'checked' : ''}}>
       Masculino
     </label>
+    <span class="errors"> {{ $errors->first('sexo') }} </span>
   </div>
+
 </div>
 
 <div class="row">
