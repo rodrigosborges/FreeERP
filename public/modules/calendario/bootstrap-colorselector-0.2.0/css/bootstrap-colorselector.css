@@ -52,8 +52,8 @@
 }
 
 .dropdown-colorselector>.dropdown-menu>li>.color-btn.selected:after {
-  /*content: "\e013";
-  font-family: 'Glyphicons Halflings';*/
+  content: "\e013";
+  font-family: 'Glyphicons Halflings';
   display: inline-block;
   font-size: 11px;
   color: #FFF;

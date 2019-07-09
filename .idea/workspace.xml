@@ -5,6 +5,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/FreeERP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FreeERP.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/modules/calendario/bootstrap-colorselector-0.2.0/css/bootstrap-colorselector.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/modules/calendario/bootstrap-colorselector-0.2.0/css/bootstrap-colorselector.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/modules/calendario/bootstrap-colorselector-0.2.0/js/bootstrap-colorselector.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/modules/calendario/bootstrap-colorselector-0.2.0/js/bootstrap-colorselector.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
+            <state relative-caret-position="200">
+              <caret line="52" column="124" selection-start-line="52" selection-start-column="124" selection-end-line="52" selection-end-column="124" />
             </state>
           </provider>
         </entry>
@@ -216,6 +218,15 @@
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="agendas" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="FreeERP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FreeERP" type="462c0819:PsiDirectoryNode" />
+              <item name="Modules" type="462c0819:PsiDirectoryNode" />
+              <item name="Calendario" type="462c0819:PsiDirectoryNode" />
+              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="eventos" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -270,7 +281,7 @@
       <updated>1562260210322</updated>
       <workItem from="1562260213222" duration="11027000" />
       <workItem from="1562545495172" duration="901000" />
-      <workItem from="1562707403151" duration="1319000" />
+      <workItem from="1562707403151" duration="4052000" />
     </task>
     <task id="LOCAL-00001" summary="Modal de novo evento finalizado (por enquanto)">
       <created>1562266723617</created>
@@ -286,11 +297,18 @@
       <option name="project" value="LOCAL" />
       <updated>1562546408084</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Adicionado cores de agenda">
+      <created>1562708782826</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1562708782826</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19184000" />
+    <option name="totallyTimeSpent" value="21917000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -372,9 +390,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Modal de novo evento finalizado (por enquanto)" />
     <MESSAGE value="Controller de agenda inserindo no bd e diversos ajustes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Controller de agenda inserindo no bd e diversos ajustes" />
+    <MESSAGE value="Adicionado cores de agenda" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionado cores de agenda" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php">
@@ -416,13 +436,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
-          <caret line="84" column="43" lean-forward="true" selection-start-line="84" selection-start-column="43" selection-end-line="84" selection-end-column="100" />
         </state>
       </provider>
     </entry>
@@ -485,10 +498,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="84" column="43" lean-forward="true" selection-start-line="84" selection-start-column="43" selection-end-line="84" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
+        <state relative-caret-position="200">
+          <caret line="52" column="124" selection-start-line="52" selection-start-column="124" selection-end-line="52" selection-end-column="124" />
         </state>
       </provider>
     </entry>

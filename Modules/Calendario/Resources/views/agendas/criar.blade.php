@@ -34,6 +34,14 @@
                 <option value="800080" data-color="#800080">Roxo</option>
             </select>
         </div>
+        <div class="form-group">
+            <label for="agendaCompartilhar">Compartilhar</label>
+            <select id="agendaCompartilhar" name="agendaCompartilhar" class="form-control" multiple data-placeholder="Selecione os setores">
+                <option value="CTI">CTI</option>
+                <option value="CTI">DRG</option>
+                <option value="CTI">RET</option>
+            </select>
+        </div>
         <button type="submit" form="agendaForm" class="btn btn-primary">Salvar</button>
     </form>
     </div>
@@ -41,6 +49,8 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':bootstrap-colorselector-0.2.0/css/bootstrap-colorselector.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen-bootstrap.css')}}">
     <style type="text/css">
         .btn-colorselector{
             width: 100px;
@@ -50,9 +60,13 @@
 
 @section('js')
     <script type="text/javascript" src="{{Module::asset(config('calendario.id').':bootstrap-colorselector-0.2.0/js/bootstrap-colorselector.js')}}"></script>
+    <script type="text/javascript" src="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen.jquery.min.js')}}"></script>
     <script type="text/javascript">
         $(function () {
             $('#agendaCor').colorselector();
+            $('#agendaCompartilhar').chosen({
+                no_results_text: "Nenhum setor possível"
+            });
         });
     </script>
 @endsection
