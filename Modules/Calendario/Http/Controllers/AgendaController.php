@@ -19,59 +19,22 @@ class AgendaController extends Controller
             $agenda->titulo = $request->agendaNome;
             $agenda->descricao = $request->agendaDescricao;
             $agenda->cor = $request->agendaCor;
+            //TODO Incluir o usuário logado
+            $agenda->funcionario_id = 1;
             $agenda->save();
         }catch (QueryException $e){
-            dd($e);
+            return redirect()->route('agendas.criar')->with('error', 'Falha ao criar agenda. Erro: ' . $e->getCode());
         }
-        return redirect()->route('agendas.criar')->with('success', 'Agenda ' . $agenda->titulo . ' criada com sucesso.');
-    }
-
-    public function teste(){
-        return Agenda::find(1)->eventos->toJson();
+        return redirect()->route('agendas.criar')->with('success', 'Agenda criada com sucesso.');
     }
 
     public function eventos()
     {
-        $calendario = [
-            [
-                'id' => 1,
-                'title' => 'Curso',
-                'start' => '2019-06-20 08:00',
-                'end' => '2019-06-20 08:00',
-                'backgroundColor' => 'red',
-                'borderColor' => 'red',
-                'classNames' => 'calendario01'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Porra',
-                'start' => '2019-06-23',
-                'backgroundColor' => 'red',
-                'borderColor' => 'red',
-                'classNames' => 'calendario01'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Porra',
-                'start' => '2019-06-15',
-                'end' => '2019-06-16',
-                'backgroundColor' => 'blue',
-                'borderColor' => 'blue',
-                'classNames' => 'calendario02'
-            ],
-            [
-                'id' => 4,
-                'title' => 'Porra',
-                'start' => '2019-06-10',
-                'end' => '2019-06-11',
-                'backgroundColor' => 'blue',
-                'borderColor' => 'blue',
-                'classNames' => 'calendario02'
-            ]
-        ];
-
-        //$this->teste();
-
-        return $calendario;
+        $eventos = [];
+        $agendas = Agenda::where('funcionario_id', 1)->get();
+        foreach ($agendas as $agenda){
+            $eventos = array_merge($eventos, $agenda->eventos_json);
+        }
+        return $eventos;
     }
 }

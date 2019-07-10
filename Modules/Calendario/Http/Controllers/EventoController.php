@@ -17,10 +17,11 @@ class EventoController extends Controller
             $evento->data_fim = $request->eventoDataFim;
             $evento->dia_todo = $request->eventoDiaTodo;
             $evento->nota = $request->eventoNota;
+            $evento->agenda_id = $request->eventoAgenda;
             $evento->save();
         }catch (QueryException $e){
-            return back()->with('error', 'Falha ao criar evento.');
+            return redirect()->route('calendario.index')->with('error', 'Falha ao criar evento. Erro: ' . $e->getMessage());
         }
-        return back()->with('success', 'Evento ' . $evento->titulo . ' criado com sucesso.');
+        return redirect()->route('calendario.index')->with('success', 'Evento criado com sucesso.');
     }
 }

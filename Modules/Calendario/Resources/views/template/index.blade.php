@@ -15,9 +15,11 @@ $menu = [
 @extends('template')
 
 @section('css')
+    @parent
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':css/app.css')}}">
 @endsection
 
 @section('js')
+    @parent
     <script src="{{Module::asset(config('calendario.id').':js/app.js')}}"></script>
 @endsection

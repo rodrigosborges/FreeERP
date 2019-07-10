@@ -9,11 +9,6 @@ class Evento extends Model
 {
     protected $table = 'evento';
 
-    public function setDiaTodoAttribute($value){
-        if($value == null)
-            $this->attributes['dia_todo'] = 0;
-    }
-
     public function setDataInicioAttribute($value){
         $tags = explode(' ', $value);
         if(count($tags) == 2)

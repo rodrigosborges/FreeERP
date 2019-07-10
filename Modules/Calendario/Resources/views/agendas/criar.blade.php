@@ -8,7 +8,7 @@
         {{ csrf_field() }}
         <div class="form-group">
             <label for="agendaNome">Título</label>
-            <input type="text" name="agendaNome" id="agendaNome"class="form-control">
+            <input type="text" name="agendaNome" id="agendaNome"class="form-control" required>
         </div>
         <div class="form-group">
             <label for="agendaDescricao">Descrição</label>
@@ -48,6 +48,7 @@
 @endsection
 
 @section('css')
+    @parent
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':bootstrap-colorselector-0.2.0/css/bootstrap-colorselector.css')}}">
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen.css')}}">
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen-bootstrap.css')}}">
@@ -55,17 +56,21 @@
         .btn-colorselector{
             width: 100px;
         }
+        .dropdown-colorselector>.dropdown-menu>li>.color-btn.selected:after{
+            font-family: "Material Icons";
+            content: "\e5ca";
+        }
     </style>
 @endsection
 
 @section('js')
+    @parent
     <script type="text/javascript" src="{{Module::asset(config('calendario.id').':bootstrap-colorselector-0.2.0/js/bootstrap-colorselector.js')}}"></script>
     <script type="text/javascript" src="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen.jquery.min.js')}}"></script>
     <script type="text/javascript">
         $(function () {
             $('#agendaCor').colorselector();
             $('#agendaCompartilhar').chosen({
-                no_results_text: "Nenhum setor possível"
             });
         });
     </script>

@@ -67,13 +67,14 @@
                         <div class="form-group">
                             <label for="eventoAgenda">Agenda</label>
                             <select id="eventoAgenda" class="form-control" name="eventoAgenda" required>
-                                <option value="1">Pessoal</option>
+                                @foreach($agendas as $agenda)
+                                    <option value="{{$agenda->id}}">{{$agenda->titulo}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
 
                     <!-- Nota -->
-
                         <div class="form-group">
                             <label for="eventoNota">Nota</label>
                             <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3"></textarea>

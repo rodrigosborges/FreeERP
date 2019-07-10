@@ -8,6 +8,7 @@
 @endsection
 
 @section('css')
+    @parent
     <link rel="stylesheet" type="text/css"
           href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/main.min.css')}}">
     <link rel="stylesheet" type="text/css"
@@ -24,6 +25,7 @@
 @endsection
 
 @section('js')
+    @parent
     <script type="text/javascript"
             src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/main.min.js')}}"></script>
     <script type="text/javascript"
