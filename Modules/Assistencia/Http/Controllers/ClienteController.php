@@ -37,11 +37,11 @@ class ClienteController extends Controller
       return view('assistencia::paginas.clientes.editarCliente',compact('cliente'))->with('success','Cliente atualizado com sucesso!');
     }
 
-    public function atualizar(Request $req, $id){
+    public function atualizar(StoreClienteRequest $req, $id){
       $dados  = $req->all();
       ClienteAssistenciaModel::find($id)->update($dados);
 
-      return redirect()->route('cliente.localizar');
+      return redirect()->route('cliente.localizar')->with('success','Cliente alterado com sucesso!');
     }
 
     public function deletar($id){
@@ -49,7 +49,7 @@ class ClienteController extends Controller
       $cliente->delete();
       $cliente->update();
 
-      return redirect()->route('cliente.localizar');
+      return redirect()->route('cliente.localizar')->with('success','Cliente deletado com sucesso!');
     }
 
     public function buscar(Request $req){

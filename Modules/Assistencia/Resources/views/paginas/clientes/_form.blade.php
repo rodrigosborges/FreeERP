@@ -41,6 +41,7 @@
       </div>
       <input required class="form-control" name="data_nascimento" type="date" id="example-date-input" value="{{ isset($cliente->data_nascimento) ? $cliente->data_nascimento : old('data_nascimento', '10-10-2000') }}">
     </div>
+    <span class="errors"> {{ $errors->first('data_nascimento') }} </span>
   </div>
   <div class="form-group col-md-6 col-sm-12">
     <label required="" class="radio-inline" for="radios-0" >
@@ -65,6 +66,7 @@
       <input required id="celnumber" name="celnumero" class="form-control input-md cel_sp" placeholder="(XX) X XXXX-XXXX"  type="text" maxlength="11"
       value="{{isset($cliente->celnumero) ? $cliente->celnumero : old('celnumero', '')}}">
     </div>
+    <span class="errors"> {{ $errors->first('celnumero') }} </span>
   </div>
   <div class="form-group col-xl-6 col-sm-12">
     <div class="input-group">
@@ -74,5 +76,6 @@
       <input id="celnumber" name="telefonenumero" class="form-control input-md cel_sp" placeholder="(XX) X XXXX-XXXX"  type="text" maxlength="11"
       value="{{isset($cliente->telefonenumero) ? $cliente->telefonenumero : old('telefonenumero', '')}}">
     </div>
+    <span class="errors"> {{ $errors->first('telefonenumero') }} </span>
   </div>
 </div>
