@@ -23,6 +23,14 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <style type="text/css">
+        .fc-body{
+            cursor: cell;
+        }
+        .fc-event-container{
+            cursor: pointer;
+        }
+    </style>
 @endsection
 
 @section('js')
@@ -49,13 +57,14 @@
         $(function() {
             var agendas = {!! $agendas !!};
 
-            $('#icone-notificacao').on('click', function () {
+            $('#icone-notificacao').on('click', function (e) {
                 $('#eventoNotificacao :input').prop('disabled', function (i, v) {
                     return !v;
                 });
                 $(this).text(function (i, v) {
                     return v === 'notifications_on' ? 'notifications_off' : 'notifications_on';
                 });
+                e.preventDefault();
             });
 
             $('#eventoDataInicio, #eventoDataFim').datetimepicker({

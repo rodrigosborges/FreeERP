@@ -46,14 +46,14 @@
                         <label>Notificação</label>
                         <div class="form-row">
                             <div class="col-2">
-                                <input type="text" class="form-control text-center" name="eventoNotificacaoTempo"
+                                <input type="number" class="form-control text-center" name="eventoNotificacaoTempo"
                                        value="10">
                             </div>
                             <div class="col-3">
                                 <select name="eventoNotificacaoPeriodo" class="form-control">
-                                    <option>minutos</option>
-                                    <option>horas</option>
-                                    <option>dias</option>
+                                    <option value="60">minutos</option>
+                                    <option value="3600">horas</option>
+                                    <option value="86400">dias</option>
                                 </select>
                             </div>
                             <div class="form-inline">
