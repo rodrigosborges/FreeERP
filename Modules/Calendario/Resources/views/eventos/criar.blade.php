@@ -22,16 +22,21 @@
                     <div class="form-group">
                         <label for="eventoDataInicio">Período</label>
                         <div class="input-group">
-                            <input type="text" class="form-control datetimepicker-input" name="eventoDataInicio" id="eventoDataInicio" data-toggle="datetimepicker" data-target="#eventoDataInicio"/>
+                            <input type="text" class="form-control datetimepicker-input" name="eventoDataInicio"
+                                   id="eventoDataInicio" data-toggle="datetimepicker" data-target="#eventoDataInicio"
+                                   required>
                             <div class="input-group-prepend input-group-append">
                                 <span class="input-group-text">
                                     <i class="material-icons">date_range</i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control datetimepicker-input" name="eventoDataFim" id="eventoDataFim" data-toggle="datetimepicker" data-target="#eventoDataFim"/>
+                            <input type="text" class="form-control datetimepicker-input" name="eventoDataFim"
+                                   id="eventoDataFim" data-toggle="datetimepicker" data-target="#eventoDataFim"
+                                   required>
                         </div>
                         <div class="small custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="eventoDiaTodo" name="eventoDiaTodo" value="1">
+                            <input type="checkbox" class="custom-control-input" id="eventoDiaTodo" name="eventoDiaTodo"
+                                   value="1">
                             <label class="custom-control-label" for="eventoDiaTodo">Dia todo</label>
                         </div>
                     </div>
@@ -58,7 +63,8 @@
                         </div>
                         <div class="small custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="eventoNotificacaoEmail">
-                            <label class="custom-control-label" for="eventoNotificacaoEmail">Também notificar via e-mail</label>
+                            <label class="custom-control-label" for="eventoNotificacaoEmail">Também notificar via
+                                e-mail</label>
                         </div>
                     </div>
 
@@ -75,11 +81,10 @@
                     </div>
 
                     <!-- Nota -->
-                        <div class="form-group">
-                            <label for="eventoNota">Nota</label>
-                            <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3"></textarea>
-                        </div>
-
+                    <div class="form-group">
+                        <label for="eventoNota">Nota</label>
+                        <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3"></textarea>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

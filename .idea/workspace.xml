@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a68ba7f3-35d5-4362-a16c-f0b77a0ca3f1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/FreeERP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FreeERP.iml" afterDir="false" />
+    <list default="true" id="a68ba7f3-35d5-4362-a16c-f0b77a0ca3f1" name="Default Changelist" comment="Calendário exibindo todos eventos do usuário e algumas refatorações">
+      <change afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/assets/bootbox.all.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/example.blade.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,14 +14,33 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
     </execution>
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="332">
+              <caret line="60" column="35" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1125">
+              <caret line="75" column="49" selection-start-line="75" selection-start-column="41" selection-end-line="75" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -50,7 +60,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Entities/Evento.php" />
@@ -58,8 +67,9 @@
         <option value="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" />
-        <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" />
         <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar.blade.php" />
+        <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php" />
+        <option value="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" />
       </list>
     </option>
   </component>
@@ -196,7 +206,7 @@
               <item name="Modules" type="462c0819:PsiDirectoryNode" />
               <item name="Calendario" type="462c0819:PsiDirectoryNode" />
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="FreeERP" type="b2602c69:ProjectViewProjectNode" />
@@ -205,16 +215,11 @@
               <item name="Calendario" type="462c0819:PsiDirectoryNode" />
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="agendas" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="FreeERP" type="b2602c69:ProjectViewProjectNode" />
               <item name="FreeERP" type="462c0819:PsiDirectoryNode" />
-              <item name="Modules" type="462c0819:PsiDirectoryNode" />
-              <item name="Calendario" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="template" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -227,13 +232,15 @@
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Modules/Calendario/Resources/assets" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Modules/Calendario/Resources/assets" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -249,6 +256,12 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner scope="XML" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -259,45 +272,59 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1562780110105</updated>
-      <workItem from="1562780111309" duration="13366000" />
+      <workItem from="1562780111309" duration="13904000" />
+      <workItem from="1562865602646" duration="5942000" />
     </task>
+    <task id="LOCAL-00001" summary="Calendário exibindo todos eventos do usuário e algumas refatorações">
+      <created>1562796695507</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1562796695508</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13366000" />
+    <option name="totallyTimeSpent" value="19846000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1003" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="npm" side_tool="true" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22677262" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2292176" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info active="true" anchor="bottom" id="Terminal" sideWeight="0.49938875" visible="true" weight="0.4739819" />
-      <window_info anchor="bottom" id="Event Log" sideWeight="0.50061125" side_tool="true" visible="true" weight="0.4739819" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" sideWeight="0.49938875" visible="true" weight="0.32918552" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49938875" weight="0.32918552" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50061125" side_tool="true" visible="true" weight="0.32918552" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49816626" weight="0.23303168" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Calendário exibindo todos eventos do usuário e algumas refatorações" />
+    <option name="LAST_COMMIT_MESSAGE" value="Calendário exibindo todos eventos do usuário e algumas refatorações" />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/example.blade.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/example.blade.php" />
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -326,13 +353,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="33" column="118" selection-start-line="33" selection-start-column="105" selection-end-line="33" selection-end-column="118" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_06_14_164410_create_evento_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -357,16 +377,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="56" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
-          <folding>
-            <element signature="e#55#94#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
@@ -384,13 +394,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/template.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="147" column="20" lean-forward="true" selection-start-line="147" selection-start-column="20" selection-end-line="147" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -405,12 +408,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/template.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+        <state relative-caret-position="1371">
+          <caret line="147" column="20" lean-forward="true" selection-start-line="147" selection-start-column="20" selection-end-line="147" selection-end-column="20" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="56" lean-forward="true" selection-start-line="19" selection-start-column="56" selection-end-line="19" selection-end-column="56" />
+          <folding>
+            <element signature="e#55#94#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/assets/popper.min.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/modules/calendario/popper.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1125">
+          <caret line="75" column="49" selection-start-line="75" selection-start-column="41" selection-end-line="75" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="60" column="35" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

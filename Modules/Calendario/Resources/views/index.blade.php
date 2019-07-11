@@ -9,6 +9,7 @@
 
 @section('css')
     @parent
+
     <link rel="stylesheet" type="text/css"
           href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/main.min.css')}}">
     <link rel="stylesheet" type="text/css"
@@ -26,6 +27,7 @@
 
 @section('js')
     @parent
+    <script type="text/javascript" src="{{Module::asset(config('calendario.id').':bootbox.all.min.js')}}"></script>
     <script type="text/javascript"
             src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/main.min.js')}}"></script>
     <script type="text/javascript"
@@ -45,6 +47,8 @@
     <script type="text/javascript">
         //TODO resolver erro de stackoverflow quando a página é exibida pelo back do navegador
         $(function() {
+            var agendas = {!! $agendas !!};
+
             $('#icone-notificacao').on('click', function () {
                 $('#eventoNotificacao :input').prop('disabled', function (i, v) {
                     return !v;
@@ -54,11 +58,7 @@
                 });
             });
 
-            $('#eventoDataInicio').datetimepicker({
-                locale: 'pt-br'
-            });
-
-            $('#eventoDataFim').datetimepicker({
+            $('#eventoDataInicio, #eventoDataFim').datetimepicker({
                 locale: 'pt-br'
             });
 
@@ -76,9 +76,7 @@
                     $('#eventoDataFim').datetimepicker('format', false);
                 }
             });
-        });
 
-        document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendario');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -93,9 +91,23 @@
                 navLinks: true, // can click day/week names to navigate views
                 businessHours: true, // display business hours
                 events: '{{route('eventos.index')}}',
-                dateClick: function (info) {
-                    $('#eventoDataInicio').datetimepicker('date', info.date);
-                    $('#eventoModal').modal('show');
+                dateClick: function (info){
+                    if(agendas.length <= 0){
+                        bootbox.confirm({
+                            title: "Ooops...",
+                            message: "Para criar um evento você deve possui ao menos uma agenda. Deseja criar uma agenda agora?",
+                            locale: 'br',
+                            callback: function (result) {
+                                if(result == true){
+                                    window.location.href = '{{route('agendas.criar')}}'
+                                }
+                            }
+                        });
+                    }
+                    else{
+                        $('#eventoDataInicio').datetimepicker('date', info.date);
+                        $('#eventoModal').modal('show');
+                    }
                 },
                 eventClick: function (info) {
                     alert('Event: ' + info.event.id);
