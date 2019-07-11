@@ -10,7 +10,7 @@ class vaga extends Model
     use SoftDeletes;
     protected $table = 'vaga';
     public $timestamps = true;
-    protected $fillable = array('id','cargo','salario','caracteristicas','descricao','escolaridade','status');
+    protected $fillable = array('id','cargo','salario','descricao','escolaridade','status');
 
     public function curriculos(){
 

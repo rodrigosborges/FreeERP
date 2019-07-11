@@ -12,19 +12,27 @@ class VagaController extends Controller
     /**
      * Display a listing of the resource.
      * @return Response
-     */
-    public function index()
-    {
-        $moduleInfo = [
+    */
+    protected $moduleInfo;
+    protected $menu;
+    public function  __construct(){
+        $this->moduleInfo = [
             'icon' => 'people',
             'name' => 'RECRUTAMENTO',
         ];
-        $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
+        $this->menu = [
+            ['icon' => 'assignment', 'tool' => 'Vaga', 'route' => '/recrutamento/Vaga'],
+            ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
 		];
+    }
+
+
+
+
+    public function index()
+    {
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
         $data = [
 			'vaga'		=> Vaga::all(),
 			'title'		=> "Lista de Vagas",
@@ -38,16 +46,8 @@ class VagaController extends Controller
      */
     public function create()
     {
-        $moduleInfo = [
-            'icon' => 'people',
-            'name' => 'RECRUTAMENTO',
-        ];
-        $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-		];
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
         $data = [
 			"url" 	 	=> url('recrutamento/Vaga'),
 			"button" 	=> "Salvar",
@@ -66,7 +66,18 @@ class VagaController extends Controller
     {
         DB::beginTransaction();
 		try{
-			$vaga = Vaga::Create($request->all());
+            
+            //$vaga = Vaga::Create($request->all());
+            $salario = str_replace('.','',$request->salario);
+            $salario = str_replace(',','.',$salario);
+            $vaga = new Vaga;
+            $vaga->salario = $salario;
+            $vaga->cargo = $request->cargo;
+            $vaga->status = $request->status;
+            $vaga->descricao = $request->descricao;
+            $vaga->escolaridade = $request->escolaridade;
+            $vaga->save();
+            
 			DB::commit();
 			return redirect('/recrutamento/Vaga')->with('success', 'Vaga cadastrada com sucesso');
 		}catch(Exception $e){
@@ -95,16 +106,8 @@ class VagaController extends Controller
      */
     public function edit($id)
     {
-        $moduleInfo = [
-            'icon' => 'people',
-            'name' => 'RECRUTAMENTO',
-        ];
-        $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-		];
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
         $data = [
 			"url" 	 	=> url("recrutamento/Vaga/$id"),
 			"button" 	=> "Atualizar",
@@ -122,10 +125,19 @@ class VagaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $salario = str_replace('.','',$request->salario);
+        $salario = str_replace(',','.',$salario);
+        $upVaga = array(
+            'cargo' => $request->cargo,
+            'status' => $request->status,
+            'descricao' => $request->descricao,
+            'salario' => $salario,
+            'escolaridade'=>$request->escolaridade
+        );
         DB::beginTransaction();
 		try{
-			$vaga = Vaga::findOrFail($id);
-			$vaga->update($request->all());
+            $vaga = Vaga::findOrFail($id);
+            $vaga->update($upVaga);
 			DB::commit();
 			return redirect('recrutamento/Vaga')->with('success', 'Vaga atualizada com sucesso');
 		}catch(Exception $e){
@@ -148,16 +160,8 @@ class VagaController extends Controller
 
     public function vagas_disponiveis()
     {
-        $moduleInfo = [
-            'icon' => 'people',
-            'name' => 'RECRUTAMENTO',
-        ];
-        $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
-            ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-		];
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
         $data = [
 			'vaga'		=> Vaga::where('status', 'disponivel')->get(),
 			'title'		=> "Lista de Vagas Disponíveis",

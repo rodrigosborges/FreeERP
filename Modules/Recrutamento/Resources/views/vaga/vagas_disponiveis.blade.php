@@ -16,7 +16,7 @@
                         <td>{{$vaga->id}}</td>
                         <td>{{$vaga->cargo}}</td>
                         <td>
-                            <a class="btn btn-info" href='{{ url("recrutamento/Curriculo/create") }}'>Candidatar-se</a> 
+                            <a class="btn btn-info" href='{{ url("recrutamento/Candidato/create") }}'>Candidatar-se</a> 
                         </td>
                     </tr>
                 @endforeach

@@ -14,7 +14,7 @@ class CreateVagaTable extends Migration
     public function up()
     {
         Schema::create('vaga', function (Blueprint $table) {
-            $table->integer('id');
+            $table->integer('id', true);
             $table->string('cargo');
             $table->double('salario',8,2);
             $table->string('descricao');

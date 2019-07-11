@@ -23,21 +23,28 @@
         <div class="col-sm">
             <div class="form-group">
                 <label for="salario" class="control-label">Salário</label>
-                <input type="text" name="salario" id="salario" class="form-control money" value="{{ $data['model'] ? $data['model']->salario : old('salario', "") }}">
+                <input type="text" maxlength="10" min='0' name="salario" id="salario" class="form-control money" value="{{ $data['model'] ? $data['model']->salario : old('salario', "") }}">
                 <label class="errors"> {{ $errors->first('salario') }} </label>
             </div>
         </div>
         </div>
 
         <div class="form-row">
+
         <div class="col-sm">
             <div class="form-group">
-                <label for="escolaridade" class="control-label">Escolariodade</label>
-                <input type="text" name="escolaridade" id="escolaridade" class="form-control" value="{{ $data['model'] ? $data['model']->escolaridade : old('escolaridade', "") }}">
-                <label class="errors"> {{ $errors->first('escolaridade') }} </label>
+                <label for="escolaridade">Escolaridade</label>
+                <select class="form-control" id="escolaridade" name='escolaridade'>
+                    <option value=''>Escolha uma opção</option>
+                    <option {{ $data['model'] && $data['model']->escolaridade == 'fundamental' ? 'selected' : '' }} value='fundamental'>Ensino Fundamental</option>
+                    <option {{ $data['model'] && $data['model']->escolaridade == 'medio' ? 'selected' : '' }} value='medio'>Ensino Médio</option>
+                    <option {{ $data['model'] && $data['model']->escolaridade == 'tecnico' ? 'selected' : '' }} value='tecnico'>Ensino Técnico</option>
+                    <option {{ $data['model'] && $data['model']->escolaridade == 'superior' ? 'selected' : '' }} value='superior'>Ensino Superior</option>
+                </select>
             </div>
         </div>
-
+        
+        
         <div class="col-sm">
             <div class="form-group">
                 <label for="status">Status</label>
@@ -48,12 +55,17 @@
                 </select>
             </div>
         </div>
-        </div>
 
+        </div>
+        <br>
+        <div class="form-row">
+        <div class="col-sm">
         <div class="form-group">
                 <label for="quantidade" class="control-label">Descrição da Vaga</label>
                 <input type="text" name="descricao" id="descricao" class="form-control" value="{{ $data['model'] ? $data['model']->descricao : old('descricao', "") }}">
                 <label class="errors"> {{ $errors->first('descricao') }} </label>
+        </div>
+        </div>
         </div>
 
         <div class="form-group">
@@ -68,5 +80,7 @@
 @endsection
 
 @section('js')
-    $('.money').mask('000.000,00', {reverse: true});
+<script>
+$('.money').mask('000.000,00', {reverse: true});
+</script>
 @endsection
