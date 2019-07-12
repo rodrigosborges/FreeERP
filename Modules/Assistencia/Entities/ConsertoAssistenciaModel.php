@@ -14,7 +14,7 @@ class ConsertoAssistenciaModel extends Model
     protected $fillable = ['id','numeroOrdem', 'valor','situacao','data_entrada','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','idCliente','idTecnico','idPeca[]','idMaoObra[]'];
 
     public static function busca($busca){
-      return static::where('id', 'LIKE', '%'.$busca.'%')->get();
+      return static::where('id', 'LIKE', '%'.$busca.'%')->paginate(10);
     }
     public function cliente(){
         return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente')->withTrashed();

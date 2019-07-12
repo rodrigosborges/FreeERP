@@ -13,6 +13,6 @@ class PecaAssistenciaModel extends Model
 
   public static function busca($busca)
   {
-    return static::where('nome', 'LIKE', '%'.$busca.'%')->get();
+    return static::where('nome', 'LIKE', '%'.$busca.'%')->paginate(10);
   }
 }

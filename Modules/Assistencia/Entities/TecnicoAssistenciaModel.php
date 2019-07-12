@@ -10,4 +10,9 @@ class TecnicoAssistenciaModel extends Model
     use SoftDeletes;
     protected $table = 'tecnico_assistencia';
     protected $fillable = ['id','nome','cpf'];
+
+    public static function busca($busca){
+
+        return static::where('nome', 'LIKE', '%'.$busca.'%')->paginate(10);
+      }
 }

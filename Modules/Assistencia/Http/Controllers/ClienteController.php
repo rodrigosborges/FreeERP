@@ -54,7 +54,8 @@ class ClienteController extends Controller
 
     public function buscar(Request $req){
       $clientes = ClienteAssistenciaModel::busca($req->busca);
-      return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
+      
+      return view('assistencia::paginas.clientes.localizarCliente', compact('clientes'));
     }
 
 
