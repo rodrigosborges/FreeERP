@@ -23,9 +23,9 @@ class AgendaController extends Controller
             $agenda->funcionario_id = 1;
             $agenda->save();
         }catch (QueryException $e){
-            return redirect()->route('agendas.criar')->with('error', 'Falha ao criar agenda. Erro: ' . $e->getCode());
+            return redirect()->route('calendario.index')->with('error', 'Falha ao criar agenda. Erro: ' . $e->getCode());
         }
-        return redirect()->route('agendas.criar')->with('success', 'Agenda criada com sucesso.');
+        return redirect()->route('calendario.index')->with('success', 'Agenda criada com sucesso.');
     }
 
     public function eventos()

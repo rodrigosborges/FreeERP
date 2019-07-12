@@ -46,7 +46,7 @@
                         <label>Notificação</label>
                         <div class="form-row">
                             <div class="col-2">
-                                <input type="number" class="form-control text-center" name="eventoNotificacaoTempo"
+                                <input type="number" min="1" max="999" class="form-control text-center" name="eventoNotificacaoTempo"
                                        value="10">
                             </div>
                             <div class="col-3">

@@ -10,7 +10,7 @@ class Evento extends Model
 {
     protected $table = 'evento';
     protected $dates = [
-        'data_inicio', 'data_fim', 'notificacao'
+        'data_inicio', 'data_fim'
     ];
 
     public function calendario(){
