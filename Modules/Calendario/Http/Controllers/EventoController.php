@@ -6,6 +6,7 @@ namespace Modules\Calendario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
+use Modules\Calendario\Entities\Agenda;
 use Modules\Calendario\Entities\Evento;
 
 class EventoController extends Controller
@@ -19,11 +20,11 @@ class EventoController extends Controller
             $evento->notificacao = $request->eventoNotificacaoTempo * $request->eventoNotificacaoPeriodo;
             $evento->dia_todo = $request->eventoDiaTodo;
             $evento->nota = $request->eventoNota;
-            $evento->agenda_id = $request->eventoAgenda;
+            $agenda = Agenda::find($request->eventoAgenda);
+            $evento->agenda()->associate($agenda);
             $evento->save();
         }catch (\Exception $e){
-            //return redirect()->route('calendario.index')->with('error', 'Falha ao criar evento. Erro: ' . $e->getMessage());
-            dd($e);
+            return redirect()->route('calendario.index')->with('error', 'Falha ao criar evento. Erro: ' . $e->getCode());
         }
         return redirect()->route('calendario.index')->with('success', 'Evento criado com sucesso.');
     }

@@ -13,7 +13,7 @@ class Evento extends Model
         'data_inicio', 'data_fim'
     ];
 
-    public function calendario(){
+    public function agenda(){
         return $this->belongsTo('Modules\Calendario\Entities\Agenda');
     }
 }

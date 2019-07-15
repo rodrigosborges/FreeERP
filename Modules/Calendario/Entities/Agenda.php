@@ -12,6 +12,10 @@ class Agenda extends Model
         return $this->hasMany('Modules\Calendario\Entities\Evento');
     }
 
+    public function cor(){
+        return $this->belongsTo('Modules\Calendario\Entities\Cor');
+    }
+
     public function getEventosJsonAttribute(){
         $eventos = [];
         foreach ($this->eventos as $evento){

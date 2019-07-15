@@ -18,11 +18,11 @@ class CreateAgendaTable extends Migration
     {
         Schema::create('agenda', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('titulo');
-            $table->string('descricao')->nullable();
-            $table->string('cor', 6)->nullable();
+            $table->string('titulo', 255);
+            $table->string('descricao', 1000)->nullable();
+            $table->unsignedBigInteger('cor_id');
             $table->unsignedBigInteger('funcionario_id')->nullable();
-            //$table->foreign('funcionario_id')->references('id')->on('funcionario');
+            $table->foreign('cor_id')->references('id')->on('cor');
             $table->softDeletes();
             $table->timestamps();
         });

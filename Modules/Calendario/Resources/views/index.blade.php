@@ -3,6 +3,7 @@
 @section('title', 'Calendário')
 
 @section('content')
+    @parent
     @include('calendario::eventos/criar')
     <div id="calendario"></div>
 @endsection
@@ -35,6 +36,7 @@
 
 @section('js')
     @parent
+
     <script type="text/javascript" src="{{Module::asset(config('calendario.id').':bootbox.all.min.js')}}"></script>
     <script type="text/javascript"
             src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/main.min.js')}}"></script>
@@ -47,7 +49,10 @@
     <script type="text/javascript"
             src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/list/main.min.js')}}"></script>
     <script type="text/javascript"
+            src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/bootstrap/main.min.js')}}"></script>
+    <script type="text/javascript"
             src="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/core/locales/pt-br.js')}}"></script>
+
     <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
@@ -91,7 +96,8 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 locale: 'pt-br',
                 height: 'parent',
-                plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
+                plugins: ['interaction', 'dayGrid', 'timeGrid', 'list', 'bootstrap'],
+                themeSystem: 'bootstrap',
                 header: {
                     left: 'prev,next today',
                     center: 'title',
