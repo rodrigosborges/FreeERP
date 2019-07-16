@@ -10,9 +10,9 @@ use Modules\Calendario\Http\Requests\AgendaSalvarRequest;
 
 class AgendaController extends Controller
 {
-    public function criar(){
+    public function criarOuEditar(Agenda $agenda = null){
         $cores = Cor::all();
-        return view('calendario::agendas.criar', ['cores' => $cores]);
+        return view('calendario::agendas.criar-editar', ['cores' => $cores, 'agenda' => $agenda]);
     }
 
     public function salvar(AgendaSalvarRequest $request){
@@ -26,9 +26,22 @@ class AgendaController extends Controller
             $agenda->funcionario_id = 1;
             $agenda->save();
         }catch (QueryException $e){
-            return redirect()->route('calendario.index')->with('error', 'Falha ao criar agenda. Erro: ' . $e->getMessage());
+            return redirect()->route('calendario.index')->with('error', 'Falha ao criar agenda "'. $request->agendaNome . '". Erro: ' . $e->getMessage());
         }
-        return redirect()->route('calendario.index')->with('success', 'Agenda criada com sucesso.');
+        return redirect()->route('calendario.index')->with('success', 'Agenda "' . $request->agendaNome . '" criada com sucesso.');
+    }
+
+    public function atualizar(AgendaSalvarRequest $request, Agenda $agenda){
+        try{
+            $agenda->titulo = $request->agendaNome;
+            $agenda->descricao = $request->agendaDescricao;
+            $cor = Cor::find($request->agendaCor);
+            $agenda->cor()->associate($cor);
+            $agenda->save();
+        }catch (\Exception $e){
+            return redirect()->route('calendario.index')->with('error', 'Falha ao atualizar agenda "' . $request->agendaNome . '". Erro: ' . $e->getMessage());
+        }
+        return redirect()->route('calendario.index')->with('success', 'Agenda "' . $request->agendaNome . '" atualizada com sucesso.');
     }
 
     public function eventos()

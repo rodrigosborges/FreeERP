@@ -5,21 +5,22 @@
 @section('content')
     @parent
     <div class="container">
-    <form action="{{route('agendas.salvar')}}" id="agendaForm" method="post">
-        {{ csrf_field() }}
+    <form action="{{isset($agenda) ? route('agendas.atualizar', $agenda) : route('agendas.salvar')}}" id="agendaForm" method="post">
+        @csrf
+        {{isset($agenda) ? method_field('PUT') : ''}}
         <div class="form-group">
             <label for="agendaNome">Título</label>
-            <input type="text" name="agendaNome" id="agendaNome"class="form-control" maxlength="100" required>
+            <input type="text" name="agendaNome" id="agendaNome"class="form-control" maxlength="100" value="{{isset($agenda) ? $agenda->titulo : old('agendaNome')}}" required>
         </div>
         <div class="form-group">
             <label for="agendaDescricao">Descrição</label>
-            <textarea name="agendaDescricao" id="agendaDescricao" class="form-control" rows="4" maxlength="500"></textarea>
+            <textarea name="agendaDescricao" id="agendaDescricao" class="form-control" rows="4" maxlength="500">{{isset($agenda) ? $agenda->descricao : old('agendaDescricao')}}</textarea>
         </div>
         <div class="form-group">
             <label for="agendaCor">Cor</label>
             <select id="agendaCor" name="agendaCor" required>
                 @foreach($cores as $cor)
-                <option value="{{$cor->id}}" data-color="#{{$cor->codigo}}">{{$cor->nome}}</option>
+                <option value="{{$cor->id}}" data-color="#{{$cor->codigo}}" @if(isset($agenda) && $agenda->cor->id == $cor->id) selected @endif>{{$cor->nome}}</option>
                 @endforeach
             </select>
         </div>
@@ -52,6 +53,7 @@
         .dropdown-colorselector>.dropdown-menu>li>.color-btn.selected:after{
             font-family: "Material Icons";
             content: "\e5ca";
+            color: #000000;
         }
     </style>
 @endsection

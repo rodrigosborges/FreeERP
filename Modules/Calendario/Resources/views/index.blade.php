@@ -5,6 +5,27 @@
 @section('content')
     @parent
     @include('calendario::eventos/criar')
+
+    <div id="agendas">
+        <div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#filtrar">
+                    Filtrar agendas <i class="material-icons">arrow_drop_down</i>
+                </a>
+            </div>
+            <div id="filtrar" class="collapse" data-parent="#agendas">
+                <div class="card-body">
+                    @foreach($agendas as $agenda)
+                        <div class="agenda custom-control custom-checkbox">
+                            <input checked type="checkbox" id="agenda{{$agenda->id}}" class="custom-control-input" value="{{$agenda->id}}" name="agenda{{$agenda->id}}">
+                            <label class="custom-control-label" for="agenda{{$agenda->id}}">{{$agenda->titulo}}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="calendario"></div>
 @endsection
 
@@ -25,11 +46,33 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <style type="text/css">
-        .fc-body{
+        .fc-body {
             cursor: cell;
         }
-        .fc-event-container{
+
+        .fc-event-container {
             cursor: pointer;
+        }
+
+        #agendas {
+            margin-bottom: 10px;
+        }
+
+        .agenda {
+            width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .agenda label {
+            margin: 0;
+        }
+
+        .card-link{
+            display: inline-flex;
+            vertical-align: middle;
         }
     </style>
 @endsection
@@ -59,7 +102,7 @@
 
     <script type="text/javascript">
         //TODO resolver erro de stackoverflow quando a página é exibida pelo back do navegador
-        $(function() {
+        $(function () {
             var agendas = {!! $agendas !!};
 
             $('#icone-notificacao').on('click', function (e) {
@@ -106,20 +149,19 @@
                 navLinks: true, // can click day/week names to navigate views
                 businessHours: true, // display business hours
                 events: '{{route('eventos.index')}}',
-                dateClick: function (info){
-                    if(agendas.length <= 0){
+                dateClick: function (info) {
+                    if (agendas.length <= 0) {
                         bootbox.confirm({
-                            title: "Ooops...",
-                            message: "Para criar um evento você deve possui ao menos uma agenda. Deseja criar uma agenda agora?",
+                            title: "Nenhuma agenda cadastrada",
+                            message: "Para criar eventos você deve possui ao menos uma agenda para vínculá-los. Deseja criar uma agenda agora?",
                             locale: 'br',
                             callback: function (result) {
-                                if(result == true){
+                                if (result == true) {
                                     window.location.href = '{{route('agendas.criar')}}'
                                 }
                             }
                         });
-                    }
-                    else{
+                    } else {
                         $('#eventoDataInicio').datetimepicker('date', info.date);
                         $('#eventoModal').modal('show');
                     }

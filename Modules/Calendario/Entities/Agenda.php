@@ -16,6 +16,10 @@ class Agenda extends Model
         return $this->belongsTo('Modules\Calendario\Entities\Cor');
     }
 
+    public function dono(){
+        return null;
+    }
+
     public function getEventosJsonAttribute(){
         $eventos = [];
         foreach ($this->eventos as $evento){
@@ -24,8 +28,8 @@ class Agenda extends Model
                'title' => $evento->titulo,
                'start' => $evento->data_inicio,
                'end' => $evento->data_fim,
-               'backgroundColor' => '#' . $this->cor,
-               'borderColor' => '#' . $this->cor,
+               'backgroundColor' => '#' . $this->cor->codigo,
+               'borderColor' => '#' . $this->cor->codigo,
                'classNames' => 'agenda' . $this->id,
                'allDay' => $evento->dia_todo
             ]);
@@ -33,7 +37,4 @@ class Agenda extends Model
         return $eventos;
     }
 
-    public function dono(){
-        return null;
-    }
 }
