@@ -5,21 +5,22 @@ namespace Modules\OrdemServico\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\OrdemServico\Entities \ {
-    Tecnico
+use Modules\OrdemServico\Entities\{
+    Gerente
 };
 use DB;
 
-class TecnicoController extends Controller
+class GerenteController extends Controller
 {
+
     public function index(Request $request)
     {
         $data = [
-            'title' => 'Administração de Tecnicos',
-            'model' => Tecnico::paginate(5),
+            'title' => 'Administração de Gerentes',
+            'model' => Gerente::paginate(5),
             'atributos' => ['id','nome'],
-            'cadastro' => 'Cadastrar Tecnico',
-            'route' => 'modulo.tecnico.',
+            'cadastro' => 'Cadastrar Gerente',
+            'route' => 'modulo.gerente.',
             'acoes' => [
                 ['nome' => 'Editar' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'edit'],
                 ]
@@ -31,21 +32,20 @@ class TecnicoController extends Controller
     public function create()
     {
         $data = [
-            'url' => url("ordemservico/tecnico"),
+            'url' => url("ordemservico/gerente"),
             'model' => '',
-            'title' => 'Cadastro de Técnico',
+            'title' => 'Cadastro de Gerente',
             'button' => 'Salvar'
         ];
-        return view('ordemservico::tecnico.form', compact('data'));
+        return view('ordemservico::gerente.form', compact('data'));
     }
-
     public function store(Request $request)
     {
         DB::beginTransaction();
         try {
-            $tecnico = Tecnico::create($request->all());
+            $gerente = Gerente::create($request->all());
             DB::commit();
-            return redirect('/ordemservico/tecnico')->with('success', 'Tecnico cadastrado com successo');
+            return redirect('/ordemservico/gerente')->with('success', 'Gerente cadastrado com successo');
         } catch (Exception $e) {
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
@@ -54,30 +54,28 @@ class TecnicoController extends Controller
 
     public function show($id)
     {
-        return view('ordemservico::show');
     }
 
     public function edit($id)
     {
         $data = [
-            'url' => url("ordemservico/tecnico/$id"),
-            'model' =>  Tecnico::findOrFail($id),
-            'title' => 'Atualização de Técnico',
+            'url' => url("ordemservico/gerente/$id"),
+            'model' =>  Gerente::findOrFail($id),
+            'title' => 'Atualização de Gerente',
             'button' => 'Atualizar'
         ];
 
-        return view('ordemservico::tecnico.form', compact('data'));
+        return view('ordemservico::gerente.form', compact('data'));
     }
 
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try {
-
-            $tecnico = Tecnico::findOrFail($id);
-            $tecnico->update($request->all());
+            $gerente = Gerente::findOrFail($id);
+            $gerente->update($request->all());
             DB::commit();
-            return redirect('/ordemservico/tecnico')->with('success', 'Tecnico atualizado com successo');
+            return redirect('/ordemservico/gerente')->with('success', 'Gerente atualizado com successo');
         } catch (Exception $e) {
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
@@ -86,13 +84,13 @@ class TecnicoController extends Controller
 
     public function destroy($id)
     {
-        $tecnico = Tecnico::withTrashed()->findOrFail($id);
-        if ($tecnico->trashed()) {
-            $tecnico->restore();
-            return back()->with('success', 'Técnico ativado com sucesso!');
+        $gerente = Gerente::withTrashed()->findOrFail($id);
+        if ($gerente->trashed()) {
+            $gerente->restore();
+            return back()->with('success', 'Gerente ativado com sucesso!');
         } else {
-            $tecnico->delete();
-            return back()->with('success', 'Técnico desativada com sucesso!');
+            $gerente->delete();
+            return back()->with('success', 'Gerente desativado com sucesso!');
         }
     }
 }

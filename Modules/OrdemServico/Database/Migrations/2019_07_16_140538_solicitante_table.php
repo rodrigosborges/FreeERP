@@ -1,10 +1,9 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Solicitante extends Migration
+class SolicitanteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -30,5 +29,4 @@ class Solicitante extends Migration
 	{
 		Schema::drop('solicitante');
 	}
-
 }

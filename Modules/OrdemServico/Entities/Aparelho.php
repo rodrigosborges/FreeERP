@@ -2,13 +2,14 @@
 
 namespace Modules\OrdemServico\Entities;
 
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Solicitante extends Model
+class Aparelho extends Model
 {
     Use SoftDeletes;
-    protected $table = 'solicitante';
+    protected $table = 'aparelho';
     public $timestamps = true;
-    protected $fillable = array('id','nome');
+    protected $fillable = array('id','marca','numero_serie');
 }

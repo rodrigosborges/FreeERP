@@ -17,29 +17,20 @@ class OrdemServicoController extends Controller
 
     public function index(Request $request)
     {
-
-        //se houver um request de busca é retornado para a view index os resultados , senão envia todo os dados da tabela
-        if ($request->has('busca')) {
-            $busca = $request->get('busca');
-            $data = [
-                'title' => 'Ordem ',
-                'ordem_servico' => OrdemServico::where('id', 'like', "%{$busca}%")
-                    ->orWhere('marca', 'like', "%{$busca}%")
-                    ->orWhere('tipo_aparelho', 'like', "%{$busca}%")
-                    ->orWhere('descricao_problema', 'like', "%{$busca}%")
-                    ->orWhere('numero_serie', 'like', "%{$busca}%")
-                    ->orWhere('solicitante_id', 'like', "%{$busca}%")
-                    ->paginate(5)
+        $data = [
+            'title' => 'Administração de Ordem de Servico',
+            'model' => OrdemServico::paginate(5),
+            'atributos' => ['id','solicitante_id','aparelho_id','problema_id','gerente_id'],
+            'cadastro' => 'Cadastrar OS',
+            'route' => 'modulo.os.',
+            'acoes' => [
+                ['nome' => 'Editar' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'edit'],
+                ['nome' => 'Detalhes' , 'class' =>'btn btn-outline-warning btn-sm','complemento-route' => 'show'],
+                ['nome' => 'Prioridade' , 'class'=>'btn btn-outline-info btn-sm' , 'complemento-route' => 'index'],
+                ['nome' => 'PDF' , 'class' =>'btn btn-outline-dark btn-sm', 'complemento-route' => 'pdf']
+                ]
             ];
-            $data['ordem_servico']->appends(['busca' => $busca]);
-            return view('ordemservico::ordemservico.index', compact('data', 'busca', 'moduleInfo', 'menu'));
-        } else {
-            $data = [
-                'title' => 'Ordem de servico',
-                'ordem_servico' => OrdemServico::paginate(5)
-            ];
-        }
-        return view('ordemservico::ordemservico.index', compact('data'));
+        return view('ordemservico::layouts.index', compact('data'));
     }
 
     public function create()

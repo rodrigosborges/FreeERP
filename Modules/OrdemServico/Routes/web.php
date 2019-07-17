@@ -12,9 +12,12 @@
 */
 
 //Módulo de Ordem de servico
-Route::prefix('ordemservico')->group(function() {
-	Route::get('os/pdf', 'OrdemServicoController@pdf');
+Route::prefix('ordemservico')->name('modulo.')->group(function() {
+	Route::get('pdf', 'OrdemServicoController@pdf')->name('os.pdf');
+	Route::resource('gerente', 'GerenteController');
 	Route::resource('os', 'OrdemServicoController');
 	Route::resource('tecnico', 'TecnicoController');
+	Route::resource('solicitante', 'SolicitanteController');
+	Route::resource('problema', 'ProblemaController');
 	
 });

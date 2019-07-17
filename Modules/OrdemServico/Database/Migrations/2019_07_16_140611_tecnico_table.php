@@ -1,10 +1,9 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Tecnico extends Migration
+class TecnicoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,25 +13,20 @@ class Tecnico extends Migration
     public function up()
     {
         Schema::create('tecnico', function(Blueprint $table)
-		{   
+		{
 			$table->integer('id', true);
-            $table->string('nome');
-            $table->string('cpf');
-            $table->string('rg');
-            $table->string('email');
-            $table->double('comissao',6, 2);
+			$table->string('nome');
 			$table->timestamps();
 			$table->softDeletes();
 		});
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
-    }
+	}
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::drop('tecnico');
+	}
 }
