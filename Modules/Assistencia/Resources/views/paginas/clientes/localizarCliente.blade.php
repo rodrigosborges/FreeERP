@@ -12,7 +12,7 @@
     <div class="form-group row">
       <form class="input-group col-lg-9 col-sm-12" action="{{route('cliente.buscar')}}" method="post">
           {{ csrf_field() }}
-            <input type="text" class="form-control" name="busca" placeholder="Nome do cliente" aria-label="Buscar cliente" aria-describedby="button-addon2">
+            <input type="text" class="form-control" name="busca" placeholder="Pesquise por nome, cpf ou telefone" aria-label="Buscar cliente" aria-describedby="button-addon2">
             <div class="input-group-append">
               <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2"> 
             </div>

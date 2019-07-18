@@ -5,7 +5,6 @@
     </div>
     <input required class="form-control" name="nome" type="text" placeholder="Nome completo" value="{{ isset($cliente->nome) ? $cliente->nome : old('nome', '') }}">
   </div>
-  <div class="col-12 form-group">
     <span class="errors"> {{ $errors->first('nome') }} </span>
   </div>
 
@@ -18,7 +17,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="cliente"><i class="material-icons">picture_in_picture</i></span>
         </div>
-        <input required type="text" class="form-control cpf-mask" minlength=11 name="cpf" placeholder="000.000.000-00" value="{{ isset($cliente->cpf) ? $cliente->cpf : old('cpf', '') }}">
+        <input required type="text" class="form-control cpf-mask" minlength=11 name="cpf" placeholder="000.000.000-00 (CPF)" value="{{ isset($cliente->cpf) ? $cliente->cpf : old('cpf', '') }}">
       </div>
       <span class="errors"> {{ $errors->first('cpf') }} </span>
     </div>

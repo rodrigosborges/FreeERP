@@ -5,10 +5,11 @@ $moduleInfo = [
 ];
 
 $menu = [
-    ['icon' => 'settings', 'tool' => 'Consertos', 'route' => 'consertos.index'],
+    ['icon' => 'build', 'tool' => 'Consertos', 'route' => 'consertos.index'],
     ['icon' => 'face', 'tool' => 'Clientes', 'route' => 'cliente.index'],
     ['icon' => 'shopping_cart', 'tool' => 'Estoques', 'route' => 'estoque.index'],
     ['icon' => 'payment', 'tool' => 'Pagamentos', 'route' => 'pagamento.index'],
+    ['icon' => 'perm_identity', 'tool' => 'Tecnicos', 'route' => 'tecnico.index']
 ];
 ?>
 <!DOCTYPE html>

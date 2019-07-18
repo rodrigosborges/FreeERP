@@ -15,7 +15,7 @@
     <div class="input-group-prepend">
       <span class="input-group-text" id="cliente"><i class="material-icons">money</i></span>
     </div>
-    <input class="form-control" name="valor" type="text" placeholder="Valor" value="{{isset($servico->valor) ? $servico->valor : old('valor', '')}}">
+    <input class="form-control" name="valor" type="text" placeholder="Valor" id="money2" value="{{isset($servico->valor) ? $servico->valor : old('valor', '')}}">
     <div class="col-12">
       <span class="errors"> {{ $errors->first('valor') }} </span>
     </div>

@@ -23,7 +23,10 @@ class PecasController extends Controller
    }
 
    public function salvar(StorePecaRequest $req){
-     $dados  = $req->all();
+     $dados = $req->all();
+     $dados['valor_venda'] = str_replace(",",".",$dados['valor_venda']);
+     $dados['valor_compra'] = str_replace(",",".",$dados['valor_compra']);
+     
      PecaAssistenciaModel::create($dados);
      return redirect()->route('pecas.localizar');
    }

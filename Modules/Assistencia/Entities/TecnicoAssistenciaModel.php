@@ -12,7 +12,7 @@ class TecnicoAssistenciaModel extends Model
     protected $fillable = ['id','nome','cpf'];
 
     public static function busca($busca){
-
-        return static::where('nome', 'LIKE', '%'.$busca.'%')->paginate(10);
+      return static::where('nome', 'LIKE', '%'.$busca.'%')
+      ->orWhere('cpf', 'LIKE', '%'.$busca.'%')->paginate(10);
       }
 }

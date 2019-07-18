@@ -22,6 +22,7 @@ class ServicosController extends Controller
 
    public function salvar(StoreServicoRequest $req){
      $dados  = $req->all();
+     $dados['valor'] = str_replace(",",".",$dados['valor']);
      ServicoAssistenciaModel::create($dados);
      return redirect()->route('servicos.localizar');
    }

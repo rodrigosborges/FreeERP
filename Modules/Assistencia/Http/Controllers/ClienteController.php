@@ -27,9 +27,16 @@ class ClienteController extends Controller
 
     public function salvar(StoreClienteRequest $req){
       $dados  = $req->all();
-      ClienteAssistenciaModel::create($dados);
+      $possivelCliente = ClienteAssistenciaModel::buscaCPF($dados['cpf']);
+      if( sizeof($possivelCliente) == 1){
+        return redirect()->route('cliente.localizar')->with('error','O cliente já possui um cadastro!');
 
-      return redirect()->route('cliente.localizar')->with('success','Cliente cadastrado com sucesso!');
+      } elseif (sizeof($possivelCliente) > 1) {
+        return redirect()->route('cliente.localizar')->with('warning','Verifique a quantidade de clientes com esse CPF!');
+      }else{
+        ClienteAssistenciaModel::create($dados);
+        return redirect()->route('cliente.localizar')->with('success','Cliente cadastrado com sucesso!');
+      }
     }
 
     public function editar($id){

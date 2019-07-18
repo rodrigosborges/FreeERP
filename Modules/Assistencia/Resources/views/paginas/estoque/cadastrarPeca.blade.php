@@ -30,7 +30,8 @@
 @section('js')
 	<script>
 		$(document).ready(function(){
-			$('#money2').mask("##0.00", {reverse: true});
+			$('#money1').mask("###0,00", {reverse: true});
+			$('#money2').mask("###0,00", {reverse: true});
 		})
 	</script>
 @stop

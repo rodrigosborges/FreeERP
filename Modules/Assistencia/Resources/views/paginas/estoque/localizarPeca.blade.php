@@ -46,7 +46,7 @@
               @foreach ($pecas as $peca)
                 <tr>
                   <td scope="row">{{$peca->nome }}</td>
-                  <td>R$ {{$peca->valor_venda }}</td>
+                  <td>R$ {{str_replace(".",",",$peca->valor_venda) }}</td>
                   <td>
                     <a href="{{route('pecas.editar',$peca->id)}}"><button type="button" class="btn btn-secondary">Editar</button></a>
                     <a href="{{route('pecas.deletar',$peca->id)}}"><button type="button" class="btn btn-danger">Deletar</button></a>
