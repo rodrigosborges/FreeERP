@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/FreeERP.iml" filepath="$PROJECT_DIR$/.idea/FreeERP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/freeerp.iml" filepath="$PROJECT_DIR$/.idea/freeerp.iml" />
     </modules>
   </component>
 </project>

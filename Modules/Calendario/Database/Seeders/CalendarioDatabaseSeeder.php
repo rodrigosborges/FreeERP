@@ -15,5 +15,6 @@ class CalendarioDatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(CorTableSeeder::class);
+        $this->call(AgendaTipoTableSeeder::class);
     }
 }

@@ -5,6 +5,7 @@ namespace Modules\Calendario\Http\Controllers;
 use Illuminate\Database\QueryException;
 use Illuminate\Routing\Controller;
 use Modules\Calendario\Entities\Agenda;
+use Modules\Calendario\Entities\Tipo;
 use Modules\Calendario\Entities\Cor;
 use Modules\Calendario\Http\Requests\AgendaSalvarRequest;
 
@@ -12,7 +13,8 @@ class AgendaController extends Controller
 {
     public function criarOuEditar(Agenda $agenda = null){
         $cores = Cor::all();
-        return view('calendario::agendas.criar-editar', ['cores' => $cores, 'agenda' => $agenda]);
+        $tipos = Tipo::all();
+        return view('calendario::agendas.criar-editar', ['cores' => $cores, 'agenda' => $agenda, 'tipos' => $tipos]);
     }
 
     public function salvar(AgendaSalvarRequest $request){
@@ -22,6 +24,8 @@ class AgendaController extends Controller
             $agenda->descricao = $request->agendaDescricao;
             $cor = Cor::find($request->agendaCor);
             $agenda->cor()->associate($cor);
+            $tipo = Tipo::find($request->agendaTipo);
+            $agenda->tipo()->associate($tipo);
             //TODO Incluir o usuário logado
             $agenda->funcionario_id = 1;
             $agenda->save();

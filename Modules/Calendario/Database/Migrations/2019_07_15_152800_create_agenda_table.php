@@ -21,8 +21,10 @@ class CreateAgendaTable extends Migration
             $table->string('titulo', 100);
             $table->string('descricao', 500)->nullable();
             $table->unsignedBigInteger('cor_id');
+            $table->unsignedBigInteger('tipo_id');
             $table->unsignedBigInteger('funcionario_id');
             $table->foreign('cor_id')->references('id')->on('cor');
+            $table->foreign('tipo_id')->references('id')->on('agenda_tipo');
             $table->softDeletes();
             $table->timestamps();
         });

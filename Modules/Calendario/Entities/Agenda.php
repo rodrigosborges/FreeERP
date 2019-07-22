@@ -8,12 +8,16 @@ class Agenda extends Model
 {
     protected $table = 'agenda';
 
-    public function eventos(){
-        return $this->hasMany('Modules\Calendario\Entities\Evento');
+    public function tipo(){
+        return $this->belongsTo('Modules\Calendario\Entities\Tipo');
     }
 
     public function cor(){
         return $this->belongsTo('Modules\Calendario\Entities\Cor');
+    }
+
+    public function eventos(){
+        return $this->hasMany('Modules\Calendario\Entities\Evento');
     }
 
     public function dono(){

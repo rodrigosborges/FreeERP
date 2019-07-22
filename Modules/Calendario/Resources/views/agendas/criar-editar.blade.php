@@ -20,16 +20,16 @@
             <label for="agendaCor">Cor</label>
             <select id="agendaCor" name="agendaCor" required>
                 @foreach($cores as $cor)
-                <option value="{{$cor->id}}" data-color="#{{$cor->codigo}}" @if(isset($agenda) && $agenda->cor->id == $cor->id) selected @endif>{{$cor->nome}}</option>
+                    <option value="{{$cor->id}}" data-color="#{{$cor->codigo}}" @if(isset($agenda) && $agenda->cor->id == $cor->id) selected @endif>{{$cor->nome}}</option>
                 @endforeach
             </select>
         </div>
         <div class="form-group">
-            <label for="agendaCompartilhar">Compartilhar</label>
-            <select id="agendaCompartilhar" name="agendaCompartilhar" class="form-control" multiple data-placeholder="Selecione os setores">
-                <option value="CTI">CTI</option>
-                <option value="CTI">DRG</option>
-                <option value="CTI">RET</option>
+            <label for="agendaTipo">Tipo</label>
+            <select id="agendaTipo" name="agendaTipo" class="form-control">
+                @foreach($tipos as $tipo)
+                    <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
+                @endforeach
             </select>
         </div>
         <button type="submit" form="agendaForm" class="btn btn-primary">Salvar</button>
