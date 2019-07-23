@@ -113,7 +113,7 @@
 	<script>
 
 
-		$("[name='selecionarCliente']").on('keyup',function(){
+		/*$("[name='selecionarCliente']").on('keyup',function(){
 
 				$.ajax({
 		        type: "GET",
@@ -121,18 +121,21 @@
 		        data: {
 							'selecionarCliente': $(this).val()
 						},
-		        success: function (data) {
-								$("[name='selecionarCliente']").autocomplete({
-									source: data,
-									select: function( event, ui ) {
+		        success: function (data) { $("[name='selecionarCliente']").autocomplete({
+									source: data, select: function( event, ui ) {
 										inserirDadosCliente(ui.item.value)
 									}
 								})
 		        },
 		    })
 
-		})
+		})*/
 
+		$('#selecionarCliente').change(function(){
+
+			var dados =$('#selecionarCliente option:selected').attr("data-puxar")
+			inserirDadosCliente(dados)
+		})
 		function inserirDadosCliente(val){
 
 			$.ajax({
@@ -149,11 +152,9 @@
 							$("[name='email']").val(data.email)
 	        },
 	    })
-
 		}
-
-		$("[name='selecionarTecnico']").on('keyup',function(){
-
+		/*$("[name='selecionarTecnico']").on('keyup',function(){
+				console.log('teste')
 				$.ajax({
 		        type: "GET",
 		        url: `${main_url}/assistencia/conserto/nomeTecnicos`,
@@ -169,7 +170,11 @@
 								})
 		        },
 		    })
+		})*/
+		$('#selecionarTecnico').change(function(){
 
+		var dados =$('#selecionarTecnico option:selected').attr("data-puxar")
+		inserirDadosTecnico(dados)
 		})
 
 		function inserirDadosTecnico(val){

@@ -5,7 +5,7 @@
 
       	@foreach($pecas as $peca) 
           <option data-valor="{{$peca->valor_venda}}" value="{{ $peca->id }}">{{ $peca->nome }} |  {{ $peca->valor_venda }}</option>
-   		@endforeach
+   		  @endforeach
 
     </select>
 

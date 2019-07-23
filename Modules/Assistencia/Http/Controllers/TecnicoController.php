@@ -12,11 +12,11 @@ class TecnicoController extends Controller
 {
 
   public function index(){
-    $tecnicos = TecnicoAssistenciaModel::all();
+    $tecnicos = TecnicoAssistenciaModel::paginate(10);
     return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos'));
   }
   public function localizar(){
-    $tecnicos = TecnicoAssistenciaModel::all();
+    $tecnicos = TecnicoAssistenciaModel::paginate(10);
     return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos'));
   }
   public function cadastrar(){
@@ -37,12 +37,12 @@ class TecnicoController extends Controller
   public function atualizar(StoreTecnicoRequest $req, $id){
     $dados  = $req->all();
     TecnicoAssistenciaModel::find($id)->update($dados);
-    return redirect()->route('tecnico.localizar');
+    return redirect()->route('tecnico.localizar')->with('success','Técnico atualizado com sucesso!');
   }
 
   public function deletar($id){
     $tecnico = TecnicoAssistenciaModel::find($id);
-    $tecnico->all();
+    $tecnico->delete();
     $tecnico->update();
 
     return redirect()->route('tecnico.localizar');

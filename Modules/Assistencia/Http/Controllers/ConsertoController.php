@@ -19,6 +19,8 @@ class ConsertoController extends Controller
     public function cadastrar(){
       $pecas = PecaAssistenciaModel::all();
       $servicos = ServicoAssistenciaModel::all();
+      $clientes = ClienteAssistenciaModel::all();
+      $tecnicos = TecnicoAssistenciaModel::all();
       $ultimo = ConsertoAssistenciaModel::withTrashed()->latest()->first();
 
       $id = 0;
@@ -28,7 +30,7 @@ class ConsertoController extends Controller
         $id = 1 + $ultimo->id;
       }
 
-      return view('assistencia::paginas.consertos.cadastrarconserto', compact('id','pecas','servicos'));
+      return view('assistencia::paginas.consertos.cadastrarconserto', compact('id','clientes','tecnicos','pecas','servicos'));
     }
 
     public function localizar() {
@@ -70,6 +72,8 @@ class ConsertoController extends Controller
     public function salvar(StoreConsertosRequest $req){
 
       $dados  = $req->all();
+      //REALIZAR VERIFICAÇÃO DE PEÇA E MAO DE OBRA VAZIOS, E GERAR UM VALOR PADRAO
+
       ConsertoAssistenciaModel::create($dados);
       $conserto = ConsertoAssistenciaModel::latest()->first();
       $idConserto = $conserto->id;

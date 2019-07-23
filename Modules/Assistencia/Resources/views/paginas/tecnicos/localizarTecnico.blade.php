@@ -13,7 +13,7 @@
           {{ csrf_field() }}
             <input type="text" class="form-control" name="busca" placeholder="Nome do tecnico" aria-label="Buscar tecnico" aria-describedby="button-addon2">
             <div class="input-group-append">
-              <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2"></input>
+              <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2">  
             </div>
       </form>
       <div class="col-md-6">

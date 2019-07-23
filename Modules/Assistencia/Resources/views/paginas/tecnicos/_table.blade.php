@@ -22,6 +22,24 @@
           </tr>
         @endforeach
       </tbody>
+      <tfoot>
+          <tr>
+              <td colspan="100%" class="text-center">
+              <p class="text-center">
+                
+                  Página {{$tecnicos->currentPage()}} de {{$tecnicos->lastPage()}}
+                  
+              </p>
+              </td>
+          </tr>
+          @if($tecnicos->lastPage() > 1)
+          <tr>
+              <td colspan="100%">
+                  {{ $tecnicos->links() }}
+              </td>
+          </tr>
+          @endif
+      </tfoot>
     </div>
   </table>
 </div>

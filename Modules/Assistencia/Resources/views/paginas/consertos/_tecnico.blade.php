@@ -2,10 +2,14 @@
 
 <div class="form-group row">
   <div class="input-group col">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="nome"><i class="material-icons">link_off</i></span>
-    </div>
-    <input class="form-control" name="selecionarTecnico" type="text" placeholder="Tecnico responsavel">
+    
+    <!--<input class="form-control" name="selecionarTecnico" type="text" placeholder="Tecnico responsavel"> -->
+    <select style="width:100%;" name="selecionarTecnico" id="selecionarTecnico" class="form-control multi-select">
+        <option value="" disabled selected>Selecionar tecnico</option>
+      	@foreach($tecnicos as $tecnico) 
+          <option value="{{ $tecnico->id }}" data-puxar="{{ $tecnico->nome }}|{{ $tecnico->cpf }}">{{ $tecnico->nome }}|{{ $tecnico->cpf }}</option>
+   		  @endforeach
+    </select>
     <div class="col-12">
       <span class="errors"> {{ $errors->first('idTecnico') }} </span>
     </div>

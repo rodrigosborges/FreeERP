@@ -3,13 +3,10 @@
     <div class="input-group-prepend">
       <span class="input-group-text" id="cliente"><i class="material-icons">person</i></span>
     </div>
-    <input required class="form-control" name="nome" type="text" placeholder="Nome completo" value="{{ isset($cliente->nome) ? $cliente->nome : old('nome', '') }}">
+      <input required class="form-control" name="nome" type="text" placeholder="Nome completo" value="{{ isset($cliente->nome) ? $cliente->nome : old('nome', '') }}">
   </div>
-    <span class="errors"> {{ $errors->first('nome') }} </span>
-  </div>
-
+  <span class="errors"> {{ $errors->first('nome') }} </span>
 </div>
-
 
 <div class="row">
     <div class="form-group">

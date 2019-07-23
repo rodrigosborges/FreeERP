@@ -1,10 +1,14 @@
 <input type="hidden" name="idCliente" value="{{isset($conserto->idCliente) ? $conserto->idCliente : old('idCliente', '')}}">
 <div class="form-group row">
   <div class="input-group col-12">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="nome"><i class="material-icons">link_off</i></span>
-    </div>
-    <input class="form-control" name="selecionarCliente" type="text" placeholder="Escolher cliente" >
+    <!--<input class="form-control" name="selecionarCliente" type="text" placeholder="Escolher cliente" > -->
+    <select style="width:100%;" name="selecionarCliente" id="selecionarCliente" class="form-control multi-select">
+        <option value="" disabled selected>Selecionar cliente</option>
+        @foreach($clientes as $cliente) 
+          <option value="{{ $cliente->id }}" data-puxar="{{ $cliente->nome }}|{{ $cliente->cpf }}">{{ $cliente->nome }}|{{ $cliente->cpf }}</option>
+        @endforeach
+    </select>
+
     <div class="col-12">
       <span class="errors"> {{ $errors->first('idCliente') }} </span>
     </div>

@@ -8,6 +8,9 @@
 
 @section('content')
 <div class="card ">
+	<div class="card-header">
+		<h3>Editar cliente </h3>
+	</div>
 	<div class="card-body">
 
 		<div class="row">

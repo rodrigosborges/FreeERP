@@ -40,6 +40,8 @@ class PecasController extends Controller
 
    public function atualizar(StorePecaRequest $req, $id){
      $dados  = $req->all();
+     $dados['valor_venda'] = str_replace(",",".",$dados['valor_venda']);
+     $dados['valor_compra'] = str_replace(",",".",$dados['valor_compra']);
      PecaAssistenciaModel::find($id)->update($dados);
      return redirect()->route('pecas.localizar');
    }

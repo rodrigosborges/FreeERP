@@ -29,11 +29,14 @@ class ServicosController extends Controller
 
    public function editar($id){
      $servico = ServicoAssistenciaModel::find($id);
+     
      return view('assistencia::paginas.estoque.editarServico',compact('servico'));
    }
 
    public function atualizar(StoreServicoRequest $req, $id){
      $dados  = $req->all();
+     $dados['valor'] = str_replace(",",".",$dados['valor']);
+
      ServicoAssistenciaModel::find($id)->update($dados);
      return redirect()->route('servicos.localizar');
    }
