@@ -69,57 +69,37 @@ class CandidatoController extends Controller
      */
     public function store(Request $request)
     {        
-        return $request->all();
-        // Define o valor default para a variável que contém o nome da imagem 
-        $nameFile = null;
-        
-        // Verifica se informou o arquivo e se é válido
-        if ($request->hasFile('curriculo') && $request->file('curriculo')->isValid()) {
-         
-        // Define um aleatório para o arquivo baseado no timestamps atual
-        $name = uniqid(date('HisYmd'));
- 
-        // Recupera a extensão do arquivo
-        $extension = $request->curriculo->extension();
- 
-        // Define finalmente o nome
-        $nameFile = "{$name}.{$extension}";
- 
-        // Faz o upload:
-        $upload = $request->curriculo->storeAs('categories', $nameFile);
-        // Se tiver funcionado o arquivo foi armazenado em storage/app/public/categories/nomedinamicoarquivo.extensao
- 
-        // Verifica se NÃO deu certo o upload (Redireciona de volta)
-        if ( !$upload )
+
+        //Upload do Curriculum
+  
+        if($request->hasFile('curriculum') && $request->file('curriculum')->isValid() && $request->curriculum->extension() == 'pdf'){
+            $nome = md5($request->candidato['nome'].date('Y-m-d H:i'));
+            $extensao = $request->curriculum->extension();
+            $nameFile = "{$nome}.{$extensao}";
+            $curriculum = $nameFile;
+
+            $upload = $request->curriculum->storeAs('curriculuns', $nameFile);
+            if(!$upload){
+                return redirect()
+                            ->back()
+                            ->with('error', 'Falha no upload do arquivo');
+            }
+        }
+        else{
             return redirect()
-                        ->back()
-                        ->with('error', 'Falha ao fazer upload')
-                        ->withInput();
- 
-    }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                            ->back()
+                            ->with('error', 'Falha, formato de arquivo inválido');
+        }
+
         
         DB::beginTransaction();
 		try{
 
-            $candidato = Candidato::Create($request->candidato);
+            $candidato = Candidato::Create([
+                'nome' => $request->candidato['nome'],
+                'vaga_id' => $request->candidato['vaga_id'],
+                'curriculo' => $curriculum
+            ]);
 
             $telefone = Telefone::Create($request->telefone);
             $email = Email::Create($request->email);
@@ -140,7 +120,7 @@ class CandidatoController extends Controller
             ]);
                 
 			DB::commit();
-			return redirect('/recrutamento/Candidato')->with('success', 'Curriculo enviado com sucesso');
+			return redirect('/recrutamento/vagasDisponiveis')->with('success', 'Curriculo enviado com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');

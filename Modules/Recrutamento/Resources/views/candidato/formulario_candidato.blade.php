@@ -52,7 +52,7 @@
                                 <i class="material-icons">email</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="E-mail" name="candidato[email]" id="email" class="form-control" value="{{ old('email', $data['model'] ? $data['model']->email()->email : '') }}">
+                        <input required type="text" placeholder="E-mail" name="email[email]" id="email" class="form-control" value="{{ old('email', $data['model'] ? $data['model']->email()->email : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('email') }} </span>
                 </div>
