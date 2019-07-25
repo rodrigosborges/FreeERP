@@ -6,6 +6,7 @@
     @parent
     @include('calendario::eventos/criar')
 
+    @if($agendas->isNotEmpty())
     <div id="agendas">
         <div class="card">
             <div class="card-header">
@@ -25,6 +26,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <div id="calendario"></div>
 @endsection

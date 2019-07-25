@@ -11,6 +11,10 @@ use Modules\Calendario\Http\Requests\AgendaSalvarRequest;
 
 class AgendaController extends Controller
 {
+    public function index(){
+        $agendas = Agenda::where('funcionario_id', 1)->get();
+        return view('calendario::agendas.index', ['agendas' => $agendas]);
+    }
     public function criarOuEditar(Agenda $agenda = null){
         $cores = Cor::all();
         $tipos = Tipo::all();
@@ -43,9 +47,9 @@ class AgendaController extends Controller
             $agenda->cor()->associate($cor);
             $agenda->save();
         }catch (\Exception $e){
-            return redirect()->route('calendario.index')->with('error', 'Falha ao atualizar agenda "' . $request->agendaNome . '". Erro: ' . $e->getMessage());
+            return redirect()->route('agendas.index')->with('error', 'Falha ao atualizar agenda "' . $request->agendaNome . '". Erro: ' . $e->getMessage());
         }
-        return redirect()->route('calendario.index')->with('success', 'Agenda "' . $request->agendaNome . '" atualizada com sucesso.');
+        return redirect()->route('agendas.index')->with('success', 'Agenda "' . $request->agendaNome . '" atualizada com sucesso.');
     }
 
     public function eventos()

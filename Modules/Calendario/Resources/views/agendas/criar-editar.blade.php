@@ -26,7 +26,7 @@
         </div>
         <div class="form-group">
             <label for="agendaTipo">Tipo</label>
-            <select id="agendaTipo" name="agendaTipo" class="form-control">
+            <select id="agendaTipo" name="agendaTipo" class="form-control" required>
                 @foreach($tipos as $tipo)
                     <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
                 @endforeach

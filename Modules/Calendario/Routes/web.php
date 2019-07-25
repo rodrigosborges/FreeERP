@@ -13,6 +13,7 @@
 
 Route::get('/calendario', 'CalendarioController@index')->name('calendario.index');
 
+Route::get('/calendario/agendas', 'AgendaController@index')->name('agendas.index');
 Route::get('/calendario/agendas/criar', 'AgendaController@criarOuEditar')->name('agendas.criar');
 Route::get('/calendario/agendas/{agenda}/editar', 'AgendaController@criarOuEditar')->name('agendas.editar');
 Route::put('/calendario/agendas/{agenda}/atualizar', 'AgendaController@atualizar')->name('agendas.atualizar');
