@@ -10,6 +10,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Título</th>
+                <th scope="col">Descrição</th>
                 <th scope="col">Eventos</th>
             </tr>
             </thead>
@@ -20,6 +21,7 @@
                     <td>
                         <a href="{{route('agendas.editar', $agenda->id)}}">{{$agenda->titulo}}</a></td>
                     </a>
+                    <td>{{$agenda->descricao}}</td>
                     <td>{{$agenda->eventos->count()}}</td>
                 </tr>
             @empty
@@ -35,6 +37,12 @@
 @section('css')
     @parent
     <style type="text/css">
-
     </style>
+@endsection
+
+@section('js')
+    @parent
+    <script type="text/javascript">
+
+    </script>
 @endsection
