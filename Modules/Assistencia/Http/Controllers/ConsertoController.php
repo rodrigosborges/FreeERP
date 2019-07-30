@@ -5,7 +5,7 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\{ConsertoAssistenciaModel, PagamentoAssistenciaModel, PecaAssistenciaModel, ServicoAssistenciaModel, ClienteAssistenciaModel, TecnicoAssistenciaModel, ItemPeca, ItemServico};
+use Modules\Assistencia\Entities\{ConsertoAssistenciaModel,ItemPeca, PagamentoAssistenciaModel, PecaAssistenciaModel, ServicoAssistenciaModel, ClienteAssistenciaModel, TecnicoAssistenciaModel, PecaOs, ItemServico};
 use DB;
 use Modules\Assistencia\Http\Requests\StoreConsertosRequest;
 
@@ -17,7 +17,7 @@ class ConsertoController extends Controller
     }
 
     public function cadastrar(){
-      $pecas = PecaAssistenciaModel::all();
+      $pecas = ItemPeca::all();
       $servicos = ServicoAssistenciaModel::all();
       $clientes = ClienteAssistenciaModel::all();
       $tecnicos = TecnicoAssistenciaModel::all();
@@ -47,20 +47,20 @@ class ConsertoController extends Controller
 
     public function visualizarConserto($id) {
        $conserto = ConsertoAssistenciaModel::find($id);
-       $itemPeca = ItemPeca::where('idConserto', $id)->get();
+       $pecaOS = PecaOs::where('idConserto', $id)->get();
        $itemServico = itemServico::where('idConserto', $id)->get();
 
-       return view('assistencia::paginas.consertos.vizualizarConserto', compact('conserto', 'itemPeca','itemServico'));
+       return view('assistencia::paginas.consertos.vizualizarConserto', compact('conserto', 'pecaOS','itemServico'));
     }
 
     public function editar($id) {
       $conserto = ConsertoAssistenciaModel::find($id);
       $pecas = PecaAssistenciaModel::all();
       $servicos = ServicoAssistenciaModel::all();
-      $itemPeca = ItemPeca::where('idConserto', $id)->get();
+      $pecaOS = PecaOs::where('idConserto', $id)->get();
       $itemServico = itemServico::where('idConserto', $id)->get();
 
-      return view('assistencia::paginas.consertos.editarConserto', compact('conserto', 'id', 'pecas', 'servicos','itemPeca','itemServico'));
+      return view('assistencia::paginas.consertos.editarConserto', compact('conserto', 'id', 'pecas', 'servicos','pecaOS','itemServico'));
     }
     public function atualizar(Request $req, $id){
       $dados  = $req->all();
@@ -88,7 +88,7 @@ class ConsertoController extends Controller
 
 
       for ($i=0; $i < count($dados['pecas']); $i++) {
-        $pecas = new ItemPeca;
+        $pecas = new PecaOs;
         $pecas->idConserto = $idConserto;
         $pecas->idPeca = $dados['pecas'][$i];
         $pecas->save();

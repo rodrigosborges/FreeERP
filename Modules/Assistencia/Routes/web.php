@@ -39,10 +39,12 @@ Route::prefix('assistencia')->group(function() {
     Route::get('estoque/pecas/cadastrar',['as'=>'pecas.cadastrar','uses'=>'PecasController@cadastrar']);
     Route::post('estoque/pecas/salvar',['as'=>'pecas.salvar','uses'=>'PecasController@salvar']);
     Route::get('estoque/pecas/localizar',['as'=>'pecas.localizar','uses'=>'PecasController@localizar']);
-    Route::get('estoquepecas//editar/{id}',['as'=>'pecas.editar','uses'=>'PecasController@editar']);
+    Route::get('estoque/pecas/editar/{id}',['as'=>'pecas.editar','uses'=>'PecasController@editar']);
     Route::put('estoque/pecas/atualizar/{id}',['as'=>'pecas.atualizar','uses'=>'PecasController@atualizar']);
     Route::get('estoque/pecas/deletar/{id}',['as'=>'pecas.deletar','uses'=>'PecasController@deletar']);
     Route::post('estoque/pecas/buscar',['as'=>'pecas.buscar','uses'=>'PecasController@buscar']);
+    Route::get('estoque/pecas/deletarItem/{id}',['as'=>'itemPeca.deletar','uses'=>'PecasController@deletarItem']);
+
 
     Route::get('estoque/servicos/cadastrar',['as'=>'servicos.cadastrar','uses'=>'ServicosController@cadastrar']);
     Route::post('estoque/servicos/salvar',['as'=>'servicos.salvar','uses'=>'ServicosController@salvar']);

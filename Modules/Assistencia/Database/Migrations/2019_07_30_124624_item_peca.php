@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ItemServico extends Migration
+class ItemPeca extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class ItemServico extends Migration
      */
     public function up()
     {
-        Schema::create('item_servico_assistencia', function (Blueprint $table) {
+        Schema::create('item_peca_assistencia', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idConserto')->unsigned();
-            $table->foreign('idConserto')->references('id')->on('conserto_assistencia');
-            $table->integer('idMaoObra')->unsigned();
-            $table->foreign('idMaoObra')->references('id')->on('servico_assistencia');
+            $table->integer('idPeca')->unsigned();
+            $table->foreign('idPeca')->references('id')->on('peca_assistencia');
             $table->softDeletes();
             $table->timestamps();
         });

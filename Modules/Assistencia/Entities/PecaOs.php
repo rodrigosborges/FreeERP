@@ -4,12 +4,13 @@ namespace Modules\Assistencia\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ItemPeca extends Model
+class PecaOS extends Model
 {
-    protected $table = 'item_peca_assistencia';
-    protected $fillable = ['id','idPeca'];
-
+    protected $table = 'peca_os_assistencia';
+    protected $fillable = ['id','idConserto','idPeca'];
+    
     public function peca(){
         return $this->belongsTo('Modules\Assistencia\Entities\PecaAssistenciaModel', 'idPeca');
     }
 }
+    

@@ -23,7 +23,7 @@
 		    <form class="col-md-4" action="{{route('pecas.atualizar',$peca->id)}}" method="post" enctype="multipart/form-data">
 		      {{ csrf_field() }}
 		      <input type="hidden" name="_method" value="put">
-		      @include('assistencia::paginas.estoque._form_peca')
+		      @include('assistencia::paginas.estoque._form_pecaEdit')
 		      <button class="btn btn-success">Atualizar</button>
 		    </form>
   		</div>

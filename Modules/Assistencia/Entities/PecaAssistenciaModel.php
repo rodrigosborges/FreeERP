@@ -9,7 +9,7 @@ class PecaAssistenciaModel extends Model
 {
   use SoftDeletes;
   protected $table = 'peca_assistencia';
-  protected $fillable = ['id','nome','valor_compra','valor_venda'];
+  protected $fillable = ['id','nome','valor_compra','valor_venda','quantidade'];
 
   public static function busca($busca)
   {

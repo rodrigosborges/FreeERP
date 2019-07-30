@@ -35,3 +35,7 @@
   </div>
 
 </div>
+<div class="form-group col-12">
+  <input class="form-control" id="qnt" name="quantidade" type="text" maxlength="2" placeholder="Quantidade" value="{{isset($peca->quantidade) ? $peca->quantidade : old('quantidade', '')}}">
+</div>
+

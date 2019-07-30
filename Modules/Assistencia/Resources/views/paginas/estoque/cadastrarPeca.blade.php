@@ -35,6 +35,7 @@
 		$(document).ready(function(){
 			$('#money1').mask("###0,00", {reverse: true});
 			$('#money2').mask("###0,00", {reverse: true});
+			$('#qnt').mask('0#');
 		})
 	</script>
 @stop

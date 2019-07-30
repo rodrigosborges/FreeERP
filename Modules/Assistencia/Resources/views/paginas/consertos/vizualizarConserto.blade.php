@@ -96,7 +96,7 @@
               $val_peças = 0;
               $val_servicos = 0;
             ?>
-            @foreach ($itemPeca as $peca)
+            @foreach ($pecaOS as $peca)
             <?php 
               $val_peças += $peca->peca->valor_venda;
             ?>
@@ -144,7 +144,7 @@
               <h5>Peças</h5>
 
             </div>
-            @foreach ($itemPeca as $peca)
+            @foreach ($pecaOS as $peca)
             <div class="col-12 text-center">
               {{$peca->peca->nome}} | R${{$peca->peca->valor_venda}}
             </div>

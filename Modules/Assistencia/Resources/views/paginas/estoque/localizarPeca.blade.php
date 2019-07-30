@@ -36,6 +36,7 @@
               <tr>
                 <th scope="col">Nome</th>
                 <th scope="col">Valor</th>
+                <th scope="col">Quantidade</th>
                 <th scope="col">Ações</th>
               </tr>
 
@@ -47,6 +48,7 @@
                 <tr>
                   <td scope="row">{{$peca->nome }}</td>
                   <td>R$ {{str_replace(".",",",$peca->valor_venda) }}</td>
+                  <td scope="row">{{$peca->quantidade }}</td>
                   <td>
                     <a href="{{route('pecas.editar',$peca->id)}}"><button type="button" class="btn btn-secondary">Editar</button></a>
                     <a href="{{route('pecas.deletar',$peca->id)}}"><button type="button" class="btn btn-danger">Deletar</button></a>
