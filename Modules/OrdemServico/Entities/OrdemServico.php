@@ -31,4 +31,5 @@ class OrdemServico extends Model
     public function problema(){
         return $this->hasOne('App\Problema','ordem_servico_has_problema');
     }
+
 }

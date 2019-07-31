@@ -11,16 +11,17 @@ use Modules\OrdemServico\Entities \ {
     Tecnico
 };
 use DB;
+use Hamcrest\Core\HasToString;
 
 class OrdemServicoController extends Controller
 {
 
     public function index(Request $request)
-    {
+    {   
         $data = [
             'title' => 'Administração de Ordem de Servico',
             'model' => OrdemServico::paginate(5),
-            'atributos' => ['id','solicitante_id','aparelho_id','problema_id','gerente_id'],
+            'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('ordem_servico'),0,5),
             'cadastro' => 'Cadastrar OS',
             'route' => 'modulo.os.',
             'acoes' => [

@@ -17,7 +17,7 @@ class TecnicoController extends Controller
         $data = [
             'title' => 'Administração de Tecnicos',
             'model' => Tecnico::paginate(5),
-            'atributos' => ['id','nome'],
+            'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('tecnico'),0,5),
             'cadastro' => 'Cadastrar Tecnico',
             'route' => 'modulo.tecnico.',
             'acoes' => [

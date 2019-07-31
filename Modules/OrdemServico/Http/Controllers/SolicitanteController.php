@@ -18,7 +18,7 @@ class SolicitanteController extends Controller
         $data = [
             'title' => 'Administração de Solicitantes',
             'model' => Solicitante::paginate(5),
-            'atributos' => ['id','nome'],
+            'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('solicitante'),0,5),
             'cadastro' => 'Cadastrar Solicitante',
             'route' => 'modulo.solicitante.',
             'acoes' => [

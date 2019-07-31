@@ -18,7 +18,7 @@ class GerenteController extends Controller
         $data = [
             'title' => 'Administração de Gerentes',
             'model' => Gerente::paginate(5),
-            'atributos' => ['id','nome'],
+            'atributos' => DB::getSchemaBuilder()->getColumnListing('gerente'),
             'cadastro' => 'Cadastrar Gerente',
             'route' => 'modulo.gerente.',
             'acoes' => [

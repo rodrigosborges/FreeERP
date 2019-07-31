@@ -18,7 +18,7 @@ class ProblemaController extends Controller
         $data = [
             'title' => 'Listagem de Problemas',
             'model' => Problema::paginate(5),
-            'atributos' => ['titulo','descricao','prioridade'],
+            'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('solicitante'),0,5),
             'route' => 'modulo.problema.',
             'cadastro' => '',
             'acoes' => ''

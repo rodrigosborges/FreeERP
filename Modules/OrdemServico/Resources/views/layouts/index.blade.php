@@ -21,7 +21,7 @@
 
                 <!--- Gera titulo para a coluna com atributos do modelo -->
                 @foreach($data['atributos'] as $atributo)
-                <th>{{ucfirst($atributo)}}</th>
+                <th>{{($atributo)}}</th>
                 @endforeach
 
                 <!--- Se a opção cadastrar tiver habilitada , criar botão de cadastro --->
