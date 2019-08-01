@@ -35,6 +35,7 @@ class Agenda extends Model
                'color' => '#' . $this->cor->codigo,
                'agenda' => 'agenda' . $this->id,
                'className' => 'agenda' . $this->id,
+               'descricao' => $evento->nota,
                'allDay' => $evento->dia_todo
             ]);
         }

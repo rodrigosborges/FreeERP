@@ -82,7 +82,7 @@
 
                     <!-- Nota -->
                     <div class="form-group">
-                        <label for="eventoNota">Nota</label>
+                        <label for="eventoNota">Descrição</label>
                         <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3"></textarea>
                     </div>
                 </form>

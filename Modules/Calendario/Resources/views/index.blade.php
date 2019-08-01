@@ -17,12 +17,14 @@
                 <div id="filtrar" class="collapse" data-parent="#agendas">
                     <div class="card-body">
                         @foreach($agendas as $agenda)
-                            <div class="agenda custom-control custom-checkbox">
-                                <input type="checkbox" id="agenda{{$agenda->id}}" class="custom-control-input"
-                                       value="{{$agenda->id}}" name="agenda{{$agenda->id}}" checked>
-                                <label class="custom-control-label" for="agenda{{$agenda->id}}"
-                                       style="border-bottom: 3px solid #{{$agenda->cor->codigo}}">{{$agenda->titulo}}</label>
-                            </div>
+                            @if($agenda->eventos->isNotEmpty())
+                                <div class="agenda custom-control custom-checkbox">
+                                    <input type="checkbox" id="agenda{{$agenda->id}}" class="custom-control-input"
+                                           value="{{$agenda->id}}" name="agenda{{$agenda->id}}" checked>
+                                    <label class="custom-control-label" for="agenda{{$agenda->id}}"
+                                           style="border-bottom: 3px solid #{{$agenda->cor->codigo}}">{{$agenda->titulo}}</label>
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -135,9 +137,18 @@
                 events: '{{route('eventos.index')}}',
                 eventRender: function (info) {
                     var agenda = info.event.extendedProps.agenda;
+                    var descricao = info.event.extendedProps.descricao;
+
                     if (!$('#' + agenda).prop('checked')) {
                         $(info.el).hide();
                     }
+
+                    if (descricao != null) {
+                        $(info.el).tooltip({
+                            'title': descricao
+                        });
+                    }
+
                 },
                 dateClick: function (info) {
                     if (agendas.length <= 0) {
@@ -193,9 +204,9 @@
             calendar.render();
 
             $('[id^="agenda"].custom-control-input').on('click', function (e) {
+                e.stopPropagation();
                 filtroAgenda(e.target.id);
             });
-
         });
     </script>
 @endsection

@@ -3,16 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b84905e5-ba51-4cac-9254-655e0db8a3b8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_07_15_145027_create_agenda_tipo_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_07_15_152800_create_agenda_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_07_15_152800_create_agenda_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_07_21_203558_create_agenda_setor_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/AgendaTipoTableSeeder.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/CalendarioDatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/CalendarioDatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/CorTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/CorTableSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar-editar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar-editar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -217,7 +209,8 @@
       <workItem from="1564513846121" duration="46000" />
       <workItem from="1564595250629" duration="1421000" />
       <workItem from="1564603072818" duration="11560000" />
-      <workItem from="1564682434025" duration="9895000" />
+      <workItem from="1564682434025" duration="9914000" />
+      <workItem from="1564697184676" duration="3222000" />
     </task>
     <task id="LOCAL-00001" summary="Calendário exibindo todos eventos do usuário e algumas refatorações">
       <created>1562796695507</created>
@@ -261,7 +254,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564094629906</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Filtro de agendas na visão geral">
+      <created>1564693639481</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1564693639481</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -303,7 +303,8 @@
     <MESSAGE value="Corrigido a criação das datas com o Carbon" />
     <MESSAGE value="Cor da agenda alterado para model e e alguns validations" />
     <MESSAGE value="Criada view index para agendas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Criada view index para agendas" />
+    <MESSAGE value="Filtro de agendas na visão geral" />
+    <option name="LAST_COMMIT_MESSAGE" value="Filtro de agendas na visão geral" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
