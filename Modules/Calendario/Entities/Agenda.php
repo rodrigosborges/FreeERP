@@ -8,8 +8,8 @@ class Agenda extends Model
 {
     protected $table = 'agenda';
 
-    public function tipo(){
-        return $this->belongsTo('Modules\Calendario\Entities\Tipo');
+    public function setor(){
+        return $this->belongsTo('Modules\Calendario\Entities\Setor');
     }
 
     public function cor(){
@@ -32,9 +32,9 @@ class Agenda extends Model
                'title' => $evento->titulo,
                'start' => $evento->data_inicio,
                'end' => $evento->data_fim,
-               'backgroundColor' => '#' . $this->cor->codigo,
-               'borderColor' => '#' . $this->cor->codigo,
-               'classNames' => 'agenda' . $this->id,
+               'color' => '#' . $this->cor->codigo,
+               'agenda' => 'agenda' . $this->id,
+               'className' => 'agenda' . $this->id,
                'allDay' => $evento->dia_todo
             ]);
         }

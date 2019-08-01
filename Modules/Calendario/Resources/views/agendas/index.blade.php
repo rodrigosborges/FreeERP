@@ -21,7 +21,7 @@
                     <td>
                         <a href="{{route('agendas.editar', $agenda->id)}}">{{$agenda->titulo}}</a></td>
                     </a>
-                    <td>{{$agenda->descricao}}</td>
+                    <td>@if($agenda->descricao){{$agenda->descricao}} @else --- @endif</td>
                     <td>{{$agenda->eventos->count()}}</td>
                 </tr>
             @empty

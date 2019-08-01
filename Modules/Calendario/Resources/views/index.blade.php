@@ -7,25 +7,27 @@
     @include('calendario::eventos/criar')
 
     @if($agendas->isNotEmpty())
-    <div id="agendas">
-        <div class="card">
-            <div class="card-header">
-                <a class="card-link" data-toggle="collapse" href="#filtrar">
-                    Filtrar agendas <i class="material-icons">arrow_drop_down</i>
-                </a>
-            </div>
-            <div id="filtrar" class="collapse" data-parent="#agendas">
-                <div class="card-body">
-                    @foreach($agendas as $agenda)
-                        <div class="agenda custom-control custom-checkbox">
-                            <input checked type="checkbox" id="agenda{{$agenda->id}}" class="custom-control-input" value="{{$agenda->id}}" name="agenda{{$agenda->id}}">
-                            <label class="custom-control-label" for="agenda{{$agenda->id}}">{{$agenda->titulo}}</label>
-                        </div>
-                    @endforeach
+        <div id="agendas">
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#filtrar">
+                        Filtrar agendas <i class="material-icons">arrow_drop_down</i>
+                    </a>
+                </div>
+                <div id="filtrar" class="collapse" data-parent="#agendas">
+                    <div class="card-body">
+                        @foreach($agendas as $agenda)
+                            <div class="agenda custom-control custom-checkbox">
+                                <input type="checkbox" id="agenda{{$agenda->id}}" class="custom-control-input"
+                                       value="{{$agenda->id}}" name="agenda{{$agenda->id}}" checked>
+                                <label class="custom-control-label" for="agenda{{$agenda->id}}"
+                                       style="border-bottom: 3px solid #{{$agenda->cor->codigo}}">{{$agenda->titulo}}</label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endif
 
     <div id="calendario"></div>
@@ -61,18 +63,19 @@
         }
 
         .agenda {
-            width: 150px;
-            white-space: nowrap;
             overflow: hidden;
+            white-space: nowrap;
             display: inline-block;
             margin-right: 15px;
+            margin-bottom: 5px;
+            max-width: 200px;
         }
 
         .agenda label {
             margin: 0;
         }
 
-        .card-link{
+        .card-link {
             display: inline-flex;
             vertical-align: middle;
         }
@@ -103,9 +106,60 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <script type="text/javascript">
-        //TODO resolver erro de stackoverflow quando a página é exibida pelo back do navegador
-        $(function () {
+
+        var filtroAgenda = function (agenda) {
+            if ($('#' + agenda).prop('checked')) {
+                $('.' + agenda).show();
+            } else {
+                $('.' + agenda).hide();
+            }
+        };
+
+        $(document).ready(function () {
             var agendas = {!! $agendas !!};
+
+            var calendarEl = document.getElementById('calendario');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'pt-br',
+                height: 'parent',
+                plugins: ['interaction', 'dayGrid', 'timeGrid', 'list', 'bootstrap'],
+                themeSystem: 'bootstrap',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                },
+                navLinks: true, // can click day/week names to navigate views
+                businessHours: true, // display business hours
+                events: '{{route('eventos.index')}}',
+                eventRender: function (info) {
+                    var agenda = info.event.extendedProps.agenda;
+                    if (!$('#' + agenda).prop('checked')) {
+                        $(info.el).hide();
+                    }
+                },
+                dateClick: function (info) {
+                    if (agendas.length <= 0) {
+                        bootbox.confirm({
+                            title: "Nenhuma agenda cadastrada",
+                            message: "Para criar eventos você deve possui ao menos uma agenda para vínculá-los. Deseja criar uma agenda agora?",
+                            locale: 'br',
+                            callback: function (result) {
+                                if (result == true) {
+                                    window.location.href = '{{route('agendas.criar')}}'
+                                }
+                            }
+                        });
+                    } else {
+                        $('#eventoDataInicio').datetimepicker('date', info.date);
+                        $('#eventoModal').modal('show');
+                    }
+                },
+                eventClick: function (info) {
+                    alert('Event: ' + info.event.id);
+                }
+            });
 
             $('#icone-notificacao').on('click', function (e) {
                 $('#eventoNotificacao :input').prop('disabled', function (i, v) {
@@ -136,44 +190,12 @@
                 }
             });
 
-            var calendarEl = document.getElementById('calendario');
+            calendar.render();
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                locale: 'pt-br',
-                height: 'parent',
-                plugins: ['interaction', 'dayGrid', 'timeGrid', 'list', 'bootstrap'],
-                themeSystem: 'bootstrap',
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-                },
-                navLinks: true, // can click day/week names to navigate views
-                businessHours: true, // display business hours
-                events: '{{route('eventos.index')}}',
-                dateClick: function (info) {
-                    if (agendas.length <= 0) {
-                        bootbox.confirm({
-                            title: "Nenhuma agenda cadastrada",
-                            message: "Para criar eventos você deve possui ao menos uma agenda para vínculá-los. Deseja criar uma agenda agora?",
-                            locale: 'br',
-                            callback: function (result) {
-                                if (result == true) {
-                                    window.location.href = '{{route('agendas.criar')}}'
-                                }
-                            }
-                        });
-                    } else {
-                        $('#eventoDataInicio').datetimepicker('date', info.date);
-                        $('#eventoModal').modal('show');
-                    }
-                },
-                eventClick: function (info) {
-                    alert('Event: ' + info.event.id);
-                }
+            $('[id^="agenda"].custom-control-input').on('click', function (e) {
+                filtroAgenda(e.target.id);
             });
 
-            calendar.render();
         });
     </script>
 @endsection
