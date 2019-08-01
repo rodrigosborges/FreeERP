@@ -23,6 +23,7 @@ class ConsertoController extends Controller
       $tecnicos = TecnicoAssistenciaModel::all();
       $ultimo = ConsertoAssistenciaModel::withTrashed()->latest()->first();
 
+
       $id = 0;
       if($ultimo == null){
         $id = 1;
@@ -90,7 +91,7 @@ class ConsertoController extends Controller
       for ($i=0; $i < count($dados['pecas']); $i++) {
         $pecas = new PecaOs;
         $pecas->idConserto = $idConserto;
-        $pecas->idPeca = $dados['pecas'][$i];
+        $pecas->idItemPeca = $dados['pecas'][$i];
         $pecas->save();
       }
       for ($i=0; $i < count($dados['servicos']); $i++) {

@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class PecaOS extends Model
 {
     protected $table = 'peca_os_assistencia';
-    protected $fillable = ['id','idConserto','idPeca'];
+    protected $fillable = ['id','idConserto','idItemPeca'];
     
-    public function peca(){
-        return $this->belongsTo('Modules\Assistencia\Entities\PecaAssistenciaModel', 'idPeca');
+    public function itemPeca(){
+        return $this->belongsTo('Modules\Assistencia\Entities\ItemPeca', 'idItemPeca');
     }
 }
     
