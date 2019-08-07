@@ -10,26 +10,26 @@ class OrdemServico extends Model
     Use SoftDeletes;
     protected $table = 'ordem_servico';
     public $timestamps = true;
-    protected $fillable = array('id','status','descricao');
+    protected $fillable = array('status','descricao');
 
     public function solicitante(){
-        return $this->hasOne('App\Solicitante','ordem_servico_has_solicitante');
+        return $this->hasOne('Modules\OrdemServico\Entities\Solicitante','ordem_servico_has_solicitante');
     }
 
     public function tecnico(){
-        return $this->hasOne('App\Tecnico','ordem_servico_has_tecnico');
+        return $this->hasOne('Modules\OrdemServico\Entities\Tecnico','ordem_servico_has_tecnico');
     }
     
     public function gerente(){
-        return $this->hasOne('App\Gerente','ordem_servico_has_gerente');
+        return $this->hasOne('Modules\OrdemServico\Entities\Gerente','ordem_servico_has_gerente');
     }
     
     public function aparelho(){
-        return $this->hasOne('App\Aparelho','ordem_servico_has_aparelho');
+        return $this->hasOne('Modules\OrdemServico\Entities\Aparelho','ordem_servico_has_aparelho');
     }
     
     public function problema(){
-        return $this->hasOne('App\Problema','ordem_servico_has_problema');
+        return $this->hasOne('Modules\OrdemServico\Entities\Problema','ordem_servico_has_problema');
     }
 
 }

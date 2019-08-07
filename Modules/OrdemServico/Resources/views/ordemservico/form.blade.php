@@ -14,32 +14,43 @@
 
         <div class="form-group">
             <div class="form-row">
-                {{Form::label('Solicitante')}}
-                {{Form::text('solicitante_id','',array('class' => 'form-control','placeholder'=>'Solicitante'))}}
+                <div class="col-sm-8">
+                    {{Form::label('solicitante_id','Solicitante ')}}  
+                </div>
+            
+                <div class="col-sm-8  col-md-6 mb-6">  
+                    {{Form::text("solicitante_id",'',array('class' => 'form-control','placeholder'=>'Identificação de solicitante'))}}   
+                </div>
+                
+                <a href="{{ url('ordemservico/solicitante/create') }}" class="btn btn-success">+</a>
+            
             </div>
         </div>
+        <hr>
         @endif
 
+        {{Form::label('Aparelho')}}
         <div class="form-row">
             <div class="col-md-4 mb-3">
-                {{Form::label('Tipo do Aparelho')}}
-                {{Form::text('tipo_aparelho', $data['model'] ? $data['model']->tipo_aparelho : old('tipo_aparelho'),array('class' => 'form-control','placeholder'=>'ex: computador'))}}
+                {{Form::text("aparelho['tipo_aparelho']", $data['model'] ? $data['model']->aparelho_id : old('aparelho_id'),array('class' => 'form-control','placeholder'=>'Tipo de Aparelho'))}}
             </div>
 
             <div class="col-md-4 mb-3">
-                {{Form::label('Marca')}}
-                {{Form::text('marca', $data['model'] ? $data['model']->marca : old('marca'),array('class' => 'form-control','placeholder'=>'ex: dell'))}}
-            </div>
-
-            <div class="col-md-4 mb-3">
-                {{Form::label('Número de Série')}}
-                {{Form::text('numero_serie', $data['model'] ? $data['model']->numero_serie : old('numero_serie'),array('class' => 'form-control','placeholder'=>'Número de Série'))}}
+                {{Form::text("aparelho['marca']", $data['model'] ? $data['model']->marca : old('marca'),array('class' => 'form-control','placeholder'=>'Marca'))}}
             </div>
         </div>
+        <hr>
 
-        <div class="form-group">
-            {{Form::textarea('descricao_problema', $data['model'] ? $data['model']->descricao_problema : old('descricao_problema'),array('class' => 'form-control','placeholder'=>'Descrição Problema'))}}
+        {{Form::label('Problema')}}
+               
+        <div class="form-row">
+        
+        <div class="col-md-4 mb-3">
+                {{Form::text("problema['titulo']", $data['model'] ? $data['model']->numero_serie : old('numero_serie'),array('class' => 'form-control','placeholder'=>'Número de Série'))}}
+            </div>
+            {{Form::textarea("descricao", $data['model'] ? $data['model']->descricao_problema : old('descricao_problema'),array('class' => 'form-control','placeholder'=>'Descrição Problema'))}}
         </div>
+        <br>
 
         <div class="form-group">
             {{Form::submit( $data['button'],array('class'=>"btn btn-success") )}}

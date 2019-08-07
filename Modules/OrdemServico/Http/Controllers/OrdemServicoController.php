@@ -49,7 +49,8 @@ class OrdemServicoController extends Controller
     {
         DB::beginTransaction();
         try {
-            $ordem_servico = OrdemServico::create($request->all());
+            $ordem_servico = OrdemServico::create();
+           
             DB::commit();
             return redirect('/ordemservico/os')->with('success', 'Ordem cadastrada com successo');
         } catch (Exception $e) {
