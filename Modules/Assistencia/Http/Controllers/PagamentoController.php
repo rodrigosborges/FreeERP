@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\{ConsertoAssistenciaModel, PagamentoAssistenciaModel};
+use DB;
 
 class PagamentoController extends Controller
 {
@@ -30,6 +31,13 @@ class PagamentoController extends Controller
 
 
     public function salvar(Request $req, $id) {
+        DB::beginTransaction();
+        try {
+            DB::commit();
+        } catch (zException $e) {
+            DB::rollback();
+            return back();
+        }
 
         $dados = $req->all();
         $forma = '';

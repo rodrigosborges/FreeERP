@@ -17,21 +17,36 @@ class ConsertoController extends Controller
     }
 
     public function cadastrar(){
+      
       $pecas = ItemPeca::all();
       $servicos = ServicoAssistenciaModel::all();
       $clientes = ClienteAssistenciaModel::all();
       $tecnicos = TecnicoAssistenciaModel::all();
-      $ultimo = ConsertoAssistenciaModel::withTrashed()->latest()->first();
+      
+      if($clientes):
 
+        return gettype($clientes);
 
-      $id = 0;
-      if($ultimo == null){
-        $id = 1;
-      } else {
-        $id = 1 + $ultimo->id;
-      }
+      elseif(is_null($tecnicos)): 
 
-      return view('assistencia::paginas.consertos.cadastrarconserto', compact('id','clientes','tecnicos','pecas','servicos'));
+        return $tecnicos;
+
+      else:
+        $ultimo = ConsertoAssistenciaModel::withTrashed()->latest()->first();
+        $id = 0;
+  
+        if($ultimo == null){
+          $id = 1;
+        } else {
+          $id = 1 + $ultimo->id;
+        }
+  
+        return view('assistencia::paginas.consertos.cadastrarconserto', compact('id','clientes','tecnicos','pecas','servicos'));
+        
+  
+      endif;
+
+      
     }
 
     public function localizar() {
@@ -64,6 +79,13 @@ class ConsertoController extends Controller
       return view('assistencia::paginas.consertos.editarConserto', compact('conserto', 'id', 'pecas', 'servicos','pecaOS','itemServico'));
     }
     public function atualizar(Request $req, $id){
+      DB::beginTransaction();
+      try {
+        DB::commit();
+      } catch (zException $e) {
+        DB::rollback();
+        return back();
+      }
       $dados  = $req->all();
       ConsertoAssistenciaModel::find($id)->update($dados);
 
@@ -71,7 +93,13 @@ class ConsertoController extends Controller
     }
 
     public function salvar(StoreConsertosRequest $req){
-
+      DB::beginTransaction();
+      try {
+        DB::commit();
+      } catch (zException $e) {
+        DB::rollback();
+        return back();
+      }
       $dados  = $req->all();
       //REALIZAR VERIFICAÇÃO DE PEÇA E MAO DE OBRA VAZIOS, E GERAR UM VALOR PADRAO
 
@@ -100,7 +128,6 @@ class ConsertoController extends Controller
         $servicos->idMaoObra = $dados['servicos'][$i];
         $servicos->save();
       }
-
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço iniciada!');
     }
 

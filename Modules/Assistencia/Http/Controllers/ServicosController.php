@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\ServicoAssistenciaModel;
 use Modules\Assistencia\Http\Requests\StoreServicoRequest;
+use DB;
 
 class ServicosController extends Controller
 {
@@ -16,15 +17,23 @@ class ServicosController extends Controller
 
    public function localizar(){
      $servicos = ServicoAssistenciaModel::paginate(10);
-
-     return view('assistencia::paginas.estoque.localizarServico',compact('servicos'));
+     $servicosDeletados = ServicoAssistenciaModel::onlyTrashed()->paginate(10);
+     return view('assistencia::paginas.estoque.localizarServico',compact('servicos','servicosDeletados'));
    }
 
    public function salvar(StoreServicoRequest $req){
-     $dados  = $req->all();
-     $dados['valor'] = str_replace(",",".",$dados['valor']);
-     ServicoAssistenciaModel::create($dados);
-     return redirect()->route('servicos.localizar');
+    DB::beginTransaction();
+    try {
+      $dados  = $req->all();
+      $dados['valor'] = str_replace(",",".",$dados['valor']);
+      ServicoAssistenciaModel::create($dados);
+      DB::commit();
+      return redirect()->route('servicos.localizar');
+    } catch (zException $e) {
+      DB::rollback();
+      return back();
+    }
+     
    }
 
    public function editar($id){
@@ -34,19 +43,35 @@ class ServicosController extends Controller
    }
 
    public function atualizar(StoreServicoRequest $req, $id){
-     $dados  = $req->all();
-     $dados['valor'] = str_replace(",",".",$dados['valor']);
+    DB::beginTransaction();
+    try {
+      $dados  = $req->all();
+      $dados['valor'] = str_replace(",",".",$dados['valor']);
 
-     ServicoAssistenciaModel::find($id)->update($dados);
-     return redirect()->route('servicos.localizar');
+      ServicoAssistenciaModel::find($id)->update($dados);
+      DB::commit();
+      return redirect()->route('servicos.localizar');
+    } catch (zException $e) {
+      DB::rollback();
+      return back();
+    }
+     
    }
 
    public function deletar($id){
-    $servico = ServicoAssistenciaModel::find($id);
-    $servico->delete();
-    $servico->update();
-
-    return redirect()->route('servicos.localizar');
+    DB::beginTransaction();
+    try {
+      $servico = ServicoAssistenciaModel::find($id);
+      $servico->delete();
+      $servico->update();
+      DB::commit();
+      return redirect()->route('servicos.localizar');
+      
+    } catch (zException $e) {
+      DB::rollback();
+      return back();
+    }
+    
    }
    public function buscar(Request $req){
      $servicos = ServicoAssistenciaModel::busca($req->busca);

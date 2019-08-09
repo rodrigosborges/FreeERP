@@ -7,13 +7,15 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\TecnicoAssistenciaModel;
 use Modules\Assistencia\Http\Requests\StoreTecnicoRequest;
+use DB;
 
 class TecnicoController extends Controller
 {
 
   public function index(){
     $tecnicos = TecnicoAssistenciaModel::paginate(10);
-    return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos'));
+    $tecnicosDeletados = TecnicoAssistenciaModel::onlyTrashed()->paginate(10);
+    return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos','tecnicosDeletados'));
   }
   public function localizar(){
     $tecnicos = TecnicoAssistenciaModel::paginate(10);
@@ -23,10 +25,18 @@ class TecnicoController extends Controller
     return view('assistencia::paginas.tecnicos.cadastrotecnico');
   }
   public function salvar(StoreTecnicoRequest $req){
-    $dados  = $req->all();
-    TecnicoAssistenciaModel::create($dados);
-
-    return redirect()->route('tecnico.localizar')->with('success','Técnico cadastrado com sucesso!');
+    DB::beginTransaction();
+      try {
+        $dados  = $req->all();
+        TecnicoAssistenciaModel::create($dados);
+        DB::commit();
+        return redirect()->route('tecnico.localizar')->with('success','Técnico cadastrado com sucesso!');
+        
+      } catch (zException $e) {
+        DB::rollback();
+        return back();
+      }
+    
   }
 
   public function editar($id){
@@ -35,17 +45,34 @@ class TecnicoController extends Controller
   }
 
   public function atualizar(StoreTecnicoRequest $req, $id){
-    $dados  = $req->all();
-    TecnicoAssistenciaModel::find($id)->update($dados);
-    return redirect()->route('tecnico.localizar')->with('success','Técnico atualizado com sucesso!');
+    DB::beginTransaction();
+      try {
+        $dados  = $req->all();
+        TecnicoAssistenciaModel::find($id)->update($dados);
+        DB::commit();
+
+        return redirect()->route('tecnico.localizar')->with('success','Técnico atualizado com sucesso!'); 
+      } catch (zException $e) {
+        DB::rollback();
+        return back();
+      }
+    
   }
 
   public function deletar($id){
-    $tecnico = TecnicoAssistenciaModel::find($id);
-    $tecnico->delete();
-    $tecnico->update();
-
-    return redirect()->route('tecnico.localizar');
+    DB::beginTransaction();
+      try {
+        
+        $tecnico = TecnicoAssistenciaModel::find($id);
+        $tecnico->delete();
+        $tecnico->update();
+        DB::commit();
+        return redirect()->route('tecnico.localizar');
+      } catch (zException $e) {
+        DB::rollback();
+        return back();
+      }
+    
   }
 
   public function buscar(Request $req){

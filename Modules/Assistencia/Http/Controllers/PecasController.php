@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\PecaAssistenciaModel;
 use Modules\Assistencia\Entities\ItemPeca;
 use Modules\Assistencia\Http\Requests\StorePecaRequest;
+use DB;
 
 class PecasController extends Controller
 {
@@ -19,28 +20,31 @@ class PecasController extends Controller
 
   public function localizar(){
      $pecas = PecaAssistenciaModel::paginate(10);
-
-     return view('assistencia::paginas.estoque.localizarPeca',compact('pecas'));
+     $pecasDeletadas = PecaAssistenciaModel::onlyTrashed()->paginate(10);
+     return view('assistencia::paginas.estoque.localizarPeca',compact('pecas','pecasDeletadas'));
   }
 
   public function salvar(StorePecaRequest $req){
-    $dados = $req->all();
-    $dados['valor_venda'] = str_replace(",",".",$dados['valor_venda']);
-    $dados['valor_compra'] = str_replace(",",".",$dados['valor_compra']);
-    $quantidade = intval($dados['quantidade']);
-    PecaAssistenciaModel::create($dados);
+    DB::beginTransaction();
+      try {
+        $dados = $req->all();
+        $dados['valor_venda'] = str_replace(",",".",$dados['valor_venda']);
+        $dados['valor_compra'] = str_replace(",",".",$dados['valor_compra']);
+        $quantidade = intval($dados['quantidade']);
+        PecaAssistenciaModel::create($dados);
+        $peca = PecaAssistenciaModel::latest()->first();
+        for($i = 1; $i <= $quantidade; $i++ ){
+          $itemPeca = new ItemPeca;
+          $itemPeca->idPeca = $peca->id;
+          $itemPeca->save();
+        }
+        DB::commit();
+        return redirect()->route('pecas.localizar');
+      } catch (zException $e) {
+        DB::rollback();
+        return back();
+      }
     
-    $peca = PecaAssistenciaModel::latest()->first();
-
-
-    for($i = 1; $i <= $quantidade; $i++ ){
-      $itemPeca = new ItemPeca;
-      $itemPeca->idPeca = $peca->id;
-      $itemPeca->save();
-    }
-     
-     
-    return redirect()->route('pecas.localizar');
   }
 
    public function editar($id){
@@ -51,28 +55,52 @@ class PecasController extends Controller
    }
 
    public function atualizar(StorePecaRequest $req, $id){
-     $dados  = $req->all();
-     $dados['valor_venda'] = str_replace(",",".",$dados['valor_venda']);
-     $dados['valor_compra'] = str_replace(",",".",$dados['valor_compra']);
-     PecaAssistenciaModel::find($id)->update($dados);
-     return redirect()->route('pecas.localizar');
+    DB::beginTransaction();
+    try {
+      $dados  = $req->all();
+      $dados['valor_venda'] = str_replace(",",".",$dados['valor_venda']);
+      $dados['valor_compra'] = str_replace(",",".",$dados['valor_compra']);
+      PecaAssistenciaModel::find($id)->update($dados);
+      DB::commit();
+      return redirect()->route('pecas.localizar');
+    } catch (zException $e) {
+      DB::rollback();
+      return back();
+    }
+     
    }
 
    public function deletar($id){
+    DB::beginTransaction();
+    try {
       $peca = PecaAssistenciaModel::find($id);
       $peca->delete();
       $peca->update();
-
-     return redirect()->route('pecas.localizar');
+      DB::commit();
+      return redirect()->route('pecas.localizar');
+    } catch (zException $e) {
+      DB::rollback();
+      return back();
+    }
+      
    }
    public function deletarItem($id){
-    $item = ItemPeca::find($id);
-    $item->delete();
-    $item->update();
-    $peca = PecaAssistenciaModel::where('id', $item->idPeca)->get()->first();
-    $peca->quantidade = ($peca->quantidade)-1;
-    $peca->update();
-    return redirect()->route('pecas.editar', $item->idPeca);
+    DB::beginTransaction();
+    try {
+      
+      $item = ItemPeca::find($id);
+      $item->delete();
+      $item->update();
+      $peca = PecaAssistenciaModel::where('id', $item->idPeca)->get()->first();
+      $peca->quantidade = ($peca->quantidade)-1;
+      $peca->update();
+      DB::commit();
+      return redirect()->route('pecas.editar', $item->idPeca);
+    } catch (zException $e) {
+      DB::rollback();
+      return back();
+    }
+    
  }
    public function buscar(Request $req){
      $pecas = PecaAssistenciaModel::busca($req->busca);
