@@ -29,9 +29,21 @@ $menu = [
 @section('css')
     @parent
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':css/app.css')}}">
+    <style type="text/css">
+        #sidebar a.active{
+            background-color: #f3f6f7;
+            color: #5f6368;
+        }
+    </style>
 @endsection
 
 @section('js')
     @parent
     <script src="{{Module::asset(config('calendario.id').':js/app.js')}}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#sidebar a.nav-link').each(function () {
+            });
+        });
+    </script>
 @endsection

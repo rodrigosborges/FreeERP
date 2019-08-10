@@ -6,18 +6,11 @@ use Illuminate\Database\QueryException;
 use Illuminate\Routing\Controller;
 use Modules\Calendario\Entities\Agenda;
 use Modules\Calendario\Entities\Setor;
-use Modules\Calendario\Entities\Tipo;
 use Modules\Calendario\Entities\Cor;
 use Modules\Calendario\Http\Requests\AgendaSalvarRequest;
 
 class AgendaController extends Controller
 {
-    public function index()
-    {
-        $agendas = Agenda::where('funcionario_id', 1)->get();
-        return view('calendario::agendas.index', ['agendas' => $agendas]);
-    }
-
     public function criarOuEditar(Agenda $agenda = null)
     {
         $cores = Cor::all();
@@ -68,13 +61,16 @@ class AgendaController extends Controller
         return redirect()->route('agendas.index')->with('success', 'Agenda "' . $request->agendaNome . '" atualizada com sucesso.');
     }
 
-    public function eventos()
-    {
-        $eventos = [];
-        $agendas = Agenda::where('funcionario_id', 1)->get();
-        foreach ($agendas as $agenda) {
-            $eventos = array_merge($eventos, $agenda->eventos_json);
+    public function deletar(Agenda $agenda){
+        try{
+            $agenda->delete();
+        }catch (\Exception $e){
+            return redirect()->route('agendas.index')->with('error', 'Falha ao deletar agenda. Erro: ' . $e->getMessage());
         }
-        return $eventos;
+        return redirect()->route('agendas.index')->with('success', 'Agenda deletada com sucesso.');
+    }
+
+    public function eventos(Agenda $agenda){
+        return view('calendario::eventos.index', ['eventos' => $agenda->eventos]);
     }
 }

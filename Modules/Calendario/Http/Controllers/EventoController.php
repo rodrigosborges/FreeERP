@@ -29,6 +29,15 @@ class EventoController extends Controller
         return redirect()->route('calendario.index')->with('success', 'Evento criado com sucesso.');
     }
 
+    public function deletar(Evento $evento){
+        try{
+            $evento->delete();
+        }catch (\Exception $e){
+            return redirect()->route('agendas.eventos.index', $evento->agenda->id)->with('error', 'Falha ao deletar evento. Erro: ' . $e->getCode());
+        }
+        return redirect()->route('agendas.eventos.index', $evento->agenda->id)->with('success', 'Evento deletado com sucesso.');
+    }
+
     private function formatar_data($data){
         $formatos = ['d/m/Y H:i', 'd/m/Y'];
         foreach ($formatos as $formato){

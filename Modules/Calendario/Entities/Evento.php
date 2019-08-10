@@ -16,4 +16,12 @@ class Evento extends Model
     public function agenda(){
         return $this->belongsTo('Modules\Calendario\Entities\Agenda');
     }
+
+    /*public function getDataInicioAttribute($value){
+        return Carbon::parse($value)->format('d/m/Y H:i');
+    }
+
+    public function getDataFimAttribute($value){
+        return Carbon::parse($value)->format('d/m/Y H:i');
+    }*/
 }

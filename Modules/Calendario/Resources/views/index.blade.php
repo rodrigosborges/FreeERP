@@ -5,7 +5,6 @@
 @section('content')
     @parent
     @include('calendario::eventos/criar')
-
     @if($agendas->isNotEmpty())
         <div id="agendas">
             <div class="card">
@@ -17,14 +16,16 @@
                 <div id="filtrar" class="collapse" data-parent="#agendas">
                     <div class="card-body">
                         @foreach($agendas as $agenda)
-                            @if($agenda->eventos->isNotEmpty())
-                                <div class="agenda custom-control custom-checkbox">
-                                    <input type="checkbox" id="agenda{{$agenda->id}}" class="custom-control-input"
-                                           value="{{$agenda->id}}" name="agenda{{$agenda->id}}" checked>
-                                    <label class="custom-control-label" for="agenda{{$agenda->id}}"
-                                           style="border-bottom: 3px solid #{{$agenda->cor->codigo}}">{{$agenda->titulo}}</label>
-                                </div>
-                            @endif
+                            <div class="agenda custom-control custom-checkbox">
+                                <input type="checkbox" id="agenda{{$agenda->id}}" class="custom-control-input"
+                                       value="{{$agenda->id}}" name="agenda{{$agenda->id}}" checked>
+                                <label class="custom-control-label" for="agenda{{$agenda->id}}"
+                                       style="padding-bottom: 3px; border-bottom: 3px solid #{{$agenda->cor->codigo}}">{{$agenda->titulo}}
+                                    @if($agenda->setor)
+                                        <a href="#" class="badge badge-secondary">{{$agenda->setor->sigla}}</a>
+                                    @endif
+                                </label>
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -118,7 +119,7 @@
         };
 
         $(document).ready(function () {
-            var agendas = {!! $agendas !!};
+            var agendas = '{{ $agendas }}';
 
             var calendarEl = document.getElementById('calendario');
 
@@ -182,8 +183,13 @@
                 e.preventDefault();
             });
 
-            $('#eventoDataInicio, #eventoDataFim').datetimepicker({
-                locale: 'pt-br'
+            $('#eventoDataInicio').datetimepicker({
+                locale: 'pt-br',
+            });
+
+            $('#eventoDataFim').datetimepicker({
+                locale: 'pt-br',
+                useCurrent: false
             });
 
             $("#eventoDataInicio").on("change.datetimepicker", function (e) {
