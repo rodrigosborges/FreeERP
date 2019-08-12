@@ -30,7 +30,7 @@ $menu = [
     @parent
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':css/app.css')}}">
     <style type="text/css">
-        #sidebar a.active{
+        #sidebar a.active {
             background-color: #f3f6f7;
             color: #5f6368;
         }
@@ -42,8 +42,31 @@ $menu = [
     <script src="{{Module::asset(config('calendario.id').':js/app.js')}}"></script>
     <script type="text/javascript">
         $(function () {
-            $('#sidebar a.nav-link').each(function () {
-            });
+            $.when(
+                $('#sidebar a.nav-link span').each(function () {
+                    switch ($(this).text().trim()) {
+                        case 'Visão Geral':
+                            $(this).parent('a').addClass('visao-geral');
+                            break;
+                        case 'Agendas':
+                            $(this).parent('a').addClass('agendas');
+                            break;
+                    }
+                }))
+                .done(function () {
+                    console.log('{{ \Illuminate\Support\Facades\Route::currentRouteName() }}');
+
+                    switch ('{{ \Illuminate\Support\Facades\Route::currentRouteName() }}'.trim()) {
+                        case 'calendario.index':
+                            $('.visao-geral').addClass('active');
+                            break;
+                        case 'agendas.index':
+                        case 'agendas.editar':
+                        case 'agendas.eventos.index':
+                            $('.agendas').addClass('active');
+                            break;
+                    }
+                });
         });
     </script>
 @endsection
