@@ -36,11 +36,11 @@
             </div>
 
             <div class="col-md-4 mb-3">
-                {{Form::text("aparelho[tipo_aparelho]", $data['model'] ? $data['model']->aparelho_id : old('aparelho_id'),array('class' => 'form-control','id' =>'tipo_aparelho','placeholder'=>'Tipo de Aparelho'))}}
+                {{Form::text("aparelho[tipo_aparelho]", $data['model'] ? $data['model']->aparelho->tipo_aparelho : old('tipo_aparelho'),array('class' => 'form-control','id' =>'tipo_aparelho','placeholder'=>'Tipo de Aparelho','disabled'))}}
             </div>
 
             <div class="col-md-4 mb-3">
-                {{Form::text("aparelho[marca]", $data['model'] ? $data['model']->marca : old('marca'),array('class' => 'form-control','id'=>'marca','placeholder'=>'Marca'))}}
+                {{Form::text("aparelho[marca]", $data['model'] ? $data['model']->aparelho->marca : old('marca'),array('class' => 'form-control','id'=>'marca','placeholder'=>'Marca','disabled'))}}
             </div>
         </div>
         <hr>
@@ -50,9 +50,9 @@
         <div class="form-row">
 
             <div class="col-md-4 mb-3">
-                {{Form::text("problema[titulo]", $data['model'] ? $data['model']->numero_serie : old('numero_serie'),array('class' => 'form-control','placeholder'=>'Titulo'))}}
+                {{Form::text("problema[titulo]", $data['model'] ? $data['model']->problema->titulo : old('titulo'),array('class' => 'form-control','placeholder'=>'Titulo'))}}
             </div>
-            {{Form::textarea("ordem_servico[descricao]", $data['model'] ? $data['model']->descricao_problema : old('descricao_problema'),array('class' => 'form-control','placeholder'=>'Descrição Problema'))}}
+            {{Form::textarea("ordem_servico[descricao]", $data['model'] ? $data['model']->descricao : old('descricao'),array('class' => 'form-control','placeholder'=>'Descrição Problema'))}}
         </div>
         <br>
 
@@ -71,7 +71,6 @@
     $(document).ready(function() {
         //Busca Aparelho , se existir preenche atributos do aparelho automaticamente
         $('#aparelho_id').keyup(function() {
-
             $.getJSON("/ordemservico/aparelho/showAjax", {
                 id: $('#aparelho_id').val()
             }, function() {
