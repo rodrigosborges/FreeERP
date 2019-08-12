@@ -15,12 +15,12 @@ class OrdemServicoTable extends Migration
         Schema::create('ordem_servico', function(Blueprint $table)
 		{
             $table->integer('id', true);
-            $table->integer('solicitante_id')->index('fk_ordem_servico_solicitante1');
+            $table->integer('solicitante_id')->unsigned();
             $table->integer('gerente_id')->index('fk_ordem_servico_gerente1');
             $table->integer('tecnico_id')->index('fk_ordem_servico_tecnico1');
             $table->integer('aparelho_id')->index('fk_ordem_servico_aparelho1');
             $table->integer('problema_id')->index('fk_ordem_servico_problema1');
-            $table->string('status');
+            $table->string('status')->default("Iniciado");
             $table->string('descricao');
 			$table->timestamps();
 			$table->softDeletes();

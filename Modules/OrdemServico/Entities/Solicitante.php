@@ -10,5 +10,11 @@ class Solicitante extends Model
     Use SoftDeletes;
     protected $table = 'solicitante';
     public $timestamps = true;
-    protected $fillable = array('id','nome');
+    protected $fillable = array('nome');
+
+    //relaçoes
+    public function ordem_servico(){
+        return $this->hasMany('Modules\OrdemServico\Entities\OrdemServico');
+    }
+    
 }

@@ -15,15 +15,15 @@
         <div class="form-group">
             <div class="form-row">
                 <div class="col-sm-8">
-                    {{Form::label('solicitante_id','Solicitante ')}}  
+                    {{Form::label('solicitante_id','Solicitante ')}}
                 </div>
-            
-                <div class="col-sm-8  col-md-6 mb-6">  
-                    {{Form::text("solicitante_id",'',array('class' => 'form-control','placeholder'=>'Identificação de solicitante'))}}   
+
+                <div class="col-sm-8  col-md-6 mb-6">
+                    {{Form::text("solicitante[solicitante_id]",'',array('class' => 'form-control','placeholder'=>'Identificação de solicitante'))}}
                 </div>
-                
+
                 <a href="{{ url('ordemservico/solicitante/create') }}" class="btn btn-success">+</a>
-            
+
             </div>
         </div>
         <hr>
@@ -32,23 +32,27 @@
         {{Form::label('Aparelho')}}
         <div class="form-row">
             <div class="col-md-4 mb-3">
-                {{Form::text("aparelho['tipo_aparelho']", $data['model'] ? $data['model']->aparelho_id : old('aparelho_id'),array('class' => 'form-control','placeholder'=>'Tipo de Aparelho'))}}
+                {{Form::text("aparelho[id]", $data['model'] ? $data['model']->aparelho_id : old('aparelho_id'),array('id' => 'aparelho_id','class' => 'form-control','placeholder'=>'Identificação'))}}
             </div>
 
             <div class="col-md-4 mb-3">
-                {{Form::text("aparelho['marca']", $data['model'] ? $data['model']->marca : old('marca'),array('class' => 'form-control','placeholder'=>'Marca'))}}
+                {{Form::text("aparelho[tipo_aparelho]", $data['model'] ? $data['model']->aparelho_id : old('aparelho_id'),array('class' => 'form-control','id' =>'tipo_aparelho','placeholder'=>'Tipo de Aparelho'))}}
+            </div>
+
+            <div class="col-md-4 mb-3">
+                {{Form::text("aparelho[marca]", $data['model'] ? $data['model']->marca : old('marca'),array('class' => 'form-control','id'=>'marca','placeholder'=>'Marca'))}}
             </div>
         </div>
         <hr>
 
         {{Form::label('Problema')}}
-               
+
         <div class="form-row">
-        
-        <div class="col-md-4 mb-3">
-                {{Form::text("problema['titulo']", $data['model'] ? $data['model']->numero_serie : old('numero_serie'),array('class' => 'form-control','placeholder'=>'Número de Série'))}}
+
+            <div class="col-md-4 mb-3">
+                {{Form::text("problema[titulo]", $data['model'] ? $data['model']->numero_serie : old('numero_serie'),array('class' => 'form-control','placeholder'=>'Titulo'))}}
             </div>
-            {{Form::textarea("descricao", $data['model'] ? $data['model']->descricao_problema : old('descricao_problema'),array('class' => 'form-control','placeholder'=>'Descrição Problema'))}}
+            {{Form::textarea("ordem_servico[descricao]", $data['model'] ? $data['model']->descricao_problema : old('descricao_problema'),array('class' => 'form-control','placeholder'=>'Descrição Problema'))}}
         </div>
         <br>
 
@@ -59,4 +63,27 @@
         {{ Form::close() }}
     </div>
 </div>
+@endsection
+
+@section('js')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        //Busca Aparelho , se existir preenche atributos do aparelho automaticamente
+        $('#aparelho_id').keyup(function() {
+
+            $.getJSON("/ordemservico/aparelho/showAjax", {
+                id: $('#aparelho_id').val()
+            }, function() {
+                console.log("success");
+            }).done(function(data) {
+                $('#tipo_aparelho').val(data.tipo_aparelho).prop('disabled', true);
+                $('#marca').val(data.marca).prop('disabled', true);
+            }).fail(function() {
+                $('#tipo_aparelho').val("").prop('disabled', false);
+                $('#marca').val("").prop('disabled', false);
+            })
+        });
+    });
+</script>
 @endsection

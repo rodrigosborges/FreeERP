@@ -14,7 +14,9 @@
 //Módulo de Ordem de servico
 Route::prefix('ordemservico')->name('modulo.')->group(function() {
 	Route::get('pdf', 'OrdemServicoController@pdf')->name('os.pdf');
+	Route::get('aparelho/showAjax','AparelhoController@showAjax')->name('aparelho.showjax');
 	Route::resource('gerente', 'GerenteController');
+	Route::resource('aparelho', 'AparelhoController');
 	Route::resource('os', 'OrdemServicoController');
 	Route::resource('tecnico', 'TecnicoController');
 	Route::resource('solicitante', 'SolicitanteController');

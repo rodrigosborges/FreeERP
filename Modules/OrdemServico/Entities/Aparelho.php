@@ -11,5 +11,5 @@ class Aparelho extends Model
     Use SoftDeletes;
     protected $table = 'aparelho';
     public $timestamps = true;
-    protected $fillable = array('id','marca','numero_serie');
+    protected $fillable = array('marca','tipo_aparelho');
 }

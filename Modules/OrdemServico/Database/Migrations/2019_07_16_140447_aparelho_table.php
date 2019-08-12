@@ -11,9 +11,8 @@ class AparelhoTable extends Migration
         Schema::create('aparelho', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('tipo');
+			$table->string('tipo_aparelho');
             $table->string('marca');
-            $table->integer('numero_serie');
 			$table->timestamps();
 			$table->softDeletes();
 		});

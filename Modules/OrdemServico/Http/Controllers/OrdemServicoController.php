@@ -5,10 +5,13 @@ namespace Modules\OrdemServico\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use App\Entities\Relacao;
 use Modules\OrdemServico\Entities \ {
     OrdemServico,
     Solicitante,
-    Tecnico
+    Tecnico,
+    Aparelho,
+    Problema
 };
 use DB;
 use Hamcrest\Core\HasToString;
@@ -21,7 +24,7 @@ class OrdemServicoController extends Controller
         $data = [
             'title' => 'Administração de Ordem de Servico',
             'model' => OrdemServico::paginate(5),
-            'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('ordem_servico'),0,5),
+            'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('ordem_servico'),0,4),
             'cadastro' => 'Cadastrar OS',
             'route' => 'modulo.os.',
             'acoes' => [
@@ -49,8 +52,17 @@ class OrdemServicoController extends Controller
     {
         DB::beginTransaction();
         try {
-            $ordem_servico = OrdemServico::create();
-           
+            
+            $aparelho = Aparelho::firstOrCreate($request->aparelho)->id;
+            $problema = Problema::firstOrCreate($request->problema)->id;
+            
+            $ordem_servico = OrdemServico::create(
+                ['solicitante_id' => $request->solicitante['solicitante_id'],
+                'aparelho_id' => $aparelho,
+                'problema_id' => $problema,
+                'descricao' => $request->ordem_servico['descricao']]
+            );        
+    
             DB::commit();
             return redirect('/ordemservico/os')->with('success', 'Ordem cadastrada com successo');
         } catch (Exception $e) {
@@ -62,11 +74,8 @@ class OrdemServicoController extends Controller
     public function show($id)
     {
         $data = [
-            'url' => url("ordemservico/os/$id"),
             'model' =>  OrdemServico::findOrFail($id),
-            'solicitante' => Solicitante::all(),
-            'title' => 'Atualização de OS',
-            'button' => 'Atualizar'
+            'title' => 'Detalhes de OS',
         ];
         return view('ordemservico::ordemservico.show', compact('data'));
     }

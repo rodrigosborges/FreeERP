@@ -11,5 +11,5 @@ class Problema extends Model
     Use SoftDeletes;
     protected $table = 'problema';
     public $timestamps = true;
-    protected $fillable = array('id','titulo','prioridade');
+    protected $fillable = array('titulo','prioridade');
 }

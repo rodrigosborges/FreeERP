@@ -16,7 +16,7 @@ class ProblemaTable extends Migration
 		{
 			$table->integer('id', true);
             $table->string('titulo');
-            $table->string('prioridade');
+            $table->string('prioridade')->default(0);
 			$table->timestamps();
 			$table->softDeletes();
 		});

@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "500797c74e73fa7125d6c4b9477295ba",
+=======
+    "content-hash": "92108ca5e870e5bcc2f824621a742a97",
+>>>>>>> master
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1147,6 +1151,76 @@
                 "php"
             ],
             "time": "2019-05-25T20:07:01+00:00"
+        },
+        {
+            "name": "nwidart/laravel-modules",
+            "version": "5.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nWidart/laravel-modules.git",
+                "reference": "52e2e8142cc9f06feb276b6d18af7c98db5b3703"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nWidart/laravel-modules/zipball/52e2e8142cc9f06feb276b6d18af7c98db5b3703",
+                "reference": "52e2e8142cc9f06feb276b6d18af7c98db5b3703",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.14",
+                "laravel/framework": "5.8.*",
+                "mockery/mockery": "~1.0",
+                "orchestra/testbench": "^3.8",
+                "phpstan/phpstan": "^0.9.2",
+                "phpunit/phpunit": "~7.0|~8.0",
+                "spatie/phpunit-snapshot-assertions": "^2.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nwidart\\Modules\\LaravelModulesServiceProvider"
+                    ],
+                    "aliases": {
+                        "Module": "Nwidart\\Modules\\Facades\\Module"
+                    }
+                },
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nwidart\\Modules\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Widart",
+                    "email": "n.widart@gmail.com",
+                    "homepage": "https://nicolaswidart.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Module management",
+            "keywords": [
+                "laravel",
+                "module",
+                "modules",
+                "nwidart",
+                "rad"
+            ],
+            "time": "2019-05-11T15:27:41+00:00"
         },
         {
             "name": "nwidart/laravel-modules",
