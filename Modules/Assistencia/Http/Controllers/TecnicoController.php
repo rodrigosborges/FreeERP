@@ -15,6 +15,7 @@ class TecnicoController extends Controller
   public function index(){
     $tecnicos = TecnicoAssistenciaModel::paginate(10);
     $tecnicosDeletados = TecnicoAssistenciaModel::onlyTrashed()->paginate(10);
+
     return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos','tecnicosDeletados'));
   }
   public function localizar(){
@@ -61,13 +62,20 @@ class TecnicoController extends Controller
 
   public function deletar($id){
     DB::beginTransaction();
+    $tecnico = TecnicoAssistenciaModel::withTrashed()->find($id);
       try {
         
-        $tecnico = TecnicoAssistenciaModel::find($id);
-        $tecnico->delete();
-        $tecnico->update();
-        DB::commit();
-        return redirect()->route('tecnico.localizar');
+        if($tecnico->trashed()){
+          $tecnico->restore();
+          DB::commit();
+          return back()->with('success','Técnico restaurado com sucesso');
+        }else {
+          $tecnico->delete();
+          $tecnico->update();
+          DB::commit();
+          return back()->with('success','Técnico deletado com sucesso');
+        }
+        
       } catch (zException $e) {
         DB::rollback();
         return back();

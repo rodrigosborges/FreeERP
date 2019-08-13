@@ -16,9 +16,9 @@ class ItemServico extends Migration
         Schema::create('item_servico_assistencia', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idConserto')->unsigned();
-            $table->foreign('idConserto')->references('id')->on('conserto_assistencia');
+            $table->foreign('idConserto')->references('id')->on('conserto_assistencia')->onDelete('cascade');;
             $table->integer('idMaoObra')->unsigned();
-            $table->foreign('idMaoObra')->references('id')->on('servico_assistencia');
+            $table->foreign('idMaoObra')->references('id')->on('servico_assistencia')->onDelete('cascade');;
             $table->softDeletes();
             $table->timestamps();
         });

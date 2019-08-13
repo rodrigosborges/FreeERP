@@ -28,111 +28,155 @@
 @stop
 
 @section('js')
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+		$('.multi-select').select2();
+
+	});
+
+</script>
+<script type="text/javascript">
 	
-	<script>
-		$(document).ready(function() {
-			$('.multi-select').select2();
+	$(document).ready(function(){
+		var pecas = $('#valor_peca').val()
+		$('#valor_peca').click(function(){
+			console.log(pecas);
+		})
+	})
+</script>
+<script>
+	$(document).ready(function(){
+		$(document).mouseover(function(){
+			var valor = 0;
+			$('#valor_peca > option:selected').each(function(index, element){
+				valor = valor + Number.parseFloat($(element).attr('data-valor'));
+			});
+			$('#valor_servico > option:selected').each(function(index, element){
+				valor = valor + Number.parseFloat($(element).attr('data-valor'));
+			});
+			$('#valorTotal').val(valor);
+
 			
 		});
-		
-	</script>
-	<script>
 
-		$(document).ready(function(){
-			$(document).click(function(){
-				var valor = 0;
-				$('#valor_peca > option:selected').each(function(ondex, element){
-					valor = valor + Number.parseFloat($(element).attr('data-valor'));
-				});
-				$('#valor_servico > option:selected').each(function(ondex, element){
-					valor = valor + Number.parseFloat($(element).attr('data-valor'));
-				});
-				$('#valorTotal').val(valor);
-			});
+		$('#salvar').click(function(){
+			if($('#valor_peca').val() == null) {
+				$('#valor_peca').val(0)
+
+			}
+			if($('#valor_servico').val() == null) {
+				$('#valor_servico').val(0)
+				console.log($('valor_servico').val())
+			}
 		})
+	})
 
-	</script>
+	/*$('#valor_peca').change(function(){
+		var valor = 0;
+		$('#valor_peca > option:selected').each(function(index, element) {
+			valor = valor + Number.parseFloat( $(element).attr('data-valor'));
+			$('#valorTotal').val(valor);
+		});
 
-	<script>
-		
+	});
 
-		$("[name='selecionarCliente']").on('keyup',function(){
+	$('#valor_servico').change(function(){
+		var valor = 0;
+		$('#valor_servico > option:checked').each(function(index, element) {
+			valor = valor + Number.parseFloat( $(element).attr('data-valor'));
+			var valorTotal =
+			$('#valorTotal').val(valor);
+		});
 
-				$.ajax({
-		        type: "GET",
-		        url: `${main_url}/assistencia/conserto/nomeClientes`,
-		        data: {
-							'selecionarCliente': $(this).val()
-						},
-		        success: function (data) {
-								$("[name='selecionarCliente']").autocomplete({
-									source: data,
-									select: function( event, ui ) {
-										inserirDadosCliente(ui.item.value)
-									}
-								})
-		        },
-		    })
+	});*/
 
-		})
+</script>
+<script>
 
-		function inserirDadosCliente(val){
+
+	/*$("[name='selecionarCliente']").on('keyup',function(){
 
 			$.ajax({
-	        type: "GET",
-	        url: `${main_url}/assistencia/conserto/dadosCliente`,
-	        data: {
-						'nome': val
+			type: "GET",
+			url: `${main_url}/assistencia/conserto/nomeClientes`,
+			data: {
+						'selecionarCliente': $(this).val()
 					},
-	        success: function (data) {
-	        				$("[name='idCliente']").val(data.id)
-							$("[name='nome']").val(data.nome)
-							$("[name='cpf']").val(data.cpf)
-							$("[name='celnumero']").val(data.celnumero)
-							$("[name='email']").val(data.email)
-	        },
-	    })
-
-		}
-
-		$("[name='selecionarTecnico']").on('keyup',function(){
-
-				$.ajax({
-		        type: "GET",
-		        url: `${main_url}/assistencia/conserto/nomeTecnicos`,
-		        data: {
-							'selecionarTecnico': $(this).val()
-						},
-		        success: function (data) {
-								$("[name='selecionarTecnico']").autocomplete({
-									source: data,
-									select: function( event, ui ) {
-										inserirDadosTecnico(ui.item.value)
-									}
-								})
-		        },
-		    })
-
+			success: function (data) { $("[name='selecionarCliente']").autocomplete({
+								source: data, select: function( event, ui ) {
+									inserirDadosCliente(ui.item.value)
+								}
+							})
+			},
 		})
 
-		function inserirDadosTecnico(val){
+	})*/
 
+	$('#selecionarCliente').change(function(){
+
+		var dados =$('#selecionarCliente option:selected').attr("data-puxar")
+		inserirDadosCliente(dados)
+	})
+	function inserirDadosCliente(val){
+
+		$.ajax({
+		type: "GET",
+		url: `${main_url}/assistencia/conserto/dadosCliente`,
+		data: {
+					'nome': val
+				},
+		success: function (data) {
+						$("[name='idCliente']").val(data.id)
+						$("[name='nome']").val(data.nome)
+						$("[name='cpf']").val(data.cpf)
+						$("[name='celnumero']").val(data.celnumero)
+						$("[name='email']").val(data.email)
+		},
+	})
+	}
+	/*$("[name='selecionarTecnico']").on('keyup',function(){
+			console.log('teste')
 			$.ajax({
-	        type: "GET",
-	        url: `${main_url}/assistencia/conserto/dadosTecnico`,
-	        data: {
-						'nome': val
+			type: "GET",
+			url: `${main_url}/assistencia/conserto/nomeTecnicos`,
+			data: {
+						'selecionarTecnico': $(this).val()
 					},
-	        success: function (data) {
-	        				$("[name='idTecnico']").val(data.id)
-							$("[name='nome-tecnico']").val(data.nome)
-							$("[name='cpf-tecnico']").val(data.cpf)
-	        },
-	    })
+			success: function (data) {
+							$("[name='selecionarTecnico']").autocomplete({
+								source: data,
+								select: function( event, ui ) {
+									inserirDadosTecnico(ui.item.value)
+								}
+							})
+			},
+		})
+	})*/
+	$('#selecionarTecnico').change(function(){
 
-		}
+	var dados =$('#selecionarTecnico option:selected').attr("data-puxar")
+	inserirDadosTecnico(dados)
+	})
 
-	</script>
+	function inserirDadosTecnico(val){
+
+		$.ajax({
+		type: "GET",
+		url: `${main_url}/assistencia/conserto/dadosTecnico`,
+		data: {
+					'nome': val
+				},
+		success: function (data) {
+						$("[name='idTecnico']").val(data.id)
+						$("[name='nome-tecnico']").val(data.nome)
+						$("[name='cpf-tecnico']").val(data.cpf)
+		},
+	})
+
+	}
+
+</script>
 
 @stop

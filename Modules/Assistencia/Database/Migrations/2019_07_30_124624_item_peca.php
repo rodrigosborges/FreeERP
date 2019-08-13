@@ -16,7 +16,7 @@ class ItemPeca extends Migration
         Schema::create('item_peca_assistencia', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idPeca')->unsigned();
-            $table->foreign('idPeca')->references('id')->on('peca_assistencia');
+            $table->foreign('idPeca')->references('id')->on('peca_assistencia')->onDelete('cascade');;
             $table->softDeletes();
             $table->timestamps();
         });

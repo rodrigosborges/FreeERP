@@ -8,7 +8,7 @@ class StoreClienteRequest extends FormRequest{
     public function rules(){
         return [
           'nome' => 'required|min:3|max:100',
-          'cpf' => 'required|cpf',
+          'cpf' => 'required|cpf|unique:cliente_assistencia,cpf,'.$this->route('id'),
           'email' => 'required|email|max:100',
           'data_nascimento' => 'required|max:10',
           'sexo' => 'required',

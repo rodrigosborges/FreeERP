@@ -13,9 +13,19 @@ class ClienteController extends Controller
 {
 
     public function index(){
-      $clientes = ClienteAssistenciaModel::paginate(10);
-      $clientesDeletados = ClienteAssistenciaModel::onlyTrashed()->paginate(10);
-      return view('assistencia::paginas.clientes.localizarCliente',compact('clientes','clientesDeletados'));
+      DB::beginTransaction();
+      try{
+        $clientes = ClienteAssistenciaModel::paginate(10);
+        $clientesDeletados = ClienteAssistenciaModel::onlyTrashed()->paginate(10);
+        
+        DB::commit();
+        return view('assistencia::paginas.clientes.localizarCliente', compact('clientes','clientesDeletados'));
+    
+      } catch (\Exception $e) {
+        
+        DB::rollback();
+        return view('assistencia::index')->with('error','Erro no servidor');
+      }
     }
 
     public function cadastrar(){
@@ -52,16 +62,15 @@ class ClienteController extends Controller
     }
 
     public function editar($id){
-      $cliente = ClienteAssistenciaModel::find($id);
+      $cliente = ClienteAssistenciaModel::withTrashed()->findOrFail($id);
       return view('assistencia::paginas.clientes.editarCliente',compact('cliente'))->with('success','Cliente atualizado com sucesso!');
     }
 
     public function atualizar(StoreClienteRequest $req, $id){
       DB::beginTransaction();
       try {
-        
         $dados  = $req->all();
-        ClienteAssistenciaModel::find($id)->update($dados);
+        ClienteAssistenciaModel::findOrFail($id)->update($dados);
         DB::commit();
         return redirect()->route('cliente.localizar')->with('success','Cliente alterado com sucesso!');
       } catch (zException $e) {
@@ -72,17 +81,23 @@ class ClienteController extends Controller
     }
 
     public function deletar($id){
+      $cliente = ClienteAssistenciaModel::withTrashed()->findOrFail($id);
       DB::beginTransaction();
       try {
+        if($cliente->trashed()){
+          $cliente->restore();
+          DB::commit();
+          return back()->with('success','Cliente restaurado com sucesso!');
+        }else {
+          $cliente->delete();
+          $cliente->update();
+          DB::commit();
+          return back()->with('success','Cliente deletado com sucesso!');
+        }
         
-        $cliente = ClienteAssistenciaModel::find($id);
-        $cliente->delete();
-        $cliente->update();
-        DB::commit();
-        return redirect()->route('cliente.localizar')->with('success','Cliente deletado com sucesso!');
       } catch (zException $e) {
         DB::rollback();
-        return back();
+        return 'back()';
       }
       
     }

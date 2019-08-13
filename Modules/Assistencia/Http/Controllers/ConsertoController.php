@@ -22,30 +22,25 @@ class ConsertoController extends Controller
       $servicos = ServicoAssistenciaModel::all();
       $clientes = ClienteAssistenciaModel::all();
       $tecnicos = TecnicoAssistenciaModel::all();
-      
-      if($clientes):
 
-        return gettype($clientes);
-
-      elseif(is_null($tecnicos)): 
-
-        return $tecnicos;
-
-      else:
+      if(count($clientes) != 0 && count($tecnicos) != 0) {
         $ultimo = ConsertoAssistenciaModel::withTrashed()->latest()->first();
         $id = 0;
-  
+
         if($ultimo == null){
           $id = 1;
         } else {
           $id = 1 + $ultimo->id;
         }
-  
         return view('assistencia::paginas.consertos.cadastrarconserto', compact('id','clientes','tecnicos','pecas','servicos'));
-        
-  
-      endif;
-
+      
+      } else if (count($clientes) == 0){
+        $consertos = ConsertoAssistenciaModel::paginate(10);
+        return redirect()->route('consertos.index')->with('error' , 'Nenhum cliente ativo na base de dados');
+      } else {
+        $consertos = ConsertoAssistenciaModel::paginate(10);
+        return redirect()->route('consertos.index')->with('error' , 'Nenhum técnico ativo na base de dados');
+      }
       
     }
 
@@ -71,12 +66,14 @@ class ConsertoController extends Controller
 
     public function editar($id) {
       $conserto = ConsertoAssistenciaModel::find($id);
-      $pecas = PecaAssistenciaModel::all();
+      $pecas = ItemPeca::all();
       $servicos = ServicoAssistenciaModel::all();
+      $tecnicos = TecnicoAssistenciaModel::all();
+      $clientes = ClienteAssistenciaModel::all();
       $pecaOS = PecaOs::where('idConserto', $id)->get();
       $itemServico = itemServico::where('idConserto', $id)->get();
 
-      return view('assistencia::paginas.consertos.editarConserto', compact('conserto', 'id', 'pecas', 'servicos','pecaOS','itemServico'));
+      return view('assistencia::paginas.consertos.editarConserto', compact('conserto', 'clientes', 'id', 'pecas', 'servicos','pecaOS','itemServico','tecnicos'));
     }
     public function atualizar(Request $req, $id){
       DB::beginTransaction();
