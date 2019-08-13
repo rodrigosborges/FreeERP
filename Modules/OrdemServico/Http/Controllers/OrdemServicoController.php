@@ -23,14 +23,14 @@ class OrdemServicoController extends Controller
     {   
         $data = [
             'title' => 'Administração de Ordem de Servico',
-            'model' => OrdemServico::paginate(5),
+            'ativos' => OrdemServico::paginate(5),
+            'inativos' => OrdemServico::onlyTrashed()->get(),
             'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('ordem_servico'),0,4),
             'cadastro' => 'Cadastrar OS',
             'route' => 'modulo.os.',
             'acoes' => [
                 ['nome' => 'Editar' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'edit'],
                 ['nome' => 'Detalhes' , 'class' =>'btn btn-outline-warning btn-sm','complemento-route' => 'show'],
-                ['nome' => 'Prioridade' , 'class'=>'btn btn-outline-info btn-sm' , 'complemento-route' => 'index'],
                 ['nome' => 'PDF' , 'class' =>'btn btn-outline-dark btn-sm', 'complemento-route' => 'pdf']
                 ]
             ];

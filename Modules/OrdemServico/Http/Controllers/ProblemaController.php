@@ -21,7 +21,9 @@ class ProblemaController extends Controller
             'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('problema'),0,5),
             'route' => 'modulo.problema.',
             'cadastro' => '',
-            'acoes' => ''
+            'acoes' => [
+                ['nome' => 'Prioridade' , 'class'=>'btn btn-outline-info btn-sm' , 'complemento-route' => 'index']],
+               
         ];
 
         return view('ordemservico::layouts.index', compact('data'));
