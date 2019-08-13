@@ -18,6 +18,7 @@ class ProblemaController extends Controller
         $data = [
             'title' => 'Listagem de Problemas',
             'model' => Problema::paginate(5),
+            'inativos' => Problema::onlyTrashed()->get(),
             'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('problema'),0,5),
             'route' => 'modulo.problema.',
             'cadastro' => '',
@@ -27,6 +28,12 @@ class ProblemaController extends Controller
         ];
 
         return view('ordemservico::layouts.index', compact('data'));
+    }
+    
+    public function showAjax(){
+        $dados = Problema::all();
+
+        return response()->json($dados);
     }
 
     public function create()
@@ -57,6 +64,14 @@ class ProblemaController extends Controller
 
     public function destroy($id)
     {
+        $problema = Problema::withTrashed()->findOrFail($id);
+        if ($problema->trashed()) {
+            $problema->restore();
+            return back()->with('success', 'Problema ativado com sucesso!');
+        } else {
+            $problema->delete();
+            return back()->with('success', 'Problema desativado com sucesso!');
+        }
     }
    
 }

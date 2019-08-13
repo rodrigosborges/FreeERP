@@ -45,7 +45,7 @@
                 </thead>
                 <tbody>
                     <!--- Gera Linhas com atributos e dados do banco --->
-                    @foreach($data['ativos'] as $model)
+                    @foreach($data['model'] as $model)
                     <tr>
                         @foreach($data['atributos'] as $atributo)
                         <td>{{$model->$atributo}}</td>
@@ -162,7 +162,7 @@
 
 <!--- Paginaçao --->
 <div class="row justify-content-center">
-    {{ $data['ativos']->links() }}
+    {{ $data['model']->links() }}
 </div>
 @endsection
 

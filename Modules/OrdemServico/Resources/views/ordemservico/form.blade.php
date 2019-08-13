@@ -1,17 +1,13 @@
 @extends('ordemservico::layouts.informacoes')
 @section('content')
-
-
-<div class="card " style="margin:auto; max-width: 40rem;">
-    <div class="card-header text-white bg-dark">{{$data['title']}}</div>
-    <div class="card-body">
-
         {{ Form::open(array('url' => $data['url'] , 'method'=>'post')) }}
         {{Form::token()}}
         @if($data['model'])
         @method('PUT')
         @else
-
+        <div class="card " style="margin:auto; max-width: 40rem;">
+    <div class="card-header text-white bg-dark">{{$data['title']}}</div>
+    <div class="card-body">
         <div class="form-group">
             <div class="form-row">
                 <div class="col-sm-8">
@@ -50,7 +46,9 @@
         <div class="form-row">
 
             <div class="col-md-4 mb-3">
-                {{Form::text("problema[titulo]", $data['model'] ? $data['model']->problema->titulo : old('titulo'),array('class' => 'form-control','placeholder'=>'Titulo'))}}
+                {{Form::text("problema[titulo]", $data['model'] ? $data['model']->problema->titulo : old('titulo'),array('class' => 'form-control','placeholder'=>'Titulo','id'=> 'titulo-problema','list' => 'titulos'))}}
+                <datalist id="titulos">
+                </datalist>
             </div>
             {{Form::textarea("ordem_servico[descricao]", $data['model'] ? $data['model']->descricao : old('descricao'),array('class' => 'form-control','placeholder'=>'Descrição Problema'))}}
         </div>
@@ -83,6 +81,25 @@
                 $('#marca').val("").prop('disabled', false);
             })
         });
+
+        //Gerando opção do datalist de titulos
+        function gerarOpcao(itens){
+            itens.forEach(item => {
+            $('#titulos').append('<option value=' + item.titulo + ">");
+        });
+        }
+
+        //Buscando Titulo de problema 
+            $.getJSON("/ordemservico/problema/showAjax", {
+            }, function() {
+                console.log("success");
+            }).done(function(data) {
+                    gerarOpcao(data);
+                
+            }).fail(function() {
+                console.log("error");
+            })
+        
     });
 </script>
 @endsection

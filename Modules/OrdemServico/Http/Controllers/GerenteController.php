@@ -18,6 +18,7 @@ class GerenteController extends Controller
         $data = [
             'title' => 'Administração de Gerentes',
             'model' => Gerente::paginate(5),
+            'inativos' => Gerente::onlyTrashed()->get(),
             'atributos' => DB::getSchemaBuilder()->getColumnListing('gerente'),
             'cadastro' => 'Cadastrar Gerente',
             'route' => 'modulo.gerente.',
