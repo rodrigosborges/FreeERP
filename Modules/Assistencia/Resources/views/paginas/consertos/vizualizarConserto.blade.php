@@ -12,11 +12,6 @@
 		.pequeno {
 			font-size: 12px;
 		}
-    
-
-    
-
-    
 	</style>
 @stop
 @section('content')
