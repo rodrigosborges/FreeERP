@@ -55,7 +55,7 @@
                         @if($data['acoes'])
                         <td>
                             @foreach($data['acoes'] as $acao)
-                            <a class="{{$acao['class']}}" href="{{route($data['route'] . $acao['complemento-route'],$model->id)}}">{{$acao['nome']}}</a>
+                            <a class="{{$acao['class']}}" {{isset($acao['complemento-route']) ? "href=" . route($data['route'] . $acao['complemento-route'],$model->id)  : ''}} >{{$acao['nome']}}</a>
                             @endforeach
                             <a class="btn btn-outline-danger btn-sm" id='delete' onclick="confirmar('{{route($data['route'] . 'destroy' , $model->id )}}')" data-id={{$model->id}}> Delete </a>
                             </form>
@@ -90,7 +90,7 @@
                         <td>{{$model->$atributo}}</td>
                         @endforeach
                         <td>
-                            <form action="{{route('modulo.os.destroy',$model->id)}}" method="POST">
+                            <form action="{{route($data['route'] .'destroy' ,$model->id)}}" method="POST">
                                 {{method_field('DELETE')}}
                                 {{ csrf_field() }}
                                 {{Form::submit( 'Restaurar',array('class'=>"btn btn-outline-danger btn-sm") )}}
@@ -132,33 +132,7 @@
     </div>
 </div>
 
-
-<!--- Modal Prioridade -->
-<div class="modal fade" id="verifica-delete" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5>Tem certeza que deseja excluir?</h5>
-                <p class="text-secondary">Você poderá recuperar na aba de reativação </p>
-                <form id="form-delete" method="POST">
-                    {{method_field('DELETE')}}
-                    {{ csrf_field() }}
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                {{Form::submit( 'Sim',array('class'=>"btn btn-primary") )}}
-            </div>
-            {{ Form::close() }}
-
-
-        </div>
-    </div>
-</div>
+@yield('modal')
 
 <!--- Paginaçao --->
 <div class="row justify-content-center">

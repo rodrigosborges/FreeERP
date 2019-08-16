@@ -23,11 +23,11 @@ class ProblemaController extends Controller
             'route' => 'modulo.problema.',
             'cadastro' => '',
             'acoes' => [
-                ['nome' => 'Prioridade' , 'class'=>'btn btn-outline-info btn-sm' , 'complemento-route' => 'index']],
+                ['nome' => 'Prioridade' , 'class'=>'prioridade btn btn-outline-info btn-sm' ]],
                
         ];
 
-        return view('ordemservico::layouts.index', compact('data'));
+        return view('ordemservico::problema.index', compact('data'));
     }
     
     public function showAjax(){
@@ -60,6 +60,16 @@ class ProblemaController extends Controller
  
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
+        try {
+            $problema = Problema::findOrFail($id);
+            $problema->update($request->all());
+            DB::commit();
+            return redirect('/ordemservico/problema')->with('success', 'Prioridade Padrão atualizada com successo');
+        } catch (Exception $e) {
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor');
+        }
     }
 
     public function destroy($id)
