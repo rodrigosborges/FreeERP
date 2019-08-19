@@ -24,7 +24,7 @@ class CreateEventoTable extends Migration
             $table->boolean('dia_todo')->nullable();
             $table->string('nota', 500)->nullable();
             $table->unsignedBigInteger('agenda_id');
-            $table->foreign('agenda_id')->references('id')->on('agenda');
+            $table->foreign('agenda_id')->references('id')->on('agenda')->onDelete('cascade');
             $table->timestamps();
         });
     }

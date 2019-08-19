@@ -19,7 +19,7 @@
             @forelse($eventos as $evento)
                 <tr>
                     <th scope="row">{{$loop->iteration}}</th>
-                    <td>{{$evento->titulo}}</td>
+                    <td><a href="{{route('eventos.editar', $evento->id)}}">{{$evento->titulo}}</a></td>
                     @if($evento->dia_todo == true)
                         <td>{{ \Carbon\Carbon::parse($evento->data_inicio)->format('d/m/Y')}}</td>
                     @else
@@ -47,16 +47,4 @@
             </tbody>
         </table>
     </div>
-@endsection
-
-@section('css')
-    @parent
-    <style type="text/css">
-    </style>
-@endsection
-
-@section('js')
-    @parent
-    <script type="text/javascript">
-    </script>
 @endsection

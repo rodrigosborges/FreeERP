@@ -4,6 +4,7 @@ namespace Modules\Calendario\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Modules\Calendario\Entities\Agenda;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,10 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Route::bind('agenda', function ($value) {
+            return Agenda::withTrashed()->find($value) ?? abort(404);
+        });
     }
 
     /**

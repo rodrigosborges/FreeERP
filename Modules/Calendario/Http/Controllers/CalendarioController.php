@@ -14,9 +14,11 @@ class CalendarioController extends Controller
         return view('calendario::index', ['agendas' => $agendas]);
     }
 
-    public function agendas(){
-        $agendas = Agenda::where('funcionario_id', 1)->get();
-        return view('calendario::agendas.index', ['agendas' => $agendas]);
+    public function agendas()
+    {
+        $agendas = Agenda::withTrashed('funcionario_id', 1)->orderBy('titulo')->get();
+        $lixeira = Agenda::onlyTrashed()->where('funcionario_id', 1)->count();
+        return view('calendario::agendas.index', ['agendas' => $agendas, 'lixeira' => $lixeira]);
     }
 
     public function eventos()

@@ -27,7 +27,7 @@ $menu = [
 @endsection
 
 @section('css')
-    @parent
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':css/app.css')}}">
     <style type="text/css">
         #sidebar a.active {
@@ -38,7 +38,7 @@ $menu = [
 @endsection
 
 @section('js')
-    @parent
+    <script type="text/javascript" src="{{Module::asset(config('calendario.id').':bootbox.all.min.js')}}"></script>
     <script src="{{Module::asset(config('calendario.id').':js/app.js')}}"></script>
     <script type="text/javascript">
         $(function () {
@@ -54,8 +54,6 @@ $menu = [
                     }
                 }))
                 .done(function () {
-                    console.log('{{ \Illuminate\Support\Facades\Route::currentRouteName() }}');
-
                     switch ('{{ \Illuminate\Support\Facades\Route::currentRouteName() }}'.trim()) {
                         case 'calendario.index':
                             $('.visao-geral').addClass('active');

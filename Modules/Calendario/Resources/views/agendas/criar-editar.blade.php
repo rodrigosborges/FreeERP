@@ -1,6 +1,6 @@
 @extends('calendario::template/index')
 
-@section('title', 'Calendário - Criar Agenda')
+@section('title', 'Calendário - Agenda')
 
 @section('content')
     @parent

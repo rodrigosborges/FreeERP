@@ -11,6 +11,11 @@ use Modules\Calendario\Entities\Evento;
 
 class EventoController extends Controller
 {
+    public function criarOuEditar(Evento $evento = null){
+        $agendas = Agenda::all();
+        return view('calendario::eventos.criar-editar',['agendas' => $agendas, 'evento' => $evento]);
+    }
+
     public function salvar(Request $request){
         try{
             $evento = new Evento();

@@ -63,11 +63,23 @@ class AgendaController extends Controller
 
     public function deletar(Agenda $agenda){
         try{
-            $agenda->delete();
+            if($agenda->trashed())
+                $agenda->forceDelete();
+            else
+                $agenda->delete();
         }catch (\Exception $e){
             return redirect()->route('agendas.index')->with('error', 'Falha ao deletar agenda. Erro: ' . $e->getMessage());
         }
         return redirect()->route('agendas.index')->with('success', 'Agenda deletada com sucesso.');
+    }
+
+    public function restaurar(Agenda $agenda){
+        try{
+            $agenda->restore();
+        }catch (\Exception $e){
+            return redirect()->route('agendas.index')->with('error', 'Falha ao restaurar agenda. Erro: ' . $e->getMessage());
+        }
+        return redirect()->route('agendas.index')->with('success', 'Agenda restaurada com sucesso.');
     }
 
     public function eventos(Agenda $agenda){
