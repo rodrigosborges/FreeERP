@@ -41,7 +41,6 @@ class OrdemServicoController extends Controller
     {
         $data = [
             'url' => url("ordemservico/os"),
-            'model' => '',
             'solicitante' => Solicitante::all(),
             'title' => 'Cadastro de OS',
             'button' => 'Salvar'
@@ -60,7 +59,7 @@ class OrdemServicoController extends Controller
                 ['solicitante_id' => $request->solicitante['solicitante_id'],
                 'aparelho_id' => $aparelho,
                 'problema_id' => $problema,
-                'descricao' => $request->ordem_servico['descricao']]
+                'descricao' => $request->descricao]
             );        
     
             DB::commit();
@@ -96,7 +95,14 @@ class OrdemServicoController extends Controller
         DB::beginTransaction();
         try {
             $ordem_servico = OrdemServico::findOrFail($id);
-            $ordem_servico->update($request->all());
+            $aparelho = Aparelho::firstOrCreate($request->aparelho)->id;
+            $problema = Problema::firstOrCreate($request->problema)->id;
+            
+            $ordem_servico->update(
+                ['aparelho_id' => $aparelho,
+                'problema_id' => $problema,
+                'descricao' => $request->descricao]
+            );    
             DB::commit();
             return redirect('/ordemservico/os')->with('success', 'Item atualizado com successo');
         } catch (Exception $e) {

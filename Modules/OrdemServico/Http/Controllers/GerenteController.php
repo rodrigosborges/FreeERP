@@ -34,7 +34,6 @@ class GerenteController extends Controller
     {
         $data = [
             'url' => url("ordemservico/gerente"),
-            'model' => '',
             'title' => 'Cadastro de Gerente',
             'button' => 'Salvar'
         ];

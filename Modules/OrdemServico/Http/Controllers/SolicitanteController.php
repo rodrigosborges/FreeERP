@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\OrdemServico\Entities\{
-Solicitante
+    Solicitante
 };
 use DB;
+use Hamcrest\Core\HasToString;
 
 class SolicitanteController extends Controller
 {
@@ -19,13 +20,13 @@ class SolicitanteController extends Controller
             'title' => 'Administração de Solicitantes',
             'model' => Solicitante::paginate(5),
             'inativos' => Solicitante::onlyTrashed()->get(),
-            'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('solicitante'),0,5),
+            'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('solicitante'), 0, 5),
             'cadastro' => 'Cadastrar Solicitante',
             'route' => 'modulo.solicitante.',
             'acoes' => [
-                ['nome' => 'Editar' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'edit'],
-                ]
-            ];
+                ['nome' => 'Editar', 'class' => 'btn btn-outline-info btn-sm', 'complemento-route' => 'edit'],
+            ]
+        ];
 
         return view('ordemservico::layouts.index', compact('data'));
     }
@@ -34,10 +35,10 @@ class SolicitanteController extends Controller
     {
         $data = [
             'url' => url("ordemservico/solicitante"),
-            'model' => '',
             'title' => 'Cadastro de Solicitante',
             'button' => 'Salvar'
         ];
+
         return view('ordemservico::solicitante.form', compact('data'));
     }
     public function store(Request $request)
@@ -46,7 +47,7 @@ class SolicitanteController extends Controller
         try {
             $solicitante = Solicitante::create($request->all());
             DB::commit();
-            return redirect('/ordemservico/solicitante')->with('success', 'Solicitante cadastrado com successo');
+            return redirect($request->url)->with('success', 'Solicitante cadastrado com successo');
         } catch (Exception $e) {
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
@@ -54,8 +55,7 @@ class SolicitanteController extends Controller
     }
 
     public function show($id)
-    {
-    }
+    { }
 
     public function edit($id)
     {

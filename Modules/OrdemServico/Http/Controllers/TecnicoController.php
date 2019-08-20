@@ -33,7 +33,6 @@ class TecnicoController extends Controller
     {
         $data = [
             'url' => url("ordemservico/tecnico"),
-            'model' => '',
             'title' => 'Cadastro de Técnico',
             'button' => 'Salvar'
         ];
