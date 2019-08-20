@@ -14,13 +14,13 @@
                 @endif
             </div>
             <div class="float-left">
-                <a class="btn btn-success btn-sm novo" href="{{route('agendas.criar')}}" data-toogle="tooltip" title="Nova agenda">
+                <a class="btn btn-primary btn-sm novo" href="{{route('agendas.criar')}}" data-toogle="tooltip" title="Nova agenda">
                     <i class="material-icons">add</i>
                 </a>
             </div>
         </div>
         <table class="table table-striped table-hover">
-            <thead class="thead-light">
+            <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Título</th>
@@ -80,26 +80,6 @@
             </tbody>
         </table>
     </div>
-@endsection
-
-@section('css')
-    @parent
-    <style type="text/css">
-        .trashed {
-            background-color: #f9d6d5 !important;
-            display: none;
-        }
-
-        .controles {
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-
-        .acoes button {
-            float: right;
-            margin-left: 5px;
-        }
-    </style>
 @endsection
 
 @section('js')

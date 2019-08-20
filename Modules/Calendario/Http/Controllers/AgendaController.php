@@ -26,7 +26,6 @@ class AgendaController extends Controller
             $agenda->descricao = $request->agendaDescricao;
             $cor = Cor::find($request->agendaCor);
             $agenda->cor()->associate($cor);
-
             if ($request->agendaCompartilhamento != 0) {
                 $setor = Setor::find($request->agendaCompartilhamento);
                 $agenda->setor()->associate($setor);
@@ -35,9 +34,9 @@ class AgendaController extends Controller
             $agenda->funcionario_id = 1;
             $agenda->save();
         } catch (QueryException $e) {
-            return redirect()->route('calendario.index')->with('error', 'Falha ao criar agenda "' . $request->agendaNome . '". Erro: ' . $e->getMessage());
+            return redirect()->route('agendas.index')->with('error', 'Falha ao criar agenda "' . $request->agendaNome . '". Erro: ' . $e->getMessage());
         }
-        return redirect()->route('calendario.index')->with('success', 'Agenda "' . $request->agendaNome . '" criada com sucesso.');
+        return redirect()->route('agendas.index')->with('success', 'Agenda "' . $request->agendaNome . '" criada com sucesso.');
     }
 
     public function atualizar(AgendaSalvarRequest $request, Agenda $agenda)

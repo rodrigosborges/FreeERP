@@ -34,6 +34,23 @@ class EventoController extends Controller
         return redirect()->route('calendario.index')->with('success', 'Evento criado com sucesso.');
     }
 
+    public function atualizar(Request $request, Evento $evento){
+        try{
+            $evento->titulo = $request->eventoTitulo;
+            $evento->data_inicio = $this->formatar_data($request->eventoDataInicio);
+            $evento->data_fim = $this->formatar_data($request->eventoDataFim);
+            $evento->notificacao = $request->eventoNotificacaoTempo * $request->eventoNotificacaoPeriodo;
+            $evento->dia_todo = $request->eventoDiaTodo;
+            $evento->nota = $request->eventoNota;
+            $agenda = Agenda::find($request->eventoAgenda);
+            $evento->agenda()->associate($agenda);
+            $evento->save();
+        }catch (\Exception $e){
+            return redirect()->back()->with('error', 'Falha ao atualizar evento "' . $request->eventoNome . '". Erro: ' . $e->getMessage());
+        }
+        return redirect()->back()->with('success', 'Evento "' . $request->eventoTitulo . '" atualizado com sucesso.');
+    }
+
     public function deletar(Evento $evento){
         try{
             $evento->delete();

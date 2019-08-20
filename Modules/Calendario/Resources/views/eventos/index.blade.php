@@ -5,6 +5,15 @@
 @section('content')
     @parent
     <div class="container">
+        <div class="controles clearfix">
+            <div class="float-right">
+            </div>
+            <div class="float-left">
+                <a class="btn btn-primary btn-sm novo" href="{{route('eventos.criar')}}" data-toogle="tooltip" title="Novo evento">
+                    <i class="material-icons">add</i>
+                </a>
+            </div>
+        </div>
         <table class="table table-striped table-hover">
             <thead>
             <tr>

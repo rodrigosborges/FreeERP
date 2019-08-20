@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{isset($evento) ? route('eventos.atualizar', $evento) : route('eventos.salvar')}}" id="eventoForm" method="post" autocomplete="off">
+        <form action="{{isset($evento) ? route('eventos.editar', $evento->id) : route('eventos.salvar')}}" id="eventoForm" method="post" autocomplete="off">
         @csrf
         {{isset($evento) ? method_field('PUT') : ''}}
 
@@ -20,16 +20,14 @@
                 <label for="eventoDataInicio">Período</label>
                 <div class="input-group">
                     <input type="text" class="form-control datetimepicker-input" name="eventoDataInicio"
-                           id="eventoDataInicio" data-toggle="datetimepicker" data-target="#eventoDataInicio"
-                           value="{{old('eventoDataInicio')}}" required>
+                           id="eventoDataInicio" data-toggle="datetimepicker" data-target="#eventoDataInicio" required>
                     <div class="input-group-prepend input-group-append">
                                 <span class="input-group-text">
                                     <i class="material-icons">date_range</i>
                                 </span>
                     </div>
                     <input type="text" class="form-control datetimepicker-input" name="eventoDataFim"
-                           id="eventoDataFim" data-toggle="datetimepicker" data-target="#eventoDataFim"
-                           value="{{old('eventoDataFim')}}" required>
+                           id="eventoDataFim" data-toggle="datetimepicker" data-target="#eventoDataFim" required>
                 </div>
                 <div class="small custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="eventoDiaTodo" name="eventoDiaTodo"
@@ -71,7 +69,7 @@
                     <label for="eventoAgenda">Agenda</label>
                     <select id="eventoAgenda" class="form-control" name="eventoAgenda" required>
                         @foreach($agendas as $agenda)
-                            <option value="{{$agenda->id}}">{{$agenda->titulo}}</option>
+                            <option value="{{$agenda->id}}" @if($evento) @if($agenda->id == $evento->agenda->id) selected @endif @endif>{{$agenda->titulo}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -80,8 +78,12 @@
             <!-- Nota -->
             <div class="form-group">
                 <label for="eventoNota">Descrição</label>
-                <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3"></textarea>
+                <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3">
+                    {{isset($evento) ? $evento->nota : old('eventoNota')}}
+                </textarea>
             </div>
+
+            <button type="submit" class="btn btn-success">Salvar</button>
         </form>
     </div>
 @endsection
@@ -128,6 +130,26 @@
                         $('#eventoDataFim').datetimepicker('format', false);
                     }
                 });
+
+            var evento = JSON.parse('{!! $evento !!}' || '[]');
+            var formato_input, formato_data;
+
+            if(Object.keys(evento).length > 0){
+                if(evento.dia_todo){
+                    formato_data = 'DD/MM/YYYY';
+                    formato_input = 'L';
+                    $('#eventoDiaTodo').prop('checked', true)
+                } else {
+                    formato_data = 'DD/MM/YYYY HH:mm';
+                    formato_input = false;
+                }
+
+                $('#eventoDataInicio').datetimepicker('format', formato_input);
+                $('#eventoDataInicio').datetimepicker('date', moment(evento.data_inicio).format(formato_data));
+                $('#eventoDataFim').datetimepicker('format', formato_input);
+                $('#eventoDataFim').datetimepicker('date', moment(evento.data_fim).format(formato_data));
+
+            }
         });
     </script>
 @endsection

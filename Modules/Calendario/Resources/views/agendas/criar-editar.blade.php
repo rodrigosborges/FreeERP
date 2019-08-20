@@ -40,7 +40,7 @@
                     @endforeach
                 </select>
             </div>
-            <button type="submit" form="agendaForm" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-success">Salvar</button>
         </form>
     </div>
 @endsection

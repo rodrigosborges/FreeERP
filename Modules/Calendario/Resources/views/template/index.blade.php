@@ -34,6 +34,20 @@ $menu = [
             background-color: #f3f6f7;
             color: #5f6368;
         }
+        .trashed {
+            background-color: #f9d6d5 !important;
+            display: none;
+        }
+
+        .controles {
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .acoes button {
+            float: right;
+            margin-left: 5px;
+        }
     </style>
 @endsection
 
