@@ -5,6 +5,7 @@
 @section('content')
     @parent
     <div class="container">
+        <h2>Eventos</h2>
         <div class="controles clearfix">
             <div class="float-right">
             </div>

@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="container">
+        <h2>{{isset($evento) ? 'Editar Evento' : 'Novo Evento'}}</h2>
         <form action="{{isset($evento) ? route('eventos.editar', $evento->id) : route('eventos.salvar')}}" id="eventoForm" method="post" autocomplete="off">
         @csrf
         {{isset($evento) ? method_field('PUT') : ''}}
@@ -12,7 +13,7 @@
             <div class="form-group">
                 <label for="eventoTitulo">Título</label>
                 <input type="text" class="form-control" id="eventoTitulo" name="eventoTitulo" value="{{isset($evento) ? $evento->titulo : old('eventoTitulo')}}"
-                       required>
+                       required autofocus>
             </div>
 
             <!-- Data -->
@@ -69,7 +70,8 @@
                     <label for="eventoAgenda">Agenda</label>
                     <select id="eventoAgenda" class="form-control" name="eventoAgenda" required>
                         @foreach($agendas as $agenda)
-                            <option value="{{$agenda->id}}" @if($evento) @if($agenda->id == $evento->agenda->id) selected @endif @endif>{{$agenda->titulo}}</option>
+                            <option value="{{$agenda->id}}" @if($evento) @if($agenda->id == $evento->agenda->id) selected @endif @endif>{{$agenda->titulo}}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -78,9 +80,7 @@
             <!-- Nota -->
             <div class="form-group">
                 <label for="eventoNota">Descrição</label>
-                <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3">
-                    {{isset($evento) ? $evento->nota : old('eventoNota')}}
-                </textarea>
+                <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3">{{isset($evento) ? $evento->nota : old('eventoNota')}}</textarea>
             </div>
 
             <button type="submit" class="btn btn-success">Salvar</button>
@@ -90,7 +90,7 @@
 
 @section('css')
     @parent
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
 @endsection
 
 @section('js')
@@ -112,8 +112,9 @@
 
             $('#eventoDataInicio, #eventoDataFim').datetimepicker({
                 locale: 'pt-br',
-                useCurrent: false
-            });
+                useCurrent: false,
+                date: localStorage.getItem('cal-data')
+            }, localStorage.setItem('cal-data', moment().toISOString()));
 
             $("#eventoDataInicio").on("change.datetimepicker", function (e) {
                 $('#eventoDataFim').datetimepicker('date', e.date);
@@ -134,8 +135,8 @@
             var evento = JSON.parse('{!! $evento !!}' || '[]');
             var formato_input, formato_data;
 
-            if(Object.keys(evento).length > 0){
-                if(evento.dia_todo){
+            if (Object.keys(evento).length > 2) {
+                if (evento.dia_todo) {
                     formato_data = 'DD/MM/YYYY';
                     formato_input = 'L';
                     $('#eventoDiaTodo').prop('checked', true)

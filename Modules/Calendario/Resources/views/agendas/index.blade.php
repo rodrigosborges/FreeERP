@@ -5,6 +5,7 @@
 @section('content')
     @parent
     <div class="container">
+        <h2>Agendas</h2>
         <div class="controles clearfix">
             <div class="float-right">
                 @if($lixeira > 0)

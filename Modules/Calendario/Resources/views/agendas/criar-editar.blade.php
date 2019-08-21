@@ -5,6 +5,7 @@
 @section('content')
     @parent
     <div class="container">
+        <h2>{{isset($agenda) ? 'Editar Agenda' : 'Nova Agenda'}}</h2>
         <form action="{{isset($agenda) ? route('agendas.atualizar', $agenda) : route('agendas.salvar')}}"
               id="agendaForm" method="post">
             @csrf
@@ -12,7 +13,7 @@
             <div class="form-group">
                 <label for="agendaNome">Título</label>
                 <input type="text" name="agendaNome" id="agendaNome" class="form-control" maxlength="100"
-                       value="{{isset($agenda) ? $agenda->titulo : old('agendaNome')}}" required>
+                       value="{{isset($agenda) ? $agenda->titulo : old('agendaNome')}}" required autofocus>
             </div>
             <div class="form-group">
                 <label for="agendaDescricao">Descrição</label>

@@ -48,7 +48,7 @@
     <link rel="stylesheet" type="text/css"
           href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/bootstrap/main.min.css')}}">
     <style type="text/css">
-        .fc-body {
+         .fc-body {
             cursor: cell;
         }
 
@@ -140,7 +140,7 @@
 
                 },
                 dateClick: function (info) {
-                    if (agendas.length <= 0) {
+                    if (Object.keys(agendas).length <= 2) {
                         bootbox.confirm({
                             title: "Nenhuma agenda cadastrada",
                             message: "Para criar eventos você deve possui ao menos uma agenda para vinculá-los. Deseja criar uma agenda?",
@@ -152,8 +152,8 @@
                             }
                         });
                     } else {
+                        localStorage.setItem('cal-data',info.dateStr);
                         var url = '{{route('eventos.criar')}}';
-                        url = url.replace('&', info.dateStr);
                         window.location.href = url;
                     }
                 },

@@ -30,10 +30,15 @@ $menu = [
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':css/app.css')}}">
     <style type="text/css">
+        h2 {
+            margin-bottom: 20px;
+        }
+
         #sidebar a.active {
             background-color: #f3f6f7;
             color: #5f6368;
         }
+
         .trashed {
             background-color: #f9d6d5 !important;
             display: none;
