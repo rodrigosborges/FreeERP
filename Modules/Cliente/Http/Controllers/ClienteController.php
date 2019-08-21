@@ -33,7 +33,8 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Cliente::create($request->all());
+        //etc
     }
 
     /**
