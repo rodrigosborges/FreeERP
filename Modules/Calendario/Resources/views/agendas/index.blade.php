@@ -75,7 +75,7 @@
             @endforeach
             @if($agendas->count() == $lixeira)
                 <tr class="vazio">
-                    <td colspan="5" class="text-center ">Nenhuma agenda cadastrada.</td>
+                    <td colspan="5" class="text-center">Nenhuma agenda cadastrada.</td>
                 </tr>
             @endif
             </tbody>

@@ -50,8 +50,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td>Essa agenda não possui eventos.</td>
-                    <td></td><td></td><td></td><td></td>
+                    <td colspan="5" class="text-center">Essa agenda ainda não possui eventos cadastrados.</td>
                 </tr>
             @endforelse
             </tbody>

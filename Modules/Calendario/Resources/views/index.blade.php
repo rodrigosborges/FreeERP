@@ -158,7 +158,9 @@
                     }
                 },
                 eventClick: function (info) {
-                    alert('Event: ' + info.event.id);
+                    var url = '{{route('eventos.editar', 'id')}}';
+                    url = url.replace('id', info.event.id);
+                    window.location.href = url;
                 }
             });
 
