@@ -4,8 +4,11 @@ namespace Modules\Estoque\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
 use Illuminate\Routing\Controller;
 use Modules\estoque\Entities\Categoria;
+use Modules\estoque\Http\Requests\CategoriaRequest;
+use DB;
 
 class CategoriaController extends Controller
 {
@@ -15,7 +18,8 @@ class CategoriaController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function __construct(){
+    public function __construct()
+    {
         $moduleInfo = [
             'icon' => 'store',
             'name' => 'Estoque',
@@ -24,14 +28,16 @@ class CategoriaController extends Controller
             ['icon' => 'people', 'tool' => 'Produto', 'route' => url('')],
             ['icon' => 'work', 'tool' => 'Categoria', 'route' => url('')],
         ];
-        $this->dadosTemplate =['moduleInfo'=>$moduleInfo,
-            'menu'=>$menu];
+        $this->dadosTemplate = [
+            'moduleInfo' => $moduleInfo,
+            'menu' => $menu
+        ];
     }
     public function index()
     {
         $categorias = Categoria::all();
-    
-        return view('estoque::categoria.index', $this->dadosTemplate, compact('categorias') );
+
+        return view('estoque::categoria.index', $this->dadosTemplate, compact('categorias'));
     }
 
     /**
@@ -40,7 +46,9 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        return view('estoque::create');
+        $data = ['titulo' => 'Cadastrar Categoria', 'button' => 'Cadastrar'];
+
+        return view('estoque::categoria.form', $this->dadosTemplate, compact('data'));
     }
 
     /**
@@ -48,9 +56,19 @@ class CategoriaController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CategoriaRequest $request)
     {
         //
+//dd($request);
+        DB::beginTransaction();
+        try {
+            Categoria::create($request->all());
+            DB::commit();
+            return back()->with('success', 'Categoria ' . $request->nome . ' cadastrada com sucesso');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->with('danger', 'Erro ao cadastrar categoria. cod:' . $e->getMessage());
+        }
     }
 
     /**
@@ -70,9 +88,9 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        
-        $categoria= Categoria::findOrFail($id);
-        return view('estoque::categoria.form',$this->dadosTemplate ,compact('categoria'));
+        $data = ['titulo' => 'Editar Categoria', 'button' => 'Editar'];
+        $categoria = Categoria::findOrFail($id);
+        return view('estoque::categoria.form', $this->dadosTemplate, compact('categoria', 'data'));
     }
 
     /**
