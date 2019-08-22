@@ -15,7 +15,7 @@ class ProdutoController extends Controller
     public function index()
     {
         return 1;
-        return view('estoque::Produto.index');
+        return view('estoque::produto.index');
     }
 
     public function create()
