@@ -17,7 +17,6 @@ class ConsertoController extends Controller
     }
 
     public function cadastrar(){
-      
       $pecas = ItemPeca::all();
       $servicos = ServicoAssistenciaModel::all();
       $clientes = ClienteAssistenciaModel::all();
@@ -77,33 +76,53 @@ class ConsertoController extends Controller
     }
     public function atualizar(Request $req, $id){
       DB::beginTransaction();
-      try {
+      try{
+        $dados  = $req->all();
+        ConsertoAssistenciaModel::find($id)->update($dados);
+
+        $pecaOS = PecaOs::where('idConserto', $id)->get();
+        $itemServico = ItemServico::where('idConserto', $id)->get();
+        foreach($pecaOS as $item){
+          $item->forceDelete();
+        }
+        foreach($itemServico as $item){
+          $item->forceDelete();
+        }
+        for ($i=0; $i < count($dados['pecas']); $i++) {
+          $pecas = new PecaOs;
+          $pecas->idConserto = $id;
+          $pecas->idItemPeca = $dados['pecas'][$i];
+          $pecas->save();
+          
+        }
+        for ($i=0; $i < count($dados['servicos']); $i++) {
+          $servicos = new ItemServico;
+          $servicos->idConserto = $id;
+          $servicos->idMaoObra = $dados['servicos'][$i];
+          $servicos->save();
+        }
+
+
         DB::commit();
-      } catch (zException $e) {
+        return redirect()->route('consertos.localizar')->with('success','Ordem de serviço alterada com sucesso');
+      } catch (\Exception $e){
         DB::rollback();
         return back();
       }
-      $dados  = $req->all();
-      ConsertoAssistenciaModel::find($id)->update($dados);
-
-      return redirect()->route('consertos.localizar')->with('success','Ordem de serviço alterada com sucesso');
+      
+      
     }
 
     public function salvar(StoreConsertosRequest $req){
       DB::beginTransaction();
       try {
-        DB::commit();
-      } catch (zException $e) {
-        DB::rollback();
-        return back();
-      }
+        
       $dados  = $req->all();
       //REALIZAR VERIFICAÇÃO DE PEÇA E MAO DE OBRA VAZIOS, E GERAR UM VALOR PADRAO
 
       ConsertoAssistenciaModel::create($dados);
       $conserto = ConsertoAssistenciaModel::latest()->first();
       $idConserto = $conserto->id;
-
       $pagamento = new PagamentoAssistenciaModel;
       $pagamento->idConserto = $conserto->id;
       $pagamento->idCliente = $conserto->idCliente;
@@ -112,20 +131,29 @@ class ConsertoController extends Controller
       $pagamento->forma = 'Não pago';
       $pagamento->save();
 
-
       for ($i=0; $i < count($dados['pecas']); $i++) {
         $pecas = new PecaOs;
         $pecas->idConserto = $idConserto;
         $pecas->idItemPeca = $dados['pecas'][$i];
         $pecas->save();
       }
+
       for ($i=0; $i < count($dados['servicos']); $i++) {
         $servicos = new ItemServico;
         $servicos->idConserto = $idConserto;
         $servicos->idMaoObra = $dados['servicos'][$i];
         $servicos->save();
       }
+
+      DB::commit();
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço iniciada!');
+      } catch (\Exception $e) {
+        DB::rollback();
+        return back()->with('error', 'Erro ao cadastrar ordem!');
+      }
+      
+      
+      
     }
 
     public function nomeClientes(Request $req){

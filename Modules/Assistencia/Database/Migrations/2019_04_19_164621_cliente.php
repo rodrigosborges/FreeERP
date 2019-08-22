@@ -14,16 +14,16 @@ class Cliente extends Migration
     public function up()
     {
       Schema::create('cliente_assistencia', function (Blueprint $table) {
-          $table->increments('id');
-          $table->string('nome');
-          $table->string('cpf');
-          $table->string('email');
-          $table->string('data_nascimento');
-          $table->string('sexo');
-          $table->string('celnumero');
-          $table->string('telefonenumero');
-          $table->timestamps();
-			    $table->softDeletes();
+        $table->increments('id');
+        $table->string('nome');
+        $table->string('cpf');
+        $table->string('email');
+        $table->string('data_nascimento');
+        $table->string('sexo');
+        $table->string('celnumero');
+        $table->string('telefonenumero');
+        $table->timestamps();
+        $table->softDeletes();
       });
     }
 

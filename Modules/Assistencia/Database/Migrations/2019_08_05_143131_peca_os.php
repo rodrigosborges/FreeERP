@@ -6,11 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class PecaOs extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    
     public function up()
     {
         Schema::create('peca_os_assistencia', function (Blueprint $table) {
@@ -24,11 +20,7 @@ class PecaOs extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         //

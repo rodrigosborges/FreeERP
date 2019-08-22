@@ -29,7 +29,7 @@ class ServicosController extends Controller
       ServicoAssistenciaModel::create($dados);
       DB::commit();
       return redirect()->route('servicos.localizar');
-    } catch (zException $e) {
+    } catch (\Exception $e) {
       DB::rollback();
       return back();
     }
@@ -51,7 +51,7 @@ class ServicosController extends Controller
       ServicoAssistenciaModel::find($id)->update($dados);
       DB::commit();
       return redirect()->route('servicos.localizar');
-    } catch (zException $e) {
+    } catch (\Exception $e) {
       DB::rollback();
       return back();
     }
@@ -67,7 +67,7 @@ class ServicosController extends Controller
       DB::commit();
       return redirect()->route('servicos.localizar');
       
-    } catch (zException $e) {
+    } catch (\Exception $e) {
       DB::rollback();
       return back();
     }

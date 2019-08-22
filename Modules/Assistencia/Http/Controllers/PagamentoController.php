@@ -34,7 +34,7 @@ class PagamentoController extends Controller
         DB::beginTransaction();
         try {
             DB::commit();
-        } catch (zException $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             return back();
         }

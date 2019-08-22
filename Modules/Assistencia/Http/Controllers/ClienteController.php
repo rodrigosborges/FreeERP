@@ -44,17 +44,20 @@ class ClienteController extends Controller
         $dados  = $req->all();
         $possivelCliente = ClienteAssistenciaModel::buscaCPF($dados['cpf']);
 
-        DB::commit();
+        
         if( sizeof($possivelCliente) == 1){
-          return redirect()->route('cliente.localizar')->with('error','O cliente já possui um cadastro!');
-
+          DB::commit();
+          return back()->with('error','O cliente já possui um cadastro!');
+          //redirect()->route('cliente.localizar') nao funciona
         } elseif (sizeof($possivelCliente) > 1) {
-          return redirect()->route('cliente.localizar')->with('warning','Verifique a quantidade de clientes com esse CPF!');
+          DB::commit();
+          return back()->with('warning','Verifique a quantidade de clientes com esse CPF!');
         }else{
           ClienteAssistenciaModel::create($dados);
-          return redirect()->route('cliente.localizar')->with('success','Cliente cadastrado com sucesso!');
+          DB::commit();
+          return back()->with('success','Cliente cadastrado com sucesso!');
         }
-      } catch (zException $e) {
+      } catch (\Exception $e) {
         DB::rollback();
         return back();
       }
@@ -73,7 +76,7 @@ class ClienteController extends Controller
         ClienteAssistenciaModel::findOrFail($id)->update($dados);
         DB::commit();
         return redirect()->route('cliente.localizar')->with('success','Cliente alterado com sucesso!');
-      } catch (zException $e) {
+      } catch (\Exception $e) {
         DB::rollback();
         return back();
       }
@@ -95,7 +98,7 @@ class ClienteController extends Controller
           return back()->with('success','Cliente deletado com sucesso!');
         }
         
-      } catch (zException $e) {
+      } catch (\Exception $e) {
         DB::rollback();
         return 'back()';
       }

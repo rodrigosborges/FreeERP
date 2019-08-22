@@ -19,9 +19,9 @@ class Pagamento extends Migration
             $table->text('status');
             $table->text('forma');
             $table->integer('idConserto')->unsigned();
-            $table->foreign('idConserto')->references('id')->on('conserto_assistencia');
+            $table->foreign('idConserto')->references('id')->on('conserto_assistencia')->onDelete('cascade');
             $table->integer('idCliente')->unsigned();
-            $table->foreign('idCliente')->references('id')->on('conserto_assistencia');
+            $table->foreign('idCliente')->references('id')->on('conserto_assistencia')->onDelete('cascade');
             $table->timestamps();
         });
     }

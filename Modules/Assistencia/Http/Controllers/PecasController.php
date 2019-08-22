@@ -40,7 +40,7 @@ class PecasController extends Controller
         }
         DB::commit();
         return redirect()->route('pecas.localizar');
-      } catch (zException $e) {
+      } catch (\Exception $e) {
         DB::rollback();
         return back();
       }
@@ -63,7 +63,7 @@ class PecasController extends Controller
       PecaAssistenciaModel::find($id)->update($dados);
       DB::commit();
       return redirect()->route('pecas.localizar');
-    } catch (zException $e) {
+    } catch (\Exception $e) {
       DB::rollback();
       return back();
     }
@@ -78,7 +78,7 @@ class PecasController extends Controller
       $peca->update();
       DB::commit();
       return redirect()->route('pecas.localizar');
-    } catch (zException $e) {
+    } catch (\Exception $e) {
       DB::rollback();
       return back();
     }
@@ -96,7 +96,7 @@ class PecasController extends Controller
       $peca->update();
       DB::commit();
       return redirect()->route('pecas.editar', $item->idPeca);
-    } catch (zException $e) {
+    } catch (\Exception $e) {
       DB::rollback();
       return back();
     }
