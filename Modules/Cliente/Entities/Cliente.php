@@ -7,18 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     protected $table = "cliente";    
-    protected $fillable = ['nome', 'tipo_cliente_id'];
+    protected $fillable = ['nome', 'tipo_cliente_id','documento_id', 'endereco_id', 'email_id'];
     
 
     public function tipo(){
         return $this->belongsTo('Modules\Cliente\Entities\TipoCliente');
     }
 
-    public function telefone(){
+    public function telefones(){
         return $this->belongsToMany('App\Entities\Telefone', 'cliente_has_telefone');
     }
 
-    public function documentos(){
+    public function documento(){
         return $this->belongsTo('App\Entities\Documento');
     }
 

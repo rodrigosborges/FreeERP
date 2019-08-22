@@ -4,14 +4,11 @@ namespace Modules\Cliente\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\Facades\Validator;
 
 class ClienteServiceProvider extends ServiceProvider
 {
-    /**
-     * Boot the application events.
-     *
-     * @return void
-     */
+    
     public function boot()
     {
         $this->registerTranslations();
@@ -19,23 +16,17 @@ class ClienteServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        Validator::extend('telefone', 'Modules\Cliente\Validators\TelefoneValidator@validate');
+        Validator::extend('cpf', 'Modules\Cliente\Validators\CpfValidator@validate');
     }
 
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
+    
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
     }
 
-    /**
-     * Register config.
-     *
-     * @return void
-     */
+    
     protected function registerConfig()
     {
         $this->publishes([
@@ -46,11 +37,7 @@ class ClienteServiceProvider extends ServiceProvider
         );
     }
 
-    /**
-     * Register views.
-     *
-     * @return void
-     */
+    
     public function registerViews()
     {
         $viewPath = resource_path('views/modules/cliente');
@@ -65,12 +52,7 @@ class ClienteServiceProvider extends ServiceProvider
             return $path . '/modules/cliente';
         }, \Config::get('view.paths')), [$sourcePath]), 'cliente');
     }
-
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
+ 
     public function registerTranslations()
     {
         $langPath = resource_path('lang/modules/cliente');

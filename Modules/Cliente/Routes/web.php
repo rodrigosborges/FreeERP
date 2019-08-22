@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('cliente')->group(function() {
-    Route::get('/', 'ClienteController@index');
-});
+//função que cria todas rotas de todas função da Classe
+Route::resource('/cliente', 'ClienteController');
+

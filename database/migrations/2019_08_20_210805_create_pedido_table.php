@@ -18,6 +18,8 @@ class CreatePedidoTable extends Migration {
 			$table->integer('cliente_id')->index('fk_pedido_cliente1');
 			$table->float('desconto', 10, 0)->nullable();
 			$table->date('data');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
