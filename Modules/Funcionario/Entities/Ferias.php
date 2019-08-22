@@ -8,10 +8,7 @@ class Ferias extends Model
 {
     protected $table = 'ferias';
 
-    protected $fillable = ['inicio_ferias','final_ferias','abono_pecuniario'];
+    protected $fillable = ['inicio_periodo_aquisitivo','fim_periodo_aquisitivo','quantidade_dias','abono_pecuniario','id_controle_ferias'];
 
-    public function funcionario(){
-        return $this->belongsTo('Modules\Funcionario\Entities\Funcionario');
-    }
 }
 
