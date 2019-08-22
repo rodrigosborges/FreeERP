@@ -17,7 +17,7 @@
     @csrf
     <div class="container" style="justify-content: center">
         <div class="row">
-            <div class="col-5">
+            <div class="col-3">
                 <div class="form-group">
                     <label for="nome">Nome</label>
                     <input required type="text" name="nome" class="form-control">
@@ -27,9 +27,23 @@
             <div class="col-3">
                 <div class="form-group">
                     <label for="categoria_id">Categoria</label>
-                    <select required class="form-control" name="categoria_estoque_id">
+                    <select required class="form-control" name="categoria_id">
                         <!-- INSERIR FOREACH CATEGORIAS -->
-                        <option value="1">Categoria 1</option>
+                        @foreach($categorias as $categoria)
+                            <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                        @endforeach
+                    </select>
+                    {{$errors->first('categoria_id')}}
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <label for="categoria_id">Unidade de Medida</label>
+                    <select required class="form-control" name="unidade_id">
+                        <!-- INSERIR FOREACH CATEGORIAS -->
+                        @foreach($unidades as $unidade)
+                            <option value="{{$unidade->id}}">{{$unidade->tipo}}</option>
+                        @endforeach
                     </select>
                     {{$errors->first('categoria_id')}}
                 </div>
@@ -52,6 +66,7 @@
             <div class="row col-8" style="justify-content: flex-end;">
                 <button type="submit" class="btn btn-primary">{{isset($produto) ? 'Salvar' : 'Cadastrar'}}</button>
             </div>
+
         </form>  
     </div>  
 @endsection

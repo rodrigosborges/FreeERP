@@ -10,10 +10,14 @@ class Produto extends Model
     use softDeletes;
 
     protected $table = 'produto';
-    protected $fillable = ['nome', 'preco_venda', 'descricao', 'categoria_estoque_id'];
+    protected $fillable = ['nome', 'preco_venda', 'descricao', 'categoria_id', 'unidade_id'];
 
     public function categoria(){
-        $this->hasOne('App\CategoriaEstoque');
+        return $this->hasOne('Modules\Estoque\Entities\Categoria');
+    }
+
+    public function unidade() {
+        return $this->hasOne('Modules\Estoque\Entities\UnidadeProduto');
     }
 
 }

@@ -11,12 +11,6 @@
 |
 */
 
-Route::prefix('estoque')->group(function() {
-    Route::get('/', 'EstoqueController@index');
-});
 
-/**
- * Rota teste cadastro produto
- */
-Route::get('/produto/cadastrar', 'ProdutoController@create');
-Route::post('/produto/cadastrar', 'ProdutoController@store');
+Route::resource('/produto','ProdutoController');
+Route::resource('/produto/unidade', 'UnidadeProdutoController');

@@ -8,17 +8,21 @@ use Illuminate\Routing\Controller;
 use DB;
 use Modules\Estoque\Http\Requests\ProdutoRequest;
 use Modules\Estoque\Entities\Produto;
+use Modules\Estoque\Entities\UnidadeProduto;
 
 class ProdutoController extends Controller
 {
     public function index()
     {
+        return 1;
         return view('estoque::Produto.index');
     }
 
     public function create()
     {
-        return view('estoque::produto.form');
+        $categorias = Categoria::all();
+        $unidades = UnidadeProduto::all();
+        return view('estoque::produto.form', compact('unidades', 'categorias'));
     }
 
     public function store(ProdutoRequest $request)
