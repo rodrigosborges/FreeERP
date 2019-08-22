@@ -66,15 +66,16 @@ class CategoriaController extends Controller
 
             $categoria =  Categoria::create($request->all());
             $subcategoria = new Subcategoria();
-          
+            $subcategoria->id = $categoria->id;
             if ($request->categoriaPai != -1) {
-               // $subcategoria->categoria_id = $request->categoriaPai;
-                $subcategoria->categoria()->associate($categoria);
-                  $subcategoria->id = $categoria->id;
+
+                $subcategoria->categoria_id = $request->categoriaPai;
+                // $subcategoria->categoria()->associate($categoria);
+
             }
-            dd($subcategoria);
+            //dd($subcategoria);
             $subcategoria->save();
-            dd($subcategoria);
+            //dd($subcategoria);
 
             DB::commit();
 
@@ -104,6 +105,7 @@ class CategoriaController extends Controller
     {
         $data = ['titulo' => 'Editar Categoria', 'button' => 'Editar'];
         $categoria = Categoria::findOrFail($id);
+        
         $categorias = Categoria::all();
         return view('estoque::categoria.form', $this->dadosTemplate, compact('categoria', 'categorias', 'data'));
     }
