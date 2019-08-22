@@ -70,7 +70,7 @@
                     <label for="eventoAgenda">Agenda</label>
                     <select id="eventoAgenda" class="form-control" name="eventoAgenda" required>
                         @foreach($agendas as $agenda)
-                            <option value="{{$agenda->id}}" @if($evento) @if($agenda->id == $evento->agenda->id) selected @endif @endif>{{$agenda->titulo}}
+                            <option value="{{$agenda->id}}" @if($evento) @if($agenda->id == $evento->agenda->id) selected @endif @elseif($agenda_selecionada == $agenda->id) selected @endif>{{$agenda->titulo}}
                             </option>
                         @endforeach
                     </select>

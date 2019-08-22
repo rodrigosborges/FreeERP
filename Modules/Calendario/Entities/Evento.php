@@ -16,4 +16,8 @@ class Evento extends Model
     public function agenda(){
         return $this->belongsTo('Modules\Calendario\Entities\Agenda');
     }
+
+    public function notificacao(){
+        return $this->hasOne('Modules\Calendario\Entities\Notificacao');
+    }
 }

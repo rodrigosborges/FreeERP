@@ -32,7 +32,7 @@
             </thead>
             <tbody>
             @foreach($agendas as $agenda)
-                <tr @if($agenda->trashed()) class="trashed" @endif>
+                <tr class="agendas @if($agenda->trashed()) trashed @endif">
                     <th scope="row">{{$agenda->id}}</th>
                     <td>
                         <a href="{{route('agendas.editar', $agenda->id)}}">{{$agenda->titulo}}</a></td>
@@ -43,6 +43,12 @@
                             <a href="{{route('agendas.eventos.index', $agenda->id)}}">{{$agenda->eventos->count()}}</a>
                         @else
                             0
+                        @endif
+                        @if(!$agenda->trashed())
+                            <a class="btn btn-link novo-evento invisible" href="{{route('eventos.criar', ['agenda' => $agenda->id])}}" data-toogle="tooltip"
+                               title="Novo evento">
+                                <i class="material-icons">add</i>
+                            </a>
                         @endif
                     </td>
                     <td class="acoes">
@@ -87,6 +93,14 @@
     @parent
     <script type="text/javascript">
         $(function () {
+            $('tr.agendas').hover(
+                function () {
+                    $(this).find('a.novo-evento').removeClass('invisible');
+                },
+                function () {
+                    $(this).find('a.novo-evento').addClass('invisible');
+                });
+
             $('.lixeira').on('click', function () {
                 $('.trashed').toggle(function () {
                     if ($(this).is(':visible')) {

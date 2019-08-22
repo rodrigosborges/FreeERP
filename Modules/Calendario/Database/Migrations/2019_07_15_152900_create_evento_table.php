@@ -20,7 +20,6 @@ class CreateEventoTable extends Migration
             $table->string('titulo', 100);
             $table->datetime('data_inicio');
             $table->datetime('data_fim');
-            $table->unsignedInteger('notificacao')->nullable();
             $table->boolean('dia_todo')->nullable();
             $table->string('nota', 500)->nullable();
             $table->unsignedBigInteger('agenda_id');

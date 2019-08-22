@@ -16,7 +16,7 @@ class CalendarioController extends Controller
 
     public function agendas()
     {
-        $agendas = Agenda::withTrashed('funcionario_id', 1)->orderBy('titulo')->get();
+        $agendas = Agenda::withTrashed('funcionario_id', 1)->orderByRaw('deleted_at DESC, created_at DESC')->get();
         $lixeira = Agenda::onlyTrashed()->where('funcionario_id', 1)->count();
         return view('calendario::agendas.index', ['agendas' => $agendas, 'lixeira' => $lixeira]);
     }
