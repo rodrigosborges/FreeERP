@@ -11,7 +11,18 @@
             @method('PUT')
             @endif
             <div class="form-group">
+
+                <select class="custom-select" name="categoriaPai">
+
+                    <option value="-1">Selecione</option>
+                    @foreach($categorias as $cat)
+                    <option value="{{$cat->id}}" >{{$cat->nome}}</option>
+
+                    @endforeach
+                </select>
+
                 <label for="nome">Nome:</label>
+
                 <input type="text" name='nome' class="form-control" maxlength="45" value="{{(isset($categoria))?$categoria->nome:''}}">
                 <p class='alert-danger'> {{$errors->first('nome')}}</p><br>
             </div>

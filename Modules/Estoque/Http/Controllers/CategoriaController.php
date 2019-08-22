@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use Illuminate\Routing\Controller;
-use Modules\estoque\Entities\Categoria;
+use Modules\estoque\Entities\{Categoria, Subcategoria};
 use Modules\estoque\Http\Requests\CategoriaRequest;
 use DB;
 
@@ -46,9 +46,11 @@ class CategoriaController extends Controller
      */
     public function create()
     {
+
         $data = ['titulo' => 'Cadastrar Categoria', 'button' => 'Cadastrar'];
 
-        return view('estoque::categoria.form', $this->dadosTemplate, compact('data'));
+        $categorias = Categoria::all();
+        return view('estoque::categoria.form', $this->dadosTemplate, compact('data', 'categorias'));
     }
 
     /**
@@ -56,14 +58,26 @@ class CategoriaController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(CategoriaRequest $request)
+    public function store(Request $request)
     {
         //
-//dd($request);
         DB::beginTransaction();
         try {
-            Categoria::create($request->all());
+
+            $categoria =  Categoria::create($request->all());
+            $subcategoria = new Subcategoria();
+          
+            if ($request->categoriaPai != -1) {
+               // $subcategoria->categoria_id = $request->categoriaPai;
+                $subcategoria->categoria()->associate($categoria);
+                  $subcategoria->id = $categoria->id;
+            }
+            dd($subcategoria);
+            $subcategoria->save();
+            dd($subcategoria);
+
             DB::commit();
+
             return back()->with('success', 'Categoria ' . $request->nome . ' cadastrada com sucesso');
         } catch (\Exception $e) {
             DB::rollback();
@@ -90,7 +104,8 @@ class CategoriaController extends Controller
     {
         $data = ['titulo' => 'Editar Categoria', 'button' => 'Editar'];
         $categoria = Categoria::findOrFail($id);
-        return view('estoque::categoria.form', $this->dadosTemplate, compact('categoria', 'data'));
+        $categorias = Categoria::all();
+        return view('estoque::categoria.form', $this->dadosTemplate, compact('categoria', 'categorias', 'data'));
     }
 
     /**
@@ -99,10 +114,16 @@ class CategoriaController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoriaRequest $request, $id)
     {
         //
-        dd($request);
+        DB::beginTransaction();
+        try {
+            //codigo de update
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
     }
 
     /**

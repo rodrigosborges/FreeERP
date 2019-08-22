@@ -10,6 +10,6 @@ class Categoria extends Model
     protected $table = 'categoria';
 
     public function subcategoria(){
-        return $this->hasMany('App\Entities\Subcategoria');
+        return $this->hasMany('Modules\Estoque\Entities\Subcategoria');
     }
 }

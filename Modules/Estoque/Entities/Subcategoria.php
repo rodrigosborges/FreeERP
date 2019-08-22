@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subcategoria extends Model
 {
-    protected $fillable = ['nome','categoria_id'];
+    protected $fillable = ['id','categoria_id'];
     protected $table = 'subcategoria';
 
 
     public function categoria(){
-        return $this->belongsTo('App\Entities\Categoria');
+        return $this->belongsTo('Modules\Estoque\Entities\Categoria');
     }
 }
