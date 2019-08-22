@@ -9,7 +9,7 @@ class Funcionario extends Model{
 
     protected $table = 'funcionario';
 
-    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao'];
+    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao','estado_civil'];
 
     public function cargos(){
         return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada','data_saida')->withTrashed();
