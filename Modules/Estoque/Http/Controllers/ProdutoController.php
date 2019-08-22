@@ -32,7 +32,7 @@ class ProdutoController extends Controller
         try{
             Produto::create($request->all());
             DB::commit();
-            return redirect('/')->with('success', 'Produto cadastrado com sucesso');
+            return redirect('/estoque/produto')->with('success', 'Produto cadastrado com sucesso');
         }catch(\Exception $e){
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
@@ -41,11 +41,23 @@ class ProdutoController extends Controller
 
     public function edit($id)
     {
-        return view('estoque::produto.form');
+        $produto = Produto::findOrFail($id);
+        $categorias = Categoria::all();
+        $unidades = UnidadeProduto::all();
+        return view('estoque::produto.form', compact('produto', 'unidades', 'categorias'));
     }
-    public function update(Request $request, $id)
+    public function update(ProdutoRequest $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $produto = Produto::findOrFail($id);
+            $produto->update($request->all());
+            DB::commit();
+            return redirect('/estoque/produto')->with('success', 'Produto alterado com sucesso');
+        }catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor');
+        }
     }
 
     public function destroy($id)
