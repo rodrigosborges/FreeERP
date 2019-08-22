@@ -1,29 +1,15 @@
-<?php 
-    $moduleInfo = [
-        'icon' => 'fastfood',
-        'name' => 'Estoque',
-    ];
-    $menu = [
-        ['icon' => 'people', 'tool' => 'Produto', 'route' => url('')],
-        ['icon' => 'work', 'tool' => 'Categoria', 'route' => url('')],
-    ];
-?>
-
-@extends('template')
+@extends('estoque::template')
 @section('title', 'Cadastro de Produto')
 
 @section('content')
-<form action="{{isset($produto) ?  url('/estoque/produto/' . $produto->id) : url('/estoque/produto')}}" method="POST">
-    @if(isset($produto))
-        @method('PUT')
-    @endif
+<form action="{{url('/produto/cadastrar')}}" method="POST">
     @csrf
     <div class="container" style="justify-content: center">
         <div class="row">
             <div class="col-3">
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input required type="text" name="nome" class="form-control" value="{{isset($produto) ? $produto->nome : ''}}">
+                    <input required type="text" name="nome" class="form-control">
                     {{$errors->first('nome')}}
                 </div>
             </div>
@@ -33,15 +19,7 @@
                     <select required class="form-control" name="categoria_id">
                         <!-- INSERIR FOREACH CATEGORIAS -->
                         @foreach($categorias as $categoria)
-                            @if(isset($produto))
-                                @if($categoria->id == $produto->categoria_id)
-                                    <option value="{{$categoria->id}}" selected>{{$categoria->nome}}</option>
-                                @else
-                                    <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
-                                @endif
-                            @else
-                                <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
-                            @endif
+                            <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
                         @endforeach
                     </select>
                     {{$errors->first('categoria_id')}}
@@ -53,15 +31,7 @@
                     <select required class="form-control" name="unidade_id">
                         <!-- INSERIR FOREACH CATEGORIAS -->
                         @foreach($unidades as $unidade)
-                            @if(isset($produto))
-                                @if($unidade->id == $produto->unidade_id)
-                                    <option value="{{$unidade->id}}" selected>{{$unidade->tipo}}</option>
-                                @else
-                                    <option value="{{$unidade->id}}">{{$unidade->tipo}}</option>
-                                @endif
-                            @else
-                                <option value="{{$unidade->id}}">{{$unidade->tipo}}</option>
-                            @endif
+                            <option value="{{$unidade->id}}">{{$unidade->tipo}}</option>
                         @endforeach
                     </select>
                     {{$errors->first('categoria_id')}}
@@ -71,13 +41,13 @@
             <div class="row" style="align-items: flex-start;">
                 <div class="form-group col-5">
                     <label for="descricao">Descrição</label>
-                    <textarea class="form-control" name="descricao" rows="3" required>{{isset($produto) ? $produto->descricao : ''}}</textarea>
+                    <textarea class="form-control" name="descricao" rows="3" required></textarea>
                     {{$errors->first('descricao')}}
                 </div>
                 <div class="col-3">
                 <div class="form-group">
                     <label for="preco_venda">Preço de Venda</label>
-                    <input type="text" name="preco_venda" class="form-control" value="{{isset($produto) ? $produto->preco_venda : ''}}" required>
+                    <input type="text" name="preco_venda" class="form-control" required>
                     {{$errors->first('preco_venda')}}
                 </div>
             </div>
