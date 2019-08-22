@@ -75,6 +75,7 @@ class CategoriaController extends Controller
             }
             //dd($subcategoria);
             $subcategoria->save();
+            
             //dd($subcategoria);
 
             DB::commit();
@@ -105,9 +106,10 @@ class CategoriaController extends Controller
     {
         $data = ['titulo' => 'Editar Categoria', 'button' => 'Editar'];
         $categoria = Categoria::findOrFail($id);
-        
         $categorias = Categoria::all();
-        return view('estoque::categoria.form', $this->dadosTemplate, compact('categoria', 'categorias', 'data'));
+        $subcategoria = Subcategoria::findOrFail($id);
+        
+        return view('estoque::categoria.form', $this->dadosTemplate, compact('categoria', 'subcategoria', 'categorias', 'data'));
     }
 
     /**
