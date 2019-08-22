@@ -11,13 +11,10 @@
 |
 */
 
-<<<<<<< HEAD
-=======
 Route::prefix('estoque')->group(function() {
     Route::get('/', 'EstoqueController@index');
     route::resource('produto/categoria', 'CategoriaController');
+    Route::resource('/produto','ProdutoController');
+    Route::resource('/produto/unidade', 'UnidadeProdutoController');
 });
->>>>>>> de80a9ab8250f2bd1a6d4784ed9a731b6c88877c
 
-Route::resource('/produto','ProdutoController');
-Route::resource('/produto/unidade', 'UnidadeProdutoController');

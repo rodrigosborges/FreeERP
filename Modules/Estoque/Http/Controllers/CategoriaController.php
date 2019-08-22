@@ -5,18 +5,33 @@ namespace Modules\Estoque\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\estoque\Entities\Categoria;
 
 class CategoriaController extends Controller
 {
+    public $dadosTemplate;
+    public $moduleInfo;
     /**
      * Display a listing of the resource.
      * @return Response
      */
+    public function __construct(){
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'Estoque',
+        ];
+        $menu = [
+            ['icon' => 'people', 'tool' => 'Produto', 'route' => url('')],
+            ['icon' => 'work', 'tool' => 'Categoria', 'route' => url('')],
+        ];
+        $this->dadosTemplate =['moduleInfo'=>$moduleInfo,
+            'menu'=>$menu];
+    }
     public function index()
     {
-        
-       
-        return view('estoque::categoria.index');
+        $categorias = Categoria::all();
+    
+        return view('estoque::categoria.index', $this->dadosTemplate, compact('categorias') );
     }
 
     /**
@@ -55,7 +70,9 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        return view('estoque::edit');
+        
+        $categoria= Categoria::findOrFail($id);
+        return view('estoque::categoria.form',$this->dadosTemplate ,compact('categoria'));
     }
 
     /**
