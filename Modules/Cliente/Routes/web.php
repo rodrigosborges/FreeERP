@@ -13,4 +13,6 @@
 
 Route::prefix('cliente')->group(function() {
     Route::get('/', 'ClienteController@index');
+    Route::get('/pedido', 'PedidoController@index');
 });
+
