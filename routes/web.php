@@ -35,7 +35,7 @@ Route::get('/', function () {
         ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
     ];
     // Passe os parâmetros definidos utilizando as chaves 'moduleInfo' e 'menu'
-    return view('example', [
+    return view('formcliente', [
         'moduleInfo' => $moduleInfo,
         'menu' => $menu,
     ]);
