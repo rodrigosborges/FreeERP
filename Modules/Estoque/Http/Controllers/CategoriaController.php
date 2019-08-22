@@ -137,6 +137,9 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
+        $categoria = Categoria::findOrFail($id);
+        $categoria->delete();
+        return back()->with('success','Categoria Removida com sucesso');
         //
     }
 }
