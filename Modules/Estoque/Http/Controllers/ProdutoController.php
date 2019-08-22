@@ -9,6 +9,7 @@ use DB;
 use Modules\Estoque\Http\Requests\ProdutoRequest;
 use Modules\Estoque\Entities\Produto;
 use Modules\Estoque\Entities\UnidadeProduto;
+use Modules\Estoque\Entities\Categoria;
 
 class ProdutoController extends Controller
 {

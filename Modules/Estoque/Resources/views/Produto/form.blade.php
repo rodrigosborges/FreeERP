@@ -13,7 +13,7 @@
 @section('title', 'Cadastro de Produto')
 
 @section('content')
-<form action="{{url('/produto/cadastrar')}}" method="POST">
+<form action="{{url('/estoque/produto')}}" method="POST">
     @csrf
     <div class="container" style="justify-content: center">
         <div class="row">

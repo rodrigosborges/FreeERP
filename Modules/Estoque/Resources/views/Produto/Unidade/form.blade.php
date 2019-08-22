@@ -13,7 +13,7 @@
 @section('title', 'Unidade de Produto')
 
 @section('content')
-<form action="{{url('/produto/unidade')}}" method="POST">
+<form action="{{url('/estoque/produto/unidade')}}" method="POST">
     @csrf
     <div class="container" style="justify-content: center">
         <div class="row">
