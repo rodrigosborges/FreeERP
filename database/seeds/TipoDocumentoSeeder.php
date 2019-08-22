@@ -22,6 +22,9 @@ class TipoDocumentoSeeder extends Seeder
             [
                 'nome'          => 'Título de eleitor',
             ],
+            [
+                'nome'          => 'CNPJ',
+            ]
         ]);
     }
 }
