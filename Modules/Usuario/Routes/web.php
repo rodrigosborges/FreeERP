@@ -14,3 +14,17 @@
 Route::prefix('usuario')->group(function() {
     Route::get('/', 'UsuarioController@index');
 });
+
+// Módulo
+Route::prefix('modulo')->group(function() {
+    // Cadastrar
+    Route::get('/cadastrar', 'ModuloController@create');
+    Route::post('/', 'ModuloController@store');
+    // Listar
+    Route::get('/', 'ModuloController@index');
+    // Atualizar
+    Route::get('/edit/{id}', 'ModuloController@edit');
+    Route::put('/{id}', 'ModuloController@update');
+    // Deletar
+    Route::delete('/{id}', 'ModuloController@destroy');
+});
