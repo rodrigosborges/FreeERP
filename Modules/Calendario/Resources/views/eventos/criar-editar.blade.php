@@ -4,7 +4,13 @@
 
 @section('content')
     <div class="container">
-        <h2>{{isset($evento) ? 'Editar Evento' : 'Novo Evento'}}</h2>
+        <h2>
+            @if(isset($evento))
+                <a href="{{route('agendas.eventos.index', $evento->agenda->id)}}">{{$evento->agenda->titulo}}</a> > {{$evento->titulo}}
+            @else
+                Novo Evento
+            @endif
+        </h2>
         <form action="{{isset($evento) ? route('eventos.editar', $evento->id) : route('eventos.salvar')}}" id="eventoForm" method="post" autocomplete="off">
         @csrf
         {{isset($evento) ? method_field('PUT') : ''}}
@@ -58,10 +64,17 @@
                     </div>
                 </div>
                 <div class="small custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="eventoNotificacaoEmail" id="eventoNotificacaoEmail" value="1" @if(isset($evento->notificacao)) @if(isset($evento->notificacao->email)) checked @else @endif @else disabled @endif>
+                    <input type="checkbox" class="custom-control-input" name="eventoNotificacaoEmail" id="eventoNotificacaoEmail" value="1"
+                           @if(isset($evento->notificacao)) @if(isset($evento->notificacao->email)) checked @else @endif @else disabled @endif>
                     <label class="custom-control-label" for="eventoNotificacaoEmail">Também notificar via
                         e-mail</label>
                 </div>
+            </div>
+
+            <!-- Nota -->
+            <div class="form-group">
+                <label for="eventoNota">Descrição</label>
+                <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3">{{isset($evento) ? $evento->nota : old('eventoNota')}}</textarea>
             </div>
 
             <!-- Agenda -->
@@ -70,17 +83,12 @@
                     <label for="eventoAgenda">Agenda</label>
                     <select id="eventoAgenda" class="form-control" name="eventoAgenda" required>
                         @foreach($agendas as $agenda)
-                            <option value="{{$agenda->id}}" @if($evento) @if($agenda->id == $evento->agenda->id) selected @endif @elseif($agenda_selecionada == $agenda->id) selected @endif>{{$agenda->titulo}}
+                            <option value="{{$agenda->id}}" @if($evento) @if($agenda->id == $evento->agenda->id) selected
+                                    @endif @elseif($agenda_selecionada == $agenda->id) selected @endif>{{$agenda->titulo}}
                             </option>
                         @endforeach
                     </select>
                 </div>
-            </div>
-
-            <!-- Nota -->
-            <div class="form-group">
-                <label for="eventoNota">Descrição</label>
-                <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3">{{isset($evento) ? $evento->nota : old('eventoNota')}}</textarea>
             </div>
 
             <button type="submit" class="btn btn-success">Salvar</button>

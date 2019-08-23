@@ -5,7 +5,7 @@
 @section('content')
     @parent
     <div class="container">
-        <h2>Eventos</h2>
+        <h2>{{$agenda}} > Eventos</h2>
         <div class="controles clearfix">
             <div class="float-right">
             </div>
@@ -28,7 +28,7 @@
             <tbody>
             @forelse($eventos as $evento)
                 <tr>
-                    <th scope="row">{{$loop->iteration}}</th>
+                    <th scope="row">{{$evento->id}}</th>
                     <td><a href="{{route('eventos.editar', $evento->id)}}">{{$evento->titulo}}</a></td>
                     @if($evento->dia_todo == true)
                         <td>{{ \Carbon\Carbon::parse($evento->data_inicio)->format('d/m/Y')}}</td>

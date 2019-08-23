@@ -135,7 +135,9 @@
                     if (descricao != null) {
                         $(info.el).tooltip({
                             'title': descricao
-                        });
+                        }).append('<i class="material-icons float-right">info</i>');
+
+                        $(info.el).find('.fc-title').append('<i style="font-size: inherit; line-height: inherit" class="material-icons float-right">info</i>');
                     }
 
                 },

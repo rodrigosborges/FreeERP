@@ -20,7 +20,11 @@ class Agenda extends Model
     }
 
     public function eventos(){
-        return $this->hasMany('Modules\Calendario\Entities\Evento');
+        return $this->hasMany('Modules\Calendario\Entities\Evento')->orderBy('data_inicio');
+    }
+
+    public function compartilhamentos(){
+        return $this->hasMany('Modules\Calendario\Entities\Compartilhamento');
     }
 
     public function dono(){

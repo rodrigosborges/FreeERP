@@ -40,9 +40,9 @@ class EventoController extends Controller
                 $notificacao->save();
             }
         } catch (\Exception $e) {
-            return redirect()->route('calendario.index')->with('error', 'Falha ao criar evento. Erro: ' . $e->getCode());
+            return redirect()->route('agendas.eventos.index', $agenda->id)->with('error', 'Falha ao criar evento. Erro: ' . $e->getCode());
         }
-        return redirect()->route('calendario.index')->with('success', 'Evento criado com sucesso.');
+        return redirect()->route('agendas.eventos.index', $agenda->id)->with('success', 'Evento criado com sucesso.');
     }
 
     public function atualizar(Request $request, Evento $evento)
@@ -76,9 +76,9 @@ class EventoController extends Controller
             }
             $evento->save();
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Falha ao atualizar evento "' . $request->eventoNome . '". Erro: ' . $e->getMessage());
+            return redirect()->route('calendario.index')->with('error', 'Falha ao atualizar evento "' . $request->eventoNome . '". Erro: ' . $e->getMessage());
         }
-        return redirect()->back()->with('success', 'Evento "' . $request->eventoTitulo . '" atualizado com sucesso.');
+        return redirect()->route('calendario.index')->with('success', 'Evento "' . $request->eventoTitulo . '" atualizado com sucesso.');
     }
 
     public function deletar(Evento $evento)

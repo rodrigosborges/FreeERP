@@ -5,7 +5,13 @@
 @section('content')
     @parent
     <div class="container">
-        <h2>{{isset($agenda) ? 'Editar Agenda' : 'Nova Agenda'}}</h2>
+        <h2>
+        @if(isset($agenda))
+            {{$agenda->titulo}}
+        @else
+            Nova Agenda
+        @endif
+        </h2>
         <form action="{{isset($agenda) ? route('agendas.atualizar', $agenda) : route('agendas.salvar')}}"
               id="agendaForm" method="post">
             @csrf
@@ -32,11 +38,17 @@
             </div>
             <div class="form-group">
                 <label for="agendaCompartilhamento">Compartilhamento</label>
-                <select id="agendaCompartilhamento" name="agendaCompartilhamento" class="form-control" required>
-                    <option value="0">Pessoal</option>
+                <select id="agendaCompartilhamento" name="agendaCompartilhamento[]" class="form-control" multiple>
                     @foreach($setores as $setor)
-                        <option value="{{$setor->id}}"
-                                @if(isset($agenda->setor) && $agenda->setor->id == $setor->id) selected @endif>{{$setor->nome}}
+                        @php($selected = '')
+                        @if(isset($agenda))
+                            @foreach($agenda->compartilhamentos as $compartilhamento)
+                                @if($compartilhamento->setor_id == $setor->id)
+                                    @php($selected = 'selected')
+                                @endif
+                            @endforeach
+                        @endif
+                        <option value="{{$setor->id}}" {{$selected}}>{{$setor->nome}}
                         </option>
                     @endforeach
                 </select>
@@ -80,7 +92,9 @@
     <script type="text/javascript">
         $(function () {
             $('#agendaCor').colorselector();
-            $('#agendaCompartilhar').chosen({});
+            $('#agendaCompartilhamento').chosen({
+                placeholder_text_multiple: 'Setores'
+            });
         });
     </script>
 @endsection
