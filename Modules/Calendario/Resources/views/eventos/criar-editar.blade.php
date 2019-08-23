@@ -43,22 +43,22 @@
                 <div class="form-row">
                     <div class="col-2">
                         <input type="number" min="1" max="999" class="form-control text-center" name="eventoNotificacaoTempo"
-                               value="10">
+                            {{isset($evento->notificacao) ? 'value=' . $evento->notificacao->tempo : 'value=10 disabled'}}>
                     </div>
                     <div class="col-3">
-                        <select name="eventoNotificacaoPeriodo" class="form-control">
-                            <option value="60">minutos</option>
-                            <option value="3600">horas</option>
-                            <option value="86400">dias</option>
+                        <select name="eventoNotificacaoPeriodo" class="form-control" {{isset($evento->notificacao) ? '' : 'disabled'}}>
+                            <option value="60" @if(isset($evento->notificacao) && $evento->notificacao->periodo == '60') selected @endif>minutos</option>
+                            <option value="3600" @if(isset($evento->notificacao) && $evento->notificacao->periodo == '3600') selected @endif>horas</option>
+                            <option value="86400" @if(isset($evento->notificacao) && $evento->notificacao->periodo == '86400') selected @endif>dias</option>
                         </select>
                     </div>
                     <div class="form-inline">
                         <a href="#">
-                            <i class="material-icons" id="icone-notificacao">notifications_on</i></a>
+                            <i class="material-icons" id="icone-notificacao">{{isset($evento->notificacao) ? 'notifications_on' : 'notifications_off'}}</i></a>
                     </div>
                 </div>
                 <div class="small custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="eventoNotificacaoEmail">
+                    <input type="checkbox" class="custom-control-input" name="eventoNotificacaoEmail" id="eventoNotificacaoEmail" value="1" @if(isset($evento->notificacao)) @if(isset($evento->notificacao->email)) checked @else @endif @else disabled @endif>
                     <label class="custom-control-label" for="eventoNotificacaoEmail">Também notificar via
                         e-mail</label>
                 </div>

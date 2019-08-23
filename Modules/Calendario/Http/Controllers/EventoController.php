@@ -36,6 +36,7 @@ class EventoController extends Controller
                 $notificacao->evento()->associate($evento);
                 $notificacao->tempo = $request->eventoNotificacaoTempo;
                 $notificacao->periodo = $request->eventoNotificacaoPeriodo;
+                $notificacao->email = $request->eventoNotificacaoEmail;
                 $notificacao->save();
             }
         } catch (\Exception $e) {
@@ -58,6 +59,7 @@ class EventoController extends Controller
                 if($request->eventoNotificacaoTempo && $request->eventoNotificacaoPeriodo){
                     $evento->notificacao->tempo = $request->eventoNotificacaoTempo;
                     $evento->notificacao->periodo = $request->eventoNotificacaoPeriodo;
+                    $evento->notificacao->email = $request->eventoNotificacaoEmail;
                     $evento->notificacao->save();
                 } else {
                     $evento->notificacao()->delete();
@@ -68,6 +70,7 @@ class EventoController extends Controller
                     $notificacao->evento()->associate($evento);
                     $notificacao->tempo = $request->eventoNotificacaoTempo;
                     $notificacao->periodo = $request->eventoNotificacaoPeriodo;
+                    $notificacao->email = $request->eventoNotificacaoEmail;
                     $notificacao->save();
                 }
             }

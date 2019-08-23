@@ -17,8 +17,8 @@ class CreateNotificacaoTable extends Migration
             $table->bigIncrements('id');
             $table->integer('tempo');
             $table->integer('periodo');
-            $table->boolean('email')->default(false);
-            $table->boolean('disparado')->default(false);
+            $table->boolean('email')->nullable();
+            $table->boolean('disparado')->nullable();
             $table->unsignedBigInteger('evento_id');
             $table->foreign('evento_id')->references('id')->on('evento')->onDelete('cascade');
             $table->timestamps();
