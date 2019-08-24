@@ -15,8 +15,9 @@ class ProdutoController extends Controller
 {
     public function index()
     {
-        return 1;
-        return view('estoque::produto.index');
+        $produtos = Produto::all();
+        $produtosInativos = Produto::onlyTrashed()->get();
+        return view('estoque::produto.index', compact('produtos', 'produtosInativos'));
     }
 
     public function create()
@@ -62,6 +63,14 @@ class ProdutoController extends Controller
 
     public function destroy($id)
     {
-        //
+        $produto = Produto::findOrFail($id);
+        $produto->delete();
+        return back()->with('success', 'Produto desativado com sucesso!');
+    }
+
+    public function restore($id){
+        $produto = Produto::onlyTrashed()->findOrFail($id);
+        $produto->restore();
+        return back()->with('success', 'Produto ativado com sucesso!');
     }
 }

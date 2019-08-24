@@ -16,5 +16,10 @@ Route::prefix('estoque')->group(function() {
     route::resource('produto/categoria', 'CategoriaController');
     Route::resource('/produto','ProdutoController');
     Route::resource('/produto/unidade', 'UnidadeProdutoController');
+    
+    //Restaurar Produto
+    Route::put('/produto/{id}/restore', 'ProdutoController@restore');
+
+    
 });
 

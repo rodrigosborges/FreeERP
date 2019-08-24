@@ -18,8 +18,8 @@ class ProdutoRequest extends FormRequest
     public function messages(){
         return[
             'required' => 'O campo :attribute é obrigatório!',
-            'min' => 'Minimo de 3 caracteres!',
-            'max' => 'Você excedeu o número de caracteres!',
+            'min' => 'Minimo de :min caracteres!',
+            'max' => 'Minimo de :max caracteres!',
             'unique' => ':attribute já cadastrado!',
             'numeric' => 'Insira apenas valores númericos'
         ];

@@ -77,15 +77,27 @@
                 <div class="col-3">
                 <div class="form-group">
                     <label for="preco_venda">Preço de Venda</label>
-                    <input type="text" name="preco_venda" class="form-control" value="{{isset($produto) ? $produto->preco_venda : ''}}" required>
+                    <input type="text" name="preco_venda" placeholder="R$" onkeyPress="" class="form-control" value="{{isset($produto) ? $produto->preco_venda : ''}}" required>
                     {{$errors->first('preco_venda')}}
                 </div>
             </div>
             </div>
             <div class="row col-8" style="justify-content: flex-end;">
-                <button type="submit" class="btn btn-primary">{{isset($produto) ? 'Salvar' : 'Cadastrar'}}</button>
+                <button type="submit" class="btn btn-success">{{isset($produto) ? 'Salvar' : 'Cadastrar'}}</button>
             </div>
 
         </form>  
     </div>  
+
+<script>
+
+function moeda(i) {
+	var v = i.value.replace(/\D/g,'');
+	v = (v/100).toFixed(2) + '';
+	v = v.replace(".", ",");
+	v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+	v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+	i.value = v;
+}
+</script>
 @endsection
