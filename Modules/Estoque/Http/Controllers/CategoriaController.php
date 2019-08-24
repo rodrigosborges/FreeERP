@@ -120,13 +120,20 @@ class CategoriaController extends Controller
      */
     public function update(CategoriaRequest $request, $id)
     {
-        //
         DB::beginTransaction();
         try {
-            //codigo de update
+
+            $categoria = Categoria::findOrFail($id);
+            $subcategoria = Subcategoria::findOrFail($id);
+            $categoria->update($request->all());
+            $subcategoria->update($request->all());
             DB::commit();
+
+            return back()->with('success', 'Categoria ' . $request->nome . ' editada com sucesso');
+             
         } catch (\Exception $e) {
             DB::rollback();
+            return back()->with('danger', 'Erro ao editar categoria. Cód:' . $e->getMessage());
         }
     }
 
