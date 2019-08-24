@@ -8,87 +8,60 @@
         ['icon' => 'work', 'tool' => 'Categoria', 'route' => url('')],
     ];
 ?>
-
 @extends('template')
-@section('title', 'Cadastro de Produto')
-
+@section('title', 'Lista de Produtos')
 @section('content')
-<div class="container col-8">
-    <h2 class="container-title">Produtos Ativos</h2>
-    <div class="row" style="margin-bottom: 20px; float: right;">
-        <a href="{{url('/estoque/produto/create')}}"><button class="btn btn-primary">Cadastrar</button></a>
-    </div>
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Categoria</th>
-      <th scope="col">Unidade</th>
-      <th scope="col">Estoque</th>
-      <th scope="col">Preço</th>
-      <th scope="col">Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach($produtos as $produto)
-        <tr>
-            <td>{{$produto->id}}</td>
-            <td>{{$produto->nome}}</td>
-            <td>{{$produto->categoria->nome}}</td>
-            <td>{{$produto->unidade->tipo}}</td>
-            <td>Soon</td>
-            <td>{{$produto->preco_venda}}</td>
-            <td style="display: flex; flex-direction: row;"><a href="{{url('/estoque/produto/' . $produto->id . '/edit')}}"><button class="btn btn-success">Editar</button></a>
-            <form method="POST" action="{{url('/estoque/produto/' . $produto->id)}}">
-                @method('delete')
-                @csrf
-                <button type="submit" class="btn btn-warning">Desativar</button>
+<div class="container">
+<div class="row">
+        <div class="col-md-8 mt-3">
+            <form id="form">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="search-input" placeholder="Pesquisa" class="form-control" type="text" name="pesquisa" />
+                        <i id="search-button" class="btn btn-dark material-icons ml-1">search</i>
+                    </div>
+                </div>
             </form>
-            </td>
-        </tr>
-    @endforeach
-  </tbody>
-</table>
-</div>
+        </div>
+        <div class="col-md-4 mt-3">
+            <div class="text-right">
+                <a class="btn btn-success" href="{{url('/produto/create')}}">Novo Produto</a>
+            </div>
+        </div>
+    </div>
 
-<div class="container col-8">
-    <h2 class="container-title">Produtos Inativos</h2>
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Categoria</th>
-            <th scope="col">Unidade</th>
-            <th scope="col">Estoque</th>
-            <th scope="col">Preço</th>
-            <th scope="col">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($produtosInativos as $produto)
+    <div class="col-md-12 mt-5">
+        <table class="table">
+            <thead class="thead-dark">
                 <tr>
-                    <td>{{$produto->id}}</td>
-                    <td>{{$produto->nome}}</td>
-                    <td>{{$produto->categoria->nome}}</td>
-                    <td>{{$produto->unidade->tipo}}</td>
-                    <td>Soon</td>
-                    <td>{{$produto->preco_venda}}</td>
-                    <td>
-                    <form method="POST" action="{{url('/estoque/produto/' . $produto->id . '/restore')}}">
-                        @method('put')
-                        @csrf
-                        <button type="submit" class="btn btn-warning">Restaurar</button>
-                    </form>
-                    </td>
+                <th scope="col">Nome</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Deletar</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-
+            </thead>
+            <tbody>
+                <!-- @if(isset($produtos))
+                @foreach($produtos as $produto)
+                <tr>    
+                    <td>{{$produto->nome}}</td>
+                    <td>{{$produto->quantidade}}</td>
+                    <td>R$ {{$produto->preco}}</td>
+                    <td><a href=""><button class="btn btn-warning">Editar</button></a></td>
+                    <td><a href=""><button class="btn btn-danger">Deletar</button></a></td>
+                </tr>
+                @endforeach 
+                @endif -->
+                <tr>    
+                    <td>Nome</td>
+                    <td>4</td>
+                    <td>R$ 13,20</td>
+                    <td><a href=""><button class="btn btn-warning">Editar</button></a></td>
+                    <td><a href=""><button class="btn btn-danger">Deletar</button></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-
-
 @endsection

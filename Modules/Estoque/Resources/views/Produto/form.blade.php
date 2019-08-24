@@ -8,14 +8,13 @@
         ['icon' => 'work', 'tool' => 'Categoria', 'route' => url('')],
     ];
 ?>
-
 @extends('template')
 @section('title', 'Cadastro de Produto')
 
 @section('content')
-<form action="{{isset($produto) ?  url('/estoque/produto/' . $produto->id) : url('/estoque/produto')}}" method="POST">
+<form action="{{isset($produto) ?  url('/estoque/produto/' . $produto->id) : url('/estoque/produto/store')}}" method="POST">
     @if(isset($produto))
-        @method('PUT')
+        @method('put')
     @endif
     @csrf
     <div class="container" style="justify-content: center">
@@ -31,18 +30,19 @@
                 <div class="form-group">
                     <label for="categoria_id">Categoria</label>
                     <select required class="form-control" name="categoria_id">
-                        <!-- INSERIR FOREACH CATEGORIAS -->
-                        @foreach($categorias as $categoria)
-                            @if(isset($produto))
+                        @if(isset($produto))
+                            @foreach($categorias as $categoria)
                                 @if($categoria->id == $produto->categoria_id)
                                     <option value="{{$categoria->id}}" selected>{{$categoria->nome}}</option>
                                 @else
                                     <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
                                 @endif
-                            @else
+                            @endforeach
+                        @else
+                            @foreach($categorias as $categoria)
                                 <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
-                            @endif
-                        @endforeach
+                            @endforeach
+                        @endif
                     </select>
                     {{$errors->first('categoria_id')}}
                 </div>
@@ -51,18 +51,19 @@
                 <div class="form-group">
                     <label for="categoria_id">Unidade de Medida</label>
                     <select required class="form-control" name="unidade_id">
-                        <!-- INSERIR FOREACH CATEGORIAS -->
-                        @foreach($unidades as $unidade)
-                            @if(isset($produto))
+                        @if(isset($produto))
+                            @foreach($unidades as $unidade)
                                 @if($unidade->id == $produto->unidade_id)
                                     <option value="{{$unidade->id}}" selected>{{$unidade->tipo}}</option>
                                 @else
                                     <option value="{{$unidade->id}}">{{$unidade->tipo}}</option>
                                 @endif
-                            @else
+                            @endforeach
+                        @else
+                            @foreach($unidades as $unidade)
                                 <option value="{{$unidade->id}}">{{$unidade->tipo}}</option>
-                            @endif
-                        @endforeach
+                            @endforeach
+                        @endif
                     </select>
                     {{$errors->first('categoria_id')}}
                 </div>

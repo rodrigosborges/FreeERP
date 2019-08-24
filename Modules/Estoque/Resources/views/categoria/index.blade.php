@@ -24,9 +24,19 @@
                 
             </td>
             <td>
-                <a class="btn btn-lg btn-danger" href="">
-                    <i class="material-icons">delete</i>
-                </a>
+            <form method="POST" action="{{url('estoque/produto/categoria/'. $categoria->id)}}">
+                        @method('delete')
+                        @csrf
+                        <button type="submit"  class="btn btn-lg btn-danger">
+                            
+                                <i class="material-icons">delete</i>
+                        
+                        </button>
+                    </form>
+
+
+
+               
             </td>
             
         </tr>

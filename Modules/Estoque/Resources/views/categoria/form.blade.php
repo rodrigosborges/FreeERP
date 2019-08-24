@@ -1,7 +1,6 @@
 @extends('template')
 @section('title','Categorias')
 @section('content')
-<h2 class="text-center">{{$data['titulo']}}</h2>
 <div class='row justify-content-center'>
     <div class="col-sm-6">
         <form action="{{url( isset($categoria)?'estoque/produto/categoria/'.$categoria->id:'estoque/produto/categoria' )}}" method="POST">
@@ -10,13 +9,15 @@
 
             @method('PUT')
             @endif
+            
+        <h2 class="text-center">{{$data['titulo']}}</h2>
             <div class="form-group">
-
+                <label for="categoriaPai"> Categoria</label>
                 <select class="custom-select" name="categoriaPai">
 
                     <option value="-1">Selecione</option>
                     @foreach($categorias as $cat)
-                    <option value="{{$cat->id}}" >{{$cat->nome}}</option>
+                    <option value="{{$cat->id}}"  {{isset($categoria)&&$subcategoria->categoria_id== $cat->id?'selected':''}}>{{$cat->nome}}</option>
 
                     @endforeach
                 </select>
