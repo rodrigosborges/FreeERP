@@ -5,12 +5,18 @@
 <div class="row justify-content-center ">
 
     <div class="col-sm-6 d-flex">
+    
         <table class="table text-center ">
+        
             <thead class="thead-dark">
+      
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Nome</th>
-                    <th scope='col' colspan='2'>Ações</th>
+                    <th scope='col' >Ações</th>
+                    <th><a class="btn btn-success btn-md"  href="{{url('/estoque/produto/categoria/create')}}"><i class="material-icons">
+note_add
+</i></a></th>
                 </tr>
             </thead>
             @foreach($categorias as $categoria)
