@@ -1,3 +1,4 @@
+
 <?php 
     $moduleInfo = [
         'icon' => 'fastfood',
@@ -12,11 +13,11 @@
 @section('title', 'Cadastro de Produto')
 
 @section('content')
-<form action="{{isset($produto) ?  url('/estoque/produto/' . $produto->id) : url('/estoque/produto/store')}}" method="POST">
+<form action="{{isset($produto) ?  url('/estoque/produto/' . $produto->id) : url('/estoque/produto')}}" method="POST">
+    @csrf
     @if(isset($produto))
         @method('put')
     @endif
-    @csrf
     <div class="container" style="justify-content: center">
         <div class="row">
             <div class="col-3">
@@ -78,7 +79,7 @@
                 <div class="col-3">
                 <div class="form-group">
                     <label for="preco_venda">Preço de Venda</label>
-                    <input type="text" name="preco_venda" placeholder="R$" onkeyPress="" class="form-control" value="{{isset($produto) ? $produto->preco_venda : ''}}" required>
+                    <input type="text" name="preco_venda" placeholder="R$" onkeyUp="moeda(this);" class="form-control" value="{{isset($produto) ? $produto->preco_venda : ''}}" required>
                     {{$errors->first('preco_venda')}}
                 </div>
             </div>
@@ -90,15 +91,14 @@
         </form>  
     </div>  
 
-<script>
-
-function moeda(i) {
-	var v = i.value.replace(/\D/g,'');
-	v = (v/100).toFixed(2) + '';
-	v = v.replace(".", ",");
-	v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
-	v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
-	i.value = v;
-}
-</script>
 @endsection
+<script>
+    function moeda(i) {
+        var v = i.value.replace(/\D/g,'');
+        v = (v/100).toFixed(2) + '';
+        v = v.replace(",", ".");
+        v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1$2$3.");
+        v = v.replace(/(\d)(\d{3}),/g, "$1$2.");
+        i.value = v;
+    }
+    </script>

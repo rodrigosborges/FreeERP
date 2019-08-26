@@ -17,7 +17,7 @@ class ProdutoController extends Controller
     {
         $produtos = Produto::all();
         $produtosInativos = Produto::onlyTrashed()->get();
-        return view('estoque::produto.index', compact('produtos', 'produtosInativos'));
+        return view('estoque::index', compact('produtos', 'produtosInativos'));
     }
 
     public function create()
