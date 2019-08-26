@@ -14,15 +14,17 @@ class CategoriaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'=>['required', 'min: 3','max: 45'],
+            'nome' => ['required', 'min: 3', 'max: 45', 'unique:categoria,nome,' . $this->nome],
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
-            'required'=> 'O Campo :attribute é obrigatório',
-            'min'=>'O campo :attribute deve conter no mínimo :min caracteres',
-            'max'=>'O campo :attribute deve conter no mínimo :max caracteres',
+            'required' => 'O Campo :attribute é obrigatório',
+            'min' => 'O campo :attribute deve conter no mínimo :min caracteres',
+            'max' => 'O campo :attribute deve conter no mínimo :max caracteres',
+            'unique'=> 'Já existe uma categoria com esse nome'
         ];
     }
 

@@ -25,8 +25,8 @@ class CategoriaController extends Controller
             'name' => 'Estoque',
         ];
         $menu = [
-            ['icon' => 'people', 'tool' => 'Produto', 'route' => url('')],
-            ['icon' => 'work', 'tool' => 'Categoria', 'route' => url('')],
+            ['icon' => 'people', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
+            ['icon' => 'work', 'tool' => 'Categoria', 'route' => url('estoque/produto/categoria')],
         ];
         $this->dadosTemplate = [
             'moduleInfo' => $moduleInfo,
@@ -36,8 +36,8 @@ class CategoriaController extends Controller
     public function index()
     {
         $categorias = Categoria::all();
-
-        return view('estoque::categoria.index', $this->dadosTemplate, compact('categorias'));
+        $categoriasInativas = Categoria::onlyTrashed()->get();
+        return view('estoque::categoria.index', $this->dadosTemplate, compact('categorias', 'categoriasInativas'));
     }
 
     /**
@@ -68,18 +68,10 @@ class CategoriaController extends Controller
             $subcategoria = new Subcategoria();
             $subcategoria->id = $categoria->id;
             if ($request->categoriaPai != -1) {
-
                 $subcategoria->categoria_id = $request->categoriaPai;
-                // $subcategoria->categoria()->associate($categoria);
-
             }
-            //dd($subcategoria);
             $subcategoria->save();
-            
-            //dd($subcategoria);
-
             DB::commit();
-
             return back()->with('success', 'Categoria ' . $request->nome . ' cadastrada com sucesso');
         } catch (\Exception $e) {
             DB::rollback();
@@ -108,7 +100,7 @@ class CategoriaController extends Controller
         $categoria = Categoria::findOrFail($id);
         $categorias = Categoria::all();
         $subcategoria = Subcategoria::findOrFail($id);
-        
+
         return view('estoque::categoria.form', $this->dadosTemplate, compact('categoria', 'subcategoria', 'categorias', 'data'));
     }
 
@@ -130,7 +122,6 @@ class CategoriaController extends Controller
             DB::commit();
 
             return back()->with('success', 'Categoria ' . $request->nome . ' editada com sucesso');
-             
         } catch (\Exception $e) {
             DB::rollback();
             return back()->with('danger', 'Erro ao editar categoria. Cód:' . $e->getMessage());
@@ -145,8 +136,17 @@ class CategoriaController extends Controller
     public function destroy($id)
     {
         $categoria = Categoria::findOrFail($id);
+       
         $categoria->delete();
-        return back()->with('success','Categoria Removida com sucesso');
+        return back()->with('success', 'Categoria Removida com sucesso');
         //
+    }
+    public function restore($id)
+    {
+        
+        $categoria = Categoria::onlyTrashed()->findOrFail($id);
+   
+        $categoria->restore();
+        return back()->with('success', 'categoria ' . $categoria->nome . " restaurada com sucesso");
     }
 }

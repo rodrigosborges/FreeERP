@@ -9,15 +9,15 @@
 
             @method('PUT')
             @endif
-            
-        <h2 class="text-center">{{$data['titulo']}}</h2>
+
+            <h2 class="text-center">{{$data['titulo']}}</h2>
             <div class="form-group">
                 <label for="categoriaPai"> Categoria</label>
                 <select class="custom-select" name="categoriaPai">
 
                     <option value="-1">Selecione</option>
                     @foreach($categorias as $cat)
-                    <option value="{{$cat->id}}"  {{isset($categoria)&&$subcategoria->categoria_id== $cat->id?'selected':''}}>{{$cat->nome}}</option>
+                    <option value="{{$cat->id}}" {{isset($categoria)&&$subcategoria->categoria_id== $cat->id?'selected':''}}>{{$cat->nome}}</option>
 
                     @endforeach
                 </select>

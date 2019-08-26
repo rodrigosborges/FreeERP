@@ -11,15 +11,13 @@
 |
 */
 
-Route::prefix('estoque')->group(function() {
+Route::prefix('estoque')->group(function () {
     Route::get('/', 'EstoqueController@index');
     route::resource('produto/categoria', 'CategoriaController');
-    Route::resource('produto','ProdutoController');
+    route::PUT('produto/categoria/restore/{id}', 'CategoriaController@restore');
+    Route::resource('produto', 'ProdutoController');
     Route::resource('/produto/unidade', 'UnidadeProdutoController');
-    
+
     //Restaurar Produto
     Route::put('/produto/{id}/restore', 'ProdutoController@restore');
-
-    
 });
-
