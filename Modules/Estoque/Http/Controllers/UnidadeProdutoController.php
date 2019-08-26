@@ -84,8 +84,17 @@ class UnidadeProdutoController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
-    {
-        //
+
+    public function restore($id){
+        $unidadeProduto = UnidadeProduto::onlyTrashed()->findOrFail($id);
+        $unidadeProduto->restore();
+        return back()->with('success', 'Produto ativado com sucesso!');
     }
+
+    public function destroy($id) {
+        $unidadeProduto = UnidadeProduto::findOrFail($id);
+        $unidadeProduto->delete();
+        return back()->with('success', 'Unidade desativada com sucesso!');
+    }
+
 }
