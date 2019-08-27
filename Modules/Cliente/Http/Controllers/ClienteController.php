@@ -65,10 +65,10 @@ class ClienteController extends Controller
         
     }
 
-    public function show($id)
-    {
-        return view('cliente::show');
-    }
+    // public function show($id)
+    // {
+    //     return view('cliente::show');
+    // }
 
     public function edit($id)
     {
