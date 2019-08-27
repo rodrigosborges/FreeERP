@@ -4,7 +4,7 @@
 <h1 class="text-center">Categorias</h1>
 <div class="row justify-content-center ">
 
-    <div class="col-sm-6 d-flex">
+    <div class="col-sm-12 d-flex">
     
         <table class="table text-center ">
         
@@ -48,7 +48,7 @@ note_add
 <hr>
 <h2 class='text-center'>Categorias Inativas</h2>
 <div class="row justify-content-center">
-    <div class="col-sm-6 d-flex text-center">
+    <div class="col-sm-12 d-flex text-center">
         <table class="table">
             <thead class="table-dark">
                 <td>id</td>

@@ -25,8 +25,8 @@ class CategoriaController extends Controller
             'name' => 'Estoque',
         ];
         $menu = [
-            ['icon' => 'people', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
-            ['icon' => 'work', 'tool' => 'Categoria', 'route' => url('estoque/produto/categoria')],
+            ['icon' => 'shopping_basket', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
+            ['icon' => 'format_align_justify', 'tool' => 'Categoria', 'route' => url('estoque/produto/categoria')],
         ];
         $this->dadosTemplate = [
             'moduleInfo' => $moduleInfo,
@@ -111,16 +111,21 @@ class CategoriaController extends Controller
      * @return Response
      */
     public function update(CategoriaRequest $request, $id)
-    {
+    {  
         DB::beginTransaction();
         try {
 
             $categoria = Categoria::findOrFail($id);
             $subcategoria = Subcategoria::findOrFail($id);
+            if($request->nome == $categoria->nome){
+                return back()->with('warning','A categoria '. $categoria->nome . " já está cadastrada");
+            }
             $categoria->update($request->all());
-            $subcategoria->update($request->all());
+            if ($request->categoriaPai != -1) {
+                $subcategoria->categoria_id = $request->categoriaPai;
+            }
+            $subcategoria->save();
             DB::commit();
-
             return back()->with('success', 'Categoria ' . $request->nome . ' editada com sucesso');
         } catch (\Exception $e) {
             DB::rollback();
