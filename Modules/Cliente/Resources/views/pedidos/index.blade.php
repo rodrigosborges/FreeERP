@@ -5,7 +5,7 @@
 <div class = "container border">
 
     <div id="nome_cliente" class="row align-items-center pb-2 pl-2 col-sm-12">
-       <div class="col-sm-4">Adicionando compra ao cliente: </div>
+       <div class="col-sm-4">Cliente Selecionado</div>
        <div class= "col-sm-4"><h4>{{ $cliente[0]->nome }}</h4></div>
     </div>
   
@@ -33,27 +33,26 @@
                 </tr>
               </thead>
               <tbody>
+                
+                @foreach ($pd as $pedido)
                 <tr>
-                  <th scope="row">1</th>
-                  <td>20/08/2019</td>
-                  <td>R$ 5.000,00</td>
-                  <td>R$ 10,00</td>
-                  <td>
-                    <button id="ocultar" class="btn-primary" data-toggle="collapse" href="#collapseExample" 
-                                              role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <i class="material-icons">
-                      format_list_bulleted
-                      </i>
-                    </button>
-                  </td>
-                  <td class="d-flex justify-content-center">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                  </td>
+                    <th scope="row">{{$pedido->id}}</th>
+                        <td>{{$pedido->data}}</td>
+                        <td>Calcular</td>
+                        <td>{{$pedido->desconto}}</td>
+                        <td>
+                            <button id="ocultar" class="btn-primary" data-toggle="collapse" href="#collapseExample" 
+                                role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <i class="material-icons">
+                                        format_list_bulleted
+                                    </i>
+                            </button>
+                        </td>
+                        <td class="d-flex justify-content-center">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        </td>
                 </tr>
-                <tr id="collapse-example" class="collapse">
-                  kokoko
-                </tr>
-  
+                @endforeach
                 
               </tbody>
             </table>

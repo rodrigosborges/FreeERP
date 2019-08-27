@@ -5,15 +5,20 @@ namespace Modules\Cliente\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Cliente\Entities\{Cliente, Pedido};
 use DB; 
+
 class PedidoController extends Controller
 {
    
-    public function index()
+    public function index($id)
     {
-        $cliente = DB::table('cliente')->where('id',2)->get();
-        //  dd($cliente);
-        return view('cliente::pedidos.index', compact('cliente'));
+        $cliente = Cliente::where('id',$id)->get();
+
+        $pd = Pedido::where('cliente_id', $id)->get();
+        // $cliente = DB::table('cliente')->where('id',$id)->get();
+        //   dd($cliente);
+        return view('cliente::pedidos.index', compact('cliente','pd'));
     }
 
     

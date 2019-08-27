@@ -15,7 +15,7 @@
 // Route::resource('/cliente', 'ClienteController');
 
 Route::prefix('cliente')->group(function() {
-    Route::get('/pedido', 'PedidoController@index');
+    Route::get('/{id}/pedido', 'PedidoController@index');
 
     Route::get('/','ClienteController@index');
 });
