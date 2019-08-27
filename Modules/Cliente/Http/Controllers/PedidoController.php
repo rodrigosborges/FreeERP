@@ -13,12 +13,10 @@ class PedidoController extends Controller
    
     public function index($id)
     {
-        $cliente = Cliente::where('id',$id)->get();
-
-        $pd = Pedido::all()->where('cliente_id', $id);
-        // $cliente = DB::table('cliente')->where('id',$id)->get();
-        //  dd($cliente);
-        return view('cliente::pedidos.index', compact('cliente','pd'));
+        $cliente = Cliente::findOrFail($id);
+        
+        
+        return view('cliente::pedidos.index', compact('cliente'));
     }
 
     
