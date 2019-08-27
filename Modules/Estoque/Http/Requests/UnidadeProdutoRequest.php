@@ -14,7 +14,7 @@ class UnidadeProdutoRequest extends FormRequest
     public function rules()
     {
         return [
-            'tipo' => ['required', 'min: 3', 'max: 45']
+            'tipo' => ['required', 'min: 1', 'max: 45']
         ];
     }
 
@@ -22,7 +22,7 @@ class UnidadeProdutoRequest extends FormRequest
     public function messages(){
         return[
             'required' => 'O campo :attribute é obrigatório!',
-            'min' => 'Minimo de 3 caracteres!',
+            'min' => 'O campo não pode ser vazio',
             'max' => 'Você excedeu o número de caracteres! (45)',
             'unique' => ':attribute já cadastrado!'
         ];

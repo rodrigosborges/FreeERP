@@ -17,7 +17,9 @@ class UnidadeProdutoController extends Controller
      */
     public function index()
     {
-        return view('estoque::index');
+        $unidadeProduto = UnidadeProduto::all();
+        $unidadesExcluidas = UnidadeProduto::onlyTrashed()->get();
+        return view('estoque::produto.unidade.index', compact('unidadeProduto', 'unidadesExcluidas'));
     }
 
     /**
@@ -34,7 +36,7 @@ class UnidadeProdutoController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(UnidadeProdutoRequest $request)
     {
         
         DB::beginTransaction();
@@ -65,7 +67,8 @@ class UnidadeProdutoController extends Controller
      */
     public function edit($id)
     {
-        return view('estoque::edit');
+        $unidadeProduto = UnidadeProduto::findOrFail($id);
+        return view('estoque::produto.unidade.form', compact('unidadeProduto'));
     }
 
     /**
@@ -74,9 +77,18 @@ class UnidadeProdutoController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UnidadeProdutoRequest $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $unidadeProduto = UnidadeProduto::findOrFail($id);
+            $unidadeProduto->update($request->all());
+            DB::commit();
+            return redirect('/estoque/produto/unidade')->with('success', 'Unidade alterada com sucesso');
+        }catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor');
+        }
     }
 
     /**
@@ -88,7 +100,7 @@ class UnidadeProdutoController extends Controller
     public function restore($id){
         $unidadeProduto = UnidadeProduto::onlyTrashed()->findOrFail($id);
         $unidadeProduto->restore();
-        return back()->with('success', 'Produto ativado com sucesso!');
+        return back()->with('success', 'Unidade ativada com sucesso!');
     }
 
     public function destroy($id) {

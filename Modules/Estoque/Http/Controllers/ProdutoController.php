@@ -40,6 +40,7 @@ class ProdutoController extends Controller
         }
     }
 
+
     public function edit($id)
     {
         $produto = Produto::findOrFail($id);

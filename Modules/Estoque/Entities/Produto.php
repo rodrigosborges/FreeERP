@@ -13,11 +13,11 @@ class Produto extends Model
     protected $fillable = ['nome', 'preco_venda', 'descricao', 'categoria_id', 'unidade_id'];
 
     public function categoria(){
-        return $this->belongsTo('Modules\Estoque\Entities\Categoria');
+        return $this->belongsTo('Modules\Estoque\Entities\Categoria')->withTrashed();
     }
 
     public function unidade() {
-        return $this->belongsTo('Modules\Estoque\Entities\UnidadeProduto');
+        return $this->belongsTo('Modules\Estoque\Entities\UnidadeProduto')->withTrashed();
     }
 
 }
