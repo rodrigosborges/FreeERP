@@ -24,5 +24,6 @@ Route::prefix('estoque')->group(function () {
     //Delete e Restore tipo_produto (UnidadeProduto)
     Route::get('produto/unidade/{id}/delete', 'UnidadeProdutoController@destroy');
     Route::put('produto/unidade/{id}/restore', 'UnidadeProdutoController@restore');
+    Route::get('produto/unidade/create', 'UnidadeProdutoController@create');
 
 });
