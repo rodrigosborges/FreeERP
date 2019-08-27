@@ -12,10 +12,12 @@
 */
 
 //função que cria todas rotas de todas função da Classe
-// Route::resource('/cliente', 'ClienteController');
 
 Route::prefix('cliente')->group(function() {
-    Route::get('/{id}/pedido', 'PedidoController@index');
+    
+    Route::resource('/cliente', 'ClienteController');
+
+    Route::get('{id}/pedido', 'PedidoController@index');
 
     Route::get('/','ClienteController@index');
 });

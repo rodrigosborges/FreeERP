@@ -3,9 +3,12 @@
 namespace Modules\Cliente\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cliente extends Model
 {
+    use SoftDeletes;
+    
     protected $table = "cliente";    
     protected $fillable = ['nome', 'tipo_cliente_id','documento_id', 'endereco_id', 'email_id'];
     
@@ -15,7 +18,7 @@ class Cliente extends Model
     }
 
     public function telefones(){
-        return $this->belongsToMany('App\Entities\Telefone', 'cliente_has_telefone');
+        return $this->belongsToMany('App\Entities\Telefone', 'cliente_has_telefone', 'cliente_id', 'telefone_id');
     }
 
     public function documento(){

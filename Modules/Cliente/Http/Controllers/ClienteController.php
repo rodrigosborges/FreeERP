@@ -15,7 +15,7 @@ class ClienteController extends Controller
     
     public function index()
     {
-        return view('cliente::index');
+        return 'index';
     }
 
     
@@ -25,7 +25,9 @@ class ClienteController extends Controller
     }
 
     
-    public function store(CreateClienteRequest $request) {
+    public function store(/*CreateCliente*/Request $request) {
+
+      
         DB::beginTransaction();
         try {
 
@@ -55,7 +57,7 @@ class ClienteController extends Controller
             }
             
             DB::commit();
-            return redirect('/cliente')->with('success', 'Cliente cadastrado com sucesso!');
+            return redirect('/cliente/cliente')->with('success', 'Cliente cadastrado com sucesso!');
         } catch (\Exception $e){
             DB::rollback();
             return back()->with('error', 'Ops! Ocorreu um erro.');
@@ -75,15 +77,17 @@ class ClienteController extends Controller
         return view('cliente::edit');
     }
 
-    public function update(CreateClienteRequest $request, $id)
-    {
-        DB::beginTransaction();
-        try {
+    public function update(/*CreateCliente*/Request $request, $id){
             $dados = $request->all();
+            return $dados;
+      
             $cliente = Cliente::findOrFail($id);
-            $email = Email::findOrFail($cliente['email_id']);
-            $endereco = Email::findOrFail($cliente['endereco_id']);
-            $documento = Email::findOrFail($cliente['documento_id']);
+            
+            $endereco = Endereco::findOrFail($cliente['endereco_id']);
+            $email = Email::findOrFail($cliente['endereco_id']);
+
+            $tipo_documento_id = $dados['tipo_cliente_id'] == 1 ? 1 : 6;
+            $documento = Documento::findOrFail($cliente['documento_id']);
             
 
             $endereco->update($dados['endereco']);
@@ -100,23 +104,26 @@ class ClienteController extends Controller
                 'endereco_id' => $endereco->id,
                 'email_id' => $email->id
             ]);
-
-            $telefones = $dados['telefones'];
+            return 'oi';
+            $telefones =  $cliente->telefones;
             foreach($telefones as $telefone){
-                $tel = Telefone::create($telefone);
-                $cliente->telefones()->attach($tel);
+                return $telefone;
             }
             
-            DB::commit();
+            
             return redirect('/cliente')->with('success', 'Cliente cadastrado com sucesso!');
-        } catch (\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Ops! Ocorreu um erro.');
-        }
+       
     }
 
     public function destroy($id)
     {
-        //
+        $cliente = Cliente::withTrashed()->findOrFail($id);
+        if($cliente->trashed()){
+            $cliente->restore();
+            return back()->with('success','Cliente restaurado com sucesso!');
+        } else {
+            $cliente->delete();
+            return back()->with('success','Cliente deletado com sucesso!');
+        }
     }
 }
