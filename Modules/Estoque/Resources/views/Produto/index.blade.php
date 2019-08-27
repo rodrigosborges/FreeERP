@@ -1,14 +1,4 @@
-<?php 
-    $moduleInfo = [
-        'icon' => 'fastfood',
-        'name' => 'Estoque',
-    ];
-    $menu = [
-        ['icon' => 'people', 'tool' => 'Produto', 'route' => url('')],
-        ['icon' => 'work', 'tool' => 'Categoria', 'route' => url('')],
-    ];
-?>
-@extends('template')
+@extends('estoque::template')
 @section('title', 'Lista de Produtos')
 @section('content')
 <div class="container">
@@ -25,7 +15,7 @@
         </div>
         <div class="col-md-4 mt-3">
             <div class="text-right">
-                <a class="btn btn-success" href="{{url('/produto/create')}}">Novo Produto</a>
+                <a class="btn btn-success" href="{{url('/estoque/produto/create')}}">Novo Produto</a>
             </div>
         </div>
     </div>
@@ -42,24 +32,17 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- @if(isset($produtos))
+                 @if(isset($produtos))
                 @foreach($produtos as $produto)
                 <tr>    
                     <td>{{$produto->nome}}</td>
                     <td>{{$produto->quantidade}}</td>
-                    <td>R$ {{$produto->preco}}</td>
+                    <td>R$ {{$produto->preco_venda}}</td>
                     <td><a href=""><button class="btn btn-warning">Editar</button></a></td>
                     <td><a href=""><button class="btn btn-danger">Deletar</button></a></td>
                 </tr>
                 @endforeach 
-                @endif -->
-                <tr>    
-                    <td>Nome</td>
-                    <td>4</td>
-                    <td>R$ 13,20</td>
-                    <td><a href=""><button class="btn btn-warning">Editar</button></a></td>
-                    <td><a href=""><button class="btn btn-danger">Deletar</button></a></td>
-                </tr>
+                @endif 
             </tbody>
         </table>
     </div>

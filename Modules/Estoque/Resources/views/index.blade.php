@@ -1,17 +1,5 @@
-<?php 
-    $moduleInfo = [
-        'icon' => 'fastfood',
-        'name' => 'Estoque',
-    ];
-    $menu = [
-        ['icon' => 'people', 'tool' => 'Produto', 'route' => url('')],
-        ['icon' => 'work', 'tool' => 'Categoria', 'route' => url('')],
-    ];
-?>
-
-@extends('template')
+@extends('estoque::template')
 @section('title', 'Cadastro de Produto')
-
 @section('content')
 <div class="container col-8">
     <h2 class="container-title">Produtos Ativos</h2>
