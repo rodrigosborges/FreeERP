@@ -17,7 +17,8 @@ class ModuloController extends Controller
     ];
     
     protected $menu = [
-        ['icon' => 'add_circle', 'tool' => 'Cadastrar Módulo', 'route' => ''],
+        ['icon' => 'add_circle', 'tool' => 'Cadastrar Usuário', 'route' => '/usuario/cadastrar'],
+        ['icon' => 'add_circle', 'tool' => 'Cadastrar Módulo', 'route' => '/modulo/cadastrar'],
     ];
 
     /**

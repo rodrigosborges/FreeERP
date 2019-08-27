@@ -12,7 +12,18 @@
 */
 
 Route::prefix('usuario')->group(function() {
+    // Cadastrar
+    Route::get('/cadastrar', 'UsuarioController@create');
+    Route::post('/', 'UsuarioController@store');
+    // Listar
     Route::get('/', 'UsuarioController@index');
+    // Atualizar
+    Route::get('/edit/{id}', 'UsuarioController@edit');
+    Route::put('/{id}', 'UsuarioController@update');
+    // Deletar
+    Route::delete('/{id}', 'UsuarioController@destroy');
+    // Restaurar
+    Route::put('/restore/{id}', 'UsuarioController@restore');
 });
 
 // Módulo

@@ -5,16 +5,30 @@ namespace Modules\Usuario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Usuario\Entities\Usuario;
+use Modules\Usuario\Http\Requests\UsuarioRequest;
+use DB;
 
 class UsuarioController extends Controller
 {
+    protected $menu = [
+        ['icon' => 'person', 'tool' => 'Usuário', 'route' => '/usuario'],
+        ['icon' => 'add_circle', 'tool' => 'Módulo', 'route' => '/modulo'],
+    ];
+
+    protected $moduleInfo = [
+        'icon' => 'person',
+        'name' => 'Usuario'
+    ];
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        return view('usuario::index');
+        $usuarios = Usuario::all();
+        $usuariosInativos = Usuario::onlyTrashed()->get();
+        return view('usuario::usuario.index', compact('usuarios', 'usuariosInativos'));
     }
 
     /**
@@ -23,7 +37,11 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('usuario::create');
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+
+        return view('usuario::usuario.form', compact('menu', 'moduleInfo'));
+        //return view('usuario::create');
     }
 
     /**
@@ -31,9 +49,20 @@ class UsuarioController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(UsuarioRequest $request)
     {
-        //
+        DB::beginTransaction();
+        try{
+        
+            $usuario = Usuario::create($request->all());
+            DB::commit();
+    
+            return back()->with('success', 'Usuário cadastrado com sucesso');
+        }catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor');
+        }
+
     }
 
     /**
@@ -43,7 +72,7 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        return view('usuario::show');
+        return view('usuario::usuario.show');
     }
 
     /**
@@ -53,7 +82,12 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        return view('usuario::edit');
+        //return view('usuario::edit');
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+        $usuario = Usuario::findOrFail($id);
+
+        return view('usuario::usuario.form', compact('menu', 'moduleInfo', 'usuario'));
     }
 
     /**
@@ -62,9 +96,11 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UsuarioRequest $request, $id)
     {
-        //
+        $usuario = Usuario::findOrFail($id);
+        $usuario->update($request->all());
+        return redirect('/usuario');
     }
 
     /**
@@ -74,6 +110,14 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $usuario = Usuario::findOrFail($id);
+       $usuario->delete();
+       return back();
+    }
+
+    public function restore($id){
+        $usuario = Usuario::onlyTrashed()->findOrFail($id);
+        $usuario->restore();
+        return back();
     }
 }
