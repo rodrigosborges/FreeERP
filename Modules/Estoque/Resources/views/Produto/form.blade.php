@@ -2,12 +2,19 @@
 @section('title', 'Cadastro de Produto')
 
 @section('content')
-<form action="{{isset($produto) ?  url('/estoque/produto/' . $produto->id) : url('/estoque/produto')}}" method="POST">
-    @csrf
-    @if(isset($produto))
-        @method('put')
-    @endif
+
+    
     <div class="container" style="justify-content: center">
+    <div class="card">
+        <div class="card-header">
+        Cadastro
+        </div>
+        <div class="card-body">
+        <form action="{{isset($produto) ?  url('/estoque/produto/' . $produto->id) : url('/estoque/produto')}}" method="POST">
+        @csrf
+        @if(isset($produto))
+            @method('put')
+        @endif
         <div class="row">
             <div class="col-3">
                 <div class="form-group">
@@ -78,6 +85,8 @@
             </div>
 
         </form>  
+        </div>
+    </div>
     </div>  
 
 @endsection

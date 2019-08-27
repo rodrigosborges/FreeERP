@@ -15,14 +15,15 @@ Route::prefix('estoque')->group(function () {
     Route::get('/', 'EstoqueController@index');
     route::resource('produto/categoria', 'CategoriaController');
     route::PUT('produto/categoria/restore/{id}', 'CategoriaController@restore');
-    Route::resource('/produto', 'ProdutoController');
     Route::resource('/produto/unidade', 'UnidadeProdutoController');
+
+    //Delete e Restore tipo_produto (UnidadeProduto)
+    Route::put('/produto/unidade/{id}/restore', 'UnidadeProdutoController@restore');
+    
+    Route::resource('/produto', 'ProdutoController');
+    
 
     //Restaurar Produto
     Route::put('/produto/{id}/restore', 'ProdutoController@restore');
-
-    //Delete e Restore tipo_produto (UnidadeProduto)
-    Route::get('produto/unidade/{id}/delete', 'UnidadeProdutoController@destroy');
-    Route::put('produto/unidade/{id}/restore', 'UnidadeProdutoController@restore');
     
 });
