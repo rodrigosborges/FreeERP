@@ -15,9 +15,9 @@ class PedidoController extends Controller
     {
         $cliente = Cliente::where('id',$id)->get();
 
-        $pd = Pedido::where('cliente_id', $id)->get();
+        $pd = Pedido::all()->where('cliente_id', $id);
         // $cliente = DB::table('cliente')->where('id',$id)->get();
-        //   dd($cliente);
+        //  dd($cliente);
         return view('cliente::pedidos.index', compact('cliente','pd'));
     }
 

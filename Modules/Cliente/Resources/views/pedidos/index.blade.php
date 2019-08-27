@@ -6,13 +6,18 @@
 
     <div id="nome_cliente" class="row align-items-center pb-2 pl-2 col-sm-12">
        <div class="col-sm-4">Cliente Selecionado</div>
-       <div class= "col-sm-4"><h4>{{ $cliente[0]->nome }}</h4></div>
+       <div class= "col-sm-4">
+         <h4> 
+           {{-- {{ $cliente or 'Não Selecionado' }} --}}
+           {{ isset($cliente[0]) ? $cliente[0]->nome : 'Nenhum selecionado'}}
+          </h4>
+        </div>
     </div>
   
       <div id="opcoes" class="row d-flex p-2 justify-content-around">
-          <button class="btn btn-primary col-md-3">Adicionar Compra</button>
-          <button class="btn btn-danger col-md-3">Excluir</button>
-          <button class="btn btn-warning col-md-3">Editar</button>
+          <button class="btn btn-primary col-md-3" id="add">Adicionar Compra</button>
+          <button class="btn btn-danger col-md-3" id="rem">Excluir</button>
+          <button class="btn btn-warning col-md-3" id="edit">Editar</button>
       </div>
   
       <div class="row p-2" id="tabela">
@@ -33,7 +38,8 @@
                 </tr>
               </thead>
               <tbody>
-                
+
+                @if(! $cliente->isEmpty() )
                 @foreach ($pd as $pedido)
                 <tr>
                     <th scope="row">{{$pedido->id}}</th>
@@ -52,8 +58,27 @@
                             <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         </td>
                 </tr>
-                @endforeach
+                @endforeach 
                 
+                @else
+            <tr>
+                <th scope="row">1</th>
+                <td>2018/01/01</td>
+                <td>Calcular</td>
+                <td>10,00</td>
+                <td>
+                    <button id="ocultar" class="btn-primary" data-toggle="collapse" href="#collapseExample" 
+                        role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="material-icons">
+                                format_list_bulleted
+                            </i>
+                    </button>
+                </td>
+                <td class="d-flex justify-content-center">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                </td>
+          </tr>
+                @endif
               </tbody>
             </table>
       </div>
