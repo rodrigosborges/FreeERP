@@ -4,7 +4,7 @@
         'name' => 'Funcionário',
     ];
     $menu = [
-        ['icon' => 'people', 'tool' => 'Pedido', 'route' => url('funcionario/funcionario')],
+        ['icon' => 'people', 'tool' => 'Pedido', 'route' => url('cliente/pedido')],
         // ['icon' => 'work', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
     ];
 ?>
@@ -35,10 +35,10 @@
 @endsection
 
 @section('js')
-    <script src="{{Module::asset('funcionario:js/bibliotecas/jquery.mask.min.js')}}"></script>
-    <script src="{{Module::asset('funcionario:js/bibliotecas/jquery.validate.min.js')}}"></script>
-    <script src="{{Module::asset('funcionario:js/bibliotecas/localization/messages_pt_BR.min.js')}}"></script>
-    <script src="{{Module::asset('funcionario:js/main.js')}}"></script>
+    <script src="{{Module::asset('cliente:js/bibliotecas/jquery.mask.min.js')}}"></script>
+    <script src="{{Module::asset('cliente:js/bibliotecas/jquery.validate.min.js')}}"></script>
+    <script src="{{Module::asset('cliente:js/bibliotecas/localization/messages_pt_BR.min.js')}}"></script>
+    <script src="{{Module::asset('cliente:js/main.js')}}"></script>
     <script>var main_url="{{url('')}}"</script>
     @yield('script')
 @endsection
