@@ -22,40 +22,46 @@ Cadastro de Pedidos - {{ $cliente->nome }}
                 </tr>
               </thead>
               <tbody>
-
                 @foreach ($cliente->pedidos as $pedido)
+                
                 <tr>
                     <th scope="row">{{$pedido->id}}</th>
                         <td>{{$pedido->data}}</td>
-                        <td>Calcular</td>
-                        <td>{{"R$ ".number_format($pedido->desconto,2) }}</td>
+                        <td>
+                          R$ 1000,00
+                        </td>
+                        <td>{{ ($pedido->desconto). "%" }}</td>
                         <td>
                             <button class="btn btn-warning col-md-5" id="edit">Editar</button>
                             <button class="btn btn-danger col-md-5" id="rem">Excluir</button>
                         </td>
                         <td>
-                            <button id="ocultar"  data-toggle="collapse" href="#collapseExample" 
-                                role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <button id="ocultar" type="button" data-toggle="collapse" href="#collapse{{$pedido->id}}" 
+                        role="button" aria-expanded="false" aria-controls="collapse{{$pedido->id}}">
                                     <i class="material-icons">
                                         arrow_drop_down
                                     </i>
                             </button>
                         </td>
-                        
                 </tr>
+                
+                <tr>
+                  <td colspan="100%" style="height: 0px; padding: 0px; margin:0px;">
+                    <div class="collapse" id="collapse{{$pedido->id}}">
+                       <div class="pedido_detalhes">
+                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                       </div>
+                    </div>
+                  </td>
+                </tr>
+
                 @endforeach 
                 
               </tbody>
             </table>
       </div>
   </div>
-  <script>
-    function ocultar(){
-      document.getElementById("oculta").css('color','red');
-    }
-  
-  
-  </script>
+
 
 @endsection
 

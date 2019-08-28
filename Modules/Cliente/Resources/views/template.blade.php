@@ -1,10 +1,10 @@
 <?php 
     $moduleInfo = [
         'icon' => 'people',
-        'name' => 'Funcionário',
+        'name' => 'Cliente',
     ];
     $menu = [
-        ['icon' => 'people', 'tool' => 'Pedido', 'route' => url('cliente/pedido')],
+        ['icon' => 'people', 'tool' => 'Cliente', 'route' => url('cliente/cliente')],
         // ['icon' => 'work', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
     ];
 ?>
@@ -12,7 +12,7 @@
 @extends('template')
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{Module::asset('funcionario:css/style.css')}}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{Module::asset('cliente:css/style.css')}}"> --}}
     @yield('style')
 @endsection
 
