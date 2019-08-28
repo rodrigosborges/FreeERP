@@ -26,6 +26,8 @@ class CreateClienteRequest extends FormRequest
         
         if($this->input('tipo_cliente_id') == 1){
             $rules['documento'][] = 'cpf';
+        } else if ($this->input('tipo_cliente_id') == 2){
+            $rules['documento'][] = 'cnpj';
         }
         return $rules;
     }
