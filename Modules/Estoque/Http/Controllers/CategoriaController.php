@@ -46,7 +46,6 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-
         $data = ['titulo' => 'Cadastrar Categoria', 'button' => 'Cadastrar'];
 
         $categorias = Categoria::all();
@@ -58,18 +57,17 @@ class CategoriaController extends Controller
      * @param Request $request
      * @return Response
      */
+    /** Autor: Diego Magno 
+     * descrição: método de inserção de categoria e subcategoria no banco
+     */
     public function store(CategoriaRequest $request)
     {
-        //
         DB::beginTransaction();
         try {
-
             $categoria =  Categoria::create($request->all());
             $subcategoria = new Subcategoria();
             $subcategoria->id = $categoria->id;
-            if ($request->categoriaPai != -1) {
-                $subcategoria->categoria_id = $request->categoriaPai;
-            }
+            $subcategoria->categoria_id = ($request->categoriaPai != -1) ? $request->categoriaPai : null;
             $subcategoria->save();
             DB::commit();
             return back()->with('success', 'Categoria ' . $request->nome . ' cadastrada com sucesso');
@@ -79,26 +77,11 @@ class CategoriaController extends Controller
         }
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('estoque::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
     public function edit($id)
     {
         $data = ['titulo' => 'Editar Categoria', 'button' => 'Editar'];
         $categoria = Categoria::findOrFail($id);
-        $categorias = Categoria::all();
+        $categorias = Categoria::all()->except($id);
         $subcategoria = Subcategoria::findOrFail($id);
 
         return view('estoque::categoria.form', $this->dadosTemplate, compact('categoria', 'subcategoria', 'categorias', 'data'));
@@ -111,20 +94,25 @@ class CategoriaController extends Controller
      * @return Response
      */
     public function update(CategoriaRequest $request, $id)
-    {  
+    {
+
         DB::beginTransaction();
         try {
 
             $categoria = Categoria::findOrFail($id);
             $subcategoria = Subcategoria::findOrFail($id);
-            if($request->nome == $categoria->nome){
-                return back()->with('warning','A categoria '. $categoria->nome . " já está cadastrada");
+            if ($request->nome == $categoria->nome) {
+                if ($id != $categoria->id)
+                    return back()->with('warning', 'A categoria ' . $categoria->nome . " já está cadastrada");
             }
             $categoria->update($request->all());
             if ($request->categoriaPai != -1) {
                 $subcategoria->categoria_id = $request->categoriaPai;
             }
+            $subcategoria->categoria_id = ($request->categoriaPai != -1) ? $request->categoriaPai : null;
+
             $subcategoria->save();
+
             DB::commit();
             return back()->with('success', 'Categoria ' . $request->nome . ' editada com sucesso');
         } catch (\Exception $e) {
@@ -141,16 +129,16 @@ class CategoriaController extends Controller
     public function destroy($id)
     {
         $categoria = Categoria::findOrFail($id);
-       
+
         $categoria->delete();
         return back()->with('success', 'Categoria Removida com sucesso');
         //
     }
     public function restore($id)
     {
-        
+
         $categoria = Categoria::onlyTrashed()->findOrFail($id);
-   
+
         $categoria->restore();
         return back()->with('success', 'categoria ' . $categoria->nome . " restaurada com sucesso");
     }
