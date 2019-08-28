@@ -13,7 +13,7 @@ class CreateFolhaPagamento extends Migration
      */
     public function up()
     {
-        Schema::create('folha_pagamento', function(Blueprint $table)
+        Schema::create('pagamento', function(Blueprint $table)
 		{
 			$table->integer('id', true);
 			$table->double('valor', 9,2); //1,000 a 999999,999
@@ -22,7 +22,7 @@ class CreateFolhaPagamento extends Migration
 			$table->double('inss', 3,2);
             $table->integer('faltas');
             $table->date('emissao');
-            $table->integer('tipo_pagamento');
+            $table->string('tipo_pagamento');
             $table->integer('funcionario_id')->index('fk_folha_pagamento_funcionario1');
            	$table->softDeletes();
 		});
@@ -35,6 +35,6 @@ class CreateFolhaPagamento extends Migration
      */
     public function down()
     {
-        Schema::drop('folha_pagamento');
+        Schema::dropIfExists('pagamento');
     }
 }

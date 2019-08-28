@@ -5,21 +5,21 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{FolhaPagamento,Funcionario};
+use Modules\Funcionario\Entities\{Pagamento,Funcionario};
 
 
-class FolhaPagamentoController extends Controller
+class PagamentoController extends Controller
 {
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index(Request $request){
-        
+            
         $data = [
             
-			'folha'	=> FolhaPagamento::all(),
-			'title'	=> "Pagamentos",
+			'funcionarios'=> Funcionario::paginate(10),
+			'title'	     => "Pagamentos",
 		];
 
 	    return view('funcionario::pagamentos.index', compact('data'));
@@ -31,6 +31,7 @@ class FolhaPagamentoController extends Controller
      */
     public function create(Request $request){
         $data = [
+
             "url" 	 	=> url('funcionario/pagamentos'),
             "button" 	=> "Salvar",
             "model"		=> null,
@@ -48,6 +49,7 @@ class FolhaPagamentoController extends Controller
     public function store(Request $request)
     {
         //
+        return 1;
     }
 
     /**

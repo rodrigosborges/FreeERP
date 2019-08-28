@@ -5,13 +5,13 @@ namespace Modules\Funcionario\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class FolhaPagamento extends Model
+class Pagamento extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'folha_pagamento';
+    protected $table = 'pagamento';
 
-    protected $fillable = ['salario', 'horas_extras', 'adicional_noturno', 
+    protected $fillable = ['valor', 'horas_extras', 'adicional_noturno', 
                            'inss', 'faltas', 'emissao', 'tipo_pagamento', 'funcionario_id'];
 
     public $timestamps = false;
