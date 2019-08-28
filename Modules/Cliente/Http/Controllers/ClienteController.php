@@ -5,8 +5,8 @@ namespace Modules\Cliente\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use App\Entities\{Telefone, Endereco, Email, Documento};
-use Modules\Cliente\Entities\{Cliente};
+use App\Entities\{Telefone, Endereco, Email, Documento, TipoTelefone, Estado};
+use Modules\Cliente\Entities\{Cliente, TipoCliente};
 use Modules\Cliente\Http\Requests\CreateClienteRequest;
 use DB;
 
@@ -21,7 +21,11 @@ class ClienteController extends Controller
     
     public function create()
     {
-        return view('cliente::create');
+        
+        $tipo_cliente = TipoCliente::all();
+        $tipo_telefone = TipoTelefone::all();
+        $estados = Estado::all();
+        return view('cliente::cliente.form', compact('tipo_cliente', 'tipo_telefone', 'estados'));
     }
 
     
