@@ -13,13 +13,27 @@ use Modules\Estoque\Entities\Categoria;
 
 class ProdutoController extends Controller
 {
-    public function index()
-    {
+    public function index(){
+        $title = 'Produtos';
+        $flag = false;
         $produtos = Produto::all();
         $produtosInativos = Produto::onlyTrashed()->get();
-        return view('estoque::index', compact('produtos', 'produtosInativos'));
+        return view('estoque::/produto/index', compact('produtos', 'produtosInativos', 'title', 'flag'));
     }
-
+/*
+    public function busca(Request $request)
+    {
+        if($request['pesquisa']){
+          
+            $produtos = Produto::where('nome', 'like', '%'.$request['pesquisa'].'%');
+            // $produtosInativos = Produto::onlyTrashed()->get();
+            return view('estoque::/produto/index', compact('produtos'));     
+        }   
+        $produtos = Produto::all();
+        $produtosInativos = Produto::onlyTrashed()->get();
+        return view('estoque::/produto/index', compact('produtos', 'produtosInativos'));
+    }
+*/
     public function create()
     {
         $categorias = Categoria::all();
@@ -39,7 +53,6 @@ class ProdutoController extends Controller
             return back()->with('error', 'Erro no servidor');
         }
     }
-
 
     public function edit($id)
     {
@@ -73,5 +86,24 @@ class ProdutoController extends Controller
         $produto = Produto::onlyTrashed()->findOrFail($id);
         $produto->restore();
         return back()->with('success', 'Produto ativado com sucesso!');
+    }
+
+
+    public function busca(Request $request){
+        $flag = false;
+        $title = 'Resultado da Pesquisa';
+        if($request['pesquisa']) {
+            $produtos = Produto::where('nome', 'like', '%'.$request['pesquisa'].'%')->get();
+        }     
+        $produtosInativos = Produto::onlyTrashed()->get();
+        return view('estoque::/produto/index', compact('produtos', 'produtosInativos', 'title', 'flag'));
+    }
+
+    public function inativos(){
+        $flag = true;
+        $title = 'Produtos Inativos';
+        $produtos = Produto::onlyTrashed()->get();
+        return view('estoque::/produto/index', compact('produtos', 'title', 'flag'));
+
     }
 }
