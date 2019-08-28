@@ -88,6 +88,7 @@ class FuncionarioController extends Controller{
                 ['data_entrada' => brToEnDate($request['funcionario']['data_admissao'])]
             );
 
+           
 
             foreach($request->documentos as $key => $documento) {
 
@@ -103,7 +104,7 @@ class FuncionarioController extends Controller{
 
 
             }
-            
+             //funcionando
             if($request->input('docs_outros')) {
                 foreach($request->docs_outros as $documento) {
                     if($documento['numero']){
