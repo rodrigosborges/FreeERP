@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Usuario\Entities\Usuario;
-use Modules\Usuario\Http\Requests\UsuarioRequest;
+use Modules\Usuario\Http\Requests\{UsuarioStoreRequest,UsuarioUpdateRequest};
 use Illuminate\Support\Facades\Hash;
 use DB;
 
@@ -25,7 +25,7 @@ class UsuarioController extends Controller
         return view('usuario::usuario.form');
     }
 
-    public function store(UsuarioRequest $request)
+    public function store(UsuarioStoreRequest $request)
     {
         DB::beginTransaction();
         try{
@@ -57,7 +57,7 @@ class UsuarioController extends Controller
         return view('usuario::usuario.form', compact('usuario'));
     }
 
-    public function update(UsuarioRequest $request, $id)
+    public function update(UsuarioUpdateRequest $request, $id)
     {
         $usuario = Usuario::findOrFail($id);
         $usuario->update($request->all());

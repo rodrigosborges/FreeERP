@@ -4,7 +4,7 @@ namespace Modules\Usuario\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UsuarioRequest extends FormRequest
+class UsuarioStoreRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class UsuarioRequest extends FormRequest
     public function rules()
     {
         return [
-            'apelido' => ['required', 'min:3', 'max:50'],
+            'apelido' => ['required', 'min:3', 'max:50','unique:usuario'],
             'email' => ['required', 'email', 'unique:usuario,email,'.$this->route('id')],
             'password' => ['required'],
         ];

@@ -29,6 +29,7 @@
                 <input value="{{old('email', isset($usuario) ? $usuario->email : '')}}" class="form-control" type="email" name="email">
                 {{$errors->first('email')}}
             </div>
+            @if(!isset($usuario))
             <div class="form-group">
                 <label for="password">Senha</label>
                 <input class="form-control" type="password" name="password">
@@ -38,6 +39,7 @@
                 <label>Repita a Senha</label>
                 <input class="form-control" type="password" name="repeat_password">
             </div>
+            @endif
             <button type="submit" class="btn btn-success">Cadastrar</button>
         </form>
     </div>
