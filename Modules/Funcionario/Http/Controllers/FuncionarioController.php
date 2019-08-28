@@ -105,7 +105,7 @@ class FuncionarioController extends Controller{
 
             }
              //funcionando
-            if($request->input('docs_outros')) {
+            if($request->docs_outros[0]['numero'] != "" && $request->docs_outros[0]['tipo_documento_id'] != "" ) {
                 foreach($request->docs_outros as $documento) {
                     if($documento['numero']){
 
@@ -143,7 +143,7 @@ class FuncionarioController extends Controller{
 
             }
 
-            if($request->input('dependentes')) {
+            if($request->dependentes[0]['parentesco_id'] != "" && $request->dependentes[0]['mora_junto'] != "" && $request->dependentes[0]['nome'] != "" && $request->dependentes[0]['cpf'] != "") {
                 foreach($request->dependentes as $dependente) {
 
                     $dependente['funcionario_id'] = $funcionario['id'];
