@@ -10,7 +10,7 @@ class Pedido extends Model
     use SoftDeletes;
 
     protected $table = "pedido";    
-    protected $fillable = ['desconto','data'];
+    protected $fillable = ['numero','desconto','data'];
 
     public function produtos(){
         return $this->belongsToMany('Modules\Cliente\Entities\Produto', 'pedido_has_produto')->withPivot('quantidade','desconto');
