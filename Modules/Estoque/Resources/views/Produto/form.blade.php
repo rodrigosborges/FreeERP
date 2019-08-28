@@ -7,7 +7,7 @@
     <div class="container" style="justify-content: center">
     <div class="card">
         <div class="card-header">
-        Cadastro
+        Cadastro de Produto
         </div>
         <div class="card-body">
         <form action="{{isset($produto) ?  url('/estoque/produto/' . $produto->id) : url('/estoque/produto')}}" method="POST">
@@ -16,14 +16,21 @@
             @method('put')
         @endif
         <div class="row">
-            <div class="col-3">
-                <div class="form-group">
+                <div class="form-group col-12">
                     <label for="nome">Nome</label>
-                    <input required type="text" name="nome" class="form-control" value="{{isset($produto) ? $produto->nome : ''}}">
+                    <input required type="text" placeholder="Insira o nome do produto" name="nome" class="form-control" value="{{isset($produto) ? $produto->nome : ''}}">
                     {{$errors->first('nome')}}
                 </div>
-            </div>
-            <div class="col-3">
+        </div>
+        <div class="row">
+            <div class="col-4">
+                        <div class="form-group">
+                            <label for="preco_venda">Preço de Venda</label>
+                            <input type="text" name="preco_venda" placeholder="R$" onkeyUp="moeda(this);" class="form-control" value="{{isset($produto) ? $produto->preco_venda : ''}}" required>
+                            {{$errors->first('preco_venda')}}
+                        </div>
+                    </div>
+            <div class="col-4">
                 <div class="form-group">
                     <label for="categoria_id">Categoria</label>
                     <select required class="form-control" name="categoria_id">
@@ -36,6 +43,7 @@
                                 @endif
                             @endforeach
                         @else
+                            <option disabled value="" selected>Selecione uma categoria</option>
                             @foreach($categorias as $categoria)
                                 <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
                             @endforeach
@@ -44,7 +52,7 @@
                     {{$errors->first('categoria_id')}}
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-4">
                 <div class="form-group">
                     <label for="categoria_id">Unidade de Medida</label>
                     <select required class="form-control" name="unidade_id">
@@ -57,6 +65,7 @@
                                 @endif
                             @endforeach
                         @else
+                            <option disabled value="" selected>Selecione uma unidade</option>
                             @foreach($unidades as $unidade)
                                 <option value="{{$unidade->id}}">{{$unidade->tipo}}</option>
                             @endforeach
@@ -65,23 +74,16 @@
                     {{$errors->first('categoria_id')}}
                 </div>
             </div>
-        </div>
+            </div>
             <div class="row" style="align-items: flex-start;">
-                <div class="form-group col-5">
+                <div class="form-group col-12">
                     <label for="descricao">Descrição</label>
-                    <textarea class="form-control" name="descricao" rows="3" required>{{isset($produto) ? $produto->descricao : ''}}</textarea>
+                    <textarea class="form-control" placeholder="Insira a descrição do produto" name="descricao" rows="3" required>{{isset($produto) ? $produto->descricao : ''}}</textarea>
                     {{$errors->first('descricao')}}
                 </div>
-                <div class="col-3">
-                <div class="form-group">
-                    <label for="preco_venda">Preço de Venda</label>
-                    <input type="text" name="preco_venda" placeholder="R$" onkeyUp="moeda(this);" class="form-control" value="{{isset($produto) ? $produto->preco_venda : ''}}" required>
-                    {{$errors->first('preco_venda')}}
-                </div>
             </div>
-            </div>
-            <div class="row col-8" style="justify-content: flex-end;">
-                <button type="submit" class="btn btn-success">{{isset($produto) ? 'Salvar' : 'Cadastrar'}}</button>
+            <div class="row col-12" style="justify-content: flex-end;">
+                <button type="submit" class="btn btn-primary">{{isset($produto) ? 'Salvar' : 'Cadastrar'}}</button>
             </div>
 
         </form>  

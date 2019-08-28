@@ -10,19 +10,26 @@
     @endif
     
     <div class="container" style="justify-content: center">
+    <div class="card">
+        <div class="card-header">
+        Cadastro de Unidade
+        </div>
+        <div class="card-body">
         <div class="row">
-            <div class="col-5">
-                <div class="form-group">
+           
+                <div class="form-group col-12">
                     <label for="nome">Nome</label>
                     <input required type="text" name="tipo" class="form-control" value="{{isset($unidadeProduto) ? $unidadeProduto->tipo : ''}}">
                     {{$errors->first('tipo')}}
                 </div>
-            </div>
+          
            
-            <div class="col-3" style="justify-content: flex-end;">
+            <div class="row col-12" style="justify-content: flex-end;">
                 <button type="submit" class="btn btn-primary">{{isset($unidadeProduto) ? 'Salvar' : 'Cadastrar'}}</button>
             </div>
         </div>
         </form>  
-    </div>  
+    </div> 
+    </div> 
+    </div>
 @endsection
