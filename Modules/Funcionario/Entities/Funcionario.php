@@ -8,7 +8,7 @@ use Modules\Funcionario\Entities\Cargo;
 class Funcionario extends Model {
     
     protected $table = 'funcionario';
-    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao', 'estado_civil_id', 'email_id', 'endereco_id'];
+    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao', 'cargo_id', 'estado_civil_id', 'email_id', 'endereco_id'];
     use SoftDeletes;
     public function estado_civil(){
         return $this->belongsTo('App\Entities\EstadoCivil');
@@ -23,10 +23,10 @@ class Funcionario extends Model {
         return $this->hasMany('Modules\Entities\Dependente');
     }
     public function telefone(){
-        return $this->hasMany('Modules\Entities\Telefone');
+        return $this->belongsToMany('Modules\Entities\Telefone');
     }
     public function documento(){
-        return $this->hasMany('App\Entities\Documento');
+        return $this->belongsToMany('App\Entities\Documento');
     }
     public function cargos(){
         return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada');
