@@ -18,8 +18,9 @@ class CreateProdutosTable extends Migration
             $table->string('nome', 45);
             $table->string('descricao', 500);
             $table->integer('categoria_id')->unsigned()->index('fk_produtos_categoria');
-            $table->decimal('preco_venda', 12, 2);
+            $table->decimal('preco', 12, 2);
             $table->integer('unidade_id')->unsgined()->index('fk_produtos_unidade');
+            $table->integer('codigo');
             $table->timestamps();
             $table->softDeletes();
         });
