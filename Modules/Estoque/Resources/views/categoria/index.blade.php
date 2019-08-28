@@ -1,8 +1,18 @@
 @extends('template')
 @section('title','Categorias')
 @section('content')
-<h1 class="text-center">Categorias</h1>
-<ul class="nav nav-tabs  justify-content-center">
+
+
+
+
+<hr>
+<div class="row justify-content-center">
+  <div class="card col-md-12">
+  <div class="header">
+  <h3 class="text-center">Categorias</h3>
+  </div>
+  <div class="card-body">
+  <ul class="nav nav-tabs  justify-content-center">
     <li class="nav-item">
         <a href="#ativos" class="nav-link active" role="tab" data-toggle="tab">
             Categorias Ativas
@@ -14,7 +24,7 @@
         </a>
     </li>
 </ul>
-<div class=" tab-content row justify-content-center ">
+  <div class=" tab-content row justify-content-center ">
     <div class="tab-pane active col-sm-10" role="tabpanel1" id="ativos">
         <table class="table text-center ">
             <thead class="">
@@ -64,7 +74,7 @@
                 @if($categorias->lastPage() > 1)
                 <tr>
                     <td colspan="100%" class="text-center">
-                        {{ $categorias->links() }}
+                       {{ $categorias->links() }}
                     </td>
                 </tr>
                 @endif
@@ -72,12 +82,12 @@
         </table>
     </div>
     <div class="tab-pane col-sm-8" role="tabpanel1" id="inativos">
-        <h2 class='text-center'>Categorias Inativas</h2>
+      
         <div class="justify-content-center">
             <table class="table text-center">
                 <thead class="">
-                    <td><strong> id</strong></td>
-                    <td><strong> nome</strong></td>
+                    <td><strong>ID</strong></td>
+                    <td><strong>Nome</strong></td>
                     <td><strong>Ação</strong></td>
                 </thead>
                 <tbody>
@@ -116,11 +126,8 @@
             </table>
         </div>
     </div>
-</div>
-<hr>
-<div class="row justify-content-center">
-    <div class="col-sm-10 d-flex text-center">
-
     </div>
+  </div>
+  </div>
 </div>
 @endsection
