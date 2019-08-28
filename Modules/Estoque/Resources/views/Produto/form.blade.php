@@ -16,18 +16,23 @@
             @method('put')
         @endif
         <div class="row">
-                <div class="form-group col-12">
+                <div class="form-group col-6">
                     <label for="nome">Nome</label>
                     <input required type="text" placeholder="Insira o nome do produto" name="nome" class="form-control" value="{{isset($produto) ? $produto->nome : ''}}">
                     {{$errors->first('nome')}}
+                </div>
+                <div class="form-group col-6">
+                    <label for="codigo">Código de Barras</label>
+                    <input required type="number" placeholder="Insira o codigo de barras" name="codigo" class="form-control" value="{{isset($produto) ? $produto->codigo : ''}}">
+                    {{$errors->first('codigo')}}
                 </div>
         </div>
         <div class="row">
             <div class="col-4">
                         <div class="form-group">
-                            <label for="preco_venda">Preço de Venda</label>
-                            <input type="text" name="preco_venda" placeholder="R$" onkeyUp="moeda(this);" class="form-control" value="{{isset($produto) ? $produto->preco_venda : ''}}" required>
-                            {{$errors->first('preco_venda')}}
+                            <label for="preco">Preço de Venda</label>
+                            <input type="text" name="preco" placeholder="R$" onkeyUp="moeda(this);" class="form-control" value="{{isset($produto) ? $produto->preco : ''}}" required>
+                            {{$errors->first('preco')}}
                         </div>
                     </div>
             <div class="col-4">

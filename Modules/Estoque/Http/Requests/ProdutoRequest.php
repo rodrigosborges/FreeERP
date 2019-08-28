@@ -10,8 +10,9 @@ class ProdutoRequest extends FormRequest
     {
         return [
             'nome' => ['required', 'min: 3', 'max: 45'],
-            'preco_venda' => ['required', 'numeric'],
-            'descricao' => ['max: 500']
+            'preco' => ['required', 'numeric'],
+            'descricao' => ['max: 500'],
+            'codigo' => ['required', 'numeric', 'unique:produto,codigo']
         ];
     }
 
