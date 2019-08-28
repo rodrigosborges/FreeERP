@@ -79,7 +79,7 @@ class CategoriaController extends Controller
 
     public function edit($id)
     {
-        $data = ['titulo' => 'Editar Categoria', 'button' => 'Editar'];
+        $data = ['titulo' => 'Editar Categoria', 'button' => 'Atualizar'];
         $categoria = Categoria::findOrFail($id);
         $categorias = Categoria::all()->except($id);
         $subcategoria = Subcategoria::findOrFail($id);
