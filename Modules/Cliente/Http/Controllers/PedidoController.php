@@ -21,7 +21,11 @@ class PedidoController extends Controller
 
         return view('cliente::pedidos.index', compact('cliente'));
     }
+    public function novo($id){
+        $cliente = Cliente::findOrFail($id);
 
+        return view('cliente::pedidos.form', compact('cliente'));
+    }
     
     public function create()
     {

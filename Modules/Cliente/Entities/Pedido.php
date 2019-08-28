@@ -15,7 +15,13 @@ class Pedido extends Model
     public function produtos(){
         return $this->belongsToMany('Modules\Cliente\Entities\Produto', 'pedido_has_produto')->withPivot('quantidade','desconto');
     }
+    public function vl_total_itens(){
+        
+    }
 
+    public function vl_total_pedido(){
+
+    }
 
 
 

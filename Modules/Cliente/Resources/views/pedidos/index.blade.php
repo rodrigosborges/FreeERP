@@ -1,6 +1,6 @@
 @extends('cliente::template')
 @section('title')
-Cadastro de Pedidos - {{ $cliente->nome }}
+Cadastro de Conmpras - {{ $cliente->nome }}
 @endsection
 @section('body')
 <div class = "container border">
