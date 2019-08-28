@@ -4,11 +4,11 @@
 <h1 class="text-center">Categorias</h1>
 <div class="row justify-content-center ">
 
-    <div class="col-sm-12 d-flex">
+    <div class="col-sm-10 d-flex">
     
         <table class="table text-center ">
         
-            <thead class="thead-dark">
+            <thead class="">
       
                 <tr>
                     <th scope="col">ID</th>
@@ -19,6 +19,7 @@ note_add
 </i></a></th>
                 </tr>
             </thead>
+            <tbody>
             @foreach($categorias as $categoria)
             <tr>
                 <td>{{$categoria->id}}</td>
@@ -42,19 +43,39 @@ note_add
                 </td>
             </tr>
             @endforeach
+        </tbody>
+        <tfoot>
+        <tr>
+        <td colspan="100%"  class="text-center"> <p class= "text-cetner">
+        Página {{$categorias->currentPage()}} de {{$categorias->lastPage()}}
+        -Exibido {{$categorias->perPage()}} registro(s) por página de {{$categorias->total()}}
+        
+        </p></td>
+        </tr>
+        @if($categorias->lastPage() > 1)
+            <tr>
+                <td colspan="100%" class="text-center">
+                {{ $categorias->links() }}
+                </td>
+            </tr>
+            @endif
+        </tfoot>
+
         </table>
+     
     </div>
 </div>
 <hr>
 <h2 class='text-center'>Categorias Inativas</h2>
 <div class="row justify-content-center">
-    <div class="col-sm-12 d-flex text-center">
+    <div class="col-sm-10 d-flex text-center">
         <table class="table">
-            <thead class="table-dark">
+            <thead class="">
                 <td>id</td>
                 <td>nome</td>
                 <td>Ação</td>
             </thead>
+            <tbody>
             @foreach($categoriasInativas as $inativa)
             <tr>
                 <td>{{$inativa->id}}</td>
@@ -68,6 +89,23 @@ note_add
                 </td>
             </tr>
             @endforeach
+    </tbody>
+            <tfoot>
+        <tr>
+        <td colspan="100%"  class="text-center"> <p class= "text-cetner">
+        Página {{$categoriasInativas->currentPage()}} de {{$categoriasInativas->lastPage()}}
+        -Exibido {{$categoriasInativas->perPage()}} registro(s) por página de {{$categoriasInativas->total()}}
+        
+        </p></td>
+        </tr>
+        @if($categoriasInativas->lastPage() > 1)
+            <tr>
+                <td colspan="100%" class="text-center">
+                {{ $categoriasInativas->links() }}
+                </td>
+            </tr>
+            @endif
+        </tfoot>
         </table>
     </div>
 </div>

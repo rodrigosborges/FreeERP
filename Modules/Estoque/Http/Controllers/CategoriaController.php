@@ -35,8 +35,8 @@ class CategoriaController extends Controller
     }
     public function index()
     {
-        $categorias = Categoria::all();
-        $categoriasInativas = Categoria::onlyTrashed()->get();
+        $categorias = Categoria::paginate(5);
+        $categoriasInativas = Categoria::onlyTrashed()->paginate(5);
         return view('estoque::categoria.index', $this->dadosTemplate, compact('categorias', 'categoriasInativas'));
     }
 
