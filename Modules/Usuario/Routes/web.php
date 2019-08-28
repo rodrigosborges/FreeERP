@@ -18,7 +18,7 @@ Route::prefix('usuario')->group(function() {
     // Listar
     Route::get('/', 'UsuarioController@index');
     // Atualizar
-    Route::get('/edit/{id}', 'UsuarioController@edit');
+    Route::get('/{id}/edit', 'UsuarioController@edit');
     Route::put('/{id}', 'UsuarioController@update');
     // Deletar
     Route::delete('/{id}', 'UsuarioController@destroy');
@@ -34,8 +34,21 @@ Route::prefix('modulo')->group(function() {
     // Listar
     Route::get('/', 'ModuloController@index');
     // Atualizar
-    Route::get('/edit/{id}', 'ModuloController@edit');
+    Route::get('/{id}/edit', 'ModuloController@edit');
     Route::put('/{id}', 'ModuloController@update');
     // Deletar
     Route::delete('/{id}', 'ModuloController@destroy');
+});
+// Papéis
+Route::prefix('papel')->group(function() {
+    // Cadastrar
+    Route::get('/cadastrar', 'PapelController@create');
+    Route::post('/', 'PapelController@store');
+    // Listar
+    Route::get('/', 'PapelController@index');
+    // Atualizar
+    Route::get('/{id}/edit', 'PapelController@edit');
+    Route::put('/{id}', 'PapelController@update');
+    // Deletar
+    Route::delete('/{id}', 'PapelController@destroy');
 });
