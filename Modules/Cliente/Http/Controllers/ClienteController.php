@@ -25,7 +25,7 @@ class ClienteController extends Controller
     }
 
     
-    public function store(/*CreateCliente*/Request $request) {
+    public function store(CreateClienteRequest $request) {
 
       
         DB::beginTransaction();
