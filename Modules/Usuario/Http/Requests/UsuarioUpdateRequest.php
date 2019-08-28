@@ -14,7 +14,7 @@ class UsuarioUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'apelido' => ['required', 'min:3', 'max:50','unique:usuario'],
+            'apelido' => ['required', 'min:3', 'max:50','unique:usuario,apelido,'.$this->route('id')],
             'email' => ['required', 'email', 'unique:usuario,email,'.$this->route('id')],
         ];
     }

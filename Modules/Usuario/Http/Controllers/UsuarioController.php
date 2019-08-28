@@ -13,11 +13,27 @@ use DB;
 class UsuarioController extends Controller
 {
   
-    public function index()
-    {
-        $usuarios = Usuario::all();
+    public function index(Request $request){
+        
+        if ($request->has('busca')) {
+            $busca = $request->get('busca');
+            $data = [
+                 'title' => 'Usuario',
+                 'usuarios' => Usuario::where('id', 'like', "%{$busca}%")
+                 ->orWhere('apelido', 'like', "%{$busca}%")
+                 ->orWhere('email', 'like', "%{$busca}%")
+                 ->paginate(5)
+             ];
+             $data['usuarios']->appends(['busca' => $busca]);
+             return view('usuario::usuario.index', compact('data', 'busca'));
+         } else {
+             $data = [
+                 'title' => 'Usuário',
+                 'usuarios' => Usuario::paginate(5)
+             ];
+         }
         $usuariosInativos = Usuario::onlyTrashed()->get();
-        return view('usuario::usuario.index', compact('usuarios', 'usuariosInativos'));
+        return view('usuario::usuario.index', compact('data', 'usuariosInativos'));
     }
 
     public function create()
@@ -57,10 +73,17 @@ class UsuarioController extends Controller
         return view('usuario::usuario.form', compact('usuario'));
     }
 
-    public function update(UsuarioUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $usuario = Usuario::findOrFail($id);
-        $usuario->update($request->all());
+        if($request->password){
+            $usuario->update([
+                'password' => Hash::make($request->password)
+                ]);
+        }
+        else{
+            $usuario->update($request->all());
+        }
         return redirect('/usuario');
     }
 
@@ -75,5 +98,10 @@ class UsuarioController extends Controller
         $usuario = Usuario::onlyTrashed()->findOrFail($id);
         $usuario->restore();
         return back();
+    }
+
+    public function trocarSenha($id){
+        $usuario = Usuario::findOrFail($id);
+        return view('usuario::usuario.trocarSenha',compact('usuario'));
     }
 }

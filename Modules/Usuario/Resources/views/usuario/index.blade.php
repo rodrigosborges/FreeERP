@@ -1,7 +1,23 @@
 @extends('usuario::layouts.informacoes')
 
 @section('content')
-    <nav class="nav nav-tabs">
+
+<!----Busca--->
+<form method="GET" action="#">
+    <div class="form-row form-group">
+        {!! Form::label('busca', 'Procurar por', ['class' => 'col-sm-2 col-form-label text-right']) !!}
+        <div class="col-sm-8">
+            {!! Form::text('busca', isset($busca) ? $busca : null, ['class' => 'form-control']) !!}
+        </div>
+
+        <div class="col-sm-2">
+            {!! Form::submit('procurar', ['class'=>'btn btn-primary']) !!}
+        </div>
+    </div>
+</form>
+
+<!----- Tabs Ativos e Inativos na tabela--->
+<nav class="nav nav-tabs">
     <a href="#ativos" data-toggle="tab" class="nav-item nav-link active show">
         Ativos
     </a>
@@ -23,13 +39,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($usuarios as $usuario)
+                    @foreach($data['usuarios'] as $usuario)
                         <tr>
                             <td>{{$usuario->apelido}}</td>
                             <td>{{$usuario->avatar}}</td>
                             <td>{{$usuario->email}}</td>
-                            <td><a  href="{{url('/usuario/' . $usuario->id.'/edit')}}"><button type="button" class=" btn-sm btn btn-success">Editar</button></a></td>
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Trocar Senha</button></td>
+                            <td><a  href="{{url('/usuario/' . $usuario->id.'/edit')}}"><button type="button" class=" btn-sm btn btn-success">Editar</button></a>
+                            <a href= "{{('/usuario/'.$usuario->id .'/trocarSenha')}}"><button type="button" class="btn btn-primary btn-sm" >Trocar Senha</button></a>
                             <td><form method="POST" action="{{url('/usuario/' . $usuario->id)}}">
                                     @method('delete')
                                     @csrf
@@ -56,6 +72,7 @@
                      </tr>
                 </thead>
                 <tbody>
+                    @if(isset($usuariosInativos))
                     @foreach($usuariosInativos as $usuario)
                         <tr>
                         <td>{{$usuario->apelido}}</td>
@@ -65,11 +82,12 @@
                                 <form method="POST" action="{{url('usuario/restore/'.$usuario->id)}}">
                                     @method('put')
                                     @csrf
-                                    <button type="submit">Restaurar</button>
+                                    <button class='btn-sm btn btn-success' type="submit">Restaurar</button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
+                    @endif
                 </tbody>
             </table>
            
@@ -78,24 +96,4 @@
     </div>
     <button><a href="{{url('usuario/cadastrar')}}">Novo</a></button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 @endsection
