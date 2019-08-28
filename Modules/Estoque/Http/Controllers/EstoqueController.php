@@ -5,16 +5,36 @@ namespace Modules\Estoque\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Estoque\Entities\Produto;
 
 class EstoqueController extends Controller
 {
+    public  $dadosTemplate;
+
+
+    public function __construct(){
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'Estoque',
+        ];
+        $menu = [
+            ['icon' => 'shopping_basket', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
+            ['icon' => 'format_align_justify', 'tool' => 'Categoria', 'route' => url('/estoque/produto/categoria')],
+        ];
+        $this->dadosTemplate =  [
+            'moduleInfo' => $moduleInfo,
+            'menu' => $menu
+        ];
+    }
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        return view('estoque::index');
+        $produtos = Produto::all();
+        $produtosInativos =  Produto::onlyTrashed()->get();
+        return view('estoque::index', $this->dadosTemplate, compact('produtos','produtosInativos'));
     }
 
     /**

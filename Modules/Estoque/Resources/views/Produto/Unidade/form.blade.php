@@ -1,4 +1,4 @@
-@extends('estoque::template')
+@extends('template')
 @section('title', 'Unidade de Produto')
 
 @section('content')

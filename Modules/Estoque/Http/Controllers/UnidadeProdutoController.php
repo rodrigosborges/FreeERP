@@ -11,15 +11,30 @@ use DB;
 
 class UnidadeProdutoController extends Controller
 {
+    public $dadosTemplate;
     /**
      * Display a listing of the resource.
      * @return Response
      */
+    public function __construct(){
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'Estoque',
+        ];
+        $menu = [
+            ['icon' => 'shopping_basket', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
+            ['icon' => 'format_align_justify', 'tool' => 'Categoria', 'route' => url('/estoque/produto/categoria')],
+        ];
+        $this->dadosTemplate =  [
+            'moduleInfo' => $moduleInfo,
+            'menu' => $menu
+        ];
+    }
     public function index()
     {
         $unidadeProduto = UnidadeProduto::all();
         $unidadesExcluidas = UnidadeProduto::onlyTrashed()->get();
-        return view('estoque::produto.unidade.index', compact('unidadeProduto', 'unidadesExcluidas'));
+        return view('estoque::produto.unidade.index',$this->dadosTemplate, compact('unidadeProduto', 'unidadesExcluidas'));
     }
 
     /**
@@ -28,7 +43,7 @@ class UnidadeProdutoController extends Controller
      */
     public function create()
     {
-        return view('estoque::produto.unidade.form');
+        return view('estoque::produto.unidade.form', $this->dadosTemplate);
     }
 
     /**
@@ -68,7 +83,7 @@ class UnidadeProdutoController extends Controller
     public function edit($id)
     {
         $unidadeProduto = UnidadeProduto::findOrFail($id);
-        return view('estoque::produto.unidade.form', compact('unidadeProduto'));
+        return view('estoque::produto.unidade.form', $this->dadosTemplate, compact('unidadeProduto'));
     }
 
     /**

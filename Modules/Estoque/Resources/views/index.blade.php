@@ -1,4 +1,4 @@
-@extends('estoque::template')
+@extends('template')
 @section('title', 'Cadastro de Produto')
 @section('content')
 <div class="container col-8">

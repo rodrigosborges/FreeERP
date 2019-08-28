@@ -2,7 +2,6 @@
 @section('title','Categorias')
 @section('content')
 <h1 class="text-center">Categorias</h1>
-
 <ul class="nav nav-tabs  justify-content-center">
     <li class="nav-item">
         <a href="#ativos" class="nav-link active" role="tab" data-toggle="tab">
@@ -14,10 +13,7 @@
             Categorias Inativas
         </a>
     </li>
-
 </ul>
-
-
 <div class=" tab-content row justify-content-center ">
     <div class="tab-pane active col-sm-10" role="tabpanel1" id="ativos">
         <table class="table text-center ">
@@ -42,7 +38,6 @@
                         <a class="btn btn-lg btn-warning" href="{{url('estoque/produto/categoria/'.$categoria->id. '/edit')}}">
                             <i class="material-icons">border_color</i>
                         </a>
-
                     </td>
                     <td>
                         <form method="POST" action="{{url('estoque/produto/categoria/'. $categoria->id)}}">
@@ -51,7 +46,6 @@
                             <button type="submit" class="btn btn-lg btn-danger">
 
                                 <i class="material-icons">delete</i>
-
                             </button>
                         </form>
                     </td>
@@ -64,7 +58,6 @@
                         <p class="text-cetner">
                             Página {{$categorias->currentPage()}} de {{$categorias->lastPage()}}
                             -Exibido {{$categorias->perPage()}} registro(s) por página de {{$categorias->total()}}
-
                         </p>
                     </td>
                 </tr>
@@ -81,52 +74,50 @@
     <div class="tab-pane col-sm-8" role="tabpanel1" id="inativos">
         <h2 class='text-center'>Categorias Inativas</h2>
         <div class="justify-content-center">
-        <table class="table text-center">
-            <thead class="">
-                <td><strong>  id</strong></td>
-                <td><strong>  nome</strong></td>
-                <td><strong>Ação</strong></td>
-            </thead>
-            <tbody>
-                @foreach($categoriasInativas as $inativa)
-                <tr>
-                    <td>{{$inativa->id}}</td>
-                    <td>{{$inativa->nome}}</td>
-                    <td>
-                        <form method="POST" action="{{url('estoque/produto/categoria/restore/'.$inativa->id)}}">
-                            @method('put')
-                            @csrf
-                            <button type="submit" class="btn btn-info">Restaurar</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="100%" class="text-center">
-                        <p class="text-cetner">
-                            Página {{$categoriasInativas->currentPage()}} de {{$categoriasInativas->lastPage()}}
-                            -Exibido {{$categoriasInativas->perPage()}} registro(s) por página de {{$categoriasInativas->total()}}
+            <table class="table text-center">
+                <thead class="">
+                    <td><strong> id</strong></td>
+                    <td><strong> nome</strong></td>
+                    <td><strong>Ação</strong></td>
+                </thead>
+                <tbody>
+                    @foreach($categoriasInativas as $inativa)
+                    <tr>
+                        <td>{{$inativa->id}}</td>
+                        <td>{{$inativa->nome}}</td>
+                        <td>
+                            <form method="POST" action="{{url('estoque/produto/categoria/restore/'.$inativa->id)}}">
+                                @method('put')
+                                @csrf
+                                <button type="submit" class="btn btn-info">Restaurar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="100%" class="text-center">
+                            <p class="text-cetner">
+                                Página {{$categoriasInativas->currentPage()}} de {{$categoriasInativas->lastPage()}}
+                                -Exibido {{$categoriasInativas->perPage()}} registro(s) por página de {{$categoriasInativas->total()}}
 
-                        </p>
-                    </td>
-                </tr>
-                @if($categoriasInativas->lastPage() > 1)
-                <tr>
-                    <td colspan="100%" class="text-center">
-                        {{ $categoriasInativas->links() }}
-                    </td>
-                </tr>
-                @endif
-            </tfoot>
-        </table>
+                            </p>
+                        </td>
+                    </tr>
+                    @if($categoriasInativas->lastPage() > 1)
+                    <tr>
+                        <td colspan="100%" class="text-center">
+                            {{ $categoriasInativas->links() }}
+                        </td>
+                    </tr>
+                    @endif
+                </tfoot>
+            </table>
         </div>
     </div>
 </div>
-
 <hr>
-
 <div class="row justify-content-center">
     <div class="col-sm-10 d-flex text-center">
 

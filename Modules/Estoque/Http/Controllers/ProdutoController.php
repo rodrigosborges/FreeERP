@@ -13,14 +13,31 @@ use Modules\Estoque\Entities\Categoria;
 
 class ProdutoController extends Controller
 {
-    public function index(){
+    public $dadosTemplate;
+    public function __construct()
+    {
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'Estoque',
+        ];
+        $menu = [
+            ['icon' => 'shopping_basket', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
+            ['icon' => 'format_align_justify', 'tool' => 'Categoria', 'route' => url('/estoque/produto/categoria')],
+        ];
+        $this->dadosTemplate =  [
+            'moduleInfo' => $moduleInfo,
+            'menu' => $menu
+        ];
+    }
+    public function index()
+    {
         $title = 'Produtos';
         $flag = false;
         $produtos = Produto::all();
         $produtosInativos = Produto::onlyTrashed()->get();
-        return view('estoque::/produto/index', compact('produtos', 'produtosInativos', 'title', 'flag'));
+        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'title', 'flag'));
     }
-/*
+    /*
     public function busca(Request $request)
     {
         if($request['pesquisa']){
@@ -38,17 +55,17 @@ class ProdutoController extends Controller
     {
         $categorias = Categoria::all();
         $unidades = UnidadeProduto::all();
-        return view('estoque::produto.form', compact('unidades', 'categorias'));
+        return view('estoque::produto.form',$this->dadosTemplate, compact('unidades', 'categorias'));
     }
 
     public function store(ProdutoRequest $request)
     {
         DB::beginTransaction();
-        try{
+        try {
             Produto::create($request->all());
             DB::commit();
             return redirect('/estoque/produto')->with('success', 'Produto cadastrado com sucesso');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
         }
@@ -59,17 +76,17 @@ class ProdutoController extends Controller
         $produto = Produto::findOrFail($id);
         $categorias = Categoria::all();
         $unidades = UnidadeProduto::all();
-        return view('estoque::produto.form', compact('produto', 'unidades', 'categorias'));
+        return view('estoque::produto.form', $this->dadosTemplate, compact('produto', 'unidades', 'categorias'));
     }
     public function update(ProdutoRequest $request, $id)
     {
         DB::beginTransaction();
-        try{
+        try {
             $produto = Produto::findOrFail($id);
             $produto->update($request->all());
             DB::commit();
             return redirect('/estoque/produto')->with('success', 'Produto alterado com sucesso');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
         }
@@ -82,28 +99,30 @@ class ProdutoController extends Controller
         return back()->with('success', 'Produto desativado com sucesso!');
     }
 
-    public function restore($id){
+    public function restore($id)
+    {
         $produto = Produto::onlyTrashed()->findOrFail($id);
         $produto->restore();
         return back()->with('success', 'Produto ativado com sucesso!');
     }
 
 
-    public function busca(Request $request){
+    public function busca(Request $request)
+    {
         $flag = false;
         $title = 'Resultado da Pesquisa';
-        if($request['pesquisa']) {
-            $produtos = Produto::where('nome', 'like', '%'.$request['pesquisa'].'%')->get();
-        }     
+        if ($request['pesquisa']) {
+            $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->get();
+        }
         $produtosInativos = Produto::onlyTrashed()->get();
-        return view('estoque::/produto/index', compact('produtos', 'produtosInativos', 'title', 'flag'));
+        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'title', 'flag'));
     }
 
-    public function inativos(){
+    public function inativos()
+    {
         $flag = true;
         $title = 'Produtos Inativos';
         $produtos = Produto::onlyTrashed()->get();
-        return view('estoque::/produto/index', compact('produtos', 'title', 'flag'));
-
+        return view('estoque::/produto/index',$this->dadosTemplate, compact('produtos', 'title', 'flag'));
     }
 }
