@@ -490,31 +490,38 @@
                                     </div>
                                     <input required type="text" placeholder="XXX.XXX.XXX-XX" name="dependentes[{{$key}}][cpf]"  class="form-control dependentes cpf" id="cpf_dep_{{$key}}" value="{{ old('dependentes.$key.cpf', isset($dependente->id) ? $dependente->cpf()->numero : '') }}">
                                 </div>
-                                <span class="errors"> {{ $errors->first('dependentes.'.$key.'.cpf') }}</span>
-                                
-                                
-                                
+                                <span class="errors"> {{ $errors->first('dependentes.'.$key.'.cpf') }}</span>                                
                             </div>
                         </div>
-
-
-
-                        
-
-                        <div class="col-lg-2 mt-2">
+                    <div class="col-lg-2 mt-2">
                             <br>
                             <i class="btn btn-danger border text-center material-icons del-dep">delete</i>
                         </div>
 
                     </div>
+                            <!-- check box -->
+                            <div class="form-check d-flex align-items-start">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Declaração 1
+                            </label>
+                            </div>
+
+                            <div class="form-check d-flex align-items-start">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Declaração 2
+                            </label>
+                            </div>
 
                 </div>
-
+                
             @endforeach
         </div>
         <div class="mt-2">
             <i class="btn btn-info border text-center add-dep">ADICIONAR DEPENDENTE</i>
         </div>
+        
     </form>
 @endsection
 
