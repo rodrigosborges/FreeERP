@@ -32,7 +32,7 @@
                 <div class="form-group col-8">
                     <label for="nome">Nome</label>
                     <input type="text" name='nome' id="nome" class="form-control" maxlength="45" value="{{(isset($categoria))?$categoria->nome:''}}">
-                    {{$errors->first('nome')}}
+                    <p class=" alert-warning">  {{$errors->first('nome')}}</p>
                 </div>
                 </div>
               
