@@ -23,4 +23,7 @@ Route::prefix('funcionario')->group(function() {
 
     Route::resource('funcionario', 'FuncionarioController');
     Route::resource('cargo', 'CargoController');
+    
+    //folha pagamento
+    Route::resource('pagamento', 'FolhaPagamentoController');
 });
