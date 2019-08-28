@@ -103,6 +103,13 @@ class PapelController extends Controller
     public function restore($id){
         $papel = Papel::onlyTrashed()->findOrFail($id);
         $papel->restore();
-        return back();
+        return redirect('/papel');
+    }
+
+    public function search($nome){
+        $papeis = Papel::where('nome', 'LIKE', '%'.$nome.'%')->get();
+        $papeisInativos = Papel::onlyTrashed()->get();
+        return view('usuario::papel.index', compact('papeis', 'papeisInativos'));
+
     }
 }
