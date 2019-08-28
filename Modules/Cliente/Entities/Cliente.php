@@ -33,7 +33,7 @@ class Cliente extends Model
         return $this->belongsTo('App\Entities\Endereco');
     }
 
-    public function pedido(){
+    public function pedidos(){
         return $this->hasMany('Modules\Cliente\Entities\Pedido');
     }
 

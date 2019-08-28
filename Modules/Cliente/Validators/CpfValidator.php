@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Funcionario\Validators;
+namespace Modules\Cliente\Validators;
 class CpfValidator
 {
     public function validate($attribute, $value, $parameters, $validator)

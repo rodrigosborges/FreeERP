@@ -18,6 +18,7 @@ class ClienteServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
         Validator::extend('telefone', 'Modules\Cliente\Validators\TelefoneValidator@validate');
         Validator::extend('cpf', 'Modules\Cliente\Validators\CpfValidator@validate');
+        Validator::extend('cnpj', 'Modules\Cliente\Validators\CnpjValidator@validate');
     }
 
     

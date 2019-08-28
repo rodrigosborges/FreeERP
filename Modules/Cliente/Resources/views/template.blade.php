@@ -1,10 +1,10 @@
 <?php 
     $moduleInfo = [
         'icon' => 'people',
-        'name' => 'Funcionário',
+        'name' => 'Cliente',
     ];
     $menu = [
-        ['icon' => 'people', 'tool' => 'Pedido', 'route' => url('funcionario/funcionario')],
+        ['icon' => 'people', 'tool' => 'Cliente', 'route' => url('cliente/cliente')],
         // ['icon' => 'work', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
     ];
 ?>
@@ -12,7 +12,7 @@
 @extends('template')
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{Module::asset('funcionario:css/style.css')}}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{Module::asset('cliente:css/style.css')}}"> --}}
     @yield('style')
 @endsection
 
@@ -35,10 +35,10 @@
 @endsection
 
 @section('js')
-    <script src="{{Module::asset('funcionario:js/bibliotecas/jquery.mask.min.js')}}"></script>
-    <script src="{{Module::asset('funcionario:js/bibliotecas/jquery.validate.min.js')}}"></script>
-    <script src="{{Module::asset('funcionario:js/bibliotecas/localization/messages_pt_BR.min.js')}}"></script>
-    <script src="{{Module::asset('funcionario:js/main.js')}}"></script>
+    <script src="{{Module::asset('cliente:js/bibliotecas/jquery.mask.min.js')}}"></script>
+    <script src="{{Module::asset('cliente:js/bibliotecas/jquery.validate.min.js')}}"></script>
+    <script src="{{Module::asset('cliente:js/bibliotecas/localization/messages_pt_BR.min.js')}}"></script>
+    <script src="{{Module::asset('cliente:js/main.js')}}"></script>
     <script>var main_url="{{url('')}}"</script>
     @yield('script')
 @endsection
