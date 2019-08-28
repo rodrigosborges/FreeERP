@@ -50,7 +50,7 @@ class ClienteController extends Controller
                 'email_id' => $email->id
             ]);
 
-            $telefones = $dados['telefones'];
+            $telefones = $dados['telefones'];            
             foreach($telefones as $telefone){
                 $tel = Telefone::create($telefone);
                 $cliente->telefones()->attach($tel);
@@ -79,11 +79,14 @@ class ClienteController extends Controller
 
     public function update(/*CreateCliente*/Request $request, $id){
             $dados = $request->all();
-            return $dados;
+
       
             $cliente = Cliente::findOrFail($id);
-            
+
+            $telefones_velhos =  $cliente->telefones;        
+
             $endereco = Endereco::findOrFail($cliente['endereco_id']);
+            
             $email = Email::findOrFail($cliente['endereco_id']);
 
             $tipo_documento_id = $dados['tipo_cliente_id'] == 1 ? 1 : 6;
@@ -91,8 +94,9 @@ class ClienteController extends Controller
             
 
             $endereco->update($dados['endereco']);
+
             $email->update(['email' => $dados['email']]);
-            $tipo_documento_id = $dados['tipo_cliente_id'] == 1 ? 1 : 6;
+
             $documento->update([
                 'numero' =>$dados['documento'],
                 'tipo_documento_id' =>  $tipo_documento_id 
@@ -104,12 +108,25 @@ class ClienteController extends Controller
                 'endereco_id' => $endereco->id,
                 'email_id' => $email->id
             ]);
-            return 'oi';
-            $telefones =  $cliente->telefones;
-            foreach($telefones as $telefone){
-                return $telefone;
+
+            $naoExcluir = [];
+            foreach($dados['telefones'] as $i => $telefone){
+                if ($telefone['id']){                  
+                    $tel = Telefone::findOrFail($telefone['numero']);                   
+                    $tel->update($telefone);
+                    
+                }else{
+                    $tel = Telefone::create($telefone);                    
+                    $cliente->telefones()->attach($tel);
+                }
+                $naoExcluir[] = $tel->id;
             }
+
+            $cliente->telefones()->whereNotIn('id', $naoExcluir)->delete();
             
+            
+            
+
             
             return redirect('/cliente')->with('success', 'Cliente cadastrado com sucesso!');
        
