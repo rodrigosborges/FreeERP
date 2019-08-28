@@ -8,11 +8,8 @@
   <thead>
     <tr>
       <th scope="col">Nome</th>
-      <th scope="col">Salario </th>
       <th scope="col">Cargo</th>
-      <th scope="col"><a class="btn btn-success" href="{{ url('funcionario/pagamento/create') }}"><i class="material-icons">
-            note_add
-          </i></a></th>
+      <th scope="col">Pagamento</th>
 
     </tr>
   </thead>
@@ -21,16 +18,19 @@
     <tr>
       <td> {{ $funcionario->nome }} </td>
       <td> Cargo </td>
+      <td>
+      <form action="{{ url('funcionario/pagamento/create/') }}" id="form" method="GET" enctype="multipart/form-data">
+        <input type="hidden" name="funcionario" value="{{$funcionario->id}}">
+      
+        
+          <button type="submit"><i class="material-icons">note_add</i></button>
+      </form>
+      
+            </td>
     </tr>
     @endforeach
   </tbody>
 </table>
-<div class="text-right">
-  <a class="btn btn-success" href="{{ url('funcionario/pagamento/create') }}">Novo Pagamento</a>
-</div>
-
-<!--salario', 'horas_extras', 'adicional_noturno', 
-                    'inss', 'faltas', 'emissao', 'funcionario_id-->
 @endsection
 
 @section('script')
