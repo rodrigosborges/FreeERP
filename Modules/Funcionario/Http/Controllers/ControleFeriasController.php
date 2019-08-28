@@ -5,8 +5,9 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Funcionario\Entities\Funcionario;
 
-class FeriasController extends Controller
+class ControleFeriasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +16,10 @@ class FeriasController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'Lista de Funcionários',
+            'title' => 'Ferias',
             'funcionarios' => Funcionario::paginate(10)
         ];
-        return view('funcionario::index', compact('data'));
+        return view('funcionario::ferias.index', compact('data'));
     }
 
     /**
@@ -27,7 +28,10 @@ class FeriasController extends Controller
      */
     public function create()
     {
-        return view('funcionario::create');
+        $data = [
+            'title' => 'Ferias',
+        ];
+        return view('funcionario::ferias.formulario', compact('data'));
     }
 
     /**

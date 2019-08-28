@@ -26,4 +26,5 @@ Route::prefix('funcionario')->group(function() {
     
     //folha pagamento
     Route::resource('pagamento', 'FolhaPagamentoController');
+    Route::resource('ferias', 'ControleFeriasController');
 });

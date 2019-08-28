@@ -5,11 +5,13 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Cargo, Funcionario, Dependente, Parentesco};
+use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Relacao, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use Modules\Funcionario\Entities\Funcionario;
+
 
 class FuncionarioController extends Controller{
     
@@ -39,6 +41,8 @@ class FuncionarioController extends Controller{
     }
     
     public function create(){
+
+        
         $data = [
             'url'               => url("funcionario/funcionario"),
             'model'             => '',
@@ -60,23 +64,31 @@ class FuncionarioController extends Controller{
 
     public function store(CreateFuncionario $request){
 
+
         DB::beginTransaction();
 		try{
 
-            $funcionario = Funcionario::create($request->input('funcionario'));
+            $email = Email::create(['email' => $request->input('email')]);
+            $endereco = Endereco::create($request->input('endereco'));
 
+            $funcionario = Funcionario::create([
+                'nome' =>$request->funcionario['nome'],
+                'data_nascimento' =>date('Y-m-d', strtotime($request->funcionario['data_nascimento'])),
+                'sexo' =>$request->funcionario['sexo'],
+                'data_admissao' =>date('Y-m-d', strtotime($request->funcionario['data_admissao'])),
+                'estado_civil_id' =>$request->funcionario['estado_civil_id'],
+                'email_id' => $email->id,
+                'endereco_id' => $endereco->id
+            ]);
+
+      
             $funcionario->cargos()->attach(
+                
                 $request['cargo']['cargo_id'],
                 ['data_entrada' => brToEnDate($request['funcionario']['data_admissao'])]
             );
 
-            Relacao::create([
-                'tabela_origem'     => 'funcionario',
-                'origem_id'         => $funcionario->id,
-                'tabela_destino'    => 'estado_civil',
-                'destino_id'        => $request->funcionario['estado_civil_id'],
-                'modelo'            => 'EstadoCivil'
-            ]);
+           
 
             foreach($request->documentos as $key => $documento) {
 
@@ -90,16 +102,9 @@ class FuncionarioController extends Controller{
 
                 $doc = Documento::create($newDoc);
 
-                Relacao::create([
-                    'tabela_origem'     => 'funcionario',
-                    'origem_id'         => $funcionario->id,
-                    'tabela_destino'    => 'documento',
-                    'destino_id'        => $doc->id,
-                    'modelo'            => 'Documento'
-                ]);
 
             }
-            
+             //funcionando
             if($request->input('docs_outros')) {
                 foreach($request->docs_outros as $documento) {
                     if($documento['numero']){
@@ -124,49 +129,17 @@ class FuncionarioController extends Controller{
                     
                         $doc = Documento::create($documento);
 
-                        Relacao::create([
-                            'tabela_origem'     => 'funcionario',
-                            'origem_id'         => $funcionario->id,
-                            'tabela_destino'    => 'documento',
-                            'destino_id'        => $doc->id,
-                            'modelo'            => 'Documento'
-                        ]);
 
                     }
                 }
             }
 
-            $endereco = Endereco::create($request->input('endereco'));
 
-            Relacao::create([
-                'tabela_origem'     => 'funcionario',
-                'origem_id'         => $funcionario->id,
-                'tabela_destino'    => 'endereco',
-                'destino_id'        => $endereco->id,
-                'modelo'            => 'Endereco'
-            ]);
-
-            $email = Email::create(['email' => $request->email]);
-
-            Relacao::create([
-                'tabela_origem'     => 'funcionario',
-                'origem_id'         => $funcionario->id,
-                'tabela_destino'    => 'email',
-                'destino_id'        => $email->id,
-                'modelo'            => 'Email'
-            ]);
 
             foreach($request->telefones as $telefone) {
            
                 $telefone = Telefone::create($telefone);
 
-                Relacao::create([
-                    'tabela_origem'     => 'funcionario',
-                    'origem_id'         => $funcionario->id,
-                    'tabela_destino'    => 'telefone',
-                    'destino_id'        => $telefone->id,
-                    'modelo'            => 'Telefone'
-                ]);
 
             }
 
@@ -184,13 +157,7 @@ class FuncionarioController extends Controller{
                     
                     $cpf = Documento::create($doc);
 
-                    Relacao::create([
-                        'tabela_origem'     => 'dependente',
-                        'origem_id'         => $newDep->id,
-                        'tabela_destino'    => 'documento',
-                        'destino_id'        => $cpf->id,
-                        'modelo'            => 'Telefone'
-                    ]);
+                    
 
                 }
             }
