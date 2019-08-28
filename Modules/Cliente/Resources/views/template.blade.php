@@ -4,7 +4,7 @@
         'name' => 'Funcionário',
     ];
     $menu = [
-        ['icon' => 'people', 'tool' => 'Pedido', 'route' => url('funcionario/funcionario')],
+        ['icon' => 'people', 'tool' => 'Pedido', 'route' => url('cliente/pedido')],
         // ['icon' => 'work', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
     ];
 ?>
