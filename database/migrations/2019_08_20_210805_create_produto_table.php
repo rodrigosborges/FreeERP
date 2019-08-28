@@ -16,7 +16,8 @@ class CreateProdutoTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('nome', 45);
-			$table->float('valor', 10, 0);
+			$table->integer('codigo');
+			$table->float('preco', 10, 0);
 		});
 	}
 

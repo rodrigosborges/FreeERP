@@ -3,22 +3,25 @@
 namespace Modules\Cliente\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cliente extends Model
 {
+    use SoftDeletes;
+    
     protected $table = "cliente";    
-    protected $fillable = ['nome', 'tipo_cliente_id'];
+    protected $fillable = ['nome', 'tipo_cliente_id','documento_id', 'endereco_id', 'email_id'];
     
 
     public function tipo(){
         return $this->belongsTo('Modules\Cliente\Entities\TipoCliente');
     }
 
-    public function telefone(){
-        return $this->belongsToMany('App\Entities\Telefone', 'cliente_has_telefone');
+    public function telefones(){
+        return $this->belongsToMany('App\Entities\Telefone', 'cliente_has_telefone', 'cliente_id', 'telefone_id');
     }
 
-    public function documentos(){
+    public function documento(){
         return $this->belongsTo('App\Entities\Documento');
     }
 
@@ -30,7 +33,7 @@ class Cliente extends Model
         return $this->belongsTo('App\Entities\Endereco');
     }
 
-    public function pedido(){
+    public function pedidos(){
         return $this->hasMany('Modules\Cliente\Entities\Pedido');
     }
 

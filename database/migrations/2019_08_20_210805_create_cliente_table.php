@@ -20,6 +20,8 @@ class CreateClienteTable extends Migration {
 			$table->integer('endereco_id')->index('fk_cliente_endereco1');
 			$table->integer('email_id')->index('fk_cliente_email1');
 			$table->integer('tipo_cliente_id')->index('fk_cliente_tipo_cliente1');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
