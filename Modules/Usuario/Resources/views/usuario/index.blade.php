@@ -29,8 +29,8 @@
                             <td>{{$usuario->avatar}}</td>
                             <td>{{$usuario->email}}</td>
                             <td><a  href="{{url('/usuario/' . $usuario->id.'/edit')}}"><button type="button" class=" btn-sm btn btn-success">Editar</button></a></td>
-                            <td>
-                                <form method="POST" action="{{url('/usuario/' . $usuario->id)}}">
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Trocar Senha</button></td>
+                            <td><form method="POST" action="{{url('/usuario/' . $usuario->id)}}">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn-sm btn btn-danger">Deletar</button>
@@ -77,4 +77,25 @@
     </div>
     </div>
     <button><a href="{{url('usuario/cadastrar')}}">Novo</a></button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
