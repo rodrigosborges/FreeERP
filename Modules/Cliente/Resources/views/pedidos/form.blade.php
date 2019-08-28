@@ -8,30 +8,37 @@ Nova Compra - {{ $cliente->nome }}
 
     {{-- <div class="col-12 border"> --}}
 
-    <form action="" class="p-2">
+    <form action="" class="">
 
-        <div class="form-group form-row pl-1">
-            <div class="col-3 pl-3">
+        <div class="form-group">
+            <div class="col-3">
             <label for="data-pedido">Data do pedido</label>
-                <input type="date" name="data-pedido" id="data-pedido" class="form-control" placeholder="Data da Compra">
+                <input type="date" name="data-pedido" id="data-pedido" class="form-control" placeholder="Data da Compra" required>
             </div>
         </div>
 
-        <div class="input-group pb-1">
-            <div class="input-group-prepend col-form-label col-3 border">
+        <div class="input-group">
+            <div class="input-group-prepend col-2">
                 <span class="input-group-text purple lighten-3" id="basic-text1">
                     <i class="material-icons" aria-hidden="true">search</i></span>
             
                 <input type="search" class="form-control" name="codigo" id="codigo" placeholder="Código">
             </div>
-            <div class="col-5 col-form-label border">
-                    <input type="text" class="form-control" name="produto" id="produto" placeholder="Produto">
+            <div class="col-4 ">
+                    <input type="text" class="form-control" name="produto" id="produto" placeholder={{"Produto"}}>
             </div>
-            <div class="col-form-label col-2 border">
-                <input type="number" class="form-control" name="qtde" id="qtde" placeholder="Qtde">
+            <div class="col col-2">
+                <input type="number" min="1" class="form-control" name="qtde" id="qtde" placeholder="Qtde">
             </div>
-            <div class="col-2 col-form-label border d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary" style="width: 90%;">Adicionar</button>
+            <div class="col col-2">
+                    <input type="number" min="0" class="form-control" name="desconto" id="desconto"  
+                                aria-label="0,0%" aria-describedby="basic-addon2">
+                    <div class="input-group-append col-1">
+                            <span class="input-group-text" id="basic-addon2">%</span>
+                    </div>
+            </div>
+            <div class="col-2 ">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Adicionar</button>
             </div>
 
         </div>
