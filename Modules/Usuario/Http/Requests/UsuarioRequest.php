@@ -15,7 +15,6 @@ class UsuarioRequest extends FormRequest
     {
         return [
             'apelido' => ['required', 'min:3', 'max:50'],
-            'data_nascimento' => ['required'],
             'email' => ['required', 'email', 'unique:usuario,email,'.$this->route('id')],
             'password' => ['required'],
         ];

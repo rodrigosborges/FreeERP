@@ -1,20 +1,13 @@
-@extends('template')
+@extends('usuario::layouts.informacoes')
 <!-- @section('title', 'Exemplo') -->
 
 @section('content')
 <div class="row justify-content-center align-items-center" style="height:100%">
     <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
         <div>
-            @if(Session::has('sucesso'))
-            <p>{{Session::get('sucesso')}}</p>
-            @endif
-
-            @if(Session::has('erro'))
-            <p>{{Session::get('erro')}}</p>
-            @endif
         </div>
         <h2 class="my-4">Cadastrar Usuário</h1>
-        <form method="POST" action="{{ url((isset($usuario) ? ('usuario/'.$usuario->id) : 'usuario') ) }}">
+        <form method="POST" action="{{ url((isset($usuario) ? ('usuario/'.$usuario->id) : '/usuario') ) }}">
             @if(isset($usuario))
                 @method('PUT')
             @endif

@@ -18,7 +18,11 @@ Route::prefix('usuario')->group(function() {
     // Listar
     Route::get('/', 'UsuarioController@index');
     // Atualizar
+<<<<<<< HEAD
     Route::get('/{id}/edit', 'UsuarioController@edit');
+=======
+    Route::get('{id}/edit', 'UsuarioController@edit');
+>>>>>>> caa2daec86cf01ede33f691db74c5e2e89a7caf4
     Route::put('/{id}', 'UsuarioController@update');
     // Deletar
     Route::delete('/{id}', 'UsuarioController@destroy');
@@ -34,7 +38,11 @@ Route::prefix('modulo')->group(function() {
     // Listar
     Route::get('/', 'ModuloController@index');
     // Atualizar
+<<<<<<< HEAD
     Route::get('/{id}/edit', 'ModuloController@edit');
+=======
+    Route::get('{id}/edit/', 'ModuloController@edit');
+>>>>>>> caa2daec86cf01ede33f691db74c5e2e89a7caf4
     Route::put('/{id}', 'ModuloController@update');
     // Deletar
     Route::delete('/{id}', 'ModuloController@destroy');
