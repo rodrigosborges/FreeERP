@@ -29,7 +29,7 @@ class ClienteController extends Controller
     }
 
     
-    public function store(CreateClienteRequest $request) {
+    public function store(/*CreateClienteRequest*/Request $request) {
 
       
         DB::beginTransaction();
@@ -38,7 +38,7 @@ class ClienteController extends Controller
             $dados = $request->all();
             
             $endereco = Endereco::create($dados['endereco']);
-            $email = Email::create(['email' => $dados['email']]);
+            $email = Email::create($dados['email']);
 
             $tipo_documento_id = $dados['tipo_cliente_id'] == 1 ? 1 : 6;
             $documento = Documento::create([
@@ -48,6 +48,7 @@ class ClienteController extends Controller
               
             $cliente = Cliente::create([
                 'nome' => $dados['nome'],
+                'nome_fantasia' => $dados['nome_fantasia'],
                 'tipo_cliente_id' => $dados['tipo_cliente_id'],
                 'documento_id' => $documento->id,
                 'endereco_id' => $endereco->id,
@@ -107,6 +108,7 @@ class ClienteController extends Controller
             ]);
             $cliente->update([
                 'nome' => $dados['nome'],
+                'nome_fantasia' => $dados['nome_fantasia'],
                 'tipo_cliente_id' => $dados['tipo_cliente_id'],
                 'documento_id' => $documento->id,
                 'endereco_id' => $endereco->id,

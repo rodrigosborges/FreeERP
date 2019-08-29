@@ -14,7 +14,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row my-3">
-                                <div class="form-group col-3">
+                                <div class="form-group col-md-2">
                                     <label for="tipo_pessoa" class="col-form-label col-form-label-lg h6">Pessoa</label>
                                     <select class="custom-select" name='tipo_pessoa' id="tipo_pessoa">
                                                     <option value="">Selecione</option>
@@ -25,15 +25,21 @@
                                                 
                                             </select>
                                 </div>
-                                <div class="form-group col-6">
+                                <div class="form-group col-md">
 
                                     <label for="nome" class="col-form-label col-form-label-lg h6">Nome:</label>
 
                                     <input type="text" class="form-control" name="nome" id="nome">
                                 </div>
-                                <div class="form-group col-6">
+                                <div class="form-group col-md d-none" id="div_nome_fantasia">
+
+                                    <label for="nome_fantasia" class="col-form-label col-form-label-lg h6">Nome Fantasia:</label>
+
+                                    <input type="text" class="form-control" name="nome_fantasia" id="nome_fantasia">
+                                </div>
+                                <div class="form-group col-12">
                                     <label for="email" class="col-form-label col-form-label-lg h6">E-mail:</label>
-                                    <input type="email" name="email" class="form-control" id="email">
+                                    <input type="email" name="email[email]" class="form-control" id="email">
                                 </div>
                             </div>
                             <div id="telefones">
@@ -41,7 +47,7 @@
                                     <div class="form-group col-4">
                                         <label for="telefone" class="col-form-label col-form-label-lg h6">Número de
                                             Telefone:</label>
-                                        <input type="text" class="form-control" name="telefone">
+                                        <input type="text" class="form-control input-telefone" name="telefone">
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="tipo_telefone" class="col-form-label col-form-label-lg h6">Tipo de
@@ -87,25 +93,25 @@
                             <div class="row my-3">
                                 <div class="form-group col-3">
                                     <label for="cep" class="col-form-label col-form-label-lg h6">Cep:</label>
-                                    <input type="text" class="form-control" name="cep">
+                                    <input type="text" class="form-control" name="endereco[cep]">
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="logradouro" class="col-form-label col-form-label-lg h6">Logradouro:</label>
-                                    <input type="text" class="form-control" name="logradouro">
+                                    <input type="text" class="form-control" name="endereco[logradouro]">
                                 </div>
                                 <div class="form-group col-2">
                                     <label for="numero" class="col-form-label col-form-label-lg h6 text-left">Número:</label>
-                                    <input type="text" class="form-control" name="numero">
+                                    <input type="text" class="form-control" name="endereco[numero]">
                                 </div>
                             </div>
                             <div class="row my-3">
                                 <div class="form-group col-4">
                                     <label for="bairro" class="col-form-label col-form-label-lg h6">Bairro:</label>
-                                    <input type="text" class="form-control" name="bairro">
+                                    <input type="text" class="form-control" name="endereco[bairro]">
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="cidade" class="col-form-label col-form-label-lg h6">Cidade:</label>
-                                    <input type="text" class="form-control" name="cidade">
+                                    <input type="text" class="form-control" name="endereco[cidade]">
                                 </div>
                             </div>
                             <div class="row my-3">
@@ -136,12 +142,22 @@
 @endsection @section('script')
 
 <script>
+    
+    
+    $(document).ready(function(){
+        escolheMascaraTel($(".input-telefone"))
+        
+    })
+    
+    
+
     $(document).on('click', '#adicionar_telefone', function() {
 
         if ($(".telefone-div").length < 4) {
             var telefone = $(".telefone-div").first().clone()
             telefone.find('select, input').val("")
             telefone.appendTo($("#telefones"))
+            escolheMascaraTel($(".input-telefone").last())
         }
 
     })
@@ -154,18 +170,48 @@
 
     })
     $(document).on('change', '#tipo_pessoa', function() {
+        var documento = $("[name='numero_documento']")
+        
         if ($('#tipo_pessoa').val() == 2) {
+
             $("[name='nome']").parent().find('label').text("Razão social:")
-            var documento = $("[name='numero_documento']")
+
+            
             documento.parent().find('label').text("CNPJ:")
             documento.attr("placeholder", "Ex: 24.953.166/0001-90")
+            documento.mask('99.999.999/9999-99')
+            
+            $("#div_nome_fantasia").removeClass("d-none");
         } else {
+            
             $("[name='nome']").parent().find('label').text("Nome:")
-            var documento = $("[name='numero_documento']")
             documento.parent().find('label').text("CPF:")
             documento.attr("placeholder", "Ex: 451.658.200-50")
+            documento.mask('999.999.999-99')
+            
+            $("#div_nome_fantasia").addClass("d-none");
+
         }
 
-    })
+    })  
+
+
+    function escolheMascaraTel(element) {
+        
+
+        var SPMaskBehavior = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        },
+
+        spOptions = {
+            onKeyPress: function(val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+            }
+        };
+
+        $(element).mask(SPMaskBehavior, spOptions);
+    }
+
+  
 </script>
 @endsection

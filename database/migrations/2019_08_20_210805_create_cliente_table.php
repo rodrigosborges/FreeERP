@@ -16,6 +16,7 @@ class CreateClienteTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('nome', 100);
+			$table->string('nome_fantasia', 100)->nullable();
 			$table->integer('documento_id')->index('fk_cliente_documento1');
 			$table->integer('endereco_id')->index('fk_cliente_endereco1');
 			$table->integer('email_id')->index('fk_cliente_email1');
