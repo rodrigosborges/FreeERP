@@ -52,6 +52,12 @@ class ProdutoController extends Controller
 */
     public function create()
     {
+        /*
+        $categoriasPai = DB::table('categoria')
+        ->join('subcategoria','subcategoria.id', '=','categoria.id')
+        ->where('subcategoria.categoria_id', '=', null)
+        ->get();
+        */
         //$categorias = DB::table('categoria')->join('subcategoria','subcategoria.id', '=','categoria.id')->where('subcategoria.categoria_id = null')->get();
         $categorias = Categoria::all();
         $unidades = UnidadeProduto::all();

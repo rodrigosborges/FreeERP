@@ -14,6 +14,6 @@ class Subcategoria extends Model
 
 
     public function categoria(){
-        return $this->belongsTo('Modules\Estoque\Entities\Categoria');
+        return $this->belongsTo('Modules\Estoque\Entities\Categoria', 'id', 'id');
     }
 }
