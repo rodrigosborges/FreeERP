@@ -59,7 +59,8 @@ Nova Compra - {{ $cliente->nome }}
                     <th>Qtde</th>
                     <th>Desconto UN</th>
                     <th>Preco</th>
-                    <th>Vl Total</th>   
+                    <th>Vl Total</th>
+                    <th>Opções</th>   
                 </tr>
                     </thead>
                     
