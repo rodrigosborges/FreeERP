@@ -11,7 +11,7 @@
                 <h2 class="my-2">{{isset($usuario) ? 'Editar' : 'Cadastrar'}} Usuário</h2>
             </div>
             <div class="card-body">
-                <form method="POST" enctype = 'multipart/form-data' action="{{ url((isset($usuario) ? ('usuario/'.$usuario->id) : '/usuario') ) }}">
+                <form id='usuarioForm' method="POST" enctype = 'multipart/form-data' action="{{ url((isset($usuario) ? ('usuario/'.$usuario->id) : '/usuario') ) }}">
                     @if(isset($usuario))
                         @method('PUT')
                     @endif
@@ -25,7 +25,7 @@
                         </div>
                         @endif
                         <label for="apelido">Apelido</label>
-                        <input value="{{old('apelido', isset($usuario) ? $usuario->apelido : '')}}" class="form-control" type="text" name="apelido">
+                        <input required minlenght='3' maxlenght='50' value="{{old('apelido', isset($usuario) ? $usuario->apelido : '')}}" class="form-control" type="text" name="apelido">
                         {{$errors->first('apelido')}}
                     </div>
                     <div class="form-group">
@@ -40,18 +40,18 @@
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail</label>
-                        <input value="{{old('email', isset($usuario) ? $usuario->email : '')}}" class="form-control" type="email" name="email">
+                        <input required value="{{old('email', isset($usuario) ? $usuario->email : '')}}" class="form-control" type="email" name="email">
                         {{$errors->first('email')}}
                     </div>
                     @if(!isset($usuario))
                     <div class="form-group">
                         <label for="password">Senha</label>
-                        <input class="form-control" type="password" name="password">
+                        <input id='password' required class="form-control" type="password" name="password">
                         {{$errors->first('password')}}
                     </div>
                     <div class="form-group">
                         <label>Confirmar Senha</label>
-                        <input class="form-control" type="password" name="repeat_password">
+                        <input required class="form-control" type="password" name="repeat_password">
                     </div>
                     @endif
                 
@@ -62,4 +62,55 @@
         </div>
     </div>
 </div>
+
+
+@section('js')
+<script type="text/javascript" src="{{asset('js/jquery.validate.min.js')}}"></script>
+<script>
+$("#usuarioForm").validate({
+    rules:{
+        apelido:{
+            required:true,
+            minlength: 3,
+            maxlength:50
+        },
+        email:{
+            required:true,
+            email:true
+        },
+        password:{
+            required:true,
+            minlength:8,
+            maxlength:16
+        },
+        repeat_password:{
+            required:true,
+            equalTo: "#password"
+        },
+    },
+    messages:{
+        apelido:{
+            required:"<span style='color:red'>Preencha o campo Apelido</span>",
+            minlength:"<span style='color:red'>Apelido tem que ter no minímo 3 caracteres</span>",
+            maxlength:"<span style='color:red'>Apelido tem que ter no máximo 50 caracteres</span>"
+        },
+        email:{
+            required:"<span style='color:red'>Preencha o campo Email</span>",
+            email:"<span style='color:red'>Insira um email válido (exemplo@exemplo.com)</span>"
+        },
+        password:{
+            required:"<span style='color:red'>Preencha o campo Senha</span>",
+            minlength:"<span style='color:red'>Senha tem que ter no minímo 8 caracteres</span>",
+            maxlength:"<span style='color:red'>Senha tem que ter no máximo 16 caracteres</span>"
+        },
+        repeat_password:{
+            required:"<span style='color:red'>Preencha o campo Confirmar Senha</span>",
+            equalTo: "<span style='color:red'>O campo Confirmar Senha tem que ser igual ao campo Senha</span>"
+        },
+    }
+});
+</script>
+@endsection
+
+
 @endsection
