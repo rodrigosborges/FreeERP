@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco};
-use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Relacao, Cidade, Estado, TipoTelefone, Endereco, Email};
+use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
 use DB;
@@ -68,6 +68,8 @@ class FuncionarioController extends Controller{
         DB::beginTransaction();
 		try{
 
+           
+
             $email = Email::create(['email' => $request->input('email')]);
             $endereco = Endereco::create($request->input('endereco'));
 
@@ -80,6 +82,7 @@ class FuncionarioController extends Controller{
                 'email_id' => $email->id,
                 'endereco_id' => $endereco->id,
                 'cargo_id' => $request->cargo['cargo_id']
+                
             ]);
 
       
@@ -144,13 +147,15 @@ class FuncionarioController extends Controller{
 
             }
 
-            if($request->dependentes[0]['parentesco_id'] != "" && $request->dependentes[0]['mora_junto'] != "" && $request->dependentes[0]['nome'] != "" && $request->dependentes[0]['cpf'] != "") {
+            if($request->dependentes[0]['parentesco_id'] != "" && $request->dependentes[0]['mora_junto'] != "" && $request->dependentes[0]['nome'] != "" && $request->dependentes[0]['cpf'] != "" && $request->dependentes[0]['certidao_matricula'] != "") {
                 foreach($request->dependentes as $dependente) {
-
+                    
+                    
+                    
                     $dependente['funcionario_id'] = $funcionario['id'];
 
                     $newDep = Dependente::create($dependente);
-
+                    
                     $doc = [
                         'tipo_documento_id'   => '1',
                         'numero'              => $dependente['cpf']
