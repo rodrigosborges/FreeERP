@@ -37,11 +37,36 @@
                 </div>
               
             <div class="row col-12" style="justify-content: flex-end;">
-                <button type="submit" class="btn btn-primary">{{$data['button']}}</button>
+                <button type="submit" id="enviar" class="btn btn-primary">{{$data['button']}}</button>
             </div>
 
         </form>  
         </div>
         </div>
         </div>
+
 @endsection
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function(){
+    $("#nome").bind('paste', function(e) {
+        e.preventDefault();
+    });
+    $("#nome").keyup(function(e){
+       var string =$('#nome').val();
+       var validator = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/
+      
+       if(!validator.test(string)){
+    
+         
+        $('#nome').val(string.substring(string.length-1 ,0));
+        $('#nome').focus()
+       }
+        
+    })
+})
+</script>

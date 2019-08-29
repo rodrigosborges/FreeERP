@@ -99,7 +99,7 @@
                             <form method="POST" action="{{url('estoque/produto/categoria/restore/'.$inativa->id)}}">
                                 @method('put')
                                 @csrf
-                                <button type="submit" class="btn btn-info">Restaurar</button>
+                                <button type="submit" class="btn btn-info"> <i class="material-icons">restore_from_trash</i></button>
                             </form>
                         </td>
                     </tr>
