@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label for="nome" class="control-label">Funcionario a ser pago</label>
+                <label for="nome" class="control-label">Nome do funcionario</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">

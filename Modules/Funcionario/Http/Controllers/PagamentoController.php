@@ -30,6 +30,7 @@ class PagamentoController extends Controller
      * @return Response
      */
     public function create(Request $request){
+
         $data = [
 
             "url" 	 	=> url('funcionario/pagamentos'),
