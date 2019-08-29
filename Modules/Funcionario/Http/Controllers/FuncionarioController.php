@@ -147,7 +147,7 @@ class FuncionarioController extends Controller{
 
             }
 
-            if($request->dependentes[0]['parentesco_id'] != "" && $request->dependentes[0]['mora_junto'] != "" && $request->dependentes[0]['nome'] != "" && $request->dependentes[0]['cpf'] != "" && $request->dependentes[0]['certidao_matricula'] != "") {
+            if($request->dependentes[0]['parentesco_id'] != "" && $request->dependentes[0]['mora_junto'] != "" && $request->dependentes[0]['nome'] != "" && $request->dependentes[0]['cpf'] != "" && $request->dependentes[0]['certidao_matricula'] != "" && $request->dependentes[0]['certidao_vacina'] != "") {
                 foreach($request->dependentes as $dependente) {
                     
                     

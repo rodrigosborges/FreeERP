@@ -459,26 +459,8 @@
                                 <span class="errors"> {{ $errors->first('dependentes.'.$key.'.mora_junto') }}</span>
                             </div>
                         </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label class="control-label">Certificado? <span class="required-symbol">*</span></label><br>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">description</i>
-                                        </span>
-                                    </div>
-                                    <select required name="dependentes[{{$key}}][certidao_matricula]" id="certidao_matricula_{{$key}}" class="form-control dependentes">
-                                        <option value="">Selecione</option>
-                                        <option value="1" {{ old('dependentes.$key.certidao_matricula', isset($dependente->certidao_matricula) ? $dependente->certidao_matricula : '') == '1' ? 'selected' : '' }}>Sim</option>
-                                        <option value="0" {{ old('dependentes.$key.certidao_matricula', isset($dependente->certidao_matricula) ? $dependente->certidao_matricula : '') == '0' ? 'selected' : '' }}>Não</option>
-                                    </select>
-                                </div>
-                                <span class="errors"> {{ $errors->first('dependentes.'.$key.'.certidao_matricula') }}</span>
-                            </div>
-                        </div>
                         
-
+                        
                     </div>
 
                     <div class="form-row">
@@ -518,10 +500,47 @@
                         </div>
 
                     </div>
+                    <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label">Certidão de Matricula? <span class="required-symbol">*</span></label><br>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">description</i>
+                                        </span>
+                                    </div>
+                                    <select required name="dependentes[{{$key}}][certidao_matricula]" id="certidao_matricula_{{$key}}" class="form-control dependentes">
+                                        <option value="">Selecione</option>
+                                        <option value="1" {{ old('dependentes.$key.certidao_matricula', isset($dependente->certidao_matricula) ? $dependente->certidao_matricula : '') == '1' ? 'selected' : '' }}>Sim</option>
+                                        <option value="0" {{ old('dependentes.$key.certidao_matricula', isset($dependente->certidao_matricula) ? $dependente->certidao_matricula : '') == '0' ? 'selected' : '' }}>Não</option>
+                                    </select>
+                                </div>
+                                <span class="errors"> {{ $errors->first('dependentes.'.$key.'.certidao_matricula') }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label">Certidão de Vacina? <span class="required-symbol">*</span></label><br>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">description</i>
+                                        </span>
+                                    </div>
+                                    <select required name="dependentes[{{$key}}][certidao_vacina]" id="certidao_vacina_{{$key}}" class="form-control dependentes">
+                                        <option value="">Selecione</option>
+                                        <option value="1" {{ old('dependentes.$key.certidao_vacina', isset($dependente->certidao_vacina) ? $dependente->certidao_vacina : '') == '1' ? 'selected' : '' }}>Sim</option>
+                                        <option value="0" {{ old('dependentes.$key.certidao_vacina', isset($dependente->certidao_vacina) ? $dependente->certidao_vacina : '') == '0' ? 'selected' : '' }}>Não</option>
+                                    </select>
+                                </div>
+                                <span class="errors"> {{ $errors->first('dependentes.'.$key.'.certidao_vacina') }}</span>
+                            </div>
+                        </div>
                             
             </div>
 
-                </div>
+                
                 
             @endforeach
         </div>
