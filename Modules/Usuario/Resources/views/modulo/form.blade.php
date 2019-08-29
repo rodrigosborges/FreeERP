@@ -1,4 +1,4 @@
-@extends('template')
+@extends('usuario::layouts.informacoes')
 <!-- @section('title', 'Exemplo') -->
 
 @section('content')

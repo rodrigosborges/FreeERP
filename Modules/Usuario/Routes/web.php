@@ -14,6 +14,7 @@
 Route::prefix('usuario')->group(function() {
     //Trocar Senha
     Route::get('{id}/trocarSenha', 'UsuarioController@trocarSenha');
+    Route::put('{id}/trocarSenha', 'UsuarioController@trocarSenhaUpdate');
     // Cadastrar
     Route::get('/cadastrar', 'UsuarioController@create');
     Route::post('/', 'UsuarioController@store');

@@ -34,4 +34,11 @@ class UsuarioUpdateRequest extends FormRequest
             'required' => 'O campo :attribute é obrigatório!',
         ];
     }
+
+    public function attributes() {
+        return [
+            'password' => 'senha',
+            'repeat_password' => "confirmar a senha",
+        ];
+    }
 }

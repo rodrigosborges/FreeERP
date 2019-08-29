@@ -4,7 +4,7 @@ namespace Modules\Usuario\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UsuarioStoreRequest extends FormRequest
+class TrocarSenhaRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,9 +14,6 @@ class UsuarioStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'apelido' => ['required', 'min:3', 'max:50','unique:usuario'],
-            'avatar' => ['mimes:jpg,png'],
-            'email' => ['required', 'email', 'unique:usuario,email,'.$this->route('id')],
             'password' => ['required', 'min:8', 'max:16', 'same:repeat_password'],
         ];
     }
@@ -30,7 +27,7 @@ class UsuarioStoreRequest extends FormRequest
     {
         return true;
     }
-
+    
     public function messages() {
         return [
             'required' => 'O campo :attribute é obrigatório!',
