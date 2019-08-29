@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Pagamento,Funcionario};
+use Modules\Funcionario\Entities\{Pagamento,Funcionario,Cargo};
 
 
 class PagamentoController extends Controller
@@ -30,7 +30,7 @@ class PagamentoController extends Controller
      * @return Response
      */
     public function create(Request $request){
-
+        
         $data = [
 
             "url" 	 	=> url('funcionario/pagamentos'),
@@ -39,7 +39,11 @@ class PagamentoController extends Controller
             'title'		=> "Cadastrar Pagamento"
         ];
         
-        return view('funcionario::pagamentos.form', compact('data'));
+        $funcionario = Funcionario::findOrFail($request->funcionario);
+
+        $cargo = Cargo::all();
+       
+        return view('funcionario::pagamentos.form', compact('data','funcionario','cargo'));
     }
 
     /**

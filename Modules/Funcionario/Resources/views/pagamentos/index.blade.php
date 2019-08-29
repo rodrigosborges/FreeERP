@@ -19,14 +19,11 @@
       <td> {{ $funcionario->nome }} </td>
       <td> Cargo </td>
       <td>
-      <form action="{{ url('funcionario/pagamento/create/') }}" id="form" method="GET" enctype="multipart/form-data">
-        <input type="hidden" name="funcionario" value="{{$funcionario->id}}">
-      
-        
-          <button type="submit"><i class="material-icons">note_add</i></button>
-      </form>
-      
-            </td>
+        <form action="{{ url('funcionario/pagamento/create/') }}" id="form" method="GET" enctype="multipart/form-data">
+            <input type="hidden" name="funcionario" value="{{$funcionario->id}}">
+            <button type="submit"><i class="material-icons">note_add</i></button>
+        </form>
+      </td>
     </tr>
     @endforeach
   </tbody>
