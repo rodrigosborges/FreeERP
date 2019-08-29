@@ -20,8 +20,10 @@
                                        value="{{$agenda->id}}" name="agenda{{$agenda->id}}" checked>
                                 <label class="custom-control-label" for="agenda{{$agenda->id}}"
                                        style="padding-bottom: 3px; border-bottom: 3px solid #{{$agenda->cor->codigo}}">{{$agenda->titulo}}
-                                    @if($agenda->setor)
-                                        <a href="#" class="badge badge-secondary">{{$agenda->setor->sigla}}</a>
+                                    @if($agenda->compartilhamentos->count())
+                                        @foreach($agenda->compartilhamentos as $compartilhamento)
+                                            <a href="#" class="badge badge-secondary">{{$compartilhamento->setor->sigla}}</a>
+                                        @endforeach
                                     @endif
                                 </label>
                             </div>
@@ -66,7 +68,7 @@
             display: inline-block;
             margin-right: 15px;
             margin-bottom: 5px;
-            max-width: 200px;
+            max-width: 300px;
         }
 
         .agenda label {

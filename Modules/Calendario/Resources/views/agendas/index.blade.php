@@ -27,6 +27,7 @@
                 <th scope="col">Título</th>
                 <th scope="col">Descrição</th>
                 <th scope="col">Eventos</th>
+                <th>Compartilhamentos</th>
                 <th></th>
             </tr>
             </thead>
@@ -49,6 +50,16 @@
                                title="Novo evento">
                                 <i class="material-icons">add</i>
                             </a>
+                        @endif
+                    </td>
+                    <td>
+
+                        @if($agenda->compartilhamentos->count())
+                            @foreach($agenda->compartilhamentos as $compartilhamento)
+                                {{$compartilhamento->setor->sigla}}
+                            @endforeach
+                        @else
+                            ---
                         @endif
                     </td>
                     <td class="acoes">
