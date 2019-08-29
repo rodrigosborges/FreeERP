@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
+
 class FeriasController extends Controller
 {
     /**
@@ -37,7 +38,7 @@ class FeriasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

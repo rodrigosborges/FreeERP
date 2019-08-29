@@ -20,6 +20,7 @@ Route::prefix('funcionario')->group(function() {
     Route::get('funcionario/editCargo/{id}','FuncionarioController@editCargo');
     Route::post('funcionario/editCargo/{id}','FuncionarioController@updateCargo');
     Route::get('funcionario/downloadComprovante/{id}','FuncionarioController@downloadComprovante');
+    Route::get('ferias/controleFerias/{id}','ControleFeriasController@controleFerias');
 
     Route::resource('funcionario', 'FuncionarioController');
     Route::resource('cargo', 'CargoController');

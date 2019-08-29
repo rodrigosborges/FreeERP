@@ -5,7 +5,8 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\Funcionario;
+use Modules\Funcionario\Entities\{Funcionario,Cargo,Ferias};
+use DB;
 
 class ControleFeriasController extends Controller
 {
@@ -41,7 +42,16 @@ class ControleFeriasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+		try{
+			$ferias = Ferias::Create($request->all());
+			DB::commit();
+			return redirect('funcionario/cargo')->with('success', 'Cargo cadastrado com sucesso!');
+		}catch(Exception $e){
+			DB::rollback();
+			return back();
+		}
+    
     }
 
     /**
@@ -83,5 +93,20 @@ class ControleFeriasController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function controleFerias($id)
+    {
+        $funcionario = Funcionario::findOrFail($id);
+        $cargoAtual = $funcionario->cargos->last()->id;
+        $funcionario_cargo =  $funcionario->cargos()->first();
+        $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
+        $data = [
+            'title' => 'Ferias',
+            'funcionario' => $funcionario,
+            'cargo'            => Cargo::where('id','=',$cargoAtual)->first(),
+            'admissao'=> $admissao
+        ];
+        return view('funcionario::ferias.formulario', compact('data'));
     }
 }
