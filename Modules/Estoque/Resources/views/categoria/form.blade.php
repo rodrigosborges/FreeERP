@@ -8,7 +8,7 @@
        {{$data['titulo']}}
         </div>
         <div class="card-body">
-        <form action="{{url( isset($categoria)?'estoque/produto/categoria/'.$categoria->id:'estoque/produto/categoria' )}}" method="POST">
+        <form action="{{url($data['url'])}}" method="POST">
         @csrf
         @if(isset($categoria))
             @method('put')

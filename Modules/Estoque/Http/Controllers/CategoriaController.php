@@ -46,7 +46,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        $data = ['titulo' => 'Cadastrar Categoria', 'button' => 'Cadastrar'];
+        $data = ['titulo' => 'Cadastrar Categoria', 'button' => 'Cadastrar','url'=>'estoque/produto/categoria'];
 
         $categorias = Categoria::all();
         return view('estoque::categoria.form', $this->dadosTemplate, compact('data', 'categorias'));
@@ -79,7 +79,7 @@ class CategoriaController extends Controller
 
     public function edit($id)
     {
-        $data = ['titulo' => 'Editar Categoria', 'button' => 'Atualizar'];
+        $data = ['titulo' => 'Editar Categoria', 'button' => 'Atualizar', 'url'=>'estoque/produto/categoria/'.$id];
         $categoria = Categoria::findOrFail($id);
         $categorias = Categoria::all()->except($id);
         $subcategoria = Subcategoria::findOrFail($id);
