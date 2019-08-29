@@ -17,7 +17,7 @@ class CreateUsuario extends Migration
             
             $table->increments('id');
             $table->string('apelido');
-            $table->string('avatar');
+            $table->string('avatar')->default("default.png");
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
