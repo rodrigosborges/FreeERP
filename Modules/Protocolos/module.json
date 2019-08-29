@@ -1,0 +1,14 @@
+{
+    "name": "Protocolos",
+    "alias": "protocolos",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Protocolos\\Providers\\ProtocolosServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
