@@ -17,11 +17,21 @@ class PapelController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
-    {
-        $papeis = Papel::all();
+    public function index(Request $request)
+    {   
+        
         $papeisInativos = Papel::onlyTrashed()->get();
-        return view('usuario::papel.index', compact('papeis', 'papeisInativos'));
+        if ($request->has('busca')) {
+            $busca = $request->get('busca');
+
+                 $papeis = Papel::where('nome', 'like', "%{$busca}%")
+                 ->paginate(10);
+             $papeis->appends(['busca' => $busca]);
+             return view('usuario::papel.index', compact('papeis', 'busca', 'papeisInativos'));
+         }else{
+            $papeis = Papel::paginate(10);
+            return view('usuario::papel.index', compact('papeis', 'papeisInativos'));
+         }
     }
 
     /**
@@ -106,10 +116,10 @@ class PapelController extends Controller
         return redirect('/papel');
     }
 
-    public function search($nome){
-        $papeis = Papel::where('nome', 'LIKE', '%'.$nome.'%')->get();
-        $papeisInativos = Papel::onlyTrashed()->get();
-        return view('usuario::papel.index', compact('papeis', 'papeisInativos'));
+    // public function search($nome){
+    //     $papeis = Papel::where('nome', 'LIKE', '%'.$nome.'%')->get();
+    //     $papeisInativos = Papel::onlyTrashed()->get();
+    //     return view('usuario::papel.index', compact('papeis', 'papeisInativos'));
 
-    }
+    // }
 }
