@@ -11,23 +11,13 @@ use DB;
 
 class ModuloController extends Controller
 {
-    protected $moduleInfo = [
-        'icon' => 'person',
-        'name' => 'Usuario'
-    ];
-    
-    protected $menu = [
-        ['icon' => 'add_circle', 'tool' => 'Cadastrar Usuário', 'route' => '/usuario/cadastrar'],
-        ['icon' => 'add_circle', 'tool' => 'Cadastrar Módulo', 'route' => '/modulo/cadastrar'],
-    ];
-
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        return view('usuario::index');
+        return view('usuario::modulo.index');
     }
 
     /**
@@ -36,10 +26,7 @@ class ModuloController extends Controller
      */
     public function create()
     {
-        $moduleInfo = $this->moduleInfo;
-        $menu = $this->menu;
-
-        return view('usuario::modulo/form', compact('menu', 'moduleInfo'));
+        return view('usuario::modulo.form');
     }
 
     /**
@@ -53,11 +40,11 @@ class ModuloController extends Controller
         try {
             Modulo::create($request->all());
             DB::commit();
-            return back()->with('sucesso', 'Módulo '.$request->nome.' cadastrado com sucesso!');
+            return back()->with('success', 'Módulo '.$request->nome.' cadastrado com sucesso!');
         }
         catch(\Exception $e) {
             DB::rollback();
-            return back()->with('erro', 'Erro ao cadastrar módulo '.$request->nome.': '.$e);
+            return back()->with('error', 'Erro ao cadastrar módulo '.$request->nome.': '.$e);
         }
     }
 
