@@ -8,25 +8,26 @@ Nova Compra - {{ $cliente->nome }}
 
     <form action="" class="">
 
-        <div class="form-group">
+        <div class="form-group form-row">
             <div class="col-3">
             <label for="data-pedido">Data da Compra</label>
                 <input type="date" name="data-pedido" id="data-pedido" class="form-control" placeholder="Data da Compra" required>
             </div>
-            <div>
-                <label for="num-pedido">Numero da Compra</label>
-                <input type="text">
+            <div class="col-4 pt-2">
+                <label for="num-pedido"></label>
+                <input type="text" name="num-pedido" id="numero" class="form-control" placeholder="Numero da Compra">
             </div>
         </div>
-                
+        
+        
         <div class="input-group">
             <div class="input-group-prepend col-6">
                 <span class="input-group-text purple lighten-3" id="basic-text1">
                     <i class="material-icons" aria-hidden="true">search</i></span>
             
-                <select class="form-control" name="produto_id">
+                <select class="form-control" name="produto_id" id="lista">
                     @foreach ($produtos as $produto)
-                        <option value="{{$produto->id}}">{{$produto->codigo}} - {{$produto->nome}}</option>
+                <option value="{{$produto->id}}">{{$produto->codigo}} - {{$produto->nome}} - R$ {{$produto->preco}}</option>
                     @endforeach
                 </select>
             </div>
@@ -42,24 +43,73 @@ Nova Compra - {{ $cliente->nome }}
                             <span class="input-group-text" id="basic-addon2">%</span>
                     </div>
             </div>
-            <div class="col-2 ">
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Adicionar</button>
-            </div>
 
+            <div class="col-2 ">
+                <button type="button" onclick="add_item()" class="btn btn-primary" style="width: 100%;">Adicionar</button>
+            </div>
+        
         </div>
     </form>
     <hr />
-    <div id="itens_adicionados" class="border" style="min-width: 30%; width: 40%;"> 
-        <ul>
-            @foreach ($produtos as $produto)
-                <li>{{$produto->nome}}</li>
-            @endforeach
-        </ul>
-    
-    
+    <div id="itens_adicionados" class="border"> 
+        <table class="table table-striped bordered text-center col-md-12" id="adicionados">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qtde</th>
+                    <th>Desconto UN</th>
+                    <th>Preco</th>
+                    <th>Vl Total</th>   
+                </tr>
+                    </thead>
+                    
+
+        </table>
     </div>
-
-
 </div>
 
+<script>
+var itens_compra = [];
+
+    function add_item(){
+        selecionado = document.getElementById("lista");
+        opt = selecionado.options[selecionado.selectedIndex]; // pegar texto        
+
+        dados = opt.text.split("-");
+        novaTabela(dados);
+
+        alert(opt.value + " " + opt.text);
+
+        itens_compra.push(selecionado.value);
+
+    }
+
+    function novaTabela(dados){
+        // alert("Funcao" + dados);
+
+        var tBody = document.createElement("tbody");
+        var tabela = document.getElementById('adicionados');
+
+            // creates a table row
+            var row = document.createElement("tr");
+
+            for (var i = 0; i < 5; i++) {
+                // Create a <td> element and a text node, make the text
+                // node the contents of the <td>, and put the <td> at
+                // the end of the table row
+                var cell = document.createElement("td");
+                var cellText = document.createTextNode( dados[i] );
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            }
+        // add the row to the end of the table body
+                tBody.appendChild(row);
+
+        // put the <tbody> in the <table>
+        tabela.appendChild(tBody);
+        // appends <table> into <body>
+    }
+
+
+</script>
 @endsection
