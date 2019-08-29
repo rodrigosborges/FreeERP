@@ -70,7 +70,7 @@ class CategoriaController extends Controller
             $subcategoria->categoria_id = ($request->categoriaPai != -1) ? $request->categoriaPai : null;
             $subcategoria->save();
             DB::commit();
-            return back()->with('success', 'Categoria ' . $request->nome . ' cadastrada com sucesso');
+            return redirect('/estoque/produto/categoria')->with('success', 'Categoria ' . $request->nome . ' cadastrada com sucesso');
         } catch (\Exception $e) {
             DB::rollback();
             return back()->with('danger', 'Erro ao cadastrar categoria. cod:' . $e->getMessage());
@@ -95,10 +95,8 @@ class CategoriaController extends Controller
      */
     public function update(CategoriaRequest $request, $id)
     {
-
         DB::beginTransaction();
         try {
-
             $categoria = Categoria::findOrFail($id);
             $subcategoria = Subcategoria::findOrFail($id);
             if ($request->nome == $categoria->nome) {
@@ -110,11 +108,10 @@ class CategoriaController extends Controller
                 $subcategoria->categoria_id = $request->categoriaPai;
             }
             $subcategoria->categoria_id = ($request->categoriaPai != -1) ? $request->categoriaPai : null;
-
             $subcategoria->save();
-
             DB::commit();
-            return back()->with('success', 'Categoria ' . $request->nome . ' editada com sucesso');
+            
+            return redirect('/estoque/produto/categoria')->with('success', 'Categoria ' . $request->nome . ' editada com sucesso');
         } catch (\Exception $e) {
             DB::rollback();
             return back()->with('danger', 'Erro ao editar categoria. Cód:' . $e->getMessage());
