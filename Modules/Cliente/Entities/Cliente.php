@@ -10,7 +10,7 @@ class Cliente extends Model
     use SoftDeletes;
     
     protected $table = "cliente";    
-    protected $fillable = ['nome', 'tipo_cliente_id','documento_id', 'endereco_id', 'email_id'];
+    protected $fillable = ['nome', 'nome_fantasia','tipo_cliente_id','documento_id', 'endereco_id', 'email_id'];
     
 
     public function tipo(){
