@@ -3,6 +3,7 @@
 namespace Modules\Cliente\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateClienteRequest extends FormRequest
 {
@@ -10,12 +11,13 @@ class CreateClienteRequest extends FormRequest
     public function rules()
     {
         
+        
         $rules =  [
             'nome'                          => ['required','max:100'],
             'tipo_cliente_id'               => ['required','exists:tipo_cliente,id'],
             'telefones.*.numero'            => ['required','telefone'],
             'telefones.*.tipo_telefone_id'  => ['required','exists:tipo_telefone,id'],
-            'documento'                     => ['required'],
+            'documento'                     => ['required','docunico:'.$this->route('cliente')], 
             'email'                         => ['required','email','max:100'],
             'endereco.logradouro'           => ['required'],
             'endereco.bairro'               => ['required'],

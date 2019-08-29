@@ -14,8 +14,8 @@ class AddForeignKeysToClienteHasTelefoneTable extends Migration {
 	{
 		Schema::table('cliente_has_telefone', function(Blueprint $table)
 		{
-			$table->foreign('cliente_id', 'fk_cliente_has_telefone_cliente1')->references('id')->on('cliente')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-			$table->foreign('telefone_id', 'fk_cliente_has_telefone_telefone1')->references('id')->on('telefone')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('cliente_id', 'fk_cliente_has_telefone_cliente1')->references('id')->on('cliente')->onUpdate('NO ACTION')->onDelete('CASCADE');
+			$table->foreign('telefone_id', 'fk_cliente_has_telefone_telefone1')->references('id')->on('telefone')->onUpdate('NO ACTION')->onDelete('CASCADE');
 		});
 	}
 

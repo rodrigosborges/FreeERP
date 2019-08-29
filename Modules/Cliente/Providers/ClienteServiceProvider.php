@@ -19,6 +19,7 @@ class ClienteServiceProvider extends ServiceProvider
         Validator::extend('telefone', 'Modules\Cliente\Validators\TelefoneValidator@validate');
         Validator::extend('cpf', 'Modules\Cliente\Validators\CpfValidator@validate');
         Validator::extend('cnpj', 'Modules\Cliente\Validators\CnpjValidator@validate');
+        Validator::extend('docunico', 'Modules\Cliente\Validators\DocUniqueValidator@validate');
     }
 
     
