@@ -31,11 +31,10 @@ class ProdutoController extends Controller
     }
     public function index()
     {
-        $title = 'Produtos';
-        $flag = false;
-        $produtos = Produto::all();
-        $produtosInativos = Produto::onlyTrashed()->get();
-        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'title', 'flag'));
+       
+        $produtos = Produto::paginate(5);
+        $produtosInativos = Produto::onlyTrashed()->paginate(5);
+        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos'));
     }
     /*
     public function busca(Request $request)
@@ -110,20 +109,26 @@ class ProdutoController extends Controller
 
     public function busca(Request $request)
     {
-        $flag = false;
-        $title = 'Resultado da Pesquisa';
-        if ($request['pesquisa']) {
-            $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->get();
+        if ($request['pesquisa'] == null ){
+            return back()->with('error', 'Insira um nome na pesquisa' );
+
+        } else {
+            $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->paginate(5);
+            $produtosInativos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->onlyTrashed()->paginate(5);
+
+            if($produtos == null){
+            return back()->with('error', 'Nenhum resultado encontrado' );
+
+        } else{
+        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos'));
         }
-        $produtosInativos = Produto::onlyTrashed()->get();
-        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'title', 'flag'));
+        }
     }
 
     public function inativos()
     {
-        $flag = true;
-        $title = 'Produtos Inativos';
-        $produtos = Produto::onlyTrashed()->get();
-        return view('estoque::/produto/index',$this->dadosTemplate, compact('produtos', 'title', 'flag'));
+        
+        $produtos = Produto::onlyTrashed()->paginate(5);
+        return view('estoque::/produto/index',$this->dadosTemplate, compact('produtos'));
     }
 }

@@ -32,9 +32,11 @@ class EstoqueController extends Controller
      */
     public function index()
     {
-        $produtos = Produto::all();
-        $produtosInativos =  Produto::onlyTrashed()->get();
-        return view('estoque::index', $this->dadosTemplate, compact('produtos','produtosInativos'));
+       
+        $produtos = Produto::paginate(5);
+        $produtosInativos = Produto::onlyTrashed()->paginate(5);
+        return view('estoque::produto.index', $this->dadosTemplate, compact('produtos','produtosInativos'));
+        
     }
 
     /**

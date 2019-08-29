@@ -32,8 +32,8 @@ class UnidadeProdutoController extends Controller
     }
     public function index()
     {
-        $unidadeProduto = UnidadeProduto::all();
-        $unidadesExcluidas = UnidadeProduto::onlyTrashed()->get();
+        $unidadeProduto = UnidadeProduto::paginate(5);
+        $unidadesExcluidas = UnidadeProduto::onlyTrashed()->paginate(5);
         return view('estoque::produto.unidade.index',$this->dadosTemplate, compact('unidadeProduto', 'unidadesExcluidas'));
     }
 
@@ -58,7 +58,7 @@ class UnidadeProdutoController extends Controller
         try{
             UnidadeProduto::create($request->all());
             DB::commit();
-            return back()->with('success', 'Unidade cadastrada com sucesso');
+            return redirect('/estoque/produto/unidade')->with('success', 'Unidade cadastrada com sucesso');
         }catch(\Exception $e){
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
