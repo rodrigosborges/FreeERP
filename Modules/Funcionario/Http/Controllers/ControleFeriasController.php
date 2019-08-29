@@ -116,11 +116,20 @@ class ControleFeriasController extends Controller
         $cargoAtual = $funcionario->cargos->last()->id;
         $funcionario_cargo =  $funcionario->cargos()->first();
         $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
+        $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
+        $ano_atual = date('Y', time());
+        $anos_trampo = ($ano_atual-$ano)*366;
+        //return $admissao;
+        $data_inicio_periodo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao))) ;
+        $teste = $anos_trampo+366;
+        $data_fim_periodo = date('d/m/Y', strtotime( "+ $teste days", strtotime($admissao)));
         $data = [
             'title' => 'Ferias',
             'funcionario' => $funcionario,
             'cargo'            => Cargo::where('id','=',$cargoAtual)->first(),
-            'admissao'=> $admissao
+            'admissao'=> $admissao,
+            'data_inicio_periodo' =>  $data_inicio_periodo,
+            'data_fim_periodo' =>  $data_fim_periodo,
         ];
         return view('funcionario::ferias.formulario', compact('data'));
     }

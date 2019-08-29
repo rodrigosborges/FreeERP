@@ -21,13 +21,13 @@
 
         <div class="row">
             <div class="form-group col-6">
-                <label for="f.nome">Inicio Período de Aquisição:</label>
-                <input type="date" class="form-control" value="02-02-2015" disabled>
+                <span>Inicio Período de Aquisição:</span>
+                <span>{{$data['data_inicio_periodo']}}</span>    
             </div>
             
             <div class="form-group col-6">
-                <label for="f.nome">Fim Período de Aquisição:</label>
-                <input type="text" class="form-control" id="f.cargo" value="{{$data['cargo']->nome}}" disabled>
+                <span>Fim Período de Aquisição:</span>
+                <span>{{$data['data_fim_periodo']}}</span>
             </div>
         </div>
     </section>
