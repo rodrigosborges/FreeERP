@@ -57,5 +57,5 @@ Route::prefix('papel')->group(function() {
     // Restaurar
     Route::put('/restore/{id}', 'PapelController@restore');
     //Buscar
-    Route::get('/search/{nome}', 'PapelController@search');
+    //Route::get('/search/{nome}', 'PapelController@search');
 });
