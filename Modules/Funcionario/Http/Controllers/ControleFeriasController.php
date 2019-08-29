@@ -41,12 +41,27 @@ class ControleFeriasController extends Controller
      * @return Response
      */
     public function store(Request $request)
-    {
+    {   
         DB::beginTransaction();
 		try{
-			$ferias = Ferias::Create($request->all());
+            if($request->pagamento_parcela13 == "on"){
+                $pagamento13 = true;
+            }else{
+                $pagamento13 = false;
+            }
+			$ferias = Ferias::Create([
+                'data_inicio' => date('Y-m-d', strtotime($request['data_inicio'])),
+                'data_fim' => date('Y-m-d', strtotime($request['data_fim'])),
+                'dias_ferias' => $request->dias_ferias,
+                'data_pagamento' => date('Y-m-d', strtotime($request['data_pagamento'])),
+                'data_aviso' => date('Y-m-d', strtotime($request['data_aviso'])),
+                'situacao_ferias' => $request['situacao_ferias'],
+                'pagamento_parcela13' => $pagamento13,
+                'observacao' => $request['observacao'],
+                'funcionario_id' => $request['funcionario_id'],
+            ]);
 			DB::commit();
-			return redirect('funcionario/cargo')->with('success', 'Cargo cadastrado com sucesso!');
+			return redirect('funcionario/ferias')->with('success', 'Férias cadastrada com sucesso!');
 		}catch(Exception $e){
 			DB::rollback();
 			return back();
