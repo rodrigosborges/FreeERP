@@ -1,12 +1,12 @@
 @extends('cliente::template')
 @section('title')
-Cadastro de Pedidos - {{ $cliente->nome }}
+Cadastro de Compras - {{ $cliente->nome }}
 @endsection
 @section('body')
 <div class = "container border">
 
       <div id="opcoes" class="row d-flex pt-2 pr-2 justify-content-end">
-          <button class="btn btn-primary col-md-3" id="bt_add">Adicionar Compra</button>
+         <a class="btn btn-primary col-md-3" href="/cliente/{{$cliente->id}}/pedido/novo" style="color: white;">Adicionar Compra</a>
       </div>
   
       <div class="row p-2" id="tabela">
@@ -61,7 +61,11 @@ Cadastro de Pedidos - {{ $cliente->nome }}
             </table>
       </div>
   </div>
-
+  <script>
+      function NovoCadastro(IdCliente){
+        console.log(IdCliente);
+      }
+  </script>
 
 @endsection
 

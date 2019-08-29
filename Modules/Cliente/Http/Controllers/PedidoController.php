@@ -15,14 +15,21 @@ class PedidoController extends Controller
     {
         $cliente = Cliente::findOrFail($id);
         $pedidos = $cliente->pedidos;
-        // $produtos = $pedidos[0]->produtos;
-        
-        // dd($produtos);
 
         return view('cliente::pedidos.index', compact('cliente'));
     }
+    public function novo($id){
+        $cliente = Cliente::findOrFail($id);
+        $produtos = Produto::all();
+        
+        return view('cliente::pedidos.form', compact('cliente','produtos'));
+    }
 
+    public function buscaItem(Request $request){
+
+    }
     
+
     public function create()
     {
         return view('cliente::create');

@@ -36,7 +36,8 @@ class ClienteController extends Controller
         try {
 
             $dados = $request->all();
-            
+            $dados['documento'] = preg_replace('/\D/', '', $dados['documento']);
+
             $endereco = Endereco::create($dados['endereco']);
             $email = Email::create($dados['email']);
 
@@ -47,6 +48,7 @@ class ClienteController extends Controller
             ]);
               
             $cliente = Cliente::create([
+                'nome_fantasia' => $dados['tipo_cliente_id'] == 2 ? $dados['nome_fantasia'] : null, 
                 'nome' => $dados['nome'],
                 'nome_fantasia' => $dados['nome_fantasia'],
                 'tipo_cliente_id' => $dados['tipo_cliente_id'],
@@ -57,6 +59,7 @@ class ClienteController extends Controller
 
             $telefones = $dados['telefones'];            
             foreach($telefones as $telefone){
+                $telefone['numero'] = preg_replace('/\D/', '', $telefone['numero']);
                 $tel = Telefone::create($telefone);
                 $cliente->telefones()->attach($tel);
             }
@@ -82,13 +85,13 @@ class ClienteController extends Controller
         return view('cliente::edit');
     }
 
-    public function update(/*CreateCliente*/Request $request, $id){
+    public function update(CreateClienteRequest $request, $id){
             $dados = $request->all();
 
       
             $cliente = Cliente::findOrFail($id);
 
-            $telefones_velhos =  $cliente->telefones;        
+            $dados['documento'] = preg_replace('/\D/', '', $dados['documento']);      
 
             $endereco = Endereco::findOrFail($cliente['endereco_id']);
             
@@ -117,8 +120,9 @@ class ClienteController extends Controller
 
             $naoExcluir = [];
             foreach($dados['telefones'] as $i => $telefone){
-                if ($telefone['id']){                  
-                    $tel = Telefone::findOrFail($telefone['numero']);                   
+                $telefone['numero'] = preg_replace('/\D/', '', $telefone['numero']);
+                if (isset($telefone['id'])){                  
+                    $tel = Telefone::findOrFail($telefone['id']);                   
                     $tel->update($telefone);
                     
                 }else{
@@ -129,12 +133,8 @@ class ClienteController extends Controller
             }
 
             $cliente->telefones()->whereNotIn('id', $naoExcluir)->delete();
-            
-            
-            
-
-            
-            return redirect('/cliente')->with('success', 'Cliente cadastrado com sucesso!');
+                       
+            return redirect('/cliente/cliente')->with('success', 'Cliente cadastrado com sucesso!');
        
     }
 

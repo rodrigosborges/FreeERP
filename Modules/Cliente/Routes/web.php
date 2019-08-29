@@ -18,6 +18,7 @@ Route::prefix('cliente')->group(function() {
     Route::resource('/cliente', 'ClienteController');
 
     Route::get('{id}/pedido', 'PedidoController@index');
+    Route::get('{id}/pedido/novo', 'PedidoController@novo');
 
     Route::get('/','ClienteController@index');
 });
