@@ -31,11 +31,10 @@ class ProdutoController extends Controller
     }
     public function index()
     {
-        $title = 'Produtos';
-        $flag = false;
-        $produtos = Produto::all();
-        $produtosInativos = Produto::onlyTrashed()->get();
-        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'title', 'flag'));
+       
+        $produtos = Produto::paginate(5);
+        $produtosInativos = Produto::onlyTrashed()->paginate(5);
+        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos'));
     }
     /*
     public function busca(Request $request)
@@ -116,14 +115,13 @@ class ProdutoController extends Controller
             $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->get();
         }
         $produtosInativos = Produto::onlyTrashed()->get();
-        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'title', 'flag'));
+        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'title'));
     }
 
     public function inativos()
     {
-        $flag = true;
-        $title = 'Produtos Inativos';
-        $produtos = Produto::onlyTrashed()->get();
-        return view('estoque::/produto/index',$this->dadosTemplate, compact('produtos', 'title', 'flag'));
+        
+        $produtos = Produto::onlyTrashed()->paginate(5);
+        return view('estoque::/produto/index',$this->dadosTemplate, compact('produtos'));
     }
 }
