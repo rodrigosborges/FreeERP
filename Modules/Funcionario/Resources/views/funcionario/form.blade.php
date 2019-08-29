@@ -155,7 +155,29 @@
                         <span class="errors"> {{ $errors->first('documentos.rg.numero') }}</span>
                     </div>
                 </div>
-            </div>        
+            </div>     
+            <!-- numero do pis começa aki    -->
+            <div id="documentos">
+             <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="tipo" class="control-label">Numero PIS <span class="required-symbol">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">description</i>
+                                </span>
+                            </div>
+                            @if($data['model'])
+                                <input type="hidden" name="documentos[pis][id]" value="{{$data['model']->pis()->id}}">
+                            @endif
+                            <input required type="text" placeholder="PIS" name="documentos[pis][numero]" id="pis" class="form-control pis" value="{{ old('documentos.pis.numero', $data['model'] ? $data['model']->pis()->numero : '') }}">
+                            <input required type="hidden" name="documentos[pis][tipo_documento_id]" value="3">
+                        </div>
+                        <span class="errors"> {{ $errors->first('documentos.pis.numero') }}</span>
+                    </div>
+                </div>
+                <!-- acaba aki -->
             @foreach(old('docs_outros', $data['documentos']) as $key => $documento)
 
                 <div class="row doc {{ isset($documento['numero']) ? '' : 'd-none'}}">
