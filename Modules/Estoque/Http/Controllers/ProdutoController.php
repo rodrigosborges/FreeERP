@@ -111,14 +111,12 @@ class ProdutoController extends Controller
     {
         if ($request['pesquisa'] == null ){
             return back()->with('error', 'Insira um nome na pesquisa' );
-
         } else {
             $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->paginate(5);
             $produtosInativos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->onlyTrashed()->paginate(5);
-
-            if($produtos == null){
+            if(count($produtos) == 0 && count($produtosInativos) == 0){
+                
             return back()->with('error', 'Nenhum resultado encontrado' );
-
         } else{
         return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos'));
         }
