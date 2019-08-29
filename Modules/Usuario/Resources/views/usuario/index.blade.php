@@ -95,5 +95,5 @@
     </div>
     </div>
     <button><a href="{{url('usuario/cadastrar')}}">Novo</a></button>
-
+    {{$data['usuarios']->links()}}
 @endsection
