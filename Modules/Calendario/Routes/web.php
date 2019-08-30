@@ -22,9 +22,11 @@ Route::patch('/calendario/agendas/{agenda}', 'AgendaController@restaurar')->name
 Route::post('/calendario/agendas', 'AgendaController@salvar')->name('agendas.salvar');
 Route::get('/calendario/agendas/{agenda}/eventos', 'AgendaController@eventos')->name('agendas.eventos.index');
 Route::delete('/calendario/agendas/{agenda}', 'AgendaController@deletar')->name('agendas.deletar');
+Route::get('calendario/agendas/compartilhamento/{compartilhamento}/aprovar', 'AgendaController@aprovarCompartilhamento')->name('compartilhamentos.aprovar');
 
 Route::get('/calendario/agendas/eventos/criar', 'EventoController@criarOuEditar')->name('eventos.criar');
 Route::get('/calendario/agendas/eventos/{evento}', 'EventoController@criarOuEditar')->name('eventos.editar');
 Route::put('/calendario/agendas/eventos/{evento}', 'EventoController@atualizar')->name('eventos.atualizar');
 Route::post('/calendario/agendas/eventos', 'EventoController@salvar')->name('eventos.salvar');
 Route::delete('/calendario/agendas/eventos/{evento}', 'EventoController@deletar')->name('eventos.deletar');
+

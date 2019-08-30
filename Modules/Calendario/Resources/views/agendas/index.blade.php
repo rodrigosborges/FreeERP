@@ -57,6 +57,12 @@
                         @if($agenda->compartilhamentos->count())
                             @foreach($agenda->compartilhamentos as $compartilhamento)
                                 {{$compartilhamento->setor->sigla}}
+                                @if(!$compartilhamento->aprovado)
+                                    <i class="material-icons align-middle" style="font-size: 18px" title="Pendente de aprovação">info</i>
+                                @endif
+                                @if (!$loop->last)
+                                    |
+                                @endif
                             @endforeach
                         @else
                             ---
@@ -64,25 +70,25 @@
                     </td>
                     <td class="acoes">
                         @if($agenda->trashed())
-                            <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}">
+                            <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" id="formDelAgPerm">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Deletar permanentemente">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Deletar permanentemente">
                                     <i class="material-icons">delete_forever</i>
                                 </button>
                             </form>
-                            <form method="POST" action="{{route('agendas.restaurar', $agenda->id)}}">
+                            <form method="POST" action="{{route('agendas.restaurar', $agenda->id)}}" id="formAgRec">
                                 @method('PATCH')
                                 @csrf
-                                <button type="submit" class="btn btn-info btn-sm" data-toggle="tooltip" title="Restaurar">
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" title="Restaurar">
                                     <i class="material-icons">restore_from_trash</i>
                                 </button>
                             </form>
                         @else
-                            <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}">
+                            <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" id="formAgDel">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Deletar">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Deletar">
                                     <i class="material-icons">delete</i>
                                 </button>
                             </form>
@@ -104,6 +110,48 @@
     @parent
     <script type="text/javascript">
         $(function () {
+            $('#formAgDel button').on('click', function () {
+                bootbox.confirm({
+                    title: 'Confirmar ação',
+                    message: 'Deseja realmente mover a agenda para a lixeira?',
+                    onEscape: true,
+                    backdrop: true,
+                    locale: 'br',
+                    callback: function (result) {
+                        if(result == true){
+                            $('#formAgDel').submit();
+                        }
+                    }
+                });
+            });
+            $('#formAgDelPerm button').on('click', function () {
+                bootbox.confirm({
+                    title: 'Confirmar ação',
+                    message: 'Deseja realmente excluir definitivamente a agenda?',
+                    onEscape: true,
+                    backdrop: true,
+                    locale: 'br',
+                    callback: function (result) {
+                        if(result == true){
+                            $('#formAgDelPerm').submit();
+                        }
+                    }
+                });
+            });
+            $('#formAgRec button').on('click', function () {
+                bootbox.confirm({
+                    title: 'Confirmar ação',
+                    message: 'Deseja realmente restaurar a agenda?',
+                    onEscape: true,
+                    backdrop: true,
+                    locale: 'br',
+                    callback: function (result) {
+                        if(result == true){
+                            $('#formAgRec').submit();
+                        }
+                    }
+                });
+            });
             $('tr.agendas').hover(
                 function () {
                     $(this).find('a.novo-evento').removeClass('invisible');

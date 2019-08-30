@@ -39,10 +39,10 @@
                     @endif
                     <td>@if($evento->nota){{$evento->nota}}@else --- @endif</td>
                     <td>
-                        <form method="POST" action="{{route('eventos.deletar', $evento->id)}}">
+                        <form method="POST" action="{{route('eventos.deletar', $evento->id)}}" id="formEvDel">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">
+                            <button type="button" class="btn btn-danger btn-sm">
                                 <i class="material-icons">delete</i>
                             </button>
                         </form>
@@ -56,4 +56,26 @@
             </tbody>
         </table>
     </div>
+@endsection
+
+@section('js')
+    @parent
+    <script type="text/javascript">
+        $(function () {
+            $('#formEvDel button').on('click', function () {
+                bootbox.confirm({
+                    title: 'Confirmar ação',
+                    message: 'Deseja realmente excluir o evento?',
+                    onEscape: true,
+                    backdrop: true,
+                    locale: 'br',
+                    callback: function (result) {
+                        if(result == true){
+                            $('#formEvDel').submit();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

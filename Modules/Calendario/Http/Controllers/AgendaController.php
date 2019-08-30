@@ -96,6 +96,11 @@ class AgendaController extends Controller
         return redirect()->route('agendas.index')->with('success', 'Agenda restaurada com sucesso.');
     }
 
+    public function aprovarCompartilhamento(Compartilhamento $compartilhamento){
+        $compartilhamento->aprovado = true;
+        $compartilhamento->save();
+    }
+
     public function eventos(Agenda $agenda)
     {
         return view('calendario::eventos.index', ['eventos' => $agenda->eventos, 'agenda' => $agenda->titulo]);
