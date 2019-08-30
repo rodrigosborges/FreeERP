@@ -21,6 +21,11 @@ class CalendarioController extends Controller
         return view('calendario::agendas.index', ['agendas' => $agendas, 'lixeira' => $lixeira]);
     }
 
+    public function compartilhamentos(){
+        $agendas = Agenda::all();
+        return view('calendario::agendas.compartilhamentos', ['agendas' => $agendas]);
+    }
+
     public function eventos()
     {
         $eventos = [];

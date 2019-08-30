@@ -14,6 +14,7 @@
 Route::get('/calendario', 'CalendarioController@index')->name('calendario.index');
 Route::get('/calendario/agendas', 'CalendarioController@agendas')->name('agendas.index');
 Route::get('/calendario/agendas/eventos', 'CalendarioController@eventos')->name('eventos.index');
+Route::get('/calendario/agendas/compartilhamentos', 'CalendarioController@compartilhamentos')->name('compartilhamentos.index');
 
 Route::get('/calendario/agendas/criar', 'AgendaController@criarOuEditar')->name('agendas.criar');
 Route::get('/calendario/agendas/{agenda}', 'AgendaController@criarOuEditar')->name('agendas.editar');
@@ -22,7 +23,7 @@ Route::patch('/calendario/agendas/{agenda}', 'AgendaController@restaurar')->name
 Route::post('/calendario/agendas', 'AgendaController@salvar')->name('agendas.salvar');
 Route::get('/calendario/agendas/{agenda}/eventos', 'AgendaController@eventos')->name('agendas.eventos.index');
 Route::delete('/calendario/agendas/{agenda}', 'AgendaController@deletar')->name('agendas.deletar');
-Route::get('calendario/agendas/compartilhamento/{compartilhamento}/aprovar', 'AgendaController@aprovarCompartilhamento')->name('compartilhamentos.aprovar');
+Route::get('/calendario/agendas/compartilhamentos/{compartilhamento}/aprovar', 'AgendaController@aprovarCompartilhamento')->name('compartilhamentos.aprovar');
 
 Route::get('/calendario/agendas/eventos/criar', 'EventoController@criarOuEditar')->name('eventos.criar');
 Route::get('/calendario/agendas/eventos/{evento}', 'EventoController@criarOuEditar')->name('eventos.editar');
