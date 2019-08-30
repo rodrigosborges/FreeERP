@@ -14,7 +14,6 @@ use Modules\OrdemServico\Entities \ {
     Problema
 };
 use DB;
-use Hamcrest\Core\HasToString;
 
 class OrdemServicoController extends Controller
 {

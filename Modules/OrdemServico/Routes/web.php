@@ -16,6 +16,12 @@ Route::prefix('ordemservico')->name('modulo.')->group(function() {
 	Route::get('pdf', 'OrdemServicoController@pdf')->name('os.pdf');
 	Route::get('aparelho/showAjax','AparelhoController@showAjax');	
 	Route::get('problema/showAjax','ProblemaController@showAjax');
+	
+	
+	Route::get('painel/ordensDisponiveis','PainelTecnicoController@ordensDisponiveis')->name('tecnico.painel.ordens_disponiveis');
+	Route::get('painel/{id}', 'PainelTecnicoController@index')->name('tecnico.painel.index');
+	Route::get('painel/{id}/minhasOs', 'PainelTecnicoController@ordensAtivas')->name('tecnico.painel.minhasOs');
+
 	Route::resource('gerente', 'GerenteController');
 	Route::resource('aparelho', 'AparelhoController');
 	Route::resource('os', 'OrdemServicoController');

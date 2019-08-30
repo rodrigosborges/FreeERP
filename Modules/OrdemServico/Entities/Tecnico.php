@@ -11,5 +11,11 @@ class Tecnico extends Model
     Use SoftDeletes;
     protected $table = 'tecnico';
     public $timestamps = true;
-    protected $fillable = array('id','nome');
+    protected $fillable = array('nome');
+
+    public function ordem_servico(){
+        return $this->hasMany('Modules\OrdemServico\Entities\OrdemServico');
+    }
+
 }
+

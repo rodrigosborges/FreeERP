@@ -23,6 +23,7 @@ class TecnicoController extends Controller
             'route' => 'modulo.tecnico.',
             'acoes' => [
                 ['nome' => 'Editar' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'edit'],
+                ['nome' => 'Acessar' , 'class' =>'btn btn-outline-warning btn-sm','complemento-route' => 'painel.index'],
                 ]
             ];
 

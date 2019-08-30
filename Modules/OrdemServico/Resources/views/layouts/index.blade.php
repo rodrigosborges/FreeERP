@@ -21,6 +21,7 @@
     <a href="#inativos" data-toggle="tab" class="nav-item nav-link">
         Inativos
     </a>
+    
 </nav>
 
 <div class="tab-content">
