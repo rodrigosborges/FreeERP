@@ -22,7 +22,7 @@
 
 @section('content')
     <div class="container">
-        <div class="card">
+        <div class="card text-center">
             <div class="card-header">
                 <h5>@yield('title')</h5>
             </div>

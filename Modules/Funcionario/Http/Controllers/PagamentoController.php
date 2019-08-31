@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Pagamento,Funcionario,Cargo};
+use Modules\Funcionario\Entities\{Pagamento, Funcionario, Cargo};
 
 
 class PagamentoController extends Controller
@@ -14,36 +14,49 @@ class PagamentoController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index(Request $request){
-            
-        $data = [
-            
-			'funcionarios'=> Funcionario::paginate(10),
-			'title'	     => "Pagamentos",
-		];
+    public function index(Request $request)
+    {
 
-	    return view('funcionario::pagamentos.index', compact('data'));
-	}
+        $data = [
+
+            'funcionarios' => Funcionario::paginate(10),
+            'title'         => "Pagamentos",
+            'url' => 'funcionario/pagamento/create',
+        ];
+
+        return view('funcionario::pagamentos.index', compact('data'));
+    }
 
     /**
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create(Request $request){
-        
+    public function create(Request $request)
+    {
         $data = [
+            "url"   => 'funcionario/pagamento',
+            "button" => 'Salvar',
+            "model" => null,
+            "title" => "Cadastrar Pagamento"
 
-            "url" 	 	=> url('funcionario/pagamentos'),
+        ];
+        $funcionarios = Funcionario::all();
+        $funcionario = Funcionario::findOrFail(2);
+
+        return view('funcionario::pagamentos.form', compact('data', 'funcionarios'));
+
+        /* $data = [
+
+            "url" 	 	=> url('funcionario/pagamento'),
             "button" 	=> "Salvar",
             "model"		=> null,
             'title'		=> "Cadastrar Pagamento"
         ];
-        
         $funcionario = Funcionario::findOrFail($request->funcionario);
 
         $cargo = Cargo::all();
        
-        return view('funcionario::pagamentos.form', compact('data','funcionario','cargo'));
+        return view('funcionario::pagamentos.form', compact('data','funcionario','cargo')); */
     }
 
     /**
@@ -54,9 +67,13 @@ class PagamentoController extends Controller
     public function store(Request $request)
     {
         //
-        return 1;
-    }
 
+    }
+    public function teste($var)
+    {
+        $var = "deu certo";
+        return json_encode($var);
+    }
     /**
      * Show the specified resource.
      * @param int $id
@@ -64,6 +81,7 @@ class PagamentoController extends Controller
      */
     public function show($id)
     {
+        return "coco";
         return view('funcionario::show');
     }
 
@@ -87,6 +105,26 @@ class PagamentoController extends Controller
     {
         //
     }
+    //Autor: Denise Lopes
+    //método que realiza a busca dos cargos de um determinado funcionario
+    public function buscaCargo(Request $request)
+    {
+        
+        
+        $funcionario = Funcionario::findOrFail($request->id);
+     
+        return json_encode($funcionario->cargos);
+    }
+
+    public function buscaSalario(Request $request)
+    {
+        
+        
+        $cargo = Cargo::findOrFail($request->id);
+     
+        return json_encode($cargo->salario);
+    }
+
 
     /**
      * Remove the specified resource from storage.
