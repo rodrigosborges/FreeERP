@@ -109,20 +109,39 @@ class PagamentoController extends Controller
     //método que realiza a busca dos cargos de um determinado funcionario
     public function buscaCargo(Request $request)
     {
-        
-        
+
+
         $funcionario = Funcionario::findOrFail($request->id);
-     
+
         return json_encode($funcionario->cargos);
     }
 
     public function buscaSalario(Request $request)
     {
+        $cargo = Cargo::find($request->id);
+        if($cargo!= null){
         
-        
-        $cargo = Cargo::findOrFail($request->id);
-     
-        return json_encode($cargo->salario);
+
+        $salario = $cargo->salario;
+        return $salario;
+    }
+    return null;
+        $var = ($salario * 8) / 100;
+
+        //Aliquota minima  
+        $inss = $var;
+        if ($salario <= 1751.81)
+            $inss = $var;
+        else if ($salario > 1751.81)
+            $inss = ($salario * 9) / 100;
+        else
+            $inss = ($cargo->salario * 12) / 100;
+        return $inss;
+
+
+
+
+
     }
 
 
