@@ -22,6 +22,7 @@ class PagamentoController extends Controller
             'funcionarios' => Funcionario::paginate(10),
             'title'         => "Pagamentos",
             'url' => url('funcionario/pagamento/create'),
+            'pagamentos' => Pagamento::paginate(10),
         ];
 
         return view('funcionario::pagamentos.index', compact('data'));
@@ -88,15 +89,10 @@ class PagamentoController extends Controller
             $pagamento->emissao = brToEnDate($request->emissao);
             $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
             $pagamento->funcionario_id = $funcionario->id;
-
+            $pagamento =$this->OpcaoPagamentoNome($pagamento);
 
             $pagamento->save();
-            $data = [
-
-                'funcionarios' => Funcionario::paginate(10),
-                'title'         => "Pagamentos",
-                'url' => url('funcionario/pagamento/create'),
-            ];
+         
 
             DB::commit();
             return redirect('/funcionario/pagamento')->with('success', "pagamento cadastrado com sucesso");
@@ -187,5 +183,26 @@ class PagamentoController extends Controller
             $inss = ($salario * 12) / 100;
         }
         return $inss;
+    }
+
+    public function OpcaoPagamentoNome(Pagamento $p)
+    {
+        switch($p->tipo_pagamento){
+            case 1: 
+            $p->tipo_pagamento = "Salário";
+            break;
+            case 2:
+            $p->tipo_pagamento = "Adiantamento";
+            break;
+            case 3:
+            $p->tipo_pagamento = "Ferias";
+            break;
+            default:$p->tipo_pagamento = "Outro";
+            break;
+        }
+        return $p;
+        
+
+
     }
 }

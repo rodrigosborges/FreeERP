@@ -17,9 +17,9 @@ class CreateFolhaPagamento extends Migration
 		{
 			$table->integer('id', true);
 			$table->double('valor', 9,2); //1,000 a 999999,999
-			$table->double('horas_extras', 3,2)->nullable();
-			$table->double('adicional_noturno', 3,2)->nullable();
-			$table->double('inss', 3,2);
+			$table->double('horas_extras', 7,3)->nullable();
+			$table->double('adicional_noturno', 7,3)->nullable();
+			$table->double('inss', 7,3);
             $table->integer('faltas');
             $table->date('emissao');
             $table->string('tipo_pagamento');

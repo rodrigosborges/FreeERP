@@ -10,6 +10,7 @@
       <th scope="col">Nome</th>
       <th scope="col">Valor</th>
       <th scope="col">Tipo</th>
+      <th scope="col">Data</th>
       <th scope="col" colspan="2">Opções</th>
       <th><a href="{{url($data['url'])}}" class="btn btn-success"><i class="material-icons">note_add</i></a></th>
 
@@ -18,16 +19,17 @@
     </tr>
   </thead>
   <tbody>
-   
+   @foreach($data['pagamentos'] as $pagamento)
     <tr>
-      <td>  </td>
-      <td> </td>
-      <td></td>
+      <td>{{ $pagamento->funcionario->nome }}  </td>
+      <td>{{ $pagamento->valor}} </td>
+      <td>{{ $pagamento->tipo_pagamento}}</td>
+      <td>{{ $pagamento->emissao}} </td>
       <td><a href="" class="btn btn-warning"><i class="material-icons">edit</i></a></td>
       <td><a href="" class="btn btn-danger"><i class="material-icons">delete</i></a></td>
  
     </tr>
-  
+  @endforeach
   </tbody>
 </table>
 @endsection
@@ -81,6 +83,8 @@
       }
     });
   })
+
+  
 </script>
 
 @endsection
