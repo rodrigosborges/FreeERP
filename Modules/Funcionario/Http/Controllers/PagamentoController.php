@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Pagamento, Funcionario, Cargo};
-
+use DB;
 
 class PagamentoController extends Controller
 {
@@ -21,7 +21,7 @@ class PagamentoController extends Controller
 
             'funcionarios' => Funcionario::paginate(10),
             'title'         => "Pagamentos",
-            'url' => 'funcionario/pagamento/create',
+            'url' => url('funcionario/pagamento/create'),
         ];
 
         return view('funcionario::pagamentos.index', compact('data'));
@@ -34,7 +34,7 @@ class PagamentoController extends Controller
     public function create(Request $request)
     {
         $data = [
-            "url"   => 'funcionario/pagamento',
+            "url"   => url('funcionario/pagamento'),
             "button" => 'Salvar',
             "model" => null,
             "title" => "Cadastrar Pagamento"
@@ -66,8 +66,44 @@ class PagamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
 
+        try {
+            $pagamento = new Pagamento;
+            $funcionario = Funcionario::findOrFail($request->funcionario);
+            $salario = floatval($funcionario->cargos->find($request->cargos)->salario);
+            $salario = str_replace(',','.', $salario);
+            $pagamento->valor = $salario;
+            $pagamento->faltas = $request->faltas;
+            $pagamento->horas_extras = $request->horas_extras;
+            $pagamento->adicional_noturno = $request->adicional;
+            $inss= $this->calcularInss($salario);
+            if ($request->opcao_pagamento == 2) {
+                $temp = $salario * 0.4;
+                $pagamento->inss = $this->calcularInss($temp);
+                $pagamento->valor *= 0.4;
+            } else
+                $pagamento->inss = $inss;
+
+            $pagamento->emissao = brToEnDate($request->emissao);
+            $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
+            $pagamento->funcionario_id = $funcionario->id;
+
+
+            $pagamento->save();
+            $data = [
+
+                'funcionarios' => Funcionario::paginate(10),
+                'title'         => "Pagamentos",
+                'url' => url('funcionario/pagamento/create'),
+            ];
+
+            DB::commit();
+            return redirect('/funcionario/pagamento')->with('success', "pagamento cadastrado com sucesso");
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('danger', "Erro ao cadastrar pagamento!: cod_erro:" . $e->getMessage());
+        }
     }
     public function teste($var)
     {
@@ -110,7 +146,7 @@ class PagamentoController extends Controller
     public function buscaCargo(Request $request)
     {
 
-        
+
         $funcionario = Funcionario::findOrFail($request->id);
 
         return json_encode($funcionario->cargos);
@@ -137,5 +173,19 @@ class PagamentoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function calcularInss($salario)
+    {
+        $formula = ($salario * 8) / 100;
+
+        if ($salario <= 1751.81) {
+            $inss = $formula;
+        } else if (data > 1751.81) {
+            $inss = ($salario * 9) / 100;;
+        } else {
+            $inss = ($salario * 12) / 100;
+        }
+        return $inss;
     }
 }

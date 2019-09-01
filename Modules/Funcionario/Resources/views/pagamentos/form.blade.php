@@ -18,7 +18,7 @@
                 </span>
             </div>
             <!--Select Funcionario -->
-            <select class="custom-select" id="funcionario">
+            <select class="custom-select" id="funcionario" name="funcionario">
                 <option selected value="-1">Selecione um Funcionário</option>
                 @foreach($funcionarios as $funcionario)
                 <option value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
@@ -45,7 +45,7 @@
                     </span>
                 </div>
                 <!--Select Cargo -->
-                <select class="custom-select" id="cargos">
+                <select class="custom-select" id="cargos" name="cargos">
                     <option value='-1'>Selecione</option>
                 </select>
                 <!--FIM Select Cargo -->
@@ -80,7 +80,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <select class="custom-select" id="opcao-pagamento">
+                <select class="custom-select" id="opcao-pagamento" name="opcao-pagamento">
                     <option value="-1">Selecione</option>
                     <option selected value="1">Salário</option>
                     <option value="2">Adiantamento</option>
@@ -119,7 +119,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" placeholder="" disabled name="valor" id="valor" class="form-control required money">
+                <input type="text"  name="valor_pagamento" disabled name="valor" id="valor" class="form-control required money">
             </div>
             <span class="errors"> </span>
         </div>
@@ -169,7 +169,7 @@
                     </span>
                 </div>
                 <!-- REFAZER -->
-                <input type="text" name="inss" id="inss" class="form-control required money" value="8" disabled>
+                <input type="text" name="INSS" id="inss" class="form-control " value="8" disabled>
             </div>
             <span class="errors"> </span>
         </div>
@@ -184,7 +184,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="faltas" id="total" placeholder="Total:" disabled class="form-control  ">
+                <input type="text" name="total" id="total" placeholder="Total:" disabled class="form-control  ">
             </div>
             <span class="errors"> </span>
         </div>
