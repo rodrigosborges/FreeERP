@@ -110,7 +110,7 @@ class PagamentoController extends Controller
     public function buscaCargo(Request $request)
     {
 
-
+        
         $funcionario = Funcionario::findOrFail($request->id);
 
         return json_encode($funcionario->cargos);
@@ -119,29 +119,13 @@ class PagamentoController extends Controller
     public function buscaSalario(Request $request)
     {
         $cargo = Cargo::find($request->id);
-        if($cargo!= null){
-        
-
-        $salario = $cargo->salario;
-        return $salario;
-    }
-    return null;
-        $var = ($salario * 8) / 100;
-
-        //Aliquota minima  
-        $inss = $var;
-        if ($salario <= 1751.81)
-            $inss = $var;
-        else if ($salario > 1751.81)
-            $inss = ($salario * 9) / 100;
-        else
-            $inss = ($cargo->salario * 12) / 100;
-        return $inss;
+        if ($cargo != null) {
 
 
-
-
-
+            $salario = $cargo->salario;
+            return $salario;
+        }
+        return null;
     }
 
 
