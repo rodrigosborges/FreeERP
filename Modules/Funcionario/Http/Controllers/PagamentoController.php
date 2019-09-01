@@ -19,7 +19,7 @@ class PagamentoController extends Controller
 
         $data = [
 
-            'funcionarios' => Funcionario::paginate(10),
+            
             'title'         => "Pagamentos",
             'url' => url('funcionario/pagamento/create'),
             'pagamentos' => Pagamento::paginate(10),
