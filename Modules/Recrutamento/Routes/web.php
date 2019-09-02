@@ -14,9 +14,12 @@
 //Módulo de Recrutamento
 Route::prefix('recrutamento')->group(function() {
 	
-	Route::get('vagasDisponiveis', 'VagaController@vagas_disponiveis');
-	Route::resource('Vaga', 'VagaController');
-	Route::resource('Candidato', 'CandidatoController');
+	Route::get('vagasDisponiveis', 'VagaController@vagasDisponiveis');
+	Route::get('vaga/candidatos/{id}', 'VagaController@candidatos');
+	Route::get('entrevista/marcarEntrevista/{id}', 'EntrevistaController@marcarEntrevista');
+	Route::resource('vaga', 'VagaController');
+	Route::resource('candidato', 'CandidatoController');
+	Route::resource('entrevista', 'EntrevistaController');
 
 	
 });

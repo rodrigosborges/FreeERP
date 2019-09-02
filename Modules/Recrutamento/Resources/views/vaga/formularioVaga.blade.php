@@ -59,18 +59,28 @@
         </div>
         <br>
         <div class="form-row">
-        <div class="col-sm">
-        <div class="form-group">
-                <label for="quantidade" class="control-label">Descrição da Vaga</label>
-                <input type="text" name="descricao" id="descricao" class="form-control" value="{{ $data['model'] ? $data['model']->descricao : old('descricao', "") }}">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="descricao" class="control-label">Descrição da Vaga</label>
+                <textarea  name="descricao" id="descricao" class="form-control"  rows="3">{{ $data['model'] ? $data['model']->descricao : old('descricao', "") }}</textarea>
                 <label class="errors"> {{ $errors->first('descricao') }} </label>
+            </div>
         </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="especificacoes" class="control-label">Especificações da Vaga</label>
+                <textarea class="form-control" name="especificacoes"  id="especificacoes" rows="3">{{ $data['model'] ? $data['model']->especificacoes : old('especificacoes', "") }}</textarea>
+                <label class="errors"> {{ $errors->first('especificacoes') }} </label>
+            </div>
         </div>
+
         </div>
+
 
         <div class="form-group">
             <button type="submit" class="btn btn-success"> {{ $data['button'] }} </button> 
-            <a class="btn btn-light" href="{{ url('recrutamento/Vaga') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+            <a class="btn btn-light" href="{{ url('recrutamento/vaga') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
         </div>
     </form>
     </div>
@@ -82,5 +92,8 @@
 @section('js')
 <script>
 $('.money').mask('000.000,00', {reverse: true});
+$('#cep').mask('00000-000');
 </script>
+
+
 @endsection

@@ -5,7 +5,7 @@ namespace Modules\Recrutamento\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Entities\{Relacao, Email, Telefone, TipoTelefone};
+use App\Entities\{Endereco,Estado,Cidade, Email, Telefone, TipoTelefone};
 use Modules\Recrutamento\Entities\{Candidato,Vaga,};
 
 class CandidatoController extends Controller
@@ -22,7 +22,7 @@ class CandidatoController extends Controller
             'name' => 'RECRUTAMENTO',
         ];
         $this->menu = [
-            ['icon' => 'assignment', 'tool' => 'Vaga', 'route' => '/recrutamento/Vaga'],
+            ['icon' => 'assignment', 'tool' => 'Vaga', 'route' => '/recrutamento/vaga'],
             ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
 		];
     }
@@ -47,11 +47,13 @@ class CandidatoController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-			"url" 	 	=> url("recrutamento/Candidato/"),
+			"url" 	 	=> url("recrutamento/candidato/"),
 			"button" 	=> "Salvar",
 			"model"		=> null,
             'title'		=> "Cadastrar Candidato",
             'vaga'      =>  Vaga::where('status', 'disponivel')->get(),
+            'cidades'   =>  Cidade::all(),
+            'estados'   =>  Estado::all(),
             'telefone'         => [
                 'tipo_telefone_id' => 0
             ],
@@ -78,46 +80,49 @@ class CandidatoController extends Controller
             $nameFile = "{$nome}.{$extensao}";
             $curriculum = $nameFile;
 
-            $upload = $request->curriculum->storeAs('curriculuns', $nameFile);
+            $upload = $request->curriculum->storeAs('curriculos', $nameFile);
             if(!$upload){
-                return redirect()
-                            ->back()
-                            ->with('error', 'Falha no upload do arquivo');
+                return redirect()->back()->with('error', 'Falha no upload do curriculum');
             }
         }
         else{
-            return redirect()
-                            ->back()
-                            ->with('error', 'Falha, formato de arquivo inválido');
+            return redirect()->back()->with('error', 'Falha, formato de curriculum inválido');
+        }
+
+        //Upload do Foto
+        $allowedExts = array("jpeg", "jpg", "png");
+        if($request->hasFile('foto') && $request->file('foto')->isValid() &&  in_array($request->foto->extension(), $allowedExts) ){
+            $nome = md5($request->candidato['nome'].date('Y-m-d H:i'));
+            $extensao = $request->foto->extension();
+            $nameFile = "{$nome}.{$extensao}";
+            $foto = $nameFile;
+
+            $upload = $request->foto->storeAs('fotos', $nameFile);
+            if(!$upload){
+                return redirect()->back()->with('error', 'Falha no upload da foto');
+            }
+        }
+        else{
+            return redirect()->back()->with('error', 'Falha, formato da foto');
         }
 
         
         DB::beginTransaction();
 		try{
 
+            $telefone = Telefone::Create($request->telefone);
+            $email = Email::Create($request->email);
+            $endereco = Endereco::Create($request->endereco);
             $candidato = Candidato::Create([
                 'nome' => $request->candidato['nome'],
                 'vaga_id' => $request->candidato['vaga_id'],
-                'curriculo' => $curriculum
-            ]);
-
-            $telefone = Telefone::Create($request->telefone);
-            $email = Email::Create($request->email);
+                'curriculo' => $curriculum,
+                'foto' => $foto,
+                'endereco_id'=>$endereco->id,
+                'email_id'=>$email->id,
+                'telefone_id'=>$telefone->id
+            ]);            
             
-            Relacao::create([
-                'tabela_origem'     => 'candidato',
-                'origem_id'         => $candidato->id,
-                'tabela_destino'    => 'email',
-                'destino_id'        => $email->id,
-                'modelo'            => 'Email'
-            ]);
-            Relacao::create([
-                'tabela_origem'     => 'candidato',
-                'origem_id'         => $candidato->id,
-                'tabela_destino'    => 'telefone',
-                'destino_id'        => $telefone->id,
-                'modelo'            => 'Telefone'
-            ]);
                 
 			DB::commit();
 			return redirect('/recrutamento/vagasDisponiveis')->with('success', 'Curriculo enviado com sucesso');
@@ -134,10 +139,21 @@ class CandidatoController extends Controller
      */
     public function show($id)
     {
-        $candidato = Candidato::findOrFail($id);
-	    return view('recrutamento::show', [
-            'model' => $candidato	    
-        ]);
+
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+        $data = [
+			"url" 	 	=> url("recrutamento/candidato/"),
+			"button" 	=> "Marcar Entrevista",
+			"model"		=> null,
+            "title"		=> "Candidato",
+            "candidato" => Candidato::findOrFail($id),    
+            "telefone" => Candidato::findOrFail($id)->telefone()->get(),    
+            "email" => Candidato::findOrFail($id)->email()->get(),    
+            "endereco" => Candidato::findOrFail($id)->endereco()->get(),  
+
+		];
+        return view('recrutamento::candidato.show',compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -150,7 +166,7 @@ class CandidatoController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-			"url" 	 	=> url("recrutamento/Candidato/"),
+			"url" 	 	=> url("recrutamento/candidato/"),
 			"button" 	=> "Atualizar",
 			"model"		=> Candidato::findOrFail($id),
             'title'		=> "Atualizar Candidato",
@@ -172,7 +188,7 @@ class CandidatoController extends Controller
 			$candidato = Candidato::findOrFail($id);
 			$candidato->update($request->all());
 			DB::commit();
-			return redirect('recrutamento/Candidato')->with('success', 'Curriculo atualizado com sucesso');
+			return redirect('recrutamento/candidato')->with('success', 'Curriculo atualizado com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');

@@ -8,6 +8,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Cargo</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -16,7 +17,8 @@
                         <td>{{$vaga->id}}</td>
                         <td>{{$vaga->cargo}}</td>
                         <td>
-                            <a class="btn btn-info" href='{{ url("recrutamento/Candidato/create") }}'>Candidatar-se</a> 
+                            <a class="btn btn-info" href='{{ url("recrutamento/vaga/".$vaga->id) }}'>Visualizar Vaga</a> 
+                            <a class="btn btn-info" href='{{ url("recrutamento/candidato/create") }}'>Candidatar-se</a> 
                         </td>
                     </tr>
                 @endforeach

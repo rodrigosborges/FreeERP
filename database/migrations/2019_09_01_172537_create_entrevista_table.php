@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVagaTable extends Migration
+class CreateEntrevistaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateVagaTable extends Migration
      */
     public function up()
     {
-        Schema::create('vaga', function (Blueprint $table) {
+        Schema::create('entrevista', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('cargo');
-            $table->double('salario',8,2);
-            $table->string('descricao');
-            $table->string('escolaridade');
-            $table->string('especificacoes');
-            $table->string('status');
-            $table->timestamps();
+            $table->integer('candidato_id')->index('fk_entrevista_candidato1');
+            $table->date('data');
+            $table->time('hora');
+            $table->string('local');
+            $table->string('email');
+            $table->string('mensagem');
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -33,6 +33,6 @@ class CreateVagaTable extends Migration
      */
     public function down()
     {
-        Schema::drop('vaga');
+        Schema::drop('entrevista');
     }
 }

@@ -69,3 +69,6 @@ Exemplos no Laravel 5.*:
  
  ### Outros comandos de criação de arquivos:
  https://nwidart.com/laravel-modules/v4/advanced-tools/artisan-commands
+
+ ## Ao utilizar módulo de recrutamento
+ php artisan storage:link

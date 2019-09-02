@@ -5,7 +5,8 @@ namespace Modules\Recrutamento\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Modules\Recrutamento\Entities\{Vaga};
+use Modules\Recrutamento\Entities\{Vaga,Candidato};
+use App\Entities\{Estado,Cidade,TipoTelefone,Telefone,Endereco};
 
 class VagaController extends Controller
 {
@@ -21,7 +22,7 @@ class VagaController extends Controller
             'name' => 'RECRUTAMENTO',
         ];
         $this->menu = [
-            ['icon' => 'assignment', 'tool' => 'Vaga', 'route' => '/recrutamento/Vaga'],
+            ['icon' => 'assignment', 'tool' => 'Vaga', 'route' => '/recrutamento/vaga'],
             ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
 		];
     }
@@ -49,12 +50,14 @@ class VagaController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-			"url" 	 	=> url('recrutamento/Vaga'),
+			"url" 	 	=> url('recrutamento/vaga'),
 			"button" 	=> "Salvar",
 			"model"		=> null,
-			'title'		=> "Cadastrar Vaga"
+            'title'		=> "Cadastrar Vaga",
+            'estados'           => Estado::all(),
+            'cidades'           => Cidade::all()
 		];
-        return view('recrutamento::vaga.formulario_vaga',compact('data','moduleInfo','menu'));
+        return view('recrutamento::vaga.formularioVaga',compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -76,10 +79,12 @@ class VagaController extends Controller
             $vaga->status = $request->status;
             $vaga->descricao = $request->descricao;
             $vaga->escolaridade = $request->escolaridade;
+            $vaga->especificacoes = $request->especificacoes;
+
             $vaga->save();
             
 			DB::commit();
-			return redirect('/recrutamento/Vaga')->with('success', 'Vaga cadastrada com sucesso');
+			return redirect('/recrutamento/vaga')->with('success', 'Vaga cadastrada com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -93,10 +98,16 @@ class VagaController extends Controller
      */
     public function show($id)
     {
-        $vaga = Vaga::findOrFail($id);
-	    return view('recrutamento::show', [
-            'model' => $vaga	    
-        ]);
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+        $data = [
+			"url" 	 	=> url('recrutamento/vaga'),
+			"button" 	=> "Salvar",
+			"model"		=> null,
+            'title'		=> "Cadastrar Vaga",
+            'vaga'      => Vaga::findOrFail($id)
+		];
+        return view('recrutamento::vaga.show',compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -109,12 +120,12 @@ class VagaController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-			"url" 	 	=> url("recrutamento/Vaga/$id"),
+			"url" 	 	=> url("recrutamento/vaga/$id"),
 			"button" 	=> "Atualizar",
 			"model"		=> Vaga::findOrFail($id),
-			'title'		=> "Atualizar Vaga"
+            'title'		=> "Atualizar Vaga",
 		];
-        return view('recrutamento::vaga.formulario_vaga',compact('data','moduleInfo','menu'));
+        return view('recrutamento::vaga.formularioVaga',compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -130,6 +141,7 @@ class VagaController extends Controller
         $upVaga = array(
             'cargo' => $request->cargo,
             'status' => $request->status,
+            'especificacoes' =>$request->especificacoes,
             'descricao' => $request->descricao,
             'salario' => $salario,
             'escolaridade'=>$request->escolaridade
@@ -139,7 +151,7 @@ class VagaController extends Controller
             $vaga = Vaga::findOrFail($id);
             $vaga->update($upVaga);
 			DB::commit();
-			return redirect('recrutamento/Vaga')->with('success', 'Vaga atualizada com sucesso');
+			return redirect('recrutamento/vaga')->with('success', 'Vaga atualizada com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -158,7 +170,7 @@ class VagaController extends Controller
 		return back()->with('success',  'Vaga deletada'); 
     }
 
-    public function vagas_disponiveis()
+    public function vagasDisponiveis()
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
@@ -166,8 +178,18 @@ class VagaController extends Controller
 			'vaga'		=> Vaga::where('status', 'disponivel')->get(),
 			'title'		=> "Lista de Vagas Disponíveis",
 		]; 
-        return view('recrutamento::vaga.vagas_disponiveis', compact('data','moduleInfo','menu'));
+        return view('recrutamento::vaga.vagasDisponiveis', compact('data','moduleInfo','menu'));
     }
 
+    public function candidatos($id)
+    {
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+        $data = [
+			'candidatos'		=> Candidato::where('vaga_id', $id)->get(),
+			'title'		=> "Lista de Candidatos",
+		]; 
+        return view('recrutamento::vaga.candidatos', compact('data','moduleInfo','menu'));
+    }
 
 }
