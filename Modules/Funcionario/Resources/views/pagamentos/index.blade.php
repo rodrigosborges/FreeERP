@@ -22,10 +22,10 @@
     @foreach($pagamentos as $pagamento)
     <tr>
       <td>{{ $pagamento->funcionario->nome }} </td>
-      <td>{{ $pagamento->valor}} </td>
+      <td>{{ $pagamento->total}} </td>
       <td>{{ $pagamento->tipo_pagamento}}</td>
       <td>{{ $pagamento->emissao}} </td>
-      <td><a href="" class="btn btn-warning"><i class="material-icons">edit</i></a></td>
+      <td><a href="pagamento/{{ $pagamento->id }}/edit" class="btn btn-warning"><i class="material-icons">edit</i></a></td>
       <td><a href="" class="btn btn-danger"><i class="material-icons">delete</i></a></td>
 
     </tr>

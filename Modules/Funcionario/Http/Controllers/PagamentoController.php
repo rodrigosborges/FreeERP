@@ -18,12 +18,12 @@ class PagamentoController extends Controller
     {
 
         $data = [
-
             'title'         => "Pagamentos",
             'url' => url('funcionario/pagamento/create'),
-           
         ];
-$pagamentos = Pagamento::paginate(5);
+
+        $pagamentos = Pagamento::paginate(5);
+
         return view('funcionario::pagamentos.index', compact('data','pagamentos'));
     }
 
@@ -47,18 +47,7 @@ $pagamentos = Pagamento::paginate(5);
 
         return view('funcionario::pagamentos.form', compact('data'));
 
-        /* $data = [
-
-            "url" 	 	=> url('funcionario/pagamento'),
-            "button" 	=> "Salvar",
-            "model"		=> null,
-            'title'		=> "Cadastrar Pagamento"
-        ];
-        $funcionario = Funcionario::findOrFail($request->funcionario);
-
-        $cargo = Cargo::all();
-       
-        return view('funcionario::pagamentos.form', compact('data','funcionario','cargo')); */
+    
     }
 
     /**
@@ -91,7 +80,8 @@ $pagamentos = Pagamento::paginate(5);
             $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
             $pagamento->funcionario_id = $funcionario->id;
             $pagamento =$this->OpcaoPagamentoNome($pagamento);
-
+            $pagamento = $this->calcularTotal($pagamento, $request->cargos);
+   
             $pagamento->save();
          
 
@@ -102,11 +92,7 @@ $pagamentos = Pagamento::paginate(5);
             return redirect()->back()->with('danger', "Erro ao cadastrar pagamento!: cod_erro:" . $e->getMessage());
         }
     }
-    public function teste($var)
-    {
-        $var = "deu certo";
-        return json_encode($var);
-    }
+   
     /**
      * Show the specified resource.
      * @param int $id
@@ -114,7 +100,7 @@ $pagamentos = Pagamento::paginate(5);
      */
     public function show($id)
     {
-        return "coco";
+        return "";
         return view('funcionario::show');
     }
 
@@ -149,6 +135,17 @@ $pagamentos = Pagamento::paginate(5);
     }
     //Autor: Denise Lopes
     //método que realiza a busca dos cargos de um determinado funcionario
+   
+
+    /**
+     * Remove the specified resource from storage.
+     * @param int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
     public function buscaCargo(Request $request)
     {
 
@@ -170,16 +167,6 @@ $pagamentos = Pagamento::paginate(5);
         return null;
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     public function calcularInss($salario)
     {
@@ -211,8 +198,49 @@ $pagamentos = Pagamento::paginate(5);
             break;
         }
         return $p;
-        
+    }    
+       
+    public function calcularTotal(Pagamento $pagamento, $cargo)
+        {
+            $total = $pagamento->valor;
+            $valor_dia = floatval($pagamento->funcionario->cargos->find($cargo)->salario) / 20; 
+            $valor_horas_extras =(floatval($valor_dia) / 8) * floatval($pagamento->horas_extras);
+            $horas_dias = floatval($pagamento->funcionario->cargos->find($cargo)->horas_semanais) / 5;
+            $desconto = floatval($pagamento->funcionario->cargos->find($cargo)->salario) / 30  * ($pagamento->faltas * $horas_dias );
+         
+            
+            if($pagamento->tipo_pagamento == "2"){
+                    $total *= 0.4;
+                }
+                $total-= $desconto;
+               
+                $total+= $valor_horas_extras + $pagamento->adicional_noturno;
+                $pagamento->total = $total - $pagamento->inss;
+             
+                return $pagamento;
+             // $desconto = $pagamento->salario / 30 * ($pagamento->faltas * $horas_dia);
+            /*
+            console.log("Valor salario :" + selectedCargo.salario + "hora Extra:" + $('#horas_extras').val() + "Adicional noturno:" + $('.adicional1').val() + " Faltas:" + $('#faltas').val())
+            var salario = parseFloat(selectedCargo.salario)
+            var horas_extras = parseFloat($('.horas_extras').val())
+            var valor_dia = salario / 20
+            var horas_dias = parseFloat(selectedCargo.horas_semanais / 5)
+            var valor_hora_extra = (valor_dia / 8) * horas_extras
+            var adicional = parseFloat($('.adicional1').val())
+            var faltas = parseFloat($('.faltas').val())
+            var inss = parseFloat($('.inss').val())
+            var desconto = salario / 30 * (faltas * horas_dias)
 
+            console.log("desconto:" + -desconto)
+            var temp = total;
 
-    }
+            //do total ele efetua os descontos e soma os extras
+            temp -= desconto
+            temp += (valor_hora_extra + adicional)
+            */
+           // $salario = 
+
+        }
+
+    
 }

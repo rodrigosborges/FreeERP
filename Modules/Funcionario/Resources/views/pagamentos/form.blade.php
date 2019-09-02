@@ -222,7 +222,7 @@
 
     $(document).ready(function(e) {
         if ($('.funcionario').val() != -1) {
-            //desabilitar(false)
+            desabilitar(false)
             buscaFuncionario()
 
       
@@ -256,6 +256,7 @@
             if ($('.cargos').val() != -1) {
                 buscaSalario()
                 $('.emissao').val('')
+                desabilitar(false)
 
             } else {
                 desabilitar(true)
@@ -282,7 +283,7 @@
 
         // Chama a função de verificação quando as entradas forem modificadas
         // Usei o 'keyup', mas 'change' ou 'keydown' são também eventos úteis aqui
-        inputs.on('keyup', verificarInputs);
+        inputs.on('change', verificarInputs);
 
         verificarInputs()
         ////////////FIM "MAIN"///////////////
@@ -341,15 +342,15 @@
 
         function desabilitar(opcao) {
 
-            $('#cargos').attr('disabled', opcao);
-            $('#cargos').attr('disabled', opcao);
-            $('#emissao').attr('disabled', opcao);
-            $('#opcao-pagamento').attr('disabled', opcao);
-            $('#horas_extras').attr('disabled', opcao);
+            $('.cargos').attr('disabled', opcao);
+            $('.cargos').attr('disabled', opcao);
+            $('.emissao').attr('disabled', opcao);
+            $('.opcao-pagamento').attr('disabled', opcao);
+            $('.horas_extras').attr('disabled', opcao);
             $('.adicional1').attr('disabled', opcao);
-            $('#faltas').attr('disabled', opcao);
+            $('.faltas').attr('disabled', opcao);
         }
-desabilitar(true);
+
     })
     // autor: Denise Lopes
     function opcaoPagamento() {
