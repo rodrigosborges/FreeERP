@@ -19,18 +19,29 @@
     </tr>
   </thead>
   <tbody>
-   @foreach($data['pagamentos'] as $pagamento)
+    @foreach($pagamentos as $pagamento)
     <tr>
-      <td>{{ $pagamento->funcionario->nome }}  </td>
+      <td>{{ $pagamento->funcionario->nome }} </td>
       <td>{{ $pagamento->valor}} </td>
       <td>{{ $pagamento->tipo_pagamento}}</td>
       <td>{{ $pagamento->emissao}} </td>
       <td><a href="" class="btn btn-warning"><i class="material-icons">edit</i></a></td>
       <td><a href="" class="btn btn-danger"><i class="material-icons">delete</i></a></td>
- 
+
     </tr>
-  @endforeach
   </tbody>
+  </tfoot>
+  @endforeach
+  <tfoot>
+    @if($pagamentos->lastPage() > 1)
+    <tr>
+      <td colspan="100%" class="text-center">
+        {{ $pagamentos->links() }}
+      </td>
+    </tr>
+    @endif
+
+
 </table>
 @endsection
 
@@ -83,8 +94,6 @@
       }
     });
   })
-
-  
 </script>
 
 @endsection

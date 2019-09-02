@@ -21,10 +21,10 @@ class PagamentoController extends Controller
 
             'title'         => "Pagamentos",
             'url' => url('funcionario/pagamento/create'),
-            'pagamentos' => Pagamento::paginate(10),
+           
         ];
-
-        return view('funcionario::pagamentos.index', compact('data'));
+$pagamentos = Pagamento::paginate(5);
+        return view('funcionario::pagamentos.index', compact('data','pagamentos'));
     }
 
     /**
@@ -80,7 +80,7 @@ class PagamentoController extends Controller
             $pagamento->horas_extras = $request->horas_extras;
             $pagamento->adicional_noturno = $request->adicional;
             $inss= $this->calcularInss($salario);
-            if ($request->opcao_pagamento == 2) {
+            if ($request->opcao_pagamento == "2") {
                 $temp = $salario * 0.4;
                 $pagamento->inss = $this->calcularInss($temp);
                 $pagamento->valor *= 0.4;
