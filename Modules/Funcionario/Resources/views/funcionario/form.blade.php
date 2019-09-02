@@ -193,7 +193,7 @@
                             @if($data['model'])
                                 <input type="hidden" name="documentos[serie_ctps][id]" value="{{$data['model']->serie_ctps()->id}}">
                             @endif
-                            <input required type="text" placeholder="Série da CTPS" name="documentos[rg][numero]" id="serie_ctps" class="form-control" value="{{ old('documentos.serie_ctps.numero', $data['model'] ? $data['model']->serie_ctps()->numero : '') }}">
+                            <input required type="text" placeholder="Série da CTPS" name="documentos[serie_ctps][numero]" id="serie_ctps" class="form-control" value="{{ old('documentos.serie_ctps.numero', $data['model'] ? $data['model']->serie_ctps()->numero : '') }}">
                             <input required type="hidden" name="documentos[serie_ctps][tipo_documento_id]" value="4">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.serie_ctps.numero') }}</span>
