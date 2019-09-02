@@ -5,6 +5,10 @@ namespace Modules\Protocolos\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Interessado, Protocolo};
+use App\Entities\{EstadoCivil};
+
+use DB;
 
 class ProtocolosController extends Controller
 {
@@ -14,7 +18,12 @@ class ProtocolosController extends Controller
      */
     public function index()
     {
-        return view('protocolos::protocolo.index');
+        $data = [
+            'title' => 'Lista de Protocolos',
+            'protocolos' => Protocolo::paginate(10)
+        ];
+
+        return view('protocolos::protocolo.index', compact('data'));
     }
 
     /**
@@ -23,7 +32,35 @@ class ProtocolosController extends Controller
      */
     public function create()
     {
-        return view('protocolos::protocolo.form');
+        $data = [
+            'url'               => url("protocolos/protocolos"),
+            'model'             => '',
+            'tipo_protocolo'    => TipoProtocolo::all(),
+            'tipo_acesso'       => TipoAcesso::all(),
+            'interessado'       => Interessado::all(),
+            'title'             => 'Cadastro de Funcionário',
+            'button'            => 'Salvar',
+        ];
+        return view('protocolos::protocolo.form', compact('data'));
+    }
+
+    public function list(Request $request, $status) {
+        $protocolos = new Protocolos;
+       
+        $protocolos = $protocolos->paginate(10);
+        return view('protocolos::protocolo.table', compact('protocolos'));
+    }
+
+    public function fetch(Request $request){
+        $query->$request->get('query');
+        $data = DB::table('interessado')->where('nome', 'LIKE', '%{$query}%')->get();
+        $output = '<ul class="dropdown-menu" style="display:block; position:relative>"';
+            foreach($data as $row){
+                $output .= '<li><a href="#">' .$row->nome. '</a></li>';
+            }
+        $output .= '</ul>';
+
+        echo $output;
     }
 
     /**

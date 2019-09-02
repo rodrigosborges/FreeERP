@@ -1,24 +1,23 @@
-    
 <?php 
     $moduleInfo = [
         'icon' => 'people',
         'name' => 'Protocolos',
     ];
     $menu = [
-        ['icon' => 'people', 'tool' => 'Protocolos', 'route' => url('protocolos/protocolos')],
+        ['icon' => 'people', 'tool' => 'Protocolo', 'route' => url('protocolos/protocolos')],
     ];
 ?>
 
 @extends('template')
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{Module::asset('funcionario:css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{Module::asset('Protocolos:css/style.css')}}">
     @yield('style')
 @endsection
 
 @section('content')
     <div class="container">
-        <div class="card">
+        <div class="card text-center">
             <div class="card-header">
                 <h5>@yield('title')</h5>
             </div>
@@ -35,10 +34,13 @@
 @endsection
 
 @section('js')
-    <script src="{{Module::asset('funcionario:js/bibliotecas/jquery.mask.min.js')}}"></script>
-    <script src="{{Module::asset('funcionario:js/bibliotecas/jquery.validate.min.js')}}"></script>
-    <script src="{{Module::asset('funcionario:js/bibliotecas/localization/messages_pt_BR.min.js')}}"></script>
-    <script src="{{Module::asset('funcionario:js/main.js')}}"></script>
+    <script src="{{Module::asset('Protocolos:js/bibliotecas/jquery.mask.min.js')}}"></script>
+    <script src="{{Module::asset('Protocolos:js/bibliotecas/jquery-ui.min.js')}}"></script>
+    <script src="{{Module::asset('Protocolos:js/bibliotecas/jquery.min.js')}}"></script>
+    <script src="{{Module::asset('Protocolos:js/bibliotecas/bootstrap.min.js')}}"></script>
+    <script src="{{Module::asset('Protocolos:js/bibliotecas/jquery.validate.min.js')}}"></script>
+    <script src="{{Module::asset('Protocolos:js/bibliotecas/localization/messages_pt_BR.min.js')}}"></script>
+    <script src="{{Module::asset('Protocolos:js/main.js')}}"></script>
     <script>var main_url="{{url('')}}"</script>
     @yield('script')
 @endsection

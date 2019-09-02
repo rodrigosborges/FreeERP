@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInteressadoTable extends Migration
+class CreateSolicitanteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateInteressadoTable extends Migration
      */
     public function up()
     {
-        Schema::create('interessado', function (Blueprint $table) {
+        Schema::create('solicitante', function (Blueprint $table) {
             $table->integer('id', true);
 			$table->string('nome');
 			$table->timestamps();
@@ -28,6 +28,6 @@ class CreateInteressadoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('interessado');
+        Schema::dropIfExists('solicitante');
     }
 }

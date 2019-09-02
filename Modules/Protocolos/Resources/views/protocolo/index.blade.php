@@ -38,5 +38,5 @@
 @endsection
 
 @section('script')
-    <script src="{{Module::asset('protocolo:js/views/protocolo/index.js')}}"></script>
+    <script src="{{Module::asset('Protocolos:js/views/protocolo/index.js')}}"></script>
 @endsection

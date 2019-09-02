@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>FreeERP @yield('title')</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -144,6 +145,13 @@
                 workspace.style.marginLeft = marginLeftWorkspace;
                 header.style.width = widthHeader;
             }
+        </script>
+        <script type = "text/javascript">
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN':{{ csrf_token() }}
+                }
+            });
         </script>
         @yield('js')
     </body>

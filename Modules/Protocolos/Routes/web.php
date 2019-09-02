@@ -14,4 +14,5 @@
 Route::prefix('protocolos')->group(function() {
     //Route::get('/', 'ProtocolosController@index');
     Route::resource('protocolos', 'ProtocolosController');
+    Route::get('protocolos/fetch', 'ProtocolosController@fetch')->name('interessado.fetch');
 });
