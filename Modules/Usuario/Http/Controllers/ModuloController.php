@@ -17,7 +17,15 @@ class ModuloController extends Controller
      */
     public function index()
     {
-        return view('usuario::modulo.index');
+        $todosModulos = Modulo::withTrashed()->get();
+        $modulosAtivos = Modulo::all();
+        $modulosInativos = Modulo::onlyTrashed()->get();
+
+        return view('usuario::modulo.index', compact(
+            'todosModulos',
+            'modulosAtivos',
+            'modulosInativos'
+        ));
     }
 
     /**
@@ -86,6 +94,8 @@ class ModuloController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $modulo = Modulo::findOrFail($id);
+        $modulo->delete();
+        return back();
     }
 }
