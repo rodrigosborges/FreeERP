@@ -18,12 +18,15 @@
                 </span>
             </div>
             <!--Select Funcionario -->
-            <select class="custom-select" id="funcionario" name="funcionario">
+
+            <select class="custom-select funcionario" id="funcionario" name="funcionario">
                 <option selected value="-1">Selecione um Funcionário</option>
-                @foreach($funcionarios as $funcionario)
-                <option value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
+                @foreach($data['funcionarios'] as $funcionario)
+                <option value="{{ $funcionario->id }}" {{($data['pagamento']) && $data['pagamento']->funcionario->id == $funcionario->id?'selected':''}}>{{ $funcionario->nome }}</option>
                 @endforeach
+
             </select>
+
             <!--FIM Select Funcionario -->
             <span class="errors"> </span>
         </div>
@@ -45,8 +48,8 @@
                     </span>
                 </div>
                 <!--Select Cargo -->
-                <select class="custom-select" id="cargos" name="cargos">
-                    <option value='-1'>Selecione</option>
+                <select class="custom-select cargos" id="cargos" name="cargos">
+
                 </select>
                 <!--FIM Select Cargo -->
             </div>
@@ -62,7 +65,7 @@
                         <i class="material-icons" for="emissao">calendar_today</i>
                     </span>
                 </div>
-                <input type="date" class="form-control required" name="emissao" id="emissao">
+                <input type="date" class="form-control required emissao" name="emissao" id="emissao" value="{{!is_null($data['pagamento'] ? $data['pagamento']->emissao :'')}}">
             </div>
         </div>
         <!--FIM Emissao -->
@@ -80,7 +83,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <select class="custom-select" id="opcao-pagamento" name="opcao-pagamento">
+                <select class="custom-select opcao-pagamento" id="opcao-pagamento" name="opcao-pagamento">
                     <option value="-1">Selecione</option>
                     <option selected value="1">Salário</option>
                     <option value="2">Adiantamento</option>
@@ -101,7 +104,7 @@
                         <i class="material-icons">access_time</i>
                     </span>
                 </div>
-                <input type="text" name="horas_extras" id="horas_extras" class="form-control required money">
+                <input type="text" name="horas_extras" id="horas_extras" class="horas_extras form-control required money" value="{{$data['pagamento'] ? $data['pagamento']->horas_extras : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
@@ -119,7 +122,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text"  name="valor_pagamento" disabled name="valor" id="valor" class="form-control required money">
+                <input type="text" name="valor_pagamento" name="valor" id="valor" class="form-control valor required money valor_pagamento" value="">
             </div>
             <span class="errors"> </span>
         </div>
@@ -134,7 +137,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="adicional" id="adicional" class=" adicional1 form-control money">
+                <input type="text" name="adicional" id="adicional" class=" adicional1 form-control money" value="{{$data['pagamento'] ? $data['pagamento']->adicional_noturno : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
@@ -153,7 +156,7 @@
                         <i class="material-icons">remove</i>
                     </span>
                 </div>
-                <input type="text" name="faltas" id="faltas" class="form-control required money">
+                <input type="text" name="faltas" id="faltas" class=" faltas form-control required money" value="{{$data['pagamento'] ? $data['pagamento']->faltas : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
@@ -168,12 +171,12 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <!-- REFAZER -->
-                <input type="text" name="INSS" id="inss" class="form-control " value="8" disabled>
+                <input type="text" name="INSS" id="inss" class="form-control inss" value="8" disabled value="{{$data['pagamento'] ? $data['pagamento']->inss : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
         <!-- Fim INSS-->
+        <!--Total-->
     </div>
     <div class="row">
         <div class="form-group col-md-12">
@@ -184,11 +187,12 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="total" id="total" placeholder="Total:" disabled class="form-control  ">
+                <input type="text" name="total" id="total" placeholder="Total:" disabled class="total form-control  ">
             </div>
             <span class="errors"> </span>
         </div>
     </div>
+    <!--FIM Total-->
 </form>
 @endsection
 
@@ -217,7 +221,14 @@
     //Função desabilitar: inputs conforme preenchimento do campo
 
     $(document).ready(function(e) {
-////////////MAIN///////////////
+        if ($('.funcionario').val() != -1) {
+            //desabilitar(false)
+            buscaFuncionario()
+
+      
+
+        }
+        ////////////MAIN///////////////
         //Chamadas de funções:funções
         // quando tirado o foco do select de funcionario ele dispara a função
         //a função faz uma requisição ajax para a pagina buscaCargos
@@ -226,41 +237,44 @@
 
 
         //verificação para habilitar busca funcionario
-        $('#funcionario').change(function() {
-            if ($('#funcionario').val() == -1) {
+        $('.funcionario').change(function() {
+
+            if ($('.funcionario').val() == -1) {
                 desabilitar(true)
-                $('#valor').val('')
-                $('#inss').val('')
-                $('#total').val('')
+                $('.valor').val('')
+                $('.inss').val('')
+                $('.total').val('')
             } else
+
                 buscaFuncionario()
         })
 
         //No selecione ele não permanece com os dados do funcionario
-        $('#cargos').change(function() {
+        $('.cargos').change(function() {
 
 
-            if ($('#cargos').val() != -1) {
+            if ($('.cargos').val() != -1) {
                 buscaSalario()
-                $('#emissao').val('')
+                $('.emissao').val('')
+
             } else {
                 desabilitar(true)
-                $('#funcionario').attr('disabled', false)
-                $('#cargos').attr('disabled', false)
-                $('#valor').val('')
-                $('#inss').val('')
-                $('#total').val('')
+                $('.funcionario').attr('disabled', false)
+                $('.cargos').attr('disabled', false)
+                $('.valor').val('')
+                $('.inss').val('')
+                $('.total').val('')
 
             }
         })
 
-        $('#opcao-pagamento').change(function() {
+        $('.opcao-pagamento').change(function() {
 
             opcaoPagamento()
         })
 
-        $('#emissao').change(function() {
-            $('#opcao-pagamento').attr('disabled', false)
+        $('.emissao').change(function() {
+            $('.opcao-pagamento').attr('disabled', false)
             desabilitar(false)
         })
         // Mantém os inputs em cache:
@@ -271,7 +285,7 @@
         inputs.on('keyup', verificarInputs);
 
         verificarInputs()
-////////////FIM "MAIN"///////////////
+        ////////////FIM "MAIN"///////////////
 
         //FUNÇÕES
         function verificarInputs() {
@@ -299,13 +313,13 @@
         function calcular() {
             console.log("Valor salario :" + selectedCargo.salario + "hora Extra:" + $('#horas_extras').val() + "Adicional noturno:" + $('.adicional1').val() + " Faltas:" + $('#faltas').val())
             var salario = parseFloat(selectedCargo.salario)
-            var horas_extras = parseFloat($('#horas_extras').val())
+            var horas_extras = parseFloat($('.horas_extras').val())
             var valor_dia = salario / 20
             var horas_dias = parseFloat(selectedCargo.horas_semanais / 5)
             var valor_hora_extra = (valor_dia / 8) * horas_extras
             var adicional = parseFloat($('.adicional1').val())
-            var faltas = parseFloat($('#faltas').val())
-            var inss = parseFloat($('#inss').val())
+            var faltas = parseFloat($('.faltas').val())
+            var inss = parseFloat($('.inss').val())
             var desconto = salario / 30 * (faltas * horas_dias)
 
             console.log("desconto:" + -desconto)
@@ -315,7 +329,7 @@
             temp -= desconto
             temp += (valor_hora_extra + adicional)
             console.log(temp)
-            $('#total').val(temp.toFixed(2)) //to fixed é para arrumar as casas decimais
+            $('.total').val(temp.toFixed(2)) //to fixed é para arrumar as casas decimais
             console.log("valor hora:" + valor_dia / 8)
 
         }
@@ -323,7 +337,7 @@
         //FIM - calcula salario, hora_extra, adicional noturno, inss
 
 
-        desabilitar(true)
+
 
         function desabilitar(opcao) {
 
@@ -335,14 +349,14 @@
             $('.adicional1').attr('disabled', opcao);
             $('#faltas').attr('disabled', opcao);
         }
-
+desabilitar(true);
     })
     // autor: Denise Lopes
     function opcaoPagamento() {
-        if ($('#opcao-pagamento').val() == -1) {
-            $('#valor').val('')
-            $('#inss').val('')
-            $('#total').val('')
+        if ($('.opcao-pagamento').val() == -1) {
+            $('.valor').val('')
+            $('.inss').val('')
+            $('.total').val('')
         } else {
             buscaSalario()
         }
@@ -356,7 +370,7 @@
 
             formula = (salario * 8) / 100;
             // Aliquota minima 
-            $('#valor').val(salario.toFixed(2))
+            $('.valor').val(salario.toFixed(2))
             if (salario <= 1751.81) {
                 inss = formula;
 
@@ -367,14 +381,14 @@
                 inss = formula;
             }
             total = salario - inss;
-            $('#total').val(total.toFixed(2))
+            $('.total').val(total.toFixed(2))
 
-            $('#inss').val(inss.toFixed(2));
+            $('.inss').val(inss.toFixed(2));
         } else {
 
-            $('#valor').val("")
-            $('#inss').val("")
-            $('#total').val("")
+            $('.valor').val("")
+            $('.inss').val("")
+            $('.total').val("")
 
         }
 
@@ -387,13 +401,13 @@
             type: 'post',
             data: {
                 '_token': $('input[name=_token]').val(),
-                'id': $('#cargos').val()
+                'id': $('.cargos').val()
             }
             //data é igual a salário
         }).done(function(data) {
 
-            $('#emissao').attr('disabled', false)
-            if ($('#opcao-pagamento').val() == 2) {
+            $('.emissao').attr('disabled', false)
+            if ($('.opcao-pagamento').val() == 2) {
                 var valor = parseFloat(data) * 0.4
 
                 calculaInss(valor)
@@ -409,7 +423,7 @@
 
             console.log()
             $.each(cargos, function(chave, valor) {
-                if (valor.id == $('#cargos').val()) {
+                if (valor.id == $('.cargos').val()) {
                     selectedCargo = valor
                 }
                 /* 
@@ -443,16 +457,16 @@
             type: 'post',
             data: {
                 '_token': $('input[name=_token]').val(),
-                'id': $('#funcionario').val()
+                'id': $('.funcionario').val()
             }
         }).done(function(data) {
             //após capturar os cargos ele faz um foreach nos cargos e adiciona em uma string 
             // que posteriormente é enviada para o select de cargos
             cargos = $.parseJSON(data);
-            $('#cargos').attr('disabled', false)
-            string = " <option value='-1'>Selecione</option>"
+            $('.cargos').attr('disabled', false)
+            string = " <option selected value='-1'>Selecione</option>"
             $.each(cargos, function(chave, valor) {
-                string += '<option value="' + valor.id + '">' + valor.nome + "</option>"
+                string += '<option  value="' + valor.id + '">' + valor.nome + "</option>"
                 console.log(valor.horas_semanais);
 
 
@@ -460,7 +474,7 @@
 
             })
 
-            $('#cargos').html(string);
+            $('.cargos').html(string);
         }).fail(function() {})
 
 

@@ -19,7 +19,6 @@ class PagamentoController extends Controller
 
         $data = [
 
-            
             'title'         => "Pagamentos",
             'url' => url('funcionario/pagamento/create'),
             'pagamentos' => Pagamento::paginate(10),
@@ -38,13 +37,15 @@ class PagamentoController extends Controller
             "url"   => url('funcionario/pagamento'),
             "button" => 'Salvar',
             "model" => null,
-            "title" => "Cadastrar Pagamento"
+            "title" => "Cadastrar Pagamento",
+            'pagamento'=>null,
+            'funcionarios'=>Funcionario::all(),
+            
 
         ];
-        $funcionarios = Funcionario::all();
-        $funcionario = Funcionario::findOrFail(2);
+        
 
-        return view('funcionario::pagamentos.form', compact('data', 'funcionarios'));
+        return view('funcionario::pagamentos.form', compact('data'));
 
         /* $data = [
 
@@ -124,7 +125,16 @@ class PagamentoController extends Controller
      */
     public function edit($id)
     {
-        return view('funcionario::edit');
+        $data = [
+            "button" => 'Atualizar',
+            'title'         => "Editar pagamentos",
+            'url' => url('funcionario/pagamento/'.$id .'/edit'),
+            'pagamento' => Pagamento::findOrFail($id),
+            'funcionarios'=>Funcionario::all(),
+        ];
+    
+        
+        return view('funcionario::pagamentos.form', compact('data'));
     }
 
     /**
