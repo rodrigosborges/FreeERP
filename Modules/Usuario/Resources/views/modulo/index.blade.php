@@ -47,7 +47,7 @@
                                         <td>
                                             <div class="d-flex justify-content-end">
                                                 @if(!$modulo->trashed())
-                                                <form method="GET" action="{{url('modulo'.$modulo->id.'/edit')}}">
+                                                <form method="GET" action="{{url('modulo/'.$modulo->id.'/edit')}}">
                                                     @csrf
                                                     <button class="text-warning" type="submit" style="border: 0; background: none; cursor: pointer">
                                                         <i class="material-icons">edit</i>
@@ -58,6 +58,14 @@
                                                     @csrf
                                                     <button class="text-danger" type="submit" style="border: 0; background: none; cursor: pointer">
                                                         <i class="material-icons">delete</i>
+                                                    </button>
+                                                </form>
+                                                @else
+                                                <form method="POST" action="{{url('modulo/'.$modulo->id.'/restore')}}">
+                                                    @method('put')
+                                                    @csrf
+                                                    <button class="text-success" type="submit" style="border: 0; background: none; cursor: pointer">
+                                                        <i class="material-icons">restore_from_trash</i>
                                                     </button>
                                                 </form>
                                                 @endif
@@ -125,8 +133,14 @@
                                         <td>{{ $modulo->nome }}</td>
                                         <td><i class="material-icons">{{ $modulo->icone }}</i></td>
                                         <td>
-                                            <div class="d-flex justify-content-around">
-                                                
+                                            <div class="d-flex justify-content-end">
+                                                <form method="POST" action="{{url('modulo/'.$modulo->id.'/restore')}}">
+                                                    @method('put')
+                                                    @csrf
+                                                    <button class="text-success" type="submit" style="border: 0; background: none; cursor: pointer">
+                                                        <i class="material-icons">restore_from_trash</i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

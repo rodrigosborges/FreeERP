@@ -6,22 +6,36 @@
     <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Cadastrar Módulo</h5>
+                <h5 class="card-title">
+                    @if(!isset($modulo))
+                        Cadastrar Módulo
+                    @else
+                        Alterar Módulo
+                    @endif
+                </h5>
             </div>
             <div>
-                <form class="card-body d-flex flex-column" method="post" action="{{url('modulo')}}">
+                <form class="card-body d-flex flex-column" method="post" action="{{ url(isset($modulo) ? 'modulo/'.$modulo->id : 'modulo') }}">
+                    @if(isset($modulo))
+                        @method('PUT')
+                    @endif
                     @csrf
 
                     <div class="form-group">
-                        <input class="form-control" type="text" name="nome" placeholder="Nome do módulo">
+                        <input value="{{ old('nome', isset($modulo) ? $modulo->nome : '') }}" class="form-control" type="text" name="nome" placeholder="Nome do módulo">
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="icone" placeholder="Ícone do módulo">
+                        <input value="{{ old('icone', isset($modulo) ? $modulo->icone : '') }}" class="form-control" type="text" name="icone" placeholder="Ícone do módulo">
                     </div>
-                    <buttom type="submit" class="btn btn-success d-flex mb-3 align-self-start">
-                        <i class="material-icons mr-2">save</i>Salvar
-                    </buttom>
+                    <div class="d-flex justify-content-between mb-3">
+                        <button type="submit" class="btn btn-success d-flex align-items-center">
+                            <i class="material-icons mr-2">save</i>Salvar
+                        </button>
                 </form>
+                        <a class="btn btn-secondary d-flex align-items-center" href="/modulo">
+                            <i class="material-icons mr-2">view_list</i> Módulos Cadastrados
+                        </a>
+                    </div>
             </div>
         </div>
     </div>
