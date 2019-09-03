@@ -3,7 +3,14 @@
 @section('content')
 <div class="row justify-content-center align-items-center" style="height:100%">
     <div class="col-xm-12 col-sm-10 col-md-8">
-
+        <div class="d-flex align-self-start">
+        <a href="modulo/cadastrar"  style="text-decoration: none">
+            <buttom class="btn btn-success d-flex mb-3" style="">
+                <i class="material-icons mr-2">post_add</i>Cadastrar novo módulo
+            </buttom>
+        </a>
+        </div>
+        
         <form class="d-flex" action="" method="get">
             <input type="text" name="nome" class="form-control" placeholder="Nome do módulo">
             <button type="submit" class="btn btn-primary d-flex ml-2">
@@ -11,16 +18,13 @@
                 Buscar
             </button>
         </form>
+
         <div class="card mt-4">
             <div class="card-header">
                 <h5 class="card-title">Modulos</h5>
             </div>
             <div class="card-body pb-0 d-flex flex-column align-items-start">
-                <a href="modulo/cadastrar" style="text-decoration: none">
-                    <buttom class="btn btn-success d-flex mb-3" style="">
-                        <i class="material-icons mr-2">post_add</i>Cadastrar novo módulo
-                    </buttom>
-                </a>
+
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-todosModulos-tab" data-toggle="tab" href="#nav-todosModulos" role="tab" aria-controls="nav-todosModulos" aria-selected="true">Todos</a>
@@ -95,7 +99,7 @@
                                         <td>
                                             <div class="d-flex justify-content-end">
                                                 @if(!$modulo->trashed())
-                                                <form method="GET" action="{{url('modulo'.$modulo->id.'/edit')}}">
+                                                <form method="GET" action="{{url('modulo/'.$modulo->id.'/edit')}}">
                                                     @csrf
                                                     <button class="text-warning" type="submit" style="border: 0; background: none; cursor: pointer">
                                                         <i class="material-icons">edit</i>
