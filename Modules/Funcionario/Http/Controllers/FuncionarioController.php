@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco};
+use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Curso};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
@@ -50,6 +50,7 @@ class FuncionarioController extends Controller{
             'documentos'        => [new Documento],
             'telefones'         => [new Telefone],
             'dependentes'       => [new Dependente],
+            'cursos'            => [new Curso],
             'parentescos'       => Parentesco::all(),
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
@@ -69,7 +70,6 @@ class FuncionarioController extends Controller{
 		try{
 
            
-
             $email = Email::create(['email' => $request->input('email')]);
             $endereco = Endereco::create($request->input('endereco'));
 
@@ -133,7 +133,6 @@ class FuncionarioController extends Controller{
                     
                         $doc = Documento::create($documento);
 
-
                     }
                 }
             }
@@ -150,8 +149,6 @@ class FuncionarioController extends Controller{
             if($request->dependentes[0]['parentesco_id'] != "" && $request->dependentes[0]['mora_junto'] != "" && $request->dependentes[0]['nome'] != "" && $request->dependentes[0]['cpf'] != "" && $request->dependentes[0]['certidao_matricula'] != "" && $request->dependentes[0]['certidao_vacina'] != "") {
                 foreach($request->dependentes as $dependente) {
                     
-                    
-                    
                     $dependente['funcionario_id'] = $funcionario['id'];
 
                     $newDep = Dependente::create($dependente);
@@ -167,6 +164,30 @@ class FuncionarioController extends Controller{
 
                 }
             }
+
+            if($request->cursos[0]['nome'] != "" && $request->cursos[0]['area_atuacao'] != "" && $request->cursos[0]['duracao_horas_curso'] != "" && 
+               $request->cursos[0]['data_realizacao'] != "" && $request->cursos[0]['validade_curso'] != ""){
+
+                foreach($request->cursos as $curso){
+                   
+                    $curso = [
+                        'nome' => $request->curso['nome'],
+                        'area_atuacao' => $request->curso['area_atuacao'],
+                        'duracao_horas_curso' => $request->curso['duracao_horas_curso'],
+                        'data_realizacao' =>  date('Y-m-d', strtotime($request->curso['data_realizacao'])),
+                        'validade_curso' => $request->curso['validade_curso'],
+                        'funcionario_id' => $email->id
+                    ];
+                   /* $curso = [
+                        
+                        'duracao_horas_curso' => date('Y-m-d', strtotime($request->curso['duracao_horas_curso'])),
+                        'funcionario_id' => $email->id
+                    ];*/
+
+                    $newCurso = Curso::create($curso);    
+                }
+               }
+
 
 			DB::commit();
             return redirect('/funcionario/funcionario')->with('success', 'Funcionário cadastrado com successo!');

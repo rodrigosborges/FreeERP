@@ -494,12 +494,13 @@
                                 <span class="errors"> {{ $errors->first('dependentes.'.$key.'.cpf') }}</span>                                
                             </div>
                         </div>
-                    <div class="col-lg-2 mt-2">
+                      <div class="col-lg-2 mt-2">
                             <br>
                             <i class="btn btn-danger border text-center material-icons del-dep">delete</i>
                         </div>
 
                     </div>
+
                     <div class="col-lg-3">
                             <div class="form-group">
                                 <label class="control-label">Certidão de Matricula? <span class="required-symbol">*</span></label><br>
@@ -538,14 +539,114 @@
                             </div>
                         </div>
                             
-            </div>
-
-                
-                
+                    </div>
             @endforeach
         </div>
+
         <div class="mt-2">
             <i class="btn btn-info border text-center add-dep">ADICIONAR DEPENDENTE</i>
+        </div>
+
+        <strong><h6 class="mt-5 mb-3">Cursos</h6></strong>
+        <hr>
+        
+        <div id="cursos">
+            @foreach(old('cursos', $data['cursos']) as $key => $curso)
+            <div class="cur {{ old('cursos.$key.nome', isset($curso->nome) ? $curso->nome : '') ? '' : 'c-none'}} mb-4">
+                
+                    @if(isset($curso->id))
+                        <input type="hidden" class="cursos" value="{{ isset($curso->id) ? $curso->id : ''}}" name="cursos[{{$key}}][id]">
+                    @endif
+
+                <div class="col-lg-7">
+                    <div class="form-group">
+                        <label for="nome_cur_{{$key}}" class="control-label">Nome do Curso<span class="required-symbol">*</span></label>
+                            <div class="input-group">
+                                 <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                         <i class="material-icons">person</i>
+                                    </span>
+                                  </div>
+                                <input required type="text" placeholder="Nome" name="cursos[{{$key}}][nome]"  class="form-control cursos" id="nome_cur_{{$key}}" value="{{ old('cursos.$key.nome', isset($curso->nome) ? $curso->nome : '') }}">
+                            </div>
+                        <span class="errors"> {{ $errors->first('cursos.'.$key.'.nome') }}</span>
+                        </div>
+                    </div>
+                 
+
+                <div class="col-lg-7">
+                    <div class="form-group">
+                        <label for="area_atuacao_cur_{{$key}}" class="control-label">Área de atuação<span class="required-symbol">*</span></label>
+                            <div class="input-group">
+                                 <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                         <i class="material-icons">business_center</i>
+                                    </span>
+                                  </div>
+                                <input required type="text" placeholder="" name="cursos[{{$key}}][area_atuacao]"  class="form-control cursos" id="area_atuacao_cur_{{$key}}" value="{{ old('cursos.$key.area_atuacao', isset($curso->area_atuacao) ? $curso->area_atuacao : '') }}">
+                            </div>
+                        <span class="errors"> {{ $errors->first('cursos.'.$key.'.area_atuacao') }}</span>
+                        </div>
+                    </div>
+                  
+
+                <div class="col-lg-7">
+                    <div class="form-group">
+                        <label for="duracao_horas_curso_cur_{{$key}}" class="control-label">Duração em horas do curso<span class="required-symbol">*</span></label>
+                            <div class="input-group">
+                                 <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                         <i class="material-icons">watch_later</i>
+                                    </span>
+                                  </div>
+                                <input required type="text" placeholder="Ex: 30" name="cursos[{{$key}}][duracao_horas_curso]"  class="form-control cursos" id="duracao_horas_curso_cur_{{$key}}" value="{{ old('cursos.$key.duracao_horas_curso', isset($curso->duracao_horas_curso) ? $curso->duracao_horas_curso : '') }}">
+                            </div>
+                        <span class="errors"> {{ $errors->first('cursos.'.$key.'.duracao_horas_curso') }}</span>
+                        </div>
+                    </div>
+                
+                
+                <div class="col-lg-7}">
+                    <div class="form-group">
+                        <label for="data_realizacao_cur_{{$key}}" class="control-label">Data de realização<span class="required-symbol">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">date_range</i>
+                                </span>
+                            </div>
+                            <input required type="text" placeholder="00/00/0000" name="cursos[{{$key}}][data_realizacao]" id="data_realizacao_cur_{{$key}}" class="form-control data cursos" value="{{ old('cursos.$key.data_realizacao', isset($curso->data_realizacao) ? $curso->data_realizacao : '') }}">
+                        </div>
+                        <span class="errors"> {{ $errors->first('cursos.'.$key.'.data_realizacao') }} </span>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="form-group">
+                        <label for="validade_curso_cur_{{$key}}" class="control-label">Validade do curso<span class="required-symbol">*</span></label>
+                            <div class="input-group">
+                                 <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                         <i class="material-icons">business_center</i>
+                                    </span>
+                                  </div>
+                                <input required type="text" placeholder="" name="cursos[{{$key}}][validade_curso]"  class="form-control cursos" id="validade_curso_cur_{{$key}}" value="{{ old('cursos.$key.validade_curso', isset($curso->validade_curso) ? $curso->validade_curso : '') }}">
+                            </div>
+                        <span class="errors"> {{ $errors->first('cursos.'.$key.'.validade_curso') }}</span>
+                        </div>
+                    </div>
+              
+               
+                <div class="col-lg-2 mt-2">
+                    <br>
+                    <i class="btn btn-danger border text-center material-icons del-cur">delete</i>
+                </div>
+            @endforeach
+        </div>
+    
+
+        <div class="mt-2">
+            <i class="btn btn-info border text-center add-curso">ADICIONAR CURSOS</i>
         </div>
         
     </form>

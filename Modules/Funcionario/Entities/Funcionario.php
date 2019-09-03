@@ -10,6 +10,7 @@ class Funcionario extends Model {
     protected $table = 'funcionario';
     protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao', 'cargo_id', 'estado_civil_id', 'email_id', 'endereco_id'];
     use SoftDeletes;
+    
     public function estado_civil(){
         return $this->belongsTo('App\Entities\EstadoCivil');
     }
@@ -30,6 +31,10 @@ class Funcionario extends Model {
     }
     public function cargos(){
         return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada');
+    }
+
+    public function curso(){
+        return $this->hasMany('Modules\Funcionario\Entities\Curso');
     }
 
 }

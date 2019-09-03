@@ -126,6 +126,39 @@ $(document).on("click", ".del-dep", function() {
 })
 //############################
 
+//#############
+//Cursos Funcionarios
+$(document).on("click", ".add-curso", function() {
+    if($(".cur").hasClass("c-none")) {
+        $(".cur").removeClass("c-none")
+        $(".cursos").fadeIn()
+    }
+    else if($(".cur").length < 4) {
+        clonar(".cur", "#cursos", true)
+        $(".cur").last().find(".cursos").val("")
+       // $(".dep").last().find(".cpf").mask('000.000.000-00')
+    } else {
+
+        Swal.fire({
+            type: 'warning',
+            title: 'Atenção!',
+            text: 'Podem ser adicionados no máximo '+$(".cur").length+' cursos',
+        })
+ 
+    }
+})
+
+$(document).on("click", ".del-cur", function() {
+    if($(".cur").length == 1) {
+        $(".cur").last().find(".cursos").val("")
+        $('.cur').addClass('c-none')
+        $(".cursos").attr('disabled', 'disabled')
+    } else {
+        remover(".cur", $(this))
+    }
+})
+
+//###################
 //ENDEREÇO
 $('.estados').change(function() {
     atualizarCidades($(".estados option:selected").data("uf"), $(".estados").data('cidade'))

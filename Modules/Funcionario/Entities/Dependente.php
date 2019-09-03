@@ -7,7 +7,7 @@ class Dependente extends Model{
    
     protected $table = 'dependente';
 
-    protected $fillable = ['nome', 'mora_junto', 'parentesco_id', 'funcionario_id', 'certidao_matricula', 'certidao_vacina'];
+    protected $fillable = ['nome', 'mora_junto', 'certidao_matricula', 'certidao_vacina', 'parentesco_id', 'funcionario_id'];
 
     public $timestamps = false;
 
