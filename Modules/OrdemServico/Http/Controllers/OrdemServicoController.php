@@ -26,6 +26,7 @@ class OrdemServicoController extends Controller
             'inativos' => OrdemServico::onlyTrashed()->get(),
             'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('ordem_servico'),0,4),
             'cadastro' => 'Cadastrar OS',
+            'deletar' => true,
             'route' => 'modulo.os.',
             'acoes' => [
                 ['nome' => 'Editar' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'edit'],

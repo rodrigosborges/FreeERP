@@ -22,6 +22,7 @@ class SolicitanteController extends Controller
             'inativos' => Solicitante::onlyTrashed()->get(),
             'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('solicitante'), 0, 5),
             'cadastro' => 'Cadastrar Solicitante',
+            'deletar' => true,
             'route' => 'modulo.solicitante.',
             'acoes' => [
                 ['nome' => 'Editar', 'class' => 'btn btn-outline-info btn-sm', 'complemento-route' => 'edit'],

@@ -18,9 +18,10 @@ Route::prefix('ordemservico')->name('modulo.')->group(function() {
 	Route::get('problema/showAjax','ProblemaController@showAjax');
 	
 	
-	Route::get('painel/ordensDisponiveis','PainelTecnicoController@ordensDisponiveis')->name('tecnico.painel.ordens_disponiveis');
+	Route::get('painel/{id}/ordensDisponiveis','PainelTecnicoController@ordensDisponiveis')->name('tecnico.painel.ordens_disponiveis');
 	Route::get('painel/{id}', 'PainelTecnicoController@index')->name('tecnico.painel.index');
 	Route::get('painel/{id}/minhasOs', 'PainelTecnicoController@ordensAtivas')->name('tecnico.painel.minhasOs');
+	Route::get('painel/{id}/{idOs}/pegarResponsabilidade', 'PainelTecnicoController@pegarResponsabilidade')->name('tecnico.painel.pegarResponsabilidade');
 
 	Route::resource('gerente', 'GerenteController');
 	Route::resource('aparelho', 'AparelhoController');

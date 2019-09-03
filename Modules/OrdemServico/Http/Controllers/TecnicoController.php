@@ -20,6 +20,7 @@ class TecnicoController extends Controller
             'inativos' => Tecnico::onlyTrashed()->get(),
             'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('tecnico'),0,5),
             'cadastro' => 'Cadastrar Tecnico',
+            'deletar' => true,
             'route' => 'modulo.tecnico.',
             'acoes' => [
                 ['nome' => 'Editar' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'edit'],

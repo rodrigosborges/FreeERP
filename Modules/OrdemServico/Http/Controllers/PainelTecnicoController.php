@@ -21,19 +21,21 @@ class PainelTecnicoController extends Controller
         return view('ordemservico::tecnico.painel.index',compact('data'));
     }
 
-    public function ordensDisponiveis(){
+    public function ordensDisponiveis($id){
         $data = [
             'title' => 'Ordens Disponíveis',
-            'model' => OrdemServico::where('status','Iniciado')->paginate(5),
+            'tecnico' => Tecnico::findOrFail($id),
+            'model' => OrdemServico::where('tecnico_id',null)->paginate(5),
             'inativos' => [],
             'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('ordem_servico'),0,4),
             'cadastro' => '',
+            'deletar' => false,
             'route' => 'modulo.tecnico.',
             'acoes' => [
-                ['nome' => 'Pegar Responsabilidade' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'index'],
+                ['nome' => 'Pegar Responsabilidade' , 'class' => 'pegar-responsabilidade btn btn-outline-info btn-sm'],
             ]
             ];
-        return view('ordemservico::layouts.index', compact('data'));
+        return view('ordemservico::tecnico.painel.ordensDisponiveis', compact('data'));
     }
 
     public function ordensAtivas($id)
@@ -44,6 +46,7 @@ class PainelTecnicoController extends Controller
             'inativos' => [],
             'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('ordem_servico'),0,4),
             'cadastro' => '',
+            'deletar' => false,
             'route' => 'modulo.tecnico.',
             'acoes' => [
                 ['nome' => 'Relatar Solução' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'index'],
@@ -54,5 +57,11 @@ class PainelTecnicoController extends Controller
         return view('ordemservico::layouts.index', compact('data'));
     }
 
+    public function pegarResponsabilidade($idTecnico,$idOs){
+        $os = OrdemServico::findOrFail($idOs);
+        $os->tecnico_id = $idTecnico;
+        $os->save();
+        return redirect('/ordemservico/painel/'. $idTecnico)->with('success', 'Ordem Ativada com successo');
+    }
 
 }

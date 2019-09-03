@@ -21,6 +21,7 @@ class GerenteController extends Controller
             'inativos' => Gerente::onlyTrashed()->get(),
             'atributos' => DB::getSchemaBuilder()->getColumnListing('gerente'),
             'cadastro' => 'Cadastrar Gerente',
+            'deletar' => true,
             'route' => 'modulo.gerente.',
             'acoes' => [
                 ['nome' => 'Editar' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'edit'],

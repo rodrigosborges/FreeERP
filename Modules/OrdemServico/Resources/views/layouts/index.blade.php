@@ -58,10 +58,11 @@
                             @foreach($data['acoes'] as $acao)
                             <a class="{{$acao['class']}}" {{isset($acao['complemento-route']) ? "href=" . route($data['route'] . $acao['complemento-route'],$model->id)  : ''}} >{{$acao['nome']}}</a>
                             @endforeach
+                            @if($data['deletar'])
                             <a class="btn btn-outline-danger btn-sm" id='delete' onclick="confirmar('{{route($data['route'] . 'destroy' , $model->id )}}')" data-id={{$model->id}}> Delete </a>
                             </form>
-                            </form>
                             @endif
+                        @endif
                         </td>
                     </tr>
                     @endforeach

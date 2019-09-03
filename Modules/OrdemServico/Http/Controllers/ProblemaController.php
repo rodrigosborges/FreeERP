@@ -22,6 +22,7 @@ class ProblemaController extends Controller
             'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('problema'),0,5),
             'route' => 'modulo.problema.',
             'cadastro' => '',
+            'deletar' => false,
             'acoes' => [
                 ['nome' => 'Prioridade' , 'class'=>'prioridade btn btn-outline-info btn-sm' ]],
                

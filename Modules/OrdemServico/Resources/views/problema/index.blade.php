@@ -40,11 +40,6 @@
 @section('js')
 <script>
     
-    function confirmar(rota) {
-        $("#form-delete").attr("action", rota);
-        $('#verifica-delete').modal('show');
-    };
-
     $(document).ready(function() {
         $(".prioridade").click(function() {
             var linha = $(this).parent().parent();
