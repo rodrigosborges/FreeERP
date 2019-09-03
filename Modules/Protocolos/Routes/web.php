@@ -11,8 +11,12 @@
 |
 */
 
+
+
 Route::prefix('protocolos')->group(function() {
     //Route::get('/', 'ProtocolosController@index');
+    Route::get('protocolos/list/{status}', 'ProtocolosController@list');
+    Route::post('busca', 'ProtocolosController@fetch');
     Route::resource('protocolos', 'ProtocolosController');
-    Route::get('protocolos/fetch', 'ProtocolosController@fetch')->name('interessado.fetch');
+ 
 });

@@ -38,29 +38,33 @@ class ProtocolosController extends Controller
             'tipo_protocolo'    => TipoProtocolo::all(),
             'tipo_acesso'       => TipoAcesso::all(),
             'interessado'       => Interessado::all(),
-            'title'             => 'Cadastro de Funcionário',
+            'title'             => 'Cadastro de Protocolo',
             'button'            => 'Salvar',
         ];
         return view('protocolos::protocolo.form', compact('data'));
     }
 
     public function list(Request $request, $status) {
-        $protocolos = new Protocolos;
+        $protocolos = new Protocolo;
        
         $protocolos = $protocolos->paginate(10);
-        return view('protocolos::protocolo.table', compact('protocolos'));
+        return view('protocolos::protocolo.table', compact('protocolos', 'status'));
     }
 
     public function fetch(Request $request){
-        $query->$request->get('query');
-        $data = DB::table('interessado')->where('nome', 'LIKE', '%{$query}%')->get();
-        $output = '<ul class="dropdown-menu" style="display:block; position:relative>"';
-            foreach($data as $row){
-                $output .= '<li><a href="#">' .$row->nome. '</a></li>';
-            }
-        $output .= '</ul>';
 
-        echo $output;
+        $query = $request->get('query'); 
+        $data = DB::table('interessado')->where('nome', 'LIKE', '%'.$query.'%')
+            ->pluck('nome');
+        //$output = '<ul class="dropdown-menu" style="display:block; position:relative>"';
+            //foreach($data as $row){
+             //   $output .= '<li><a href="#">' .$row->nome. '</a></li>';
+            //}
+        //$output .= '</ul>';
+
+        //echo $output;
+
+        return $data;
     }
 
     /**

@@ -146,13 +146,6 @@
                 header.style.width = widthHeader;
             }
         </script>
-        <script type = "text/javascript">
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN':{{ csrf_token() }}
-                }
-            });
-        </script>
         @yield('js')
     </body>
 </html>

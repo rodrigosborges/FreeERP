@@ -17,8 +17,9 @@
                 <div class="form-group">
                     <label for="nome" class="control-label">Interessados: <span class="required-symbol">*</span></label>
                     <div class="input-group">
-                        <input id="pesquisa" class="form-control" type="text" name="pesquisa" />
-                        <div id="interessados_list"></div>
+                       
+                            <input id="pesquisa" class="form-control" type="text" name="pesquisa" />
+                        
                     </div>
                    
                 </div>
@@ -69,5 +70,12 @@
 @endsection
 
 @section('script')
+    <script type = "text/javascript">
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN':"{{ csrf_token() }}"
+                }
+            });
+        </script>
     <script src="{{Module::asset('Protocolos:js/views/protocolo/form.js')}}"></script>
 @endsection
