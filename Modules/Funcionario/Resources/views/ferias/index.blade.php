@@ -14,7 +14,7 @@
     @foreach($data['funcionarios'] as $funcionario)
     <tr>
       <td> {{ $funcionario->nome }} </td>
-      <td><a href="controleFerias/{{$funcionario->id}}" class="btn btn-primary">conferir ferias</a></td>
+      <td><a href='{{url("funcionario/ferias/controleFerias/$funcionario->id")}}' class="btn btn-primary">conferir ferias</a></td>
     </tr>
     @endforeach
   </tbody>
