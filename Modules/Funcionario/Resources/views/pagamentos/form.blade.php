@@ -122,7 +122,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="valor_pagamento" name="valor" id="valor" class="form-control valor required money valor_pagamento" value="">
+                <input type="text" name="valor_pagamento" name="valor" id="valor" class=" valor form-control valor required money valor_pagamento" value="">
             </div>
             <span class="errors"> </span>
         </div>
@@ -218,15 +218,12 @@
     var temporaria
     var adicional
 
-    //Função desabilitar: inputs conforme preenchimento do campo
+    //Função desabilitar: inputs 
 
     $(document).ready(function(e) {
         if ($('.funcionario').val() != -1) {
-            desabilitar(false)
+            desabilitar(true)
             buscaFuncionario()
-
-      
-
         }
         ////////////MAIN///////////////
         //Chamadas de funções:funções
@@ -252,7 +249,7 @@
         //No selecione ele não permanece com os dados do funcionario
         $('.cargos').change(function() {
 
-
+            //Se cargo for igual a selecione    
             if ($('.cargos').val() != -1) {
                 buscaSalario()
                 $('.emissao').val('')
@@ -288,7 +285,7 @@
         verificarInputs()
         ////////////FIM "MAIN"///////////////
 
-        //FUNÇÕES
+        ///////FUNÇÕES/////////
         function verificarInputs() {
             var preenchidos = true; // assumir que estão preenchidos
             inputs.each(function() {
@@ -308,6 +305,17 @@
                 calcular()
             }
 
+        }
+        //desabilita e habilita inputs
+        function desabilitar(opcao) {
+
+            $('.cargos').attr('disabled', opcao);
+            $('.cargos').attr('disabled', opcao);
+            $('.emissao').attr('disabled', opcao);
+            $('.opcao-pagamento').attr('disabled', opcao);
+            $('.horas_extras').attr('disabled', opcao);
+            $('.adicional1').attr('disabled', opcao);
+            $('.faltas').attr('disabled', opcao);
         }
         //calcula salario, hora_extra, adicional noturno, inss
 
@@ -337,19 +345,6 @@
 
         //FIM - calcula salario, hora_extra, adicional noturno, inss
 
-
-
-
-        function desabilitar(opcao) {
-
-            $('.cargos').attr('disabled', opcao);
-            $('.cargos').attr('disabled', opcao);
-            $('.emissao').attr('disabled', opcao);
-            $('.opcao-pagamento').attr('disabled', opcao);
-            $('.horas_extras').attr('disabled', opcao);
-            $('.adicional1').attr('disabled', opcao);
-            $('.faltas').attr('disabled', opcao);
-        }
 
     })
     // autor: Denise Lopes
@@ -394,7 +389,7 @@
         }
 
     }
-
+    //select de salario conforme id do cargo
     function buscaSalario() {
         $.ajax({
             url: main_url + "/buscasalario",
@@ -406,7 +401,7 @@
             }
             //data é igual a salário
         }).done(function(data) {
-
+            //adiantamento de salario
             $('.emissao').attr('disabled', false)
             if ($('.opcao-pagamento').val() == 2) {
                 var valor = parseFloat(data) * 0.4
@@ -416,29 +411,14 @@
             } else
                 calculaInss(data)
 
-            // $('#opcao-pagamento').attr('disabled',false)
-            // $('#horas_extras').attr('disabled',false)
-            // $('.adicional1').attr('disabled',false)
-            // $('#faltas').attr('disabled',false)
 
-
-            console.log()
+            //seleciona nome do cargo conforme id
             $.each(cargos, function(chave, valor) {
                 if (valor.id == $('.cargos').val()) {
                     selectedCargo = valor
                 }
-                /* 
-                var valor_hora = valor.salario / valor.horas_semanais
-                var horas_dia = (valor.horas_semanais / 5)
-                var horas_trabalhada = valor.horas_semanais - (horas_dia * falta)
-                var desconto = horas_trabalhada / 20 * 4 * valor_hora
-                */
+
             })
-            console.log(selectedCargo.horas_semanais)
-
-
-            //alert(desconto)
-            //  
 
         }).fail(function() {
 
@@ -477,10 +457,6 @@
 
             $('.cargos').html(string);
         }).fail(function() {})
-
-
-
-
 
     }
 </script>
