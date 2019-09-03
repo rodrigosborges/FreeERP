@@ -14,7 +14,7 @@ class CategoriaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => ['required', 'min: 3', 'max: 45'],
+            'nome' => ['required', 'min: 3', 'max: 45', 'unique:categoria,nome,'.$this->route('categoria')],
         ];
     }
 
@@ -24,6 +24,7 @@ class CategoriaRequest extends FormRequest
             'required' => 'O Campo :attribute é obrigatório',
             'min' => 'O campo :attribute deve conter no mínimo :min caracteres',
             'max' => 'O campo :attribute deve conter no mínimo :max caracteres',
+            'unique'=>'Esta categoria já está cadastrada'
             
         ];
     }
