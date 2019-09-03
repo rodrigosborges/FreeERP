@@ -122,7 +122,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="valor_pagamento" name="valor" id="valor" class=" valor form-control valor required money valor_pagamento" value="">
+                <input type="text" name="valor_pagamento" disabled name="valor" id="valor" class=" valor form-control valor required money valor_pagamento" value="">
             </div>
             <span class="errors"> </span>
         </div>
@@ -222,8 +222,10 @@
 
     $(document).ready(function(e) {
         if ($('.funcionario').val() != -1) {
-            desabilitar(true)
+            desabilitar(false)
             buscaFuncionario()
+        } else {
+            desabilitar(true)
         }
         ////////////MAIN///////////////
         //Chamadas de funções:funções
@@ -280,7 +282,7 @@
 
         // Chama a função de verificação quando as entradas forem modificadas
         // Usei o 'keyup', mas 'change' ou 'keydown' são também eventos úteis aqui
-        inputs.on('change', verificarInputs);
+        inputs.on('keyup', verificarInputs);
 
         verificarInputs()
         ////////////FIM "MAIN"///////////////
@@ -291,7 +293,7 @@
             inputs.each(function() {
                 // verificar um a um e passar a false se algum falhar
                 // no lugar do if pode-se usar alguma função de validação, regex ou outros
-                console.log(this)
+               // console.log(this)
                 if (!this.value) {
                     preenchidos = false;
                     // parar o loop, evitando que mais inputs sejam verificados sem necessidade
@@ -320,6 +322,7 @@
         //calcula salario, hora_extra, adicional noturno, inss
 
         function calcular() {
+            
             console.log("Valor salario :" + selectedCargo.salario + "hora Extra:" + $('#horas_extras').val() + "Adicional noturno:" + $('.adicional1').val() + " Faltas:" + $('#faltas').val())
             var salario = parseFloat(selectedCargo.salario)
             var horas_extras = parseFloat($('.horas_extras').val())
