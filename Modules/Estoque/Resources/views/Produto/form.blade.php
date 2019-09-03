@@ -16,25 +16,26 @@
             @method('put')
         @endif
         <div class="row">
-                <div class="form-group col-6">
+                <div class="form-group col-12">
                     <label for="nome">Nome</label>
                     <input required type="text" placeholder="Insira o nome do produto" name="nome" class="form-control" value="{{isset($produto) ? $produto->nome : ''}}">
                     {{$errors->first('nome')}}
                 </div>
-                <div class="form-group col-6">
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="preco">Preço de Venda</label>
+                    <input type="text" name="preco" placeholder="R$" onkeyUp="moeda(this);" class="form-control" value="{{isset($produto) ? $produto->preco : ''}}" required>
+                    {{$errors->first('preco')}}
+                </div>
+            </div>
+            
+            <div class="form-group col-4">
                     <label for="codigo">Código de Barras</label>
                     <input required type="number" placeholder="Insira o codigo de barras" name="codigo" class="form-control" value="{{isset($produto) ? $produto->codigo : ''}}">
                     {{$errors->first('codigo')}}
                 </div>
-        </div>
-        <div class="row">
-            <div class="col-4">
-                        <div class="form-group">
-                            <label for="preco">Preço de Venda</label>
-                            <input type="text" name="preco" placeholder="R$" onkeyUp="moeda(this);" class="form-control" value="{{isset($produto) ? $produto->preco : ''}}" required>
-                            {{$errors->first('preco')}}
-                        </div>
-                    </div>
             <div class="col-4">
                 <div class="form-group">
                     <label for="categoria_id">Categoria</label>
@@ -57,29 +58,7 @@
                     {{$errors->first('categoria_id')}}
                 </div>
             </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="categoria_id">Unidade de Medida</label>
-                    <select required class="form-control" name="unidade_id">
-                        @if(isset($produto))
-                            @foreach($unidades as $unidade)
-                                @if($unidade->id == $produto->unidade_id)
-                                    <option value="{{$unidade->id}}" selected>{{$unidade->tipo}}</option>
-                                @else
-                                    <option value="{{$unidade->id}}">{{$unidade->tipo}}</option>
-                                @endif
-                            @endforeach
-                        @else
-                            <option disabled value="" selected>Selecione uma unidade</option>
-                            @foreach($unidades as $unidade)
-                                <option value="{{$unidade->id}}">{{$unidade->tipo}}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    {{$errors->first('categoria_id')}}
-                </div>
-            </div>
-            </div>
+        </div>
             <div class="row" style="align-items: flex-start;">
                 <div class="form-group col-12">
                     <label for="descricao">Descrição</label>

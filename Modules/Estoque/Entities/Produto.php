@@ -10,14 +10,10 @@ class Produto extends Model
     use softDeletes;
 
     protected $table = 'produto';
-    protected $fillable = ['nome', 'codigo', 'preco', 'descricao', 'categoria_id', 'unidade_id'];
+    protected $fillable = ['nome', 'codigo', 'preco', 'descricao', 'categoria_id'];
 
     public function categoria(){
         return $this->belongsTo('Modules\Estoque\Entities\Categoria')->withTrashed();
-    }
-
-    public function unidade() {
-        return $this->belongsTo('Modules\Estoque\Entities\UnidadeProduto')->withTrashed();
     }
 
 }

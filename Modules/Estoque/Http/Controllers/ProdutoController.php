@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 use DB;
 use Modules\Estoque\Http\Requests\ProdutoRequest;
 use Modules\Estoque\Entities\Produto;
-use Modules\Estoque\Entities\UnidadeProduto;
 use Modules\Estoque\Entities\Categoria;
 
 class ProdutoController extends Controller
@@ -60,8 +59,7 @@ class ProdutoController extends Controller
         */
         //$categorias = DB::table('categoria')->join('subcategoria','subcategoria.id', '=','categoria.id')->where('subcategoria.categoria_id = null')->get();
         $categorias = Categoria::all();
-        $unidades = UnidadeProduto::all();
-        return view('estoque::produto.form',$this->dadosTemplate, compact('unidades', 'categorias'));
+        return view('estoque::produto.form',$this->dadosTemplate, compact('categorias'));
     }
 
     public function store(ProdutoRequest $request)
@@ -81,8 +79,7 @@ class ProdutoController extends Controller
     {
         $produto = Produto::findOrFail($id);
         $categorias = Categoria::all();
-        $unidades = UnidadeProduto::all();
-        return view('estoque::produto.form', $this->dadosTemplate, compact('produto', 'unidades', 'categorias'));
+        return view('estoque::produto.form', $this->dadosTemplate, compact('produto', 'categorias'));
     }
     public function update(ProdutoRequest $request, $id)
     {
