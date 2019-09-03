@@ -28,4 +28,10 @@ Route::prefix('funcionario')->group(function() {
     //folha pagamento
     Route::resource('pagamento', 'PagamentoController');
     Route::resource('ferias', 'ControleFeriasController');
+
+
+
 });
+//Rotas AJAX
+Route::post('buscacargos','PagamentoController@buscaCargo');
+Route::post('buscasalario','PagamentoController@buscaSalario');

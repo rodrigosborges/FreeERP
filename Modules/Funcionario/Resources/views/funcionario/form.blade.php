@@ -155,7 +155,96 @@
                         <span class="errors"> {{ $errors->first('documentos.rg.numero') }}</span>
                     </div>
                 </div>
-            </div>        
+            </div> 
+                
+            
+            <!-- numero da CTPS começa aki    -->
+            <div id="documentos">
+             <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="tipo" class="control-label">Numero CTPS <span class="required-symbol">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">description</i>
+                                </span>
+                            </div>
+                            @if($data['model'])
+                                <input type="hidden" name="documentos[numero_ctps][id]" value="{{$data['model']->numero_ctps()->id}}">
+                            @endif
+                            <input required type="text" placeholder="Numero CTPS" name="documentos[numero_ctps][numero]" id="numero_ctps" class="form-control numero_ctps" value="{{ old('documentos.numero_ctps.numero', $data['model'] ? $data['model']->numero_ctps()->numero : '') }}">
+                            <input required type="hidden" name="documentos[numero_ctps][tipo_documento_id]" value="4">
+                        </div>
+                        <span class="errors"> {{ $errors->first('documentos.numero_ctps.numero') }}</span>
+                    </div>
+                </div>
+                <!-- acaba aki -->
+                <!-- numero de serie da ctps -->
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="tipo" class="control-label">Série CTPS <span class="required-symbol">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">description</i>
+                                </span>
+                            </div>
+                            @if($data['model'])
+                                <input type="hidden" name="documentos[serie_ctps][id]" value="{{$data['model']->serie_ctps()->id}}">
+                            @endif
+                            <input required type="text" placeholder="Série da CTPS" name="documentos[serie_ctps][numero]" id="serie_ctps" class="form-control" value="{{ old('documentos.serie_ctps.numero', $data['model'] ? $data['model']->serie_ctps()->numero : '') }}">
+                            <input required type="hidden" name="documentos[serie_ctps][tipo_documento_id]" value="4">
+                        </div>
+                        <span class="errors"> {{ $errors->first('documentos.serie_ctps.numero') }}</span>
+                    </div>
+                </div>
+            </div>    
+            <!-- acaba aki -->
+
+            <!-- UF CTPS -->
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="tipo" class="control-label">UF CTPS <span class="required-symbol">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">description</i>
+                                </span>
+                            </div>
+                            @if($data['model'])
+                                <input type="hidden" name="documentos[uf_ctps][id]" value="{{$data['model']->uf_ctps()->id}}">
+                            @endif
+                            <input required type="text" placeholder="UF CTPS" name="documentos[uf_ctps][numero]" id="uf_ctps" class="form-control uf_ctps" value="{{ old('documentos.uf_ctps.numero', $data['model'] ? $data['model']->uf_ctps()->numero : '') }}">
+                            <input required type="hidden" name="documentos[uf_ctps][tipo_documento_id]" value="4">
+                        </div>
+                        <span class="errors"> {{ $errors->first('documentos.uf_ctps.numero') }}</span>
+                    </div>
+                </div>
+                <!-- acaba aki -->
+
+                <!-- numero do pis -->
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="tipo" class="control-label">Numero PIS <span class="required-symbol">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">description</i>
+                                </span>
+                            </div>
+                            @if($data['model'])
+                                <input type="hidden" name="documentos[pis][id]" value="{{$data['model']->pis()->id}}">
+                            @endif
+                            <input required type="text" placeholder="PIS" name="documentos[pis][numero]" id="pis" class="form-control" value="{{ old('documentos.pis.numero', $data['model'] ? $data['model']->pis()->numero : '') }}">
+                            <input required type="hidden" name="documentos[pis][tipo_documento_id]" value="7">
+                        </div>
+                        <span class="errors"> {{ $errors->first('documentos.pis.numero') }}</span>
+                    </div>
+                </div>
+            </div> 
+            <!-- acaba aki -->
             @foreach(old('docs_outros', $data['documentos']) as $key => $documento)
 
                 <div class="row doc {{ isset($documento['numero']) ? '' : 'd-none'}}">
@@ -224,7 +313,7 @@
                 </div>
             @endforeach
         </div>
-        <div class="mt-2">
+        <div class="mt-2 d-flex justify-content-start">
             <i class="btn btn-info border text-center add-doc">ADICIONAR DOCUMENTO</i>
         </div>
 

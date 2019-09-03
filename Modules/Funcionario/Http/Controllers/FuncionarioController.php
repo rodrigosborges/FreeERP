@@ -80,7 +80,7 @@ class FuncionarioController extends Controller{
                 'data_admissao' =>date('Y-m-d', strtotime($request->funcionario['data_admissao'])),
                 'estado_civil_id' =>$request->funcionario['estado_civil_id'],
                 'email_id' => $email->id,
-                'endereco_id' => $endereco->id,
+                'endereco_id' => $endereco->id, 
                 'cargo_id' => $request->cargo['cargo_id']
                 
             ]);

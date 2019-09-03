@@ -12,7 +12,7 @@ class Pagamento extends Model
     protected $table = 'pagamento';
 
     protected $fillable = ['valor', 'horas_extras', 'adicional_noturno', 
-                           'inss', 'faltas', 'emissao', 'tipo_pagamento', 'funcionario_id'];
+                           'inss', 'faltas', 'emissao', 'tipo_pagamento', 'funcionario_id', 'total'];
 
     public $timestamps = false;
 

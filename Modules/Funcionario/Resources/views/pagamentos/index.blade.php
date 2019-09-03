@@ -1,32 +1,47 @@
 @extends('funcionario::template')
 
-@section('title','Pagamentos')
+@section('title','Lista Pagamentos')
 
 @section('body')
 
-<table class="table">
+<table class="table text-center">
   <thead>
     <tr>
       <th scope="col">Nome</th>
-      <th scope="col">Cargo</th>
-      <th scope="col">Pagamento</th>
+      <th scope="col">Valor</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Data</th>
+      <th scope="col" colspan="2">Opções</th>
+      <th><a href="{{url($data['url'])}}" class="btn btn-success"><i class="material-icons">note_add</i></a></th>
+
+
 
     </tr>
   </thead>
   <tbody>
-    @foreach($data['funcionarios'] as $funcionario)
+    @foreach($pagamentos as $pagamento)
     <tr>
-      <td> {{ $funcionario->nome }} </td>
-      <td> Cargo </td>
-      <td>
-        <form action="{{ url('funcionario/pagamento/create/') }}" id="form" method="GET" enctype="multipart/form-data">
-            <input type="hidden" name="funcionario" value="{{$funcionario->id}}">
-            <button type="submit"><i class="material-icons">note_add</i></button>
-        </form>
+      <td>{{ $pagamento->funcionario->nome }} </td>
+      <td>{{ $pagamento->total}} </td>
+      <td>{{ $pagamento->tipo_pagamento}}</td>
+      <td>{{ $pagamento->emissao}} </td>
+      <td><a href="pagamento/{{ $pagamento->id }}/edit" class="btn btn-warning"><i class="material-icons">edit</i></a></td>
+      <td><a href="" class="btn btn-danger"><i class="material-icons">delete</i></a></td>
+
+    </tr>
+  </tbody>
+  </tfoot>
+  @endforeach
+  <tfoot>
+    @if($pagamentos->lastPage() > 1)
+    <tr>
+      <td colspan="100%" class="text-center">
+        {{ $pagamentos->links() }}
       </td>
     </tr>
-    @endforeach
-  </tbody>
+    @endif
+
+
 </table>
 @endsection
 
