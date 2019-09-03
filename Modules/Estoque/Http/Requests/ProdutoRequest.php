@@ -12,7 +12,7 @@ class ProdutoRequest extends FormRequest
             'nome' => ['required', 'min: 3', 'max: 45'],
             'preco' => ['required', 'numeric'],
             'descricao' => ['max: 500'],
-            'codigo' => ['required', 'numeric', 'unique:produto,codigo']
+            'codigo' => ['required', 'numeric', 'unique:produto,codigo,'.$this->route('produto')]
         ];
     }
 
