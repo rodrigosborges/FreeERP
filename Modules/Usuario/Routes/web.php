@@ -41,6 +41,8 @@ Route::prefix('modulo')->group(function() {
     Route::put('/{id}', 'ModuloController@update');
     // Deletar
     Route::delete('/{id}', 'ModuloController@destroy');
+    // Restaurar
+    Route::put('/{id}/restore', 'ModuloController@restore');
 });
 // Papéis
 Route::prefix('papel')->group(function() {

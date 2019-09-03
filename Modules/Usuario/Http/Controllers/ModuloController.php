@@ -17,7 +17,15 @@ class ModuloController extends Controller
      */
     public function index()
     {
-        return view('usuario::modulo.index');
+        $todosModulos = Modulo::withTrashed()->get();
+        $modulosAtivos = Modulo::all();
+        $modulosInativos = Modulo::onlyTrashed()->get();
+
+        return view('usuario::modulo.index', compact(
+            'todosModulos',
+            'modulosAtivos',
+            'modulosInativos'
+        ));
     }
 
     /**
@@ -65,7 +73,8 @@ class ModuloController extends Controller
      */
     public function edit($id)
     {
-        return view('usuario::edit');
+        $modulo = Modulo::findOrFail($id);
+        return view('usuario::modulo.form', compact('modulo'));
     }
 
     /**
@@ -76,7 +85,10 @@ class ModuloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $modulo = Modulo::findOrFail($id);
+        $modulo->update($request->all());
+
+        return redirect('modulo/'.$modulo->id.'/edit')->with('success', 'Módulo '.$modulo->nome.' alterado com sucesso!');
     }
 
     /**
@@ -86,6 +98,14 @@ class ModuloController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $modulo = Modulo::findOrFail($id);
+        $modulo->delete();
+        return back();
+    }
+
+    public function restore($id){
+        $modulo = Modulo::onlyTrashed()->findOrFail($id);
+        $modulo->restore();
+        return back();
     }
 }
