@@ -57,7 +57,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{$papeis->links()}}
                 </div>
+
             </div>
             
             <div id="inativos" class="tab-pane fade">
@@ -86,13 +88,16 @@
                             @endif
                         </tbody>
                     </table>
-                
+                    
                 </div>
+
             </div>
 
             </div>
-            <button class="btn btn-primary"><a href="{{url('papel/cadastrar')}}" style="color:white"><i class="material-icons" style="float:left;padding-right:5px">add_circle_outline</i> Novo</a></button>
-            {{$papeis->links()}}
+            
+            <a href="{{url('papel/cadastrar')}}" style="color:white"><button class="btn btn-primary"><i class="material-icons" style="float:left;padding-right:5px">add_circle_outline</i> Novo</button></a>
+            
         </div>
+        
     </div>
 @endsection
