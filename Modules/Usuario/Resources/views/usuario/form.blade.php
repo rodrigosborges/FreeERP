@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail</label>
-                        <input required value="{{old('email', isset($usuario) ? $usuario->email : '')}}" class="form-control" type="email" name="email">
+                        <input required id='email' value="{{old('email', isset($usuario) ? $usuario->email : '')}}" class="form-control" type="email" name="email">
                         {{$errors->first('email')}}
                     </div>
                     @if(!isset($usuario))
@@ -76,11 +76,12 @@ $("#usuarioForm").validate({
             required:true,
             minlength: 3,
             maxlength:50,
-            remote: "{{url('usuario/check-unique')}}",       
+            remote: "{{url('usuario/check-unique' , isset($usuario) ? $usuario->id : null)}}",   
         },
         email:{
             required:true,
             email:true,
+            remote: "{{url('usuario/check-unique' , isset($usuario) ? $usuario->id : null)}}", 
         },
         password:{
             required:true,
@@ -101,7 +102,8 @@ $("#usuarioForm").validate({
         },
         email:{
             required:"<span style='color:red'>Preencha o campo Email</span>",
-            email:"<span style='color:red'>Insira um email válido (exemplo@exemplo.com)</span>"
+            email:"<span style='color:red'>Insira um email válido (exemplo@exemplo.com)</span>",
+            remote:"<span style='color:red'>Email indisponível</span>"
         },
         password:{
             required:"<span style='color:red'>Preencha o campo Senha</span>",

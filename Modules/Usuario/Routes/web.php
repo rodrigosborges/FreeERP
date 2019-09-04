@@ -30,7 +30,7 @@ Route::prefix('usuario')->group(function() {
     // Restaurar
     Route::put('/restore/{id}', 'UsuarioController@restore');
 
-    Route::get('/check-unique', 'UsuarioController@isUnique');
+    Route::get('/check-unique/{id?}' ,'UsuarioController@isUnique');
 });
 
 // Módulo

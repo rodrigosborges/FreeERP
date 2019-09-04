@@ -162,12 +162,12 @@ class UsuarioController extends Controller
         return view('usuario::usuario.trocarSenha',compact('usuario'));
     }
 
-    public function isUnique(Request $request){
+    public function isUnique(Request $request,$id=null){
         $key = key($request->query());
-
+        
         $field = Usuario::where($key, $request->$key)->first();
-
-        if($field){
+     
+        if($field && $id != $field->id ){
             return 'false';
         } else {
             return 'true';
