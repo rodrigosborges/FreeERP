@@ -139,21 +139,30 @@ class ProdutoController extends Controller
                 return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'categorias', 'produtosInativos'));
             }
         } else {
-            $produtos;
-            $produtosInativos;
             if($request['categoria_id'] != -1){
-                $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->where('categoria_id', $request['categoria_id'])->paginate(5);
-                $produtosInativos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->where('categoria_id', $request['categoria_id'])->onlyTrashed()->paginate(5);
+                $produtos = Produto::where([
+                    ['nome', 'like', '%' . $request['pesquisa'] . '%'],
+                    ['categoria_id', '=', $request['categoria_id']]
+                ])->paginate(5);
+                $produtosInativos = Produto::where([
+                    ['nome', 'like', '%' . $request['pesquisa'] . '%'],
+                    ['categoria_id', '=', $request['categoria_id']]
+                ])->onlyTrashed()->paginate(5);
+                
+                if(count($produtos) == 0 && count($produtosInativos) == 0){
+                    return redirect('/estoque/produto')->with('error', 'Nenhum resultado encontrado');
+                } else{
+                    return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'categorias'));
+                }
             }else{
                 $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->paginate(5);
                 $produtosInativos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->onlyTrashed()->paginate(5);
-                return count($produtos); 
-            }
-            if(count($produtos) == 0 && count($produtosInativos) == 0){
                 
-            return back()->with('error', 'Nenhum resultado encontrado' );
-            } else{
-                return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'categorias'));
+                if(count($produtos) == 0 && count($produtosInativos) == 0){
+                    return redirect('/estoque/produto')->with('error', 'Nenhum resultado encontrado');
+                } else{
+                    return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'categorias'));
+                }
             }
         }
     }
