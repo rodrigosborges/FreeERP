@@ -25,7 +25,7 @@ Nova Compra - {{ $cliente->nome }}
                 <span class="input-group-text purple lighten-3" id="basic-text1">
                     <i class="material-icons" aria-hidden="true">search</i></span>
             
-                <select class="form-control" name="produto_id" id="lista">
+                <select class="form-control" name="produto_id">
                     @foreach ($produtos as $produto)
                 <option value="{{$produto->id}}">{{$produto->codigo}} - {{$produto->nome}} - R$ {{$produto->preco}}</option>
                     @endforeach
@@ -73,19 +73,25 @@ Nova Compra - {{ $cliente->nome }}
 var itens_compra = [];
 
     function add_item(){
-        selecionado = document.getElementById("lista");
-        opt = selecionado.options[selecionado.selectedIndex]; // pegar texto        
+        //$ é a variável que amarzena o Jquery
 
-        dados = opt.text.split("-");
+        var opt = $("[name='produto_id']");     
+
+        dados = opt.text().split("-");
         novaTabela(dados);
 
-        alert(opt.value + " " + opt.text);
+        alert(opt.val() + " " + opt.text());
 
-        itens_compra.push(selecionado.value);
+        itens_compra.push(opt.val());
 
     }
 
     function novaTabela(dados){
+
+
+        //adicionar uma linha à tabela usando Jquery
+        
+
         // alert("Funcao" + dados);
 
         var tBody = document.createElement("tbody");
