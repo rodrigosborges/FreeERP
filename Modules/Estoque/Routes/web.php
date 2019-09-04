@@ -29,6 +29,9 @@ Route::prefix('estoque')->group(function () {
 
     
     Route::resource('/produto', 'ProdutoController');
+
+    //preview ficha
+    Route::get('/produto/ficha/{id}', 'ProdutoController@gerarFicha');
     
 
     //Restaurar Produto

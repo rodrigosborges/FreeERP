@@ -99,8 +99,10 @@ class ProdutoController extends Controller
     {
         $produto = Produto::findOrFail($id);
         $produto->delete();
-        return back()->with('success', 'Produto desativado com sucesso!');
+        return back()->with('success'   , 'Produto desativado com sucesso!');
     }
+
+   
 
     public function restore($id)
     {
