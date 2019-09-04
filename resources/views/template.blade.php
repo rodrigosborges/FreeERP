@@ -149,6 +149,8 @@
                 workspace.style.marginLeft = marginLeftWorkspace;
                 header.style.width = widthHeader;
             }
+            
+            var main_url = "{{url('')}}"
         </script>
         @yield('js')
     </body>
