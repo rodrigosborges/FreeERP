@@ -10,14 +10,17 @@ use DB;
 
 class PedidoController extends Controller
 {
-   
+   //view listagem
     public function index($id)
     {
         $cliente = Cliente::findOrFail($id);
         $pedidos = $cliente->pedidos;
 
+    // return $pedidos[0]->vl_total_itens();
+
         return view('cliente::pedidos.index', compact('cliente'));
     }
+    //view novo pedido
     public function novo($id){
         $cliente = Cliente::findOrFail($id);
         $produtos = Produto::all();

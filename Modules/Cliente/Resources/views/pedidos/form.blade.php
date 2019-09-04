@@ -13,7 +13,7 @@ Nova Compra - {{ $cliente->nome }}
             <label for="data-pedido">Data da Compra</label>
                 <input type="date" name="data-pedido" id="data-pedido" class="form-control" placeholder="Data da Compra" required>
             </div>
-            <div class="col-4 pt-2">
+            <div class="col-3 pt-2">
                 <label for="num-pedido"></label>
                 <input type="text" name="num-pedido" id="numero" class="form-control" placeholder="Numero da Compra">
             </div>
@@ -56,20 +56,19 @@ Nova Compra - {{ $cliente->nome }}
             <thead>
                 <tr>
                     <th>Item</th>
+                    <th>Descricao</th>
+                    <th>Preco</th>
                     <th>Qtde</th>
                     <th>Desconto UN</th>
-                    <th>Preco</th>
                     <th>Vl Total</th>
                     <th>Opções</th>   
                 </tr>
                     </thead>
-                    
-
         </table>
     </div>
 </div>
-
 <script>
+
 var itens_compra = [];
 
     function add_item(){
@@ -77,12 +76,16 @@ var itens_compra = [];
         opt = selecionado.options[selecionado.selectedIndex]; // pegar texto        
 
         dados = opt.text.split("-");
-        novaTabela(dados);
 
-        alert(opt.value + " " + opt.text);
+        qtde = document.getElementById("qtde").value;
+        dados.push(qtde);
+        desconto = document.getElementById("desconto").value;
+        dados.push(desconto);
+
+        novaTabela(dados);
+        
 
         itens_compra.push(selecionado.value);
-
     }
 
     function novaTabela(dados){
@@ -98,8 +101,11 @@ var itens_compra = [];
                 // Create a <td> element and a text node, make the text
                 // node the contents of the <td>, and put the <td> at
                 // the end of the table row
+                console.log(i + " --- " +dados[i]);
+
                 var cell = document.createElement("td");
                 var cellText = document.createTextNode( dados[i] );
+                
                 cell.appendChild(cellText);
                 row.appendChild(cell);
             }
