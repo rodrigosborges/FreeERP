@@ -33,7 +33,8 @@ class ProdutoController extends Controller
        
         $produtos = Produto::paginate(5);
         $produtosInativos = Produto::onlyTrashed()->paginate(5);
-        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos'));
+        $categorias = Categoria::all();
+        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'categorias'));
     }
     /*
     public function busca(Request $request)
@@ -112,17 +113,37 @@ class ProdutoController extends Controller
 
     public function busca(Request $request)
     {
+        $categorias = Categoria::all();
+
         if ($request['pesquisa'] == null ){
-            return back()->with('error', 'Insira um nome na pesquisa' );
+            if($request['categoria_id'] != -1){
+                $produtos = Produto::where('categoria_id', $request['categoria_id'])->paginate(5);
+                $produtosInativos = Produto::onlyTrashed()->where('categoria_id', $request['categoria_id'])->paginate(5);
+                
+                return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'categorias'));
+
+            }else{
+                $produtos = Produto::paginate(5);
+                $produtosInativos = Produto::onlyTrashed()->paginate(5);
+                return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'categorias', 'produtosInativos'));
+            }
         } else {
-            $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->paginate(5);
-            $produtosInativos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->onlyTrashed()->paginate(5);
+            $produtos;
+            $produtosInativos;
+            if($request['categoria_id'] != -1){
+                $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->where('categoria_id', $request['categoria_id'])->paginate(5);
+                $produtosInativos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->where('categoria_id', $request['categoria_id'])->onlyTrashed()->paginate(5);
+            }else{
+                $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->paginate(5);
+                $produtosInativos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->onlyTrashed()->paginate(5);
+                return count($produtos); 
+            }
             if(count($produtos) == 0 && count($produtosInativos) == 0){
                 
             return back()->with('error', 'Nenhum resultado encontrado' );
-        } else{
-        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos'));
-        }
+            } else{
+                return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'categorias'));
+            }
         }
     }
 
