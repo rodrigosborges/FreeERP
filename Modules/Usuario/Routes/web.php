@@ -38,6 +38,7 @@ Route::prefix('modulo')->group(function() {
     Route::post('/', 'ModuloController@store');
     // Listar
     Route::get('/', 'ModuloController@index');
+    Route::get('/{args}', 'ModuloController@index');
     // Atualizar
     Route::get('/{id}/edit', 'ModuloController@edit');
     Route::put('/{id}', 'ModuloController@update');
