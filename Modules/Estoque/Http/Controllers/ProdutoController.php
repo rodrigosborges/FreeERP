@@ -76,6 +76,14 @@ class ProdutoController extends Controller
         }
     }
 
+    public function gerarFicha($id) 
+    {
+        $produto = Produto::findOrFail($id)->get();
+        echo $produto;
+        return view('estoque::/produto/ficha', $this->dadosTemplate, compact('produto'));
+    
+    }
+
     public function edit($id)
     {
         $produto = Produto::findOrFail($id);
