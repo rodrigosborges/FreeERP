@@ -332,7 +332,8 @@
             var adicional = parseFloat($('.adicional1').val())
             var faltas = parseFloat($('.faltas').val())
             var inss = parseFloat($('.inss').val())
-            var desconto = salario / 30 * (faltas * horas_dias)
+            var desconto = (salario / 30) * (faltas * horas_dias)
+            
 
             console.log("desconto:" + -desconto)
             var temp = total;

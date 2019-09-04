@@ -42,30 +42,7 @@ class ControleFeriasController extends Controller
      */
     public function store(Request $request)
     {   
-        DB::beginTransaction();
-		try{
-            if($request->pagamento_parcela13 == "on"){
-                $pagamento13 = true;
-            }else{
-                $pagamento13 = false;
-            }
-			$ferias = Ferias::Create([
-                'data_inicio' => date('Y-m-d', strtotime($request['data_inicio'])),
-                'data_fim' => date('Y-m-d', strtotime($request['data_fim'])),
-                'dias_ferias' => $request->dias_ferias,
-                'data_pagamento' => date('Y-m-d', strtotime($request['data_pagamento'])),
-                'data_aviso' => date('Y-m-d', strtotime($request['data_aviso'])),
-                'situacao_ferias' => $request['situacao_ferias'],
-                'pagamento_parcela13' => $pagamento13,
-                'observacao' => $request['observacao'],
-                'funcionario_id' => $request['funcionario_id'],
-            ]);
-			DB::commit();
-			return redirect('funcionario/ferias')->with('success', 'Férias cadastrada com sucesso!');
-		}catch(Exception $e){
-			DB::rollback();
-			return back();
-		}
+        
     
     }
 
@@ -118,10 +95,10 @@ class ControleFeriasController extends Controller
         $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
         $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
         $ano_atual = date('Y', time());
-        $anos_trampo = ($ano_atual-$ano)*366;
+        $anos_trampo = (($ano_atual-$ano)-1)*364;
         //return $admissao;
         $data_inicio_periodo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao))) ;
-        $teste = $anos_trampo+366;
+        $teste = $anos_trampo+364;
         $data_fim_periodo = date('d/m/Y', strtotime( "+ $teste days", strtotime($admissao)));
         $data = [
             'title' => 'Ferias',

@@ -21,13 +21,15 @@ Route::prefix('funcionario')->group(function() {
     Route::post('funcionario/editCargo/{id}','FuncionarioController@updateCargo');
     Route::get('funcionario/downloadComprovante/{id}','FuncionarioController@downloadComprovante');
     Route::get('ferias/controleFerias/{id}','ControleFeriasController@controleFerias');
+    Route::get('ferias/listar/{id}','FeriasController@listar');
 
     Route::resource('funcionario', 'FuncionarioController');
     Route::resource('cargo', 'CargoController');
     
-    //folha pagamento
+    
     Route::resource('pagamento', 'PagamentoController');
-    Route::resource('ferias', 'ControleFeriasController');
+    Route::resource('controleFerias', 'ControleFeriasController');
+    Route::resource('ferias', 'FeriasController');
 
 
 
