@@ -10,6 +10,7 @@ use Modules\Usuario\Http\Requests\{UsuarioStoreRequest,UsuarioUpdateRequest,Troc
 use Illuminate\Support\Facades\Hash;
 use DB;
 use Illuminate\Support\Facades\Storage;
+use File;
 
 class UsuarioController extends Controller
 {
@@ -120,7 +121,8 @@ class UsuarioController extends Controller
                 }
                 //verifica se o nome do avatar não é default para então apagar a foto antiga
                 if(!($usuario->avatar == 'default.jpg') && $avatar){
-                    Storage::delete($usuario->avatar);
+                    $dirPath = "C:\\xampp\\htdocs\\FreeERP\\public\\storage\\img\\avatars\\";
+                    File::delete($dirPath.$usuario->avatar);
                     $usuario->avatar = $nameFile;
                     $usuario->save();
                 }
