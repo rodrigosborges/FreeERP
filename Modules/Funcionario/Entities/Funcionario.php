@@ -27,7 +27,7 @@ class Funcionario extends Model {
         return $this->belongsToMany('Modules\Entities\Telefone');
     }
     public function documento(){
-        return $this->belongsToMany('App\Entities\Documento');
+        return $this->belongsToMany('App\Entities\Documento', 'funcionario_has_documento');
     }
     public function cargos(){
         return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada');

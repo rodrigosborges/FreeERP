@@ -106,6 +106,12 @@ class FuncionarioController extends Controller{
                 ];
                      
                 $doc = Documento::create($newDoc);
+                //Ajustar Attach de Documentos
+                // $funcionario->documento()->attach([
+                //     'documento_id'=>$doc->id,
+                //     'funcionario_id'$funcionario->id,
+                // ]
+                // );
                 
 
             }
@@ -133,9 +139,9 @@ class FuncionarioController extends Controller{
                             $documento['comprovante'] = $nomeArquivo;
                         
                         }
-                    
+                        
                         $doc = Documento::create($documento);
-                        $funcionario->documentos->attach($doc);
+                        
                     }
                 }
             }
