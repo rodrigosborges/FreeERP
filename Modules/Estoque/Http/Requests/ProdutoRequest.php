@@ -12,7 +12,7 @@ class ProdutoRequest extends FormRequest
             'nome' => ['required', 'min: 3', 'max: 45'],
             'preco' => ['required', 'numeric'],
             'descricao' => ['max: 500'],
-            'codigo' => ['required', 'numeric', 'unique:produto,codigo,'.$this->route('produto')]
+            'codigo' => ['required', 'numeric', 'digits_between:8,13','unique:produto,codigo,'.$this->route('produto')]
         ];
     }
 
@@ -20,9 +20,10 @@ class ProdutoRequest extends FormRequest
         return[
             'required' => 'O campo :attribute é obrigatório!',
             'min' => 'Minimo de :min caracteres!',
-            'max' => 'Minimo de :max caracteres!',
+            'max' => 'Máximo de :max caracteres!',
             'unique' => ':attribute já cadastrado!',
-            'numeric' => 'Insira apenas valores númericos'
+            'numeric' => 'Insira apenas valores númericos',
+            'digits_between' => 'Insira entre 8 e 13 caracteres'
         ];
     }
 
