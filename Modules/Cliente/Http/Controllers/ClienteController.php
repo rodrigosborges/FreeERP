@@ -15,7 +15,9 @@ class ClienteController extends Controller
     
     public function index()
     {
-        return 'index';
+        $clientes = Cliente::paginate(10);
+
+        return view('cliente::cliente.index', compact('clientes'));
     }
 
     
@@ -30,28 +32,26 @@ class ClienteController extends Controller
 
     
     public function store(/*CreateClienteRequest*/Request $request) {
-
-      
         DB::beginTransaction();
         try {
-
             $dados = $request->all();
-            $dados['documento'] = preg_replace('/\D/', '', $dados['documento']);
+
+            $dados['documento']['documento'] = preg_replace('/\D/', '', $dados['documento']['documento']);
 
             $endereco = Endereco::create($dados['endereco']);
+
             $email = Email::create($dados['email']);
 
-            $tipo_documento_id = $dados['tipo_cliente_id'] == 1 ? 1 : 6;
+            $tipo_documento_id = $dados['cliente']['tipo_cliente_id'] == 1 ? 1 : 6;
             $documento = Documento::create([
-                'numero' =>$dados['documento'],
+                'numero' =>$dados['documento']['documento'],
                 'tipo_documento_id' =>  $tipo_documento_id 
             ]);
               
             $cliente = Cliente::create([
-                'nome_fantasia' => $dados['tipo_cliente_id'] == 2 ? $dados['nome_fantasia'] : null, 
-                'nome' => $dados['nome'],
-                'nome_fantasia' => $dados['nome_fantasia'],
-                'tipo_cliente_id' => $dados['tipo_cliente_id'],
+                'nome_fantasia' => $dados['cliente']['tipo_cliente_id'] == 2 ? $dados['cliente']['nome_fantasia'] : null, 
+                'nome' => $dados['cliente']['nome'],
+                'tipo_cliente_id' => $dados['cliente']['tipo_cliente_id'],
                 'documento_id' => $documento->id,
                 'endereco_id' => $endereco->id,
                 'email_id' => $email->id
@@ -91,31 +91,22 @@ class ClienteController extends Controller
       
             $cliente = Cliente::findOrFail($id);
 
-            $dados['documento'] = preg_replace('/\D/', '', $dados['documento']);      
+            $dados['documento']['documento'] = preg_replace('/\D/', '', $dados['documento']['documento']);      
 
-            $endereco = Endereco::findOrFail($cliente['endereco_id']);
+            $tipo_documento_id = $dados['cliente']['tipo_cliente_id'] == 1 ? 1 : 6;
             
-            $email = Email::findOrFail($cliente['endereco_id']);
+            $cliente->endereco->update($dados['endereco']);
 
-            $tipo_documento_id = $dados['tipo_cliente_id'] == 1 ? 1 : 6;
-            $documento = Documento::findOrFail($cliente['documento_id']);
-            
+            $cliente->email->update($dados['email']);
 
-            $endereco->update($dados['endereco']);
-
-            $email->update(['email' => $dados['email']]);
-
-            $documento->update([
-                'numero' =>$dados['documento'],
+            $cliente->documento->update([
+                'numero' =>$dados['documento']['documento'],
                 'tipo_documento_id' =>  $tipo_documento_id 
             ]);
             $cliente->update([
-                'nome' => $dados['nome'],
-                'nome_fantasia' => $dados['nome_fantasia'],
-                'tipo_cliente_id' => $dados['tipo_cliente_id'],
-                'documento_id' => $documento->id,
-                'endereco_id' => $endereco->id,
-                'email_id' => $email->id
+                'nome' => $dados['cliente']['nome'],
+                'nome_fantasia' => $dados['cliente']['tipo_cliente_id'] == 2 ? $dados['cliente']['nome_fantasia'] : null, 
+                'tipo_cliente_id' => $dados['cliente']['tipo_cliente_id']
             ]);
 
             $naoExcluir = [];
