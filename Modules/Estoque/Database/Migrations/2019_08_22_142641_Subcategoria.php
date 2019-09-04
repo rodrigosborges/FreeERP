@@ -18,9 +18,6 @@ class Subcategoria extends Migration
             $table->integer('id');
             $table->integer('categoria_id')->unsigned()->nullable()->index('fk_categoria_pai');
             $table->softDeletes();
-            $table->foreign('categoria_id', 'fk_categoria_pai')->references('id')->on('categoria')->onUpdate('NO ACTION')->onDelete('CASCADE');
-            $table->foreign('id', 'fk_categoria')->references('id')->on('categoria')->onUpdate('NO ACTION')->onDelete('CASCADE');
-
             $table->timestamps();
             
             

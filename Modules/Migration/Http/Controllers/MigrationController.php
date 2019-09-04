@@ -1,40 +1,20 @@
 <?php
 
-namespace Modules\Estoque\Http\Controllers;
+namespace Modules\Migration\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
-class EstoqueController extends Controller
+class MigrationController extends Controller
 {
-    public $dadosTemplate;
-
-    public function __construct()
-    {
-        $moduleInfo = [
-            'icon' => 'store',
-            'name' => 'Estoque',
-        ];
-        $menu = [
-            ['icon' => 'shopping_basket', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
-            ['icon' => 'format_align_justify', 'tool' => 'Categoria', 'route' => url('/estoque/produto/categoria')],
-            ['icon' => 'store', 'tool' => 'Estoque', 'route' => url('estoque')],
-        ];
-        $this->dadosTemplate = [
-            'moduleInfo' => $moduleInfo,
-            'menu' => $menu,
-        ];
-    }
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-
-        return view('estoque::estoque.index', $this->dadosTemplate);
-
+        return view('migration::index');
     }
 
     /**
@@ -43,7 +23,7 @@ class EstoqueController extends Controller
      */
     public function create()
     {
-        return view('estoque::create');
+        return view('migration::create');
     }
 
     /**
@@ -63,7 +43,7 @@ class EstoqueController extends Controller
      */
     public function show($id)
     {
-        return view('estoque::show');
+        return view('migration::show');
     }
 
     /**
@@ -73,7 +53,7 @@ class EstoqueController extends Controller
      */
     public function edit($id)
     {
-        return view('estoque::edit');
+        return view('migration::edit');
     }
 
     /**

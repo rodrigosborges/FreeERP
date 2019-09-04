@@ -27,6 +27,7 @@ class CategoriaController extends Controller
         $menu = [
             ['icon' => 'shopping_basket', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
             ['icon' => 'format_align_justify', 'tool' => 'Categoria', 'route' => url('estoque/produto/categoria')],
+            ['icon' => 'store', 'tool' => 'Estoque', 'route' => url('estoque')],
         ];
         $this->dadosTemplate = [
             'moduleInfo' => $moduleInfo,
@@ -83,10 +84,8 @@ class CategoriaController extends Controller
         $categoria = Categoria::findOrFail($id);
         $categorias = Categoria::all()->except($id);
         $subcategoria = Subcategoria::findOrFail($id);
-
         return view('estoque::categoria.form', $this->dadosTemplate, compact('categoria', 'subcategoria', 'categorias', 'data'));
     }
-
     /**
      * Update the specified resource in storage.
      * @param Request $request
