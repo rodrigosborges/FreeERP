@@ -24,7 +24,11 @@ class TipoDocumentoSeeder extends Seeder
             ],
             [
                 'nome'          => 'CNPJ',
+            ],
+            [
+                'nome'          => 'Numero de Pis',
             ]
+                
         ]);
     }
 }
