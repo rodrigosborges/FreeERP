@@ -489,9 +489,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 mt-2">
+                    <div class="col-lg-6 mt-2 ">
                         <br>
-                        <i class="btn btn-info border text-center material-icons add-tel">add</i>
+                        <i class="btn btn-info border text-center material-icons add-tel ">add</i>
                         <i class="btn btn-danger border text-center material-icons del-tel">delete</i>
                     </div>
                 </div>
@@ -570,6 +570,7 @@
                         </div>
 
                         <div class="col-lg-3">
+                            
                             <div class="form-group">
                                 <label for="cpf_dep_{{$key}}" class="control-label">CPF <span class="required-symbol">*</span></label>
                                 <div class="input-group">
@@ -589,17 +590,17 @@
                         </div>
 
                     </div>
-
-                    <div class="col-lg-3">
+                    
+                    <div class="col-lg-3 ">
                             <div class="form-group">
                                 <label class="control-label">Certidão de Matricula? <span class="required-symbol">*</span></label><br>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
+                                <div class="input-group ">
+                                    <div class="input-group-prepend ">
                                         <span class="input-group-text">
                                             <i class="material-icons">description</i>
                                         </span>
                                     </div>
-                                    <select required name="dependentes[{{$key}}][certidao_matricula]" id="certidao_matricula_{{$key}}" class="form-control dependentes">
+                                    <select required name="dependentes[{{$key}}][certidao_matricula]" id="certidao_matricula_{{$key}}" class="form-control dependentes ">
                                         <option value="">Selecione</option>
                                         <option value="1" {{ old('dependentes.$key.certidao_matricula', isset($dependente->certidao_matricula) ? $dependente->certidao_matricula : '') == '1' ? 'selected' : '' }}>Sim</option>
                                         <option value="0" {{ old('dependentes.$key.certidao_matricula', isset($dependente->certidao_matricula) ? $dependente->certidao_matricula : '') == '0' ? 'selected' : '' }}>Não</option>
@@ -610,7 +611,7 @@
                         </div>
 
                         <div class="col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <label class="control-label">Certidão de Vacina? <span class="required-symbol">*</span></label><br>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -618,7 +619,7 @@
                                             <i class="material-icons">description</i>
                                         </span>
                                     </div>
-                                    <select required name="dependentes[{{$key}}][certidao_vacina]" id="certidao_vacina_{{$key}}" class="form-control dependentes">
+                                    <select required name="dependentes[{{$key}}][certidao_vacina]" id="certidao_vacina_{{$key}}" class="form-control dependentes ">
                                         <option value="">Selecione</option>
                                         <option value="1" {{ old('dependentes.$key.certidao_vacina', isset($dependente->certidao_vacina) ? $dependente->certidao_vacina : '') == '1' ? 'selected' : '' }}>Sim</option>
                                         <option value="0" {{ old('dependentes.$key.certidao_vacina', isset($dependente->certidao_vacina) ? $dependente->certidao_vacina : '') == '0' ? 'selected' : '' }}>Não</option>
@@ -632,7 +633,7 @@
             @endforeach
         </div>
 
-        <div class="mt-2">
+        <div class="mt-2 d-flex justify-content-start">
             <i class="btn btn-info border text-center add-dep">ADICIONAR DEPENDENTE</i>
         </div>
 
