@@ -25,7 +25,7 @@
                         </div>
                         @endif
                         <label for="apelido">Apelido</label>
-                        <input required minlenght='3' maxlenght='50' value="{{old('apelido', isset($usuario) ? $usuario->apelido : '')}}" class="form-control" type="text" name="apelido">
+                        <input required minlenght='3' id="apelido" maxlenght='50' value="{{old('apelido', isset($usuario) ? $usuario->apelido : '')}}" class="form-control" type="text" name="apelido">
                         {{$errors->first('apelido')}}
                     </div>
                     <div class="form-group">
@@ -67,16 +67,20 @@
 @section('js')
 <script type="text/javascript" src="{{asset('js/jquery.validate.min.js')}}"></script>
 <script>
+
+var apelido = $("#apelido").text()
+
 $("#usuarioForm").validate({
     rules:{
         apelido:{
             required:true,
             minlength: 3,
-            maxlength:50
+            maxlength:50,
+            remote: "{{url('usuario/check-unique')}}",       
         },
         email:{
             required:true,
-            email:true
+            email:true,
         },
         password:{
             required:true,
@@ -92,7 +96,8 @@ $("#usuarioForm").validate({
         apelido:{
             required:"<span style='color:red'>Preencha o campo Apelido</span>",
             minlength:"<span style='color:red'>Apelido tem que ter no minímo 3 caracteres</span>",
-            maxlength:"<span style='color:red'>Apelido tem que ter no máximo 50 caracteres</span>"
+            maxlength:"<span style='color:red'>Apelido tem que ter no máximo 50 caracteres</span>",
+            remote:"<span style='color:red'>Apelido indisponível</span>"
         },
         email:{
             required:"<span style='color:red'>Preencha o campo Email</span>",

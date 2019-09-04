@@ -27,6 +27,8 @@ Route::prefix('usuario')->group(function() {
     Route::delete('/{id}', 'UsuarioController@destroy');
     // Restaurar
     Route::put('/restore/{id}', 'UsuarioController@restore');
+
+    Route::get('/check-unique', 'UsuarioController@isUnique');
 });
 
 // Módulo
