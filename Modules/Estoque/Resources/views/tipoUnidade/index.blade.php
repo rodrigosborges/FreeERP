@@ -1,5 +1,5 @@
 @extends('estoque::estoque.estoqueTemplate')
-@section('title', 'Estoque')
+@section('title', 'Tipo de Unidade')
 @section('body')
 <table class="table text-center ">
     <thead class="">
@@ -8,7 +8,7 @@
             <th scope="col">Nome</th>
             <th scope='col'>Ações</th>
             <th>
-                <a class="btn btn-success btn-md" href="{{url('/estoque/create')}}">
+                <a class="btn btn-success btn-md" href="{{url('/estoque/tipo-unidade/create')}}">
                     <i class="material-icons">note_add</i>
                 </a>
             </th>
