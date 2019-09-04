@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', 'LoginController@index');
+Route::post('/logar', 'LoginController@authenticate');
 
 Route::prefix('usuario')->group(function() {
     //Trocar Senha
