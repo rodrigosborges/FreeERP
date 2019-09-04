@@ -25,11 +25,11 @@ class PapelController extends Controller
             $busca = $request->get('busca');
 
                  $papeis = Papel::where('nome', 'like', "%{$busca}%")
-                 ->paginate(5);
+                 ->paginate(10);
              $papeis->appends(['busca' => $busca]);
              return view('usuario::papel.index', compact('papeis', 'busca', 'papeisInativos'));
          }else{
-            $papeis = Papel::paginate(5);
+            $papeis = Papel::paginate(10);
             return view('usuario::papel.index', compact('papeis', 'papeisInativos'));
          }
     }
@@ -82,7 +82,7 @@ class PapelController extends Controller
     public function edit($id)
     {
         $papel = Papel::findOrFail($id);
-        return view('usuario::papel.form', compact('papel'));
+        return view('usuario::papel.form');
     }
 
     /**
