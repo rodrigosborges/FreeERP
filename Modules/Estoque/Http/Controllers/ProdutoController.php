@@ -80,13 +80,8 @@ class ProdutoController extends Controller
     public function gerarFicha($id) 
     {
         $produto = Produto::findOrFail($id);
-        $categorias = Categoria::all();
-        foreach($categorias as $categoria) {
-            if($categoria->id == $produto->categoria_id)
-                $categorias = Categoria::findOrFail($categoria->id);
-        }
         
-        return view('estoque::/produto.ficha', $this->dadosTemplate, compact('produto','categorias'));
+        return view('estoque::/produto.ficha', $this->dadosTemplate, compact('produto'));
     
     }
 

@@ -33,7 +33,7 @@
 
                 <div class="col-md-4">
                     <label for="categoria">Categoria</label>
-                    <input placeholder="{{$categorias->nome}}" name="categoria_id" class="form-control" disabled="disabled">
+                    <input placeholder="{{$produto->categoria->nome}}" name="{{$produto->categoria_id}}" class="form-control" disabled="disabled">
                     
             
                 </div>
