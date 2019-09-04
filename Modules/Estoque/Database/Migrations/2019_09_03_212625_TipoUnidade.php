@@ -16,6 +16,7 @@ class TipoUnidade extends Migration
         Schema::create('tipo_unidade', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome', 20);
+            $table->integer('quantidade_itens');
             $table->softDeletes();
             $table->timestamps();
         });

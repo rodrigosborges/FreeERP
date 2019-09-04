@@ -12,32 +12,33 @@ $menu = [
 
 @extends('template')
 
-@section('css')
-<link rel="stylesheet" type="text/css" href="{{Module::asset('funcionario:css/style.css')}}">
-@yield('style')
-@endsection
+
 
 @section('content')
 <div class="container">
+
     <div class="card text-center">
+
         <div class="card-header">
             <h5>@yield('title')</h5>
+
         </div>
+        <ul class="nav justify-content-center bg-secondary" style="margin-bottom:25px">
+            <li class="nav-item ">
+                <a class="nav-link text-white " href= "{{url('estoque')}}">Inicial</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link text-white" href="#">Relatorios</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link text-white " href="{{url('estoque/tipo-unidade')}}">Gerenciar Unidades</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link text-white " href="#">Movimentação de estoque</a>
+            </li>
+        </ul>
         <div class="card-body">
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link  active" href="#">Inicial</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-info" href="#">Relatorios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-info " href="{{url('estoque/tipo-unidade')}}">Gerenciar Unidades</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-info " href="#">Movimentação de estoque</a>
-                </li>
-            </ul>
+
             @yield('body')
         </div>
         @if (trim($__env->yieldContent('footer')))
