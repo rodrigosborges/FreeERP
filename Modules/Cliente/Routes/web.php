@@ -16,6 +16,7 @@
 Route::prefix('cliente')->group(function() {
     
     Route::resource('/cliente', 'ClienteController');
+    Route::post('/cliente/busca',['as'=>'cliente.buscar','uses'=>'ClienteController@buscar']);
 
     Route::get('{id}/pedido', 'PedidoController@index');
     Route::get('{id}/pedido/novo', 'PedidoController@novo');
