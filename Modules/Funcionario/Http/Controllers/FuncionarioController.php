@@ -93,8 +93,9 @@ class FuncionarioController extends Controller{
             );
 
            
+            foreach($request->documentos as $documento) {
 
-            foreach($request->documentos as $key => $documento) {
+                
 
                 if($documento['tipo_documento_id'] == 1)
                     $documento['numero'] = str_replace([".","-"],"",$documento['numero']);
@@ -103,11 +104,13 @@ class FuncionarioController extends Controller{
                     'tipo_documento_id'     => $documento['tipo_documento_id'],
                     'numero'                => $documento['numero']
                 ];
-
+                     
                 $doc = Documento::create($newDoc);
-
+                
 
             }
+
+
              //funcionando
             if($request->docs_outros[0]['numero'] != "" && $request->docs_outros[0]['tipo_documento_id'] != "" ) {
                 foreach($request->docs_outros as $documento) {
@@ -132,7 +135,7 @@ class FuncionarioController extends Controller{
                         }
                     
                         $doc = Documento::create($documento);
-
+                        $funcionario->documentos->attach($doc);
                     }
                 }
             }
@@ -167,15 +170,14 @@ class FuncionarioController extends Controller{
 
             if($request->cursos[0]['nome'] != "" && $request->cursos[0]['area_atuacao'] != "" && $request->cursos[0]['duracao_horas_curso'] != "" && 
                $request->cursos[0]['data_realizacao'] != "" && $request->cursos[0]['validade_curso'] != ""){
-
-                foreach($request->cursos as $curso){
-                   
+                
+                foreach($request->cursos as $key => $curso){
                     $curso = [
-                        'nome' => $request->curso['nome'],
-                        'area_atuacao' => $request->curso['area_atuacao'],
-                        'duracao_horas_curso' => $request->curso['duracao_horas_curso'],
-                        'data_realizacao' =>  date('Y-m-d', strtotime($request->curso['data_realizacao'])),
-                        'validade_curso' => $request->curso['validade_curso'],
+                        'nome' => $curso['nome'],
+                        'area_atuacao' => $curso['area_atuacao'],
+                        'duracao_horas_curso' => $curso['duracao_horas_curso'],
+                        'data_realizacao' =>  date('Y-m-d', strtotime($curso['data_realizacao'])),
+                        'validade_curso' => $curso['validade_curso'],
                         'funcionario_id' => $email->id
                     ];
                    /* $curso = [
