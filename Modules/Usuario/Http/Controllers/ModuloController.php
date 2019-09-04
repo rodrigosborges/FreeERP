@@ -17,12 +17,10 @@ class ModuloController extends Controller
      */
     public function index()
     {
-        $todosModulos = Modulo::withTrashed()->get();
         $modulosAtivos = Modulo::all();
         $modulosInativos = Modulo::onlyTrashed()->get();
 
         return view('usuario::modulo.index', compact(
-            'todosModulos',
             'modulosAtivos',
             'modulosInativos'
         ));

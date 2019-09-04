@@ -14,7 +14,10 @@
                         </div>
 
                         <div class="col-sm-2">
-                            <button class='col-4 btn-sm btn btn-primary' type="submit"><i class="material-icons">search</i></button>
+                        <button type="submit" class="btn btn-primary d-flex ml-2">
+                            <i class="material-icons mr-2">search</i>
+                            Buscar
+                        </button>
                         </div>
                     </div>
                 </form>
