@@ -82,26 +82,32 @@ class ConsertoController extends Controller
 
         $pecaOS = PecaOs::where('idConserto', $id)->get();
         $itemServico = ItemServico::where('idConserto', $id)->get();
+        
+        
         foreach($pecaOS as $item){
           $item->forceDelete();
+        }
+        if($dados['pecas']){
+          
+          for ($i=0; $i < count($dados['pecas']); $i++) {
+            $pecas = new PecaOs;
+            $pecas->idConserto = $id;
+            $pecas->idItemPeca = $dados['pecas'][$i];
+            $pecas->save();
+          }
         }
         foreach($itemServico as $item){
           $item->forceDelete();
         }
-        for ($i=0; $i < count($dados['pecas']); $i++) {
-          $pecas = new PecaOs;
-          $pecas->idConserto = $id;
-          $pecas->idItemPeca = $dados['pecas'][$i];
-          $pecas->save();
+        if($dados['servicos']){
           
+          for ($i=0; $i < count($dados['servicos']); $i++) {
+            $servicos = new ItemServico;
+            $servicos->idConserto = $id;
+            $servicos->idMaoObra = $dados['servicos'][$i];
+            $servicos->save();
+          }
         }
-        for ($i=0; $i < count($dados['servicos']); $i++) {
-          $servicos = new ItemServico;
-          $servicos->idConserto = $id;
-          $servicos->idMaoObra = $dados['servicos'][$i];
-          $servicos->save();
-        }
-
 
         DB::commit();
         return redirect()->route('consertos.localizar')->with('success','Ordem de serviço alterada com sucesso');
@@ -114,9 +120,7 @@ class ConsertoController extends Controller
     }
 
     public function salvar(StoreConsertosRequest $req){
-      DB::beginTransaction();
-      try {
-        
+      
       $dados  = $req->all();
       //REALIZAR VERIFICAÇÃO DE PEÇA E MAO DE OBRA VAZIOS, E GERAR UM VALOR PADRAO
 
@@ -131,26 +135,28 @@ class ConsertoController extends Controller
       $pagamento->forma = 'Não pago';
       $pagamento->save();
 
-      for ($i=0; $i < count($dados['pecas']); $i++) {
-        $pecas = new PecaOs;
-        $pecas->idConserto = $idConserto;
-        $pecas->idItemPeca = $dados['pecas'][$i];
-        $pecas->save();
+      if($dados['pecas']){
+        for ($i=0; $i < count($dados['pecas']); $i++) {
+          $pecas = new PecaOs;
+          $pecas->idConserto = $idConserto;
+          $pecas->idItemPeca = $dados['pecas'][$i];
+          $pecas->save();
+        }
+      }
+      if($dados['servicos']){
+        for ($i=0; $i < count($dados['servicos']); $i++) {
+          $servicos = new ItemServico;
+          $servicos->idConserto = $idConserto;
+          $servicos->idMaoObra = $dados['servicos'][$i];
+          $servicos->save();
+        }
       }
 
-      for ($i=0; $i < count($dados['servicos']); $i++) {
-        $servicos = new ItemServico;
-        $servicos->idConserto = $idConserto;
-        $servicos->idMaoObra = $dados['servicos'][$i];
-        $servicos->save();
-      }
+      
 
-      DB::commit();
+      
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço iniciada!');
-      } catch (\Exception $e) {
-        DB::rollback();
-        return back()->with('error', 'Erro ao cadastrar ordem!');
-      }
+      
       
       
       
