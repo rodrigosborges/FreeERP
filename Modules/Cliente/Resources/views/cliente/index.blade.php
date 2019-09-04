@@ -5,7 +5,7 @@
             <div class="col-12">
                 <h3>Lista de clientes...</h3>
             </div>
-            <form class="input-group col-lg-7 col-sm-10" action="" method="post">
+            <form class="input-group col-lg-7 col-sm-10" action="{{route('cliente.buscar')}}" method="post">
                 {{ csrf_field() }}
                 <input type="text" class="form-control" name="busca" placeholder="Índice de busca">
                 <div class="input-group-append">

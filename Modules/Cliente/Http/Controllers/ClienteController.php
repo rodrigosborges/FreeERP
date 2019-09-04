@@ -31,7 +31,13 @@ class ClienteController extends Controller
         return view('cliente::cliente.form', compact('tipo_cliente', 'tipo_telefone', 'estados'));
     }
 
+    public function buscar(Request $request){
+        $clientes = Cliente::busca($request->busca);
+        $clientesDeletados = Cliente::buscaInativos($request->busca);
     
+    return view('cliente::cliente.index', compact('clientes','clientesDeletados'));
+    }
+
     public function store(CreateClienteRequestRequest $request) {
         DB::beginTransaction();
         try {

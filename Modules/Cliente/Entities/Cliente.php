@@ -16,6 +16,16 @@ class Cliente extends Model
     public function tipo(){
         return $this->belongsTo('Modules\Cliente\Entities\TipoCliente');
     }
+
+    public static function busca($busca){ 
+        return static::where('nome', 'LIKE', '%'.$busca.'%')->paginate(10);
+    
+    }
+    public static function buscaInativos($busca){ 
+        return static::onlyTrashed()->where('nome', 'LIKE', '%'.$busca.'%')->paginate(10);
+    
+    }
+
     public function telefonesAll(){
         $numeros = '';
         foreach($this->telefones as $key => $telefone){
