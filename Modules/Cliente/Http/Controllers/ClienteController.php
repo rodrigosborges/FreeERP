@@ -16,8 +16,9 @@ class ClienteController extends Controller
     public function index()
     {
         $clientes = Cliente::paginate(10);
+        $clientesDeletados = Cliente::onlyTrashed()->paginate(10);
 
-        return view('cliente::cliente.index', compact('clientes'));
+        return view('cliente::cliente.index', compact('clientes','clientesDeletados'));
     }
 
     
@@ -31,7 +32,7 @@ class ClienteController extends Controller
     }
 
     
-    public function store(/*CreateClienteRequest*/Request $request) {
+    public function store(CreateClienteRequestRequest $request) {
         DB::beginTransaction();
         try {
             $dados = $request->all();
@@ -129,8 +130,7 @@ class ClienteController extends Controller
        
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $cliente = Cliente::withTrashed()->findOrFail($id);
         if($cliente->trashed()){
             $cliente->restore();
