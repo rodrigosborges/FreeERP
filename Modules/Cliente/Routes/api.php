@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Entities\Estado;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,13 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/cliente', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/cidades/{id}', function($id){
+        
+        $estado = Estado::findorFail($id);
+        
+        $cidades = $estado->cidades()->getQuery()->get(['id', 'nome']);
+        
+        return Response::json($cidades);
 });
