@@ -46,7 +46,7 @@
                                         <form action="{{url('/cliente/cliente/'.$cliente->id)}}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger">Restaurar</button>
+                                            <button type="submit" class="btn btn-danger">Apagar</button>
                                         </form>
                                     </td> 
                                 </tr>  
