@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+       <!-- <tr>
             <td></td>
             <td></td>
             <td>
@@ -33,7 +33,7 @@
                     </button>
                 </form>
             </td>
-        </tr>
+        </tr> -->
     </tbody>
     <tfoot>
         <tr>
