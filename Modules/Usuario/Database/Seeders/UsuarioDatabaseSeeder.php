@@ -13,6 +13,10 @@ class UsuarioDatabaseSeeder extends Seeder{
      * @return void
      */
     public function run(){
+        DB::table('papel')->insert([
+            'nome' => 'admin',
+        ]);
+        
         DB::table('usuario')->insert([
             'apelido' => 'admin',
             'avatar' => 'default.png',            
@@ -20,7 +24,7 @@ class UsuarioDatabaseSeeder extends Seeder{
             'password' => bcrypt('password'),
         ]);
 
-        //Model::unguard();
+        Model::unguard();
 
         // $this->call("OthersTableSeeder");
     }

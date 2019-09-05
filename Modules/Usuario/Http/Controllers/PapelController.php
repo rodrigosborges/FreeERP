@@ -49,7 +49,7 @@ class PapelController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(PapelRequest $request)
     {
         DB::beginTransaction();
         try{
@@ -92,7 +92,7 @@ class PapelController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(PapelRequest $request, $id)
     {
         $papel = Papel::findOrFail($id);
         $papel->update($request->all());

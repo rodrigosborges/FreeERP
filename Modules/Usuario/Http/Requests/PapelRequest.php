@@ -14,7 +14,7 @@ class PapelRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => ['required', 'min:3', 'max:50']
+            'nome' => ['required', 'min:3', 'max:50', 'unique:papel']
         ];
     }
 
@@ -31,6 +31,9 @@ class PapelRequest extends FormRequest
     public function messages() {
         return [
             'required' => 'O campo :attribute é obrigatório!',
+            'min' => 'O campo :attribute deve ter no mínimo 3 caracteres.',
+            'max' => 'O campo :attribute pode ter no máximo 50 caracteres.',
+            'unique' => 'O campo :attribute já existe.',
         ];
     }
 }
