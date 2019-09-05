@@ -2,7 +2,7 @@
 @section('title', 'Ficha do Produto')
 @section('content')
 
-<div class="container" style="justify-content: center">
+<div class="container" style="justify-content: center" id="imprimir">
     <div class="card">
         <div class="card-header">
             Ficha do Produto
@@ -46,13 +46,18 @@
 
         </div>
     </div>
+    
     <div class="d-flex justify-content-end mt-3">
+    <input type="button" class="btn btn-primary mr-3" value="Imprimir" onclick="window.print()"/>
     <form method="POST" action="{{url('/estoque/produto/' . $produto->id)}}">
         @method('delete')
         @csrf
-        <button type="submit" class="btn btn-danger">Desativar</button>
+        <button type="submit" class="btn btn-primary ml-3">Desativar</button>
     </form>
+    
     </div>
+    
 </div>
-@endsection
 
+
+@endsection
