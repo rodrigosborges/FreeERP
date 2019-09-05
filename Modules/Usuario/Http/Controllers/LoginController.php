@@ -24,9 +24,20 @@ class LoginController extends Controller
     {
         $credentials = $request->only('apelido', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard()->attempt($credentials)) {
             // Authentication passed...
-            return redirect()->intended('/usuario');
+            return redirect()->intended('/usuario')->with('success','Login efetuado com sucesso!');
+            // return Usuario::firstOrFail()->where('apelido', $value)
+            // $results = DB::select('select * from cliente where id = ?', [1]);
+        }else{
+            // return back()->withErrors(['apelido' => ['Usuário inválido ou inexistente'],'senha' => ['Senha incorreta']]);
+            return back()->with('error', 'Falha no login!');
         }
     }
+    public function logoutUsuario(Request $request)
+    {
+        Auth::logout();
+        return redirect()->intended('/')->with('info','Logout efetuado com sucesso!');
+    }
+
 }

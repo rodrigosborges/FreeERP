@@ -16,6 +16,8 @@
     </div>
 </form>
 
+
+
 <!----- Tabs Ativos e Inativos na tabela--->
 <nav class="nav nav-tabs">
     <a href="#ativos" data-toggle="tab" class="nav-item nav-link active show">

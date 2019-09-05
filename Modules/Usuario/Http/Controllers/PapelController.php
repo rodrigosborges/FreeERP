@@ -20,16 +20,17 @@ class PapelController extends Controller
     public function index(Request $request)
     {   
         
-        $papeisInativos = Papel::onlyTrashed()->get();
+        $papeisInativos = Papel::onlyTrashed()->paginate(5);
+
         if ($request->has('busca')) {
             $busca = $request->get('busca');
 
                  $papeis = Papel::where('nome', 'like', "%{$busca}%")
-                 ->paginate(10);
+                 ->paginate(5);
              $papeis->appends(['busca' => $busca]);
              return view('usuario::papel.index', compact('papeis', 'busca', 'papeisInativos'));
          }else{
-            $papeis = Papel::paginate(10);
+            $papeis = Papel::paginate(5);
             return view('usuario::papel.index', compact('papeis', 'papeisInativos'));
          }
     }
@@ -82,7 +83,7 @@ class PapelController extends Controller
     public function edit($id)
     {
         $papel = Papel::findOrFail($id);
-        return view('usuario::papel.form');
+        return view('usuario::papel.form', compact('papel'));
     }
 
     /**
