@@ -25,7 +25,16 @@
                         <button type="submit" class="btn btn-dark material-icons"><i id="search-button">search</i></button>
                     </div>
                 </div>
+                <div class="row">
+                        <div class="form-group col-3">
+                            <input type="text" name="preco_min" class="form-control" placeholder="Preço minimo">
+                        </div>
+                        <div class="form-group col-3">
+                            <input type="text" name="preco_max" class="form-control" placeholder="Preço máximo">
+                        </div>
+                </div>
             </form>
+            
             
             <div class="row">
                 <div class="col-12 text-right">
@@ -53,8 +62,10 @@
                                 <th scope="col">Nome</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Preço</th>
+                                <th scope="col">Visualizar</th>
                                 <th scope="col">Editar</th>
                                 <th scope="col">Deletar</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -64,7 +75,9 @@
                                 <td>{{$produto->nome}}</td>
                                 <td>{{$produto->categoria->nome}}</td>
                                 <td>R$ {{$produto->preco}}</td>
-                                <td style="display: flex; flex-direction: row;"><a href="{{url('/estoque/produto/' . $produto->id . '/edit')}}"><button class="btn btn-warning">Editar</button></a></td>
+                                <td><a href="{{url('/estoque/produto/ficha/' . $produto->id)}}"><button class="btn btn-warning">Visualizar</button></a></td>
+
+                                <td ><a href="{{url('/estoque/produto/' . $produto->id . '/edit')}}"><button class="btn btn-warning">Editar</button></a></td>
                                 <td>
                                     <!-- <form method="POST" action="{{url('/estoque/produto/' . $produto->id)}}">
                                         @method('delete')
