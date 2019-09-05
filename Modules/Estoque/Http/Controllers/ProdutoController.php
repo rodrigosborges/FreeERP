@@ -118,53 +118,46 @@ class ProdutoController extends Controller
     {
         $produto = Produto::onlyTrashed()->findOrFail($id);
         $produto->restore();
-        return back()->with('success', 'Produto ativado com sucesso!');
+        return redirect('/estoque/produto')->with('success', 'Produto ativado com sucesso!');
     }
 
 
     public function busca(Request $request)
     {
+        $sql = [];
         $categorias = Categoria::all();
-
-        if ($request['pesquisa'] == null ){
-            if($request['categoria_id'] != -1){
-                $produtos = Produto::where('categoria_id', $request['categoria_id'])->paginate(5);
-                $produtosInativos = Produto::onlyTrashed()->where('categoria_id', $request['categoria_id'])->paginate(5);
-                
-                return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'categorias'));
-
-            }else{
-                $produtos = Produto::paginate(5);
-                $produtosInativos = Produto::onlyTrashed()->paginate(5);
-                return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'categorias', 'produtosInativos'));
-            }
-        } else {
-            if($request['categoria_id'] != -1){
-                $produtos = Produto::where([
-                    ['nome', 'like', '%' . $request['pesquisa'] . '%'],
-                    ['categoria_id', '=', $request['categoria_id']]
-                ])->paginate(5);
-                $produtosInativos = Produto::where([
-                    ['nome', 'like', '%' . $request['pesquisa'] . '%'],
-                    ['categoria_id', '=', $request['categoria_id']]
-                ])->onlyTrashed()->paginate(5);
-                
-                if(count($produtos) == 0 && count($produtosInativos) == 0){
-                    return redirect('/estoque/produto')->with('error', 'Nenhum resultado encontrado');
-                } else{
-                    return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'categorias'));
-                }
-            }else{
-                $produtos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->paginate(5);
-                $produtosInativos = Produto::where('nome', 'like', '%' . $request['pesquisa'] . '%')->onlyTrashed()->paginate(5);
-                
-                if(count($produtos) == 0 && count($produtosInativos) == 0){
-                    return redirect('/estoque/produto')->with('error', 'Nenhum resultado encontrado');
-                } else{
-                    return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'categorias'));
-                }
-            }
+        
+        if($request['pesquisa'] == null){
+            
+        }else{
+            array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);
         }
+
+        if($request['categoria_id'] != -1){
+            array_push($sql, ['categoria_id', '=', $request['categoria_id']]);
+        }else{
+
+        }
+        if($request['preco_min'] != null){
+            if($request['preco_max'] != null){
+                array_push($sql, ['preco', '>=', $request['preco_min']]);
+                array_push($sql, ['preco', '<=', $request['preco_max']]);
+            }else{
+                array_push($sql, ['preco', '>=', $request['preco_min']]);
+            }
+        }else if($request['preco_max'] != null){
+                array_push($sql, ['preco', '<=', $request['preco_max']]);
+        }
+        
+        $produtosInativos = Produto::onlyTrashed()->where($sql)->paginate(5);
+        $produtos = Produto::where($sql)->paginate(5);
+
+        if(count($produtos) == 0 && count($produtosInativos) == 0){
+            return redirect('/estoque/produto')->with('error', 'Nenhum resultado encontrado');
+        }
+
+        return view('estoque::produto.index', $this->dadosTemplate, compact('produtos', 'categorias','produtosInativos'))->with('success', 'Resultado da pesquisa');
+
     }
 
     public function inativos()
