@@ -1,81 +1,51 @@
 @extends('funcionario::template')
 
-@section('title')
-    {{ $data['title'] }}
-@endsection
-
 @section('body')
 
-    <section>
-        <div class="row">
-            <div class="form-group col-6">
-                <label for="f.nome">Nome:</label>
-                <input type="text" class="form-control" id="f.nome" value="{{$data['funcionario']->nome}}" disabled>
-            </div>
-
-            <div class="form-group col-6">
-                <label for="f.nome">Cargo:</label>
-                <input type="text" class="form-control" id="f.cargo" value="{{$data['cargo']->nome}}" disabled>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-6">
-                <span>Inicio Período de Aquisição:</span>
-                <span>{{$data['data_inicio_periodo']}}</span>    
-            </div>
-            
-            <div class="form-group col-6">
-                <span>Fim Período de Aquisição:</span>
-                <span>{{$data['data_fim_periodo']}}</span>
-            </div>
-        </div>
-    </section>
-
-    <section>
-    <form action="{{url('funcionario/ferias')}}" method="POST">
-    <h4>Período Gozo</h4>
+<form action="{{url('funcionario/ferias')}}" method="PUT">
+    <h4>Agora Vai</h4>
     {{csrf_field()}}
         <div class="row">
 
             <div class="form-group col-4">
                 <label for="data_inicio">Data Início:</label>
-                <input type="date" name="data_inicio" id="data_inicio" class="form-control">
+                <input type="date" name="data_inicio" id="data_inicio" class="form-control"  value="{{ (isset($ferias) ?  $ferias->data_inicio : '')}}">
             </div>
             
             <div class="form-group col-4">
                 <label for="data_fim">Data Fim:</label>
-                <input type="date" name="data_fim" id="data_fim" class="form-control">
+                <input type="date" name="data_fim" id="data_fim" class="form-control"value="{{ (isset($ferias) ?  $ferias->data_fim : '')}}">
             </div>
 
             <div class="form-group col-4">
                 <label for="dias_ferias">Dias de Férias:</label>
-                <input type="text" id="dias_ferias" maxlength="2" name="dias_ferias" class="form-control" placeholder="Ex: 2">
+                <input type="text" id="dias_ferias" maxlength="2" name="dias_ferias" class="form-control" placeholder="Ex: 2" value="{{ (isset($ferias) ?  $ferias->dias_ferias : '')}}">
             </div>
-        </div>
-        <input type="text" name="funcionario_id" style="display:none;" value="{{$data['funcionario']->id}}">
+         </div>
+
+       <!-- <input type="text" name="funcionario_id" style="display:none;" value="{{ (isset($ferias) ?  $ferias->funcionario_id : '')}}"> -->
 
         
 
         <div class="row">
             <div class="form-group col-3">
                 <label for="data_pagamento">Data Pagamento:</label>
-                <input type="date" name="data_pagamento" id="data_pagamento" class="form-control">
+                <input type="date" name="data_pagamento" id="data_pagamento" class="form-control" value="{{ (isset($ferias) ?  $ferias->data_pagamento : '')}}">
             </div>
             
             <div class="form-group col-3">
                 <label for="data_aviso">Data de Início do Aviso:</label>
-                <input type="date" name="data_aviso" id="data_aviso" class="form-control">
+                <input type="date" name="data_aviso" id="data_aviso" class="form-control" value="{{ (isset($ferias) ?  $ferias->data_aviso : '')}}">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-8">
                 <label for="situacao_ferias">Situação das Férias:</label>
-                <select name="situacao_ferias" class="form-control" id="situacao_ferias">
+                <select name="situacao_ferias" class="form-control" id="situacao_ferias" value="{{ (isset($ferias) ?  $ferias->situacao_ferias : '')}}">
                     <option value=""selected>Selecionar</option>
-                    <option value="marcadas">Marcadas</option>
-                    <option value="naoMarcadas">Não Marcadas</option>
+                    <option @if($ferias->situacao_ferias == 'marcadas')selected @endif value="Marcadas">Marcadas</option>
+                    <option @if($ferias->situacao_ferias == 'naoMarcadas')selected @endif value="Nao_Marcadas">Não Marcadas</option>
                 </select>
             </div>
             
@@ -84,7 +54,7 @@
         <div class="row">
             <div class="form-check col-12">
                 <label for="pagamento_parcela13">Pagamento 1ª Parcela 13º:&nbsp</label>
-                <input type="checkbox" name="pagamento_parcela13" id="pagamento_parcela13" class="">
+                <input type="checkbox" name="pagamento_parcela13" id="pagamento_parcela13" value="{{ (isset($ferias->pagamento_parcela13) ?  '' : '0')}}">
             </div>
         </div>
 

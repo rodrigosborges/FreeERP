@@ -20,9 +20,9 @@
       <td> {{ $ferias->data_fim }} </td>
       <td class="min">                  
         <a class="btn btn btn-success" href=''>Visualizar</a>     
-        <a class="btn btn-warning" href=''>Editar</a>
+        <a class="btn btn-warning" href='{{ url("funcionario/ferias/$ferias->id/edit") }}'>Editar</a>
 
-                                <input type="submit" class="btn btn-danger" value="Deletar"/>
+                      
                         
       
     </tr>
