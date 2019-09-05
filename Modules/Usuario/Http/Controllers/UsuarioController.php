@@ -120,8 +120,8 @@ class UsuarioController extends Controller
                     return redirect()->back()->with('error','Falha ao fazer upload de avatar')->withInput();
                 }
                 //verifica se o nome do avatar não é default para então apagar a foto antiga
-                if(!($usuario->avatar == 'default.jpg') && $avatar){
-                    $dirPath = "C:\\xampp\\htdocs\\FreeERP\\public\\storage\\img\\avatars\\";
+                if($usuario->avatar != 'default.png' && $avatar){
+                    $dirPath = public_path()."/storage/img/avatars/";
                     File::delete($dirPath.$usuario->avatar);
                     $usuario->avatar = $nameFile;
                     $usuario->save();
