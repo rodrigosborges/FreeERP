@@ -45,7 +45,7 @@ Nova Compra - {{ $cliente->nome }}
             </div>
 
             <div class="col-2 ">
-                <button type="button" onclick="add_item()" class="btn btn-primary" style="width: 100%;">Adicionar</button>
+                <button type="button" class="btn btn-primary" style="width: 100%;">Adicionar</button>
             </div>
         
         </div>
@@ -63,28 +63,17 @@ Nova Compra - {{ $cliente->nome }}
                     <th>Vl Total</th>
                     <th>Opções</th>   
                 </tr>
-                    </thead>
+            </thead>
+            <tbody></tbody>
         </table>
     </div>
 </div>
 <script>
 
-var itens_compra = [];
+    var itens_compra = [];
 
     function add_item(){
-        //$ é a variável que amarzena o Jquery
 
-<<<<<<< HEAD
-        dados = opt.text.split("-");
-
-        qtde = document.getElementById("qtde").value;
-        dados.push(qtde);
-        desconto = document.getElementById("desconto").value;
-        dados.push(desconto);
-
-        novaTabela(dados);
-        
-=======
         var opt = $("[name='produto_id']");     
 
         dados = opt.text().split("-");
@@ -93,44 +82,20 @@ var itens_compra = [];
         alert(opt.val() + " " + opt.text());
 
         itens_compra.push(opt.val());
->>>>>>> e3555f991c08a1eeb01ff4d95643a3c128c06873
 
-        itens_compra.push(selecionado.value);
     }
 
-    function novaTabela(dados){
+    $("#add").click(function(){
+        var opt = $("[name='produto_id']");
+        dados = opt.text().split("-");
 
+        var quantidade = $('#qtde').val();
+        var desconto = $('#desconto').val();
+         //CRIAR TBODY
+        var row = "<td>" +  dados + "</td></tr>" + quantidade + "</td><td>" + desconto +"</td><td>";
+        $("#adicionados tbody").append(row);
+    });
 
-        //adicionar uma linha à tabela usando Jquery
-        
-
-        // alert("Funcao" + dados);
-
-        var tBody = document.createElement("tbody");
-        var tabela = document.getElementById('adicionados');
-
-            // creates a table row
-            var row = document.createElement("tr");
-
-            for (var i = 0; i < 5; i++) {
-                // Create a <td> element and a text node, make the text
-                // node the contents of the <td>, and put the <td> at
-                // the end of the table row
-                console.log(i + " --- " +dados[i]);
-
-                var cell = document.createElement("td");
-                var cellText = document.createTextNode( dados[i] );
-                
-                cell.appendChild(cellText);
-                row.appendChild(cell);
-            }
-        // add the row to the end of the table body
-                tBody.appendChild(row);
-
-        // put the <tbody> in the <table>
-        tabela.appendChild(tBody);
-        // appends <table> into <body>
-    }
 
 
 </script>
