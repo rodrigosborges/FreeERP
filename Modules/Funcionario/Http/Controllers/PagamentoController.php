@@ -151,8 +151,8 @@ class PagamentoController extends Controller
 
 
         $funcionario = Funcionario::findOrFail($request->id);
-
-        return json_encode($funcionario->cargos);
+        
+        return json_encode($funcionario->cargos->last());
     }
 
     public function buscaSalario(Request $request)
