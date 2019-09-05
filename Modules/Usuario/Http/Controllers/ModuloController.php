@@ -15,10 +15,23 @@ class ModuloController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $modulosAtivos = Modulo::all();
         $modulosInativos = Modulo::onlyTrashed()->get();
+
+        if($request->has('busca')) {
+            $busca = $request->get('busca');
+            
+            $modulosAtivos = Modulo::where('nome', 'like', "%{$busca}%")->get();
+            $modulosInativos = Modulo::onlyTrashed()->where('nome', 'like', "%{$busca}%")->get();
+            
+            return view('usuario::modulo.index', compact(
+                'modulosAtivos',
+                'modulosInativos',
+                'busca'
+            ));
+        }
 
         return view('usuario::modulo.index', compact(
             'modulosAtivos',
