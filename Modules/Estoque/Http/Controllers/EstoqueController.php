@@ -43,7 +43,13 @@ class EstoqueController extends Controller
      */
     public function create()
     {
-        return view('estoque::create');
+        $data = [
+            'titulo'  => 'Cadastrar Estoque',
+            'button'  => 'Cadastrar',
+            'url'     => 'estoque',
+            'estoque' => null,
+        ];
+        return view('estoque::estoque.form', compact('data'));
     }
 
     /**
