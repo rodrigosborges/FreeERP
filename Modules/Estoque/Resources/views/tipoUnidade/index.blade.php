@@ -6,7 +6,8 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nome</th>
-            <th scope='col'>Ações</th>
+            <th scope="col">Qtd Itens</th>
+            <th scope='col' colspan=2>Ações</th>
             <th>
                 <a class="btn btn-success btn-md" href="{{url('/estoque/tipo-unidade/create')}}">
                     <i class="material-icons">note_add</i>
@@ -15,16 +16,18 @@
         </tr>
     </thead>
     <tbody>
+        @foreach($tipos as $tipo)
         <tr>
-            <td></td>
-            <td></td>
+            <td>{{$tipo->id}}</td>
+            <td>{{$tipo->nome}}</td>
+            <td>{{$tipo->quantidade_itens}}</td>
             <td>
-                <a class="btn btn-lg btn-warning" href="">
+                <a class="btn btn-lg btn-warning" href="{{url('estoque/tipo-unidade/'.$tipo->id .'/edit')}}">
                     <i class="material-icons">border_color</i>
                 </a>
             </td>
             <td>
-                <form method="POST" action="">
+                <form method="POST" action="{{url('estoque/tipo-unidade/'.$tipo->id)}}">
                     @method('delete')
                     @csrf
                     <button type="submit" class="btn btn-lg btn-danger">
@@ -34,6 +37,7 @@
                 </form>
             </td>
         </tr>
+        @endforeach
 
     </tbody>
     <tfoot>

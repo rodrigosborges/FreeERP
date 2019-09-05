@@ -2,12 +2,12 @@
 
 namespace Modules\Estoque\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Estoque\Entities\TipoUnidade;
 use Modules\Estoque\Http\Requests\TipoUnidadeRequest;
-use DB;
 
 class TipoUnidadeController extends Controller
 {
@@ -27,11 +27,12 @@ class TipoUnidadeController extends Controller
      */
     public function create()
     {
-        
+
         $data = [
             'titulo' => 'Cadastrar Tipo de Unidade',
             'button' => 'Cadastrar',
-            'url' => 'estoque/tipo-unidade'
+            'url' => 'estoque/tipo-unidade',
+            'tipo' => null,
         ];
 
         return view('estoque::tipoUnidade.form', compact('data'));
@@ -44,8 +45,17 @@ class TipoUnidadeController extends Controller
      */
     public function store(TipoUnidadeRequest $request)
     {
-        return 1;
-        dd($request);
+
+        DB::beginTransaction();
+        try {
+            TipoUnidade::create($request->all());
+            DB::commit();
+            return redirect("/estoque/tipo-unidade")->with('success', "Unidade " . $request->nome . " cadastrado com sucesso!");
+        } catch (Exception $e) {
+            DB::rollback();
+            return back()->with('danger', "Erro ao cadastrar unidade! cod: "+$e->getMessage());
+
+        }
         //
     }
 
@@ -56,7 +66,9 @@ class TipoUnidadeController extends Controller
      */
     public function show($id)
     {
-        return view('estoque::show');
+        $inativos = TipoUnidade::onlyTrashed()->get();
+      
+        return view('estoque::tipoUnidade.inativos', compact('inativos'));
     }
 
     /**
@@ -66,7 +78,14 @@ class TipoUnidadeController extends Controller
      */
     public function edit($id)
     {
-        return view('estoque::edit');
+        $tipo = TipoUnidade::findOrFail($id);
+        $data = [
+            'button' => 'atualizar',
+            'url' => 'estoque/tipo-unidade/' . $id  ,
+            'tipo' => TipoUnidade::findOrFail($id),
+            'titulo' => 'Editar Unidade',
+        ];
+        return view('estoque::tipoUnidade.form', compact('data', 'tipo'));
     }
 
     /**
@@ -75,8 +94,19 @@ class TipoUnidadeController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(TipoUnidadeRequest $request, $id)
     {
+
+        DB::beginTransaction();
+        try {
+            $tipo = TipoUnidade::findOrFail($id);
+            $tipo->update($request->all());
+            DB::commit();
+            return redirect("/estoque/tipo-unidade")->with('success', "Unidade " . $request->nome . " atualizado com sucesso!");
+        } catch (Exception $e) {
+            DB::rollback();
+            return back()->with('danger', "Erro ao atualizar unidade! cód: " . $e->getMessage());
+        }
         //
     }
 
@@ -87,6 +117,17 @@ class TipoUnidadeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tipo = TipoUnidade::findOrFail($id);
+
+        $tipo->delete();
+        return back()->with('success', 'Unidade Removida com sucesso');
+    }
+    public function restore($id){
+        $tipo = TipoUnidade::onlyTrashed()->findOrFail($id);
+        $tipo->restore();
+        return back()->with('success', 'categoria ' . $tipo->nome . " restaurada com sucesso");
+    }
+    public function inativos(){
+        
     }
 }

@@ -36,6 +36,9 @@ $menu = [
             <li class="nav-item ">
                 <a class="nav-link text-white " href="#">Movimentação de estoque</a>
             </li>
+            <li class="nav-item ">
+                <a class="nav-link text-white " href="{{url('estoque/tipo-unidade/inativos')}}">itens inativos</a>
+            </li>
         </ul>
         <div class="card-body">
 

@@ -34,23 +34,18 @@
                 </form>
             </td>
         </tr>
-
     </tbody>
     <tfoot>
         <tr>
             <td colspan="100%" class="text-center">
                 <p class="text-cetner">
-
                 </p>
             </td>
         </tr>
-
         <tr>
             <td colspan="100%" class="text-center">
-
             </td>
         </tr>
-
     </tfoot>
 </table>
 @endsection
