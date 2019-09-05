@@ -22,7 +22,9 @@ Route::prefix('funcionario')->group(function() {
     Route::get('funcionario/downloadComprovante/{id}','FuncionarioController@downloadComprovante');
     Route::get('ferias/controleFerias/{id}','ControleFeriasController@controleFerias');
     Route::get('ferias/listar/{id}','FeriasController@listar');
-
+    //rota editar ferias
+    Route::get('ferias/editarFerias/{id}','FeriasController@edit');
+    //acaba aki
     Route::resource('funcionario', 'FuncionarioController');
     Route::resource('cargo', 'CargoController');
     
