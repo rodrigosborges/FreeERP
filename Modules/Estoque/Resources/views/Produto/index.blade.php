@@ -27,10 +27,10 @@
                 </div>
                 <div class="row">
                         <div class="form-group col-3">
-                            <input type="text" name="preco_min" class="form-control" placeholder="Preço minimo">
+                            <input type="text" name="preco_min" class="form-control" onkeyUp="moeda(this);" placeholder="Preço minimo">
                         </div>
                         <div class="form-group col-3">
-                            <input type="text" name="preco_max" class="form-control" placeholder="Preço máximo">
+                            <input type="text" name="preco_max" class="form-control" onkeyUp="moeda(this);" placeholder="Preço máximo">
                         </div>
                 </div>
             </form>
@@ -161,3 +161,14 @@
     </div>
 </div>
 @endsection
+
+<script>
+    function moeda(i) {
+        var v = i.value.replace(/\D/g,'');
+        v = (v/100).toFixed(2) + '';
+        v = v.replace(",", ".");
+        v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1$2$3.");
+        v = v.replace(/(\d)(\d{3}),/g, "$1$2.");
+        i.value = v;
+    }
+    </script>
