@@ -72,7 +72,8 @@ class FeriasController extends Controller
      */
     public function show($id)
     {
-        return view('funcionario::show');
+        $ferias = Ferias::findOrFail($id);     
+        return view('funcionario::ferias.show', compact('ferias'));
     }
     public function listar($id)
     {

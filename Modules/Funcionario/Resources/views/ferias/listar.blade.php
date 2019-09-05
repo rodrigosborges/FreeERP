@@ -19,12 +19,8 @@
       <td> {{ $ferias->data_inicio }} </td>
       <td> {{ $ferias->data_fim }} </td>
       <td class="min">                  
-        <a class="btn btn btn-success" href=''>Visualizar</a>     
+        <a class="btn btn btn-success" href='{{url("funcionario/ferias/$ferias->id/show")}}'>Visualizar</a>     
         <a class="btn btn-warning" href='{{ url("funcionario/ferias/$ferias->id/edit") }}'>Editar</a>
-
-                      
-                        
-      
     </tr>
     @endforeach
   </tbody>

@@ -25,8 +25,6 @@
 
        <!-- <input type="text" name="funcionario_id" style="display:none;" value="{{ (isset($ferias) ?  $ferias->funcionario_id : '')}}"> -->
 
-        
-
         <div class="row">
             <div class="form-group col-3">
                 <label for="data_pagamento">Data Pagamento:</label>
