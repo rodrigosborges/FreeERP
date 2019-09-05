@@ -66,11 +66,11 @@
                                 <td>R$ {{$produto->preco}}</td>
                                 <td style="display: flex; flex-direction: row;"><a href="{{url('/estoque/produto/' . $produto->id . '/edit')}}"><button class="btn btn-warning">Editar</button></a></td>
                                 <td>
-                                    <form method="POST" action="{{url('/estoque/produto/' . $produto->id)}}">
+                                    <!-- <form method="POST" action="{{url('/estoque/produto/' . $produto->id)}}">
                                         @method('delete')
                                         @csrf
                                         <button type="submit" class="btn btn-danger">Desativar</button>
-                                    </form>
+                                    </form> -->
                                 </td>
                             </tr>
                             @endforeach 
