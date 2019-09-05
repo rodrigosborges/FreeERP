@@ -73,38 +73,12 @@ var itens_compra = [];
 
     function add_item(){
         //$ é a variável que amarzena o Jquery
-
-<<<<<<< HEAD
-        dados = opt.text.split("-");
-
-        qtde = document.getElementById("qtde").value;
-        dados.push(qtde);
-        desconto = document.getElementById("desconto").value;
-        dados.push(desconto);
-
-        novaTabela(dados);
-        
-=======
-        var opt = $("[name='produto_id']");     
-
-        dados = opt.text().split("-");
-        novaTabela(dados);
-
-        alert(opt.val() + " " + opt.text());
-
-        itens_compra.push(opt.val());
->>>>>>> e3555f991c08a1eeb01ff4d95643a3c128c06873
-
-        itens_compra.push(selecionado.value);
+      
     }
 
     function novaTabela(dados){
-
-
         //adicionar uma linha à tabela usando Jquery
-        
-
-        // alert("Funcao" + dados);
+        alert("Funcao" + dados);
 
         var tBody = document.createElement("tbody");
         var tabela = document.getElementById('adicionados');
