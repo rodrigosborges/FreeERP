@@ -63,9 +63,10 @@ class TipoUnidadeController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show()
     {
-        return $this->inativos();
+       
+        //return $this->inativos();
     }
 
     /**
@@ -127,6 +128,7 @@ class TipoUnidadeController extends Controller
     }
     public function inativos()
     {
+        
         $inativos = TipoUnidade::onlyTrashed()->get();
 
         return view('estoque::tipoUnidade.inativos', compact('inativos'));

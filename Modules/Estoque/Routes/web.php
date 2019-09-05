@@ -21,9 +21,10 @@ Route::prefix('estoque')->group(function () {
     Route::put('/produto/unidade/{id}/restore', 'UnidadeProdutoController@restore');
     
     //Rota tipo unidade
-    Route::resource('/tipo-unidade', 'TipoUnidadeController');
+    Route::get('tipo-unidade/inativos', 'TipoUnidadeController@inativos'); 
+    Route::resource('/tipo-unidade', 'TipoUnidadeController'); 
     Route::put('tipo-unidade/{id}/restore','TipoUnidadeController@restore');
-    Route::get('tipo-unidade/inativos', 'TipoUnidadeController@inativos');
+    
   
     
     //Rota de Busca
@@ -44,3 +45,4 @@ Route::prefix('estoque')->group(function () {
     
     
 });
+ 
