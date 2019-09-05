@@ -8,7 +8,7 @@
     <a class="btn  btn-outline-info btn-sm" href="{{url('/estoque/tipo-unidade/inativos')}}">
         <i class="material-icons">restore_from_trash</i>Itens Inativos
     </a>
-    <thead class="table-dark">
+    <thead class="card-header">
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nome</th>

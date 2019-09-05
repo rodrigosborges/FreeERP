@@ -27,7 +27,7 @@
             <div class=" tab-content row justify-content-center ">
                 <div class="tab-pane active col-sm-10" role="tabpanel1" id="ativos">
                     <table class="table text-center table-striped ">
-                        <thead class="table-dark">
+                        <thead class="card-header">
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Nome</th>
@@ -85,7 +85,7 @@
 
                     <div class="justify-content-center">
                         <table class="table text-center  table-striped ">
-                            <thead class="table-dark">
+                            <thead class="card-header">
                                 <td><strong>ID</strong></td>
                                 <td><strong>Nome</strong></td>
                                 <td><strong>Ação</strong></td>

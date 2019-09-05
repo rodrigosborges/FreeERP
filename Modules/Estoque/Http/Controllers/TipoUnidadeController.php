@@ -53,8 +53,7 @@ class TipoUnidadeController extends Controller
             return redirect("/estoque/tipo-unidade")->with('success', "Unidade " . $request->nome . " cadastrado com sucesso!");
         } catch (Exception $e) {
             DB::rollback();
-            return back()->with('danger', "Erro ao cadastrar unidade! cod: "+$e->getMessage());
-
+            return back()->with('danger', "Erro ao cadastrar unidade! cod: " + $e->getMessage());
         }
         //
     }
@@ -66,9 +65,7 @@ class TipoUnidadeController extends Controller
      */
     public function show($id)
     {
-        $inativos = TipoUnidade::onlyTrashed()->get();
-      
-        return view('estoque::tipoUnidade.inativos', compact('inativos'));
+        return $this->inativos();
     }
 
     /**
@@ -81,7 +78,7 @@ class TipoUnidadeController extends Controller
         $tipo = TipoUnidade::findOrFail($id);
         $data = [
             'button' => 'atualizar',
-            'url' => 'estoque/tipo-unidade/' . $id  ,
+            'url' => 'estoque/tipo-unidade/' . $id,
             'tipo' => TipoUnidade::findOrFail($id),
             'titulo' => 'Editar Unidade',
         ];
@@ -122,12 +119,16 @@ class TipoUnidadeController extends Controller
         $tipo->delete();
         return back()->with('success', 'Unidade Removida com sucesso');
     }
-    public function restore($id){
+    public function restore($id)
+    {
         $tipo = TipoUnidade::onlyTrashed()->findOrFail($id);
         $tipo->restore();
         return back()->with('success', 'categoria ' . $tipo->nome . " restaurada com sucesso");
     }
-    public function inativos(){
-        
+    public function inativos()
+    {
+        $inativos = TipoUnidade::onlyTrashed()->get();
+
+        return view('estoque::tipoUnidade.inativos', compact('inativos'));
     }
 }

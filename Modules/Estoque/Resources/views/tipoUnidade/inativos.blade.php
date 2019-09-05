@@ -1,8 +1,8 @@
 @extends('estoque::estoque.estoqueTemplate')
 @section('title', 'Unidades inativas')
 @section('body')
-<table class="table text-center ">
-    <thead class="">
+<table class="table text-center table-striped ">
+    <thead class="card-header">
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nome</th>
