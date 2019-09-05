@@ -30,6 +30,8 @@ Route::prefix('usuario')->group(function() {
     Route::delete('/{id}', 'UsuarioController@destroy')->middleware('auth');
     // Restaurar
     Route::put('/restore/{id}', 'UsuarioController@restore')->middleware('auth');
+
+    Route::get('/check-unique/{id?}' ,'UsuarioController@isUnique')->middleware('auth');
 });
 
 // Módulo

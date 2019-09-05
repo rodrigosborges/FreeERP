@@ -2,6 +2,7 @@
 @extends('template')
 
 
+
 <?php
     $menu = [
         ['icon' => 'person', 'tool' => 'Usuário', 'route' => '/usuario'],

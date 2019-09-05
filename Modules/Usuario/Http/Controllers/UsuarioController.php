@@ -9,6 +9,8 @@ use Modules\Usuario\Entities\Usuario;
 use Modules\Usuario\Http\Requests\{UsuarioStoreRequest,UsuarioUpdateRequest,TrocarSenhaRequest};
 use Illuminate\Support\Facades\Hash;
 use DB;
+use Illuminate\Support\Facades\Storage;
+use File;
 
 class UsuarioController extends Controller
 {
@@ -94,8 +96,44 @@ class UsuarioController extends Controller
 
     public function update(UsuarioUpdateRequest $request, $id)
     {
-        $usuario = Usuario::findOrFail($id);
-        $usuario->update($request->all());
+        DB::beginTransaction();
+        try{
+            //atualizando dados básicos
+            $usuario = Usuario::findOrFail($id);
+            $usuario->update([
+                'apelido' => $request->apelido,
+                'email' => $request->email
+            ]);
+            
+            //pegando a imagem 
+            $avatar = $request->file('avatar');
+
+            if($avatar && $avatar->isValid()){
+                $name = uniqid(date('HisYmd'));
+                $extension = $request->avatar->extension();
+
+                $nameFile = "{$name}.{$extension}";
+
+                $upload = $request->avatar->storeAs('img/avatars',$nameFile);
+            
+                if(!$upload){
+                    return redirect()->back()->with('error','Falha ao fazer upload de avatar')->withInput();
+                }
+                //verifica se o nome do avatar não é default para então apagar a foto antiga
+                if($usuario->avatar != 'default.png' && $avatar){
+                    $dirPath = public_path()."/storage/img/avatars/";
+                    File::delete($dirPath.$usuario->avatar);
+                    $usuario->avatar = $nameFile;
+                    $usuario->save();
+                }
+            }
+            
+            DB::commit();
+        }catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor');
+        }
+
         return redirect('/usuario');
     }
 
@@ -122,5 +160,18 @@ class UsuarioController extends Controller
     public function trocarSenha($id){
         $usuario = Usuario::findOrFail($id);
         return view('usuario::usuario.trocarSenha',compact('usuario'));
+    }
+
+    public function isUnique(Request $request,$id=null){
+        $key = key($request->query());
+        
+        $field = Usuario::where($key, $request->$key)->first();
+     
+        if($field && $id != $field->id ){
+            return 'false';
+        } else {
+            return 'true';
+        }
+
     }
 }
