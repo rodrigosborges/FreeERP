@@ -2,9 +2,6 @@
 @section('title', 'Ficha do Produto')
 @section('content')
 
-<link rel="stylesheet" type="text/css" href="../../Resources/assets/css/style.css">
-
-
 <div class="container" style="justify-content: center">
     <div class="card">
         <div class="card-header">
@@ -14,11 +11,11 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <label for="nome"><i class="material-icons">account_circle</i>Nome: {{$produto->nome}}</label>
+                    <label for="nome"><span><i class="material-icons" style="vertical-align:middle;">account_circle</i></span>&nbsp&nbsp<b>Nome</b><br><br>{{$produto->nome}}</label>
                     
                 </div>
                 <div class="col-md-6">
-                    <label for="preco"><i class="material-icons">attach_money</i>Preço: {{$produto->preco}}</label>
+                    <label for="preco"><i class="material-icons" style="vertical-align:middle;">attach_money</i>&nbsp&nbsp<b>Preço</b><br><br>R${{$produto->preco}}</label>
                 </div>
 
                 
@@ -28,11 +25,11 @@
             <div class="row">
 
                 <div class="col-md-6">
-                    <label for="codigo"><b>llll</b>Código de Barras: {{$produto->codigo}}</label>
+                    <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Código de Barras</b><br><br>{{$produto->codigo}}</label>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="categoria"><i class="material-icons">category</i>Categoria: {{$produto->categoria->nome}}</label>   
+                    <label for="categoria"><i class="material-icons" style="vertical-align:middle;">category</i>&nbsp&nbsp<b>Categoria</b><br><br>{{$produto->categoria->nome}}</label>   
                 </div>       
             </div>
 
@@ -40,7 +37,7 @@
             
             <div class="row">
                 <div class="col-md-12">
-                    <label for="descricao"><i class="material-icons icon" style="margin: 5px">event_note</i>Descrição: {{$produto->descricao}}</label> 
+                    <label for="descricao"><i class="material-icons ficha-icon" style="vertical-align:middle;">event_note</i>&nbsp&nbsp<b>Descrição</b><br><br>{{$produto->descricao}}</label> 
                 </div>
             </div>
             

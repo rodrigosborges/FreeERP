@@ -1029,16 +1029,16 @@
         },
         {
             "name": "nwidart/laravel-modules",
-            "version": "5.0.1",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nWidart/laravel-modules.git",
-                "reference": "52e2e8142cc9f06feb276b6d18af7c98db5b3703"
+                "reference": "d4edc3465d471644ca44b1b303803492609957cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nWidart/laravel-modules/zipball/52e2e8142cc9f06feb276b6d18af7c98db5b3703",
-                "reference": "52e2e8142cc9f06feb276b6d18af7c98db5b3703",
+                "url": "https://api.github.com/repos/nWidart/laravel-modules/zipball/d4edc3465d471644ca44b1b303803492609957cd",
+                "reference": "d4edc3465d471644ca44b1b303803492609957cd",
                 "shasum": ""
             },
             "require": {
@@ -1095,7 +1095,7 @@
                 "nwidart",
                 "rad"
             ],
-            "time": "2019-05-11T15:27:41+00:00"
+            "time": "2019-09-05T09:41:08+00:00"
         },
         {
             "name": "opis/closure",
