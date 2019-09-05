@@ -147,20 +147,6 @@
     <br>
 
     <div class="row">
-        <!-- Faltas-->
-        <div class="form-group col-md-6">
-            <label for="salario" class="control-label"> Faltas</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">
-                        <i class="material-icons">remove</i>
-                    </span>
-                </div>
-                <input type="text" name="faltas" id="faltas" class=" faltas form-control required money" value="{{$data['pagamento'] ? $data['pagamento']->faltas : ''}}">
-            </div>
-            <span class="errors"> </span>
-        </div>
-        <!-- Fim Faltas-->
 
         <!-- INSS-->
         <div class="form-group col-md-6">
@@ -176,6 +162,22 @@
             <span class="errors"> </span>
         </div>
         <!-- Fim INSS-->
+
+        <!-- Faltas-->
+        <div class="form-group col-md-6">
+            <label for="salario" class="control-label"> Faltas</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="material-icons">remove</i>
+                    </span>
+                </div>
+                <input type="text" name="faltas" id="faltas" class=" faltas form-control required money" value="{{$data['pagamento'] ? $data['pagamento']->faltas : ''}}">
+            </div>
+            <span class="errors"> </span>
+        </div>
+        <!-- Fim Faltas-->
+
         <!--Total-->
     </div>
     <div class="row">
@@ -255,7 +257,7 @@
             if ($('.cargos').val() != -1) {
                 buscaSalario()
                 $('.emissao').val('')
-                desabilitar(false)
+                desabilitar(true)
 
             } else {
                 desabilitar(true)
@@ -449,15 +451,8 @@
             // que posteriormente é enviada para o select de cargos
             cargos = $.parseJSON(data);
             $('.cargos').attr('disabled', false)
-            string = " <option selected value='-1'>Selecione</option>"
-            $.each(cargos, function(chave, valor) {
-                string += '<option  value="' + valor.id + '">' + valor.nome + "</option>"
-                console.log(valor.horas_semanais);
-
-
-                //  console.log(desconto)
-
-            })
+            
+            string = '<option  value="' + cargos.id + '">' + cargos.nome + "</option>"
 
             $('.cargos').html(string);
         }).fail(function() {})
