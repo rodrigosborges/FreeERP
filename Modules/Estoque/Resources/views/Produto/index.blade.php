@@ -3,37 +3,37 @@
 @section('content')
 <div class="container">
     <div class="card col-md-12">
-        <div class="header mt-3">
-            <h3 class="text-center">Produto</h3>
-        </div>
         <div class="card-body">
-            <form method="POST" action="{{url('/estoque/produto/busca')}}" id="form">
-                @csrf
-                <div class="row">
-                    <div class="form-group col-6">
-                        <input id="search-input" placeholder="Insira o nome do produto" class="form-control" type="text" name="pesquisa" />
-                    </div>
-                    <div class="form-group col-5">
-                        <select class="form-control" name="categoria_id">
-                            <option value="-1">Todas Categorias</option>
-                            @foreach($categorias as $categoria)
-                            <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group col-1">
-                        <button type="submit" class="btn btn-dark material-icons"><i id="search-button">search</i></button>
-                    </div>
-                </div>
-                <div class="row">
-                        <div class="form-group col-3">
-                            <input type="text" name="preco_min" class="form-control" onkeyUp="moeda(this);" placeholder="Preço minimo">
+            <div class="header text-left mb-3 mt-3">
+                <h4>Pesquisar Produto</h4>
+            </div>
+                <form method="POST" action="{{url('/estoque/produto/busca')}}" id="form">
+                    @csrf
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <input id="search-input" placeholder="Insira o nome do produto" class="form-control" type="text" name="pesquisa" />
                         </div>
-                        <div class="form-group col-3">
-                            <input type="text" name="preco_max" class="form-control" onkeyUp="moeda(this);" placeholder="Preço máximo">
-                        </div>
-                </div>
-            </form>
+                    </div>
+                    <div class="row">
+                            <div class="form-group col-7">
+                                <select class="form-control" name="categoria_id">
+                                    <option value="-1">Todas Categorias</option>
+                                    @foreach($categorias as $categoria)
+                                    <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-2">
+                                <input type="text" name="preco_min" class="form-control" onkeyUp="moeda(this);" placeholder="Preço minimo">
+                            </div>
+                            <div class="form-group col-2">
+                                <input type="text" name="preco_max" class="form-control" onkeyUp="moeda(this);" placeholder="Preço máximo">
+                            </div>
+                            <div class="form-group col-1 text-right">
+                                <button type="submit" class="btn btn-dark material-icons"><i id="search-button">search</i></button>
+                            </div>
+                    </div>
+                </form>
             
             
             <div class="row">
