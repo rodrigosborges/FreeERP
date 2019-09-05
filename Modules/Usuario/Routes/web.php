@@ -37,18 +37,18 @@ Route::prefix('usuario')->group(function() {
 // Módulo
 Route::prefix('modulo')->group(function() {
     // Cadastrar
-    Route::get('/cadastrar', 'ModuloController@create')->middleware('auth');
-    Route::post('/', 'ModuloController@store')->middleware('auth');
+    Route::get('/cadastrar', 'ModuloController@create');
+    Route::post('/', 'ModuloController@store');
     // Listar
-    Route::get('/', 'ModuloController@index')->middleware('auth');
-    Route::get('/{args}', 'ModuloController@index')->middleware('auth');
+    Route::get('/', 'ModuloController@index');
+    Route::get('/{args}', 'ModuloController@index');
     // Atualizar
-    Route::get('/{id}/edit', 'ModuloController@edit')->middleware('auth');
-    Route::put('/{id}', 'ModuloController@update')->middleware('auth');
+    Route::get('/{id}/edit', 'ModuloController@edit');
+    Route::put('/{id}', 'ModuloController@update');
     // Deletar
-    Route::delete('/{id}', 'ModuloController@destroy')->middleware('auth');
+    Route::delete('/{id}', 'ModuloController@destroy');
     // Restaurar
-    Route::put('/{id}/restore', 'ModuloController@restore')->middleware('auth');
+    Route::put('/{id}/restore', 'ModuloController@restore');
 });
 // Papéis
 Route::prefix('papel')->group(function() {

@@ -3,16 +3,15 @@
 <div class="row justify-content-center align-items-center" style="height:100%">
     <div class="col-xm-12 col-sm-10">
         <div class="card mt-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-
-                <h5 class="card-title m-0">Modulos</h5>
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="card-title m-0 ">Modulos</h5>
                 <a href="{{url('modulo/cadastrar')}}" style="text-decoration: none; padding:0">
                     <button class="text-success d-flex align-items-center p-0" style="background: none; border: 0; cursor: pointer;" type="submit" title="Cadastrar">
                         <i class="material-icons" style="font-size: 32px">add</i>
                     </button>
                 </a>
             </div>
-            <div class="card-body pb-0">
+            <div class="card-body bg-light pb-0">
                 <form class="d-flex mb-3" action="" method="get">
                     <input type="text" name="busca" class="form-control" placeholder="Buscar módulo">
                     <button class="text-primary d-flex align-items-center ml-2" style="background: none; border: 0; cursor: pointer" type="submit" title="Buscar">
@@ -36,7 +35,7 @@
                 <div class="tab-content" id="nav-tabContent" style="width:100%">
                     <div class="tab-pane fade show active" id="nav-modulosAtivos" role="tabpanel" aria-labelledby="nav-modulosAtivos-tab">
                         <div>
-                            <table class="table table-striped table-borderless">
+                            <table class="table table-striped table-borderless bg-white" style="border-style: solid; border-color: #dee2e6; border-width: 0 1px 1px 1px;">
                                 <thead>
                                     <tr>
                                         <th scope="col">Nome</th>
@@ -76,7 +75,7 @@
                     </div>
                     <div class="tab-pane fade" id="nav-modulosInativos" role="tabpanel" aria-labelledby="nav-modulosInativos-tab">
                         <div>
-                            <table class="table table-striped table-borderless">
+                            <table class="table table-striped table-borderless bg-white" style="border-style: solid; border-color: #dee2e6; border-width: 0 1px 1px 1px;">
                                 <thead>
                                     <tr>
                                         <th scope="col">Nome</th>
