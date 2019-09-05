@@ -23,7 +23,15 @@ class CalendarioController extends Controller
 
     public function compartilhamentos(){
         $agendas = Agenda::all();
-        return view('calendario::agendas.compartilhamentos', ['agendas' => $agendas]);
+        $solicitacoes = [];
+        foreach ($agendas as $agenda){
+            foreach ($agenda->compartilhamentos as $compartilhamento){
+                if(!$compartilhamento->aprovado){
+                    $solicitacoes[] = $compartilhamento;
+                }
+            }
+        }
+        return view('calendario::agendas.compartilhamentos', ['solicitacoes' => $solicitacoes]);
     }
 
     public function eventos()

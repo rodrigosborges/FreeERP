@@ -27,8 +27,8 @@
                 <th scope="col">Título</th>
                 <th scope="col">Descrição</th>
                 <th scope="col">Eventos</th>
-                <th>Compartilhamentos</th>
-                <th></th>
+                <th scope="col" class="text-center">Compartilhamentos</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -52,8 +52,7 @@
                             </a>
                         @endif
                     </td>
-                    <td>
-
+                    <td class="text-center">
                         @if($agenda->compartilhamentos->count())
                             @foreach($agenda->compartilhamentos as $compartilhamento)
                                 {{$compartilhamento->setor->sigla}}

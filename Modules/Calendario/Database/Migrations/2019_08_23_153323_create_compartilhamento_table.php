@@ -15,7 +15,6 @@ class CreateCompartilhamentoTable extends Migration
     {
         Schema::create('compartilhamento', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->boolean('aprovado')->nullable();
             $table->unsignedBigInteger('agenda_id');
             $table->unsignedBigInteger('setor_id');
             $table->foreign('agenda_id')->references('id')->on('agenda')->onDelete('cascade');

@@ -10,7 +10,7 @@ class Compartilhamento extends Model
     protected $fillable = ['setor_id', 'agenda_id'];
 
     public function agenda(){
-        return $this->belongsTo('Modules\Calendario\Entities\Evento');
+        return $this->belongsTo('Modules\Calendario\Entities\Agenda');
     }
 
     public function setor(){

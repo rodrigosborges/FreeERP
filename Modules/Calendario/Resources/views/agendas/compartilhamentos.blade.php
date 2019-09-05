@@ -17,24 +17,22 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($agendas as $agenda)
-                @if($agenda->compartilhamentos->count())
-                    @foreach($agenda->compartilhamentos as $compartilhamento)
-                        @if(!$compartilhamento->aprovado)
-                            <tr>
-                                <td>{{$agenda->id}}</td>
-                                <td>{{$agenda->titulo}}</td>
-                                <td>{{isset($agenda->descricao) ? $agenda->descricao : '---'}}</td>
-                                <td>{{$agenda->funcionario_id}}</td>
-                                <td>
-                                    <a href="{{route('compartilhamentos.aprovar', $compartilhamento)}}" class="btn btn-success text-white">Aprovar</a>
-                                    <a class="btn btn-danger text-white">Excluir</a>
-                                </td>
-                            </tr>
-                        @endif
-                    @endforeach
-                @endif
-            @endforeach
+            @forelse($solicitacoes as $solicitacao)
+                <tr>
+                    <td>{{$solicitacao->agenda->id}}</td>
+                    <td>{{$solicitacao->agenda->titulo}}</td>
+                    <td>{{isset($solicitacao->agenda->descricao) ? $solicitacao->agenda->descricao : '---'}}</td>
+                    <td>{{$solicitacao->agenda->funcionario_id}}</td>
+                    <td>
+                        <a href="{{route('compartilhamentos.aprovar', $solicitacao)}}" class="btn btn-success text-white">Aprovar</a>
+                        <a class="btn btn-danger text-white">Excluir</a>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5" class="text-center">Nenhuma aprovação pendente</td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
     </div>
