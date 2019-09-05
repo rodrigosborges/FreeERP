@@ -33,9 +33,9 @@ class ProdutoController extends Controller
     {
        
         $produtos = Produto::paginate(5);
-        $produtosInativos = Produto::onlyTrashed()->paginate(5);
         $categorias = Categoria::all();
-        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'produtosInativos', 'categorias'));
+        $flag = 0;
+        return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'categorias', 'flag'));
     }
     /*
     public function busca(Request $request)
@@ -164,6 +164,9 @@ class ProdutoController extends Controller
     {
         
         $produtos = Produto::onlyTrashed()->paginate(5);
-        return view('estoque::/produto/index',$this->dadosTemplate, compact('produtos'));
+        $flag = 1;
+        $categorias = Categoria::all();
+        return view('estoque::/produto/index',$this->dadosTemplate, compact('produtos', 'flag', 'categorias'));
     }
 }
+

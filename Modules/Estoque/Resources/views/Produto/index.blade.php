@@ -37,20 +37,24 @@
             
             
             <div class="row">
-                <div class="col-12 text-right">
+                <div class="col-12 text-right pl-2">
+                    @if($flag == 0)
                     <a class="btn btn-success" href="{{url('/estoque/produto/create')}}">Novo Produto</a>
+                    <a class="btn btn-danger" href="{{url('/estoque/produto/inativos')}}">Inativos</a>
+                    @else
+                    <a class="btn btn-warning" href="{{url('/estoque/produto')}}">Voltar</a>
+                    @endif
                 </div>
             </div>
 
             <ul class="nav nav-tabs  justify-content-center">
                 <li class="nav-item">
                     <a href="#ativos" class="nav-link active" role="tab" data-toggle="tab">
-                    Produtos Ativos
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#inativos" class="nav-link" role="tab" data-toggle="tab">
-                    Produtos Inativos
+                    @if($flag == 1)
+                    <h5>Produtos Inativos</h5>
+                    @else
+                    <h5>Produtos Ativos</h5>
+                    @endif
                     </a>
                 </li>
             </ul>
@@ -62,10 +66,13 @@
                                 <th scope="col">Nome</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Preço</th>
-                                <th scope="col">Visualizar</th>
-                                <th scope="col">Editar</th>
-                                <th scope="col">Deletar</th>
-                                
+                                @if($flag == 0)
+                                <th scope="col">Ações</th>
+                                <th scope="col">Editar</th>   
+                                @else
+                                <th scope="col">Restaurar</th>
+                                @endif
+                                                   
                             </tr>
                         </thead>
                         <tbody>
@@ -75,16 +82,18 @@
                                 <td>{{$produto->nome}}</td>
                                 <td>{{$produto->categoria->nome}}</td>
                                 <td>R$ {{$produto->preco}}</td>
-                                <td><a href="{{url('/estoque/produto/ficha/' . $produto->id)}}"><button class="btn btn-warning">Visualizar</button></a></td>
+                                @if($flag == 0)
+                                <td><a href="{{url('/estoque/produto/ficha/' . $produto->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
 
                                 <td ><a href="{{url('/estoque/produto/' . $produto->id . '/edit')}}"><button class="btn btn-warning">Editar</button></a></td>
+                                @else
                                 <td>
-                                    <!-- <form method="POST" action="{{url('/estoque/produto/' . $produto->id)}}">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger">Desativar</button>
-                                    </form> -->
+                                    <form method="POST" action="{{url('/estoque/produto/' . $produto->id. '/restore')}}">
+                                    @method('put')
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Restaurar</button>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach 
                             @endif 
@@ -108,54 +117,7 @@
                         </tfoot>
                     </table>
                 </div>
-                <div class="tab-pane col-sm-10" role="tabpanel1" id="inativos">
-                    <div class="justify-content-center">
-                        <table class="table mt-3">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Categoria</th>
-                                    <th scope="col">Preço</th>
-                                    <th scope="col">Restaurar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if(isset($produtosInativos))
-                                @foreach($produtosInativos as $produto)
-                                <tr>
-                                    <td>{{$produto->nome}}</td>
-                                    <td>{{$produto->categoria->nome}}</td>
-                                    <td>R$ {{$produto->preco}}</td>
-                                    <td>
-                                        <form method="POST" action="{{url('/estoque/produto/' . $produto->id. '/restore')}}">
-                                        @method('put')
-                                        @csrf
-                                        <button type="submit" class="btn btn-primary">Restaurar</button>
-                                    </td>
-                                </tr>
-                                @endforeach 
-                                @endif 
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="100%" class="text-center">
-                                        <p class="text-cetner">
-                                            Página {{$produtosInativos->currentPage()}} de {{$produtosInativos->lastPage()}}
-                                            -Exibido {{$produtosInativos->perPage()}} registro(s) por página de {{$produtosInativos->total()}}
-                                        </p>
-                                    </td>
-                                </tr>
-                                @if($produtosInativos->lastPage() > 1)
-                                <tr>
-                                    <td colspan="100%" class="text-center">
-                                        {{ $produtosInativos>links() }}
-                                    </td>
-                                </tr>
-                                @endif
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
