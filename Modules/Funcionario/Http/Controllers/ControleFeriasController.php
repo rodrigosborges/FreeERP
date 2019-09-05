@@ -95,11 +95,16 @@ class ControleFeriasController extends Controller
         $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
         $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
         $ano_atual = date('Y', time());
-        $anos_trampo = (($ano_atual-$ano)-1)*364;
-        //return $admissao;
-        $data_inicio_periodo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao))) ;
-        $teste = $anos_trampo+364;
-        $data_fim_periodo = date('d/m/Y', strtotime( "+ $teste days", strtotime($admissao)));
+
+        if($ano == $ano_atual){
+            $data_inicio_periodo = date('d/m/Y', strtotime($admissao));
+            $anos_trampo = 364;
+        } else {
+            $anos_trampo = (($ano_atual-$ano)-1)*364;
+            $data_inicio_periodo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao))) ;
+            $teste = $anos_trampo+364;
+        }
+        $data_fim_periodo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
         $data = [
             'title' => 'Ferias',
             'funcionario' => $funcionario,

@@ -8,38 +8,27 @@
   <thead>
     <tr>
       <th scope="col">Nome</th>
-      <th scope="col">Valor</th>
-      <th scope="col">Tipo</th>
-      <th scope="col">Data</th>
-      <th scope="col" colspan="2">Opções</th>
-      <th><a href="{{url($data['url'])}}" class="btn btn-success"><i class="material-icons">note_add</i></a></th>
-
-
-
+      <th scope="col">Ações</th>
     </tr>
   </thead>
   <tbody>
-    @foreach($pagamentos as $pagamento)
+    @foreach($data['funcionarios'] as $funcionario)
     <tr>
-      <td>{{ $pagamento->funcionario->nome }} </td>
-      <td>{{ $pagamento->total}} </td>
-      <td>{{ $pagamento->tipo_pagamento}}</td>
-      <td>{{ $pagamento->emissao}} </td>
-      <td><a href="pagamento/{{ $pagamento->id }}/edit" class="btn btn-warning"><i class="material-icons">edit</i></a></td>
-      <td><a href="" class="btn btn-danger"><i class="material-icons">delete</i></a></td>
-
+      <td>{{ $funcionario->nome }}</td>
+      <td>
+        <a href="{{url($data['url']).'/'.$funcionario->id}}" class="btn btn-success"><i class="material-icons">note_add</i></a>
+        <a href="{{}}" class="btn btn-warning"><i class="material-icons">edit</i></a>
+        <a href="" class="btn btn-danger"><i class="material-icons">delete</i></a>
+      </td>
     </tr>
   </tbody>
   </tfoot>
   @endforeach
   <tfoot>
-    @if($pagamentos->lastPage() > 1)
     <tr>
       <td colspan="100%" class="text-center">
-        {{ $pagamentos->links() }}
       </td>
     </tr>
-    @endif
 
 
 </table>

@@ -20,6 +20,7 @@ class PagamentoController extends Controller
         $data = [
             'title'         => "Pagamentos",
             'url' => url('funcionario/pagamento/create'),
+            'funcionarios' => Funcionario::all(),
         ];
 
         $pagamentos = Pagamento::paginate(5);
@@ -151,8 +152,8 @@ class PagamentoController extends Controller
 
 
         $funcionario = Funcionario::findOrFail($request->id);
-
-        return json_encode($funcionario->cargos);
+        
+        return json_encode($funcionario->cargos->last());
     }
 
     public function buscaSalario(Request $request)

@@ -89,8 +89,11 @@ class FeriasController extends Controller
      * @return Response
      */
     public function edit($id)
-    {
-        return view('funcionario::edit');
+    {   $ferias = Ferias::findOrFail($id);
+    
+        
+        
+        return view('funcionario::ferias.editaFerias',compact('ferias'));
     }
 
     /**
