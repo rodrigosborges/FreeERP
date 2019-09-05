@@ -54,7 +54,7 @@
         <div class="row">
             <div class="form-check col-12">
                 <label for="pagamento_parcela13">Pagamento 1ª Parcela 13º:&nbsp</label>
-                <input type="checkbox" name="pagamento_parcela13" id="pagamento_parcela13" value="{{ (isset($ferias->pagamento_parcela13) ?  '' : '0')}}">
+                <input type="checkbox" name="pagamento_parcela13" id="pagamento_parcela13"  @if($ferias->pagamento_parcela13 == 1) checked @endif">
             </div>
         </div>
 
