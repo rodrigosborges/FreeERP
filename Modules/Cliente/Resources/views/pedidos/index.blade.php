@@ -28,7 +28,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                     <th scope="row">{{$pedido->id}}</th>
                         <td>{{$pedido->data}}</td>
                         <td>
-                          R$ 1000,00
+                          {{"R$ ".number_format($pedido->vl_total_pedido(), 2, ',', '.') }}
                         </td>
                         <td>{{ ($pedido->desconto). "%" }}</td>
                         <td>
@@ -48,8 +48,29 @@ Cadastro de Compras - {{ $cliente->nome }}
                 <tr>
                   <td colspan="100%" style="height: 0px; padding: 0px; margin:0px;">
                     <div class="collapse" id="collapse{{$pedido->id}}">
-                       <div class="pedido_detalhes">
-                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                       <div class="pedido_detalhes row d-flex justify-content-between">
+                          @foreach ($pedido->vl_total_itens() as $item)
+                              <div class = "col-6 pt-1">
+                                <table class="table table-sm bordered">
+                                  <thead>
+                                    <th class="table-light">Produto</th>
+                                    <th class="table-light">Quantidade</th>
+                                    <th class="table-light">Valor Item</th>
+                                    <th class="table-light">Desconto</th>
+                                    <th class="table-light">Total</th>
+                                    
+                                  </thead>
+                                  <tbody>
+                                    <td scope="row">{{ $item->nome }}</td>
+                                    <td>{{$item->quantidade}}</td>
+                                    <td >{{ "R$ ".number_format($item->preco, 2, ',', '.') }}</td>
+                                    <td>{{ $item->desconto." %"}}</td>
+                                    <td>{{ "R$ ".number_format($item->valor_total, 2, ',', '.')}}</td>
+                                </tbody>
+                                </table>
+                              
+                              </div>
+                          @endforeach
                        </div>
                     </div>
                   </td>

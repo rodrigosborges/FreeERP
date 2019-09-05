@@ -15,9 +15,7 @@ class PedidoController extends Controller
     {
         $cliente = Cliente::findOrFail($id);
         $pedidos = $cliente->pedidos;
-
-    // return $pedidos[0]->vl_total_itens();
-
+        // return $pedidos[0]->vl_total_itens();
         return view('cliente::pedidos.index', compact('cliente'));
     }
     //view novo pedido

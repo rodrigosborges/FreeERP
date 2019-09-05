@@ -17,8 +17,9 @@ class Pedido extends Model
         return $this->belongsToMany('Modules\Cliente\Entities\Produto', 'pedido_has_produto')->withPivot('quantidade','desconto');
     }
     public function vl_total_itens(){
+
         return $this->produtos()->
-        select("produto.preco", "pedido_has_produto.quantidade", "pedido_has_produto.desconto", 
+        select("produto.preco", "produto.nome","pedido_has_produto.quantidade", "pedido_has_produto.desconto", 
         
         DB::raw(" ( (produto.preco * pedido_has_produto.quantidade) 
             - ( (produto.preco*pedido_has_produto.quantidade) * (pedido_has_produto.desconto/100) ) ) as valor_total"
@@ -28,8 +29,26 @@ class Pedido extends Model
     }
 
     public function vl_total_pedido(){
+        $valor = 0;
+        foreach($this->vl_total_itens() as $pedido){
+            $valor += $pedido->valor_total;
+        }
+        
+        if($valor > 0){
+            if($this->desconto > 0){
+                $valor = $valor - ($valor*($this->desconto /100 ));
+            }else{
+                $this->desconto = 0;
+            }
+        }
 
+        return $valor;
     }
+
+
+
+
+    
 
 
 
