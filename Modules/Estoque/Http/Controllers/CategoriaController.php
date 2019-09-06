@@ -47,7 +47,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        $data = ['titulo' => 'Cadastrar Categoria', 'button' => 'Cadastrar','url'=>'estoque/produto/categoria'];
+        $data = ['titulo' => 'Cadastrar Categoria', 'button' => 'Cadastrar', 'url' => 'estoque/produto/categoria'];
 
         $categorias = Categoria::all();
         return view('estoque::categoria.form', $this->dadosTemplate, compact('data', 'categorias'));
@@ -69,7 +69,12 @@ class CategoriaController extends Controller
             $subcategoria = new Subcategoria();
             $subcategoria->id = $categoria->id;
             $subcategoria->categoria_id = ($request->categoriaPai != -1) ? $request->categoriaPai : null;
-            $subcategoria->save();
+            $nome =  DB::table('categoria')->select('nome')->whereNotIn('id', $request->id)->where('nome', $request->nome)->count();
+            if ($nome != 0) {
+                $subcategoria->save();
+            } else {
+                return back()->with('warning', 'O nome selecionado já está cadastrado');
+            }
             DB::commit();
             return redirect('/estoque/produto/categoria')->with('success', 'Categoria ' . $request->nome . ' cadastrada com sucesso');
         } catch (\Exception $e) {
@@ -82,8 +87,9 @@ class CategoriaController extends Controller
     {
         $data = [
             'titulo' => 'Editar Categoria',
-             'button' => 'Atualizar',
-              'url'=>'estoque/produto/categoria/'.$id];
+            'button' => 'Atualizar',
+            'url' => 'estoque/produto/categoria/' . $id
+        ];
         $categoria = Categoria::findOrFail($id);
         $categorias = Categoria::all()->except($id);
         $subcategoria = Subcategoria::findOrFail($id);
@@ -101,9 +107,12 @@ class CategoriaController extends Controller
         try {
             $categoria = Categoria::findOrFail($id);
             $subcategoria = Subcategoria::findOrFail($id);
-            if ($request->nome == $categoria->nome) {
-                if ($id != $categoria->id)
-                    return back()->with('warning', 'A categoria ' . $categoria->nome . " já está cadastrada");
+
+
+            $nomeCategoria =  DB::table('categoria')->select('nome')->where('nome', $request->nome)->where('id','<>',$request->categoriaId)->get()->count();
+        
+            if ($nomeCategoria != 0) {
+                return back()->with('warning', 'Este nome já está cadastrado');
             }
             $categoria->update($request->all());
             if ($request->categoriaPai != -1) {
@@ -112,7 +121,7 @@ class CategoriaController extends Controller
             $subcategoria->categoria_id = ($request->categoriaPai != -1) ? $request->categoriaPai : null;
             $subcategoria->save();
             DB::commit();
-            
+
             return redirect('/estoque/produto/categoria')->with('success', 'Categoria ' . $request->nome . ' editada com sucesso');
         } catch (\Exception $e) {
             DB::rollback();
@@ -140,5 +149,17 @@ class CategoriaController extends Controller
 
         $categoria->restore();
         return back()->with('success', 'categoria ' . $categoria->nome . " restaurada com sucesso");
+    }
+    public function verificaNome(Request $request)
+    {
+
+        if ($request->id != 0) {
+            $categorias =  DB::table('categoria')
+                ->whereNotIn('id', $request->id)->select('nome')->where('nome', $request->nome)->count();
+        } else
+            $categorias = DB::table('categoria')->select('nome')->where('nome', $request->nome)->count();
+
+
+        return $categorias;
     }
 }

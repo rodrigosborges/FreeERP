@@ -35,3 +35,10 @@ $menu = [
     </div>
 </div>
 @endsection
+@section('js')
+
+<script>
+    var main_url = "{{url('')}}"
+</script>
+@yeld('js')
+@endsection
