@@ -2,9 +2,12 @@
 
 @section('body')
 
-<form action="{{url('funcionario/ferias')}}" method="PUT">
+<form action="{{url('funcionario/ferias' .'/'. $ferias->id)}}" method="POST">
+ 
     <h4>Agora Vai</h4>
+    @method('PUT')  
     {{csrf_field()}}
+           
         <div class="row">
 
             <div class="form-group col-4">
@@ -23,7 +26,7 @@
             </div>
          </div>
 
-       <!-- <input type="text" name="funcionario_id" style="display:none;" value="{{ (isset($ferias) ?  $ferias->funcionario_id : '')}}"> -->
+         <input type="text" name="funcionario_id" style="display:none;" value="{{ (isset($ferias) ?  $ferias->funcionario_id : '')}}"> 
 
         <div class="row">
             <div class="form-group col-3">
@@ -64,7 +67,7 @@
         <div>
 
         <button type="submit"  class="btn btn-success ">Enviar</button>
-        
+
         
     </form>
     </section>
