@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateColaborador extends Migration
+class Fornecedor extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateColaborador extends Migration
      */
     public function up()
     {
-        Schema::create('colaboradores', function (Blueprint $table) {
+        Schema::create('fornecedor', function(Blueprint $table){
             $table->increments('id');
-            $table->string('cargo');
+            $table->string('endereco');
+            $table->string('nome');
+            $table->string('cnpj');
             $table->timestamps();
-        
+            $table->softDeletes();
+
         });
     }
 
@@ -28,6 +31,6 @@ class CreateColaborador extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('colaboradores');
+        //
     }
 }
