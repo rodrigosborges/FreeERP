@@ -44,7 +44,6 @@
             <div class="form-group col-8">
                 <label for="situacao_ferias">Situação das Férias:</label>
                 <select name="situacao_ferias" class="form-control" id="situacao_ferias" value="{{ (isset($ferias) ?  $ferias->situacao_ferias : '')}}">
-                    <option value=""selected>Selecionar</option>
                     <option @if($ferias->situacao_ferias == 'marcadas')selected @endif value="Marcadas">Marcadas</option>
                     <option @if($ferias->situacao_ferias == 'naoMarcadas')selected @endif value="Nao_Marcadas">Não Marcadas</option>
                 </select>
@@ -62,10 +61,9 @@
         <div class="row">
             <div class="form-group col-12">
                 <label for="observacao">Observação:</label>
-                <textarea rows="5" name="observacao" id="observacao" class="form-control"></textarea>
+                <textarea rows="5" name="observacao" id="observacao" class="form-control" >{{$ferias->observacao}}</textarea>
             </div>
         <div>
-
         <button type="submit"  class="btn btn-success ">Enviar</button>
 
         
