@@ -35,7 +35,7 @@ class ClienteController extends Controller
     return view('cliente::cliente.index', compact('clientes','clientesDeletados'));
     }
 
-    public function store(/*CreateCliente*/Request $request) {
+    public function store(CreateClienteRequest $request) {
         DB::beginTransaction();
         try {
             $dados = $request->all();
