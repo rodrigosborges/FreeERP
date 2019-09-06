@@ -44,7 +44,9 @@ Route::prefix('estoque')->group(function () {
 
     //Restaurar Produto
     Route::put('/produto/{id}/restore', 'ProdutoController@restore');
-    
+    Route::post('/verificaNomeCategoria',function(){
+        return 'ok';
+    });
     
 });
  

@@ -17,8 +17,9 @@ class TipoUnidadeController extends Controller
      */
     public function index()
     {
+        $flag=1;
         $tipos = TipoUnidade::all();
-        return view('estoque::tipoUnidade.index', compact('tipos'));
+        return view('estoque::tipoUnidade.index', compact('tipos','flag'));
     }
 
     /**
@@ -66,7 +67,6 @@ class TipoUnidadeController extends Controller
     public function show()
     {
        
-        //return $this->inativos();
     }
 
     /**
@@ -128,9 +128,9 @@ class TipoUnidadeController extends Controller
     }
     public function inativos()
     {
-        
+        $flag=0;
         $inativos = TipoUnidade::onlyTrashed()->get();
 
-        return view('estoque::tipoUnidade.inativos', compact('inativos'));
+        return view('estoque::tipoUnidade.index', compact('inativos','flag'));
     }
 }

@@ -23,6 +23,7 @@
         </div>
 
         <div class="form-group col-8">
+            <input type="hidden" id="categoria-id" value="{{isset($categoria)?$categoria->id:0}}">
             <label for="nome">Nome</label>
             <input type="text" name='nome' id="nome" class="form-control" maxlength="45" value="{{(isset($categoria))?$categoria->nome:''}}">
             <p class=" alert-warning"> {{$errors->first('nome')}}</p>
@@ -37,8 +38,7 @@
 
 
 @endsection
-<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-
+@section('js')
 <script>
     $(document).ready(function() {
         $("#nome").bind('paste', function(e) {
@@ -54,7 +54,11 @@
                 $('#nome').val(string.substring(string.length - 1, 0));
                 $('#nome').focus()
             }
-
+            
+         
         })
+        var categoria = $('#categoria-id').val();
+    
     })
 </script>
+@endsection
