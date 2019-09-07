@@ -37,6 +37,7 @@
                         <th>Apelido</th>
                         <th>Avatar</th>
                         <th>E-mail</th>
+                        <th>Papel</th>
                         <th colspan="2">Ações</th>
                     </tr>
                 </thead>
@@ -46,6 +47,7 @@
                             <td>{{$usuario->apelido}}</td>
                             <td>{{$usuario->avatar}}</td>
                             <td>{{$usuario->email}}</td>
+                            <td>{{$usuario->papel->nome}}</td>
                             <td><a  href="{{url('/usuario/' . $usuario->id.'/edit')}}"><button type="button" class=" btn-sm btn btn-success">Editar</button></a>
                             <a href= "{{('/usuario/'.$usuario->id .'/trocarSenha')}}"><button type="button" class="btn btn-primary btn-sm" >Trocar Senha</button></a>
                             <td><form method="POST" action="{{url('/usuario/' . $usuario->id)}}">

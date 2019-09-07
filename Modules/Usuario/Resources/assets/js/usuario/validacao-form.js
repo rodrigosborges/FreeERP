@@ -7,6 +7,9 @@
                 maxlength:50,
                 remote: main_url+'/usuario/check-unique/'+usuario_id
             },
+            papel:{
+                required:true
+            },
             email:{
                 required:true,
                 email:true,
@@ -28,6 +31,9 @@
                 minlength:"<span style='color:red'>Apelido tem que ter no minímo 3 caracteres</span>",
                 maxlength:"<span style='color:red'>Apelido tem que ter no máximo 50 caracteres</span>",
                 remote:"<span style='color:red'>Apelido indisponível</span>"
+            },
+            papel:{
+                required:"<span style='color:red'>Selecione um Papel</span>",
             },
             email:{
                 required:"<span style='color:red'>Preencha o campo Email</span>",

@@ -29,6 +29,6 @@ class Modulo extends Migration
      */
     public function down()
     {
-        Schema::drop('modulo');
+        Schema::dropIfExists('modulo');
     }
 }

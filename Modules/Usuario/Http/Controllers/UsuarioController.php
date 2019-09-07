@@ -5,7 +5,7 @@ namespace Modules\Usuario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Usuario\Entities\Usuario;
+use Modules\Usuario\Entities\{Usuario,Papel};
 use Modules\Usuario\Http\Requests\{UsuarioStoreRequest,UsuarioUpdateRequest,TrocarSenhaRequest};
 use Illuminate\Support\Facades\Hash;
 use DB;
@@ -40,7 +40,8 @@ class UsuarioController extends Controller
 
     public function create()
     {
-        return view('usuario::usuario.form');
+        $papeis = Papel::all();
+        return view('usuario::usuario.form',compact('papeis'));
     }
 
     public function store(UsuarioStoreRequest $request)
@@ -66,12 +67,11 @@ class UsuarioController extends Controller
             $usuario = Usuario::create([
                 'apelido' => $request->apelido,
                 'email' => $request->email,
+                'papel_id' => $request->papel,
                 'avatar' => $nameFile,
                 'password' => Hash::make($request->password)
             ]);
-
-            
-
+    
             DB::commit();
     
             return back()->with('success', 'Usuário cadastrado com sucesso');
@@ -90,8 +90,9 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         $usuario = Usuario::findOrFail($id);
+        $papeis = Papel::all();
 
-        return view('usuario::usuario.form', compact('usuario'));
+        return view('usuario::usuario.form', compact('usuario','papeis'));
     }
 
     public function update(UsuarioUpdateRequest $request, $id)
@@ -102,7 +103,8 @@ class UsuarioController extends Controller
             $usuario = Usuario::findOrFail($id);
             $usuario->update([
                 'apelido' => $request->apelido,
-                'email' => $request->email
+                'email' => $request->email,
+                'papel_id' => $request->papel
             ]);
             
             //pegando a imagem 
