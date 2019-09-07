@@ -295,7 +295,7 @@
             inputs.each(function() {
                 // verificar um a um e passar a false se algum falhar
                 // no lugar do if pode-se usar alguma função de validação, regex ou outros
-               // console.log(this)
+                // console.log(this)
                 if (!this.value) {
                     preenchidos = false;
                     // parar o loop, evitando que mais inputs sejam verificados sem necessidade
@@ -306,25 +306,16 @@
             // Habilite, ou não, o <button>, dependendo da variável:
             $('button').prop('disabled', !preenchidos); // 
             if (preenchidos) {
+                alert("TUDO PRENCHIDO")
                 calcular()
             }
 
         }
-        //desabilita e habilita inputs
-        function desabilitar(opcao) {
 
-            $('.cargos').attr('disabled', opcao);
-            $('.cargos').attr('disabled', opcao);
-            $('.emissao').attr('disabled', opcao);
-            $('.opcao-pagamento').attr('disabled', opcao);
-            $('.horas_extras').attr('disabled', opcao);
-            $('.adicional1').attr('disabled', opcao);
-            $('.faltas').attr('disabled', opcao);
-        }
         //calcula salario, hora_extra, adicional noturno, inss
 
         function calcular() {
-            
+
             console.log("Valor salario :" + selectedCargo.salario + "hora Extra:" + $('#horas_extras').val() + "Adicional noturno:" + $('.adicional1').val() + " Faltas:" + $('#faltas').val())
             var salario = parseFloat(selectedCargo.salario)
             var horas_extras = parseFloat($('.horas_extras').val())
@@ -335,7 +326,7 @@
             var faltas = parseFloat($('.faltas').val())
             var inss = parseFloat($('.inss').val())
             var desconto = (salario / 30) * (faltas * horas_dias)
-            
+
 
             console.log("desconto:" + -desconto)
             var temp = total;
@@ -417,15 +408,7 @@
             } else
                 calculaInss(data)
 
-
-            //seleciona nome do cargo conforme id
-            $.each(cargos, function(chave, valor) {
-                if (valor.id == $('.cargos').val()) {
-                    selectedCargo = valor
-                }
-
-            })
-
+     
         }).fail(function() {
 
         })
@@ -450,13 +433,29 @@
             //após capturar os cargos ele faz um foreach nos cargos e adiciona em uma string 
             // que posteriormente é enviada para o select de cargos
             cargos = $.parseJSON(data);
+            selectedCargo =cargos
             $('.cargos').attr('disabled', false)
-            
+
             string = '<option  value="' + cargos.id + '">' + cargos.nome + "</option>"
+            desabilitar(false)
 
             $('.cargos').html(string);
+            var salario = cargos.salario
+            calculaInss(salario)
+            $('.valor').val()
         }).fail(function() {})
 
+    }
+    //desabilita e habilita inputs
+    function desabilitar(opcao) {
+
+        $('.cargos').attr('disabled', opcao);
+        $('.cargos').attr('disabled', opcao);
+        $('.emissao').attr('disabled', opcao);
+        $('.opcao-pagamento').attr('disabled', opcao);
+        $('.horas_extras').attr('disabled', opcao);
+        $('.adicional1').attr('disabled', opcao);
+        $('.faltas').attr('disabled', opcao);
     }
 </script>
 
