@@ -16,7 +16,8 @@ class UsuarioStoreRequest extends FormRequest
         return [
             'apelido' => ['required', 'min:3', 'max:50','unique:usuario'],
             'avatar' => ['mimes:jpeg,png'],
-            'email' => ['required', 'email', 'unique:usuario, email,'.$this->route('id')],
+            'email' => ['required', 'email', 'unique:usuario,email,'.$this->route('id')],
+            'papel' => ['required'],
             'password' => ['required', 'min:8', 'max:16', 'same:repeat_password'],
         ];
     }

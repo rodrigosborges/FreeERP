@@ -22,7 +22,8 @@ class UsuarioDatabaseSeeder extends Seeder{
         
         DB::table('usuario')->insert([
             'apelido' => 'admin',
-            'avatar' => 'default.png',            
+            'avatar' => 'default.png',
+            'papel_id' => 1,            
             'email' => 'admin@freeerp.com',
             'papel_id' => Papel::where('nome', '=', 'admin')->firstOrFail()->id,
             'password' => bcrypt('password'),

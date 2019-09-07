@@ -47,7 +47,7 @@
                             <td>{{$usuario->apelido}}</td>
                             <td>{{$usuario->avatar}}</td>
                             <td>{{$usuario->email}}</td>
-                            <td>{{Modules\Usuario\Entities\Papel::Find($usuario->papel_id)->nome}}</td>
+                            <td>{{$usuario->papel->nome}}</td>
                             <td><a  href="{{url('/usuario/' . $usuario->id.'/edit')}}"><button type="button" class=" btn-sm btn btn-success">Editar</button></a>
                             <a href= "{{('/usuario/'.$usuario->id .'/trocarSenha')}}"><button type="button" class="btn btn-primary btn-sm" >Trocar Senha</button></a>
                             <td><form method="POST" action="{{url('/usuario/' . $usuario->id)}}">

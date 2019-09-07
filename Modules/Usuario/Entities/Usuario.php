@@ -14,10 +14,9 @@ class Usuario extends Authenticatable{
     use SoftDeletes;
 
     protected $table = 'usuario';
-    protected $fillable = ['apelido', 'avatar', 'email', 'papel_id', 'password'];
-
+    protected $fillable = ['apelido', 'avatar', 'email', 'password','papel_id'];
 
     public function papel(){
-        return $this->hasOne('Modules\Usuario\Entities\Papel');
+        return $this->belongsTo('Modules\Usuario\Entities\Papel');
     }
 }

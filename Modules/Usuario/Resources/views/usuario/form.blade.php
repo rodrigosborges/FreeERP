@@ -43,14 +43,16 @@
                         <input required id='email' value="{{old('email', isset($usuario) ? $usuario->email : '')}}" class="form-control" type="email" name="email">
                         {{$errors->first('email')}}
                     </div>
+                    
                     <div class="form-group">
-                        <label for="papel_id">Papel</label>
-                        <select name="papel_id" class="form-control" >
+                        <label for="papel">Papel</label>
+                        <select class="form-control" name='papel'>
+                            <option disabled selected>Escolha um Papel...</option>
                             @foreach($papeis as $papel)
-                                <option {{isset($usuario) && $usuario->papel_id == $papel->id ? 'selected' : ''}} value="{{$papel->id}}">{{$papel->nome}}</option>
+                            <option value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
                             @endforeach
                         </select>
-                        {{$errors->first('papel_id')}}
+                        {{$errors->first('papel')}}
                     </div>
 
                     @if(!isset($usuario))
