@@ -43,6 +43,16 @@
                         <input required id='email' value="{{old('email', isset($usuario) ? $usuario->email : '')}}" class="form-control" type="email" name="email">
                         {{$errors->first('email')}}
                     </div>
+                    <div class="form-group">
+                        <label for="papel_id">Papel</label>
+                        <select name="papel_id" class="form-control" >
+                            @foreach($papeis as $papel)
+                                <option {{isset($usuario) && $usuario->papel_id == $papel->id ? 'selected' : ''}} value="{{$papel->id}}">{{$papel->nome}}</option>
+                            @endforeach
+                        </select>
+                        {{$errors->first('papel_id')}}
+                    </div>
+
                     @if(!isset($usuario))
                     <div class="form-group">
                         <label for="password">Senha</label>
