@@ -29,7 +29,7 @@
             <p class=" alert" id="mensagem-nome"> {{$errors->first('nome')}}</p>
         </div>
     </div>
-    
+
 
     <div class="row col-12" style="justify-content: flex-end;">
         <button type="submit" id="enviar" class="btn btn-primary">{{$data['button']}}</button>
@@ -44,7 +44,6 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#mensagem-nome').fadeOut();
 
         function doneTyping() {
             $('#nome').css('opacity', '0.8');
@@ -79,46 +78,47 @@
     })
 
     function buscaNome() {
-        var string = $('#nome').val();
+        var string = $('#nome').val().trim();
         var categoria = $('#categoria-id').val()
 
 
+        if (string.length > 0) {
+            $.ajax({
+                url: '/verificaNomeCategoria',
+                type: 'post',
+                data: {
+                    'nome': string,
+                    'categoria-id': categoria,
+                    '_token': $('input[name=_token]').val(),
 
-        $.ajax({
-            url: '/verificaNomeCategoria',
-            type: 'post',
-            data: {
-                'nome': string,
-                'categoria-id': categoria,
-                '_token': $('input[name=_token]').val(),
 
+                },
+                dataType: 'json'
 
-            },
-            dataType: 'json'
+            }).done(function(data) {
+                $('#nome').css('opacity', '1');
 
-        }).done(function(data) {
-            $('#nome').css('opacity', '1');
+                console.log(data);
+                var mensagem;
+                if (data == 1) {
+                    //    alert('Ja tem');
+                    mensagem = "Esta categoria já está cadastrada"
+                    $('#mensagem-nome').removeClass('alert-success')
+                    $('#mensagem-nome').addClass('alert-warning')
+                } else {
+                    $('#mensagem-nome').removeClass('alert-warning')
+                    $('#mensagem-nome').addClass('alert-success')
+                    mensagem = "Categoria disponível"
+                    //  alert('nome livre')
+                    $('#enviar').attr('disabled', false);
+                }
+                $('#mensagem-nome').html(mensagem)
+                $('#mensagem-nome').fadeIn()
 
-            console.log(data);
-            var mensagem;
-            if (data == 1) {
-            //    alert('Ja tem');
-                mensagem = "Esta categoria já está cadastrada"
-                $('#mensagem-nome').removeClass('alert-success')
-                $('#mensagem-nome').addClass('alert-warning')
-            } else {
-                $('#mensagem-nome').removeClass('alert-warning')
-                $('#mensagem-nome').addClass('alert-success')
-                mensagem = "Categoria disponível"
-              //  alert('nome livre')
-                $('#enviar').attr('disabled', false);
-            }
-            $('#mensagem-nome').html(mensagem)
-            $('#mensagem-nome').fadeIn()
-            
-        }).fail(function() {
-            console.log('fail')
-        })
+            }).fail(function() {
+                console.log('fail')
+            })
+        }
     }
 </script>
 @endsection

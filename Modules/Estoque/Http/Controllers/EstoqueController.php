@@ -5,6 +5,7 @@ namespace Modules\Estoque\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Estoque\Entities\{Produto,Estoque, TipoUnidade};
 
 class EstoqueController extends Controller
 {
@@ -48,6 +49,8 @@ class EstoqueController extends Controller
             'button'  => 'Cadastrar',
             'url'     => 'estoque',
             'estoque' => null,
+            'produtos'=>Produto::all(),
+            'tipoUnidade' =>TipoUnidade::all(),
         ];
         return view('estoque::estoque.form', compact('data'));
     }

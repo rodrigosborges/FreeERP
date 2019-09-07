@@ -20,4 +20,8 @@ class Estoque extends Model
         return $this->hasOne('Modules\Estoque\Entities\TipoUnidade');
     }
 
+    public function movimentacaoEstoque()
+    {
+        return $this->hasMany('Modules\Estoque\Entities\MovimentacaoEstoque');
+    }
 }
