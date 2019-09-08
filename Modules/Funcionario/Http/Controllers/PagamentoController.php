@@ -58,6 +58,8 @@ class PagamentoController extends Controller
      */
     public function store(Request $request)
     {
+
+       
         DB::beginTransaction();
 
         try {
@@ -66,9 +68,10 @@ class PagamentoController extends Controller
             $salario = floatval($funcionario->cargos->find($request->cargos)->salario);
             $salario = str_replace(',','.', $salario);
             $pagamento->valor = $salario;
-            $pagamento->faltas = $request->faltas;
-            $pagamento->horas_extras = $request->horas_extras;
-            $pagamento->adicional_noturno = $request->adicional;
+            $pagamento->faltas = floatval($request->faltas);
+            $pagamento->horas_extras = floatval($request->horas_extras);
+            $pagamento->adicional_noturno = floatval($request->adicional);
+            
             $inss= $this->calcularInss($salario);
             if ($request->opcao_pagamento == "2") {
                 $temp = $salario * 0.4;
@@ -82,7 +85,7 @@ class PagamentoController extends Controller
             $pagamento->funcionario_id = $funcionario->id;
             $pagamento =$this->OpcaoPagamentoNome($pagamento);
             $pagamento = $this->calcularTotal($pagamento, $request->cargos);
-   
+           // dd($pagamento);
             $pagamento->save();
          
 
@@ -112,6 +115,7 @@ class PagamentoController extends Controller
      */
     public function edit($id)
     {
+        dd($id); 
         $data = [
             "button" => 'Atualizar',
             'title'         => "Editar pagamentos",
