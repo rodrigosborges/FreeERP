@@ -5,7 +5,8 @@ namespace Modules\Estoque\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Estoque\Entities\{Produto,Estoque, TipoUnidade};
+use Modules\Estoque\Entities\{Produto, Estoque, TipoUnidade};
+use DB;
 
 class EstoqueController extends Controller
 {
@@ -33,9 +34,10 @@ class EstoqueController extends Controller
      */
     public function index()
     {
-
-        return view('estoque::estoque.index', $this->dadosTemplate);
-
+      
+     
+        $itens = Estoque::paginate(10);
+        return view('estoque::estoque.index', $this->dadosTemplate, compact('itens'));
     }
 
     /**
@@ -44,14 +46,16 @@ class EstoqueController extends Controller
      */
     public function create()
     {
+
         $data = [
             'titulo'  => 'Cadastrar Estoque',
             'button'  => 'Cadastrar',
             'url'     => 'estoque',
             'estoque' => null,
-            'produtos'=>Produto::all(),
-            'tipoUnidade' =>TipoUnidade::all(),
+            'produtos' => Produto::all(),
+            'tipoUnidade' => TipoUnidade::all(),
         ];
+
         return view('estoque::estoque.form', compact('data'));
     }
 
@@ -62,7 +66,16 @@ class EstoqueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Estoque::create($request->all());
+            
+            DB::commit();
+            return redirect('/estoque')->with('success', 'Item de estoque registrado com sucesso!');
+        } catch (Exception $ex) {
+            DB::rollback();
+            return back()->with('danger', "Erro ao tentar registrar item. cod:" + $ex->getMessage());
+        }
     }
 
     /**

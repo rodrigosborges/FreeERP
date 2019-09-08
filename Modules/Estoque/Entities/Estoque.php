@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Estoque extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['quantidade', 'produto_id', 'tipo_unidade'];
+    protected $fillable = ['quantidade', 'produto_id', 'tipo_unidade_id'];
     protected $table = 'estoque';
 
     public function produtos()

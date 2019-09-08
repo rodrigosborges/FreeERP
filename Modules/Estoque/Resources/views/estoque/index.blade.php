@@ -15,8 +15,9 @@
         </tr>
     </thead>
     <tbody>
-       <!-- <tr>
-            <td></td>
+        @foreach($itens as $item)
+        <tr>
+            <td>{{$item->id}}</td>
             <td></td>
             <td>
                 <a class="btn btn-lg btn-warning" href="">
@@ -33,7 +34,7 @@
                     </button>
                 </form>
             </td>
-        </tr> -->
+        </tr> @endforeach
     </tbody>
     <tfoot>
         <tr>

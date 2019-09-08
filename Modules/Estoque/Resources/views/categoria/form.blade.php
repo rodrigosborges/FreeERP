@@ -22,12 +22,16 @@
             </div>
         </div>
 
-        <div class="form-group col-8">
+        <div class="form-group col-7">
             <input type="hidden" name="categoriaId" id="categoria-id" value="{{isset($categoria)?$categoria->id:0}}">
             <label for="nome">Nome</label>
             <input type="text" name='nome' id="nome" class="form-control" maxlength="45" value="{{(isset($categoria))?$categoria->nome:''}}">
+            <img src="https://flevix.com/wp-content/uploads/2019/07/Ring-Preloader.gif" alt="" class="img-loader" height="80px">
             <p class=" alert" id="mensagem-nome"> {{$errors->first('nome')}}</p>
+
         </div>
+
+
     </div>
 
 
@@ -44,6 +48,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $('.img-loader').hide();
 
         function doneTyping() {
             $('#nome').css('opacity', '0.8');
@@ -78,6 +83,7 @@
     })
 
     function buscaNome() {
+        $('.img-loader').fadeIn();
         var string = $('#nome').val().trim();
         var categoria = $('#categoria-id').val()
 
@@ -103,9 +109,12 @@
                 if (data == 1) {
                     //    alert('Ja tem');
                     mensagem = "Esta categoria já está cadastrada"
+
+                    $('.img-loader').hide()
                     $('#mensagem-nome').removeClass('alert-success')
                     $('#mensagem-nome').addClass('alert-warning')
                 } else {
+                    $('.img-loader').hide()
                     $('#mensagem-nome').removeClass('alert-warning')
                     $('#mensagem-nome').addClass('alert-success')
                     mensagem = "Categoria disponível"
@@ -113,7 +122,7 @@
                     $('#enviar').attr('disabled', false);
                 }
                 $('#mensagem-nome').html(mensagem)
-                $('#mensagem-nome').fadeIn()
+                $('#mensagem-nome').fadeIn("slow ")
 
             }).fail(function() {
                 console.log('fail')
