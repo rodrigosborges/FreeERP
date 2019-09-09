@@ -13,7 +13,7 @@ class Estoque extends Model
 
     public function produtos()
     {
-        return $this->hasMany('Modules\Estoque\Entities\Produto');
+        return $this->belongsToMany('Modules\Estoque\Entities\Produto', 'estoque_has_produto','esotque_id','produto_id')->withPivot(['tipo_unidade_id']);
     }
     public function tipoUnidade()
     {
