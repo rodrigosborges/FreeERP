@@ -18,6 +18,6 @@ class Produto extends Model
     }
     public function estoque()
     {
-        return $this->belongsTo('Modules\Estoque\Entities\Categoria');
+        return $this->belongsToMany('Modules\Estoque\Entities\Estoque','estoque_has_produto','produto_id', 'estoque_id')->withPivot(['tipo_unidade_id']);
     }
 }
