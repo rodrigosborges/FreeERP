@@ -52,7 +52,7 @@
     <form method="POST" action="{{url('/estoque/produto/' . $produto->id)}}">
         @method('delete')
         @csrf
-        <button type="submit" class="btn btn-primary ml-3">Desativar</button>
+        <button type="submit" class="btn btn-danger ml-3">Desativar</button>
     </form>
     
     </div>

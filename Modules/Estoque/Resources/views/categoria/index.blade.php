@@ -3,9 +3,6 @@
 @section('content')
 
 
-
-
-<hr>
 <div class="row justify-content-center">
     <div class="card col-md-12">
         <div class="header">
@@ -29,39 +26,39 @@
                     <table class="table text-center table-striped ">
                         <thead class="card-header">
                             <tr>
-                                <th scope="col">ID</th>
                                 <th scope="col">Nome</th>
-                                <th scope='col'>Ações</th>
-                                <th>
-                                    <a class="btn btn-outline-success btn-md" href="{{url('/estoque/produto/categoria/create')}}">
-                                        <i class="material-icons">note_add</i>Adicionar
-                                    </a>
-                                </th>
+                                <th scope="col">Editar</th>
+                                <th scope="col">Remover</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($categorias as $categoria)
                             <tr>
-                                <td>{{$categoria->id}}</td>
                                 <td>{{$categoria->nome}}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-outline-warning" href="{{url('estoque/produto/categoria/'.$categoria->id. '/edit')}}">
-                                        <i class="material-icons">border_color</i>Editar
+                                    <a class="btn btn-sm btn-warning" style="font-size:0px" href="{{url('estoque/produto/categoria/'.$categoria->id. '/edit')}}">
+                                        <i class="material-icons" style="font-size:18px;">border_color</i>
                                     </a>
                                 </td>
                                 <td>
                                     <form method="POST" action="{{url('estoque/produto/categoria/'. $categoria->id)}}">
                                         @method('delete')
                                         @csrf
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <button type="submit" style="font-size:0px" class="btn btn-sm btn-danger">
 
-                                            <i class="material-icons">delete</i> <span style="float:right">Remover<span>
+                                            <i class="material-icons" style="font-size:18px;">delete</i>
                                         </button>
                                     </form>
                                 </td>
                             </tr>
                             @endforeach
+
+                               
+                            	
                         </tbody>
+                        <a class="btn btn-success btn-sm mt-3 mb-3" href="{{url('/estoque/produto/categoria/create')}}">
+                                    <i class="material-icons" style="vertical-align:middle;">note_add</i>  Adicionar
+                                </a>
                         <tfoot>
                             <tr>
                                 <td colspan="100%" class="text-center">
@@ -86,20 +83,20 @@
                     <div class="justify-content-center">
                         <table class="table text-center  table-striped ">
                             <thead class="card-header">
-                                <td><strong>ID</strong></td>
+                               
                                 <td><strong>Nome</strong></td>
-                                <td><strong>Ação</strong></td>
+                                <td><strong>Restaurar</strong></td>
                             </thead>
                             <tbody>
                                 @foreach($categoriasInativas as $inativa)
                                 <tr>
-                                    <td>{{$inativa->id}}</td>
+                                   
                                     <td>{{$inativa->nome}}</td>
                                     <td>
                                         <form method="POST" action="{{url('estoque/produto/categoria/restore/'.$inativa->id)}}">
                                             @method('put')
                                             @csrf
-                                            <button type="submit" class="btn btn-outline-info"> <i class="material-icons">restore_from_trash</i>Restaurar</button>
+                                            <button type="submit" style="font-size:0px" class="btn btn-sm btn-info"> <i class="material-icons" style="font-size:18px;">restore_from_trash</i></button>
                                         </form>
                                     </td>
                                 </tr>

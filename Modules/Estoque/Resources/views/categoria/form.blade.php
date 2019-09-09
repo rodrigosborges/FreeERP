@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="form-group col-7">
+        <div class="form-group col-8">
             <input type="hidden" name="categoriaId" id="categoria-id" value="{{isset($categoria)?$categoria->id:0}}">
             <label for="nome">Nome</label>
             <input type="text" name='nome' id="nome" class="form-control" maxlength="45" value="{{(isset($categoria))?$categoria->nome:''}}">
