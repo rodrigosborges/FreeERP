@@ -5,8 +5,7 @@ namespace Modules\Protocolos\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Interessado, Protocolo};
-use App\Entities\{EstadoCivil};
+use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Interessado, Protocolo, Setor};
 
 use DB;
 
@@ -38,6 +37,7 @@ class ProtocolosController extends Controller
             'tipo_protocolo'    => TipoProtocolo::all(),
             'tipo_acesso'       => TipoAcesso::all(),
             'interessado'       => Interessado::all(),
+            'setor'             => Setor::all(),
             'title'             => 'Cadastro de Protocolo',
             'button'            => 'Salvar',
         ];
@@ -45,9 +45,9 @@ class ProtocolosController extends Controller
     }
 
     public function list(Request $request, $status) {
-        $protocolos = new Protocolo;
+        $protocolo = new Protocolo;
        
-        $protocolos = $protocolos->paginate(10);
+        $protocolo = $protocolo->paginate(10);
         return view('protocolos::protocolo.table', compact('protocolos', 'status'));
     }
 
@@ -56,13 +56,6 @@ class ProtocolosController extends Controller
         $query = $request->get('query'); 
         $data = DB::table('interessado')->where('nome', 'LIKE', '%'.$query.'%')
             ->pluck('nome');
-        //$output = '<ul class="dropdown-menu" style="display:block; position:relative>"';
-            //foreach($data as $row){
-             //   $output .= '<li><a href="#">' .$row->nome. '</a></li>';
-            //}
-        //$output .= '</ul>';
-
-        //echo $output;
 
         return $data;
     }
@@ -72,9 +65,9 @@ class ProtocolosController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(CreateProtocolo $request){
+
+        
     }
 
     /**

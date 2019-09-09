@@ -17,9 +17,11 @@
                 <div class="form-group">
                     <label for="nome" class="control-label">Interessados: <span class="required-symbol">*</span></label>
                     <div class="input-group">
-                       
-                            <input id="pesquisa" class="form-control" type="text" name="pesquisa" />
-                        
+                        <div class="interessado" id="interessado"></div>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <input id="pesquisa" class="form-control" type="text" name="pesquisa" />
                     </div>
                    
                 </div>
@@ -44,7 +46,7 @@
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="nome" class="control-label">Nível de acesso: <span class="required-symbol">*</span></label>
+                    <label for="nome" class="control-label">Nível de Acesso: <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -59,14 +61,31 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-9">
-                <div class="text-right">
-                    <button class="btn btn-success sendForm" type="button">Salvar</button>
+                <div class="form-group">
+                    <label for="nome" class="control-label">Setor de Criação: <span class="required-symbol">*</span></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">person</i>
+                            </span>
+                        </div>
+                        <select required name="setor[id]" class="form-control">
+                            <option value="">Selecione</option>
+                            @foreach($data['setor'] as $item)
+                                <option value="{{ $item->id }}" {{ old('setor.setor_id', $data['model']? $data['model']->setor()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
     </form>
+@endsection
+
+@section('footer')
+    <div class="text-right">
+        <button class="btn btn-success sendForm" type="button">{{$data['button']}}</button>
+    </div>
 @endsection
 
 @section('script')

@@ -33,4 +33,9 @@ class Protocolo extends Model
     public function interessado(){
         return $this->belongsToMany('Modules\Protocolos\Entities\Interessado');
     }
+
+    //Relação com a tabela setor
+    public function setor(){
+        return $this->belongsTo('Modules\Protocolos\Entities\Setor');
+    }  
 }

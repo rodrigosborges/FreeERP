@@ -12,16 +12,12 @@ $('#pesquisa').keyup(function(){
             data: {query:query},
             dataType: 'json',
             success:function(data){
-               
-                // for(i=0; i<=data.length; i++){
-                //     console.log(data[i]['nome'])
-                //     termos[i] = data[i]['nome']
-                // }
                 $('#pesquisa').autocomplete({
-                    source: data
+                    source: data,
+                    select: function (e, i) {
+                        document.getElementById("interessado").innerHTML = i.item.value
+                    }
                 })
-                // $('#interessados_list').fadeIn();
-                // $('#interessados_list').html(data);
             }
         })
     }

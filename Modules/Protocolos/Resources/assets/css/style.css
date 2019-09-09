@@ -44,3 +44,10 @@ div.error, .errors {
     left: 0;
     right: 0;
 }
+
+.interessado{
+    background-image: radial-gradient(#ccffcc,  #99ff99,  #70db70);
+    border-radius:5px;
+    min-width: 300px;
+    text-align:center;
+}
