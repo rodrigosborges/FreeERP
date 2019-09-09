@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use DB;
 use Modules\Estoque\Http\Requests\ProdutoRequest;
+use Modules\Estoque\Http\Requests\PesquisaProdutoRequest;
 use Modules\Estoque\Entities\Produto;
 use Modules\Estoque\Entities\Categoria;
 
@@ -122,7 +123,7 @@ class ProdutoController extends Controller
     }
 
 
-    public function busca(Request $request)
+    public function busca(PesquisaProdutoRequest $request)
     {
         $sql = [];
         $categorias = Categoria::all();
@@ -149,20 +150,30 @@ class ProdutoController extends Controller
                 array_push($sql, ['preco', '<=', $request['preco_max']]);
         }
         
-        $produtosInativos = Produto::onlyTrashed()->where($sql)->paginate(5);
-        $produtos = Produto::where($sql)->paginate(5);
+        //Se a flag for 1 retorna os produtos inativos, se for 2 os produtos ativos
+        if($request['flag'] == 1){
+            $produtos = Produto::onlyTrashed()->where($sql)->paginate(5);
+            if(count($produtos) == 0){
+                return redirect('/estoque/produto')->with('error', 'Nenhum resultado encontrado');
+            }
 
-        if(count($produtos) == 0 && count($produtosInativos) == 0){
-            return redirect('/estoque/produto')->with('error', 'Nenhum resultado encontrado');
+            $flag = $request['flag'];
+            return view('estoque::produto.index', $this->dadosTemplate, compact('produtos', 'categorias', 'flag'))->with('success', 'Resultado da pesquisa');
+
+        }else{
+            $produtos = Produto::where($sql)->paginate(5);
+            if(count($produtos) == 0){
+                return redirect('/estoque/produto')->with('error', 'Nenhum resultado encontrado');
+            }
+            $flag = $request['flag'];
+            return view('estoque::produto.index', $this->dadosTemplate, compact('produtos', 'categorias', 'flag'))->with('success', 'Resultado da pesquisa');
+
         }
-
-        return view('estoque::produto.index', $this->dadosTemplate, compact('produtos', 'categorias','produtosInativos'))->with('success', 'Resultado da pesquisa');
 
     }
 
     public function inativos()
     {
-        
         $produtos = Produto::onlyTrashed()->paginate(5);
         $flag = 1;
         $categorias = Categoria::all();
