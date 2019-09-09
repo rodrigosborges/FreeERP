@@ -21,7 +21,7 @@
                     </a>
                 </li>
             </ul>
-            <div class=" tab-content row justify-content-center ">
+            <div class="tab-content row justify-content-center">
                 <div class="tab-pane active col-sm-10" role="tabpanel1" id="ativos">
                     <table class="table text-center table-striped ">
                         <thead class="card-header">
@@ -56,9 +56,11 @@
                                
                             	
                         </tbody>
+                        <div class="col-12 text-right">
                         <a class="btn btn-success btn-sm mt-3 mb-3" href="{{url('/estoque/produto/categoria/create')}}">
                                     <i class="material-icons" style="vertical-align:middle;">note_add</i>  Adicionar
                                 </a>
+                        </div>
                         <tfoot>
                             <tr>
                                 <td colspan="100%" class="text-center">
@@ -81,7 +83,7 @@
                 <div class="tab-pane col-sm-8" role="tabpanel1" id="inativos">
 
                     <div class="justify-content-center">
-                        <table class="table text-center  table-striped ">
+                        <table class="table text-center  table-striped mt-5">
                             <thead class="card-header">
                                
                                 <td><strong>Nome</strong></td>

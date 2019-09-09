@@ -36,16 +36,7 @@
                 </form>
             
             
-            <div class="row">
-                <div class="col-12 text-right pl-2">
-                    @if($flag == 0)
-                    <a class="btn btn-success" href="{{url('/estoque/produto/create')}}">Novo Produto</a>
-                    <a class="btn btn-danger" href="{{url('/estoque/produto/inativos')}}">Inativos</a>
-                    @else
-                    <a class="btn btn-warning" href="{{url('/estoque/produto')}}">Voltar</a>
-                    @endif
-                </div>
-            </div>
+            
 
             <ul class="nav nav-tabs  justify-content-center">
                 <li class="nav-item">
@@ -58,16 +49,28 @@
                     </a>
                 </li>
             </ul>
-            <div class=" tab-content row justify-content-center ">
+            <div class="tab-content row justify-content-center">
                 <div class="tab-pane active col-sm-10" role="tabpanel1" id="ativos">
-                    <table class="table mt-3">
-                        <thead class="thead-dark">
+                    <table class="table text-center table-striped">
+                        <thead class="card-header">
+                        <div class="row mt-3 mb-3">
+                            <div class="col-12 text-right">
+                            @if($flag == 0)
+                                <a class="btn btn-success btn-sm" href="{{url('/estoque/produto/create')}}">
+                                    <i class="material-icons" style="vertical-align:middle; font-size:25px;">note_add</i>Adicionar
+                                </a>
+                                 <a class="btn btn-danger btn-sm" href="{{url('/estoque/produto/inativos')}}"><i class="material-icons" style="vertical-align:middle; font-size:25px;">delete</i>Inativos</a>
+                            @else
+                                <a class="btn btn-warning btn-sm" href="{{url('/estoque/produto')}}"><i class="material-icons" style="vertical-align:middle; font-size:25px;">keyboard_backspace</i>Voltar</a>
+                            @endif
+                        </div>
+                    </div>
                             <tr>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Preço</th>
                                 @if($flag == 0)
-                                <th scope="col">Ações</th>
+                                <th scope="col">Visualizar</th>
                                 <th scope="col">Editar</th>   
                                 @else
                                 <th scope="col">Restaurar</th>
@@ -75,7 +78,10 @@
                                                    
                             </tr>
                         </thead>
+                        
                         <tbody>
+                        
+                        
                             @if(isset($produtos))
                             @foreach($produtos as $produto)
                             <tr>
@@ -83,9 +89,10 @@
                                 <td>{{$produto->categoria->nome}}</td>
                                 <td>R$ {{$produto->preco}}</td>
                                 @if($flag == 0)
-                                <td><a href="{{url('/estoque/produto/ficha/' . $produto->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
+                                
+                                <td><a href="{{url('/estoque/produto/ficha/' . $produto->id)}}"><button class="btn btn-sm btn-primary" style="font-size: 0px;"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
 
-                                <td ><a href="{{url('/estoque/produto/' . $produto->id . '/edit')}}"><button class="btn btn-warning">Editar</button></a></td>
+                                <td ><a href="{{url('/estoque/produto/' . $produto->id . '/edit')}}"><button class="btn btn-sm btn-warning"><i class="material-icons" style="font-size:18px;">border_color</i></button></a></td>
                                 @else
                                 <td>
                                     <form method="POST" action="{{url('/estoque/produto/' . $produto->id. '/restore')}}">
