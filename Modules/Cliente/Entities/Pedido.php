@@ -5,17 +5,22 @@ namespace Modules\Cliente\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Pedido extends Model
 {
     use SoftDeletes;
 
     protected $table = "pedido";    
-    protected $fillable = ['numero','desconto','data'];
+    protected $fillable = ['numero','desconto','data','cliente_id'];
 
     public function produtos(){
         return $this->belongsToMany('Modules\Cliente\Entities\Produto', 'pedido_has_produto')->withPivot('quantidade','desconto');
     }
+    public function cliente(){
+        return $this->belongsTo('Modules\Cliente\Entities\Cliente');
+    }
+
     public function vl_total_itens(){
 
         return $this->produtos()->
