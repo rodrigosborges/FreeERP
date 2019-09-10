@@ -62,7 +62,18 @@ class ConsertoController extends Controller
 
        return view('assistencia::paginas.consertos.vizualizarConserto', compact('conserto', 'pecaOS','itemServico'));
     }
+    public function imprimir($id) {
+      $conserto = ConsertoAssistenciaModel::find($id);
+       $pecaOS = PecaOs::where('idConserto', $id)->get();
+       $itemServico = itemServico::where('idConserto', $id)->get();
+      //  $html = view('assistencia::paginas.consertos.checklist', compact('conserto', 'pecaOS','itemServico'));
+      //  $pdf = App::make('dompdf.wrapper');
+      //  $pdf->loadHTML($html);
+      //  return $pdf->stream();
 
+      return \PDF::loadView('assistencia::paginas.consertos.checklist', compact('conserto', 'pecaOS','itemServico'))->stream();
+                
+    }
     public function editar($id) {
       $conserto = ConsertoAssistenciaModel::find($id);
       $pecas = ItemPeca::all();
@@ -152,14 +163,7 @@ class ConsertoController extends Controller
         }
       }
 
-      
-
-      
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço iniciada!');
-      
-      
-      
-      
     }
 
     public function nomeClientes(Request $req){

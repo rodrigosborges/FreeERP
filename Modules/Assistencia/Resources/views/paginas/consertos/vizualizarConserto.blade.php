@@ -25,8 +25,7 @@
                 <div class="col-11">
                     <h4>Vizualização da ordem de serviço</h4>
                 </div>
-                <div class="col-1"><button type="button" class="btn btn-primary" id="print"><i
-                            class="material-icons">local_printshop</i></button></div>
+                <div class="col-1"><a href="{{route('consertos.imprimir', $conserto->id)}}"><button>Imprimir</button></a></div>
             </div>
 
         </div>
