@@ -10,7 +10,7 @@ class CreateClienteRequest extends FormRequest
     
     public function rules()
     {
-        
+
         
         $rules =  [
             'cliente.nome'                  => ['required','max:100'],
@@ -26,7 +26,7 @@ class CreateClienteRequest extends FormRequest
             'endereco.cep'                  => ['regex:^[0-9]{5}-[0-9]{3}$^']          
         ];
         
-        if($this->input('tipo_cliente_id') == 1){
+        if($this->input('cliente.tipo_cliente_id') == 1){
             $rules['documento.documento'][] = 'cpf';
         } else if ($this->input('cliente.tipo_cliente_id') == 2){
             $rules['documento.documento'][] = 'cnpj';
@@ -34,6 +34,21 @@ class CreateClienteRequest extends FormRequest
         }
         return $rules;
     }
+    // public function messages() {
+    //     return [
+    //         'cliente.nome'                  => 'Digite o nome do cliente.',
+    //         'cliente.tipo_cliente_id'       => 'Informe o tipo de cliente.',
+    //         'telefones.*.numero'            => 'Informe o numero do telefone.',
+    //         'telefones.*.tipo_telefone_id'  => 'Informe o tipo de telefone.',
+    //         'documento.documento'           => 'Informe o documento.',
+    //         'email.email'                   => 'Informe o email do cliente.',
+    //         'endereco.logradouro'           => 'Informe a rua/avenida.',
+    //         'endereco.bairro'               => 'Informe o bairro.',
+    //         'endereco.numero'               => 'Informe o numero da casa.',
+    //         'endereco.cidade_id'            => 'Informe a cidade.',
+    //         'endereco.cep'                  => 'Informe o cep.',
+    //     ];
+    // }
         
     
     public function authorize()

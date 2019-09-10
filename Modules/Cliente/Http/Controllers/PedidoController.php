@@ -59,8 +59,11 @@ class PedidoController extends Controller
         //
     }
 
-    public function destroy($id)
-    {
-        //
+    public function destroy($id, $idPedido)
+    {   
+        $pedido = Pedido::findOrFail($idPedido);
+
+        $pedido->delete();
+        return back()->with('success', 'Pedido deletado');
     }
 }

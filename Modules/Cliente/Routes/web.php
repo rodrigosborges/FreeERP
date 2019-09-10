@@ -11,15 +11,15 @@
 |
 */
 
-//função que cria todas rotas de todas função da Classe
-
 Route::prefix('cliente')->group(function() {
-    
-    Route::resource('/cliente', 'ClienteController');
+        
+    Route::resource('/cliente', 'ClienteController'); //função que cria todas rotas de todas função da Classe
     Route::post('/cliente/busca',['as'=>'cliente.buscar','uses'=>'ClienteController@buscar']);
 
     Route::get('{id}/pedido', 'PedidoController@index');
     Route::get('{id}/pedido/novo', 'PedidoController@novo');
+    Route::delete('{id}/pedido/{idPedido}', 'PedidoController@destroy');
+    
 
     Route::get('/','ClienteController@index');
 });

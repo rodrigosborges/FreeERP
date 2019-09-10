@@ -13,8 +13,7 @@ use DB;
 class ClienteController extends Controller
 {
     
-    public function index()
-    {
+    public function index() {
         $clientes = Cliente::paginate(10);
         $clientesDeletados = Cliente::onlyTrashed()->paginate(10);
 
@@ -22,9 +21,7 @@ class ClienteController extends Controller
     }
 
     
-    public function create()
-    {
-        
+    public function create() {
         $tipo_cliente = TipoCliente::all();
         $tipo_telefone = TipoTelefone::all();
         $estados = Estado::all();
@@ -38,7 +35,7 @@ class ClienteController extends Controller
     return view('cliente::cliente.index', compact('clientes','clientesDeletados'));
     }
 
-    public function store(CreateClienteRequestRequest $request) {
+    public function store(CreateClienteRequest $request) {
         DB::beginTransaction();
         try {
             $dados = $request->all();
@@ -72,7 +69,7 @@ class ClienteController extends Controller
             }
             
             DB::commit();
-            return redirect('/cliente/cliente')->with('success', 'Cliente cadastrado com sucesso!');
+            return redirect('/cliente')->with('success', 'Cliente cadastrado com sucesso!');
         } catch (\Exception $e){
             DB::rollback();
             return back()->with('error', 'Ops! Ocorreu um erro.');
