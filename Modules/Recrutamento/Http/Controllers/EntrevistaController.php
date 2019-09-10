@@ -8,6 +8,7 @@ use Modules\Recrutamento\Entities\{Candidato,Vaga,Entrevista};
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Mail;
 
 class EntrevistaController extends Controller
 {
@@ -59,26 +60,14 @@ class EntrevistaController extends Controller
         $email= $candidato->email()->get()[0]['email'];
         $entrevista = Entrevista::Create($request->all());
         if($entrevista){
-            // emails para quem será enviado o formulário
-            $emailenviar = $request->email;
-            $destino = $email;
-            $assunto = "Entrevista Marcada";
-            
-            // É necessário indicar que o formato do e-mail é html
-            $headers  = 'MIME-Version: 1.0' . "\r\n";
-                $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-                $headers .= 'From: Empresa <$request->email>';
-            //$headers .= "Bcc: $EmailPadrao\r\n";
-            
-            $enviaremail = mail($destino, $assunto, $request->mensagem, $headers);
-            if($enviaremail){
-            
-                return "boa";
-            
-            } else {
-                return "deu ruim"; 
-            }
+            Mail::send('recrutamento::email.entrevista',['entrevista' => $entrevista], function ($m) use ($candidato){
+                $m->from('comprateste06@gmail.com', 'RH Empresa');
+                $m->to($candidato->email()->get()[0]['email'], $candidato->nome)->subject('Entrevista Agendada!');
+            });
+        }else{
+            return redirect()->back()->with('error', 'Erro ao Marcar Entrevista');
         }
+        return redirect('recrutamento/candidato')->with('success', 'Entrevista Agendada com sucesso');
     }
 
     /**

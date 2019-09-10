@@ -20,7 +20,6 @@ class CreateEntrevistaTable extends Migration
             $table->time('hora');
             $table->string('local');
             $table->string('email');
-            $table->string('mensagem');
             $table->softDeletes();
             $table->timestamps();
         });

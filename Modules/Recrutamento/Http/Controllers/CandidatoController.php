@@ -36,10 +36,10 @@ class CandidatoController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-            'candidato'	=> Candidato::all(),
+            'candidatos'	=> Candidato::all(),
 			'title'		=> "Lista de Curriculo"
 		]; 
-        return view('recrutamento::candidato.candidato', compact('data','moduleInfo','menu'));
+        return view('recrutamento::candidato.index', compact('data','moduleInfo','menu'));
     }
 
     public function create()

@@ -35,13 +35,6 @@
                     <input type="text" id="local" class="form-control" name="local"  />
                 </div>
             </div>
-            
-            <div class="form-group form-row mb-3">
-                <div class="col-md-12">
-                    <label for="mensagem">Mensagem:</label>
-                    <textarea  id="mensagem" class="form-control" name="mensagem" rows='3'  /></textarea>
-                </div>
-            </div>
 
             <div class="form-group">
             <button type="submit" class="btn btn-success"> {{ $data['button'] }} </button> 

@@ -10,7 +10,7 @@ class Entrevista extends Model
     use SoftDeletes;
     protected $table = 'entrevista';
     public $timestamps = true;
-    protected $fillable = array('id','candidato_id','data','hora','local','email','mensagem');
+    protected $fillable = array('id','candidato_id','data','hora','local','email');
 
     public function candidato(){
         return $this->belongsTo('Modules\Recrutamento\Entities\Candidato','candidato_id');
