@@ -1,17 +1,19 @@
 @extends('estoque::estoque.estoqueTemplate')
 @section('title', 'Estoque')
 @section('body')
+
 <table class="table text-center ">
+
     <thead class="">
+
+    <a class="btn btn-success btn-sm mb-4" style="float:right;" href="{{url('/estoque/create')}}">
+            <i class="material-icons" style="vertical-align:middle; font-size:25px;">note_add</i>Adicionar
+        </a>
+        
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nome</th>
             <th scope='col'>Ações</th>
-            <th>
-                <a class="btn btn-success btn-md" href="{{url('/estoque/create')}}">
-                    <i class="material-icons">note_add</i>
-                </a>
-            </th>
         </tr>
     </thead>
     <tbody>

@@ -20,8 +20,7 @@ $menu = [
     <div class="card text-center">
 
         <div class="card-header">
-            <h5>@yield('title')</h5>
-
+            <h5 style="font-size:25px;">@yield('title')</h5>
         </div>
         <div class="card-body">
 

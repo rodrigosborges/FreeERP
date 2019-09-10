@@ -20,10 +20,10 @@ $menu = [
     <div class="card text-center">
 
         <div class="card-header">
-            <h5>@yield('title')</h5>
+            <h5 style="font-size:25px;">@yield('title')</h5>
 
         </div>
-        <ul class="nav justify-content-center bg-secondary" style="margin-bottom:25px">
+        <ul class="nav justify-content-center bg-secondary" style="margin-bottom:5px">
             <li class="nav-item ">
                 <a class="nav-link text-white " href="{{url('estoque')}}">Itens em estoque</a>
             </li>

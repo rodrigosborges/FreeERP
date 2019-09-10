@@ -39,7 +39,7 @@
         </div>
 
     </div>
-    <div class="row col-12" style="justify-content: flex-start;">
+    <div class="row col-12" style="justify-content: flex-end;">
         <button type="submit" id="send" class="btn btn-primary">{{$data['button']}}</button>
     </div>
 

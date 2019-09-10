@@ -1,14 +1,15 @@
-@extends('template')
+@extends('estoque::template2')
 @section('title','Categorias')
-@section('content')
+@section('body')
 
 
 <div class="row justify-content-center">
-    <div class="card col-md-12">
-        <div class="header">
-            <h3 class="text-center card-header">Categorias</h3>
-        </div>
+
+
+
+  
         <div class="card-body">
+        
             <ul class="nav nav-tabs  justify-content-center">
                 <li class="nav-item">
                     <a href="#ativos" class="nav-link active" role="tab" data-toggle="tab">
@@ -128,5 +129,5 @@
             </div>
         </div>
     </div>
-</div>
+
 @endsection
