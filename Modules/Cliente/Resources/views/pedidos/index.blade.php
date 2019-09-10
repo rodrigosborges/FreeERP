@@ -24,8 +24,6 @@ Cadastro de Compras - {{ $cliente->nome }}
               </thead>
               <tbody>
                 @foreach ($cliente->pedidos as $pedido)
-                
-                                    
                 <tr>
                         <th scope="row">{{$pedido->id}}</th>
                         <td>{{$pedido->numero}}</td>
