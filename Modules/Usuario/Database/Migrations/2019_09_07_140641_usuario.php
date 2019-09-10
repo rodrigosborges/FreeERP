@@ -18,7 +18,6 @@ class Usuario extends Migration
             $table->increments('id');
             $table->string('apelido');
             $table->string('avatar')->default("default.png");
-            $table->integer('papel_id')->unsigned();
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('papel_id')->unsigned();
@@ -28,10 +27,6 @@ class Usuario extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-        });
-
-        Schema::table('usuario', function(Blueprint $table) {
-            $table->foreign('papel_id')->references('id')->on('papel');
         });
     }
 
