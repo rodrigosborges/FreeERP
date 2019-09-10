@@ -22,7 +22,7 @@
             <td>{{$item->id}}</td>
             <td></td>
             <td>
-                <a class="btn btn-lg btn-warning" href="">
+                <a class="btn btn-lg btn-warning" href="{{url('/estoque/'.$item->id.'/edit')}}">
                     <i class="material-icons">border_color</i>
                 </a>
             </td>

@@ -23,6 +23,7 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <input type="text" name="flag" hidden value="{{$flag}}">
                             <div class="form-group col-2">
                                 <input type="text" name="preco_min" class="form-control" onkeyUp="moeda(this);" placeholder="Preço minimo">
                             </div>
