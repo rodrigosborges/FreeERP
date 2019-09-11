@@ -78,10 +78,9 @@ class EstoqueController extends Controller
             MovimentacaoEstoque::create(
                 ['estoque_id' => $estoque->id,
                 'quantidade' => $estoque->quantidade,
-                'preco_custo' => '0.0',
+                'preco_custo' => $request['preco_custo'],
                 'observacao' => "Entrada Inicial"]
             );
-
             DB::commit();
             return redirect('/estoque')->with('success', 'Item de estoque registrado com sucesso!');
         } catch (Exception $ex) {

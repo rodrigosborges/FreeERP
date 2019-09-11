@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-4">
             <div class="form-group">
-                <label for="categoria_id">Produtos</label>
+                <label for="categoria_id">Produto</label>
                 <select class="custom-select" id="produto_id" name="produto_id">
                     <option value="-1">Selecione</option>
                     @foreach($data['produtos'] as $produto)
@@ -20,7 +20,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-5">
+        <div class="col-3">
             <div class="form-group">
                 <label for="categoria_id">Tipo Unidade</label>
                 <select class="custom-select" id="tipo_unidade_id" name="tipo_unidade_id">
@@ -30,6 +30,13 @@
                     @endforeach
                 </select>
             </div>
+        </div>
+
+        <div class="col-2">
+                <div class="form-group">
+                    <label for="preco_custo">Preço de Custo</label>
+                    <input type="text" name="preco_custo" id="preco_custo" placeholder="R$" onkeyUp="moeda(this);" class="form-control" required>
+                </div>
         </div>
 
         <div class="form-group col-3">
@@ -61,6 +68,11 @@
             message += "\n Selecione um tipo de unidade";
             $('#tipo_unidade_id').focus()
         }
+        if ($('#preco').val() == ""){
+            error = true;
+            message += "\n O Campo preço de custo é obrigatório";
+            $('#preco_custo').focus()
+        }
         if ($('#quantidade').val() == "") {
             error = true;
             message += "\n O campo quantidade é obrigatório";
@@ -75,5 +87,15 @@
         }
         console.log(message);
     })
+</script>
+<script>
+    function moeda(i) {
+        var v = i.value.replace(/\D/g,'');
+        v = (v/100).toFixed(2) + '';
+        v = v.replace(",", ".");
+        v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1$2$3.");
+        v = v.replace(/(\d)(\d{3}),/g, "$1$2.");
+        i.value = v;
+    }
 </script>
 @endsection
