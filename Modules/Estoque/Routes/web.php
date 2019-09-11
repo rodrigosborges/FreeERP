@@ -13,7 +13,8 @@
 
 Route::prefix('estoque')->group(function () {
 
-    
+    route::put('/{id}/restore','EstoqueController@restore');
+    route::get('/inativos', 'EstoqueController@inativos');
     route::get('produto/categoria/inativos', 'CategoriaController@inativos');
     route::resource('produto/categoria', 'CategoriaController');
     route::PUT('produto/categoria/restore/{id}', 'CategoriaController@restore');
