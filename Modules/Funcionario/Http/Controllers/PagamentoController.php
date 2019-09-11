@@ -67,7 +67,7 @@ class PagamentoController extends Controller
             $pagamento->valor = $salario;
             $pagamento->faltas = $request->faltas;
             $pagamento->horas_extras = $request->horas_extras;
-            $pagamento->adicional_noturno = $request->adicional;
+            $pagamento->adicional_noturno = floatval($request->adicional);
             $inss= $this->calcularInss($salario);
             if ($request->opcao_pagamento == "2") {
                 $temp = $salario * 0.4;
@@ -157,12 +157,11 @@ class PagamentoController extends Controller
 
     public function buscaSalario(Request $request)
     {
+        
         $cargo = Cargo::find($request->id);
         if ($cargo != null) {
 
-
-            $salario = $cargo->salario;
-            return $salario;
+            return $cargo;
         }
         return null;
     }
@@ -202,6 +201,7 @@ class PagamentoController extends Controller
        
     public function calcularTotal(Pagamento $pagamento, $cargo)
         {
+            
             $total = $pagamento->valor;
             $valor_dia = floatval($pagamento->funcionario->cargos->find($cargo)->salario) / 20; 
             $valor_horas_extras =(floatval($valor_dia) / 8) * floatval($pagamento->horas_extras);
@@ -213,8 +213,7 @@ class PagamentoController extends Controller
                     $total *= 0.4;
                 }
                 $total-= $desconto;
-               
-                $total+= $valor_horas_extras + $pagamento->adicional_noturno;
+                $total+= $valor_horas_extras + floatval($pagamento->adicional_noturno);
                 $pagamento->total = $total - $pagamento->inss;
              
                 return $pagamento;
