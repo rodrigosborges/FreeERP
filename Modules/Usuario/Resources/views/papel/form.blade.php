@@ -1,32 +1,41 @@
 @extends('usuario::layouts.informacoes')
 
+
 @section('content')
-<div class="card" style="margin:0 5% 0 5%;">
-    <div class="card-body">
-        <div class="row justify-content-center align-items-center" style="height:100%">
-            <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
-                <div>
-                    @if(Session::has('erro'))
-                    <p>{{Session::get('erro')}}</p>
+<div class="row justify-content-center align-items-center" style="height:100%">
+    <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    @if(!isset($papel))
+                        Cadastrar Papel
+                    @else
+                        Alterar Papel
                     @endif
-                </div>
-                <h2 class="my-4 card-title">Cadastrar Papel</h1>
-                <form id="papelForm" method="POST" action="{{ url((isset($papel) ? ('papel/'.$papel->id) : 'papel') ) }}">
+                </h5>
+            </div>
+            <div>
+                <form class="card-body d-flex flex-column" method="post" action="{{ url(isset($papel) ? 'papel/'.$papel->id : 'papel') }}">
                     @if(isset($papel))
                         @method('PUT')
                     @endif
-                        
                     @csrf
 
                     <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input id="nome" value="{{old('nome', isset($papel) ? $papel->nome : '')}}" class="form-control" type="text" name="nome">
-                        {{$errors->first('nome')}}
+                        <input value="{{ old('nome', isset($papel) ? $papel->nome : '') }}" class="form-control" type="text" name="nome" placeholder="Nome do Papel">
                     </div>
-                    <button type="submit" class="btn btn-success">Cadastrar</button>
-                    <br>
-                    <br>
+                    <!-- <div class="form-group">
+                        <input value="{{ old('icone', isset($papel) ? $papel->icone : '') }}" class="form-control" type="text" name="icone" placeholder="Ícone do Papel">
+                    </div> -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <button type="submit" class="btn btn-success d-flex align-items-center">
+                            <i class="material-icons mr-2">save</i>Salvar
+                        </button>
                 </form>
+                        <a class="btn btn-secondary d-flex align-items-center" href="/papel">
+                            <i class="material-icons mr-2">view_list</i> Papéis Cadastrados
+                        </a>
+                    </div>
             </div>
         </div>
     </div>

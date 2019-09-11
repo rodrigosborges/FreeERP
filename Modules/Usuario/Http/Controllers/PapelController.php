@@ -25,13 +25,13 @@ class PapelController extends Controller
         if ($request->has('busca')) {
             $busca = $request->get('busca');
 
-                 $papeis = Papel::where('nome', 'like', "%{$busca}%")
+                 $papeisAtivos = Papel::where('nome', 'like', "%{$busca}%")
                  ->paginate(5);
-             $papeis->appends(['busca' => $busca]);
-             return view('usuario::papel.index', compact('papeis', 'busca', 'papeisInativos'));
+             $papeisAtivos->appends(['busca' => $busca]);
+             return view('usuario::papel.index', compact('papeisAtivos', 'busca', 'papeisInativos'));
          }else{
-            $papeis = Papel::paginate(5);
-            return view('usuario::papel.index', compact('papeis', 'papeisInativos'));
+            $papeisAtivos = Papel::paginate(5);
+            return view('usuario::papel.index', compact('papeisAtivos', 'papeisInativos'));
          }
     }
 
