@@ -10,6 +10,7 @@
             <th scope="col">ID</th>
             <th scope="col">Produto</th>
             <th scope="col">Quantidade</th>
+            <th scope="col">Detalhes</th>
         </tr>
     </thead>
     <tbody>
@@ -19,12 +20,14 @@
                 <td >{{$m->id}}</td>
                 <td>{{$m->estoque->produtos->last()->nome}} - {{$m->estoque->tipoUnidade->nome}}({{$m->estoque->tipoUnidade->quantidade_itens}} itens)</td>
                 <td>+{{$m->quantidade}}</td>
+                <td><a href="{{url('/estoque/movimentacao/' . $m->id)}}"><button class="btn btn-sm btn-primary"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
             </tr>
             @else
             <tr class="text-danger">
                 <td>{{$m->id}}</td>
                 <td>{{$m->estoque->produtos->last()->nome}} - {{$m->estoque->tipoUnidade->nome}}({{$m->estoque->tipoUnidade->quantidade_itens}} itens)  </td>
                 <td>{{$m->quantidade}}</td>
+                <td><a href="{{url('/estoque/movimentacao/' . $m->id)}}"><button class="btn btn-sm btn-primary"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
             </tr>
             @endif
         @endforeach

@@ -46,7 +46,8 @@ class MovimentacaoEstoqueController extends Controller
      */
     public function show($id)
     {
-        return view('estoque::show');
+        $movimentacao = MovimentacaoEstoque::findOrFail($id);
+        return view('estoque::estoque.movimentacao.ficha', compact('movimentacao'));
     }
 
     /**
