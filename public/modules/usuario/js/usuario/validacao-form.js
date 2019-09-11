@@ -7,6 +7,10 @@
                 maxlength:50,
                 remote: main_url+'/usuario/check-unique/'+usuario_id
             },
+            avatar: {
+                accept: "image/*",
+                filesize: 1048576  
+            },
             papel:{
                 required:true
             },
@@ -32,6 +36,10 @@
                 maxlength:"<span style='color:red'>Apelido tem que ter no máximo 50 caracteres</span>",
                 remote:"<span style='color:red'>Apelido indisponível</span>"
             },
+            avatar:{
+                accept:"<span style='color:red'>Utilize imagens de extensão JPG ou PNG</span>",
+                filesize: "<span style='color:red'>Imagem abaixo de 1 MB</span>",
+            } ,
             papel:{
                 required:"<span style='color:red'>Selecione um Papel</span>",
             },
