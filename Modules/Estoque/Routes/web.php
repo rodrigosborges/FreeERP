@@ -10,9 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('/estoque', 'EstoqueController');
 Route::prefix('estoque')->group(function () {
-    Route::get('/', 'EstoqueController@index');
   
     route::get('produto/categoria/inativos','CategoriaController@inativos');
     route::resource('produto/categoria', 'CategoriaController');
@@ -45,7 +43,9 @@ Route::prefix('estoque')->group(function () {
 
     //Restaurar Produto
     Route::put('/produto/{id}/restore', 'ProdutoController@restore');
-    
+
+    //Rotas do Estoque
+    Route::resource('/', 'EstoqueController');
     
 });
 Route::post('verificaNomeCategoria','CategoriaController@verificaNome');
