@@ -11,6 +11,9 @@ class Ferias extends Model
 
     protected $fillable = ['data_inicio','data_fim','dias_ferias','data_pagamento','data_aviso','situacao_ferias','pagamento_parcela13','observacao','funcionario_id'];
 
+    public function ferias() {
+        return $this->belongTo('Modules\Funcionario\Entities\ControleFerias');
+    }
    
 }
 

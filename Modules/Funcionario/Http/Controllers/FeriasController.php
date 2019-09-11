@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Funcionario,Cargo,Ferias};
+use Modules\Funcionario\Entities\{Funcionario,Cargo,Ferias, ControleFerias};
 use DB;
 
 class FeriasController extends Controller
@@ -61,7 +61,15 @@ class FeriasController extends Controller
                 'observacao' => $request['observacao'],
                 'funcionario_id' => $request['funcionario_id']
             ]);
-
+           
+            $controleFerias = ControleFerias::Create([
+                'inicio_periodo_aquisitivo' => date('Y-m-d', strtotime($request['inicio_periodo_aquisitivo'])),
+                'fim_periodo_aquisitivo ' => date('Y-m-d', strtotime($request['fim_periodo_aquisitivo'])),
+                'saldo_total' => 0,
+                'saldo_periodo' => 0,
+                'funcionario_id' => $request['funcionario_id']
+            ]);
+         
 			DB::commit();
 			return redirect('funcionario/ferias')->with('success', 'Férias cadastrada com sucesso!');
 		} catch(Exception $e){
@@ -76,7 +84,7 @@ class FeriasController extends Controller
      * @return Response
      */
     public function show($id)
-    //Cargo::where('id','=',$cargoAtual)->first()
+  
     {         
 
         $ferias = Ferias::findOrFail($id); 

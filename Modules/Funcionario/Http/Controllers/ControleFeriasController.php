@@ -97,21 +97,22 @@ class ControleFeriasController extends Controller
         $ano_atual = date('Y', time());
 
         if($ano == $ano_atual){
-            $data_inicio_periodo = date('d/m/Y', strtotime($admissao));
+            $inicio_periodo_aquisitivo = date('d/m/Y', strtotime($admissao));
             $anos_trampo = 364;
         } else {
             $anos_trampo = (($ano_atual-$ano)-1)*364;
-            $data_inicio_periodo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao))) ;
+            $inicio_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao))) ;
             $teste = $anos_trampo+364;
         }
-        $data_fim_periodo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
+        $fim_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
+
         $data = [
             'title' => 'Ferias',
             'funcionario' => $funcionario,
             'cargo'            => Cargo::where('id','=',$cargoAtual)->first(),
             'admissao'=> $admissao,
-            'data_inicio_periodo' =>  $data_inicio_periodo,
-            'data_fim_periodo' =>  $data_fim_periodo,
+            'inicio_periodo_aquisitivo' =>  $inicio_periodo_aquisitivo,
+            'fim_periodo_aquisitivo' =>  $fim_periodo_aquisitivo,
         ];
         return view('funcionario::ferias.formulario', compact('data'));
     }
