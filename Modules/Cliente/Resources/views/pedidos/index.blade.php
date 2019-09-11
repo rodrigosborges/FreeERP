@@ -13,8 +13,8 @@ Cadastro de Compras - {{ $cliente->nome }}
           <table class="table table-striped bordered text-center col-md-12">
               <thead>
                 <tr>
-                  <th>Id_Pedido</th>
-                  <th>Num_Pedido</th>
+                  <th>Id_Compra</th>
+                  <th>Num_Compra</th>
                   <th>Data</th>
                   <th>Valor Liquido</th>
                   <th>Desconto Aplicado</th>
@@ -25,25 +25,28 @@ Cadastro de Compras - {{ $cliente->nome }}
               <tbody>
                 @foreach ($cliente->pedidos as $pedido)
                 <tr>
-                        <th scope="row">{{$pedido->id}}</th>
+                     <th scope="row">{{$pedido->id}}</th>
                         <td>{{$pedido->numero}}</td>
                         <td>{{ \Carbon\Carbon::parse($pedido->data)->format('d/m/Y') }}</td>
                         <td>{{"R$ ".number_format($pedido->vl_total_pedido(), 2, ',', '.') }}</td>
                         <td>{{ ($pedido->desconto). "%" }}</td>
                         <td><!--BOTOES -->
-                          <form action={{url( "/cliente/".$cliente->id."/pedido/".$pedido->id ) }} 
-                            method="post" onsubmit="return confirmar({{$pedido->id}});">
-                            {{method_field('DELETE')}}
-                            {{ csrf_field() }}
-                                <a href="#" class="btn btn-warning col-md-5" name="edit">Editar</a>
-                                <button type="submit" class="btn btn-danger col-md-5" name="rem">Excluir</button>
-
-                          </form>
+                          <div class="flex row justify-content-around">
+                              <form action="{{url("/cliente/pedido/editar/".$pedido->id )}}">
+                                 <button type="submit" class="btn btn-sm btn-warning" name="edit">Editar</button>
+                              </form>
+                          
+                              <form action={{url( "/cliente/pedido/".$pedido->id ) }} method="post" onsubmit="return confirmar({{$pedido->id}});">
+                                  {{method_field('DELETE')}}
+                                  {{ csrf_field() }}
+                                  <button type="submit" class="btn btn-sm btn-danger" name="rem">Excluir</button>
+                              </form>
+                          </div>
                         </td>
 
                         <td>
-                            <button id="ocultar" type="button" data-toggle="collapse" href="#collapse{{$pedido->id}}" 
-                        role="button" aria-expanded="false" aria-controls="collapse{{$pedido->id}}">
+                            <button id="ocultar" type="button" data-toggle="collapse" data-target="#collapse{{$pedido->id}}" 
+                        aria-expanded="false" aria-controls="collapse{{$pedido->id}}">
                                     <i class="material-icons">
                                         arrow_drop_down
                                     </i>
@@ -53,9 +56,9 @@ Cadastro de Compras - {{ $cliente->nome }}
               
 
                 <tr>
-                  <td colspan="100%" style="height: 0px; padding: 0px; margin:0px;">
+                  <td colspan="100%" style="height: 0px; margin:0px;">
                     <div class="collapse" id="collapse{{$pedido->id}}">
-                       <div class="pedido_detalhes row d-flex justify-content-between">
+                       <div class="row d-flex justify-content-between">
 
                           @foreach ($pedido->vl_total_itens() as $item)
                               <div class = "col-6 pt-1">

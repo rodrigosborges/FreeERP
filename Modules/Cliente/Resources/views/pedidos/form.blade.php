@@ -1,6 +1,6 @@
 @extends('cliente::template')
 @section('title')
-Nova Compra - {{ $cliente->nome }}
+Cadastro Nova Compra - {{ $cliente->nome }}
 @endsection
 @section('body')
 

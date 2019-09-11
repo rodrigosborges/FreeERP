@@ -18,8 +18,10 @@ Route::prefix('cliente')->group(function() {
 
     Route::get('{id}/pedido', 'PedidoController@index');
     Route::get('{id}/pedido/novo', 'PedidoController@novo');
-    Route::delete('{id}/pedido/{idPedido}', 'PedidoController@destroy');
+
+    Route::delete('pedido/{pedido_id}', 'PedidoController@destroy');
     
+    Route::get('pedido/editar/{pedido_id}','PedidoController@edit');
 
     Route::get('/','ClienteController@index');
 });
