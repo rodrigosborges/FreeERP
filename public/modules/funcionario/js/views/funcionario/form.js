@@ -64,7 +64,7 @@ $(document).on("click", ".add-doc", function() {
     }
     else if($(".doc").length < 4) {
         clonar(".doc", "#documentos", true)
-        $(".doc").last().find(".documentos").val("")
+        $(".doc").find(".documentos").val("")
     } else {
 
         Swal.fire({
@@ -133,7 +133,7 @@ $(document).on("click", ".add-curso", function() {
     }
     else if($(".cur").length < 4) {
         clonar(".cur", "#cursos", true)
-        $(".cur").last().find(".cursos").val("")
+        $(".cur").find(".cursos").val("")
     } else {
 
         Swal.fire({
