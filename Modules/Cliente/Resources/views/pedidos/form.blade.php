@@ -36,42 +36,42 @@ Cadastro Nova Compra - {{ $cliente->nome }}
             </div>
             
         </div>
-        
-        <div class="row">
+        <div class="pedidos">
+            <div class="row pedido ">
+                <div class="col-4 form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
+                        </div>
+                        <select name="produtos[][produto_id]" id="" class="form-control">
+                            @foreach($produtos as $produto)           
+                                <option value="{{$produto->id}}">{{$produto->nome}}</option>
+                            @endforeach        
+                        </select>                
+                    </div>                            
+                </div>
+                <div class="col-4 form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
+                        </div>
+                        <input type="text" class="form-control" name="produtos[][quantidade]" placeholder="Quantidade">
+                    </div>                 
+                </div>
+                <div class="col-4 form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
+                        </div>
+                        <input type="text" class="form-control" name="produtos[][desconto]" placeholder="Desconto do Produto">
+                    </div>  
+                </div>
 
-            <div class="col-4 form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
-                    </div>
-                    <select name="produtos[][produto_id]" id="" class="form-control">
-                        @foreach($produtos as $produto)           
-                            <option value="{{$produto->id}}">{{$produto->nome}}</option>
-                        @endforeach        
-                    </select>                
-                </div>                            
             </div>
-
-
-            <div class="col-4 form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
-                    </div>
-                    <input type="text" class="form-control" name="produtos[][quantidade]" placeholder="Quantidade">
-                </div>                 
-            </div>
-
-            <div class="col-4 form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
-                    </div>
-                    <input type="text" class="form-control" name="produtos[][desconto]" placeholder="Desconto do Produto">
-                </div>  
-            </div>
-        
         </div>
+        <button type="button" id="adicionar-pedido" class="btn btn-primary">Adicionar</button>
+        <button type="button" id="excluir-pedido" class="btn btn-primary">Excluir</button>
+        
     
     </form>
     
@@ -79,38 +79,41 @@ Cadastro Nova Compra - {{ $cliente->nome }}
 
 @section('js')
 <script>
+    $('#adicionar-pedido').click(function(){
+        var pedido = $(".pedido").first().clone()
+        pedido.find('select, input').val("")
+        pedido.appendTo($("#pedidos"))
+        
+    });
+    $('#excluir-pedido').click(function(){
+        if ($(".pedido").length > 1) {
+            $(".pedido").last().remove()
+        }
+    });
 
-var itens_compra = [];
 
-function add_item(){
 
-    var opt = $("[name='produto_id'] option:selected");     
 
-    dados = opt.text().split("-");
-    novaTabela(dados);
-
-    alert(opt.val() + " " + opt.text());
-
-    itens_compra.push(opt.val());
-
-}
-
-$("#add").click(function(){
-    var opt = $("[name='produto_id'] option:selected");     
-    console.log();
-   
-    var nome = opt.attr("data-nome");
-    var preco = opt.attr("data-preco");
-    var codigo = opt.attr("data-codigo")
-
-    var quantidade = $('#qtde').val();
-    var desconto = $('#desconto').val();
-     //CRIAR TBODY
-
-    var row = "<tr><td>" +  codigo + "</td><td>" + nome + "</td><td>" + preco +"</td><td>" + quantidade + "</td><td>" + desconto + "</td></tr>";
- 
-    $("#adicionados tbody").append(row);
-});
+// var itens_compra = [];
+// function add_item(){
+//     var opt = $("[name='produto_id'] option:selected");     
+//     dados = opt.text().split("-");
+//     novaTabela(dados);
+//     alert(opt.val() + " " + opt.text());
+//     itens_compra.push(opt.val());
+// }
+// $("#add").click(function(){
+//     var opt = $("[name='produto_id'] option:selected");     
+//     console.log();
+//     var nome = opt.attr("data-nome");
+//     var preco = opt.attr("data-preco");
+//     var codigo = opt.attr("data-codigo")
+//     var quantidade = $('#qtde').val();
+//     var desconto = $('#desconto').val();
+//      //CRIAR TBODY
+//     var row = "<tr><td>" +  codigo + "</td><td>" + nome + "</td><td>" + preco +"</td><td>" + quantidade + "</td><td>" + desconto + "</td></tr>";
+//     $("#adicionados tbody").append(row);
+// });
 
 </script>
 @endsection
