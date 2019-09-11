@@ -32,7 +32,8 @@ Cadastro de Compras - {{ $cliente->nome }}
                         <td>{{ ($pedido->desconto). "%" }}</td>
                         <td><!--BOTOES -->
                           <div class="flex row justify-content-around">
-                              <form action="{{url("/cliente/pedido/editar/".$pedido->id )}}">
+
+                              <form action="{{url("/cliente/pedido/".$pedido->id )}}">
                                  <button type="submit" class="btn btn-sm btn-warning" name="edit">Editar</button>
                               </form>
                           
@@ -41,6 +42,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                                   {{ csrf_field() }}
                                   <button type="submit" class="btn btn-sm btn-danger" name="rem">Excluir</button>
                               </form>
+
                           </div>
                         </td>
 
@@ -56,23 +58,23 @@ Cadastro de Compras - {{ $cliente->nome }}
               
 
                 <tr>
-                  <td colspan="100%" style="height: 0px; margin:0px;">
+                  <td colspan="100%" style="height: 0px; padding: 0px; margin:0px;">
                     <div class="collapse" id="collapse{{$pedido->id}}">
                        <div class="row d-flex justify-content-between">
 
-                          @foreach ($pedido->vl_total_itens() as $item)
+                          @forelse ($pedido->vl_total_itens() as $item)
                               <div class = "col-6 pt-1">
                                 <table class="table table-sm bordered">
                                   <thead>
-                                    <th class="table-light">Produto</th>
-                                    <th class="table-light">Quantidade</th>
-                                    <th class="table-light">Valor Item</th>
-                                    <th class="table-light">Desconto Item</th>
-                                    <th class="table-light">Total</th>
+                                    <th scope="col" class="table-light">Produto</th>
+                                    <th scope="col" class="table-light">Quantidade</th>
+                                    <th scope="col" class="table-light">Valor Item</th>
+                                    <th scope="col" class="table-light">Desconto Item</th>
+                                    <th scope="col" class="table-light">Total</th>
                                     
                                   </thead>
                                   <tbody>
-                                    <td scope="row">{{ $item->nome }}</td>
+                                    <td>{{ $item->nome }}</td>
                                     <td>{{$item->quantidade}}</td>
                                     <td >{{ "R$ ".number_format($item->preco, 2, ',', '.') }}</td>
                                     <td>{{ $item->desconto." %"}}</td>
@@ -81,16 +83,25 @@ Cadastro de Compras - {{ $cliente->nome }}
                                 </table>
                               
                               </div>
-                          @endforeach
+                              @empty
+                              <div class = "col-6 pt-1">
+                                  <h5>Compra sem itens cadastrados</h5>
+                              </div>
+                          @endforelse
                        </div>
                     </div>
                   </td>
                 </tr>
-                
                 @endforeach 
                
               </tbody>
             </table>
+      </div>
+      <div>
+          <form action={{ url( "/cliente/".$cliente->id."/pedido") }} method="post">
+            {{ csrf_field() }}
+            <button type="submit" class="btn  btn-secondary" name="rem">Teste New</button>
+        </form>
       </div>
   </div>
   <script>
