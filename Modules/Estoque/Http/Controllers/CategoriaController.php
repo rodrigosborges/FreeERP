@@ -36,9 +36,10 @@ class CategoriaController extends Controller
     }
     public function index()
     {
+        $flag = 0;
         $categorias = Categoria::paginate(5);
         $categoriasInativas = Categoria::onlyTrashed()->paginate(5);
-        return view('estoque::categoria.index', $this->dadosTemplate, compact('categorias', 'categoriasInativas'));
+        return view('estoque::categoria.index', $this->dadosTemplate, compact('categorias', 'categoriasInativas','flag'));
     }
 
     /**
@@ -161,5 +162,11 @@ class CategoriaController extends Controller
 
 
         return $categorias;
+    }
+    public function inativos(){
+        $flag =1;
+        $categoriasInativas = Categoria::onlyTrashed()->paginate(10);
+        $categorias = Categoria::paginate(5);
+        return view('estoque::categoria.index', $this->dadosTemplate,compact('flag','categoriasInativas','categorias'));
     }
 }

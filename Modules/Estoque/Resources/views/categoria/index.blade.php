@@ -12,18 +12,20 @@
         
             <ul class="nav nav-tabs  justify-content-center">
                 <li class="nav-item">
-                    <a href="#ativos" class="nav-link active" role="tab" data-toggle="tab">
+                    <a href="{{url('/estoque/produto/categoria')}}" class="nav-link active" >
                         Categorias Ativas
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#inativos" class="nav-link" role="tab" data-toggle="tab">
+                    <a href="{{url('/estoque/produto/categoria/inativos')}}" class="nav-link active" >
                         Categorias Inativas
                     </a>
                 </li>
+             
             </ul>
             <div class="tab-content row justify-content-center">
                 <div class="tab-pane active col-sm-10" role="tabpanel1" id="ativos">
+                @if($flag ==0)
                     <table class="table text-center table-striped ">
                         <thead class="card-header">
                             <tr>
@@ -80,11 +82,8 @@
                             @endif
                         </tfoot>
                     </table>
-                </div>
-                <div class="tab-pane col-sm-8" role="tabpanel1" id="inativos">
-
-                    <div class="justify-content-center">
-                        <table class="table text-center  table-striped mt-5">
+                    @else
+                    <table class="table text-center  table-striped mt-5">
                             <thead class="card-header">
                                
                                 <td><strong>Nome</strong></td>
@@ -124,10 +123,10 @@
                                 @endif
                             </tfoot>
                         </table>
-                    </div>
+                        @endif
                 </div>
-            </div>
+              </div>
         </div>
-    </div>
+    
 
 @endsection

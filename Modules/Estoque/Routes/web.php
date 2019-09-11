@@ -14,10 +14,11 @@
 Route::prefix('estoque')->group(function () {
     Route::get('/', 'EstoqueController@index');
     Route::resource('/', 'EstoqueController');
-
+    route::get('produto/categoria/inativos','CategoriaController@inativos');
     route::resource('produto/categoria', 'CategoriaController');
     route::PUT('produto/categoria/restore/{id}', 'CategoriaController@restore');
     Route::resource('/produto/unidade', 'UnidadeProdutoController');
+
 
     //Delete e Restore tipo_produto (UnidadeProduto)
     Route::put('/produto/unidade/{id}/restore', 'UnidadeProdutoController@restore');
