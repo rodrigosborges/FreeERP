@@ -3,11 +3,9 @@
 namespace Modules\Estoque\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MovimentacaoEstoque extends Model
 {
-    use SoftDeletes;
     protected $fillable = ['quantidade','observacao','estoque_id','preco_custo'];
     protected $table ='movimentacao_estoque';
 
@@ -15,4 +13,5 @@ class MovimentacaoEstoque extends Model
     public function estoque(){
         return $this->belongsTo('Modules\Estoque\Entities\Estoque');
     }
+
 }

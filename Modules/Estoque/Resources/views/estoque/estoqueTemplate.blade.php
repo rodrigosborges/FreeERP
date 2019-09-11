@@ -32,7 +32,7 @@ $menu = [
                 <a class="nav-link text-white " href="{{url('estoque/tipo-unidade')}}">Gerenciar Unidades</a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link text-white " href="#">Movimentação de estoque</a>
+                <a class="nav-link text-white " href="{{url('estoque/movimentacao')}}">Movimentação de estoque</a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link text-white" href="#">Relatorios</a>
