@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Estoque extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['quantidade', 'produto_id', 'tipo_unidade_id'];
+    protected $fillable = ['quantidade','tipo_unidade_id'];
     protected $table = 'estoque';
 
     public function produtos()
     {
-        return $this->belongsToMany('Modules\Estoque\Entities\Produto', 'estoque_has_produto','esotque_id','produto_id')->withPivot(['tipo_unidade_id']);
+        return $this->belongsToMany('Modules\Estoque\Entities\Produto', 'estoque_has_produto','estoque_id','produto_id');
     }
     public function tipoUnidade()
     {
-        return $this->hasOne('Modules\Estoque\Entities\TipoUnidade');
+        return $this->belongsTo('Modules\Estoque\Entities\TipoUnidade');
     }
 
     public function movimentacaoEstoque()
     {
-        return $this->hasMany('Modules\Estoque\Entities\MovimentacaoEstoque');
+        return $this->hasMany('Modules\Estoque\Entities\MovimentacaoEstoque' );
     }
 }

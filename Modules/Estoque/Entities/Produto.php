@@ -15,9 +15,5 @@ class Produto extends Model
     public function categoria()
     {
         return $this->belongsTo('Modules\Estoque\Entities\Categoria')->withTrashed();
-    }
-    public function estoque()
-    {
-        return $this->belongsToMany('Modules\Estoque\Entities\Estoque','estoque_has_produto','produto_id', 'estoque_id')->withPivot(['tipo_unidade_id']);
-    }
+    }  
 }

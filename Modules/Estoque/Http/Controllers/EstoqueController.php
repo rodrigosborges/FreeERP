@@ -68,8 +68,12 @@ class EstoqueController extends Controller
     {
         DB::beginTransaction();
         try {
-            Estoque::create($request->all());
-            
+            $estoque =Estoque::create($request->all());
+          
+            $produto = Produto::findOrFail($request->produto_id);
+            $estoque->produtos()->attach($produto);
+       
+            $estoque->save();
             DB::commit();
             return redirect('/estoque')->with('success', 'Item de estoque registrado com sucesso!');
         } catch (Exception $ex) {
