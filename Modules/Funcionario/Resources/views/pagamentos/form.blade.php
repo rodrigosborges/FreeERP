@@ -304,7 +304,6 @@
             // Habilite, ou não, o <button>, dependendo da variável:
             $('button').prop('disabled', !preenchidos); // 
             if (preenchidos) {
-                alert("TUDO PRENCHIDO")
                 calcular()
             }
 
