@@ -21,7 +21,7 @@
                     <div class="form-group" >
                         @if(isset($usuario))
                         <div class='text-center'>
-                            <img width= 100vw height = 100vh class='rounded-circle border border-dark mb-3' src="{{asset('storage/img/avatars/'.$usuario->avatar)}}">
+                            <img width= 100vw  id='imageAvatar' height = 100vh class='rounded-circle border border-dark mb-3' src="{{asset('storage/img/avatars/'.$usuario->avatar)}}">
                         </div>
                         @endif
                         <label for="apelido">Apelido</label>
@@ -87,6 +87,22 @@
 var apelido = $("#apelido").text()
 
 var usuario_id = "{{isset($usuario) ? $usuario->id : ''}}"
+
+function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#imageAvatar').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#avatar").change(function(){
+        readURL(this);
+    });
 
 </script>
 
