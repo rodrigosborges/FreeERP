@@ -80,11 +80,12 @@ class FeriasController extends Controller
     {         
 
         $ferias = Ferias::findOrFail($id); 
-        $funcionarios = Ferias::where('funcionario_id', '=',$id)->get();
-        $teste = $ferias->funcionario_id;
-        $funcionarios = Funcionario::where('id', '=', $teste)->get();
         
-        return view('funcionario::ferias.show', compact('ferias', 'funcionarios'));
+        $funcionarios = Funcionario::where('id',    '=', $ferias->funcionario_id)->get();
+        $cargo = Cargo::where('id' , '=',$ferias->funcionario_id)->get();
+
+            
+        return view('funcionario::ferias.show', compact('ferias', 'funcionarios','cargo'));
     }
     public function listar($id)
     {
