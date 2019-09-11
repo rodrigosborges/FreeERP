@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="container">
-        <form>
+    <form id="form" method="POST" action="{{ url('cliente/cliente') }}">
             <div class='row'>
                 <div class="col my-3">
                     <h5>Dados Cadastrais</h5>
@@ -21,11 +21,11 @@
                 </div>
                 <div class="form-group col-md">
                     <label for="nome" class="">Nome</label>
-                    <input type="text" class="form-control" name="nome" id="nome">
+                    <input type="text" class="form-control required" name="cliente[nome]" id="nome">
                 </div>
                 <div class="form-group col-md d-none" id="div_nome_fantasia">
                     <label for="nome_fantasia" class="">Nome Fantasia</label>
-                    <input type="text" class="form-control" name="nome_fantasia" id="nome_fantasia">
+                    <input type="text" class="form-control" name="cliente[nome_fantasia]" id="nome_fantasia">
                 </div>
                 <div class="form-group col-12">
                     <label for="email" class="">E-mail</label>
@@ -40,16 +40,13 @@
             <div id="telefones">
 
                 <div class="row my-3 telefone-div">
-
-
-
                     <div class="form-group col">
                         <label for="telefone" class="">Número</label>
-                        <input type="text" class="form-control input-telefone" name="telefone">
+                        <input type="text" class="form-control input-telefone" name="telefone[][numero]">
                     </div>
                     <div class="form-group col">
                         <label for="tipo_telefone" class="">Tipo</label>
-                        <select class="custom-select" name="tipo_telefone" id="tipo_telefone">
+                        <select class="custom-select" name="telefone[][tipo_telefone_id]" id="tipo_telefone">
                             <option value="">Selecione</option>
                             @foreach($tipo_telefone as $tipo){
                             <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
@@ -61,74 +58,75 @@
             </div>
             <button type="button" id="adicionar_telefone" class="btn btn-primary">Adicionar</button>
             <button type="button" id="excluir_telefone" class="btn btn-primary">Excluir</button>
-    </div>
-    <div class="container">
-        <div class="row my-3">
-            <div class="col my-3">
-                <h5>Documentação</h5>
+        </div>
+        <div class="container">
+            <div class="row my-3">
+                <div class="col my-3">
+                    <h5>Documentação</h5>
+                </div>
+            </div>
+            <div class="row my-3 documento-div">
+                <div class="form-group col">
+                    <label for="numero_documento" class="">Selecione o tipo de Pessoa</label>
+                    <input type="text" class="form-control" name="documento[documento]" disabled>
+                </div>
             </div>
         </div>
-        <div class="row my-3 documento-div">
-            <div class="form-group col">
-                <label for="numero_documento" class="">Número de
-                    Documento</label>
-                <input type="text" class="form-control" name="numero_documento">
+        <div class="container">
+            <div class="row">
+                <div class="col my-3">
+                    <h5>Endereço</h5>
+                </div>
             </div>
+            <div class="row my-3">
+                <div class="form-group col-3">
+                    <label for="cep" class="">CEP</label>
+                    <input type="text" class="form-control" name="endereco[cep]" id="cep">
+                </div>
+                <div class="form-group col-7">
+                    <label for="logradouro" class="">Logradouro</label>
+                    <input type="text" class="form-control" name="endereco[logradouro]">
+                </div>
+                <div class="form-group col-2">
+                    <label for="numero" class=" text-left">Número</label>
+                    <input type="text" class="form-control" name="endereco[numero]">
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="form-group col">
+                    <label for="complemento" class=" text-left">Complemento</label>
+                    <input type="text" class="form-control" name="endereco[complemento]">
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="form-group col-4">
+                    <label for="bairro" class="">Bairro</label>
+                    <input type="text" class="form-control" name="endereco[bairro]">
+                </div>
+                <div class="form-group col">
+                    <label for="estado" class="">Estado</label>
+                    <select class="custom-select" name="endereco[estado_id]" id="estado">
+                        <option value="">Selecione</option>
+                        @foreach($estados as $estado){
+                        <option value="{{$estado->id}}" uf="{{$estado->uf}}">{{ $estado->nome }}</option>
+                        }
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col">
+                    <label for="cidade" class="">Cidade</label>
+                    <select class="custom-select" name="endereco[cidade_id]" id="cidade"></select>
+                </div>
+            </div>
+            </h1> <button type="submit" class="btn btn-success sendForm">Enviar</button>
         </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col my-3">
-                <h5>Endereço</h5>
-            </div>
-        </div>
-        <div class="row my-3">
-            <div class="form-group col-3">
-                <label for="cep" class="">CEP</label>
-                <input type="text" class="form-control" name="endereco[cep]" id="cep">
-            </div>
-            <div class="form-group col-7">
-                <label for="logradouro" class="">Logradouro</label>
-                <input type="text" class="form-control" name="endereco[logradouro]">
-            </div>
-            <div class="form-group col-2">
-                <label for="numero" class=" text-left">Número</label>
-                <input type="text" class="form-control" name="endereco[numero]">
-            </div>
-        </div>
-        <div class="row my-3">
-            <div class="form-group col">
-                <label for="complemento" class=" text-left">Complemento</label>
-                <input type="text" class="form-control" name="endereco[complemento]">
-            </div>
-        </div>
-        <div class="row my-3">
-            <div class="form-group col-4">
-                <label for="bairro" class="">Bairro</label>
-                <input type="text" class="form-control" name="endereco[bairro]">
-            </div>
-            <div class="form-group col">
-                <label for="estado" class="">Estado</label>
-                <select class="custom-select" name="endereco[estado]" id="estado">
-                    <option value="">Selecione</option>
-                    @foreach($estados as $estado){
-                    <option value="{{$estado->id}}" uf="{{$estado->uf}}">{{ $estado->nome }}</option>
-                    }
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group col">
-                <label for="cidade" class="">Cidade</label>
-                <select class="custom-select" name="endereco[cidade]" id="cidade"></select>
-            </div>
-        </div>
-        </h1> <button type="submit" class="btn btn-success">Enviar</button>
-    </div>
     </form>
 
 </div>
 
+
 @endsection @section('script')
+<script src="{{Module::asset('cliente:js/views/cliente/validations.js')}}"></script>
 
 <script>
     $(document).ready(function() {
@@ -163,8 +161,11 @@
                             $("[name='endereco[logradouro]']").val(dados.logradouro);
                             $("[name='endereco[bairro]']").val(dados.bairro);
 
-                            $(`select[name='endereco[estado]'] option[uf='${dados.uf}']`).attr('selected', 'selected');
+                            var estado = $(`select[name='endereco[estado_id]'] option[uf='${dados.uf}']`);
+                            estado.attr('selected', 'selected');
                             
+                            
+                            getCidades(estado.val(),dados.localidade);
                             
                         } //end if.
                         else {
@@ -209,11 +210,11 @@
 
     })
     $(document).on('change', '#tipo_pessoa', function() {
-        var documento = $("[name='numero_documento']")
+        var documento = $("[name='documento[documento]']")
 
         if ($('#tipo_pessoa').val() == 2) {
-
-            $("[name='nome']").parent().find('label').text("Razão social:")
+            documento.prop("disabled", false);
+            $("[name='cliente[nome]']").parent().find('label').text("Razão social:")
 
 
             documento.parent().find('label').text("CNPJ:")
@@ -221,15 +222,19 @@
             documento.mask('99.999.999/9999-99')
 
             $("#div_nome_fantasia").removeClass("d-none");
-        } else {
-
-            $("[name='nome']").parent().find('label').text("Nome:")
+        } else if ($('#tipo_pessoa').val() == 1){
+            documento.prop("disabled", false);
+            $("[name='cliente[nome]']").parent().find('label').text("Nome:")
             documento.parent().find('label').text("CPF:")
             documento.attr("placeholder", "Ex: 451.658.200-50")
             documento.mask('999.999.999-99')
 
             $("#div_nome_fantasia").addClass("d-none");
 
+        } else {
+            documento.prop("disabled", true);
+            documento.val("");
+            documento.parent().find('label').text("Selecione o tipo de Pessoa")
         }
 
     })
@@ -257,26 +262,29 @@
     $('#estado').change(function() {
 
         var idEstado = $(this).val();
-
+        console.log(idEstado)
         if (idEstado) {
-            $.get('/api/cidades/' + idEstado, function(cidades) {
-
-                $('#cidade').empty()
-                $('#cidade').append("<option value=''>Selecione</option>")
-
-
-
-                $.each(cidades, function(key, value) {
-                    $('#cidade').append('<option value=' + value.id + '>' + value.nome + '</option>')
-
-                })
-            })
+            getCidades(idEstado);
         } else {
             $('#cidade').empty()
             $('#cidade').append("<option value=''>Selecione</option>")
         }
 
     });
+    function getCidades(estado_id,nome_cidade=null){
+        $.get('/api/cidades/' + estado_id, function(cidades) {
+                $('#cidade').empty()
+                $('#cidade').append("<option value=''>Selecione</option>")
+                $.each(cidades, function(key, value) {
+                    if(nome_cidade == value.nome){
+                        $('#cidade').append('<option selected value=' + value.id + '>' + value.nome + '</option>')
+                    }else{
+                        $('#cidade').append('<option  value=' + value.id + '>' + value.nome + '</option>')
+                    }
+                })
+        })
+        
+    }
 </script>
 
 @endsection
