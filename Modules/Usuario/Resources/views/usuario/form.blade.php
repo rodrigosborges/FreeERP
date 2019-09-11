@@ -32,11 +32,12 @@
                         <label for="avatar">Avatar</label>
 
                         <div class="custom-file">
-                            <input value="{{old('avatar', isset($usuario) ? $usuario->avatar : '')}}" type="file" class="custom-file-input form-control" id="customFileLang" lang="pt-br" name="avatar">
-                            <label class="custom-file-label" for="customFileLang">Selecionar imagem</label>
+                            <input value="{{old('avatar', isset($usuario) ? $usuario->avatar : '')}}" type="file" class="custom-file-input form-control" id="avatar" accept="image/jpeg,image/png" lang="pt-br" name="avatar">
+                            <label class="custom-file-label" for="avatar">Selecionar imagem</label>
+                        
+                            {{$errors->first('avatar')}}
                         </div>
 
-                        {{$errors->first('avatar')}}
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail</label>
@@ -78,6 +79,7 @@
 
 @section('js')
 <script type="text/javascript" src="{{asset('js/jquery.validate.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
 
 <script>
