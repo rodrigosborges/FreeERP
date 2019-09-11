@@ -36,8 +36,8 @@ Cadastro Nova Compra - {{ $cliente->nome }}
             </div>
             
         </div>
-        <div class="pedidos">
-            <div class="row pedido ">
+        <div class="produtos">
+            <div class="row produto ">
                 <div class="col-4 form-group">
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -69,8 +69,8 @@ Cadastro Nova Compra - {{ $cliente->nome }}
 
             </div>
         </div>
-        <button type="button" id="adicionar-pedido" class="btn btn-primary">Adicionar</button>
-        <button type="button" id="excluir-pedido" class="btn btn-primary">Excluir</button>
+        <button type="button" id="adicionar-produto" class="btn btn-success">Adicionar</button>
+        <button type="button" id="excluir-produto" class="btn btn-danger">Excluir</button>
         
     
     </form>
@@ -79,17 +79,16 @@ Cadastro Nova Compra - {{ $cliente->nome }}
 
 @section('js')
 <script>
-    $('#adicionar-pedido').click(function(){
-        var pedido = $(".pedido").first().clone()
-        pedido.find('select, input').val("")
-        pedido.appendTo($("#pedidos"))
-        
-    });
-    $('#excluir-pedido').click(function(){
-        if ($(".pedido").length > 1) {
-            $(".pedido").last().remove()
-        }
-    });
+     $('#adicionar-produto').click(function(){
+            var pedido = $(".produto").first().clone()
+            pedido.find('select, input').val("")
+            pedido.appendTo($(".produtos"))
+        });
+        $('#excluir-produto').click(function(){
+            if ($(".produto").length > 1) {
+                $(".produto").last().remove()
+            }
+        });
 
 
 
