@@ -13,6 +13,10 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nome</th>
+            
+            <th scope="col">Categorias</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Quantidade</th>
             <th scope='col'>Ações</th>
         </tr>
     </thead>
@@ -20,7 +24,10 @@
         @foreach($itens as $item)
         <tr>
             <td>{{$item->id}}</td>
-            <td></td>
+            <td>{{$item->produtos->last()->nome}}</td>
+            <td>{{$item->produtos->last()->categoria->nome}}</td>
+            <td>{{$item->tipoUnidade->nome}}-({{$item->tipoUnidade->quantidade_itens}} itens)</td>
+            <td>{{$item->quantidade}}</td>
             <td>
                 <a class="btn btn-lg btn-warning" href="{{url('/estoque/'.$item->id.'/edit')}}">
                     <i class="material-icons">border_color</i>

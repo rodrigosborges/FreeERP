@@ -32,8 +32,10 @@ class ProdutoController extends Controller
     }
     public function index()
     {
-       
+     
+
         $produtos = Produto::paginate(5);
+    
         $categorias = Categoria::all();
         $flag = 0;
         return view('estoque::/produto/index', $this->dadosTemplate, compact('produtos', 'categorias', 'flag'));
