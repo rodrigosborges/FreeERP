@@ -5,93 +5,108 @@
 
 <form action="{{url($data['url'])}}" method="POST" class="estoqueForm">
     @csrf
-    @if(isset($estoque))
+    @if(isset($data['estoque']))
     @method('put')
     @endif
+    <p class="feedback-errors alert"></p>
     <div class="row">
-        <div class="col-4">
+
+        <div class="col-lg-4  col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="categoria_id">Produto</label>
-                <select class="custom-select" id="produto_id" name="produto_id">
+                <select class="custom-select produto_id" id="produto_id" name="produto_id">
                     <option value="-1">Selecione</option>
                     @foreach($data['produtos'] as $produto)
-                    <option value="{{$produto->id}}">{{$produto->nome}}</option>
+                    <option value="{{$produto->id}}" {{isset($data['estoque']) && $data['produto']->id==$produto->id?'selected':''}}>{{$produto->nome}}</option>
                     @endforeach
                 </select>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-lg-3  col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="categoria_id">Tipo Unidade</label>
-                <select class="custom-select" id="tipo_unidade_id" name="tipo_unidade_id">
+                <select class="custom-select tipo_unidade_id" id="tipo_unidade_id" name="tipo_unidade_id">
                     <option value="-1">Selecione</option>
                     @foreach($data['tipoUnidade'] as $unidade)
-                    <option value="{{$unidade->id}}">{{$unidade->nome . ' - ' .$unidade->quantidade_itens. ' itens' }} </option>
+                    <option value="{{$unidade->id}}" {{isset($data['estoque']) && $data['estoque']->tipo_unidade_id==$unidade->id?'selected':''}}>{{$unidade->nome . ' - ' .$unidade->quantidade_itens. ' itens' }} </option>
                     @endforeach
                 </select>
             </div>
         </div>
 
-        <div class="col-2">
-                <div class="form-group">
-                    <label for="preco_custo">Preço de Custo</label>
-                    <input type="text" name="preco_custo" id="preco_custo" placeholder="R$" onkeyUp="moeda(this);" class="form-control" required>
-                </div>
+        <div class="col-lg-2 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="preco_custo">Preço de Custo</label>
+                <input type="text" name="preco_custo" id="preco_custo" value=" {{isset($data['estoque'])?$data['estoque']->movimentacaoEstoque->last()->preco_custo:''}}" placeholder="R$" onkeyUp="moeda(this);" class="form-control preco_custo" required>
+            </div>
         </div>
 
-        <div class="form-group col-3">
+        <div class="form-group col-lg-3 col-md-6 col-sm-6">
             <label for="nome">Quantidade</label>
-            <input type="number" name='quantidade' required id="quantidade" class="form-control" maxlength="45" value="{{(isset($estoque))?$categoria->nome:''}}">
+            <input type="{{isset($data['estoque'])?'text':'number'}}" name='quantidade' required id="quantidade" class="form-control quantidade" maxlength="45" value=" {{isset($data['estoque'])?(int)$data['estoque']->quantidade:''}}">
             <p class=" alert" id="mensagem-nome"> {{$errors->first('quantidade')}}</p>
         </div>
 
     </div>
     <div class="row col-12" style="justify-content: flex-end;">
-        <button type="submit" id="send" class="btn btn-primary">{{$data['button']}}</button>
+        <button type="submit" id="send" class="btn btn-primary send">{{$data['button']}}</button>
     </div>
 
 </form>
 @endsection
 @section('js')
+
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    $('#send').click(function(event) {
+    $('.feedback-errors').hide();
+    $('.send').click(function(event) {
         event.preventDefault();
         var error = false;
         var message = "";
-        if ($('#produto_id').val() == -1) {
+        if ($('.produto_id').val() == -1) {
             error = true;
-            message += "Selecione um produto";
-            $('#produto_id').focus()
+            message += "Selecione um produto<br>";
+            $('.produto_id').focus()
         }
-        if ($('#tipo_unidade_id').val() == -1) {
+        if ($('.tipo_unidade_id').val() == -1) {
             error = true;
-            message += "\n Selecione um tipo de unidade";
-            $('#tipo_unidade_id').focus()
+            message += "\n Selecione um tipo de unidade<br>";
+            $('.tipo_unidade_id').focus()
         }
-        if ($('#preco').val() == ""){
+        if ($('.preco').val() == "") {
             error = true;
-            message += "\n O Campo preço de custo é obrigatório";
-            $('#preco_custo').focus()
+            message += "\n O Campo preço de custo é obrigatório<br>";
+            $('.preco_custo').focus()
         }
-        if ($('#quantidade').val() == "") {
+        if ($('.quantidade').val() == "") {
             error = true;
-            message += "\n O campo quantidade é obrigatório";
-            $('#quantidade').focus()
-        } else if ($('#quantidade').val() <= 0) {
+            message += "\n O campo quantidade é obrigatório<br>";
+            $('.quantidade').focus()
+        } else if ($('.quantidade').val() <= 0) {
             error = true;
             message += "\n A Quantidade não pode ser menor ou igual a 0";
-            $('#quantidade').focus()
+            $('.quantidade').focus()
         }
         if (!error) {
+            $('.feedback-errors').hide()
+            $('.feedback-errors').removeClass('alert-warning')
+            $('.feedback-errors').addClass('alert-primary')
+            $('.feedback-errors').fadeIn()
+            $('.feedback-errors').html("processando...")
+            $('.send').attr('disabled', true)
             $('.estoqueForm').submit();
+        } else {
+            $('.feedback-errors').fadeIn()
+            $('.feedback-errors').html(message)
+            $('.feedback-errors').addClass('alert-warning')
         }
-        console.log(message);
+
     })
 </script>
 <script>
     function moeda(i) {
-        var v = i.value.replace(/\D/g,'');
-        v = (v/100).toFixed(2) + '';
+        var v = i.value.replace(/\D/g, '');
+        v = (v / 100).toFixed(2) + '';
         v = v.replace(",", ".");
         v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1$2$3.");
         v = v.replace(/(\d)(\d{3}),/g, "$1$2.");
