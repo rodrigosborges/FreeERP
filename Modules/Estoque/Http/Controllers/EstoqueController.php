@@ -5,7 +5,7 @@ namespace Modules\Estoque\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Estoque\Entities\{Produto, Estoque, TipoUnidade};
+use Modules\Estoque\Entities\{Produto, Estoque, TipoUnidade, MovimentacaoEstoque};
 use DB;
 
 class EstoqueController extends Controller
@@ -74,6 +74,14 @@ class EstoqueController extends Controller
             $estoque->produtos()->attach($produto);
        
             $estoque->save();
+
+            MovimentacaoEstoque::create(
+                ['estoque_id' => $estoque->id,
+                'quantidade' => $estoque->quantidade,
+                'preco_custo' => '0.0',
+                'observacao' => "Entrada Inicial"]
+            );
+
             DB::commit();
             return redirect('/estoque')->with('success', 'Item de estoque registrado com sucesso!');
         } catch (Exception $ex) {

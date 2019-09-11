@@ -16,10 +16,10 @@ class MovimentacaoEstoque extends Migration
         //
         Schema::create('movimentacao_estoque', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('data');
-            $table->tinyInteger('entrada');
             $table->integer('estoque_id')->unsigned()->index('fk_estoque_pai');
-            $table->decimal('preco_custo')->nullable();
+            $table->decimal('preco_custo', 12,2)->nullable();
+            $table->string('observacao', 256);
+            $table->integer('quantidade');
             $table->timestamps();
         });
     }
