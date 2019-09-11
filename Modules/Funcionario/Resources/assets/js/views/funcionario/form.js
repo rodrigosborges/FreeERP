@@ -95,35 +95,7 @@ $(document).on('change', '.custom-file-input',function(e){
 //###########################
 
 //ADICIONA E REMOVE DEPENDENTES
-$(document).on("click", ".add-dep", function() {
-    if($(".dep").hasClass("d-none")) {
-        $(".dep").removeClass("d-none")
-        $(".dependentes").hide().removeAttr('disabled').fadeIn()
-    }
-    else if($(".dep").length < 4) {
-        clonar(".dep", "#dependentes", true)
-        $(".dep").last().find(".dependentes").val("")
-        $(".dep").last().find(".cpf").mask('000.000.000-00')
-    } else {
 
-        Swal.fire({
-            type: 'warning',
-            title: 'Atenção!',
-            text: 'Podem ser adicionados no máximo '+$(".dep").length+' dependentes',
-        })
- 
-    }
-})
-
-$(document).on("click", ".del-dep", function() {
-    if($(".dep").length == 1) {
-        $(".dep").last().find(".dependentes").val("")
-        $('.dep').addClass('d-none')
-        $(".dependentes").attr('disabled', 'disabled')
-    } else {
-        remover(".dep", $(this))
-    }
-})
 //############################
 
 //#############

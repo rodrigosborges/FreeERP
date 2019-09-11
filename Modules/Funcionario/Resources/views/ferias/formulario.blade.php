@@ -24,7 +24,7 @@
                 <span>Inicio Período de Aquisição:</span>
                 <span>{{$data['data_inicio_periodo']}}</span>    
             </div>
-            
+
             <div class="form-group col-6">
                 <span>Fim Período de Aquisição:</span>
                 <span>{{$data['data_fim_periodo']}}</span>
@@ -74,8 +74,8 @@
                 <label for="situacao_ferias">Situação das Férias:</label>
                 <select name="situacao_ferias" class="form-control" id="situacao_ferias">
                     <option value=""selected>Selecionar</option>
-                    <option value="Marcadas">Marcadas</option>
-                    <option value="Não Marcadas">Não Marcadas</option>
+                    <option value="marcadas">Marcadas</option>
+                    <option value="naoMarcadas">Não Marcadas</option>
                 </select>
             </div>
             

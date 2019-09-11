@@ -186,12 +186,7 @@ class FuncionarioController extends Controller{
                         'validade_curso' => $curso['validade_curso'],
                         'funcionario_id' => $email->id
                     ];
-                   /* $curso = [
-                        
-                        'duracao_horas_curso' => date('Y-m-d', strtotime($request->curso['duracao_horas_curso'])),
-                        'funcionario_id' => $email->id
-                    ];*/
-
+                  
                     $newCurso = Curso::create($curso);    
                 }
                }

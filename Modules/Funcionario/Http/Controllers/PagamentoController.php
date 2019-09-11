@@ -20,6 +20,7 @@ class PagamentoController extends Controller
         $data = [
             'title'         => "Pagamentos",
             'url' => url('funcionario/pagamento/create'),
+            'funcionarios' => Funcionario::all(),
         ];
 
         $pagamentos = Pagamento::paginate(5);
@@ -57,6 +58,8 @@ class PagamentoController extends Controller
      */
     public function store(Request $request)
     {
+
+       
         DB::beginTransaction();
 
         try {
@@ -81,7 +84,7 @@ class PagamentoController extends Controller
             $pagamento->funcionario_id = $funcionario->id;
             $pagamento =$this->OpcaoPagamentoNome($pagamento);
             $pagamento = $this->calcularTotal($pagamento, $request->cargos);
-   
+           // dd($pagamento);
             $pagamento->save();
          
 
@@ -111,6 +114,7 @@ class PagamentoController extends Controller
      */
     public function edit($id)
     {
+        dd($id); 
         $data = [
             "button" => 'Atualizar',
             'title'         => "Editar pagamentos",

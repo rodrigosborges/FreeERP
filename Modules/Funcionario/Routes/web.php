@@ -23,9 +23,13 @@ Route::prefix('funcionario')->group(function() {
     Route::get('ferias/controleFerias/{id}','ControleFeriasController@controleFerias');
     Route::get('ferias/listar/{id}','FeriasController@listar');
 
+    //Rotas do FeriasController
+    Route::get('ferias/editarFerias/{id}','FeriasController@edit');
+    Route::get('ferias/{id}/show', 'FeriasController@show');
+    //Fim das rotas
+
     Route::resource('funcionario', 'FuncionarioController');
     Route::resource('cargo', 'CargoController');
-    
     
     Route::resource('pagamento', 'PagamentoController');
     Route::resource('controleFerias', 'ControleFeriasController');

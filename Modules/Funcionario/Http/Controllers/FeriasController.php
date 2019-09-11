@@ -18,7 +18,9 @@ class FeriasController extends Controller
     {
         $data = [
             'title' => 'Lista de Funcionários',
-            'funcionarios' => Funcionario::paginate(10)
+            'funcionarios' => Funcionario::all(),
+           
+            
         ];
         return view('funcionario::ferias.index', compact('data'));
     }
@@ -40,12 +42,14 @@ class FeriasController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
+
 		try{
             if($request->pagamento_parcela13 == "on"){
                 $pagamento13 = true;
             }else{
                 $pagamento13 = false;
             }
+
 			$ferias = Ferias::Create([
                 'data_inicio' => date('Y-m-d', strtotime($request['data_inicio'])),
                 'data_fim' => date('Y-m-d', strtotime($request['data_fim'])),
@@ -55,11 +59,12 @@ class FeriasController extends Controller
                 'situacao_ferias' => $request['situacao_ferias'],
                 'pagamento_parcela13' => $pagamento13,
                 'observacao' => $request['observacao'],
-                'funcionario_id' => $request['funcionario_id'],
+                'funcionario_id' => $request['funcionario_id']
             ]);
+
 			DB::commit();
 			return redirect('funcionario/ferias')->with('success', 'Férias cadastrada com sucesso!');
-		}catch(Exception $e){
+		} catch(Exception $e){
 			DB::rollback();
 			return back();
 		}
@@ -71,8 +76,15 @@ class FeriasController extends Controller
      * @return Response
      */
     public function show($id)
-    {
-        return view('funcionario::show');
+    //Cargo::where('id','=',$cargoAtual)->first()
+    {         
+
+        $ferias = Ferias::findOrFail($id); 
+        $funcionarios = Ferias::where('funcionario_id', '=',$id)->get();
+        $teste = $ferias->funcionario_id;
+        $funcionarios = Funcionario::where('id', '=', $teste)->get();
+        
+        return view('funcionario::ferias.show', compact('ferias', 'funcionarios'));
     }
     public function listar($id)
     {
@@ -88,9 +100,9 @@ class FeriasController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
-    {
-        return view('funcionario::edit');
+    public function edit($id) {
+        $ferias = Ferias::findOrFail($id);
+        return view('funcionario::ferias.editaFerias',compact('ferias'));
     }
 
     /**
@@ -99,9 +111,38 @@ class FeriasController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {   
+
+        if($request->pagamento_parcela13 == "on"){
+            $pagamento13 = true;
+        }else{
+            $pagamento13 = false;
+        }
+        
+        DB::beginTransaction();
+
+        try {
+            $ferias = Ferias::findOrFail($id);
+            $ferias->update([
+                'data_inicio' => date('Y-m-d', strtotime($request['data_inicio'])),
+                'data_fim' => date('Y-m-d', strtotime($request['data_fim'])),
+                'dias_ferias' => $request->dias_ferias,
+                'data_pagamento' => date('Y-m-d', strtotime($request['data_pagamento'])),
+                'data_aviso' => date('Y-m-d', strtotime($request['data_aviso'])),
+                'situacao_ferias' => $request['situacao_ferias'],
+                'pagamento_parcela13' => $pagamento13,
+                'observacao' => $request['observacao'],
+                'funcionario_id' => $request['funcionario_id']
+            ]);
+            
+            DB::commit();
+           
+            return redirect('funcionario/ferias')->with('success', 'Férias atualizada com sucesso');
+
+        } catch(Exception $e){
+            DB::rollback();
+            return $e;
+        }
     }
 
     /**
