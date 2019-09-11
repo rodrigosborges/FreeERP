@@ -99,14 +99,17 @@ class EstoqueController extends Controller
      */
     public function edit($id)
     {
-        /*return 1;
+     $estoque =Estoque::findOrFail($id);
         $data = [
             'button' => 'atualizar',
             'url' => 'estoque/' . $id,
             'titulo' => 'Editar Estoque',
-            'estoque' => Estoque::findOrFail($id),
+            'estoque' => $estoque,
+            'produtos'=>Produto::all(),
+            'produto'=>$estoque->produtos->last(),
+            'tipoUnidade' => TipoUnidade::all(),
         ];
-        return view('estoque::estoque.form', compact('data'));*/
+        return view('estoque::estoque.form', compact('data'));
     }
 
     /**

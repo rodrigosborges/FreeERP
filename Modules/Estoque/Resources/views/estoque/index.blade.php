@@ -29,7 +29,7 @@
             <td>{{$item->tipoUnidade->nome}}-({{$item->tipoUnidade->quantidade_itens}} itens)</td>
             <td>{{$item->quantidade}}</td>
             <td>
-                <a class="btn btn-lg btn-warning" href="{{url('/estoque/'.$item->id.'/edit')}}">
+                <a class="btn btn-lg btn-warning" href="{{url('estoque/'.$item->id.'/edit')}}">
                     <i class="material-icons">border_color</i>
                 </a>
             </td>
