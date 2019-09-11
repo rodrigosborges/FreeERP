@@ -19,7 +19,7 @@
                 <div class="form-group col-12">
                     <label for="nome">Nome</label>
                     <input required type="text" placeholder="Insira o nome do produto" name="nome" class="form-control" value="{{isset($produto) ? $produto->nome : ''}}">
-                    {{$errors->first('nome')}}
+                    <span style="color:red">{{$errors->first('nome')}}</span>
                 </div>
         </div>
         <div class="row">
