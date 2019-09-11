@@ -40,11 +40,18 @@ class PedidoController extends Controller
     
     public function store(Request $request)
     {
-        
         $pedido = Pedido::create( $request->all() );
-        
+        $produtos = $request->input('produtos');
+        $dados = [];
+        foreach($produtos as $produto){
+            $dados[$produto['produto_id']] = [
+                    'quantidade' => $produto['quantidade'], 
+                    'desconto' => $produto['desconto']
+            ];
+        }
+        $pedido->produtos()->sync($dados);
 
-        return $pedido;
+        return back()->with('sucess','Pedido Salvo');
     }
 
     
@@ -63,9 +70,24 @@ class PedidoController extends Controller
         return view('cliente::pedidos.form', compact('cliente','pedido','produtos'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $pedido_id)
     {
-        //
+        $pedido = Pedido::findOrFail($pedido_id);
+        $produtos = $request->input('produtos');
+        $params = $request->all();
+        $pedido->update($params);
+        
+        $dados = [];
+        foreach($produtos as $produto){
+            $dados[$produto['produto_id']] = [
+                    'quantidade' => $produto['quantidade'], 
+                    'desconto' => $produto['desconto']
+            ];
+        }
+
+        $pedido->produtos()->sync($dados);
+
+        return back()->with('sucess', 'Pedido editado');
     }
 
     public function destroy($pedido_id)

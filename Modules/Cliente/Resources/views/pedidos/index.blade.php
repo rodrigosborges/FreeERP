@@ -32,11 +32,9 @@ Cadastro de Compras - {{ $cliente->nome }}
                         <td>{{ ($pedido->desconto). "%" }}</td>
                         <td><!--BOTOES -->
                           <div class="flex row justify-content-around">
-
-                              <form action="{{url("/cliente/pedido/".$pedido->id )}}">
-                                 <button type="submit" class="btn btn-sm btn-warning" name="edit">Editar</button>
-                              </form>
-                          
+                                 <a href="{{url("/cliente/pedido/".$pedido->id )}}" 
+                                  class="btn btn-sm btn-warning" name="edit">Editar</button>
+                                 </a>
                               <form action={{url( "/cliente/pedido/".$pedido->id ) }} method="post" onsubmit="return confirmar({{$pedido->id}});">
                                   {{method_field('DELETE')}}
                                   {{ csrf_field() }}
@@ -97,12 +95,7 @@ Cadastro de Compras - {{ $cliente->nome }}
               </tbody>
             </table>
       </div>
-      <div>
-          <form action={{ url( "/cliente/".$cliente->id."/pedido") }} method="post">
-            {{ csrf_field() }}
-            <button type="submit" class="btn  btn-secondary" name="rem">Teste New</button>
-        </form>
-      </div>
+      
   </div>
   <script>
     function confirmar(pedido_id){
