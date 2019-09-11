@@ -30,8 +30,8 @@
                             <div class="form-group col-2">
                                 <input type="text" name="preco_max" class="form-control" onkeyUp="moeda(this);" placeholder="Preço máximo">
                             </div>
-                            <div class="form-group col-1 text-right">
-                                <button type="submit" class="btn btn-dark material-icons"><i id="search-button">search</i></button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
                             </div>
                     </div>
                 </form>
