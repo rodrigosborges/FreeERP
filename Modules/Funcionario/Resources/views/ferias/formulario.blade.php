@@ -24,7 +24,7 @@
                 <span>Inicio Período de Aquisição:</span>
                 <span>{{$data['data_inicio_periodo']}}</span>    
             </div>
-            
+
             <div class="form-group col-6">
                 <span>Fim Período de Aquisição:</span>
                 <span>{{$data['data_fim_periodo']}}</span>

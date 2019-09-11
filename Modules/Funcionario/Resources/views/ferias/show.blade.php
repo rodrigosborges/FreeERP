@@ -1,6 +1,18 @@
 @extends('funcionario::template')
 
+@section('title','Aviso de Férias')
+
 @section('body')
+
+    <div class="row d-flex justify-content-center">
+            <h3>Dados Funcionario</h3>
+          
+            @foreach($funcionarios as $funcionario)
+                {{$funcionario->nome}}
+            @endforeach
+    </div>
+
+   
     <table class="table">
         <thead>
             <tr>
