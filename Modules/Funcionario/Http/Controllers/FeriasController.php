@@ -18,7 +18,9 @@ class FeriasController extends Controller
     {
         $data = [
             'title' => 'Lista de Funcionários',
-            'funcionarios' => Funcionario::paginate(10)
+            'funcionarios' => Funcionario::all(),
+           
+            
         ];
         return view('funcionario::ferias.index', compact('data'));
     }
@@ -74,9 +76,15 @@ class FeriasController extends Controller
      * @return Response
      */
     public function show($id)
-    {
-        $ferias = Ferias::findOrFail($id);     
-        return view('funcionario::ferias.show', compact('ferias'));
+    //Cargo::where('id','=',$cargoAtual)->first()
+    {         
+
+        $ferias = Ferias::findOrFail($id); 
+        $funcionarios = Ferias::where('funcionario_id', '=',$id)->get();
+        $teste = $ferias->funcionario_id;
+        $funcionarios = Funcionario::where('id', '=', $teste)->get();
+        
+        return view('funcionario::ferias.show', compact('ferias', 'funcionarios'));
     }
     public function listar($id)
     {

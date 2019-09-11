@@ -36,5 +36,4 @@ class Funcionario extends Model {
     public function curso(){
         return $this->hasMany('Modules\Funcionario\Entities\Curso');
     }
-
 }

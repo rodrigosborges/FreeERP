@@ -246,7 +246,6 @@
                 $('.inss').val('')
                 $('.total').val('')
             } else
-
                 buscaFuncionario()
         })
 
@@ -258,7 +257,6 @@
                 buscaSalario()
                 $('.emissao').val('')
                 desabilitar(true)
-
             } else {
                 desabilitar(true)
                 $('.funcionario').attr('disabled', false)
@@ -334,7 +332,7 @@
             //do total ele efetua os descontos e soma os extras
             temp -= desconto
             temp += (valor_hora_extra + adicional)
-            console.log(temp)
+            console.log("temp"+temp)
             $('.total').val(temp.toFixed(2)) //to fixed é para arrumar as casas decimais
             console.log("valor hora:" + valor_dia / 8)
 
@@ -359,21 +357,24 @@
         var salario;
 
         if (data != null && data != "") {
-            salario = parseFloat(data)
-
-            formula = (salario * 8) / 100;
+            salario = data.salario
+            
+            
             // Aliquota minima 
             $('.valor').val(salario.toFixed(2))
-            if (salario <= 1751.81) {
+            if (salario <= 1693.72) {
+                formula = (parseFloat(salario) * 0.8);
                 inss = formula;
-
-            } else if (data > 1751.81) {
+            }else if(salario > 1693.73 && salario < 2222.90){
+                formula = (parseFloat(salario) * 0.9);
                 inss = formula;
-
-            } else {
+            }else{
+                formula = (parseFloat(salario) * 0.11);
                 inss = formula;
             }
-            total = salario - inss;
+            
+
+            total = parseFloat(salario) - inss;
             $('.total').val(total.toFixed(2))
 
             $('.inss').val(inss.toFixed(2));
@@ -401,14 +402,18 @@
             //adiantamento de salario
             $('.emissao').attr('disabled', false)
             if ($('.opcao-pagamento').val() == 2) {
-                var valor = parseFloat(data) * 0.4
-
-                calculaInss(valor)
+                var valor = parseFloat(data.salario) * 0.4;
+                data.salario = (parseFloat(data.salario) * 0.4)*1000;
+                calculaInss(data);
                 console.log("Adiantamento:" + valor)
-            } else
-                calculaInss(data)
+            } else{
+                data.salario = parseFloat(data.salario)*1000;
+                calculaInss(data);
+                console.log("Tipo Salário - Salário:"+data.salario);
+                selectedCargo = data;
+            }
 
-     
+
         }).fail(function() {
 
         })
@@ -435,9 +440,10 @@
             cargos = $.parseJSON(data);
             selectedCargo =cargos
             $('.cargos').attr('disabled', false)
-
-            string = '<option  value="' + cargos.id + '">' + cargos.nome + "</option>"
-            desabilitar(false)
+            
+            
+            string = '<option selected  value="-1">Selecione </option>'
+            string += '<option   value="' + cargos.id + '">' + cargos.nome + "</option>"
 
             $('.cargos').html(string);
             var salario = cargos.salario
