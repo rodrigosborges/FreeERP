@@ -15,11 +15,12 @@ class PedidoController extends Controller
     {
         $cliente = Cliente::findOrFail($id);
         $pedidos = $cliente->pedidos;
-        // return $pedidos[0]->vl_total_itens();
         return view('cliente::pedidos.index', compact('cliente'));
     }
+
     //view novo pedido
     public function novo($id){
+
         $cliente = Cliente::findOrFail($id);
         $produtos = Produto::all();
         
@@ -49,9 +50,13 @@ class PedidoController extends Controller
     // }
 
     
-    public function edit($id)
+    public function edit($pedido_id)
     {
-        return view('cliente::edit');
+        $pedido = Pedido::findOrFail($pedido_id);
+        $cliente = $pedido->cliente;
+        $produtos = Produto::all();
+
+        return view('cliente::pedidos.form', compact('cliente','pedido','produtos'));
     }
 
     public function update(Request $request, $id)
