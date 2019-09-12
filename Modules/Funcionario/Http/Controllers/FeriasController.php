@@ -62,10 +62,9 @@ class FeriasController extends Controller
                 'funcionario_id' => $request['funcionario_id']
             ]);
             
-            return $request->all();
             $controleFerias = ControleFerias::Create([
                 'inicio_periodo_aquisitivo' => date('Y-m-d', strtotime($request['inicio_periodo_aquisitivo'])),
-                'fim_periodo_aquisitivo ' => date('Y-m-d', strtotime($request['fim_periodo_aquisitivo'])),
+                'fim_periodo_aquisitivo' => date('Y-m-d', strtotime($request['fim_periodo_aquisitivo'])),
                 'saldo_total' => 0,
                 'saldo_periodo' => 0,
                 'funcionario_id' => $request['funcionario_id']

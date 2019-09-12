@@ -106,8 +106,7 @@ class FuncionarioController extends Controller{
                 ];
                      
                 $doc = Documento::create($newDoc);
-<<<<<<< HEAD
-                dd($doc);
+                //dd($doc);
                 //Ajustar Attach de Documentos
                 // $funcionario->documento()->attach([
                 //     'documento_id'=>$doc->id,
@@ -115,8 +114,6 @@ class FuncionarioController extends Controller{
                 // ]
                 // );
                 
-=======
->>>>>>> 5b88d3f2b7c64d0222f24ec08928167c67bfd100
 
                 $funcionario->documento()->attach([
                     'documento_id'=> $doc->id
