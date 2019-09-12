@@ -85,7 +85,7 @@ class PagamentoController extends Controller
             $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
             $pagamento->funcionario_id = $funcionario->id;
             $pagamento =$this->OpcaoPagamentoNome($pagamento);
-            $pagamento = $this->calcularTotal($pagamento, $request->cargos);
+            $pagamento = $this->calcularTotal($pagamento, $salario);
            // dd($pagamento);
             $pagamento->save();
          
@@ -116,7 +116,6 @@ class PagamentoController extends Controller
      */
     public function edit($id)
     {
-        dd($id); 
         $data = [
             "button" => 'Atualizar',
             'title'         => "Editar pagamentos",
@@ -205,38 +204,34 @@ class PagamentoController extends Controller
         return $p;
     }    
        
-    public function calcularTotal(Pagamento $pagamento, $cargo)
-        {
-            
+    public function calcularTotal(Pagamento $pagamento, $salario){
             $total = $pagamento->valor;
             //horas Extras
             if($pagamento->tipo_hora_extra == 1){
-                $horas_extras = ($cargo->salario/220)*2;
+                $horas_extras = ($salario/220)*2;
                 $horas_extras *= $pagamento->horas_extras;
             }else{
-                $horas_extras = ($cargo->salario/220)*1.5;
+                $horas_extras = ($salario/220)*1.5;
                 $horas_extras *= $pagamento->horas_extras;
             }
 
             //add noturno
-            $add_noturno = ($cargo->salario/220)*0.2;
+            $add_noturno = ($salario/220)*0.2;
             $add_noturno *= $pagamento->adicional_noturno;
 
             
             //faltas
-            $faltas = ($cargo->salario/30)*$pagamento->faltas;
+            $faltas = ($salario/30)*$pagamento->faltas;
 
-            
 
-            
             if($pagamento->tipo_pagamento == "2"){
-                    $total *= 0.4;
-                }
-                $total-= $desconto;
-                $total+= $horas_extras + $add_noturno;
-                $pagamento->total = $total - $pagamento->inss;
-             
-                return $pagamento;
+                $total *= 0.4;
+            }
+
+            $total+= $horas_extras + $add_noturno;
+            $pagamento->total = $total - $pagamento->inss - $faltas ;
+            
+            return $pagamento;
              // $desconto = $pagamento->salario / 30 * ($pagamento->faltas * $horas_dia);
             /*
             console.log("Valor salario :" + selectedCargo.salario + "hora Extra:" + $('#horas_extras').val() + "Adicional noturno:" + $('.adicional1').val() + " Faltas:" + $('#faltas').val())
