@@ -11,17 +11,17 @@ use DB;
 class PedidoController extends Controller
 {
    //view listagem
-    public function index($id)
+    public function index($cliente_id)
     {
-        $cliente = Cliente::findOrFail($id);
+        $cliente = Cliente::findOrFail($cliente_id);
         $pedidos = $cliente->pedidos;
         return view('cliente::pedidos.index', compact('cliente'));
     }
 
     //view novo pedido
-    public function novo($id){
+    public function novo($cliente_id){
 
-        $cliente = Cliente::findOrFail($id);
+        $cliente = Cliente::findOrFail($cliente_id);
         $produtos = Produto::all();
         
         return view('cliente::pedidos.form', compact('cliente','produtos'));
@@ -40,7 +40,18 @@ class PedidoController extends Controller
     
     public function store(Request $request)
     {
-        //
+        $pedido = Pedido::create( $request->all() );
+        $produtos = $request->input('produtos');
+        $dados = [];
+        foreach($produtos as $produto){
+            $dados[$produto['produto_id']] = [
+                    'quantidade' => $produto['quantidade'], 
+                    'desconto' => $produto['desconto']
+            ];
+        }
+        $pedido->produtos()->sync($dados);
+
+        return back()->with('sucess','Pedido Salvo');
     }
 
     
@@ -59,14 +70,29 @@ class PedidoController extends Controller
         return view('cliente::pedidos.form', compact('cliente','pedido','produtos'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $pedido_id)
     {
-        //
+        $pedido = Pedido::findOrFail($pedido_id);
+        $produtos = $request->input('produtos');
+        $params = $request->all();
+        $pedido->update($params);
+        
+        $dados = [];
+        foreach($produtos as $produto){
+            $dados[$produto['produto_id']] = [
+                    'quantidade' => $produto['quantidade'], 
+                    'desconto' => $produto['desconto']
+            ];
+        }
+
+        $pedido->produtos()->sync($dados);
+
+        return back()->with('sucess', 'Pedido editado');
     }
 
-    public function destroy($id, $idPedido)
+    public function destroy($pedido_id)
     {   
-        $pedido = Pedido::findOrFail($idPedido);
+        $pedido = Pedido::findOrFail($pedido_id);
 
         $pedido->delete();
         return back()->with('success', 'Pedido deletado');
