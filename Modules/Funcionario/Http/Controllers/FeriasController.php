@@ -83,18 +83,15 @@ class FeriasController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
-  
-    {         
+    public function show($id) {         
 
         $ferias = Ferias::findOrFail($id); 
-        
-        $funcionarios = Funcionario::where('id',    '=', $ferias->funcionario_id)->get();
-        $cargo = Cargo::where('id' , '=',$ferias->funcionario_id)->get();
+        $funcionario = Funcionario::where('id','=', $ferias->funcionario_id)->get()->last()->nome;
+        $cargo = Cargo::where('id' , '=',$ferias->funcionario_id)->get()->last()->nome;
+        $inicio_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->funcionario_id)->get()->last()->inicio_periodo_aquisitivo;
+        $fim_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->funcionario_id)->get()->last()->fim_periodo_aquisitivo;    
 
-
-            
-        return view('funcionario::ferias.show', compact('ferias', 'funcionarios','cargo'));
+        return view('funcionario::ferias.show', compact('ferias', 'funcionario','cargo', 'inicio_periodo_aquisitivo', 'fim_periodo_aquisitivo'));
     }
     public function listar($id)
     {

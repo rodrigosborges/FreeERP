@@ -13,15 +13,15 @@
 
     <div class="row">
         <div class="col-4  d-flex justify-content-start" >
-            @foreach($funcionarios as $funcionario)
-              <p class="font-weight-bold">Nome:&nbsp</p>  {{$funcionario->nome}}
-            @endforeach
+            
+              <p class="font-weight-bold">Nome:&nbsp</p>  {{$funcionario}}
+            
          </div>
 
          <div class="col d-flex justify-content-end">
-         @foreach($cargo as $cargo)
-         <p class="font-weight-bold">Cargo:&nbsp</p>{{$cargo->nome}}
-            @endforeach       
+         
+         <p class="font-weight-bold">Cargo:&nbsp</p>{{$cargo}}
+                 
          </div>
     </div>
 
@@ -39,7 +39,7 @@
         <div class="col">
             <h4 class="font-weight-bold mt-2">Aviso</h4>
         <hr>
-            <p class="mt-4 ">Comunicamos-lhe na forma do artigo 135/CLT, que suas férias relativas ao período de (inicia)  a (termina) 
+            <p class="mt-4 ">Comunicamos-lhe na forma do artigo 135/CLT, que suas férias relativas ao período de {{date('d/m/Y', strtotime($inicio_periodo_aquisitivo))}}  a {{date('d/m/Y', strtotime($fim_periodo_aquisitivo))}} 
              se iniciarão no dia  <strong>{{date('d/m/Y', strtotime($ferias->data_inicio))}}</strong> e terminarão no dia <strong>{{{date('d/m/Y', strtotime($ferias->data_fim))}}}</strong>  próximo</p>
         </div>
     </div>
