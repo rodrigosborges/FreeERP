@@ -5,7 +5,9 @@ namespace Modules\Estoque\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Estoque\Entities\{MovimentacaoEstoque};
+use Modules\Estoque\Entities\{MovimentacaoEstoque, Estoque};
+use Modules\Estoque\Http\Requests\MovimentacaoRequest;
+use DB;
 
 class MovimentacaoEstoqueController extends Controller
 {
@@ -46,10 +48,71 @@ class MovimentacaoEstoqueController extends Controller
      */
     public function show($id)
     {
+        
         $movimentacao = MovimentacaoEstoque::findOrFail($id);
         return view('estoque::estoque.movimentacao.ficha', compact('movimentacao'));
     }
 
+
+    public function adicionar($id){
+        $estoque = Estoque::findOrFail($id);
+        $flag = 1;
+
+        return view('estoque::estoque.movimentacao.form', compact('estoque', 'flag'));
+    }
+
+
+    public function remover($id){
+        $estoque = Estoque::findOrFail($id);
+        $flag = 0;
+        
+        return view('estoque::estoque.movimentacao.form', compact('estoque', 'flag'));
+    }
+
+
+    public function alterarEstoque($id){
+        $e = Estoque::findOrFail($id);
+        $movimentacao = MovimentacaoEstoque::where('estoque_id', $e->id)->orderBy('created_at', 'DESC')->get();
+
+        return view('estoque::estoque.movimentacao.visualizar', compact('e', 'movimentacao'));
+
+
+    }
+
+    public function salvarEstoque(MovimentacaoRequest $request){
+        $estoque = Estoque::findOrFail($request->estoque_id);
+        DB::beginTransaction(); 
+        try{
+            if($request->flag == 1){
+                $estoque->quantidade = $estoque->quantidade + $request->quantidade;
+
+            }else if($request->flag == 0){
+                $request->quantidade = $request->quantidade*-1;
+                $estoque->quantidade = $estoque->quantidade + ($request->quantidade);
+                if($estoque->quantidade < 0){
+                    return back()->with('error', 'Estoque insuficiente');
+                }
+            }else{
+                return back()->with('error', 'Erro no servidor');
+            }
+
+            //quantidade','observacao','estoque_id','preco_custo'
+                 MovimentacaoEstoque::create([
+                    'quantidade' => $request->quantidade,
+                    'observacao' => $request->observacao,
+                    'estoque_id' => $request->estoque_id,
+                    'preco_custo' => $request->preco_custo
+
+                ]);
+                $estoque->update();
+                DB::commit();
+            return redirect('/estoque/movimentacao/alterar/' . $estoque->produtos->last()->id)->with('success', 'Registro salvo');
+        }catch(\Exception $e){
+            return back()->with('error', 'Erro no servidor');
+        }
+
+
+    }
     /**
      * Show the form for editing the specified resource.
      * @param int $id

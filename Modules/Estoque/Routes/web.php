@@ -47,7 +47,12 @@ Route::prefix('estoque')->group(function () {
     Route::put('/produto/{id}/restore', 'ProdutoController@restore');
 
     //Rota das movimentações
+    Route::get('/movimentacao/alterar/{id}', 'MovimentacaoEstoqueController@alterarEstoque');
+    Route::get('/movimentacao/alterar/{id}/adicionar', 'MovimentacaoEstoqueController@adicionar');
+    Route::post('/movimentacao/alterar', 'MovimentacaoEstoqueController@salvarEstoque');
+    Route::get('/movimentacao/alterar/{id}/remover', 'MovimentacaoEstoqueController@remover');
     Route::resource('/movimentacao', 'MovimentacaoEstoqueController');
+
 
     //Rotas do Estoque
 
