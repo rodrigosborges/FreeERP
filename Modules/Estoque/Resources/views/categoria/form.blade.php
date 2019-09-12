@@ -106,7 +106,7 @@
 
                 console.log(data);
                 var mensagem;
-                if (data == 1) {
+                if (data !=0) {
                     //    alert('Ja tem');
                     mensagem = "Esta categoria já está cadastrada"
 

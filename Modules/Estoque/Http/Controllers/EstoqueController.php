@@ -35,9 +35,9 @@ class EstoqueController extends Controller
     public function index()
     {
 
-
+        $flag= 0;
         $itens = Estoque::paginate(10);
-        return view('estoque::estoque.index', $this->dadosTemplate, compact('itens'));
+        return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'));
     }
 
     /**
@@ -181,6 +181,30 @@ class EstoqueController extends Controller
      */
     public function destroy($id)
     {
+        $estoque = Estoque::findOrFail($id);
+
+        
+        
+        MovimentacaoEstoque::create(
+            [
+                'estoque_id' => $estoque->id,
+                'quantidade' => $estoque->quantidade,
+                'preco_custo' => $estoque->preco_custo,
+                'observacao' => "Item Excluido"
+            ]);
+            $estoque->delete();
+        return back()->with('success', 'Categoria Removida com sucesso');
         //
+    }
+    public function restore($id){
+      $estoque = Estoque::onlyTrashed()->findOrFail($id);
+      $estoque->restore();
+      return redirect('/estoque')->with('success', 'Item restaurado com sucesso!');
+    }
+    public function inativos(){
+        $flag= 1;
+        $itensInativos = Estoque::onlyTrashed()->paginate(5);
+        return view('estoque::estoque.index', $this->dadosTemplate, compact('itensInativos','flag'));
+
     }
 }
