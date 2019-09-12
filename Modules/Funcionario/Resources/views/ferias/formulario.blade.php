@@ -39,8 +39,8 @@
     <h4>Período Gozo</h4>
     {{csrf_field()}}
         <div class="row">
-        <input type="hidden" name="inicio_periodo_aquisitivo" id="inicio_periodo_aquisitivo" value="{{$data['inicio_periodo_aquisitivo']}}">
-        <input type="hidden" name="fim_periodo_aquisitivo" id="fim_periodo_aquisitivo" value="{{$data['fim_periodo_aquisitivo']}}">
+        <input type="text" hidden name="inicio_periodo_aquisitivo" id="inicio_periodo_aquisitivo" value="{{$data['inicio_periodo_aquisitivo']}}">
+        <input type="text" hidden name="fim_periodo_aquisitivo" id="fim_periodo_aquisitivo" value="{{$data['fim_periodo_aquisitivo']}}">
 
             <div class="form-group col-4">
                 <label for="data_inicio">Data Início:</label>

@@ -105,6 +105,7 @@ class ControleFeriasController extends Controller
             $teste = $anos_trampo+364;
         }
         $fim_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
+      
 
         $data = [
             'title' => 'Ferias',
@@ -114,6 +115,7 @@ class ControleFeriasController extends Controller
             'inicio_periodo_aquisitivo' =>  $inicio_periodo_aquisitivo,
             'fim_periodo_aquisitivo' =>  $fim_periodo_aquisitivo,
         ];
+        
         return view('funcionario::ferias.formulario', compact('data'));
     }
 }

@@ -61,7 +61,8 @@ class FeriasController extends Controller
                 'observacao' => $request['observacao'],
                 'funcionario_id' => $request['funcionario_id']
             ]);
-           
+            
+            return $request->all();
             $controleFerias = ControleFerias::Create([
                 'inicio_periodo_aquisitivo' => date('Y-m-d', strtotime($request['inicio_periodo_aquisitivo'])),
                 'fim_periodo_aquisitivo ' => date('Y-m-d', strtotime($request['fim_periodo_aquisitivo'])),
@@ -69,7 +70,7 @@ class FeriasController extends Controller
                 'saldo_periodo' => 0,
                 'funcionario_id' => $request['funcionario_id']
             ]);
-         
+                
 			DB::commit();
 			return redirect('funcionario/ferias')->with('success', 'Férias cadastrada com sucesso!');
 		} catch(Exception $e){
@@ -91,6 +92,7 @@ class FeriasController extends Controller
         
         $funcionarios = Funcionario::where('id',    '=', $ferias->funcionario_id)->get();
         $cargo = Cargo::where('id' , '=',$ferias->funcionario_id)->get();
+
 
             
         return view('funcionario::ferias.show', compact('ferias', 'funcionarios','cargo'));
@@ -143,7 +145,7 @@ class FeriasController extends Controller
                 'observacao' => $request['observacao'],
                 'funcionario_id' => $request['funcionario_id']
             ]);
-            
+        
             DB::commit();
            
             return redirect('funcionario/ferias')->with('success', 'Férias atualizada com sucesso');

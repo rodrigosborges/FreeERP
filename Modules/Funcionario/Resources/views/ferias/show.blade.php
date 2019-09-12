@@ -6,55 +6,58 @@
 
     <div class="row d-flex justify-content-center">
            <div class="col">
-             <p>Dados do Funcionario</p>
+             <h4 class="font-weight-bold">Dados do Funcionário</h4>
+             <hr>
            </div>           
     </div>
 
-    <div class="row" >
-        <div class="col-sm-4 d-flex justify-content-center " >
+    <div class="row">
+        <div class="col-4  d-flex justify-content-start" >
             @foreach($funcionarios as $funcionario)
-                {{$funcionario->nome}}
+              <p class="font-weight-bold">Nome:&nbsp</p>  {{$funcionario->nome}}
             @endforeach
          </div>
 
-         <div class="col-sm-5 d-flex justify-content-end" >
+         <div class="col d-flex justify-content-end">
          @foreach($cargo as $cargo)
-                {{$cargo->nome}}
+         <p class="font-weight-bold">Cargo:&nbsp</p>{{$cargo->nome}}
             @endforeach       
          </div>
     </div>
 
-    <div class="row p-3" >
-        <div class="col-sm-3">
-            <p>Carteira de Trabalho:&nbsp76752</p>
-        </div>
+    <div class="row mt-2 d-flex justify-content-start">
+            <div class="col-3 d-flex justify-content-start" >
+            <p class="font-weight-bold">Carteira de Trabalho:</p>
+            </div>
 
-        <div class="col-sm-3">
-            <p>Série:&nbsp76752</p>
+        <div class="col-3">
+        <p class="font-weight-bold">Série: </p>
         </div>
     </div>
 
     <div class="row">
-        <div class="col" style="border-bottom: solid 1px">
-            <p>Aviso</p>
+        <div class="col">
+            <h4 class="font-weight-bold mt-2">Aviso</h4>
+        <hr>
+            <p class="mt-4 ">Comunicamos-lhe na forma do artigo 135/CLT, que suas férias relativas ao período de (inicia)  a (termina) 
+             se iniciarão no dia  <strong>{{date('d/m/Y', strtotime($ferias->data_inicio))}}</strong> e terminarão no dia <strong>{{{date('d/m/Y', strtotime($ferias->data_fim))}}}</strong>  próximo</p>
         </div>
     </div>
 
-    <div class="row d-flex justify-content-center">
-        <div class="col-sm-10 p-3">
-            <p>Comunicamos-lhe na forma do artigo 135/CLT, que suas férias relativas ao período de {{date('d/m/Y', strtotime($ferias->data_inicio))}} a 
-            {{{date('d/m/Y', strtotime($ferias->data_fim))}}} se iniciarão no dia (nao sei) e terminarão no dia (nao faço ideia) próximo</p>
-
+    
+    <div class="row-5 d-flex justify-content-between">
+        <div class="col-4 mt-5" style="border-top: solid 1px">
+            <p>Assinatura do Funcionario</p>
         </div>
 
+        <div class="col-4 mt-5" style="border-top: solid 1px">
+            <p>Assinatura da Empresa</p>
+        </div>
     </div>
-    <div class="col">
-        _______________________________________
-        <p>Assinatura do Funcionario</p>
-    </div>
+    <hr>
 
 
-    <table class="table">
+    <!-- <table class="table">
         <thead>
             <tr>
                 <th scope="col">Data de início</th>
@@ -92,5 +95,5 @@
                 <td>{{$ferias->observacao}}</td>
             </tr>
         </tbody>
-    </table>
+    </table> -->
 @endsection
