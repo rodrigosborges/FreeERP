@@ -24,10 +24,10 @@ class Funcionario extends Model {
         return $this->hasMany('Modules\Entities\Dependente');
     }
     public function telefone(){
-        return $this->belongsToMany('Modules\Entities\Telefone');
+        return $this->belongsToMany('App\Entities\Telefone','funcionario_has_telefone','funcionario_id','telefone_id');
     }
     public function documento(){
-        return $this->belongsToMany('App\Entities\Documento', 'funcionario_has_documento');
+        return $this->belongsToMany('App\Entities\Documento', 'funcionario_has_documento','funcionario_id','documento_id');
     }
     public function cargos(){
         return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada');
