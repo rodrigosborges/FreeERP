@@ -12,7 +12,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="material-icons">calendar_today</i></span>    
                     </div>
-                    <input type="date" name="data" class="form-control">
+                    <input type="date" name="data" onfocusout="checkDate()" id="data" class="form-control">
                 </div>                        
             </div>
 
@@ -30,7 +30,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="material-icons">arrow_downward</i></span>
-                    </div>                    
+                    </div>                      
                     <input type="number" name="desconto" placeholder="Desconto da compra" class="form-control">
                 </div>
             </div>
@@ -106,9 +106,18 @@ Cadastro Nova Compra - {{ $cliente->nome }}
             }else if($('.produto').length >= 2) {
                 $(this).closest('.produto').remove();
             }
-                
-            
         });
+
+        function checkDate() {
+            var dateString = document.getElementById('data').value;
+            var arrayData = dateString.split("-");
+            var selectedDate = new Date(arrayData[0], arrayData[2], arrayData[1]);
+            var now = new Date(); 
+            if (selectedDate > now) {  //bloquear botão de cadastrar compra  
+                alert("Data inválida");
+            }
+        }
+
 
 
 
