@@ -2,7 +2,7 @@
 @section('content')
 <div class="row justify-content-center align-items-center" style="height:100%">
     <div class="col-xm-12 col-sm-10">
-        <div class="card mt-4">
+        <div class="card mt-4 shadow-sm">
             <div class="card-header bg-white d-flex justify-content-between align-items-center">
                 <h5 class="card-title m-0 ">Modulos</h5>
                 <a href="{{url('modulo/cadastrar')}}" style="text-decoration: none; padding:0">
