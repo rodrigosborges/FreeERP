@@ -93,8 +93,30 @@
         </div>
         <!--Fim Opções Pagamento -->
 
+        <!--Opções Pagamento -->
+        <div class="form-group mb-5 col-md-6">
+            <label class="control-label" for="inputGroupSelect01">Tipo Hora Extra</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="material-icons">attach_money</i>
+                    </span>
+                </div>
+                <select class="custom-select tipo-hora-extra" id="tipo-hora-extra" name="tipo_hora_extra">
+                    <option selected value="1">100%</option>
+                    <option value="2">50%</option>
+                </select>
+            </div>
+        </div>
+        <!--Fim Opções Pagamento -->
+
         <br>
 
+        
+    </div>
+    <!--FIM opção Pagamento e Horas extras -->
+
+    <div class="row">
         <!-- Horas Extras-->
         <div class="form-group col-md-6">
             <label for="salario" class="control-label"> Horas Extras</label>
@@ -104,15 +126,12 @@
                         <i class="material-icons">access_time</i>
                     </span>
                 </div>
-                <input type="text" name="horas_extras" id="horas_extras" class="horas_extras form-control required money" value="{{$data['pagamento'] ? $data['pagamento']->horas_extras : ''}}">
+                <input value='0' type="text" name="horas_extras" id="horas_extras" class="horas_extras form-control required " value="{{$data['pagamento'] ? $data['pagamento']->horas_extras : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
         <!-- Fim Horas Extras-->
-    </div>
-    <!--FIM opção Pagamento e Horas extras -->
 
-    <div class="row">
         <!-- Valor-->
         <div class="form-group col-md-6">
             <label for="salario" class="control-label">Valor Pagamento</label>
@@ -122,12 +141,17 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="valor_pagamento" disabled name="valor" id="valor" class=" valor form-control valor required money valor_pagamento" value="">
+                <input type="text" name="valor_pagamento" disabled name="valor" id="valor" class=" valor form-control valor required  valor_pagamento" value="">
             </div>
             <span class="errors"> </span>
         </div>
         <!-- Fim Valor-->
 
+    </div>
+
+    <br>
+
+    <div class="row">
         <!-- Adicional Noturno-->
         <div class="form-group col-md-6">
             <label for="salario" class="control-label">Adicional Noturno</label>
@@ -137,16 +161,11 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="adicional" id="adicional" class=" adicional1 form-control money" value="{{$data['pagamento'] ? $data['pagamento']->adicional_noturno : ''}}">
+                <input value='0' type="text" name="adicional" id="adicional" class=" adicional1 form-control " value="{{$data['pagamento'] ? $data['pagamento']->adicional_noturno : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
         <!-- Fim Adicional Noturno-->
-    </div>
-
-    <br>
-
-    <div class="row">
 
         <!-- INSS-->
         <div class="form-group col-md-6">
@@ -157,12 +176,14 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="INSS" id="inss" class="form-control inss" value="8" disabled value="{{$data['pagamento'] ? $data['pagamento']->inss : ''}}">
+                <input type="text" readonly name="INSS" id="inss" class="form-control inss" value="8"  value="{{$data['pagamento'] ? $data['pagamento']->inss : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
         <!-- Fim INSS-->
 
+    </div>
+    <div class="row">
         <!-- Faltas-->
         <div class="form-group col-md-6">
             <label for="salario" class="control-label"> Faltas</label>
@@ -172,16 +193,14 @@
                         <i class="material-icons">remove</i>
                     </span>
                 </div>
-                <input type="text" name="faltas" id="faltas" class=" faltas form-control required money" value="{{$data['pagamento'] ? $data['pagamento']->faltas : ''}}">
+                <input value='0' type="text" name="faltas" id="faltas" class=" faltas form-control required   " value="{{$data['pagamento'] ? $data['pagamento']->faltas : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
         <!-- Fim Faltas-->
 
         <!--Total-->
-    </div>
-    <div class="row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-6">
             <label for="salario" class="control-label"> Total</label>
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -189,7 +208,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="total" id="total" placeholder="Total:" disabled class="total form-control  ">
+                <input type="text" name="total" id="total" placeholder="Total:"  readonly class="total form-control">
             </div>
             <span class="errors"> </span>
         </div>
@@ -315,25 +334,32 @@
 
             console.log("Valor salario :" + selectedCargo.salario + "hora Extra:" + $('#horas_extras').val() + "Adicional noturno:" + $('.adicional1').val() + " Faltas:" + $('#faltas').val())
             var salario = parseFloat(selectedCargo.salario)
-            var horas_extras = parseFloat($('.horas_extras').val())
-            var valor_dia = salario / 20
-            var horas_dias = parseFloat(selectedCargo.horas_semanais / 5)
-            var valor_hora_extra = (valor_dia / 8) * horas_extras
-            var adicional = parseFloat($('.adicional1').val())
-            var faltas = parseFloat($('.faltas').val())
+            if($("#tipo-hora-extra").val() == 1){
+                var horas_extras = parseFloat((salario/220)*2);
+                horas_extras *= $('.horas_extras').val();
+            }else{
+                var horas_extras = parseFloat((salario/220)*1.5);
+                horas_extras *= $('.horas_extras').val();
+            }
+
+            //add noturno
+            var adicional = parseFloat((salario/220)*0.2);
+            adicional *= $('.adicional1').val();
+            
+
+            var faltas = salario/30*($('.faltas').val())
+            console.log("V.faltas="+faltas)
+
             var inss = parseFloat($('.inss').val())
-            var desconto = (salario / 30) * (faltas * horas_dias)
+            
+            var desconto = faltas+inss;
 
 
             console.log("desconto:" + -desconto)
-            var temp = total;
-
-            //do total ele efetua os descontos e soma os extras
-            temp -= desconto
-            temp += (valor_hora_extra + adicional)
-            console.log("temp"+temp)
+            var temp = (salario + adicional + horas_extras)-desconto
+            console.log("salaior:"+salario+" adicional not"+adicional+" horas extras"+horas_extras+"  -desconto"+desconto)
+            console.log("temp:"+temp)
             $('.total').val(temp.toFixed(2)) //to fixed é para arrumar as casas decimais
-            console.log("valor hora:" + valor_dia / 8)
 
         }
 
@@ -458,6 +484,7 @@
         $('.cargos').attr('disabled', opcao);
         $('.emissao').attr('disabled', opcao);
         $('.opcao-pagamento').attr('disabled', opcao);
+        $('.tipo-hora-extra').attr('disabled', opcao);
         $('.horas_extras').attr('disabled', opcao);
         $('.adicional1').attr('disabled', opcao);
         $('.faltas').attr('disabled', opcao);

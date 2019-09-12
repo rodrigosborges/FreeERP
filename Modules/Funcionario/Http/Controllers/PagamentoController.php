@@ -59,6 +59,7 @@ class PagamentoController extends Controller
     public function store(Request $request)
     {
 
+
        
         DB::beginTransaction();
 
@@ -70,7 +71,8 @@ class PagamentoController extends Controller
             $pagamento->valor = $salario;
             $pagamento->faltas = $request->faltas;
             $pagamento->horas_extras = $request->horas_extras;
-            $pagamento->adicional_noturno = floatval($request->adicional);
+            $pagamento->adicional_noturno = $request->adicional;
+            $pagamento->tipo_hora_extra = $request->tipo_hora_extra;
             $inss= $this->calcularInss($salario);
             if ($request->opcao_pagamento == "2") {
                 $temp = $salario * 0.4;
@@ -207,17 +209,31 @@ class PagamentoController extends Controller
         {
             
             $total = $pagamento->valor;
-            $valor_dia = floatval($pagamento->funcionario->cargos->find($cargo)->salario) / 20; 
-            $valor_horas_extras =(floatval($valor_dia) / 8) * floatval($pagamento->horas_extras);
-            $horas_dias = floatval($pagamento->funcionario->cargos->find($cargo)->horas_semanais) / 5;
-            $desconto = floatval($pagamento->funcionario->cargos->find($cargo)->salario) / 30  * ($pagamento->faltas * $horas_dias );
-         
+            //horas Extras
+            if($pagamento->tipo_hora_extra == 1){
+                $horas_extras = ($cargo->salario/220)*2;
+                $horas_extras *= $pagamento->horas_extras;
+            }else{
+                $horas_extras = ($cargo->salario/220)*1.5;
+                $horas_extras *= $pagamento->horas_extras;
+            }
+
+            //add noturno
+            $add_noturno = ($cargo->salario/220)*0.2;
+            $add_noturno *= $pagamento->adicional_noturno;
+
+            
+            //faltas
+            $faltas = ($cargo->salario/30)*$pagamento->faltas;
+
+            
+
             
             if($pagamento->tipo_pagamento == "2"){
                     $total *= 0.4;
                 }
                 $total-= $desconto;
-                $total+= $valor_horas_extras + floatval($pagamento->adicional_noturno);
+                $total+= $horas_extras + $add_noturno;
                 $pagamento->total = $total - $pagamento->inss;
              
                 return $pagamento;
