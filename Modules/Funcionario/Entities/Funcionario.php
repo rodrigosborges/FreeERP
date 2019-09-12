@@ -24,7 +24,7 @@ class Funcionario extends Model {
         return $this->hasMany('Modules\Entities\Dependente');
     }
     public function telefone(){
-        return $this->belongsToMany('Modules\Entities\Telefone');
+        return $this->belongsToMany('App\Entities\Telefone','funcionario_has_telefone');
     }
     public function documento(){
         return $this->belongsToMany('App\Entities\Documento', 'funcionario_has_documento');

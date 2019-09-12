@@ -155,6 +155,12 @@ $(document).on("click", ".del-cur", function() {
     }
 })
 
+//ADICIONA PPOSIÇÃO DO BTN
+$(document).on("click", ".btn-alg", function() {
+    if($(".btnx").hasClass("d-none")) {
+        $(".btnx").removeClass("d-none")
+    }
+})
 //############################
 
 //ENDEREÇO

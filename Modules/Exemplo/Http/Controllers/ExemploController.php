@@ -20,7 +20,6 @@ class ExemploController extends Controller{
             ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
             ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
         ];
-
         return view('exemplo::index',compact('moduleInfo','menu'));
     }
 

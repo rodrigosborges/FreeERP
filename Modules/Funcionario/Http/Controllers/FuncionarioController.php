@@ -107,11 +107,11 @@ class FuncionarioController extends Controller{
                      
                 $doc = Documento::create($newDoc);
                 //Ajustar Attach de Documentos
-                // $funcionario->documento()->attach([
-                //     'documento_id'=>$doc->id,
-                //     'funcionario_id'$funcionario->id,
-                // ]
-                // );
+                    $funcionario->documento()->sync([
+                    'documento_id'=>$doc->id,
+                    'funcionario_id'=>$funcionario->id,
+                  ]
+                 );
                 
 
             }
@@ -152,7 +152,11 @@ class FuncionarioController extends Controller{
            
                 $telefone = Telefone::create($telefone);
 
-
+                $funcionario->telefone()->sync([
+                    'telefone_id'=>$telefone->id,
+                    'funcionario_id'=>$funcionario->id,
+                  ]
+                 );
             }
 
             if($request->dependentes[0]['parentesco_id'] != "" && $request->dependentes[0]['mora_junto'] != "" && $request->dependentes[0]['nome'] != "" && $request->dependentes[0]['cpf'] != "" && $request->dependentes[0]['certidao_matricula'] != "" && $request->dependentes[0]['certidao_vacina'] != "") {
@@ -168,7 +172,6 @@ class FuncionarioController extends Controller{
                     ];
                     
                     $cpf = Documento::create($doc);
-
                     
 
                 }

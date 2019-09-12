@@ -727,18 +727,16 @@
             </div>
             @endforeach
         </div>
-</div>
-        
-<div class="mt-2 d-flex justify-content-start">
+    </div>
+        <div class="mt-2 d-flex justify-content-start">
             <i class="btn btn-info text-center add-curso">ADICIONAR CURSOS</i>
         </div>
-        
     </form>
 @endsection
 
 @section('footer')
     <div class="text-right">
-        <button class="btn btn-success" type="button"> {{$data['button']}} </button>
+        <button class="btn btn-success sendForm" type="button">{{$data['button']}}</button>
     </div>
 @endsection
 

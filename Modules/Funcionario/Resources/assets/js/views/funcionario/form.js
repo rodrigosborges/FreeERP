@@ -222,7 +222,15 @@ $('#cep').blur(function(){
         }
     }
 });
-
+$(document).ready(function(){
+    $(".sendForm").on('click',function(){
+        if($("#form").valid()){
+            $(".sendForm").prop("disabled",true) 
+            $("#form").submit()  
+            console.log('success')
+        }
+    })
+}) 
 //MÁSCARAS
 $(".data").mask('00/00/0000')
 $("#cep").mask('00000-000')
