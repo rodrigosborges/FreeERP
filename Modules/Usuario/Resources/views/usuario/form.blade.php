@@ -1,5 +1,8 @@
 @extends('usuario::layouts.informacoes')
 <!-- @section('title', 'Exemplo') -->
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{Module::asset('usuario:css/usuario/form.css')}}">
+@endsection
 
 @section('content')
 <div class="row justify-content-center align-items-center" style="height:100%">
@@ -20,24 +23,44 @@
 
                     <div class="form-group" >
                         @if(isset($usuario))
-                        <div class='text-center'>
+                        <!-- <div class='text-center'>
                             <img width= 100vw  id='imageAvatar' height = 100vh class='rounded-circle border border-dark mb-3' src="{{asset('storage/img/avatars/'.$usuario->avatar)}}">
-                        </div>
-                        @endif
-                        <label for="apelido">Apelido</label>
-                        <input required minlenght='3' id="apelido" maxlenght='50' value="{{old('apelido', isset($usuario) ? $usuario->apelido : '')}}" class="form-control" type="text" name="apelido">
-                        {{$errors->first('apelido')}}
-                    </div>
-                    <div class="form-group">
-                        <label for="avatar">Avatar</label>
-
+                        </div> -->
                         <div class="custom-file">
-                            <input value="{{old('avatar', isset($usuario) ? $usuario->avatar : '')}}" type="file" class="custom-file-input form-control" id="avatar" accept="image/jpeg,image/png" lang="pt-br" name="avatar">
-                            <label class="custom-file-label" for="avatar">Selecionar imagem</label>
+                            
+                            <!-- <label class="custom-file-label" for="avatar">Selecionar imagem</label> -->
+                         
+                            <div class='text-center overlay-image'>
+                    
+                                <label for="avatar">
+                                    <div id="imagem">
+                                    <input hidden value="{{old('avatar', isset($usuario) ? $usuario->avatar : '')}}" type="file" class="custom-file-input form-control" id="avatar" accept="image/jpeg,image/png" lang="pt-br" name="avatar">
+                                        <img id='imageAvatar' class='rounded-circle border border-dark' src="{{asset('storage/img/avatars/'.$usuario->avatar)}}">
+                                        <i id="hover" class="material-icons">edit</i>
+                                    </div>
+                                    <!-- <div class="normal">
+                                    <div class="text"></div>
+                                    </div>
+                                    <div class="hover">
+                                    <i class="text material-icons">edit</i>
+                                    </div> -->
+                                </label>
+                                
+                                
+                                
+                            
+                            </div>
+                            
                         
                             {{$errors->first('avatar')}}
                         </div>
-
+                        @endif
+                    </div>
+                 
+                    <div class="form-group mt-5">
+                        <label for="apelido">Apelido</label>
+                        <input required minlenght='3' id="apelido" maxlenght='50' value="{{old('apelido', isset($usuario) ? $usuario->apelido : '')}}" class="form-control" type="text" name="apelido">
+                        {{$errors->first('apelido')}}
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail</label>

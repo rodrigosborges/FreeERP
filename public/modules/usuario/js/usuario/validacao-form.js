@@ -8,7 +8,7 @@
                 remote: main_url+'/usuario/check-unique/'+usuario_id
             },
             avatar: {
-                accept: "image/*",
+                accept: "image/jpeg,image/png",
                 filesize: 1048576  
             },
             papel:{
