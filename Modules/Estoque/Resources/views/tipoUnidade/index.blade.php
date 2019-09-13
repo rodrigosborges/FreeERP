@@ -1,11 +1,11 @@
 @extends('estoque::estoque.estoqueTemplate')
 @section('title', 'Tipo de Unidade')
 @section('body')
-<a class="btn btn-outline-success btn-sm" href="{{url('/estoque/tipo-unidade/create')}}">
-        <i class="material-icons">note_add</i>Cadastrar Unidade
+<a class="btn btn-success btn-sm mb-3" href="{{url('/estoque/tipo-unidade/create')}}">
+        <i class="material-icons" style="vertical-align: middle; font-size:25px;">note_add</i>Cadastrar Unidade
     </a>
-    <a class="btn  btn-outline-info btn-sm" href="{{url('/estoque/tipo-unidade/inativos')}}">
-        <i class="material-icons">restore_from_trash</i>Itens Inativos
+    <a class="btn  btn-danger btn-sm mb-3" href="{{url('/estoque/tipo-unidade/inativos')}}">
+        <i class="material-icons" style="vertical-align: middle; font-size:25px;">delete</i>Itens Inativos
     </a>
 @if($flag==1)
 <table class="table text-center table-striped ">
@@ -14,7 +14,7 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nome</th>
-            <th scope="col">Qtd Itens</th>
+            <th scope="col">Quantidade</th>
             <th scope='col' colspan=2>Ações</th>
         </tr>
     </thead>
@@ -67,7 +67,7 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nome</th>
-            <th scope="col">Qtd Itens</th>
+            <th scope="col">Quantidade</th>
             <th scope='col' colspan=2>Ações</th>
 
         </tr>
