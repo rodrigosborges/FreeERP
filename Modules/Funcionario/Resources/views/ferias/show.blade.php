@@ -27,7 +27,10 @@
 
     <div class="row mt-2 d-flex justify-content-start">
             <div class="col-3 d-flex justify-content-start" >
-            <p class="font-weight-bold">Carteira de Trabalho:</p>
+            <p class="font-weight-bold">Carteira de Trabalho:
+            @foreach($documentos as $documento)
+           {{$documento->numero}}</p>
+            @endforeach
             </div>
 
         <div class="col-3">
