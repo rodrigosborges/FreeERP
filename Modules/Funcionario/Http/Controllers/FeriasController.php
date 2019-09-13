@@ -87,12 +87,12 @@ class FeriasController extends Controller
 
         $ferias = Ferias::findOrFail($id); 
         $funcionario = Funcionario::where('id','=', $ferias->funcionario_id)->get()->last()->nome;
+        $funcionario2 = Funcionario::find($ferias->funcionario_id);
+        $documentos  = $funcionario2->documento->where('tipo_documento_id', 4);
         $cargo = Cargo::where('id' , '=',$ferias->funcionario_id)->get()->last()->nome;
         $inicio_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->funcionario_id)->get()->last()->inicio_periodo_aquisitivo;
         $fim_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->funcionario_id)->get()->last()->fim_periodo_aquisitivo;    
-        
-        
-        
+                
         $carteiraTrabalho = DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', '=', 'funcionario.id')
                                 ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
                                 ->where('documento.tipo_documento_id', '=', '4')->get()->last()->numero;

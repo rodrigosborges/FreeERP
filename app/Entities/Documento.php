@@ -9,4 +9,5 @@ class Documento extends Model{
     protected $fillable = ['numero','comprovante','tipo_documento_id'];
 
     public $timestamps = false;
+
 }   

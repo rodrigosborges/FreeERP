@@ -29,7 +29,6 @@
             <div class="col-3 d-flex justify-content-start" >
                 <p class="font-weight-bold">Carteira de Trabalho:</p>{{$carteiraTrabalho}}
             </div>
-
         <div class="col-3 d-flex " >
             <p class="font-weight-bold">Série:</p>{{$serieCarteiraTrabalho}}
         </div>
