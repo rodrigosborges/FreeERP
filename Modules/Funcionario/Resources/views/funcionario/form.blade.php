@@ -214,7 +214,7 @@
                                 <input type="hidden" class="form-control" name="documentos[serie_ctps][id]" value="{{$data['model']->serie_ctps()->id}}">
                             @endif
                             <input required type="text" placeholder="Série da CTPS" name="documentos[serie_ctps][numero]" id="serie_ctps" class="form-control rounded-right" value="{{ old('documentos.serie_ctps.numero', $data['model'] ? $data['model']->serie_ctps()->numero : '') }}">
-                            <input required type="hidden" name="documentos[serie_ctps][tipo_documento_id]" value="4">
+                            <input required type="hidden" name="documentos[serie_ctps][tipo_documento_id]" value="8">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.serie_ctps.numero') }}</span>
                     </div>
@@ -234,7 +234,7 @@
                                 <input type="hidden"  name="documentos[uf_ctps][id]" value="{{$data['model']->uf_ctps()->id}}">
                             @endif
                             <input required type="text"class="form-control rounded-right" placeholder="UF CTPS" name="documentos[uf_ctps][numero]" id="uf_ctps" class="form-control uf_ctps" value="{{ old('documentos.uf_ctps.numero', $data['model'] ? $data['model']->uf_ctps()->numero : '') }}">
-                            <input required type="hidden" name="documentos[uf_ctps][tipo_documento_id]" value="4">
+                            <input required type="hidden" name="documentos[uf_ctps][tipo_documento_id]" value="9">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.uf_ctps.numero') }}</span>
                     </div>

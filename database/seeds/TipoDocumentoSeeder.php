@@ -27,7 +27,13 @@ class TipoDocumentoSeeder extends Seeder
             ],
             [
                 'nome'          => 'Numero de Pis',
-            ]
+            ],
+            [
+                'nome'          => 'Serie Carteira de Trabalho'
+            ],
+            [
+                'nome'          => 'UF Carteira de Trabalho'
+            ]     
                 
         ]);
     }

@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Funcionario,Cargo,Ferias, ControleFerias};
+use Modules\Funcionario\Entities\{Funcionario,Cargo,Ferias, ControleFerias, Documento};
 use DB;
 
 class FeriasController extends Controller
@@ -90,9 +90,27 @@ class FeriasController extends Controller
         $cargo = Cargo::where('id' , '=',$ferias->funcionario_id)->get()->last()->nome;
         $inicio_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->funcionario_id)->get()->last()->inicio_periodo_aquisitivo;
         $fim_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->funcionario_id)->get()->last()->fim_periodo_aquisitivo;    
-
-        return view('funcionario::ferias.show', compact('ferias', 'funcionario','cargo', 'inicio_periodo_aquisitivo', 'fim_periodo_aquisitivo'));
+        
+        
+        
+        $carteiraTrabalho = DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', '=', 'funcionario.id')
+                                ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
+                                ->where('documento.tipo_documento_id', '=', '4')->get()->last()->numero;
+                                    
+        $serieCarteiraTrabalho =  DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', '=', 'funcionario.id')
+                                 ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
+                                 ->where('documento.tipo_documento_id', '=', '8')->get()->last()->numero;
+                    
+      
+        return view('funcionario::ferias.show', compact('ferias', 'funcionario','cargo', 'inicio_periodo_aquisitivo', 'fim_periodo_aquisitivo', 'carteiraTrabalho', 'serieCarteiraTrabalho'));
     }
+
+
+    /*DB::table('users')
+            ->join('contacts', 'users.id', '=', 'contacts.user_id')
+            ->join('orders', 'users.id', '=', 'orders.user_id')
+            ->select('users.*', 'contacts.phone', 'orders.price')
+            ->get();*/
     public function listar($id)
     {
         $data = [

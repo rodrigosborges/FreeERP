@@ -27,11 +27,11 @@
 
     <div class="row mt-2 d-flex justify-content-start">
             <div class="col-3 d-flex justify-content-start" >
-            <p class="font-weight-bold">Carteira de Trabalho:</p>
+                <p class="font-weight-bold">Carteira de Trabalho:</p>{{$carteiraTrabalho}}
             </div>
 
-        <div class="col-3">
-        <p class="font-weight-bold">Série: </p>
+        <div class="col-3 d-flex " >
+            <p class="font-weight-bold">Série:</p>{{$serieCarteiraTrabalho}}
         </div>
     </div>
 
