@@ -11,7 +11,7 @@
                     @csrf
                     <div class="row">
                         <div class="form-group col-12">
-                            <input id="search-input" placeholder="Insira o nome do produto" class="form-control" type="text" name="pesquisa" />
+                            <input id="search-input" placeholder="Insira o nome do produto" maxlength="45" class="form-control" type="text" name="pesquisa" />
                         </div>
                     </div>
                     <div class="row">

@@ -66,12 +66,12 @@ class CategoriaController extends Controller
     {
         DB::beginTransaction();
         try {
+            $nome =  DB::table('categoria')->select('*')->where('nome','=' , $request->nome)->count();
             $categoria =  Categoria::create($request->all());
             $subcategoria = new Subcategoria();
             $subcategoria->id = $categoria->id;
             $subcategoria->categoria_id = ($request->categoriaPai != -1) ? $request->categoriaPai : null;
-            $nome =  DB::table('categoria')->select('nome')->where('id','<>', $request->id)->where('nome', $request->nome)->count();
-            if ($nome != 0) {
+            if ($nome == 0) {
                 $subcategoria->save();
             } else {
                 return back()->with('warning', 'O nome selecionado já está cadastrado');
