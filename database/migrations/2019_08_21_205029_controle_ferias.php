@@ -19,6 +19,7 @@ class ControleFerias extends Migration
             $table->date('fim_periodo_aquisitivo');
             $table->integer('saldo_total');
             $table->integer('saldo_periodo');
+            $table->integer('marcar_ferias');
             $table->integer('funcionario_id')->unsigned()->index('fk_controle_ferias_funcionario');
             $table->timestamps();
         });

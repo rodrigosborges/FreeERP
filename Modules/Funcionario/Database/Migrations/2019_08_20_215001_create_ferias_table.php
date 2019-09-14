@@ -24,6 +24,7 @@ class CreateFeriasTable extends Migration
             $table->boolean('pagamento_parcela13');
             $table->string('observacao');
             $table->integer('funcionario_id')->unsigned()->index('fk_ferias_funcionario');
+            $table->integer('controle_ferias_id')->unsigned()->index('fk_ferias_controle_ferias');
             $table->timestamps();
         });
     }

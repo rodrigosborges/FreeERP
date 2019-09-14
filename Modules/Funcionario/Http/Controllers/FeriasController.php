@@ -44,13 +44,25 @@ class FeriasController extends Controller
         DB::beginTransaction();
 
 		try{
+            
+            $teste = 30 - $request->dias_ferias;
+            
+            $controleFerias = ControleFerias::Create([
+                'inicio_periodo_aquisitivo' => date('Y-m-d', strtotime($request['inicio_periodo_aquisitivo'])),
+                'fim_periodo_aquisitivo' => date('Y-m-d', strtotime($request['fim_periodo_aquisitivo'])),
+                'saldo_total' => 0,
+                'saldo_periodo' => 0,
+                'marcar_ferias' => $teste,
+                'funcionario_id' => $request['funcionario_id']
+            ]);
+
             if($request->pagamento_parcela13 == "on"){
                 $pagamento13 = true;
             }else{
                 $pagamento13 = false;
             }
 
-			$ferias = Ferias::Create([
+            $ferias = Ferias::Create([
                 'data_inicio' => date('Y-m-d', strtotime($request['data_inicio'])),
                 'data_fim' => date('Y-m-d', strtotime($request['data_fim'])),
                 'dias_ferias' => $request->dias_ferias,
@@ -59,17 +71,12 @@ class FeriasController extends Controller
                 'situacao_ferias' => $request['situacao_ferias'],
                 'pagamento_parcela13' => $pagamento13,
                 'observacao' => $request['observacao'],
-                'funcionario_id' => $request['funcionario_id']
+                'funcionario_id' => $request['funcionario_id'],
+                'controle_ferias_id' => $controleFerias->id
             ]);
-            
-            $controleFerias = ControleFerias::Create([
-                'inicio_periodo_aquisitivo' => date('Y-m-d', strtotime($request['inicio_periodo_aquisitivo'])),
-                'fim_periodo_aquisitivo' => date('Y-m-d', strtotime($request['fim_periodo_aquisitivo'])),
-                'saldo_total' => 0,
-                'saldo_periodo' => 0,
-                'funcionario_id' => $request['funcionario_id']
-            ]);
-                
+
+           return $controleFerias;
+           
 			DB::commit();
 			return redirect('funcionario/ferias')->with('success', 'Férias cadastrada com sucesso!');
 		} catch(Exception $e){
@@ -84,15 +91,15 @@ class FeriasController extends Controller
      * @return Response
      */
     public function show($id) {         
-
+        
         $ferias = Ferias::findOrFail($id); 
         $funcionario = Funcionario::where('id','=', $ferias->funcionario_id)->get()->last()->nome;
         $funcionario2 = Funcionario::find($ferias->funcionario_id);
         $documentos  = $funcionario2->documento->where('tipo_documento_id', 4);
         $cargo = Cargo::where('id' , '=',$ferias->funcionario_id)->get()->last()->nome;
-        $inicio_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->funcionario_id)->get()->last()->inicio_periodo_aquisitivo;
-        $fim_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->funcionario_id)->get()->last()->fim_periodo_aquisitivo;    
-                
+        $inicio_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->controle_ferias_id)->get()->last()->inicio_periodo_aquisitivo;
+        $fim_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->controle_ferias_id)->get()->last()->fim_periodo_aquisitivo;    
+        
         $carteiraTrabalho = DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', '=', 'funcionario.id')
                                 ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
                                 ->where('documento.tipo_documento_id', '=', '4')->get()->last()->numero;
