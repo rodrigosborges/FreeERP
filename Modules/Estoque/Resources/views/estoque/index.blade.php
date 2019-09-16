@@ -5,12 +5,16 @@
 <table class="table text-center ">
 
     <thead class="">
-    <a class="btn btn-outline-primary btn-sm mb-4" href="{{url('/estoque/inativos')}}">
-            <i class="material-icons" style="vertical-align:middle; font-size:25px;">restore_from_trash</i>Itens Inativos
-        </a>
-    <a class="btn btn-outline-success btn-sm mb-4"  href="{{url('/estoque/create')}}">
-            <i class="material-icons" style="vertical-align:middle; font-size:25px;">note_add</i>Adicionar
-        </a>
+
+    <div class="col-12 text-right mb-4">
+    <a class="btn btn-success btn-sm"  href="{{url('/estoque/create')}}">
+    <i class="material-icons" style="vertical-align:middle; font-size:25px;">note_add</i>Adicionar
+    </a>
+    <a class="btn btn-danger btn-sm" href="{{url('/estoque/inativos')}}">
+    <i class="material-icons" style="vertical-align:middle; font-size:25px;">delete</i>Inativos
+    </a>
+    </div>
+    
         
         <tr>
             <th scope="col">ID</th>
@@ -66,9 +70,10 @@
 
     <thead class="">
 
-    <a class="btn btn-success btn-sm mb-4" style="float:right;" href="{{url('/estoque/create')}}">
-            <i class="material-icons" style="vertical-align:middle; font-size:25px;">note_add</i>Adicionar
-        </a>
+    <div class="col-12 text-right mb-4">
+    <a class="btn btn-warning btn-sm" href="{{url('/estoque')}}">
+        <i class="material-icons" style="vertical-align:middle; font-size:25px;">keyboard_backspace</i>Voltar</a>
+    </div>
         
         <tr>
             <th scope="col">ID</th>

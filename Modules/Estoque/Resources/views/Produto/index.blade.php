@@ -60,9 +60,11 @@
                                 <a class="btn btn-success btn-sm" href="{{url('/estoque/produto/create')}}">
                                     <i class="material-icons" style="vertical-align:middle; font-size:25px;">note_add</i>Adicionar
                                 </a>
-                                 <a class="btn btn-danger btn-sm" href="{{url('/estoque/produto/inativos')}}"><i class="material-icons" style="vertical-align:middle; font-size:25px;">delete</i>Inativos</a>
+                                 <a class="btn btn-danger btn-sm" href="{{url('/estoque/produto/inativos')}}">
+                                 <i class="material-icons" style="vertical-align:middle; font-size:25px;">delete</i>Inativos</a>
                             @else
-                                <a class="btn btn-warning btn-sm" href="{{url('/estoque/produto')}}"><i class="material-icons" style="vertical-align:middle; font-size:25px;">keyboard_backspace</i>Voltar</a>
+                                <a class="btn btn-warning btn-sm" href="{{url('/estoque/produto')}}">
+                                <i class="material-icons" style="vertical-align:middle; font-size:25px;">keyboard_backspace</i>Voltar</a>
                             @endif
                         </div>
                     </div>
@@ -91,7 +93,8 @@
                                 <td>R$ {{$produto->preco}}</td>
                                 @if($flag == 0)
                                 
-                                <td><a href="{{url('/estoque/produto/ficha/' . $produto->id)}}"><button class="btn btn-sm btn-primary" style="font-size: 0px;"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
+                                <td><a href="{{url('/estoque/produto/ficha/' . $produto->id)}}"><button class="btn btn-sm" style="font-size: 0px; background-color: rgb(100,149,237);">
+                                <i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
 
                                 <td ><a href="{{url('/estoque/produto/' . $produto->id . '/edit')}}"><button class="btn btn-sm btn-warning"><i class="material-icons" style="font-size:18px;">border_color</i></button></a></td>
                                 @else

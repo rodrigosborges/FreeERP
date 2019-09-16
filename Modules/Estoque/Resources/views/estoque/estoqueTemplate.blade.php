@@ -23,7 +23,7 @@ $menu = [
             <h5 style="font-size:25px;">@yield('title')</h5>
 
         </div>
-        <ul class="nav justify-content-center bg-primary" style="margin-bottom:5px">
+        <ul class="nav justify-content-center" style="background-color: rgb(100,149,237); margin-bottom:5px">
             <li class="nav-item ">
                 <a class="nav-link text-white " href="{{url('estoque')}}">Itens em estoque</a>
             </li>

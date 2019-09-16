@@ -3,14 +3,12 @@
 @section('body')
 
 
+
 <div class="row justify-content-center">
 
-
-
-  
         <div class="card-body">
         
-            <ul class="nav nav-tabs  justify-content-center">
+            <ul class="nav nav-tabs justify-content-center">
                 <li class="nav-item">
                     <a href="{{url('/estoque/produto/categoria')}}" class="nav-link active" >
                         Categorias Ativas
