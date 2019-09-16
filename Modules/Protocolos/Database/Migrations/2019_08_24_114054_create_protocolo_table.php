@@ -15,10 +15,10 @@ class CreateProtocoloTable extends Migration
     {
         Schema::create('protocolo', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('solicitante_id')->unsigned();
-			$table->text('assunto');
+			$table->string('assunto',200);
 			$table->integer('tipo_protocolo_id')->index('fk_protocolo_tipo_protocolo1');
             $table->integer('tipo_acesso_id')->index('fk_protocolo_tipo_acesso1');
+            $table->integer('setor_id')->index('fk_protocolo_setor1');
 			$table->timestamps();
 			$table->softDeletes();
         });

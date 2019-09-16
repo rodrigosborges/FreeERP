@@ -10,4 +10,9 @@ class TipoProtocolo extends Model
 
     protected $fillable = ['tipo'];
 
+    //Relação com a tabela protocolos
+    public function protocolos(){
+        return $this->belongsTo('Modules\Protocolos\Entities\Protocolos');
+    }
+
 }

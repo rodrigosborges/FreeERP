@@ -12,8 +12,9 @@
 */
 
 
-
+//Módulo de Protocolos
 Route::prefix('protocolos')->group(function() {
+    
     Route::get('protocolos/list/{status}', 'ProtocolosController@list');
     Route::post('busca', 'ProtocolosController@fetch');
 

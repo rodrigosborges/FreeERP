@@ -46,8 +46,22 @@ div.error, .errors {
 }
 
 .interessado{
-    background-image: radial-gradient(#ccffcc,  #99ff99,  #70db70);
-    border-radius:5px;
-    min-width: 300px;
+    background-color:gray;
     text-align:center;
+    margin:10px 10px;
+    color:white;
+    padding:6px;
+    position:relative;
+    float:left;
+    border-radius: 3px;
+}
+
+.trash{
+    position:absolute;
+    top:-15px;
+    right:-15px;
+    background-color:red;
+    border-radius:100%;
+    font-size:20px;
+    padding:5px;
 }

@@ -12,12 +12,7 @@ class Protocolo extends Model
 
     protected $table = 'protocolo';
 
-    protected $fillable = ['solicitante_id', 'assunto', 'tipo_protocolo_id', 'tipo_acesso_id'];
-
-    //Relação com a tabela solicitante
-    public function solicitante(){
-        return $this->belongsTo('Modules\Protocolos\Entities\Solicitante');
-    }
+    protected $fillable = ['assunto', 'tipo_protocolo_id', 'tipo_acesso_id', 'setor_id'];
 
     //Relação com a tabela tipo_protocolo
     public function tipo_protocolo(){

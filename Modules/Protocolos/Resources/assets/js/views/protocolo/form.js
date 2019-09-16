@@ -1,10 +1,9 @@
+var nomes = []
+
 $('#pesquisa').keyup(function(){
     var query = $(this).val();
 
     if(query != ''){
-        // var _token = $('input[name="_token"]').val();
-
-    
 
         $.ajax({
             url: main_url+'/protocolos/busca',
@@ -15,11 +14,25 @@ $('#pesquisa').keyup(function(){
                 $('#pesquisa').autocomplete({
                     source: data,
                     select: function (e, i) {
-                        document.getElementById("interessado").innerHTML = i.item.value
+                        if (nomes.indexOf(i.item.value) === -1) {
+                            nomes.push(i.item.value);
+                            $("#interessados").append('<div class="interessado"><i class="material-icons trash">delete</i><span class="del">'+i.item.value+'</span></div>')
+                        } else if (nomes.indexOf(i.item.value) > -1) {
+                            console.log(i.item.value + ' nome já selecionado.');
+                        }
                     }
                 })
             }
+            
         })
+
     }
 
 })
+
+$(document).on("click", ".trash", function() {
+    console.log('clicou');
+})
+
+
+

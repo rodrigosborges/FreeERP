@@ -6,7 +6,7 @@
 
 @section('body')
 
-    <form id="form" action="{{ $data['url'] }}" method="POST" enctype="multipart/form-data">
+    <form id="form-protocolo" action="{{ $data['url'] }}" method="POST" enctype="form-data">
         {{ csrf_field() }}
         @if($data['model'])
             @method('PUT')
@@ -16,14 +16,20 @@
             <div class="col-lg-9">
                 <div class="form-group">
                     <label for="nome" class="control-label">Interessados: <span class="required-symbol">*</span></label>
-                    <div class="input-group">
-                        <div class="interessado" id="interessado"></div>
+                        <div class="input-group">
+                        @foreach(old('interessados', $data['interessados']) as $key => $interessado)
+                            @if($data['model'])
+                                <input type="hidden" value="{{isset($interessado->id) ? $interessado->id : ''}}" name="interessados[{{$key}}][id]">
+                            @endif
+                            <div id="interessados" class="interessados">
+
+                            </div>
+                        @endforeach
                     </div>
                     <br>
                     <div class="input-group">
-                        <input id="pesquisa" class="form-control" type="text" name="pesquisa" />
+                        <input id="pesquisa" class="form-control" type="text" name="pesquisa"/>
                     </div>
-                   
                 </div>
                 <div class="form-group">
                     <label for="nome" class="control-label">Tipo de processo: <span class="required-symbol">*</span></label>
@@ -33,7 +39,7 @@
                                 <i class="material-icons">person</i>
                             </span>
                         </div>
-                        <select required name="tipo_protocolo[id]" class="form-control">
+                        <select required name="protocolo[tipo_protocolo_id]" class="form-control">
                             <option value="">Selecione</option>
                             @foreach($data['tipo_protocolo'] as $item)
                                 <option value="{{ $item->id }}" {{ old('tipo_protocolo.tipo_protocolo_id', $data['model']? $data['model']->tipo_protocolo()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->tipo }} </option>
@@ -43,17 +49,17 @@
                 </div>
                 <div class="form-group">
                     <label for="nome" class="control-label">Assunto: <span class="required-symbol">*</span></label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control" id="assunto" name="assunto" rows="3"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="nome" class="control-label">Nível de Acesso: <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="material-icons">person</i>
+                                <i class="material-icons lock-locked">lock</i>
                             </span>
                         </div>
-                        <select required name="tipo_acesso[id]" class="form-control">
+                        <select required name="protocolo[tipo_acesso_id]" class="form-control">
                             <option value="">Selecione</option>
                             @foreach($data['tipo_acesso'] as $item)
                                 <option value="{{ $item->id }}" {{ old('tipo_acesso.tipo_acesso_id', $data['model']? $data['model']->tipo_acesso()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->tipo }} </option>
@@ -66,10 +72,10 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="material-icons">person</i>
+                                <i class="material-icons">business</i>
                             </span>
                         </div>
-                        <select required name="setor[id]" class="form-control">
+                        <select required name="protocolo[setor_id]" class="form-control">
                             <option value="">Selecione</option>
                             @foreach($data['setor'] as $item)
                                 <option value="{{ $item->id }}" {{ old('setor.setor_id', $data['model']? $data['model']->setor()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
@@ -95,6 +101,14 @@
                     'X-CSRF-TOKEN':"{{ csrf_token() }}"
                 }
             });
-        </script>
+            $(document).ready(function(){
+                $(".sendForm").on('click',function(){
+                    $(".sendForm").prop("disabled",true) 
+                    $("#form-protocolo").submit()  
+                    console.log('success')
+                })
+            });
+           
+    </script>
     <script src="{{Module::asset('Protocolos:js/views/protocolo/form.js')}}"></script>
 @endsection

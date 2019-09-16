@@ -1,9 +1,9 @@
 <div class="table-responsive">
-    <table id="protocolo-table" class="table table-stripped">
+    <table class="table table-stripped">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th class="min" colspan="3">Ações</th>
+                <th>Assunto</th>
+                <th class="min">Ações</th>
                 @if($status == "ativos")
                     <th class="min"></th>
                 @endif
@@ -12,24 +12,17 @@
         <tbody>
             @foreach($protocolos as $protocolo)
                 <tr>
-                    <td>{{$protocolo->created_at}}</td>
+                    <td>{{$protocolo->assunto}}</td>
                     @if($status == "ativos")
-                    <td class="min">         
-                            <a class="btn btn-warning" href='{{ url("funcionario/funcionario/$funcionario->id/edit") }}'>Editar</a>
-                    </td>
-                    <td class="min">
-                        <a class="btn btn-secondary" href='{{ url("funcionario/funcionario/editCargo/$funcionario->id") }}'>Cargo</a>              
-                    </td>
-                    <td class="min">                       
-                        <a class="btn btn-info" href='{{ url("funcionario/funcionario/ficha/$funcionario->id") }}'>Ficha</a>
-                    </td>
+                        <td class="min">                       
+                            <a class="btn btn-success" href=''>Finalizar</a>
+                        </td>
                     @endif
                     <td class="min">
-                        <form action="{{url('funcionario/funcionario', [$funcionario->id])}}" class="input-group" method="POST">
-                            {{method_field('DELETE')}}
-                            {{ csrf_field() }}
-                                <input type="submit" class="btn btn-{{$funcionario->trashed() ? 'success' : 'danger'}}" value="{{$funcionario->trashed() ? 'Restaurar' : 'Deletar'}}"/>
-                        </form>
+                        <a class="btn btn-primary" href=''>Encaminhar</a>
+                    </td>
+                    <td class="min">
+                        <a class="btn btn-dark" href=''>Adicionar comentário</a>
                     </td>
                 </tr>
             @endforeach
