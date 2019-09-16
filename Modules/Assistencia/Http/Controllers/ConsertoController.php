@@ -60,7 +60,7 @@ class ConsertoController extends Controller
        $pecaOS = PecaOs::where('idConserto', $id)->get();
        $itemServico = itemServico::where('idConserto', $id)->get();
 
-       return view('assistencia::paginas.consertos.vizualizarConserto', compact('conserto', 'pecaOS','itemServico'));
+       return view('assistencia::paginas.consertos.visualizarConserto', compact('conserto', 'pecaOS','itemServico'));
     }
     public function imprimir($id) {
       $conserto = ConsertoAssistenciaModel::find($id);

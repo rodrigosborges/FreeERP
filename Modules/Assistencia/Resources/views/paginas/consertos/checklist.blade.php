@@ -5,70 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    
 </head>
 <body>
-<div id="card">
-    <div class="card-body">
-        <div class="header">
-            <div class="center">
-                <h4>Ordem de serviço nº {{$conserto->numeroOrdem}}</h4>
+        <div class="row">Ordem de serviço nº {{$conserto->numeroOrdem}}</div>
+        <hr>
+        <div class="row">
+           Cliente
+        </div>
+        <div class="row">
+            <div class="col-6">
+                Nome: {{$conserto->cliente->nome}}
+            </div>
+            <div class="offset-6 col-6">
+                CPF: {{$conserto->cliente->cpf}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                {{$conserto->cliente->celnumero}}
+            </div>
+            <div class="offset-6 col-6">
+                {{$conserto->cliente->telefonenumero}}
             </div>
         </div>
         <hr>
         <div class="row">
-            <div class="col-lg-6 col-md-12 row text-center">
-                <div class="col-12">
-                    <h5>Cliente</h5>
-                    <hr>
-                </div>
-                <div class="col-6">
-                    {{$conserto->cliente->nome}}
-                </div>
-                <div class="col-6">
-                    {{$conserto->cliente->celnumero}}
-                </div>
-                <div class="col-6">
-                    {{$conserto->cliente->cpf}}
-                </div>
-                <div class="col-6">
-                    {{$conserto->cliente->telefonenumero}}
-                </div>
+           Aparelho
+        </div>
+        <div class="row">
+            <div class="col-6">
+                Nome: {{$conserto->cliente->nome}}
             </div>
-            <div class="col-lg-6 col-md-12 row  text-center">
-                <div class="col-12">
-                    <h5>Aparelho</h5>
-                    <hr>
-                </div>
-                <div class="col-6">
-                    Modelo: {{$conserto->modelo_aparelho}}
-                </div>
-                <div class="col-6">
-                    Serial: {{$conserto->serial_aparelho}}
-                </div>
-                <div class="col-6">
-                    Marca: {{$conserto->marca_aparelho}}
-                </div>
-                <div class="col-6">
-                    IMEI: {{$conserto->imei_aparelho}}
-                </div>
+            <div class="offset-6 col-6">
+                CPF: {{$conserto->cliente->cpf}}
             </div>
         </div>
+        <div class="row">
+            <div class="col-6">
+                {{$conserto->cliente->celnumero}}
+            </div>
+            <div class="offset-6 col-6">
+                {{$conserto->cliente->telefonenumero}}
+            </div>
+        </div>
+        <hr>
         <hr>
         <div class="text-center">
             <h3>Checklist</h3>
         </div>
         <div class="row">
             <div class="col-12">
-                <strong>Estado do aparelho:</strong>
+                <strong>Estado do aparelho:</strong> (  ) Riscado (  ) Quebrado (  ) Arranhado (  ) Trincado (  ) Amassado <br>
             </div>
-            <div class="col-12">
-                (  ) Riscado (  ) Quebrado (  ) Arranhado (  ) Trincado (  ) Amassado <br>
-            </div>
-            <div class="col-12">
+        </div>
+        <div class="row">
+            <div class="col-6">
+            <br>
                 Display danificado? (  )
             </div>
-            <div class="col-12">
+            <div class="offset-6 col-6">
+            <br>
                 Aparelho liga? (  ) ________
             </div>
         </div>
@@ -96,11 +94,20 @@
             <div class="col-6">
                 Reclamação:
             </div>
-            <div class="col-6">
+            <div class="offset-6 col-6">
                 Observações:
             </div>
         </div>
-    </div>
-</div>
+        <div class="row">
+            <div class="col-6">
+                Funcionario:<br><br>
+                ________________________________
+            </div>
+            <div class="offset-6 col-6">
+                Cliente: <br><br>
+                ________________________________
+            </div>
+        </div>
+
 </body>
 </html>
