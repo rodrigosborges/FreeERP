@@ -23,7 +23,10 @@
             <th scope="col">Categorias</th>
             <th scope="col">Tipo</th>
             <th scope="col">Quantidade</th>
-            <th scope='col'>Ações</th>
+            <th scope='col'>Gerenciar Estoque</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Excluir</th>
+            <th/>
         </tr>
     </thead>
     <tbody>
@@ -35,7 +38,10 @@
             <td>{{$item->tipoUnidade->nome}}-({{$item->tipoUnidade->quantidade_itens}} itens)</td>
             <td>{{$item->quantidade}}</td>
             <td>
-                <a class="btn btn-lg btn-warning" href="{{url('estoque/'.$item->id.'/edit')}}">
+                <a href="{{url('/estoque/movimentacao/alterar/' . $item->id)}}"><button class="btn btn-primary btn-sm"> <i class="material-icons">list</i></button></a>
+            </td>
+            <td>
+                <a class="btn btn-sm btn-warning" href="{{url('estoque/'.$item->id.'/edit')}}">
                     <i class="material-icons">border_color</i>
                 </a>
             </td>
@@ -43,7 +49,7 @@
                 <form method="POST" action="{{url('estoque/'.$item->id )}}">
                     @method('delete')
                     @csrf
-                    <button type="submit" class="btn btn-lg btn-danger">
+                    <button type="submit" class="btn btn-sm btn-danger">
 
                         <i class="material-icons">delete</i>
                     </button>
