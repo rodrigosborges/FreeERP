@@ -6,6 +6,9 @@
 
 @section('body')
 <form action="{{ $data['url'] }}" id="form" method="POST" enctype="multipart/form-data">
+@if($data['pagamento'])
+    @method('put')
+@endif
 
     {{ csrf_field() }}
 

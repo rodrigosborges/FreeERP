@@ -59,8 +59,6 @@ class PagamentoController extends Controller
     public function store(Request $request)
     {
 
-
-       
         DB::beginTransaction();
 
         try {
@@ -119,7 +117,7 @@ class PagamentoController extends Controller
         $data = [
             "button" => 'Atualizar',
             'title'         => "Editar pagamentos",
-            'url' => url('funcionario/pagamento/'.$id .'/edit'),
+            'url' => url('funcionario/pagamento/'.$id ),
             'pagamento' => Pagamento::findOrFail($id),
             'funcionarios'=>Funcionario::all(),
         ];
@@ -133,13 +131,48 @@ class PagamentoController extends Controller
      * @param Request $request
      * @param int $id
      * @return Response
-     */
+     *///Autor: Denise Lopes
     public function update(Request $request, $id)
     {
-        //
+
+        DB::beginTransaction();
+        
+        try {
+            $pagamento = Pagamento::findOrFail($id);
+            $funcionario = Funcionario::findOrFail($request->funcionario);
+
+            $salario = floatval($funcionario->cargos->find($request->cargos)->salario);
+            $salario = str_replace(',','.', $salario);
+            $pagamento->valor = $salario;
+            $pagamento->faltas = $request->faltas;
+            $pagamento->horas_extras = $request->horas_extras;
+            $pagamento->adicional_noturno = $request->adicional;
+            $pagamento->tipo_hora_extra = $request->tipo_hora_extra;
+            $inss= $this->calcularInss($salario);
+            if ($request->opcao_pagamento == "2") {
+                $temp = $salario * 0.4;
+                $pagamento->inss = $this->calcularInss($temp);
+                $pagamento->valor *= 0.4;
+            } else
+                $pagamento->inss = $inss;
+
+            $pagamento->emissao = brToEnDate($request->emissao);
+            $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
+            $pagamento->funcionario_id = $funcionario->id;
+            $pagamento =$this->OpcaoPagamentoNome($pagamento);
+            $pagamento = $this->calcularTotal($pagamento, $salario);
+           // dd($pagamento);
+            $pagamento->save();
+         
+            DB::commit();
+            return redirect('/funcionario/pagamento')->with('success', "pagamento atualizado com sucesso");
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('danger', "Erro ao atualizar o pagamento!: cod_erro:" . $e->getMessage());
+        }
     }
-    //Autor: Denise Lopes
-    //método que realiza a busca dos cargos de um determinado funcionario
+    
+    
    
 
     /**
