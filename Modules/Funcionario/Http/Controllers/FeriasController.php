@@ -75,7 +75,7 @@ class FeriasController extends Controller
                 'controle_ferias_id' => $controleFerias->id
             ]);
 
-           return $controleFerias;
+           
            
 			DB::commit();
 			return redirect('funcionario/ferias')->with('success', 'Férias cadastrada com sucesso!');
