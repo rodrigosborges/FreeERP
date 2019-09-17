@@ -15,8 +15,11 @@
     <tr>
       <td> {{ $funcionario->nome }} </td>
       <td>
-        <a href='{{url("funcionario/ferias/controleFerias/$funcionario->id")}}' class="btn btn-primary">Gerar ferias</a>
+        <a href='{{url("funcionario/ferias/controleFerias/$funcionario->id")}}' class="btn btn-success">Agendar ferias</a>
+        <a href='{{url("funcionario/ferias/$funcionario->id/edit")}}' class="btn btn-warning">Editar</a>
+        <a href='{{url("funcionario/ferias/$funcionario->id/show")}}' class="btn btn-secondary">Gerar Aviso</a>
         <a href='{{url("funcionario/ferias/listar/$funcionario->id")}}' class="btn btn-primary">Listar ferias</a>
+        
       </td>
     </tr>
     @endforeach

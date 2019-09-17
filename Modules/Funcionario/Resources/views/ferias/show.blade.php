@@ -95,4 +95,5 @@
             </tr>
         </tbody>
     </table> -->
+    <a href="{{url('funcionario/ferias')}}">Voltar</a>
 @endsection

@@ -119,7 +119,7 @@ class FeriasController extends Controller
             ->select('users.*', 'contacts.phone', 'orders.price')
             ->get();*/
     public function listar($id)
-    {
+    {   
         $data = [
             'title' => 'Lista de Funcionários',
             'ferias' => Ferias::where('funcionario_id','=',$id)->get(),
@@ -133,7 +133,9 @@ class FeriasController extends Controller
      * @return Response
      */
     public function edit($id) {
-        $ferias = Ferias::findOrFail($id);
+        $funcionario = funcionario::findorFail($id);   
+        $ferias = $funcionario->ferias->last();
+        
         return view('funcionario::ferias.editaFerias',compact('ferias'));
     }
 

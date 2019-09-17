@@ -4,7 +4,7 @@
 
 <form action="{{url('funcionario/ferias' .'/'. $ferias->id)}}" method="POST">
  
-    <h4>Agora Vai</h4>
+    <h4>Editar Ferias</h4>
     @method('PUT')  
     {{csrf_field()}}
            
