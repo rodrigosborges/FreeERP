@@ -21,10 +21,11 @@
                             @if($data['model'])
                                 <input type="hidden" value="{{isset($interessado->id) ? $interessado->id : ''}}" name="interessados[{{$key}}][id]">
                             @endif
-                            <div id="interessados" class="interessados">
-
-                            </div>
+                            
                         @endforeach
+                        <div id="interessados" class="interessados">
+
+                        </div>
                     </div>
                     <br>
                     <div class="input-group">

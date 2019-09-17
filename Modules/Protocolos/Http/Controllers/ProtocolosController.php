@@ -59,10 +59,15 @@ class ProtocolosController extends Controller
     public function fetch(Request $request){
 
         $query = $request->get('query'); 
-        $data = DB::table('interessado')->where('nome', 'LIKE', '%'.$query.'%')
-            ->pluck('nome');
-
-        return $data;
+        $data = DB::table('interessado')->where('nome', 'LIKE', '%'.$query.'%')->get();
+        $content = [];
+        foreach($data as $dados){
+            $content[] = [
+                'label' => $dados->nome,
+                'value' => $dados->id
+            ];  
+        }
+        return $content;
     }
 
     /**
