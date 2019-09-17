@@ -39,5 +39,5 @@ $menu = [
 <script>
     var main_url = "{{url('')}}"
 </script>
-@yeld('js')
+@yield('js')
 @endsection
