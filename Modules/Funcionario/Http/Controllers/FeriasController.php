@@ -135,8 +135,12 @@ class FeriasController extends Controller
     public function edit($id) {
         $funcionario = funcionario::findorFail($id);   
         $ferias = $funcionario->ferias->last();
-        
-        return view('funcionario::ferias.editaFerias',compact('ferias'));
+        $data = [
+            'title' => 'Editar Férias',
+            'ferias' => Ferias::where('funcionario_id','=',$id)->get()->last(),
+        ];
+       
+        return view('funcionario::ferias.editaFerias',compact('data'));
     }
 
     /**
