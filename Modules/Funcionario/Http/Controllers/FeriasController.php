@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Funcionario,Cargo,Ferias, ControleFerias, Documento};
 use DB;
+use DateTime;
+use DateInterval;
 
 class FeriasController extends Controller
 {
@@ -19,8 +21,6 @@ class FeriasController extends Controller
         $data = [
             'title' => 'Lista de Funcionários',
             'funcionarios' => Funcionario::all(),
-           
-            
         ];
         return view('funcionario::ferias.index', compact('data'));
     }
@@ -44,23 +44,26 @@ class FeriasController extends Controller
         DB::beginTransaction();
 
 		try{
-            
-            $teste = 30 - $request->dias_ferias;
-            
+           
+            $inicio_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $request['inicio_periodo_aquisitivo']);
+            $fim_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $request['fim_periodo_aquisitivo']);
+            $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $request['limite_periodo_aquisitivo']);
+
             $controleFerias = ControleFerias::Create([
-                'inicio_periodo_aquisitivo' => date('Y-m-d', strtotime($request['inicio_periodo_aquisitivo'])),
-                'fim_periodo_aquisitivo' => date('Y-m-d', strtotime($request['fim_periodo_aquisitivo'])),
+                'inicio_periodo_aquisitivo' => $inicio_periodo_aquisitivo->format('Y-m-d'),
+                'fim_periodo_aquisitivo' => $fim_periodo_aquisitivo->format('Y-m-d'),
+                'limite_periodo_aquisitivo' => $limite_periodo_aquisitivo->format('Y-m-d'),
                 'saldo_total' => 0,
                 'saldo_periodo' => 0,
-                'marcar_ferias' => $teste,
                 'funcionario_id' => $request['funcionario_id']
             ]);
-
+  
             if($request->pagamento_parcela13 == "on"){
                 $pagamento13 = true;
             }else{
                 $pagamento13 = false;
             }
+           
 
             $ferias = Ferias::Create([
                 'data_inicio' => date('Y-m-d', strtotime($request['data_inicio'])),
@@ -75,8 +78,6 @@ class FeriasController extends Controller
                 'controle_ferias_id' => $controleFerias->id
             ]);
 
-           
-           
 			DB::commit();
 			return redirect('funcionario/ferias')->with('success', 'Férias cadastrada com sucesso!');
 		} catch(Exception $e){
@@ -166,7 +167,7 @@ class FeriasController extends Controller
                 'observacao' => $request['observacao'],
                 'funcionario_id' => $request['funcionario_id']
             ]);
-        
+             
             DB::commit();
            
             return redirect('funcionario/ferias')->with('success', 'Férias atualizada com sucesso');
