@@ -72,7 +72,7 @@ class MovimentacaoEstoqueController extends Controller
 
     public function alterarEstoque($id){
         $e = Estoque::findOrFail($id);
-        $movimentacao = MovimentacaoEstoque::where('estoque_id', $e->id)->orderBy('created_at', 'DESC')->get();
+        $movimentacao = MovimentacaoEstoque::where('estoque_id', $e->id)->orderBy('created_at', 'DESC')->paginate(10);
 
         return view('estoque::estoque.movimentacao.visualizar', compact('e', 'movimentacao'));
 

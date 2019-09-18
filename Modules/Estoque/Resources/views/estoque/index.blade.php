@@ -19,8 +19,7 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nome</th>
-            
-            <th scope="col">Categorias</th>
+            <th scope="col">Categoria</th>
             <th scope="col">Tipo</th>
             <th scope="col">Quantidade</th>
             <th scope='col'>Gerenciar Estoque</th>
@@ -61,13 +60,18 @@
         <tr>
             <td colspan="100%" class="text-center">
                 <p class="text-cetner">
+                    Página {{$itens->currentPage()}} de {{$itens->lastPage()}}
+                    -Exibido {{$itens->perPage()}} registro(s) por página de {{$itens->total()}}
                 </p>
             </td>
         </tr>
+        @if($itens->lastPage() > 1)
         <tr>
             <td colspan="100%" class="text-center">
+                {{ $itens->links() }}
             </td>
         </tr>
+        @endif
     </tfoot>
 </table>
 @else

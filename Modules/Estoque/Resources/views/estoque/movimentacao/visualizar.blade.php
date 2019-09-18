@@ -64,13 +64,18 @@
                                 <tr>
                                     <td colspan="100%" class="text-center">
                                         <p class="text-cetner">
+                                            Página {{$movimentacao->currentPage()}} de {{$movimentacao->lastPage()}}
+                                            -Exibido {{$movimentacao->perPage()}} registro(s) por página de {{$movimentacao->total()}}
                                         </p>
                                     </td>
                                 </tr>
+                                @if($movimentacao->lastPage() > 1)
                                 <tr>
                                     <td colspan="100%" class="text-center">
+                                        {{ $movimentacao->links() }}
                                     </td>
                                 </tr>
+                                @endif
                             </tfoot>
                         </table>
                     </div>

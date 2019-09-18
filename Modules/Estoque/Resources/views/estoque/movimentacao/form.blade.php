@@ -61,4 +61,4 @@
         v = v.replace(/(\d)(\d{3}),/g, "$1$2.");
         i.value = v;
     }
-    </script>
+</script>
