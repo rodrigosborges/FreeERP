@@ -233,7 +233,12 @@
                             @if($data['model'])
                                 <input type="hidden"  name="documentos[uf_ctps][id]" value="{{$data['model']->uf_ctps()->id}}">
                             @endif
-                            <input required type="text"class="form-control rounded-right" placeholder="UF CTPS" name="documentos[uf_ctps][numero]" id="uf_ctps" class="form-control uf_ctps" value="{{ old('documentos.uf_ctps.numero', $data['model'] ? $data['model']->uf_ctps()->numero : '') }}">
+                            <select name="documentos[uf_ctps][numero]" required data-cidade="{{old('endereco.cidade_id', $data['model'] ? $data['model']->endereco()->cidade_id : '')}}" class="form-control estados">
+                                <option value="">Selecione</option>
+                                @foreach($data['estados'] as $estado))
+                                    <option data-uf="{{$estado->uf}}" value="{{ $estado->nome }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco()->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                                @endforeach
+                            </select>
                             <input required type="hidden" name="documentos[uf_ctps][tipo_documento_id]" value="9">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.uf_ctps.numero') }}</span>
@@ -700,7 +705,7 @@
                                         <i class="material-icons">date_range</i>
                                     </span>
                                 </div>
-                                <input required type="text" placeholder="00/00/0000" name="cursos[{{$key}}][data_realizacao]" id="data_realizacao_cur_{{$key}}" class="form-control data cursos" value="{{ old('cursos.$key.data_realizacao', isset($curso->data_realizacao) ? $curso->data_realizacao : '') }}">
+                                <input required type="date" placeholder="00/00/0000" name="cursos[{{$key}}][data_realizacao]" id="data_realizacao_cur_{{$key}}" class="form-control data cursos" value="{{ old('cursos.$key.data_realizacao', isset($curso->data_realizacao) ? $curso->data_realizacao : '') }}">
                             </div>
                             <span class="errors"> {{ $errors->first('cursos.'.$key.'.data_realizacao') }} </span>
                         </div>
@@ -715,7 +720,7 @@
                                             <i class="material-icons">business_center</i>
                                         </span>
                                     </div>
-                                    <input required type="text" placeholder="" name="cursos[{{$key}}][validade_curso]"  class="form-control cursos" id="validade_curso_cur_{{$key}}" value="{{ old('cursos.$key.validade_curso', isset($curso->validade_curso) ? $curso->validade_curso : '') }}">
+                                    <input required type="date" placeholder="" name="cursos[{{$key}}][validade_curso]"  class="form-control cursos" id="validade_curso_cur_{{$key}}" value="{{ old('cursos.$key.validade_curso', isset($curso->validade_curso) ? $curso->validade_curso : '') }}">
                                 </div>
                             <span class="errors"> {{ $errors->first('cursos.'.$key.'.validade_curso') }}</span>
                         </div>
