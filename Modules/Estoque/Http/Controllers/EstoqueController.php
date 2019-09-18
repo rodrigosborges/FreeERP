@@ -69,7 +69,6 @@ class EstoqueController extends Controller
         DB::beginTransaction();
         try {
             $estoque = Estoque::create($request->all());
-
             $produto = Produto::findOrFail($request->produto_id);
             $estoque->produtos()->attach($produto);
 
@@ -134,11 +133,13 @@ class EstoqueController extends Controller
         try {
             $estoque = Estoque::findOrFail($id);
             $observacao = $this->verificaAlteracoes($request, $estoque);
+            $qtdInicial = $estoque->quantidade;
+            $qtdMovimentacao =  $request['quantidade'] - $qtdInicial;
             $estoque->update($request->all());
             MovimentacaoEstoque::create(
                 [
                     'estoque_id' => $estoque->id,
-                    'quantidade' => $estoque->quantidade,
+                    'quantidade' =>  $qtdMovimentacao,
                     'preco_custo' => $request['preco_custo'],
                     'observacao' => $observacao
                 ]
