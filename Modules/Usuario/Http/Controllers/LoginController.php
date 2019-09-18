@@ -15,9 +15,17 @@ class LoginController extends Controller
      *
      * @return Response
      */
+
+
+
     public function index(Request $request)
     {   
+        if(Auth::check()){
+            return redirect()->intended('/usuario')->with('warning','Usuário já logado!');
+        }
         return view('usuario::index');
+        
+
     }
     
     public function authenticate(Request $request)
@@ -31,7 +39,7 @@ class LoginController extends Controller
             // $results = DB::select('select * from cliente where id = ?', [1]);
         }else{
             // return back()->withErrors(['apelido' => ['Usuário inválido ou inexistente'],'senha' => ['Senha incorreta']]);
-            return back()->with('error', 'Falha no login!');
+            return back()->with('error', 'Credenciais não conferem!');
         }
     }
     public function logoutUsuario(Request $request)

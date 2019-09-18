@@ -90,9 +90,15 @@
                         <input required class="form-control" type="password" name="repeat_password">
                     </div>
                     @endif
-                
-                        <button type="submit" class="btn btn-success">Cadastrar</button>
-                
+                    <div class="d-flex justify-content-between mb-3">
+                        <button type="submit" class="btn btn-success d-flex align-items-center">
+                            <i class="material-icons mr-2">save</i>Salvar
+                        </button>
+                </form>
+                        <a class="btn btn-secondary d-flex align-items-center" href="/usuario">
+                            <i class="material-icons mr-2">view_list</i> Usuários Cadastrados
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>

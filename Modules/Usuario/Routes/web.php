@@ -11,8 +11,8 @@
 |
 */
 Route::get('/', 'LoginController@index')->name('login');
-Route::post('/logar', 'LoginController@authenticate');
-Route::get('/logout', 'LoginController@logoutUsuario');
+Route::post('logar', 'LoginController@authenticate');
+Route::get('logout', 'LoginController@logoutUsuario');
 
 Route::prefix('usuario')->group(function() {
     //Trocar Senha
@@ -29,7 +29,7 @@ Route::prefix('usuario')->group(function() {
     // Deletar
     Route::delete('/{id}', 'UsuarioController@destroy')->middleware('auth');
     // Restaurar
-    Route::put('/restore/{id}', 'UsuarioController@restore')->middleware('auth');
+    Route::put('{id}/restore/', 'UsuarioController@restore')->middleware('auth');
 
     Route::get('/check-unique/{id?}' ,'UsuarioController@isUnique')->middleware('auth');
 });

@@ -125,9 +125,9 @@ class UsuarioController extends Controller
                 if($usuario->avatar != 'default.png' && $avatar){
                     $dirPath = public_path()."/storage/img/avatars/";
                     File::delete($dirPath.$usuario->avatar);
-                    $usuario->avatar = $nameFile;
-                    $usuario->save();
                 }
+                $usuario->avatar = $nameFile;
+                $usuario->save();
             }
             
             DB::commit();

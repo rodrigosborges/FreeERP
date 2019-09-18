@@ -22,7 +22,7 @@
                     <p class="ml-1">
                         <i>
                             Exibindo resultados para: <b>{{ $busca }}</b>
-                            <a class="ml-4" href="{{ url('Usuário') }}">Limpar Busca</a>
+                            <a class="ml-4" href="{{ url('usuario') }}">Limpar Busca</a>
                         </i>
                     </p>
                 @endif
@@ -89,16 +89,23 @@
                             <table class="table table-striped table-borderless bg-white" style="border-style: solid; border-color: #dee2e6; border-width: 0 1px 1px 1px;">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Nome</th>
-                                        <th class="text-center" scope="col">Icone</th>
+                                    
+                                    <th scope="col">Apelido</th>
+                                        <th scope="col">Avatar</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Papel</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                
+                                    @if(isset($usuariosInativos))
                                     @foreach($usuariosInativos as $usuario)
                                     <tr id="usuariosInativos">
-                                        <td>{{ $usuario->nome }}</td>
-                                        <td class="text-center"><i class="material-icons">{{ $usuario->icone }}</i></td>
+                                    <td>{{ $usuario->apelido }}</td>
+                                        <td>{{ $usuario->avatar }}</td>
+                                        <td>{{ $usuario->email }}</td>
+                                        <td>{{ $usuario->papel->nome }}</td>
                                         <td>
                                             <div class="d-flex justify-content-end">
                                                 <form method="POST" action="{{url('usuario/'.$usuario->id.'/restore')}}">
@@ -112,6 +119,7 @@
                                         </td>
                                     </tr>
                                     @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

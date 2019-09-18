@@ -18,10 +18,12 @@
 
                     <div class="form-group">
                         <label for="apelido">Apelido</label>
-                        <input id="apelido" class="form-control" type="text" name="apelido">
+                        <input required id="apelido" class="form-control" type="text" name="apelido">
+                        {{$errors->first('apelido')}}
                         <br>
                         <label for="password">Senha</label>
-                        <input id="password" class="form-control" type="password" name="password">
+                        <input required id="password" class="form-control" type="password" name="password">
+                        {{$errors->first('password')}}
                     </div>
                     <br>
                     <button type="submit" class="btn btn-success">Entrar</button>
@@ -31,4 +33,10 @@
         </div>
     </div>
 </div>
-@stop
+
+@section('js')
+<script type="text/javascript" src="{{asset('js/jquery.validate.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="{{Module::asset('usuario:js/login/validacao-form.js')}}"></script>
+@endsection
+@endsection
