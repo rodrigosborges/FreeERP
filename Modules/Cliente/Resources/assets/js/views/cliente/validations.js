@@ -9,9 +9,6 @@ $('#form').validate({
         "email[email]": {
             maxlength: 50,
         },
-        "endereco[cep]": {
-            digits: true
-        },
         "endereco[logradouro]": {
             maxlength: 50
         },
