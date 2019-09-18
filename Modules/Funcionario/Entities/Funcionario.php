@@ -40,4 +40,8 @@ class Funcionario extends Model {
     public function ferias(){
         return $this->hasMany('Modules\Funcionario\Entities\Ferias');
     }
+
+    public function controle_ferias(){
+        return $this->hasMany('Modules\Funcionario\Entities\ControleFerias');
+    }
 }

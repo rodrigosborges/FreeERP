@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Funcionario,Cargo,Ferias};
+use Modules\Funcionario\Entities\{Funcionario,Cargo,Ferias, ControleFerias};
 use DB;
 use DateTime;
 use DateInterval;
@@ -113,6 +113,22 @@ class ControleFeriasController extends Controller
         $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
         $limite_periodo_aquisitivo->add(new DateInterval('P330D')); // Essa linha adiciona 330 dias(11 meses)
 
+        //ControleFerias::where('funcionario_id', '=', $id)->get()->last()->inicio_periodo_aquisitivo;
+
+        /*if(ControleFerias::where($id, '=', 'funcionario_id')){
+            $dias = $funcionario->ferias()->get()->last()->dias_ferias;
+            $marcar_ferias = 30 - $dias;
+        } */
+
+        if(DB::table('controle_ferias')->where('funcionario_id', $id)){
+            $dias = $funcionario->ferias()->get()->last()->dias_ferias;
+            $marcar_ferias = 30 - $dias;
+        } 
+
+        
+
+        return $marcar_ferias;
+
         /*O formato da variavel limite_periodo_aquisito é passado dentro do array pois ele é considerado um objeto, para que ele seja uma string,
         o formato que será apresentado na view deve ser passado dentro do array*/ 
         $data = [
@@ -123,9 +139,9 @@ class ControleFeriasController extends Controller
             'inicio_periodo_aquisitivo' => $inicio_periodo_aquisitivo,
             'fim_periodo_aquisitivo'    => $fim_periodo_aquisitivo,
             'limite_periodo_aquisitivo' => $limite_periodo_aquisitivo->format('d/m/Y'),
-            'marcar_ferias' => 30
+            'marcar_ferias'             => $marcar_ferias
         ];
-        
+    
         return view('funcionario::ferias.formulario', compact('data'));
     }
 }

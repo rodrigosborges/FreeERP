@@ -64,7 +64,6 @@ class FeriasController extends Controller
                 $pagamento13 = false;
             }
            
-
             $ferias = Ferias::Create([
                 'data_inicio' => date('Y-m-d', strtotime($request['data_inicio'])),
                 'data_fim' => date('Y-m-d', strtotime($request['data_fim'])),
@@ -77,7 +76,8 @@ class FeriasController extends Controller
                 'funcionario_id' => $request['funcionario_id'],
                 'controle_ferias_id' => $controleFerias->id
             ]);
-
+            $marcar_ferias = $request->dias_ferias - $request['marcar_ferias'];
+              
 			DB::commit();
 			return redirect('funcionario/ferias')->with('success', 'Férias cadastrada com sucesso!');
 		} catch(Exception $e){
@@ -108,17 +108,10 @@ class FeriasController extends Controller
         $serieCarteiraTrabalho =  DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', '=', 'funcionario.id')
                                  ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
                                  ->where('documento.tipo_documento_id', '=', '8')->get()->last()->numero;
-                    
-      
+                
         return view('funcionario::ferias.show', compact('ferias', 'funcionario','cargo', 'inicio_periodo_aquisitivo', 'fim_periodo_aquisitivo', 'carteiraTrabalho', 'serieCarteiraTrabalho'));
     }
 
-
-    /*DB::table('users')
-            ->join('contacts', 'users.id', '=', 'contacts.user_id')
-            ->join('orders', 'users.id', '=', 'orders.user_id')
-            ->select('users.*', 'contacts.phone', 'orders.price')
-            ->get();*/
     public function listar($id)
     {   
         $data = [
