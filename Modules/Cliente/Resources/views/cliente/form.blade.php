@@ -1,38 +1,24 @@
 @extends('cliente::template') @section('title','Cadastro de Cliente') @section('body')
 
 <div class="container">
-    
+    <div class="container">
     <form id="form" method="POST" action="{{ url('cliente/cliente') }}">
-            <div class="row text-center">
+            <div class='row'>
                 <div class="col my-3">
                     <h5>Dados Cadastrais</h5>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="tipo_pessoa" class="">Pessoa</label>
-                    <div  class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="material-icons">person</i></span>
-                            </div>
-                            <select class="custom-select" name='tipo_pessoa' id="tipo_pessoa">
-                            <option value="">Selecione</option>
-                            @foreach($tipo_cliente as $tipo)
-                            <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
+                    <select class="custom-select" name='tipo_pessoa' id="tipo_pessoa">
+                        <option value="">Selecione</option>
+                        @foreach($tipo_cliente as $tipo)
+                        <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
 
-                            @endforeach
-                        </select>
-                    </div>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="form-group col-md-9">
-                        <label for="documento.documento">Selecione o tipo de Pessoa</label>
-                        <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="material-icons">description</i></span>
-                                </div>
-                            <input type="text" id="documento.documento" class="form-control" name="documento[documento]" disabled>
-                        </div>
-                    </div>
                 <div class="form-group col-md">
                     <label for="nome" class="">Nome</label>
                     <input type="text" class="form-control required" name="cliente[nome]" id="nome">
@@ -45,11 +31,10 @@
                     <label for="email" class="">E-mail</label>
                     <input type="email" name="email[email]" class="form-control" id="email">
                 </div>
-                
             </div>
-            <div class='row text-center'>
+            <div class='row'>
                 <div class="col my-3">
-                    <h5>Contato</h5>
+                    <h6>Contato</h6>
                 </div>
             </div>
             <div id="telefones">
@@ -73,24 +58,36 @@
             </div>
             <button type="button" id="adicionar_telefone" class="btn btn-primary">Adicionar</button>
             <button type="button" id="excluir_telefone" class="btn btn-primary">Excluir</button>
-        
-        
-            <div class="row text-center">
-                <div class="col my-3 ">
+        </div>
+        <div class="container">
+            <div class="row my-3">
+                <div class="col my-3">
+                    <h5>Documentação</h5>
+                </div>
+            </div>
+            <div class="row my-3 documento-div">
+                <div class="form-group col">
+                    <label for="numero_documento" class="">Selecione o tipo de Pessoa</label>
+                    <input type="text" class="form-control" name="documento[documento]" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col my-3">
                     <h5>Endereço</h5>
-                    
                 </div>
             </div>
             <div class="row my-3">
-                <div class="form-group col-lg-2">
+                <div class="form-group col-3">
                     <label for="cep" class="">CEP</label>
                     <input type="text" class="form-control" name="endereco[cep]" id="cep">
                 </div>
-                <div class="form-group col-lg-8">
+                <div class="form-group col-7">
                     <label for="logradouro" class="">Logradouro</label>
                     <input type="text" class="form-control" name="endereco[logradouro]">
                 </div>
-                <div class="form-group col-lg-2">
+                <div class="form-group col-2">
                     <label for="numero" class=" text-left">Número</label>
                     <input type="text" class="form-control" name="endereco[numero]">
                 </div>
@@ -122,7 +119,7 @@
                 </div>
             </div>
             </h1> <button type="submit" class="btn btn-success sendForm">Enviar</button>
-        
+        </div>
     </form>
 
 </div>
@@ -213,32 +210,22 @@
 
     })
     $(document).on('change', '#tipo_pessoa', function() {
-        
-
-       
-        $("[name='documento[documento]']").rules('remove'); 
         var documento = $("[name='documento[documento]']")
 
         if ($('#tipo_pessoa').val() == 2) {
             documento.prop("disabled", false);
-            $("[name='cliente[nome]']").parent().find('label').text("Razão social")
-            $("[name='documento[documento]']").rules('add', {
-                cnpj: true
-            }); 
+            $("[name='cliente[nome]']").parent().find('label').text("Razão social:")
 
-            documento.parent().parent().find('label').text("CNPJ")
+
+            documento.parent().find('label').text("CNPJ:")
             documento.attr("placeholder", "Ex: 24.953.166/0001-90")
             documento.mask('99.999.999/9999-99')
 
             $("#div_nome_fantasia").removeClass("d-none");
         } else if ($('#tipo_pessoa').val() == 1){
-            
-            $("[name='documento[documento]']").rules('add', {
-                cpf: true
-            }); 
             documento.prop("disabled", false);
-            $("[name='cliente[nome]']").parent().find('label').text("Nome") 
-            documento.parent().parent().find('label').text("CPF")
+            $("[name='cliente[nome]']").parent().find('label').text("Nome:")
+            documento.parent().find('label').text("CPF:")
             documento.attr("placeholder", "Ex: 451.658.200-50")
             documento.mask('999.999.999-99')
 
