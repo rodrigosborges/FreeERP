@@ -66,15 +66,6 @@ class EstoqueController extends Controller
      */
     public function store(Request $request)
     {
-        $itens = DB::table('estoque')->select('tipo_unidade_id')
-            ->join('estoque_has_produto', function ($join) use ($request) {
-                $join->where('produto_id', $request->produto_id);
-            })->get();
-        foreach ($itens as $item) {
-            $data[] = $item->tipo_unidade_id;
-        }
-
-        $unidadesDisponiveis = TipoUnidade::all()->except($data);
 
         DB::beginTransaction();
         try {
@@ -116,7 +107,18 @@ class EstoqueController extends Controller
      */
     public function edit($id)
     {
+
         $estoque = Estoque::findOrFail($id);
+        $idProduto = $estoque->produtos->last()->id;
+        $data2 = array();
+        $itens = DB::table('estoque')->select('tipo_unidade_id')
+            ->join('estoque_has_produto', function ($join) use ($idProduto) {
+                $join->where('produto_id', $idProduto);
+            })->get();
+        foreach ($itens as $item)
+            if ($item->tipo_unidade_id != $estoque->tipo_unidade_id)
+                $data2[] = $item->tipo_unidade_id;
+
         $data = [
             'button' => 'atualizar',
             'url' => 'estoque/' . $id,
@@ -124,7 +126,7 @@ class EstoqueController extends Controller
             'estoque' => $estoque,
             'produtos' => Produto::all(),
             'produto' => $estoque->produtos->last(),
-            'tipoUnidade' => TipoUnidade::all(),
+            'tipoUnidade' => TipoUnidade::all()->except($data2),
 
         ];
         return view('estoque::estoque.form', compact('data'));
@@ -167,10 +169,8 @@ class EstoqueController extends Controller
             ->join('estoque_has_produto', function ($join) use ($request) {
                 $join->where('produto_id', $request->id);
             })->get();
-        foreach ($itens as $item) {
+        foreach ($itens as $item)
             $data[] = $item->tipo_unidade_id;
-        }
-
         $unidadesDisponiveis = TipoUnidade::all()->except($data);
         return json_encode($unidadesDisponiveis);
     }
