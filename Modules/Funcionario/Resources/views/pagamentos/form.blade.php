@@ -5,7 +5,7 @@
 @endsection
 
 @section('body')
-<form action="{{ $data['url'] }}" id="form" method="POST" enctype="multipart/form-data">
+<form action="{{url('funcionario/pagamento')}}" id="form" method="POST" enctype="multipart/form-data">
 @if($data['pagamento'])
     @method('put')
 @endif
@@ -22,8 +22,7 @@
             </div>
             <!--Select Funcionario -->
 
-            <select class="custom-select funcionario" id="funcionario" name="funcionario">
-                <option selected value="-1">Selecione um Funcionário</option>
+            <select class="custom-select funcionario" id="funcionario" $data-salario="{{$data['cargo']->salario}}" name="funcionario">
                 @foreach($data['funcionarios'] as $funcionario)
                 <option value="{{ $funcionario->id }}" {{($data['pagamento']) && $data['pagamento']->funcionario->id == $funcionario->id?'selected':''}}>{{ $funcionario->nome }}</option>
                 @endforeach
@@ -51,8 +50,8 @@
                     </span>
                 </div>
                 <!--Select Cargo -->
-                <select class="custom-select cargos" id="cargos" name="cargos">
-
+                <select class="custom-select cargos" id="cargos" data-salario="{{$data['cargo']->salario}}" name="cargos">
+                    <option value="{{$data['cargo']->id}}">{{$data['cargo']->nome}}</option>
                 </select>
                 <!--FIM Select Cargo -->
             </div>
@@ -241,10 +240,12 @@
     var falta
     var temporaria
     var adicional
-
+    
     //Função desabilitar: inputs 
 
     $(document).ready(function(e) {
+        var dados = $('.salario').dataset.salario.val();
+        alert(dados);
         if ($('.funcionario').val() != -1) {
             desabilitar(false)
             buscaFuncionario()
@@ -381,8 +382,8 @@
         }
     }
 
-    function calculaInss(data) {
-        var salario;
+    function calculaInss() {
+        //var salario = $('.cargo').("data-id").val();
 
         if (data != null && data != "") {
             salario = data.salario
@@ -416,36 +417,7 @@
 
     }
     //select de salario conforme id do cargo
-    function buscaSalario() {
-        $.ajax({
-            url: main_url + "/buscasalario",
-            datatype: 'json',
-            type: 'post',
-            data: {
-                '_token': $('input[name=_token]').val(),
-                'id': $('.cargos').val()
-            }
-            //data é igual a salário
-        }).done(function(data) {
-            //adiantamento de salario
-            $('.emissao').attr('disabled', false)
-            if ($('.opcao-pagamento').val() == 2) {
-                var valor = parseFloat(data.salario) * 0.4;
-                data.salario = (parseFloat(data.salario) * 0.4)*1000;
-                calculaInss(data);
-                console.log("Adiantamento:" + valor)
-            } else{
-                data.salario = parseFloat(data.salario)*1000;
-                calculaInss(data);
-                console.log("Tipo Salário - Salário:"+data.salario);
-                selectedCargo = data;
-            }
-
-
-        }).fail(function() {
-
-        })
-    }
+   
     //https://trabalhista.blog/2015/01/30/dsr-horista-com-falta-nao-justificada-no-mes/
     /*  Somam-se as horas normais trabalhadas no mês;
         Divide-se o resultado pelo número de dias úteis;
@@ -453,33 +425,7 @@
         Multiplica-se pelo valor da hora normal.*/
 
 
-    function buscaFuncionario() {
-        $.ajax({
-            url: main_url + "/buscacargos",
-            datatype: 'json',
-            type: 'post',
-            data: {
-                '_token': $('input[name=_token]').val(),
-                'id': $('.funcionario').val()
-            }
-        }).done(function(data) {
-            //após capturar os cargos ele faz um foreach nos cargos e adiciona em uma string 
-            // que posteriormente é enviada para o select de cargos
-            cargos = $.parseJSON(data);
-            selectedCargo =cargos
-            $('.cargos').attr('disabled', false)
-            
-            
-            string = '<option selected  value="-1">Selecione </option>'
-            string += '<option   value="' + cargos.id + '">' + cargos.nome + "</option>"
-
-            $('.cargos').html(string);
-            var salario = cargos.salario
-            calculaInss(salario)
-            $('.valor').val()
-        }).fail(function() {})
-
-    }
+  
     //desabilita e habilita inputs
     function desabilitar(opcao) {
 
