@@ -10,20 +10,28 @@
         
             <ul class="nav nav-tabs justify-content-center">
                 <li class="nav-item">
-                    <a href="{{url('/estoque/produto/categoria')}}" class="nav-link active" >
+                    <p class="nav-link active" >
                         Categorias Ativas
-                    </a>
+                    </p>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="{{url('/estoque/produto/categoria/inativos')}}" class="nav-link active" >
                         Categorias Inativas
                     </a>
-                </li>
+                </li> -->
              
             </ul>
             <div class="tab-content row justify-content-center">
                 <div class="tab-pane active col-sm-10" role="tabpanel1" id="ativos">
                 @if($flag ==0)
+                <div class="col-12 text-right">
+                        <a class="btn btn-success btn-sm mt-3 mb-3" href="{{url('/estoque/produto/categoria/create')}}">
+                                    <i class="material-icons" style="vertical-align:middle;">note_add</i>  Adicionar
+                        </a>
+                        <a class="btn btn-danger btn-sm mt-3 mb-3" href="{{url('/estoque/produto/categoria/inativos')}}">
+                                    <i class="material-icons" style="vertical-align:middle;">delete</i>  Inativos
+                        </a>
+                        </div>
                     <table class="table text-center table-striped ">
                         <thead class="card-header">
                             <tr>
@@ -57,11 +65,7 @@
                                
                             	
                         </tbody>
-                        <div class="col-12 text-right">
-                        <a class="btn btn-success btn-sm mt-3 mb-3" href="{{url('/estoque/produto/categoria/create')}}">
-                                    <i class="material-icons" style="vertical-align:middle;">note_add</i>  Adicionar
-                                </a>
-                        </div>
+                        
                         <tfoot>
                             <tr>
                                 <td colspan="100%" class="text-center">
@@ -81,6 +85,11 @@
                         </tfoot>
                     </table>
                     @else
+                    <div class="col-12 text-right">
+                     <a class="btn btn-info btn-sm mt-3 mb-3" href="{{url('/estoque/produto/categoria')}}">
+                                    <i class="material-icons" style="vertical-align:middle;">keyboard_backspace</i>  Voltar
+                        </a>
+                        </div>
                     <table class="table text-center  table-striped mt-5">
                             <thead class="card-header">
                                
