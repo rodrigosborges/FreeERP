@@ -466,7 +466,9 @@ class FuncionarioController extends Controller{
     }
 
     public function ficha($id){
+        
         $funcionario = Funcionario::findOrFail($id);
+
         return view('funcionario::funcionario.ficha', compact('funcionario'));
     }
 
@@ -491,7 +493,7 @@ class FuncionarioController extends Controller{
 
         return view('funcionario::funcionario.cargo', compact('data'));
     }
-
+        
     public function updateCargo($id, Request $request){
         DB::beginTransaction();
 		try{
@@ -517,11 +519,20 @@ class FuncionarioController extends Controller{
 		}
     }
 
+
+
     public function downloadComprovante($id){
         $documento = Documento::findOrFail($id);
         if($documento->comprovante){
             return Storage::download('funcionario/documentos/'.$documento->comprovante);
         }
     }
+    public function search($valor) {
+
+		$cargos = DB::table('cargo')->select('id', 'nome')->where('nome', 'like', '%'.$valor.'%')->where('cargo.deleted_at', null)->limit(10)->get();
+
+		return $cargos;
+
+	}
 
 }
