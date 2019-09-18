@@ -23,9 +23,9 @@ class PagamentoController extends Controller
             'funcionarios' => Funcionario::all(),
         ];
 
-        $pagamentos = Pagamento::paginate(5);
+        //$pagamentos = Pagamento::paginate(5);
 
-        return view('funcionario::pagamentos.index', compact('data','pagamentos'));
+        return view('funcionario::pagamentos.index', compact('data'));
     }
 
     /**
@@ -49,6 +49,34 @@ class PagamentoController extends Controller
         return view('funcionario::pagamentos.form', compact('data'));
 
     
+    }
+
+    public function novoPagamento($id){
+        $funcionario = Funcionario::findOrFail($id);
+        $data = [
+            "url"   => url('funcionario/pagamento'),
+            "button" => 'Salvar',
+            "model" => null,
+            "title" => "Cadastrar Pagamento",
+            'pagamento'=>null,
+            'funcionarios' =>Funcionario::findOrFail($id)->get(),
+            'cargo'=> $funcionario->cargos->last()
+        ];
+        
+
+        return view('funcionario::pagamentos.form', compact('data','funcionario'));
+    }
+
+
+    public function listar($id)
+    {   
+        
+        $data = [
+            'title' => 'Lista de Funcionários',
+            'pagamento' => Pagamento::where('funcionario_id','=',$id)->get(),
+        ];
+       
+        return view('funcionario::pagamento.listar', compact('data'));
     }
 
     /**

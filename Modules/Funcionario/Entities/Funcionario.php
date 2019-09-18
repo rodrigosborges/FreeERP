@@ -15,7 +15,7 @@ class Funcionario extends Model {
         return $this->belongsTo('App\Entities\EstadoCivil');
     }
     public function email(){
-        return $this->belongTo('App\Entities\Email');
+        return $this->belongsTo('App\Entities\Email');
     }
     public function endereco(){
         return $this->belongsTo('App\Entities\Endereco');
