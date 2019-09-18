@@ -44,7 +44,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
                         </div>
-                        <select name="produtos[][produto_id]" id="" class="form-control">
+                        <select name="produtos[0][produto_id] produto_id" id="" class="form-control">
                             <option value="" selected>Selecione o produto</option>
                             @foreach($produtos as $produto)           
                                 <option value="{{$produto->id}}">{{$produto->nome}}</option>
@@ -58,7 +58,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="material-icons">add_shopping_cart</i></span>
                         </div>
-                        <input type="text" class="form-control" name="produtos[][quantidade]" placeholder="Quantidade">
+                        <input type="text" class="form-control produto_quantidade" name="produtos[0][quantidade]" placeholder="Quantidade">
                     </div>                 
                 </div>
                 <div class="col-3 form-group">
@@ -66,7 +66,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="material-icons">trending_down</i></span>
                         </div>
-                        <input type="text" class="form-control" name="produtos[][desconto]" placeholder="Desconto">
+                        <input type="text" class="form-control produto_desconto" name="produtos[0][desconto]" placeholder="Desconto">
                     </div>  
                 </div>
                 <div class="col-1 d-none">
@@ -88,16 +88,24 @@ Cadastro Nova Compra - {{ $cliente->nome }}
     
 
 
-@section('js')
+@section('script')
 <script>
+   
      $(document).on('click', '#adicionar-produto', function(){
             $('.excluir-produto').parent().removeClass('d-none');
-            var pedido = $(".produto").first().clone()
-            pedido.find('select, input').val("")
+            var pedido = $(".produto").last().clone();
+            
+            var inputs = pedido.find('select, input');
+            inputs.val("");
+            inputs.map((i, input)=> {
+                var match = $(input).attr('name').match(/\[(\d+)]/g)[0]
+                var contador = parseInt(match.replace('[','').replace(']',''))+1
+                var newName = $(input).attr('name').replace(match, `[${contador}]`)
+                $(input).attr('name', newName)
+            })
+
             pedido.appendTo($(".produtos"))
         });
-
- 
 
         $(document).on('click', '.excluir-produto',function(){
             if($('.produto').length == 2){
