@@ -37,20 +37,20 @@
             <td>{{$item->tipoUnidade->nome}}-({{$item->tipoUnidade->quantidade_itens}} itens)</td>
             <td>{{$item->quantidade}}</td>
             <td>
-                <a href="{{url('/estoque/movimentacao/alterar/' . $item->id)}}"><button class="btn btn-primary btn-sm"> <i class="material-icons">list</i></button></a>
+                <a href="{{url('/estoque/movimentacao/alterar/' . $item->id)}}"><button class="btn btn-primary btn-sm" style="font-size:0px"> <i class="material-icons" style="font-size:18px;">list</i></button></a>
             </td>
             <td>
-                <a class="btn btn-sm btn-warning" href="{{url('estoque/'.$item->id.'/edit')}}">
-                    <i class="material-icons">border_color</i>
+                <a class="btn btn-sm btn-warning" style="font-size:0px" href="{{url('estoque/'.$item->id.'/edit')}}">
+                    <i class="material-icons" style="font-size:18px;">border_color</i>
                 </a>
             </td>
             <td>
                 <form method="POST" action="{{url('estoque/'.$item->id )}}">
                     @method('delete')
                     @csrf
-                    <button type="submit" class="btn btn-sm btn-danger">
+                    <button type="submit" class="btn btn-sm btn-danger" style="font-size:0px">
 
-                        <i class="material-icons">delete</i>
+                        <i class="material-icons" style="font-size:18px;">delete</i>
                     </button>
                 </form>
             </td>
