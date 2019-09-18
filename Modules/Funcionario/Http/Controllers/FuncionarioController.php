@@ -46,7 +46,7 @@ class FuncionarioController extends Controller{
         $data = [
             'url'               => url("funcionario/funcionario"),
             'model'             => '',
-            'tipo_documentos'   => TipoDocumento::whereNotIn("id",[1,2])->get(),
+            'tipo_documentos'   => TipoDocumento::whereNotIn("id",[1,2,4,7,8,9])->get(),
             'documentos'        => [new Documento],
             'telefones'         => [new Telefone],
             'dependentes'       => [new Dependente],
@@ -64,7 +64,6 @@ class FuncionarioController extends Controller{
     }
 
     public function store(CreateFuncionario $request){
-
 
         DB::beginTransaction();
 		try{
