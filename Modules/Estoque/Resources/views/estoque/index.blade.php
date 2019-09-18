@@ -99,7 +99,7 @@
     <thead class="">
 
     <div class="col-12 text-right mb-4">
-    <a class="btn btn-warning btn-sm" href="{{url('/estoque')}}">
+    <a class="btn btn-info btn-sm" href="{{url('/estoque')}}">
         <i class="material-icons" style="vertical-align:middle; font-size:25px;">keyboard_backspace</i>Voltar</a>
     </div>
         

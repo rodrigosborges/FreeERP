@@ -63,7 +63,7 @@
                                  <a class="btn btn-danger btn-sm" href="{{url('/estoque/produto/inativos')}}">
                                  <i class="material-icons" style="vertical-align:middle; font-size:25px;">delete</i>Inativos</a>
                             @else
-                                <a class="btn btn-warning btn-sm" href="{{url('/estoque/produto')}}">
+                                <a class="btn btn-info btn-sm" href="{{url('/estoque/produto')}}">
                                 <i class="material-icons" style="vertical-align:middle; font-size:25px;">keyboard_backspace</i>Voltar</a>
                             @endif
                         </div>

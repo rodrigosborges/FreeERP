@@ -2,10 +2,15 @@
 @section('title', 'Tipo de Unidade')
 @section('body')
     <div class="col-12 text-right mb-4">
+    @if($flag==0)
+        <a class="btn btn-info btn-sm text-right" href="{{url('/estoque/tipo-unidade/')}}">
+            <i class="material-icons" style="vertical-align: middle; font-size:25px;">keyboard_backspace</i>Voltar
+        </a>
+        @else
         <a class="btn btn-success btn-sm text-right" href="{{url('/estoque/tipo-unidade/create')}}">
             <i class="material-icons" style="vertical-align: middle; font-size:25px;">note_add</i>Adicionar
         </a>
-    
+        @endif
         <a class="btn btn-danger btn-sm" href="{{url('/estoque/tipo-unidade/inativos')}}">
             <i class="material-icons" style="vertical-align: middle; font-size:25px;">delete</i>Inativos
         </a>
