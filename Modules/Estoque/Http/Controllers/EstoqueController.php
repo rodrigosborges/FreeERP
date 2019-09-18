@@ -112,8 +112,8 @@ class EstoqueController extends Controller
         $idProduto = $estoque->produtos->last()->id;
         $data2 = array();
         $itens = DB::table('estoque')->select('tipo_unidade_id')
-            ->join('estoque_has_produto', function ($join){
-                $join->where('produto_id', $id);
+            ->join('estoque_has_produto', function ($join) use ($idProduto) {
+                $join->where('produto_id', $idProduto);
             })->get();
         foreach ($itens as $item)
             if ($item->tipo_unidade_id != $estoque->tipo_unidade_id)
