@@ -145,20 +145,20 @@ class MovimentacaoEstoqueController extends Controller
     }
     public function buscar(Request $request)
     {
-        $moduleInfo = [
-            'icon' => 'store',
-            'name' => 'Estoque',
-        ];
-        $menu = [
-            ['icon' => 'shopping_basket', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
-            ['icon' => 'format_align_justify', 'tool' => 'Categoria', 'route' => url('/estoque/produto/categoria')],
-            ['icon' => 'store', 'tool' => 'Estoque', 'route' => url('estoque')],
-        ];
-        $this->dadosTemplate = [
-            'moduleInfo' => $moduleInfo,
-            'menu' => $menu,
-        ];
-        $flag = 0;
+        if($request->pesquisa == null){
+            $movimentacao = MovimentacaoEstoque::paginate(10);
+            return redirect('/estoque/movimentacao');
+        }else{
+            $movimentacao = MovimentacaoEstoque::where('id', $request->pesquisa)->orWhere('quantidade', $request->pesquisa)->paginate(10);
+            if(count($movimentacao) > 0){
+                return view('estoque::estoque.movimentacao.index', compact('movimentacao'))->with('success', 'Resultado da Pesquisa');
+            }else{
+                return redirect('/estoque/movimentacao')->with('error', 'Nenhum resultado encontrado');
+            }
+        }
+
+        
+        return view('estoque::estoque.movimentacao.index', compact('movimentacao'));
 
         if($request->pesquisa == null){
             $itens = Estoque::paginate(10);
@@ -172,8 +172,6 @@ class MovimentacaoEstoqueController extends Controller
             return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'));
   
         }
-
-
     }
 
 }

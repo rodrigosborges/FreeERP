@@ -11,6 +11,6 @@ class TipoUnidade extends Model
 
     public function estoque()
     {
-        return $this->belongsTo('Modules\Estoque\Entities\Estoque');
+        return $this->belongsTo('Modules\Estoque\Entities\Estoque')->withTrashed();
     }
 }

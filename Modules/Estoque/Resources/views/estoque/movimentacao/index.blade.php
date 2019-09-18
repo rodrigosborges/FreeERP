@@ -4,6 +4,22 @@
 
 <table class="table text-center ">
 
+<h4>Pesquisar Movimentação</h4>
+                <form method="POST" action="{{url('/estoque/movimentacao/buscar')}}" id="form">
+                    @csrf
+                    <div class="row mb-3 mt-3">
+                        <div class="form-group col-11">
+                            <input id="search-input" placeholder="Insira o ID da movimentação ou a quantidade" maxlength="45" class="form-control" type="text" name="pesquisa" />
+                        </div>
+                        <div class="form-group col-1">
+                            <button type="submit" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
+                        </div>
+                    </div>
+                        
+                    </div>
+                </form>
+
+
     <thead class="">
         
         <tr>
