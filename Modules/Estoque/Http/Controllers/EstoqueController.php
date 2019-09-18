@@ -35,9 +35,9 @@ class EstoqueController extends Controller
     public function index()
     {
 
-        $flag= 0;
+        $flag = 0;
         $itens = Estoque::paginate(10);
-        return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'));
+        return view('estoque::estoque.index', $this->dadosTemplate, compact('itens', 'flag'));
     }
 
     /**
@@ -66,14 +66,23 @@ class EstoqueController extends Controller
      */
     public function store(Request $request)
     {
+        $itens = DB::table('estoque')->select('tipo_unidade_id')
+            ->join('estoque_has_produto', function ($join) use ($request) {
+                $join->where('produto_id', $request->produto_id);
+            })->get();
+        foreach ($itens as $item) {
+            $data[] = $item->tipo_unidade_id;
+        }
+
+        $unidadesDisponiveis = TipoUnidade::all()->except($data);
+
         DB::beginTransaction();
         try {
+
             $estoque = Estoque::create($request->all());
             $produto = Produto::findOrFail($request->produto_id);
             $estoque->produtos()->attach($produto);
-
             $estoque->save();
-
             MovimentacaoEstoque::create(
                 [
                     'estoque_id' => $estoque->id,
@@ -145,11 +154,25 @@ class EstoqueController extends Controller
                 ]
             );
             DB::commit();
-            return redirect('/estoque')->with('message', 'Item de estoque atualizado com sucesso')->with('success','Item de estoque atualizado com sucesso');
+            return redirect('/estoque')->with('message', 'Item de estoque atualizado com sucesso')->with('success', 'Item de estoque atualizado com sucesso');
         } catch (Exception $ex) {
             DB::rollback();
             return back()->with('warning', ' Erro ao atualizar item de estoque! cod:' . $ex);
         }
+    }
+    public function buscaUnidades(Request $request)
+    {
+        $data = array();
+        $itens = DB::table('estoque')->select('tipo_unidade_id')
+            ->join('estoque_has_produto', function ($join) use ($request) {
+                $join->where('produto_id', $request->id);
+            })->get();
+        foreach ($itens as $item) {
+            $data[] = $item->tipo_unidade_id;
+        }
+
+        $unidadesDisponiveis = TipoUnidade::all()->except($data);
+        return json_encode($unidadesDisponiveis);
     }
     public function verificaAlteracoes($request, $estoque)
     {
@@ -175,6 +198,7 @@ class EstoqueController extends Controller
         return $observacao;
     }
 
+
     /**
      * Remove the specified resource from storage.
      * @param int $id
@@ -184,28 +208,30 @@ class EstoqueController extends Controller
     {
         $estoque = Estoque::findOrFail($id);
 
-        
-        
+
+
         MovimentacaoEstoque::create(
             [
                 'estoque_id' => $estoque->id,
                 'quantidade' => $estoque->quantidade,
                 'preco_custo' => $estoque->preco_custo,
                 'observacao' => "Item Excluido"
-            ]);
-            $estoque->delete();
+            ]
+        );
+        $estoque->delete();
         return back()->with('success', 'Categoria Removida com sucesso');
         //
     }
-    public function restore($id){
-      $estoque = Estoque::onlyTrashed()->findOrFail($id);
-      $estoque->restore();
-      return redirect('/estoque')->with('success', 'Item restaurado com sucesso!');
+    public function restore($id)
+    {
+        $estoque = Estoque::onlyTrashed()->findOrFail($id);
+        $estoque->restore();
+        return redirect('/estoque')->with('success', 'Item restaurado com sucesso!');
     }
-    public function inativos(){
-        $flag= 1;
+    public function inativos()
+    {
+        $flag = 1;
         $itensInativos = Estoque::onlyTrashed()->paginate(5);
-        return view('estoque::estoque.index', $this->dadosTemplate, compact('itensInativos','flag'));
-
+        return view('estoque::estoque.index', $this->dadosTemplate, compact('itensInativos', 'flag'));
     }
 }
