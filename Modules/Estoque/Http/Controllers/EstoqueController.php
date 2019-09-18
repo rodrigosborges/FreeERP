@@ -234,4 +234,22 @@ class EstoqueController extends Controller
         $itensInativos = Estoque::onlyTrashed()->paginate(5);
         return view('estoque::estoque.index', $this->dadosTemplate, compact('itensInativos', 'flag'));
     }
+
+    public function buscar(Request $request)
+    {
+        $flag = 0;
+
+        if($request->pesquisa == null){
+            $itens = Estoque::paginate(10);
+            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'))->with('success', 'Resultado da Pesquisa');
+
+        }else{  
+            $itens = Estoque::
+            join('estoque_has_produto', 'estoque_has_produto.estoque_id', '=', 'estoque.id')
+            ->join('produto', 'produto.id', '=', 'estoque_has_produto.produto_id') 
+            ->where('produto.nome', 'like', '%' . $request->pesquisa . '%')->paginate(10);   
+            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'))->with('success', 'Resultado da Pesquisa');
+  
+        }
+    }
 }
