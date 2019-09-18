@@ -60,4 +60,5 @@ Route::prefix('estoque')->group(function () {
 
 });
 Route::post('verificaNomeCategoria', 'CategoriaController@verificaNome');
+Route::post('buscaUnidades', 'EstoqueController@buscaUnidades');
 Route::resource('/estoque', 'EstoqueController');

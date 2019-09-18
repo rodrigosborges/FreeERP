@@ -26,10 +26,11 @@
             <div class="form-group">
                 <label for="categoria_id">Tipo Unidade</label>
                 <select class="custom-select tipo_unidade_id" id="tipo_unidade_id" name="tipo_unidade_id">
-                    <option value="-1">Selecione</option>
+                    <option value="-1">Selecione um produto</option>
                     @foreach($data['tipoUnidade'] as $unidade)
-                    <option value="{{$unidade->id}}" {{isset($data['estoque']) && $data['estoque']->tipo_unidade_id==$unidade->id?'selected':''}}>{{$unidade->nome . ' - ' .$unidade->quantidade_itens. ' itens' }} </option>
+                    <option value="{{$unidade->id}}"  {{isset($data['estoque']) && $data['estoque']->tipo_unidade_id==$unidade->id?'selected':''}}>{{$unidade->nome}} ({{$unidade->quantidade_itens}} itens) </option>
                     @endforeach
+
                 </select>
             </div>
         </div>
@@ -58,6 +59,11 @@
 
 <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
 <script type="text/javascript">
+    $(document).ready(function(e) {
+        if ($('.produto_id').val() == -1) {
+            $('.tipo_unidade_id').html('');
+        }
+    })
     $('.feedback-errors').hide();
     $('.send').click(function(event) {
         event.preventDefault();
@@ -102,6 +108,36 @@
         }
 
     })
+    $('.produto_id').change(function() {
+        var idProduto = $('.produto_id').val();
+        if (idProduto != -1)
+            buscaUnidade(idProduto)
+    })
+
+    function buscaUnidade(id) {
+        $.ajax({
+            url: '/buscaUnidades',
+            type: "POST",
+            data: {
+                id: id,
+                '_token': $('input[name=_token]').val(),
+            }
+        }).done(function(e) {
+            //console.log("Ok:" + e);
+            var options = "<option value ='-1'>Selecione</option>"
+            var data = $.parseJSON(e);
+            console.log("Data:" + data)
+            $.each(data, function(cahve, valor) {
+                options += "<option value='" + valor.id + "'>" + valor.nome + "(" + valor.quantidade_itens + " itens)</option>"
+            })
+            $('.tipo_unidade_id').html(options);
+            // console.log(options)
+        }).fail(function() {
+            console.log('Fail')
+        }).always(function() {
+
+        })
+    }
 </script>
 <script>
     function moeda(i) {

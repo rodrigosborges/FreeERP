@@ -13,11 +13,11 @@ class Estoque extends Model
 
     public function produtos()
     {
-        return $this->belongsToMany('Modules\Estoque\Entities\Produto', 'estoque_has_produto','estoque_id','produto_id');
+        return $this->belongsToMany('Modules\Estoque\Entities\Produto', 'estoque_has_produto','estoque_id','produto_id')->withTrashed();
     }
     public function tipoUnidade()
     {
-        return $this->belongsTo('Modules\Estoque\Entities\TipoUnidade');
+        return $this->belongsTo('Modules\Estoque\Entities\TipoUnidade')->withTrashed();
     }
 
     public function movimentacaoEstoque()
