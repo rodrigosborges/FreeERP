@@ -56,7 +56,7 @@ Route::prefix('estoque')->group(function () {
 
 
     //Rotas do Estoque
-
+    Route::post('/buscar', 'MovimentacaoEstoqueController@buscar');
 
 });
 Route::post('verificaNomeCategoria', 'CategoriaController@verificaNome');

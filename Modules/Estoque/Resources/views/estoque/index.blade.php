@@ -3,6 +3,24 @@
 @section('body')
 @if($flag==0)
 <table class="table text-center ">
+<div class="header text-left mb-3 mt-3">
+                <h4>Pesquisar Item</h4>
+            </div>
+                <form method="POST" action="{{url('/estoque/buscar')}}" id="form">
+                    @csrf
+                    <div class="row">
+                        <div class="form-group col-11">
+                            <input id="search-input" placeholder="Insira o nome do produto" maxlength="45" class="form-control" type="text" name="pesquisa" />
+                        </div>
+                        <div class="form-group col-1">
+                            <button type="submit" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
+                        </div>
+                    </div>
+                        
+                    </div>
+                </form>
+
+
 
     <thead class="">
 
@@ -25,7 +43,7 @@
             <th scope='col'>Gerenciar Estoque</th>
             <th scope="col">Editar</th>
             <th scope="col">Excluir</th>
-            <th/>
+            
         </tr>
     </thead>
     <tbody>

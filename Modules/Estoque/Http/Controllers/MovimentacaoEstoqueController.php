@@ -5,7 +5,7 @@ namespace Modules\Estoque\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Estoque\Entities\{MovimentacaoEstoque, Estoque};
+use Modules\Estoque\Entities\{MovimentacaoEstoque, Estoque, Produto};
 use Modules\Estoque\Http\Requests\MovimentacaoRequest;
 use DB;
 
@@ -143,4 +143,37 @@ class MovimentacaoEstoqueController extends Controller
     {
         //
     }
+    public function buscar(Request $request)
+    {
+        $moduleInfo = [
+            'icon' => 'store',
+            'name' => 'Estoque',
+        ];
+        $menu = [
+            ['icon' => 'shopping_basket', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
+            ['icon' => 'format_align_justify', 'tool' => 'Categoria', 'route' => url('/estoque/produto/categoria')],
+            ['icon' => 'store', 'tool' => 'Estoque', 'route' => url('estoque')],
+        ];
+        $this->dadosTemplate = [
+            'moduleInfo' => $moduleInfo,
+            'menu' => $menu,
+        ];
+        $flag = 0;
+
+        if($request->pesquisa == null){
+            $itens = Estoque::paginate(10);
+            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'));
+
+        }else{  
+            $itens = DB::table('estoque')
+            ->join('estoque_has_produto', 'estoque_has_produto.estoque_id', '=', 'estoque.id')
+            ->join('produto', 'produto.id', '=', 'estoque_has_produto.produto_id') 
+            ->where('produto.nome', 'like', '%' . $request->pesquisa . '%')->paginate(10);   
+            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'));
+  
+        }
+
+
+    }
+
 }
