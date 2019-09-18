@@ -12,7 +12,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="material-icons">calendar_today</i></span>    
                     </div>
-                    <input type="date" name="data" onfocusout="checkDate()" id="data" class="form-control">
+                    <input type="date" name="data" onfocusout="checkDate()" id="data" class="form-control" value="{{ isset($pedido->data) ? $pedido->data : old('data', '') }}">
                 </div>                        
             </div>
 
@@ -21,7 +21,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="material-icons">local_atm</i></span>
                     </div>
-                    <input type="number" name="numero" placeholder="Numero da Compra" class="form-control">
+                    <input type="number" name="numero" placeholder="Numero da Compra" class="form-control" value="{{ isset($pedido->numero) ? $pedido->numero : old('numero', '') }}">
                 </div>
                 
             </div>
@@ -31,7 +31,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="material-icons">arrow_downward</i></span>
                     </div>                      
-                    <input type="number" name="desconto" placeholder="Desconto da compra" class="form-control">
+                    <input type="number" name="desconto" placeholder="Desconto da compra" class="form-control" value="{{isset($pedido->desconto) ? $pedido->desconto : old('pedido', '')}}">
                 </div>
             </div>
             
@@ -58,7 +58,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="material-icons">add_shopping_cart</i></span>
                         </div>
-                        <input type="text" class="form-control produto_quantidade" name="produtos[0][quantidade]" placeholder="Quantidade">
+                        <input type="text" class="form-control produto_quantidade"  name="produtos[0][quantidade]" placeholder="Quantidade">
                     </div>                 
                 </div>
                 <div class="col-3 form-group">

@@ -3,22 +3,25 @@
     <div class="card">
         <div class="card-header row">
             <div class="col-12">
-                <h3>Lista de clientes...</h3>
+                <h3>Lista de clientes</h3>
             </div>
-            <form class="input-group col-lg-7 col-sm-10" action="{{route('cliente.buscar')}}" method="post">
-                {{ csrf_field() }}
-                <input type="text" class="form-control" name="busca" placeholder="Índice de busca">
+            <form class="input-group col-lg-7 col-sm-10">
+                <input type="text" class="form-control" name="busca" placeholder="Localizar cliente por nome">
                 <div class="input-group-append">
                     <input class="btn btn-outline-success" type="submit" value="Localizar" id="button-addon2">
                 </div>
             </form>
+            <div class="col text-right">
+                <a href="{{url('/cliente/cliente/create')}}"><button class="btn btn-success">Adicionar cliente</button></a> 
+            </div>
+            
         </div>
             
         <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="ativos-tab" data-toggle="tab" href="#ativos" role="tab"  aria-selected="true">Ativos</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item">   
                 <a class="nav-link" id="inativos-tab" data-toggle="tab" href="#inativos" role="tab"  aria-selected="false">Inativos</a>
             </li>
         </ul>
