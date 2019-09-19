@@ -15,7 +15,7 @@ class Funcionario extends Model {
         return $this->belongsTo('App\Entities\EstadoCivil');
     }
     public function email(){
-        return $this->belongTo('App\Entities\Email');
+        return $this->belongsTo('App\Entities\Email');
     }
     public function endereco(){
         return $this->belongsTo('App\Entities\Endereco');
@@ -39,5 +39,9 @@ class Funcionario extends Model {
 
     public function ferias(){
         return $this->hasMany('Modules\Funcionario\Entities\Ferias');
+    }
+
+    public function controle_ferias(){
+        return $this->hasMany('Modules\Funcionario\Entities\ControleFerias');
     }
 }
