@@ -10,7 +10,7 @@ Cadastro de Compras - {{ $cliente->nome }}
       </div>
   
       <div class="row p-2" id="tabela">
-          <table class="table table-striped bordered text-center col-md-12">
+          <table class="table bordered text-center col-md-12">
               <thead>
                 <tr>
                   <th>Id_Compra</th>
@@ -32,9 +32,9 @@ Cadastro de Compras - {{ $cliente->nome }}
                         <td>{{ ($pedido->desconto). "%" }}</td>
                         <td><!--BOTOES -->
                           <div class="flex row justify-content-around">
-                                 <a href="{{url("/cliente/pedido/".$pedido->id )}}" 
+                              <a href="{{url("/cliente/pedido/".$pedido->id )}}" 
                                   class="btn btn-sm btn-warning" name="edit">Editar</button>
-                                 </a>
+                              </a>
                               <form action={{url( "/cliente/pedido/".$pedido->id ) }} method="post" onsubmit="return confirmar({{$pedido->id}});">
                                   {{method_field('DELETE')}}
                                   {{ csrf_field() }}
@@ -62,7 +62,7 @@ Cadastro de Compras - {{ $cliente->nome }}
 
                           @forelse ($pedido->vl_total_itens() as $item)
                               <div class = "col-6 pt-1">
-                                <table class="table table-sm bordered">
+                                <table class="table table-responsive table-sm table-borderless">
                                   <thead>
                                     <th scope="col" class="table-light">Produto</th>
                                     <th scope="col" class="table-light">Quantidade</th>

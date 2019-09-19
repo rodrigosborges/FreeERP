@@ -57,9 +57,11 @@ class PedidoController extends Controller
             $pedido->produtos()->sync($dados);
 
         DB::commit();
+        return "ok";
             return back()->with('sucess','Pedido Salvo');
         } catch (\Exception $e){
         DB::rollback();
+        return "fail";
             return back()->with('error', 'Ocorreu um erro ao salvar');
         }
 
@@ -102,10 +104,12 @@ class PedidoController extends Controller
 
             $pedido->produtos()->sync($dados);
             DB::commit();
-            return back()->with('sucess', 'Pedido editado');
+            return "ok";
+            // return back()->with('sucess', 'Pedido editado');
         } catch (\Exception $e){
             DB::rollback();
-            return back()->with('error', 'Ocorreu um erro ao salvar');
+            return "erro";
+            // return back()->with('error', 'Ocorreu um erro ao salvar');
         }
     }
 
