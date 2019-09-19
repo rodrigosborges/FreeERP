@@ -116,6 +116,18 @@ class PapelController extends Controller
         $papel->restore();
         return redirect('/papel');
     }
+    
+    public function isUnique(Request $request,$id=null){
+        $key = key($request->query());
+        
+        $field = Papel::where($key, $request->$key)->first();
+     
+        if($field && $id != $field->id ){
+            return 'false';
+        } else {
+            return 'true';
+        }
+    }
 
     // public function search($nome){
     //     $papeis = Papel::where('nome', 'LIKE', '%'.$nome.'%')->get();

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
+use Modules\Usuario\Http\Requests\ModuloRequest;
+
 use Modules\Usuario\Entities\{Modulo};
 use DB;
 
@@ -53,7 +55,7 @@ class ModuloController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(ModuloRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -94,7 +96,7 @@ class ModuloController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ModuloRequest $request, $id)
     {
         $modulo = Modulo::findOrFail($id);
         $modulo->update($request->all());
@@ -118,5 +120,17 @@ class ModuloController extends Controller
         $modulo = Modulo::onlyTrashed()->findOrFail($id);
         $modulo->restore();
         return back();
+    }
+    
+    public function isUnique(Request $request,$id=null){
+        $key = key($request->query());
+        
+        $field = Modulo::where($key, $request->$key)->first();
+     
+        if($field && $id != $field->id ){
+            return 'false';
+        } else {
+            return 'true';
+        }
     }
 }

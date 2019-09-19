@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use File;
+use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
@@ -141,6 +142,9 @@ class UsuarioController extends Controller
 
     public function destroy($id)
     {
+        if(Auth::user()->id == $id){
+            return redirect()->back()->with("error","Impossível deletar sua conta logada");
+        }
        $usuario = Usuario::findOrFail($id);
        $usuario->delete();
        return back();

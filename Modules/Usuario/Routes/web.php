@@ -49,6 +49,9 @@ Route::prefix('modulo')->group(function() {
     Route::delete('/{id}', 'ModuloController@destroy');
     // Restaurar
     Route::put('/{id}/restore', 'ModuloController@restore');
+
+    
+    Route::get('/check-unique/{id?}' ,'ModuloController@isUnique')->middleware('auth');
 });
 // Papéis
 Route::prefix('papel')->group(function() {
@@ -66,4 +69,7 @@ Route::prefix('papel')->group(function() {
     Route::put('/restore/{id}', 'PapelController@restore')->middleware('auth');
     //Buscar
     //Route::get('/search/{nome}', 'PapelController@search')->middleware('auth');
+
+    
+    Route::get('/check-unique/{id?}' ,'PapelController@isUnique')->middleware('auth');
 });
