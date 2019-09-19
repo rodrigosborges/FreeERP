@@ -11,7 +11,7 @@
     <p class="feedback-errors alert"></p>
     <div class="row">
 
-        <div class="col-lg-4  col-md-6 col-sm-6">
+        <div class="col-lg-6  col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="categoria_id">Produto</label>
                 <select class="custom-select produto_id" id="produto_id" name="produto_id">
@@ -22,9 +22,10 @@
                 </select>
             </div>
         </div>
-        <div class="col-lg-3  col-md-6 col-sm-6">
+
+        <div class="col-lg-6  col-md-6 col-sm-6">
             <div class="form-group">
-                <label for="categoria_id">Tipo Unidade</label>
+                <label for="categoria_id">Tipo de Unidade</label>
                 <select class="custom-select tipo_unidade_id" id="tipo_unidade_id" name="tipo_unidade_id">
                     <option value="-1">Selecione um produto</option>
                     @foreach($data['tipoUnidade'] as $unidade)
@@ -35,22 +36,30 @@
             </div>
         </div>
 
-        <div class="col-lg-2 col-md-6 col-sm-6">
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="form-group">
                 <label for="preco_custo">Preço de Custo</label>
                 <input type="text" name="preco_custo" id="preco_custo" value=" {{isset($data['estoque'])?$data['estoque']->movimentacaoEstoque->last()->preco_custo:''}}" placeholder="R$" onkeyUp="moeda(this);" class="form-control preco_custo" required>
             </div>
         </div>
 
-        <div class="form-group col-lg-3 col-md-6 col-sm-6">
+        <div class="form-group col-lg-4 col-md-4 col-sm-4">
             <label for="nome">Quantidade</label>
-            <input type="{{isset($data['estoque'])?'text':'number'}}" name='quantidade' required id="quantidade" class="form-control quantidade" maxlength="45" value=" {{isset($data['estoque'])?(int)$data['estoque']->quantidade:''}}">
+            <input type="{{isset($data['estoque'])?'text':'number'}}" placeholder="Insira a quantidade" name='quantidade' required id="quantidade" class="form-control quantidade" maxlength="45" value=" {{isset($data['estoque'])?(int)$data['estoque']->quantidade:''}}">
             <p class=" alert" id="mensagem-nome"> {{$errors->first('quantidade')}}</p>
         </div>
 
+        <div class="form-group col-4">
+            <label for="quantidade_notificacao">Notificar estoque baixo</label>
+            <input type="number" class="form-control" name="quantidade_notificacao" value="{{isset($data['estoque']) ? $data['estoque']->quantidade_notificacao : ''}}" placeholder="Insira a quantidade" required>
+        </div>
     </div>
-    <div class="row col-12" style="justify-content: flex-end;">
-        <button type="submit" id="send" class="btn btn-primary send">{{$data['button']}}</button>
+    <div class="row">
+        <div class="col-12 text-right">
+            <button type="submit" id="send" class="btn btn-primary send">{{$data['button']}}</button>
+        </div>
     </div>
 
 </form>

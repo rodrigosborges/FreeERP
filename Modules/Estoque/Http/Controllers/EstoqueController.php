@@ -252,4 +252,10 @@ class EstoqueController extends Controller
   
         }
     }
+
+    public function notificacoes(){
+        $itens = Estoque::where('quantidade', '<=', 'estoque.quantidade_estoque')->get();
+        return $itens;
+    }
+
 }

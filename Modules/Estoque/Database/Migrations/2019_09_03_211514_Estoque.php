@@ -16,8 +16,9 @@ class Estoque extends Migration
         //
         Schema::create('estoque', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('quantidade');
+            $table->integer('quantidade');
             $table->integer('tipo_unidade_id')->unsigned()->index('fk_tipo_unidade');
+            $table->integer('quantidade_notificacao')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
