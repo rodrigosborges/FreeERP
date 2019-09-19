@@ -1,6 +1,6 @@
 $('#loginForm').validate({
     rules:{
-        apelido: {
+        login: {
             required:true
         },
         password:{
@@ -8,8 +8,8 @@ $('#loginForm').validate({
         }
     },
     messages:{
-        apelido:{
-            required:"<span style='color:red'>Informe o Apelido</span>",
+        login:{
+            required:"<span style='color:red'>Informe o Apelido ou email</span>",
         },
         password:{
             required:"<span style='color:red'>Informe a Senha</span>",

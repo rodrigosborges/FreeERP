@@ -30,6 +30,15 @@ class LoginController extends Controller
     
     public function authenticate(Request $request)
     {
+        
+        // if(strrpos($request['login'], "@")){
+        //     $credentials = $request->only('login', 'password');
+        //     Auth::attempt(['email' => $request->login , 'password' => $request->password]);
+            
+        // return strrpos($request['login'], "@");
+        // }else{
+        //     $credentials = $request->only('apelido', 'password');
+        // }
         $credentials = $request->only('apelido', 'password');
 
         if (Auth::guard()->attempt($credentials)) {
