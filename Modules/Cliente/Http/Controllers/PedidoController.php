@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Modules\Cliente\Http\Requests\CreatePedidoRequest;
 use Illuminate\Routing\Controller;
 use Modules\Cliente\Entities\{Cliente, Pedido, Produto};
-use DB; 
+use DB;
 
 class PedidoController extends Controller
 {
@@ -15,8 +15,8 @@ class PedidoController extends Controller
     public function index($cliente_id)
     {
         $cliente = Cliente::findOrFail($cliente_id);
-        $pedidos = $cliente->pedidos;
-        return view('cliente::pedidos.index', compact('cliente'));
+        $pedidosApagados = $cliente->pedidos()->onlyTrashed()->get();
+        return view('cliente::pedidos.index', compact('cliente','pedidosApagados'));
     }
 
     //view novo pedido
@@ -113,9 +113,13 @@ class PedidoController extends Controller
 
     public function destroy($pedido_id)
     {   
-        $pedido = Pedido::findOrFail($pedido_id);
-
-        $pedido->delete();
-        return back()->with('success', 'Pedido deletado');
+        $pedido = Pedido::withTrashed()->findOrFail($pedido_id);
+        if( $pedido->trashed() ){
+            $pedido->restore();
+            return back()->with('sucess', 'Pedido restaurado');
+        }else{
+            $pedido->delete();
+            return back()->with('success', 'Pedido deletado');
+        }
     }
 }
