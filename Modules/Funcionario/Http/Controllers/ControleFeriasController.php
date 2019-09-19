@@ -113,24 +113,16 @@ class ControleFeriasController extends Controller
         $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
         $limite_periodo_aquisitivo->add(new DateInterval('P330D')); // Essa linha adiciona 330 dias(11 meses)
 
-        //ControleFerias::where('funcionario_id', '=', $id)->get()->last()->inicio_periodo_aquisitivo;
-
-        /*if(ControleFerias::where($id, '=', 'funcionario_id')){
-            $dias = $funcionario->ferias()->get()->last()->dias_ferias;
-            $marcar_ferias = 30 - $dias;
-        } */
-
-        if(DB::table('controle_ferias')->where('funcionario_id', $id)){
-            $dias = $funcionario->ferias()->get()->last()->dias_ferias;
-            $marcar_ferias = 30 - $dias;
-        } 
-
         
+       $teste = DB::table('controle_ferias')->where('funcionario_id', '=', $id)->count();
+        
+        if($teste > 0){
+            $saldo_total = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_total;
+            
+        } else {
+            $saldo_total = 30;
+        }
 
-        return $marcar_ferias;
-
-        /*O formato da variavel limite_periodo_aquisito é passado dentro do array pois ele é considerado um objeto, para que ele seja uma string,
-        o formato que será apresentado na view deve ser passado dentro do array*/ 
         $data = [
             'title'                     => 'Ferias',
             'funcionario'               => $funcionario,
@@ -139,8 +131,24 @@ class ControleFeriasController extends Controller
             'inicio_periodo_aquisitivo' => $inicio_periodo_aquisitivo,
             'fim_periodo_aquisitivo'    => $fim_periodo_aquisitivo,
             'limite_periodo_aquisitivo' => $limite_periodo_aquisitivo->format('d/m/Y'),
-            'marcar_ferias'             => $marcar_ferias
+            'saldo_total'               => $saldo_total 
         ];
+
+        
+        /*
+        
+        O formato da variavel limite_periodo_aquisito é passado dentro do array pois ele é considerado um objeto, para que ele seja uma string,
+        o formato que será apresentado na view deve ser passado dentro do array
+        $data = [
+            'title'                     => 'Ferias',
+            'funcionario'               => $funcionario,
+            'cargo'                     => Cargo::where('id','=',$cargoAtual)->first(),
+            'admissao'                  => $admissao,
+            'inicio_periodo_aquisitivo' => $inicio_periodo_aquisitivo,
+            'fim_periodo_aquisitivo'    => $fim_periodo_aquisitivo,
+            'limite_periodo_aquisitivo' => $limite_periodo_aquisitivo->format('d/m/Y'),
+            'saldo_total'               => $saldo_total 
+        ];*/
     
         return view('funcionario::ferias.formulario', compact('data'));
     }

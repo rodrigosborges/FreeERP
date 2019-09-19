@@ -35,7 +35,6 @@
                 <span>{{$data['limite_periodo_aquisitivo']}}</span>
             </div>
         </div>
-                {{$data['marcar_ferias']}}
         
     </section>
 
@@ -49,7 +48,6 @@
         <input type="text" hidden name="fim_periodo_aquisitivo" id="fim_periodo_aquisitivo" value="{{$data['fim_periodo_aquisitivo']}}">
         <input type="text" hidden name="limite_periodo_aquisitivo" id="limite_periodo_aquisitivo" value="{{$data['limite_periodo_aquisitivo']}}">
         <input type="text" name="funcionario_id" style="display:none;" value="{{$data['funcionario']->id}}">
-        <input type="text" hidden name="marcar_ferias" value="{{$data['marcar_ferias']}}">
 
             <div class="form-group col-4">
                 <label for="data_inicio">Data Início:</label>
@@ -76,6 +74,11 @@
             <div class="form-group col-3">
                 <label for="data_aviso">Data de Início do Aviso:</label>
                 <input type="date" name="data_aviso" id="data_aviso" class="form-control">
+            </div>
+
+            <div class="form-group col-3">
+                <label for="saldo_total">Férias a marcar</label>
+                <input type="text" name="saldo_total" id="saldo_total" class="form-control" value="{{$data['saldo_total']}}" disabled>
             </div>
         </div>
 

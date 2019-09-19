@@ -39,6 +39,11 @@
                 <label for="data_aviso">Data de Início do Aviso:</label>
                 <input type="date" name="data_aviso" id="data_aviso" class="form-control"  value="{{$data['ferias']->data_aviso }}">
             </div>
+
+            <div class="form-group col-3">
+                <label for="saldo_total">Férias a marcar</label>
+                <input type="text" name="saldo_total" id="saldo_total" class="form-control" value="{{$data['saldo_total']}}" disabled>
+            </div>
         </div>
 
         <div class="row">
@@ -64,6 +69,10 @@
                 <label for="observacao">Observação:</label>
                 <textarea rows="5" name="observacao" id="observacao" class="form-control" >{{$data['ferias']->observacao}}</textarea>
             </div>
+        </div>
+        
+        <div class="text-right">
+            <button type="submit"  class="btn btn-success d-flex justify-content-start ">Salvar</button>
         </div> 
     </form>
     </section>
@@ -71,14 +80,8 @@
 @endsection
 
 @section('footer')
-    <div class="text-right">
-    <button type="submit"  class="btn btn-success d-flex justify-content-start ">Salvar</button>
-    </div>
+    
 @endsection
-
-
-
-
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>

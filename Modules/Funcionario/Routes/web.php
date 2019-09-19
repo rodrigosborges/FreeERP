@@ -26,6 +26,7 @@ Route::prefix('funcionario')->group(function() {
     //Rotas do FeriasController
     Route::get('ferias/editarFerias/{id}','FeriasController@edit');
     Route::get('ferias/{id}/show', 'FeriasController@show');
+    Route::post('funcionario/ferias/{id}', 'FeriasController@update');
 
     Route::get('pagamento/listar/{id}','PagamentoController@listar');
     Route::get('pagamento/novoPagamento/{id}','PagamentoController@novoPagamento');
