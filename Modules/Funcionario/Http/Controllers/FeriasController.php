@@ -166,6 +166,9 @@ class FeriasController extends Controller
         }else{
             $pagamento13 = false;
         }
+
+        $teste = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get();
+        return $teste;
         
         DB::beginTransaction();
 

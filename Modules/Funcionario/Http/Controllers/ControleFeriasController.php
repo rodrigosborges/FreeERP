@@ -122,7 +122,9 @@ class ControleFeriasController extends Controller
         } else {
             $saldo_total = 30;
         }
-
+        
+        /*O formato da variavel limite_periodo_aquisito é passado dentro do array pois ele é considerado um objeto, para que ele seja uma string,
+        o formato que será apresentado na view deve ser passado dentro do array*/
         $data = [
             'title'                     => 'Ferias',
             'funcionario'               => $funcionario,
@@ -134,22 +136,6 @@ class ControleFeriasController extends Controller
             'saldo_total'               => $saldo_total 
         ];
 
-        
-        /*
-        
-        O formato da variavel limite_periodo_aquisito é passado dentro do array pois ele é considerado um objeto, para que ele seja uma string,
-        o formato que será apresentado na view deve ser passado dentro do array
-        $data = [
-            'title'                     => 'Ferias',
-            'funcionario'               => $funcionario,
-            'cargo'                     => Cargo::where('id','=',$cargoAtual)->first(),
-            'admissao'                  => $admissao,
-            'inicio_periodo_aquisitivo' => $inicio_periodo_aquisitivo,
-            'fim_periodo_aquisitivo'    => $fim_periodo_aquisitivo,
-            'limite_periodo_aquisitivo' => $limite_periodo_aquisitivo->format('d/m/Y'),
-            'saldo_total'               => $saldo_total 
-        ];*/
-    
         return view('funcionario::ferias.formulario', compact('data'));
     }
 }
