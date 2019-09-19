@@ -36,8 +36,9 @@ class EstoqueController extends Controller
     {
 
         $flag = 0;
+        $notificacoes = $this->verificarNotificacoes();
         $itens = Estoque::paginate(10);
-        return view('estoque::estoque.index', $this->dadosTemplate, compact('itens', 'flag'));
+        return view('estoque::estoque.index', $this->dadosTemplate, compact('itens', 'flag', 'notificacoes'));
     }
 
     /**
@@ -46,7 +47,7 @@ class EstoqueController extends Controller
      */
     public function create()
     {
-
+        $notificacoes = $this->verificarNotificacoes();
         $data = [
             'titulo'  => 'Cadastrar Estoque',
             'button'  => 'Cadastrar',
@@ -56,7 +57,7 @@ class EstoqueController extends Controller
             'tipoUnidade' => TipoUnidade::all(),
         ];
 
-        return view('estoque::estoque.form', compact('data'));
+        return view('estoque::estoque.form', compact('data', 'notificacoes'));
     }
 
     /**
@@ -108,6 +109,7 @@ class EstoqueController extends Controller
     public function edit($id)
     {
 
+        $notificacoes = $this->verificarNotificacoes();
         $estoque = Estoque::findOrFail($id);
         $idProduto = $estoque->produtos->last()->id;
         $data2 = array();
@@ -129,7 +131,7 @@ class EstoqueController extends Controller
             'tipoUnidade' => TipoUnidade::all()->except($data2),
 
         ];
-        return view('estoque::estoque.form', compact('data'));
+        return view('estoque::estoque.form', compact('data', 'notificacoes'));
     }
 
     /**
@@ -232,13 +234,14 @@ class EstoqueController extends Controller
     {
         $flag = 1;
         $itensInativos = Estoque::onlyTrashed()->paginate(5);
-        return view('estoque::estoque.index', $this->dadosTemplate, compact('itensInativos', 'flag'));
+        $notificacoes = $this->verificarNotificacoes();
+        return view('estoque::estoque.index', $this->dadosTemplate, compact('notificacoes', 'itensInativos', 'flag'));
     }
 
     public function buscar(Request $request)
     {
         $flag = 0;
-
+        $notificacoes = $this->verificarNotificacoes();
         if($request->pesquisa == null){
             $itens = Estoque::paginate(10);
             return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'))->with('success', 'Resultado da Pesquisa');
@@ -248,14 +251,20 @@ class EstoqueController extends Controller
             join('estoque_has_produto', 'estoque_has_produto.estoque_id', '=', 'estoque.id')
             ->join('produto', 'produto.id', '=', 'estoque_has_produto.produto_id') 
             ->where('produto.nome', 'like', '%' . $request->pesquisa . '%')->paginate(10);   
-            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'))->with('success', 'Resultado da Pesquisa');
+            return view('estoque::estoque.index', $this->dadosTemplate, compact('notificacoes','itens','flag'))->with('success', 'Resultado da Pesquisa');
   
         }
     }
 
     public function notificacoes(){
-        $itens = Estoque::where('quantidade', '<=', 'estoque.quantidade_estoque')->get();
-        return $itens;
+        $itens = Estoque::where('quantidade', '<=', DB::raw('quantidade_notificacao'))->paginate(10);
+        $notificacoes = $this->verificarNotificacoes();
+        return view('estoque::estoque.notificacoes.index', compact('itens', 'notificacoes'));
+    }
+
+    public static function verificarNotificacoes(){
+        $itens = Estoque::where('quantidade', '<=', DB::raw('quantidade_notificacao'))->paginate(10);
+        return count($itens);
     }
 
 }

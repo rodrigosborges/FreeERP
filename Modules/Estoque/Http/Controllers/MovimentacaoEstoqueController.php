@@ -7,10 +7,16 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Estoque\Entities\{MovimentacaoEstoque, Estoque, Produto};
 use Modules\Estoque\Http\Requests\MovimentacaoRequest;
+use Modules\Estoque\Http\Controllers\EstoqueController;
 use DB;
 
 class MovimentacaoEstoqueController extends Controller
 {
+    protected $notificacoes;
+    public function __construct(){
+        $this->notificacoes = EstoqueController::verificarNotificacoes();
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -18,8 +24,7 @@ class MovimentacaoEstoqueController extends Controller
     public function index()
     {
         $movimentacao = MovimentacaoEstoque::paginate(10);
-        
-        return view('estoque::estoque.movimentacao.index', compact('movimentacao'));
+        return view('estoque::estoque.movimentacao.index', compact('movimentacao'))->with('notificacoes', $this->notificacoes);
     }
 
     /**
@@ -50,7 +55,7 @@ class MovimentacaoEstoqueController extends Controller
     {
         
         $movimentacao = MovimentacaoEstoque::findOrFail($id);
-        return view('estoque::estoque.movimentacao.ficha', compact('movimentacao'));
+        return view('estoque::estoque.movimentacao.ficha', compact('movimentacao'))->with('notificacoes', $this->notificacoes);
     }
 
 
@@ -58,7 +63,7 @@ class MovimentacaoEstoqueController extends Controller
         $estoque = Estoque::findOrFail($id);
         $flag = 1;
 
-        return view('estoque::estoque.movimentacao.form', compact('estoque', 'flag'));
+        return view('estoque::estoque.movimentacao.form', compact('estoque', 'flag'))->with('notificacoes', $this->notificacoes);
     }
 
 
@@ -66,7 +71,7 @@ class MovimentacaoEstoqueController extends Controller
         $estoque = Estoque::findOrFail($id);
         $flag = 0;
         
-        return view('estoque::estoque.movimentacao.form', compact('estoque', 'flag'));
+        return view('estoque::estoque.movimentacao.form', compact('estoque', 'flag'))->with('notificacoes', $this->notificacoes);
     }
 
 
@@ -74,7 +79,7 @@ class MovimentacaoEstoqueController extends Controller
         $e = Estoque::findOrFail($id);
         $movimentacao = MovimentacaoEstoque::where('estoque_id', $e->id)->orderBy('created_at', 'DESC')->paginate(10);
 
-        return view('estoque::estoque.movimentacao.visualizar', compact('e', 'movimentacao'));
+        return view('estoque::estoque.movimentacao.visualizar', compact('e', 'movimentacao'))->with('notificacoes', $this->notificacoes);
 
 
     }
@@ -151,7 +156,7 @@ class MovimentacaoEstoqueController extends Controller
         }else{
             $movimentacao = MovimentacaoEstoque::where('id', $request->pesquisa)->orWhere('quantidade', $request->pesquisa)->paginate(10);
             if(count($movimentacao) > 0){
-                return view('estoque::estoque.movimentacao.index', compact('movimentacao'))->with('success', 'Resultado da Pesquisa');
+                return view('estoque::estoque.movimentacao.index', compact('movimentacao'))->with('success', 'Resultado da Pesquisa')->with('notificacoes', $this->notificacoes);
             }else{
                 return redirect('/estoque/movimentacao')->with('error', 'Nenhum resultado encontrado');
             }
@@ -162,14 +167,14 @@ class MovimentacaoEstoqueController extends Controller
 
         if($request->pesquisa == null){
             $itens = Estoque::paginate(10);
-            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'));
+            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'))->with('notificacoes', $this->notificacoes);
 
         }else{  
             $itens = DB::table('estoque')
             ->join('estoque_has_produto', 'estoque_has_produto.estoque_id', '=', 'estoque.id')
             ->join('produto', 'produto.id', '=', 'estoque_has_produto.produto_id') 
             ->where('produto.nome', 'like', '%' . $request->pesquisa . '%')->paginate(10);   
-            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'));
+            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'))->with('notificacoes', $this->notificacoes);
   
         }
     }

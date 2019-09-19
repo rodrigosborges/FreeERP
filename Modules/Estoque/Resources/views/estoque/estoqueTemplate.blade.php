@@ -6,7 +6,7 @@ $moduleInfo = [
 $menu = [
     ['icon' => 'shopping_basket', 'tool' => 'Produto', 'route' => url('/estoque/produto')],
     ['icon' => 'format_align_justify', 'tool' => 'Categoria', 'route' => url('estoque/produto/categoria')],
-    ['icon' => 'store', 'tool' => 'Estoque', 'route' => url('estoque')],
+    ['icon' => 'store', 'tool' =>  'Estoque', 'route' => url('estoque')],
 ];
 ?>
 
@@ -24,6 +24,11 @@ $menu = [
 
         </div>
         <ul class="nav justify-content-center" style="background-color: rgb(100,149,237); margin-bottom:5px">
+            <li class="nav-item ">
+                <a class="nav-link text-white " href="{{url('estoque/notificacoes')}}">Notificações <span class="badge badge-warning">{{isset($notificacoes) && $notificacoes > 0 ? $notificacoes : ''}}</span></a>
+            </li>
+
+
             <li class="nav-item ">
                 <a class="nav-link text-white " href="{{url('estoque')}}">Itens em estoque</a>
             </li>

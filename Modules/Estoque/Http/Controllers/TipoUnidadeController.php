@@ -11,6 +11,15 @@ use Modules\Estoque\Http\Requests\TipoUnidadeRequest;
 
 class TipoUnidadeController extends Controller
 {
+
+    protected $notificacoes;
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function __construct(){
+        $this->notificacoes = EstoqueController::verificarNotificacoes();
+    }
     /**
      * Display a listing of the resource.
      * @return Response
@@ -19,7 +28,7 @@ class TipoUnidadeController extends Controller
     {
         $flag=1;
         $tipos = TipoUnidade::all();
-        return view('estoque::tipoUnidade.index', compact('tipos','flag'));
+        return view('estoque::tipoUnidade.index', compact('tipos','flag'))->with('notificacoes', $this->notificacoes);
     }
 
     /**
@@ -36,7 +45,7 @@ class TipoUnidadeController extends Controller
             'tipo' => null,
         ];
 
-        return view('estoque::tipoUnidade.form', compact('data'));
+        return view('estoque::tipoUnidade.form', compact('data'))->with('notificacoes', $this->notificacoes);
     }
 
     /**
@@ -83,7 +92,7 @@ class TipoUnidadeController extends Controller
             'tipo' => TipoUnidade::findOrFail($id),
             'titulo' => 'Editar Unidade',
         ];
-        return view('estoque::tipoUnidade.form', compact('data', 'tipo'));
+        return view('estoque::tipoUnidade.form', compact('data', 'tipo'))->with('notificacoes', $this->notificacoes);
     }
 
     /**
@@ -131,6 +140,6 @@ class TipoUnidadeController extends Controller
         $flag=0;
         $inativos = TipoUnidade::onlyTrashed()->get();
 
-        return view('estoque::tipoUnidade.index', compact('inativos','flag'));
+        return view('estoque::tipoUnidade.index', compact('inativos','flag'))->with('notificacoes', $this->notificacoes);
     }
 }

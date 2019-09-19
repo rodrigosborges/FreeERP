@@ -7,10 +7,12 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Estoque\Entities\UnidadeProduto;
 use Modules\Estoque\Http\Requests\UnidadeProdutoRequest;
+use Modules\Estoque\Http\Controllers\EstoqueController;
 use DB;
 
 class UnidadeProdutoController extends Controller
 {
+    protected $notificacoes;
     public $dadosTemplate;
     /**
      * Display a listing of the resource.
@@ -30,12 +32,13 @@ class UnidadeProdutoController extends Controller
             'moduleInfo' => $moduleInfo,
             'menu' => $menu
         ];
+        $this->notificacoes = EstoqueController::verificarNotificacoes();
     }
     public function index()
     {
         $unidadeProduto = UnidadeProduto::paginate(5);
         $unidadesExcluidas = UnidadeProduto::onlyTrashed()->paginate(5);
-        return view('estoque::produto.unidade.index',$this->dadosTemplate, compact('unidadeProduto', 'unidadesExcluidas'));
+        return view('estoque::produto.unidade.index',$this->dadosTemplate, compact('unidadeProduto', 'unidadesExcluidas'))->with('notificacoes', $this->notificacoes);
     }
 
     /**
@@ -44,7 +47,7 @@ class UnidadeProdutoController extends Controller
      */
     public function create()
     {
-        return view('estoque::produto.unidade.form', $this->dadosTemplate);
+        return view('estoque::produto.unidade.form', $this->dadosTemplate)->with('notificacoes', $this->notificacoes);
     }
 
     /**
@@ -84,7 +87,7 @@ class UnidadeProdutoController extends Controller
     public function edit($id)
     {
         $unidadeProduto = UnidadeProduto::findOrFail($id);
-        return view('estoque::produto.unidade.form', $this->dadosTemplate, compact('unidadeProduto'));
+        return view('estoque::produto.unidade.form', $this->dadosTemplate, compact('unidadeProduto'))->with('notificacoes', $this->notificacoes);
     }
 
     /**
