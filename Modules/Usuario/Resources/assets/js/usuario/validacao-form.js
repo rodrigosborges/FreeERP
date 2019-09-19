@@ -1,11 +1,14 @@
-
+jQuery.validator.addMethod("verificaespaco", function(value, element) {
+    return value.indexOf(" ") == -1 ;
+  }, "<span style='color:red'>Não pode conter espaços</span>");
     $("#usuarioForm").validate({
         rules:{
             apelido:{
                 required:true,
                 minlength: 3,
                 maxlength:50,
-                remote: main_url+'/usuario/check-unique/'+usuario_id
+                remote: main_url+'/usuario/check-unique/'+usuario_id,
+                verificaespaco: true
             },
             avatar: {
                 accept: "image/jpeg,image/png",
@@ -22,11 +25,13 @@
             password:{
                 required:true,
                 minlength:8,
-                maxlength:16
+                maxlength:16,
+                verificaespaco: true
             },
             repeat_password:{
                 required:true,
-                equalTo: "#password"
+                equalTo: "#password",
+                verificaespaco: true
             },
         },
         messages:{

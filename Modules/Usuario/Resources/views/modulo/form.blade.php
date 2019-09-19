@@ -15,7 +15,7 @@
                 </h5>
             </div>
             <div>
-                <form class="card-body d-flex flex-column" method="post" action="{{ url(isset($modulo) ? 'modulo/'.$modulo->id : 'modulo') }}">
+                <form id="moduloForm" class="card-body d-flex flex-column" method="post" action="{{ url(isset($modulo) ? 'modulo/'.$modulo->id : 'modulo') }}">
                     @if(isset($modulo))
                         @method('PUT')
                     @endif
@@ -40,4 +40,16 @@
         </div>
     </div>
 </div>
+
+@section('js')
+<script type="text/javascript" src="{{asset('js/jquery.validate.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+
+<script>
+var modulo_id = "{{isset($modulo) ? $modulo->id : ''}}"
+</script>
+<script src="{{Module::asset('usuario:js/modulo/validacao-form.js')}}"></script>
+@endsection
+
 @endsection
