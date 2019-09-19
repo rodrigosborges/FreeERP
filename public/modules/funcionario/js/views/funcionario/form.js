@@ -64,7 +64,7 @@ $(document).on("click", ".add-doc", function() {
     }
     else if($(".doc").length < 4) {
         clonar(".doc", "#documentos", true)
-        $(".doc").find(".documentos").val("")
+        $(".doc").last().find(".documentos").val("")
     } else {
 
         Swal.fire({
@@ -95,45 +95,20 @@ $(document).on('change', '.custom-file-input',function(e){
 //###########################
 
 //ADICIONA E REMOVE DEPENDENTES
-$(document).on("click", ".add-dep", function() {
-    if($(".dep").hasClass("d-none")) {
-        $(".dep").removeClass("d-none")
-        $(".dependentes").hide().removeAttr('disabled').fadeIn()
-    }
-    else if($(".dep").length < 4) {
-        clonar(".dep", "#dependentes", true)
-        $(".dep").last().find(".dependentes").val("")
-        $(".dep").last().find(".cpf").mask('000.000.000-00')
-    } else {
 
-        Swal.fire({
-            type: 'warning',
-            title: 'Atenção!',
-            text: 'Podem ser adicionados no máximo '+$(".dep").length+' dependentes',
-        })
- 
-    }
-})
-
-$(document).on("click", ".del-dep", function() {
-    if($(".dep").length == 1) {
-        $(".dep").last().find(".dependentes").val("")
-        $('.dep').addClass('d-none')
-        $(".dependentes").attr('disabled', 'disabled')
-    } else {
-        remover(".dep", $(this))
-    }
-})
 //############################
+
+//#############
 //Cursos Funcionarios
 $(document).on("click", ".add-curso", function() {
-    if($(".cur").hasClass("d-none")) {
-        $(".cur").removeClass("d-none")
+    if($(".cur").hasClass("c-none")) {
+        $(".cur").removeClass("c-none")
         $(".cursos").fadeIn()
     }
     else if($(".cur").length < 4) {
         clonar(".cur", "#cursos", true)
-        $(".cur").find(".cursos").val("")
+        $(".cur").last().find(".cursos").val("")
+       // $(".dep").last().find(".cpf").mask('000.000.000-00')
     } else {
 
         Swal.fire({
@@ -148,21 +123,14 @@ $(document).on("click", ".add-curso", function() {
 $(document).on("click", ".del-cur", function() {
     if($(".cur").length == 1) {
         $(".cur").last().find(".cursos").val("")
-        $('.cur').addClass('d-none')
+        $('.cur').addClass('c-none')
         $(".cursos").attr('disabled', 'disabled')
     } else {
         remover(".cur", $(this))
     }
 })
 
-//ADICIONA PPOSIÇÃO DO BTN
-$(document).on("click", ".btn-alg", function() {
-    if($(".btnx").hasClass("d-none")) {
-        $(".btnx").removeClass("d-none")
-    }
-})
-//############################
-
+//###################
 //ENDEREÇO
 $('.estados').change(function() {
     atualizarCidades($(".estados option:selected").data("uf"), $(".estados").data('cidade'))
@@ -254,9 +222,20 @@ $('#cep').blur(function(){
         }
     }
 });
-
+$(document).ready(function(){
+    $(".sendForm").on('click',function(){
+        if($("#form").valid()){
+            $(".sendForm").prop("disabled",true) 
+            $("#form").submit()  
+            console.log('success')
+        }
+    })
+}) 
 //MÁSCARAS
 $(".data").mask('00/00/0000')
 $("#cep").mask('00000-000')
 $("#numero").mask('99999')
 $(".cpf").mask('000.000.000-00')
+$(".pis").mask('000.00000.00-0')
+$(".ctps").mask('90000000')
+$(".serie-ctps").mask('00000')

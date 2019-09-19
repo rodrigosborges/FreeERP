@@ -168,7 +168,7 @@
                             @if($data['model'])
                                 <input type="hidden" name="documentos[pis][id]" value="{{$data['model']->pis()->id}}">
                             @endif
-                            <input required type="text" placeholder="PIS" name="documentos[pis][numero]" id="pis" class=" rounded-right
+                            <input required type="text" placeholder="PIS" name="documentos[pis][numero]" id="pis" class="pis rounded-right
                              form-control" value="{{ old('documentos.pis.numero', $data['model'] ? $data['model']->pis()->numero : '') }}">
                             <input required type="hidden" name="documentos[pis][tipo_documento_id]" value="7">
                         </div>
@@ -193,7 +193,7 @@
                             @if($data['model'])
                                 <input  class="form-control" type="hidden" name="documentos[numero_ctps][id]" value="{{$data['model']->numero_ctps()->id}}">
                             @endif
-                            <input required type="text" class="form-control rounded-right" placeholder="Numero CTPS" name="documentos[numero_ctps][numero]" id="numero_ctps" class="form-control numero_ctps" value="{{ old('documentos.numero_ctps.numero', $data['model'] ? $data['model']->numero_ctps()->numero : '') }}">
+                            <input required type="text" class="form-control rounded-right ctps numero_ctps " placeholder="Numero CTPS" required name="documentos[numero_ctps][numero]" id="numero_ctps"  value="{{ old('documentos.numero_ctps.numero', $data['model'] ? $data['model']->numero_ctps()->numero : '') }}">
                             <input required type="hidden" name="documentos[numero_ctps][tipo_documento_id]" value="4">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.numero_ctps.numero') }}</span>
@@ -213,7 +213,7 @@
                             @if($data['model'])
                                 <input type="hidden" class="form-control" name="documentos[serie_ctps][id]" value="{{$data['model']->serie_ctps()->id}}">
                             @endif
-                            <input required type="text" placeholder="Série da CTPS" name="documentos[serie_ctps][numero]" id="serie_ctps" class="form-control rounded-right" value="{{ old('documentos.serie_ctps.numero', $data['model'] ? $data['model']->serie_ctps()->numero : '') }}">
+                            <input required type="text" placeholder="Série da CTPS" name="documentos[serie_ctps][numero]" id="serie_ctps" class="serie-ctps form-control rounded-right" value="{{ old('documentos.serie_ctps.numero', $data['model'] ? $data['model']->serie_ctps()->numero : '') }}">
                             <input required type="hidden" name="documentos[serie_ctps][tipo_documento_id]" value="8">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.serie_ctps.numero') }}</span>
