@@ -5,7 +5,8 @@ jQuery.validator.setDefaults({
     keyUp: true,
 
     errorPlacement: function (error, e) {
-        error.hide().appendTo(e.parents('.form-group')).fadeIn()
+        console.log(e.parents('.form-group').find('.error'))
+            error.hide().appendTo(e.parents('.form-group')).fadeIn()
     },
 
     highlight: function (e) {
