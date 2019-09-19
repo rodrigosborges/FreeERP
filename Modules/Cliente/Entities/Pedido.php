@@ -32,12 +32,17 @@ class Pedido extends Model
         
         )->get();
     }
-
-    public function vl_total_pedido(){
-        $valor = 0;
+    public function vl_itens_desconto(){
+        $valor  = 0;
         foreach($this->vl_total_itens() as $pedido){
             $valor += $pedido->valor_total;
         }
+        return $valor;
+    }
+
+    public function vl_total_pedido(){
+        $valor = $this->vl_itens_desconto();
+
         
         if($valor > 0){
             if($this->desconto > 0){
