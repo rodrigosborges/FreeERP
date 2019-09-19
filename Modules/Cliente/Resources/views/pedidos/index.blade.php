@@ -2,14 +2,38 @@
 @section('title')
 Cadastro de Compras - {{ $cliente->nome }}
 @endsection
-@section('body')
-<div class = "container border">
+@section('content')
+<div class = "card">
+      <div id="opcoes" class="card-header flex">
+      <div class="row col-12"><h3>Compras cliente {{ $cliente->nome }}</h3></div>
+        <div class="row input-group justify-content-between">  
+              <form class="d-flex form-inline justify-content-between" action="">    
+                  <div class="col-4">
+                      <label class="mr-sm-2" for="dtInicio">Data Inicial</label>
+                        <input type="date" id="dtInicio" class="form-control">
+                  </div>
+                  <div class="col-4">
+                      <label class="mr-sm-2" for="dtFim">Data Final</label>
+                        <input type="date" id="dtFim" class="form-control">
+                  </div>
+                  <div class="col-3 align-self-end">
+                    <button class="btn btn-outline-info d-flex" type="submit">
+                        <i class="material-icons">
+                            search
+                        </i> Buscar
+                    </button>
+                  </div>
+                </form>
 
-      <div id="opcoes" class="row d-flex pt-2 pr-2 justify-content-end">
-         <a class="btn btn-primary col-md-3" href="/cliente/{{$cliente->id}}/pedido/novo" style="color: white;">Adicionar Compra</a>
+              <div class="align-self-end text-right">
+                  <a class="btn btn-primary" href="/cliente/{{$cliente->id}}/pedido/novo" style="color: white;">Adicionar Compra</a>
+              </div>
+
+            </div>
+            
       </div>
       
-      <ul class="nav nav-tabs" id="tab" role="tablist">
+      <ul class="nav nav-tabs justify-content-center" id="tab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" href="#ativos" data-toggle="tab" id="ativos-tab" data-toggle="tab" role="tab" aria-controls="home" 
           aria-selected="true">Ativos</a>
@@ -46,10 +70,10 @@ Cadastro de Compras - {{ $cliente->nome }}
                               <a href="{{url("/cliente/pedido/".$pedido->id )}}" 
                                   class="btn btn-sm btn-warning" name="edit">Editar</button>
                               </a>
-                              <form action={{url( "/cliente/pedido/".$pedido->id ) }} method="post" onsubmit="return confirmar({{$pedido->id}});">
+                              <form action={{url( "/cliente/pedido/".$pedido->id ) }} method="post">
                                   {{method_field('DELETE')}}
                                   {{ csrf_field() }}
-                                  <button type="submit" class="btn btn-sm btn-danger" name="rem">Excluir</button>
+                                  <button type="submit" class="btn btn-sm btn-danger" name="delete">Excluir</button>
                               </form>
 
                           </div>
@@ -129,12 +153,11 @@ Cadastro de Compras - {{ $cliente->nome }}
                         <td>{{ ($pedido->desconto). "%" }}</td>
                         <td><!--BOTOES -->
                           <div class="flex row justify-content-around">
-                              <form action={{url( "/cliente/pedido/".$pedido->id ) }} method="post" onsubmit="return restaurar({{$pedido->id}});">
+                              <form action={{url( "/cliente/pedido/".$pedido->id ) }} method="post" onsubmit=" return restaurar( {{$pedido->id}} )">
                                   {{method_field('DELETE')}}
                                   {{ csrf_field() }}
                               <button type="submit" class="btn btn-sm btn-success" name="restaurar">Restaurar</button>
                               </form>
-
                           </div>
                         </td>
 
@@ -191,16 +214,26 @@ Cadastro de Compras - {{ $cliente->nome }}
       </div>
     </div>
   </div>
+  @endsection
+  @section('script')
   <script>
-    function confirmar(pedido_id){
-      confirmado = confirm("Excluir pedido id: " +pedido_id+" ?");
-      return confirmado;
-    }
 
-    function restaurar(pedido_id){
-      restaurar = confirm("Restaurar pedido id: " +pedido_id+" ?");
-      return restaurar;
-    }
+    // function deletar(pedido_id){
+    //   confirmado = confirm("Excluir pedido id: " +pedido_id+" ?");
+    //   return confirmado;
+    // }
+
+    $("[name='delete']").on("click", function(e){
+        if(!confirm("Excluir pedido?")){
+            e.preventDefault();
+        }
+    })
+
+    $("[name='restaurar']").on("click", function(e){
+        if(!confirm("Restaurar pedido?")){
+            e.preventDefault();
+        }
+    })
 
   </script>
 
