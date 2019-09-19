@@ -126,7 +126,7 @@ class EstoqueController extends Controller
             'url' => 'estoque/' . $id,
             'titulo' => 'Editar Estoque',
             'estoque' => $estoque,
-            'produtos' => Produto::all(),
+            'produtos' => Produto::withTrashed()->get(),
             'produto' => $estoque->produtos->last(),
             'tipoUnidade' => TipoUnidade::all()->except($data2),
 
