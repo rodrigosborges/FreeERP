@@ -13,11 +13,17 @@ use DB;
 class ClienteController extends Controller
 {
     
-    public function index() {
-        $clientes = Cliente::paginate(10);
-        $clientesDeletados = Cliente::onlyTrashed()->paginate(10);
+    public function index(Request $request) {
+        if($request->busca){
+            $clientes = Cliente::where('nome', 'LIKE', '%'.$request->busca.'%')->paginate(10);
+            $clientesDeletados = Cliente::onlyTrashed()->where('nome', 'LIKE', '%'.$request->busca.'%')->paginate(10);
+        }else {
+            $clientes = Cliente::paginate(10);
+            $clientesDeletados = Cliente::onlyTrashed()->paginate(10);
+        }
 
         return view('cliente::cliente.index', compact('clientes','clientesDeletados'));
+        
     }
 
     
@@ -28,12 +34,6 @@ class ClienteController extends Controller
         return view('cliente::cliente.form', compact('tipo_cliente', 'tipo_telefone', 'estados'));
     }
 
-    public function buscar(Request $request){
-        $clientes = Cliente::busca($request->busca);
-        $clientesDeletados = Cliente::buscaInativos($request->busca);
-    
-    return view('cliente::cliente.index', compact('clientes','clientesDeletados'));
-    }
 
     public function store(CreateClienteRequest $request) {
         DB::beginTransaction();
