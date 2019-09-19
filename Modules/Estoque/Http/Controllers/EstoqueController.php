@@ -67,7 +67,9 @@ class EstoqueController extends Controller
      */
     public function store(Request $request)
     {
+        //   dd($request->all());
 
+        //return $unidades;
         DB::beginTransaction();
         try {
 
@@ -166,15 +168,16 @@ class EstoqueController extends Controller
     }
     public function buscaUnidades(Request $request)
     {
+        $itens =  DB::table('estoque_has_produto')->select('estoque_id')->where('produto_id', $request->id)->get();
         $data = array();
-        $itens = DB::table('estoque')->select('tipo_unidade_id')
-            ->join('estoque_has_produto', function ($join) use ($request) {
-                $join->where('produto_id', $request->id);
-            })->get();
         foreach ($itens as $item)
-            $data[] = $item->tipo_unidade_id;
-        $unidadesDisponiveis = TipoUnidade::all()->except($data);
-        return json_encode($unidadesDisponiveis);
+            $data[] = $item->estoque_id;
+        $unidades = DB::table('estoque')->whereIn('id', $data)->get();
+        $data2 = array();
+        foreach ($unidades as $unidade)
+            $data2[] = $unidade->tipo_unidade_id;
+        $unidades = TipoUnidade::all()->except($data2);
+        return json_encode($unidades);
     }
     public function verificaAlteracoes($request, $estoque)
     {
@@ -242,29 +245,27 @@ class EstoqueController extends Controller
     {
         $flag = 0;
         $notificacoes = $this->verificarNotificacoes();
-        if($request->pesquisa == null){
+        if ($request->pesquisa == null) {
             $itens = Estoque::paginate(10);
-            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'))->with('success', 'Resultado da Pesquisa');
-
-        }else{  
-            $itens = Estoque::
-            join('estoque_has_produto', 'estoque_has_produto.estoque_id', '=', 'estoque.id')
-            ->join('produto', 'produto.id', '=', 'estoque_has_produto.produto_id') 
-            ->where('produto.nome', 'like', '%' . $request->pesquisa . '%')->paginate(10);   
-            return view('estoque::estoque.index', $this->dadosTemplate, compact('notificacoes','itens','flag'))->with('success', 'Resultado da Pesquisa');
-  
+            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens', 'flag'))->with('success', 'Resultado da Pesquisa');
+        } else {
+            $itens = Estoque::join('estoque_has_produto', 'estoque_has_produto.estoque_id', '=', 'estoque.id')
+                ->join('produto', 'produto.id', '=', 'estoque_has_produto.produto_id')
+                ->where('produto.nome', 'like', '%' . $request->pesquisa . '%')->paginate(10);
+            return view('estoque::estoque.index', $this->dadosTemplate, compact('notificacoes', 'itens', 'flag'))->with('success', 'Resultado da Pesquisa');
         }
     }
 
-    public function notificacoes(){
+    public function notificacoes()
+    {
         $itens = Estoque::where('quantidade', '<=', DB::raw('quantidade_notificacao'))->paginate(10);
         $notificacoes = $this->verificarNotificacoes();
         return view('estoque::estoque.notificacoes.index', compact('itens', 'notificacoes'));
     }
 
-    public static function verificarNotificacoes(){
+    public static function verificarNotificacoes()
+    {
         $itens = Estoque::where('quantidade', '<=', DB::raw('quantidade_notificacao'))->paginate(10);
         return count($itens);
     }
-
 }

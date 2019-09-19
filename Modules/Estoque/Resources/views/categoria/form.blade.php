@@ -52,12 +52,12 @@
 
         function doneTyping() {
             var valor = $('.nome').val().trim();
-           
-            
+
+
             $('.nome').css('opacity', '0.8');
             $('.enviar').attr('disabled', true);
-        
-            
+
+
             buscaNome()
         }
         $(".nome").bind('paste', function(e) {
@@ -77,27 +77,18 @@
             }
             clearTimeout(typingTimer);
             if ($('#myInput').val) {
-               
+
                 typingTimer = setTimeout(doneTyping, doneTypingInterval);
-                
             }
             var categoria = $('#categoria-id').val();
-
-
         })
-
     })
-
     function buscaNome() {
-        
-       
         var string = $('.nome').val().trim();
         if (string.length > 0) {
-        $('.img-loader').fadeIn();
-        var categoria = $('.categoria-id').val()
+            $('.img-loader').fadeIn();
+            var categoria = $('.categoria-id').val()
 
-
-        
             $.ajax({
                 url: '/verificaNomeCategoria',
                 type: 'post',
@@ -105,20 +96,14 @@
                     'nome': string,
                     'categoria-id': categoria,
                     '_token': $('input[name=_token]').val(),
-
-
                 },
                 dataType: 'json'
-
             }).done(function(data) {
                 $('#nome').css('opacity', '1');
-
                 console.log(data);
                 var mensagem;
-                if (data !=0) {
-                    //    alert('Ja tem');
+                if (data != 0) {
                     mensagem = "Esta categoria já está cadastrada"
-
                     $('.img-loader').hide()
                     $('.mensagem-nome').removeClass('alert-success')
                     $('.mensagem-nome').addClass('alert-warning')
