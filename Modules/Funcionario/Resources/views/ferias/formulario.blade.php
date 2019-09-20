@@ -49,9 +49,13 @@
         <input type="text" hidden name="limite_periodo_aquisitivo" id="limite_periodo_aquisitivo" value="{{$data['limite_periodo_aquisitivo']}}">
         <input type="text" name="funcionario_id" style="display:none;" value="{{$data['funcionario']->id}}">
 
+
+        
+
             <div class="form-group col-4">
                 <label for="data_inicio">Data Início:</label>
-                <input type="date" name="data_inicio" id="data_inicio" class="form-control">
+                <input type="date" name="data_inicio" id="data_inicio" class="form-control" >
+                {{$errors->first('data_inicio')}}
             </div>
             
             <div class="form-group col-4">

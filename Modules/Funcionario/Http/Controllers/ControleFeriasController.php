@@ -113,8 +113,7 @@ class ControleFeriasController extends Controller
         $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
         $limite_periodo_aquisitivo->add(new DateInterval('P330D')); // Essa linha adiciona 330 dias(11 meses)
 
-        
-       $teste = DB::table('controle_ferias')->where('funcionario_id', '=', $id)->count();
+        $teste = DB::table('controle_ferias')->where('funcionario_id', '=', $id)->count();
         
         if($teste > 0){
             $saldo_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;

@@ -3,12 +3,14 @@
 namespace Modules\Funcionario\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Modules\Funcionario\Http\Requests\CreateFerias;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Funcionario,Cargo,Ferias, ControleFerias, Documento};
 use DB;
 use DateTime;
 use DateInterval;
+use Carbon\Carbon;
 
 class FeriasController extends Controller
 {
@@ -39,7 +41,7 @@ class FeriasController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CreateFerias $request)
     {
         DB::beginTransaction();
 
@@ -48,7 +50,7 @@ class FeriasController extends Controller
             /*Estas linhas fazer com que seja possivel a inversão das datas sem dar problemas,
              só é preciso agora passar o formato no create para salvar no banco.*/
             $inicio_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $request['inicio_periodo_aquisitivo']);
-            $fim_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $request['fim_periodo_aquisitivo']);
+            $fim_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $request['fim_periodo_aquisitivo'])->format('Y-m-d');
             $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $request['limite_periodo_aquisitivo']);
 
             //Esta linha verifica se já há algum registro na tabela controle_ferias.
@@ -63,16 +65,17 @@ class FeriasController extends Controller
             } else {
                 $saldo_periodo = 30 - $request->dias_ferias;
             }
-        
+
             $controleFerias = ControleFerias::Create([
                 'inicio_periodo_aquisitivo'  => $inicio_periodo_aquisitivo->format('Y-m-d'),
-                'fim_periodo_aquisitivo'     => $fim_periodo_aquisitivo->format('Y-m-d'),
+                'fim_periodo_aquisitivo'     => $fim_periodo_aquisitivo,
                 'limite_periodo_aquisitivo'  => $limite_periodo_aquisitivo->format('Y-m-d'),
                 'saldo_total'                => 0,
                 'saldo_periodo'              => $saldo_periodo,
                 'funcionario_id'             => $request['funcionario_id']
             ]);
-  
+                
+            
             if($request->pagamento_parcela13 == "on"){
                 $pagamento13 = true;
             }else{
@@ -91,7 +94,7 @@ class FeriasController extends Controller
                 'funcionario_id'        => $request['funcionario_id'],
                 'controle_ferias_id'    => $controleFerias->id
             ]);
-          
+            
 			DB::commit();
 			return redirect('funcionario/ferias')->with('success', 'Férias cadastrada com sucesso!');
 		} catch(Exception $e){
@@ -125,7 +128,7 @@ class FeriasController extends Controller
                 
         return view('funcionario::ferias.show', compact('ferias', 'funcionario','cargo', 'inicio_periodo_aquisitivo', 'fim_periodo_aquisitivo', 'carteiraTrabalho', 'serieCarteiraTrabalho'));
     }
-
+    
     public function listar($id)
     {   
         $data = [
@@ -186,7 +189,7 @@ class FeriasController extends Controller
             $saldo_periodo =  ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo + ($dias_ferias_banco - $dias_ferias_inseridos);
             
         }
-        
+       
         DB::beginTransaction();
 
         try {
