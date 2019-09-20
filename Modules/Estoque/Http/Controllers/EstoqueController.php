@@ -70,6 +70,8 @@ class EstoqueController extends Controller
         //   dd($request->all());
 
         //return $unidades;
+       
+ 
         DB::beginTransaction();
         try {
 
@@ -110,19 +112,18 @@ class EstoqueController extends Controller
      */
     public function edit($id)
     {
-
+        
         $notificacoes = $this->verificarNotificacoes();
         $estoque = Estoque::findOrFail($id);
         $idProduto = $estoque->produtos->last()->id;
         $data2 = array();
-        $itens = DB::table('estoque')->select('tipo_unidade_id')
+        $itens = DB::table('estoque')
             ->join('estoque_has_produto', function ($join) use ($idProduto) {
-                $join->where('produto_id', $idProduto);
-            })->get();
+                $join->where('produto_id', $idProduto)->whereraw('estoque.id = estoque_has_produto.estoque_id');
+            })->get();          
         foreach ($itens as $item)
             if ($item->tipo_unidade_id != $estoque->tipo_unidade_id)
                 $data2[] = $item->tipo_unidade_id;
-
         $data = [
             'button' => 'atualizar',
             'url' => 'estoque/' . $id,
@@ -168,13 +169,11 @@ class EstoqueController extends Controller
     }
     public function buscaUnidades(Request $request)
     {
-        $itens =  DB::table('estoque_has_produto')->select('estoque_id')->where('produto_id', $request->id)->get();
-        $data = array();
-        foreach ($itens as $item)
-            $data[] = $item->estoque_id;
-        $unidades = DB::table('estoque')->whereIn('id', $data)->get();
-        $data2 = array();
-        foreach ($unidades as $unidade)
+        $itens = DB::table('estoque')
+            ->join('estoque_has_produto', function ($join) use ($request) {
+                $join->where('produto_id', $request->id)->whereraw('estoque.id = estoque_has_produto.estoque_id');
+            })->get();
+        foreach ($itens as $unidade)
             $data2[] = $unidade->tipo_unidade_id;
         $unidades = TipoUnidade::all()->except($data2);
         return json_encode($unidades);

@@ -14,12 +14,16 @@
         <div class="col-lg-6  col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="categoria_id">Produto</label>
+                @if($data['estoque'])
+                <input type="text" disabled="disabled" class="form-control" value ="{{$data['estoque']->produtos->last()->nome}}">
+                @else
                 <select class="custom-select produto_id" id="produto_id" name="produto_id">
                     <option value="-1">Selecione</option>
                     @foreach($data['produtos'] as $produto)
                     <option value="{{$produto->id}}" {{isset($data['estoque']) && $data['produto']->id==$produto->id?'selected':''}}>{{$produto->nome}}</option>
                     @endforeach
                 </select>
+                @endif
             </div>
         </div>
 
