@@ -1,7 +1,7 @@
-@extends('estoque::template')
+@extends('estoque::estoque.estoqueTemplate')
 @section('title', 'Estoque do Produto #'.$e->produtos->last()->id)
 
-@section('content')
+@section('body')
 
     
     <div class="container" style="justify-content: center">

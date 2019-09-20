@@ -23,7 +23,7 @@ class MovimentacaoEstoqueController extends Controller
      */
     public function index()
     {
-        $movimentacao = MovimentacaoEstoque::paginate(10);
+        $movimentacao = MovimentacaoEstoque::orderBy('created_at', 'DESC')->paginate(10);
         return view('estoque::estoque.movimentacao.index', compact('movimentacao'))->with('notificacoes', $this->notificacoes);
     }
 
