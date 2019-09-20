@@ -11,24 +11,29 @@ $('#pesquisa').keyup(function(){
             data: {query:query},
             dataType: 'json',
             success:function(data){
-                // var dataNomes = []
-
-                // for(i=0;i < data.length; i++){
-                //     dataNomes.push(data[i].nome)
-                // }
+                
                 $('#pesquisa').autocomplete({
                     source: data,
+                  
                     select: function (e, i) {
+                        
                         console.log(i)
                         if (ids.indexOf(i.item.value) === -1) {
                             ids.push(i.item.value);
+                            $("#arrayInteressados").val(ids)
                             console.log(ids)
                             $("#interessados").append('<div class="interessado"><i class="material-icons trash">delete</i><span data-id="'+i.item.value+'" class="del">'+i.item.label+'</span></div>')
                         } else if (ids.indexOf(i.item.value) > -1) {
                             console.log(i.item.value + ' nome já selecionado.');
                         }
+
+                        $("#pesquisa").val('')
+                        return false
+   
                     }
+                    
                 })
+                
             }
             
         })
@@ -39,12 +44,18 @@ $('#pesquisa').keyup(function(){
 
 $(document).on("click", ".trash", function() {
 
-    let id = $(this).parent().find('span').data('id')
-
-    ids.splice(ids.find((val) => val === id))
-
     $(this).parent().remove()
-    console.log(nomes);
+
+    let id = $(this).parent().find('span').data('id')
+    console.log('ID do abençoado: '+id)
+
+    let index = ids.indexOf(id)
+
+    if(index > -1){
+        ids.splice(index,1)
+    }
+
+    console.log(ids);
 })
 
 

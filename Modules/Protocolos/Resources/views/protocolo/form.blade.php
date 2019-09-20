@@ -17,12 +17,9 @@
                 <div class="form-group">
                     <label for="nome" class="control-label">Interessados: <span class="required-symbol">*</span></label>
                         <div class="input-group">
-                        @foreach(old('interessados', $data['interessados']) as $key => $interessado)
-                            @if($data['model'])
-                                <input type="hidden" value="{{isset($interessado->id) ? $interessado->id : ''}}" name="interessados[{{$key}}][id]">
-                            @endif
-                            
-                        @endforeach
+                       
+                            <input id="arrayInteressados" type="hidden" value="{{isset($interessado->id) ? $interessado->id : ''}}" name="interessados">
+                           
                         <div id="interessados" class="interessados">
 
                         </div>

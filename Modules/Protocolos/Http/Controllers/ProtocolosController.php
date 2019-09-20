@@ -77,7 +77,16 @@ class ProtocolosController extends Controller
      */
     public function store(Request $request){
 
-        
+
+        $interessados = explode(',', $request['interessados']);
+
+        $interessadosArray = [];
+
+        foreach($interessados as $interessado) {
+            $interessadosArray[] = [
+                'interessado_id' => $interessado
+            ];
+        }
 
         DB::beginTransaction();
 
@@ -90,16 +99,18 @@ class ProtocolosController extends Controller
                 'setor_id'              => $request->protocolo['setor_id']
             ]);
             
-            foreach($request->interessados as $interessado){
+            // foreach($request->interessados as $interessado){
 
-                $interessado = Interessado::create($interessado);
+            //     $interessado = Interessado::create($interessado);
 
-                $protocolo->interessado()->attach([
+                // $protocolo->interessado()->attach([
 
-                    'interessado_id' => $interessado->id
+                //     'interessado_id' => $interessado->id
 
-                ]);
-            }
+                // ]);
+
+                $protocolo->interessado()->attach($interessadosArray);
+           // }
 
             DB::commit();
             

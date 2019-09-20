@@ -26,7 +26,7 @@ class Protocolo extends Model
 
     //Relação com a tabela interessado 
     public function interessado(){
-        return $this->belongsToMany('Modules\Protocolos\Entities\Interessado');
+        return $this->belongsToMany('Modules\Protocolos\Entities\Interessado', 'protocolo_has_interessado', 'protocolo_id', 'interessado_id');
     }
 
     //Relação com a tabela setor
