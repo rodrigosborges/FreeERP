@@ -56,20 +56,20 @@ class FeriasController extends Controller
 
             //Verificação se há, se houver, ele pega o último atributo que está salvo no banco e subtrai com os dias inseridos no input.
             if($teste > 0){
-                $saldoTotalBanco = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_total;
-                $saldo_total = $saldoTotalBanco - $request->dias_ferias;
+                $saldoTotalBanco = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo;
+                $saldo_periodo = $saldoTotalBanco - $request->dias_ferias;
 
             //Senão, ele subtrai os dias inseridos por 30, pois a cada periodo aquisitivo o funcionário tem direito a 30 dias.     
             } else {
-                $saldo_total = 30 - $request->dias_ferias;
+                $saldo_periodo = 30 - $request->dias_ferias;
             }
         
             $controleFerias = ControleFerias::Create([
                 'inicio_periodo_aquisitivo'  => $inicio_periodo_aquisitivo->format('Y-m-d'),
                 'fim_periodo_aquisitivo'     => $fim_periodo_aquisitivo->format('Y-m-d'),
                 'limite_periodo_aquisitivo'  => $limite_periodo_aquisitivo->format('Y-m-d'),
-                'saldo_total'                => $saldo_total,
-                'saldo_periodo'              => 0,
+                'saldo_total'                => 0,
+                'saldo_periodo'              => $saldo_periodo,
                 'funcionario_id'             => $request['funcionario_id']
             ]);
   
@@ -147,7 +147,7 @@ class FeriasController extends Controller
         $data = [
             'title' => 'Editar Férias',
             'ferias' => Ferias::where('funcionario_id','=',$id)->get()->last(),
-            'saldo_total' => ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_total
+            'saldo_periodo' => ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo
         ];
         
         return view('funcionario::ferias.editaFerias',compact('data'));
@@ -167,19 +167,35 @@ class FeriasController extends Controller
             $pagamento13 = false;
         }
 
-        $saldo_total = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_total;
+        //Esta query pega o ultimo saldo disponível do periodo 
+        $saldo_periodo = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo;
         
+        //Esta variável armazena o valor no campo de dias que o usuário digitou na tela
         $dias_ferias_inseridos = $request->dias_ferias;
+        
+        //Esta guarda o valor que já está cadastada no banco os dias de férias marcados.
+        $dias_ferias_banco = Ferias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->dias_ferias;
 
-        if($dias_ferias_inseridos > Ferias::where('funcionario_id', '=', $request['funcionario_id'])) {
-            $saldo_total = $dias_ferias_inseridos - 
+        /*O if verifica se os dias que o usuário digitou são maiores do que está guardado no banco, caso for, 
+        ele pega o saldo e subtrai da diferença dos dias inseridos com os ja cadastrados no banco (pois o novo saldo será menor que o cadastrado), senão,
+        o saldo_periodo é somado com a diferença entre os dias de férias ja cadastrado no banco com os nvoos dias inseridos (o novo saldo será maior que o cadastrado anteriormente)*/
+        if($dias_ferias_inseridos > $dias_ferias_banco) {
+            $saldo_periodo = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo - ($dias_ferias_inseridos - $dias_ferias_banco);
+            
+        } else {
+            $saldo_periodo =  ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo + ($dias_ferias_banco - $dias_ferias_inseridos);
+            
         }
-     
         
         DB::beginTransaction();
 
         try {
+            
             $ferias = Ferias::findOrFail($id);
+            $controleFerias = ControleFerias::findOrFail($id);
+            
+            $controleFerias->update(['saldo_periodo' => $saldo_periodo]);
+        
             $ferias->update([
                 'data_inicio'          => date('Y-m-d', strtotime($request['data_inicio'])),
                 'data_fim'             => date('Y-m-d', strtotime($request['data_fim'])),

@@ -117,10 +117,10 @@ class ControleFeriasController extends Controller
        $teste = DB::table('controle_ferias')->where('funcionario_id', '=', $id)->count();
         
         if($teste > 0){
-            $saldo_total = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_total;
+            $saldo_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
             
         } else {
-            $saldo_total = 30;
+            $saldo_periodo = 30;
         }
         
         /*O formato da variavel limite_periodo_aquisito é passado dentro do array pois ele é considerado um objeto, para que ele seja uma string,
@@ -133,7 +133,7 @@ class ControleFeriasController extends Controller
             'inicio_periodo_aquisitivo' => $inicio_periodo_aquisitivo,
             'fim_periodo_aquisitivo'    => $fim_periodo_aquisitivo,
             'limite_periodo_aquisitivo' => $limite_periodo_aquisitivo->format('d/m/Y'),
-            'saldo_total'               => $saldo_total 
+            'saldo_periodo'             => $saldo_periodo 
         ];
 
         return view('funcionario::ferias.formulario', compact('data'));

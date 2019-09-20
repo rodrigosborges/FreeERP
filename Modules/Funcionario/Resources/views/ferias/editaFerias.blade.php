@@ -42,7 +42,7 @@
 
             <div class="form-group col-3">
                 <label for="saldo_total">Férias a marcar</label>
-                <input type="text" name="saldo_total" id="saldo_total" class="form-control" value="{{$data['saldo_total']}}" disabled>
+                <input type="text" name="saldo_periodo" id="saldo_periodo" class="form-control" value="{{$data['saldo_periodo']}}" disabled>
             </div>
         </div>
 
