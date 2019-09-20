@@ -17,7 +17,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="material-icons">calendar_today</i></span>    
                     </div>
-                    <input type="text" required name="data" id="data" class="form-control" value="{{ isset($pedido->data) ? $pedido->data : old('data', '') }}">
+                    <input type="text" required name="data" placeholder="DD/MM/AAAA" id="data" class="form-control" value="{{ isset($pedido->data) ? $pedido->data : old('data', '') }}">
                     
                 </div>                        
             </div>
@@ -47,7 +47,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
         <hr>
         <div class="produtos">
             <h3>Produto(s)</h3>
-            
+        
             <div class="row produto ">
                 <hr>
                 <div class="col-lg col-md form-group">
@@ -84,6 +84,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                 </div>
                 <hr>
             </div>
+
         </div>
         <div class="text-center">
             <button type="button" id="adicionar-produto" class="btn btn-success"><strong>+</strong></button>
