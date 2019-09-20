@@ -167,8 +167,14 @@ class FeriasController extends Controller
             $pagamento13 = false;
         }
 
-        $teste = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get();
-        return $teste;
+        $saldo_total = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_total;
+        
+        $dias_ferias_inseridos = $request->dias_ferias;
+
+        if($dias_ferias_inseridos > Ferias::where('funcionario_id', '=', $request['funcionario_id'])) {
+            $saldo_total = $dias_ferias_inseridos - 
+        }
+     
         
         DB::beginTransaction();
 
