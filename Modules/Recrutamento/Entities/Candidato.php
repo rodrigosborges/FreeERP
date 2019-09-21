@@ -28,6 +28,12 @@ class Candidato extends Model
         
     }
 
+    //Relação Com a tabela Vaga
+    public function mensagem(){
+        return $this->HasMany('Modules\Recrutamento\Entities\Mensagem','mensagem_id');
+        
+    }
+
 
 
 }

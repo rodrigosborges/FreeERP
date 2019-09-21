@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEntrevistaTable extends Migration
+class CreateCategoriaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateEntrevistaTable extends Migration
      */
     public function up()
     {
-        Schema::create('mensagem', function (Blueprint $table) {
+        Schema::create('categoria', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('candidato_id')->index('fk_entrevista_candidato1');
-            $table->string('mensagem');
-            $table->softDeletes();
+            $table->string('nome');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateEntrevistaTable extends Migration
      */
     public function down()
     {
-        Schema::drop('mensagem');
+        Schema::drop('categoria');
     }
 }
