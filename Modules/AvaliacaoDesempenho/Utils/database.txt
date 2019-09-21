@@ -1,0 +1,37 @@
+Tabelas a serem criadas: 
+
+Processos:
+- Responsavel_id - Ligaçao com funcionario
+- Data_inicio
+- Data_fim
+
+Avaliaçoes:
+- Processo_id - Ligaçao com processo
+- Responsavel_id - Ligaçao com funcionario
+- Data_inicio
+- Data_fim
+- Setor_id - Ligaçao com setor
+- Questoes_id - Ligaçao muitos pra muitos com questões
+
+Questoes:
+- Enunciado
+- 5 Campos de resposta
+- Categoria_id - Ligaçao com categoria
+
+Categorias:
+- Nome
+
+Setores:
+- Nome
+- Data_criacao
+
+Avaliados: 
+- Avaliacao_id - Ligaçao com avaliaçao
+- Responsavel_id - Ligaçao com funcionario
+
+Resultados_Gestores:
+- Avaliacao_id - Ligaçao com Avaliados
+- Resultados - 
+
+
+

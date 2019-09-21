@@ -1,0 +1,18 @@
+.dash-cards {
+    border: 1px solid #BBB; 
+    border-radius: 4px;
+    margin: 10px;
+    padding: 25px;
+}
+
+.dash-cards .card {
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2), 0 10px 28px 0 rgba(0, 0, 0, 0.19);
+}
+
+.list-label {
+    float: left;
+}
+
+.list-content {
+    float: right;
+}
