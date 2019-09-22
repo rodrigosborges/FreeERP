@@ -20,8 +20,10 @@ Route::prefix('avaliacaodesempenho')->group(function() {
     Route::post('/processos/store', 'ProcessoController@store');
     Route::get('/processos/edit/{id}', 'ProcessoController@edit');
     Route::put('/processos/{id}', 'ProcessoController@update');
-    Route::delete('/processos/{id}', 'ProcessoController@delete');
+    // Route::delete('/processos/{id}', 'ProcessoController@delete');
+    Route::get('/processos/delete/{id}', 'ProcessoController@delete');
     Route::get('/processos/restore/{id}', 'ProcessoController@restore');
+    Route::post('/processos/ajax/search', 'ProcessoController@search');
 
     Route::get('/avaliacoes', 'AvaliacaoController@index');
 

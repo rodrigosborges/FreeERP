@@ -1,10 +1,10 @@
-@extends('template')
+@extends('avaliacaodesempenho::template')
 
-@section('css')
+@section('style')
 <link href="{{Module::asset('avaliacaodesempenho:css/processos/create.css')}}" rel="stylesheet">
 @endsection
 
-@section('content')
+@section('container')
     @include('avaliacaodesempenho::processos._form')
 @endsection
 

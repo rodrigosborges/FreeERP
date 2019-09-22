@@ -2,18 +2,22 @@
 
 namespace Modules\AvaliacaoDesempenho\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\AvaliacaoDesempenho\Entities\Funcionario;
+use Modules\AvaliacaoDesempenho\Entities\Processo;
+use Modules\AvaliacaoDesempenho\Http\Requests\StoreProcesso;
 
 class ProcessoController extends Controller
 {
-    
+
     protected $moduleInfo;
 
     protected $menu;
-  
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->moduleInfo = [
             'icon' => 'android',
             'name' => 'Avaliacao Desempenho',
@@ -34,27 +38,39 @@ class ProcessoController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        return view('avaliacaodesempenho::processos/index', compact('moduleInfo','menu'));
+        return view('avaliacaodesempenho::processos/index', compact('moduleInfo', 'menu'));
     }
 
     public function create()
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+        $data = [
+            'funcionarios' => Funcionario::all(),
+        ];
 
-        return view('avaliacaodesempenho::processos/create', compact('moduleInfo','menu'));
+        return view('avaliacaodesempenho::processos/create', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function store(Request $request)
+    public function store(StoreProcesso $request)
     {
-        $moduleInfo = $this->moduleInfo;
-        $menu = $this->menu;
+        DB::beginTransaction();
 
-        // Logica de inserçao
-        $teste = $request->input();
-        echo '<pre>';print_r($teste);exit;
+        try {
 
-        return view('avaliacaodesempenho::processos/index', compact('moduleInfo','menu'));
+            $input = $request->input();
+            echo '<pre>';print_r($input);exit;
+
+            $processo = Processo::create($input);
+
+            DB::commit();
+            return redirect('/avaliacaodesempenho/processos')->with('success', 'Processo Criado com Sucesso');
+
+        } catch (\Throwable $th) {
+            // echo '<pre>';print_r($th->getMessage());exit;
+
+            return back()->with('error', 'Não foi possível cadastrar o Processo');
+        }
     }
 
     public function show($id)
@@ -66,11 +82,12 @@ class ProcessoController extends Controller
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
-        $data['processo'] = (object)[
-            'id' => $id
+        $data = [
+            'processo' => Processo::findOrFail($id),
+            'funcionarios' => Funcionario::all()
         ];
 
-        return view('avaliacaodesempenho::processos/edit', compact('moduleInfo','menu', 'data'));
+        return view('avaliacaodesempenho::processos/edit', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function update(Request $request, $id)
@@ -80,13 +97,34 @@ class ProcessoController extends Controller
 
         // Logica de inserçao
         $teste = $request->input();
-        echo '<pre>';print_r($teste);exit;
+        echo '<pre>';
+        print_r($teste);exit;
 
-        return view('avaliacaodesempenho::processos/index', compact('moduleInfo','menu'));
+        return view('avaliacaodesempenho::processos/index', compact('moduleInfo', 'menu'));
     }
 
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+
+        $term = $request->input('term');
+
+        if (empty($term)) {
+
+            $processos = Processo::all();
+
+        } else {
+
+            $processos = Processo::withTrashed()->where('nome', 'LIKE', '%' . $term . '%')
+                ->orWhere('crm', 'LIKE', '%' . $term . '%')
+                ->get();
+        }
+
+        $table = view('avaliacaodesempenho::processos/_table', compact('processos'))->render();
+        return response()->json(['success' => true, 'html' => $table]);
     }
 }

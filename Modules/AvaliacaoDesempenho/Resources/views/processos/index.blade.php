@@ -1,35 +1,34 @@
-@extends('template')
+@extends('avaliacaodesempenho::template')
 
-@section('css')
+@section('style')
 <link href="{{Module::asset('avaliacaodesempenho:css/processos/index.css')}}" rel="stylesheet">
 @endsection
 
-@section('content')
+@section('container')
 
-    <div class="container">
+<div class="card">
 
-        <div class="card">
-
-            <div class="card-header">
-                <div class="row">
-                    <h3>Processos</h3>
-                    <span>
-                        <a href="/tcc/public/avaliacaodesempenho/processos/create" class="btn btn-primary">Adicionar</a>
-                    </span>
-                </div>
-            </div>
-
-            <div class="card-body">
-                <h1>Aqui a tabela com a listagem de Processos (Ativos/Correntes e Inativos/Finalizados)</h1>
-            </div>
-
-            <div class="card-footer"></div>
-
+    <div class="card-header">
+        <div class="row">
+            <h3>Processos</h3>
+            <span>
+                <a href="/tcc/public/avaliacaodesempenho/processos/create" class="btn btn-primary">Adicionar</a>
+            </span>
         </div>
+    </div>
+
+    <div class="card-body">
+        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+        <div id="ProcessoTable" class="table-responsive"></div>
 
     </div>
+
+    <div class="card-footer"></div>
+
+</div>
 
 @endsection
 
 @section('scripts')
+<script src="{{Module::asset('avaliacaodesempenho:js/processos/_main.js')}}"></script>
 @endsection
