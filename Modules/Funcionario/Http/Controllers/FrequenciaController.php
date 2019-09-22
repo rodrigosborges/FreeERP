@@ -6,15 +6,29 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Funcionario,Ponto};
+use DB;
 
 class FrequenciaController extends Controller{
 
     public function index($id){
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
         $funcionario = Funcionario::findOrFail($id);
+        $pontos = $funcionario
+            ->pontos()
+            ->where('entrada', 1)
+            ->select(
+                DB::raw('YEAR(created_at) ano, MONTH(created_at) mes, MONTHNAME(created_at) nome_mes')
+            )
+            ->groupby('ano','mes', 'nome_mes')
+            ->orderby('ano', 'desc')
+            ->orderby('mes', 'desc')
+            ->get();
 
         $data = [
             'title' => "Banco de horas - $funcionario->nome",
-            'funcionario' => $funcionario
+            'funcionario' => $funcionario,
+            'pontos' => $pontos,
         ];
 
         return view('funcionario::frequencia.index', compact('data'));

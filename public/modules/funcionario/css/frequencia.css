@@ -1,0 +1,12 @@
+.icon-ponto{
+    font-size: 40px !important;
+}
+
+.icon-ponto-success{
+    color: #28a745;
+    cursor: pointer;
+}
+
+.icon-ponto-danger{
+    color: #dc3545;
+}
