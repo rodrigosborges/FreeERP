@@ -6,8 +6,8 @@
     <div class="card-body col-md-10 offset-md-1">
     <div class="row">
         <div class="col-sm-12 col-md-8">
-            <form action="{{url('recrutamento/candidato/')}}" method="GET" class="form-inline mb-2">
-                <input class="form-control mr-sm-2" type="search" placeholder="Nome da categoria" name="pesquisa" aria-label="Search">
+            <form action="{{url('recrutamento/cargo/')}}" method="GET" class="form-inline mb-2">
+                <input class="form-control mr-sm-2" type="search" placeholder="cargo/categoria" name="pesquisa" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
             </form>
             <nav>
@@ -17,6 +17,9 @@
                 </div>
             </nav>
         </div>
+        <div class="col-sm-12 col-md-2 offset-md-2">
+            <a class="btn btn-success " style="margin-bottom:10px;" href="{{ url('recrutamento/cargo/create') }}">Novo cargo</a>
+        </div>
     </div>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-ativos" role="tabpanel" aria-labelledby="nav-ativos-tab">
@@ -24,21 +27,20 @@
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Cargo</th>
+                        <th>Categoria</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($data['candidatos'] as $item)
+                @foreach($data['cargos'] as $item)
                     <tr>
                         <td>{{$item->nome}}</td>
-                        <td>{{$item->vaga()->first()->cargo()->first()->nome}}</td>
+                        <td>{{$item->categoria()->first()->nome}}</td>
                         <td>
-                            <form action="{{url('recrutamento/candidato', [$item->id])}}" method="POST">
+                            <form action="{{url('recrutamento/cargo', [$item->id])}}" method="POST">
                                 {{method_field('DELETE')}}
-                                {{ csrf_field() }} 
-                                <a class="btn btn-info" href='{{ url("recrutamento/candidato/$item->id") }}'>Visualizar</a> 
-                                <a class="btn btn-primary" href='{{ url("recrutamento/mensagem/enviarMensagem/$item->id") }}'>Enviar Mensagem</a> 
+                                {{ csrf_field() }}
+                                <a class="btn btn-warning" href='{{ url("recrutamento/cargo/$item->id/edit") }}'>Editar</a> 
                                 <input type="submit" class="btn btn-danger" value="Delete"/>
                             </form>
                         </td>
@@ -51,18 +53,18 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Cargo</th>
+                        <th>Nome</th>
+                        <th>Categoria</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($data['candidatos_inativos'] as $item)
+                @foreach($data['cargos_inativos'] as $item)
                     <tr>
                         <td>{{$item->nome}}</td>
-                        <td>{{$item->vaga()->first()->cargo()->first()->nome}}</td>
+                        <td>{{$item->categoria()->first()->nome}}</td>
                         <td>
-                            <a class="btn btn-info" href='{{ url("recrutamento/candidato/$item->id/restore") }}'>Restaurar</a> 
+                            <a class="btn btn-info" href='{{ url("recrutamento/cargo/$item->id/restore") }}'>Restaurar</a> 
                         </td>
                     </tr>
                 @endforeach

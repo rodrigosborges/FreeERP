@@ -5,3 +5,8 @@
 .errors{
     color: rgb(233, 85, 85);
 }
+
+.title{
+    font-weight: bold;
+    font-size: 25px;
+}

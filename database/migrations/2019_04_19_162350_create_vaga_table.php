@@ -15,12 +15,14 @@ class CreateVagaTable extends Migration
     {
         Schema::create('vaga', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('cargo');
-            $table->double('salario',8,2);
-            $table->string('descricao');
+            $table->integer('cargo_id')->index('fk_vaga_cargo1');
+            $table->string('salario');
+            $table->longText('descricao');
+            $table->string('regime');
+            $table->string('beneficios');
             $table->string('escolaridade');
             $table->string('especificacoes');
-            $table->string('status');
+            $table->boolean('status');
             $table->timestamps();
             $table->softDeletes();
         });

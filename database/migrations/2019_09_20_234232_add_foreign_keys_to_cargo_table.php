@@ -14,7 +14,7 @@ class AddForeignKeysToCargoTable extends Migration
     public function up()
     {
         Schema::table('cargo', function (Blueprint $table) {
-            $table->foreign('categoria_id', 'fk_cargo_categoria1')->references('id')->on('categoria')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign('categoria_id', 'fk_cargo_categoria1')->references('id')->on('categoria')->onUpdate('NO ACTION')->onDelete('CASCADE');
         });
     }
 

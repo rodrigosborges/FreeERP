@@ -22,8 +22,10 @@ class CandidatoController extends Controller
             'name' => 'RECRUTAMENTO',
         ];
         $this->menu = [
-            ['icon' => 'assignment', 'tool' => 'Vaga', 'route' => '/recrutamento/vaga'],
+            ['icon' => 'assignment', 'tool' => 'Vagas', 'route' => '/recrutamento/vaga'],
             ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
+            ['icon' => 'assignment', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
+            ['icon' => 'assignment', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
 		];
     }
 
@@ -42,7 +44,7 @@ class CandidatoController extends Controller
         return view('recrutamento::candidato.index', compact('data','moduleInfo','menu'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
@@ -205,5 +207,27 @@ class CandidatoController extends Controller
         $candidato = Candidato::findOrFail($id);
 		$candidato->delete();
 		return back()->with('success',  'Curriculo deletado'); 
+    }
+
+    public function novo($id)
+    {
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+        $data = [
+			"url" 	 	=> url("recrutamento/candidato/"),
+			"button" 	=> "Salvar",
+			"model"		=> null,
+            'title'		=> "Cadastrar Candidato",
+            'vaga'      =>  Vaga::findOrFail($id),
+            'cidades'   =>  Cidade::all(),
+            'estados'   =>  Estado::all(),
+            'telefone'         => [
+                'tipo_telefone_id' => 0
+            ],
+            'tipos_telefone'    => TipoTelefone::all(),
+    
+
+		];
+        return view('recrutamento::candidato.form',compact('data','moduleInfo','menu'));
     }
 }

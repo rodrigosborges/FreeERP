@@ -18,6 +18,7 @@ class CreateCargoTable extends Migration
             $table->string('nome');
             $table->integer('categoria_id')->index('fk_cargo_categoria1');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

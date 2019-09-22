@@ -24,11 +24,11 @@ class Candidato extends Model
 
     //Relação Com a tabela Vaga
     public function vaga(){
-        return $this->belongsTo('Modules\Recrutamento\Entities\Vaga','vaga_id');
+        return $this->belongsTo('Modules\Recrutamento\Entities\Vaga');
         
     }
 
-    //Relação Com a tabela Vaga
+    //Relação Com a tabela Mensagem
     public function mensagem(){
         return $this->HasMany('Modules\Recrutamento\Entities\Mensagem','mensagem_id');
         

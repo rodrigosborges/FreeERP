@@ -5,7 +5,7 @@ namespace Modules\Recrutamento\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Modules\Recrutamento\Entities\{Vaga,Candidato};
+use Modules\Recrutamento\Entities\{Vaga,Candidato,Cargo,Categoria};
 use App\Entities\{Estado,Cidade,TipoTelefone,Telefone,Endereco};
 
 class VagaController extends Controller
@@ -22,23 +22,35 @@ class VagaController extends Controller
             'name' => 'RECRUTAMENTO',
         ];
         $this->menu = [
-            ['icon' => 'assignment', 'tool' => 'Vaga', 'route' => '/recrutamento/vaga'],
+            ['icon' => 'assignment', 'tool' => 'Vagas', 'route' => '/recrutamento/vaga'],
             ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
+            ['icon' => 'assignment', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
+            ['icon' => 'assignment', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
 		];
     }
 
 
 
 
-    public function index()
+    public function index(Request $request)
     {
+        if($request->pesquisa != ""){
+            $pesquisaCargo = Cargo::where('categoria_id', '=', $request->pesquisa)->first();
+            $pesquisaVaga = Vaga::where('cargo_id', '=' , $pesquisaCargo->id)->get();
+            $pesquisaVagaInativa = Vaga::onlyTrashed()->where('cargo_id', '=' , $pesquisaCargo->id)->get();
+        }else{
+            $pesquisaVaga = Vaga::all();
+            $pesquisaVagaInativa = Vaga::onlyTrashed()->get();
+        }
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-			'vaga'		=> Vaga::all(),
-			'title'		=> "Lista de Vagas",
+			'vagas'	=> $pesquisaVaga,
+            'vagas_inativas'	=> $pesquisaVagaInativa,
+            'title'		=> "Lista de Vagas",
+            'categorias'    => Categoria::all(),
 		]; 
-        return view('recrutamento::vaga.vaga', compact('data','moduleInfo','menu'));
+        return view('recrutamento::vaga.index', compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -54,10 +66,9 @@ class VagaController extends Controller
 			"button" 	=> "Salvar",
 			"model"		=> null,
             'title'		=> "Cadastrar Vaga",
-            'estados'           => Estado::all(),
-            'cidades'           => Cidade::all()
+            'cargos'    => Cargo::all(), 
 		];
-        return view('recrutamento::vaga.formularioVaga',compact('data','moduleInfo','menu'));
+        return view('recrutamento::vaga.form',compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -70,18 +81,7 @@ class VagaController extends Controller
         DB::beginTransaction();
 		try{
             
-            //$vaga = Vaga::Create($request->all());
-            $salario = str_replace('.','',$request->salario);
-            $salario = str_replace(',','.',$salario);
-            $vaga = new Vaga;
-            $vaga->salario = $salario;
-            $vaga->cargo = $request->cargo;
-            $vaga->status = $request->status;
-            $vaga->descricao = $request->descricao;
-            $vaga->escolaridade = $request->escolaridade;
-            $vaga->especificacoes = $request->especificacoes;
-
-            $vaga->save();
+            $vaga = Vaga::Create($request->all());
             
 			DB::commit();
 			return redirect('/recrutamento/vaga')->with('success', 'Vaga cadastrada com sucesso');
@@ -102,9 +102,9 @@ class VagaController extends Controller
         $menu = $this->menu;
         $data = [
 			"url" 	 	=> url('recrutamento/vaga'),
-			"button" 	=> "Salvar",
+			"button" 	=> "Candidatar-se",
 			"model"		=> null,
-            'title'		=> "Cadastrar Vaga",
+            'title'		=> "Visualização de Vaga",
             'vaga'      => Vaga::findOrFail($id)
 		];
         return view('recrutamento::vaga.show',compact('data','moduleInfo','menu'));
@@ -124,8 +124,9 @@ class VagaController extends Controller
 			"button" 	=> "Atualizar",
 			"model"		=> Vaga::findOrFail($id),
             'title'		=> "Atualizar Vaga",
+            'cargos'    => Cargo::all(),
 		];
-        return view('recrutamento::vaga.formularioVaga',compact('data','moduleInfo','menu'));
+        return view('recrutamento::vaga.form',compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -165,18 +166,35 @@ class VagaController extends Controller
      */
     public function destroy($id)
     {
-        $vaga = Vaga::findOrFail($id);
-		$vaga->delete();
-		return back()->with('success',  'Vaga deletada'); 
+        DB::beginTransaction();
+		try{    
+            $vaga = Vaga::FindOrFail($id);
+            $vaga->delete();          
+			DB::commit();
+			return redirect('/recrutamento/vaga')->with('success', 'Vaga deletada com sucesso');
+		}catch(Exception $e){
+			DB::rollback();
+			return back()->with('error', 'Erro no servidor');
+		}
     }
 
-    public function vagasDisponiveis()
+    public function vagasDisponiveis(Request $request)
     {
+        if($request->pesquisa != "" || $request->pesquisa != null){
+            $pesquisaCargo = Cargo::where('categoria_id', '=', $request->pesquisa)->first();
+            $pesquisa = Vaga::where([
+                ['cargo_id', $pesquisaCargo->id],
+                ['status', 1]
+            ])->get();
+        }else{
+            $pesquisa = Vaga::where('status', '1')->get();
+        }
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-			'vaga'		=> Vaga::where('status', 'disponivel')->get(),
-			'title'		=> "Lista de Vagas Disponíveis",
+			'vagas'		=> $pesquisa,
+            'title'		=> "Lista de Vagas Disponíveis",
+            'categorias'    => Categoria::all(),
 		]; 
         return view('recrutamento::vaga.vagasDisponiveis', compact('data','moduleInfo','menu'));
     }
@@ -187,9 +205,25 @@ class VagaController extends Controller
         $menu = $this->menu;
         $data = [
 			'candidatos'		=> Candidato::where('vaga_id', $id)->get(),
+			'candidatos_inativos'		=> Candidato::onlyTrashed()->where('vaga_id', $id)->get(),
 			'title'		=> "Lista de Candidatos",
 		]; 
         return view('recrutamento::vaga.candidatos', compact('data','moduleInfo','menu'));
     }
+
+    public function restore($id)
+    {
+        DB::beginTransaction();
+		try{    
+            $vaga = Vaga::onlyTrashed()->where('id', $id)->first();
+            $vaga->restore();          
+			DB::commit();
+			return redirect('/recrutamento/vaga')->with('success', 'Vaga restaurada com sucesso');
+		}catch(Exception $e){
+			DB::rollback();
+			return back()->with('error', 'Erro no servidor');
+		}
+    }
+
 
 }

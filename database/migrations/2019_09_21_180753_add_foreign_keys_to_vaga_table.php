@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriaTable extends Migration
+class AddForeignKeysToVagaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateCategoriaTable extends Migration
      */
     public function up()
     {
-        Schema::create('categoria', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->string('nome');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('vaga', function (Blueprint $table) {
+            $table->foreign('cargo_id', 'fk_vaga_cargo1')->references('id')->on('cargo')->onUpdate('NO ACTION')->onDelete('CASCADE');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateCategoriaTable extends Migration
      */
     public function down()
     {
-        Schema::drop('categoria');
+        Schema::table('vaga', function (Blueprint $table) {
+            $table->dropForeign('fk_vaga_cargo1');
+        });
     }
 }

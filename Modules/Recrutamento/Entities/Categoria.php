@@ -1,7 +1,8 @@
 <?php
-use Illuminate\Database\Eloquent\SoftDeletes;
+
 namespace Modules\Recrutamento\Entities;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Categoria extends Model
 {

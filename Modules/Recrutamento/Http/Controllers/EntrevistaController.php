@@ -25,9 +25,10 @@ class EntrevistaController extends Controller
             'name' => 'RECRUTAMENTO',
         ];
         $this->menu = [
-            ['icon' => 'assignment', 'tool' => 'Vaga', 'route' => '/recrutamento/vaga'],
+            ['icon' => 'assignment', 'tool' => 'Vagas', 'route' => '/recrutamento/vaga'],
             ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
-            ['icon' => 'assignment', 'tool' => 'Entrevista', 'route' => '/recrutamento/entrevista'],
+            ['icon' => 'assignment', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
+            ['icon' => 'assignment', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
 		];
     }
 

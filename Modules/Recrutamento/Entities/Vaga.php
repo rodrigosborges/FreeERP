@@ -11,7 +11,7 @@ class vaga extends Model
     use SoftDeletes;
     protected $table = 'vaga';
     public $timestamps = true;
-    protected $fillable = array('id','cargo','salario','descricao','escolaridade','status','especificacoes');
+    protected $fillable = array('id','cargo_id','salario','descricao','escolaridade','status','especificacoes','regime','beneficios');
 
     public function candidatos(){
         return $this->hasMany('Modules\Recrutamento\Entities\Candidado');
@@ -20,4 +20,9 @@ class vaga extends Model
     public function endereco(){
         return $this->belongsTo('App\Entities\Endereco');
     }
+
+    public function cargo(){
+        return $this->belongsTo('Modules\Recrutamento\Entities\Cargo');
+    }
+
 }
