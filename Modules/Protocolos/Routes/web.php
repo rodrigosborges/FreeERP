@@ -14,10 +14,17 @@
 
 //Módulo de Protocolos
 Route::prefix('protocolos')->group(function() {
+
+    Route::get('/cadastrar', 'UsuarioController@create');
+    Route::post('/envia', 'UsuarioController@store');
     
+    Route::get('protocolos/login', 'LoginController@index')->name('login');
+    Route::post('protocolos/logar', 'LoginController@authenticate');
+    Route::get('protocolos/logout', 'LoginController@logoutUsuario');
+
     Route::get('protocolos/list/{status}', 'ProtocolosController@list');
     Route::post('busca', 'ProtocolosController@fetch');
 
-    Route::resource('protocolos', 'ProtocolosController');
+    Route::resource('protocolos', 'ProtocolosController')->middleware('auth');
  
 });

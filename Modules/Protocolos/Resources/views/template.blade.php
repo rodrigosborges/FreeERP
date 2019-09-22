@@ -4,7 +4,13 @@
         'name' => 'Protocolos',
     ];
     $menu = [
-        ['icon' => 'people', 'tool' => 'Protocolo', 'route' => url('protocolos/protocolos')],
+        ['icon' => 'exit_to_app', 'tool' => Auth::check() ? Auth::user()->apelido : "Usuário não logado", 'route' => '/usuario'],
+        ['icon' => 'list_alt', 'tool' => 'Protocolo', 'route' => url('protocolos/protocolos')],
+        ['icon' => 'power_settings_new', 'tool' => 'Sair', 'route' => url('protocolos/protocolos/logout')],
+    ];
+
+    $login = [
+        'route' => url('protocolos/protocolos/login')
     ];
 ?>
 
@@ -19,8 +25,8 @@
 
 @section('content')
     <div class="container">
-        <div class="card">
-            <div class="card-header">
+        <div class="card d-flex">
+            <div class="card-header d-flex justify-content-center">
                 <h5>@yield('title')</h5>
             </div>
             <div class="card-body">

@@ -91,7 +91,9 @@
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="material-icons mr-2 btn-circle">apps</i>
-                        <i class="material-icons btn-circle">person</i>
+                        <a class="nav-link d-flex align-items-center" href="{{$login['route']}}">
+                            <i class="material-icons btn-circle">person</i>
+                        </a>
                     </div>
                 </div>
                 <div id="content">

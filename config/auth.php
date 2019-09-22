@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
@@ -12,12 +10,10 @@ return [
     | as required, but they're a perfect start for most applications.
     |
     */
-
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'usuario',
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -28,32 +24,29 @@ return [
     | here which uses session storage and the Eloquent user provider.
     |
     | All authentication drivers have a user provider. This defines how the
-    | users are actually retrieved out of your database or other storage
+    | usuario are actually retrieved out of your database or other storage
     | mechanisms used by this application to persist your user's data.
     |
     | Supported: "session", "token"
     |
     */
-
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'usuario',
         ],
-
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
+            'provider' => 'usuario',
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | User Providers
     |--------------------------------------------------------------------------
     |
     | All authentication drivers have a user provider. This defines how the
-    | users are actually retrieved out of your database or other storage
+    | usuario are actually retrieved out of your database or other storage
     | mechanisms used by this application to persist your user's data.
     |
     | If you have multiple user tables or models you may configure multiple
@@ -63,19 +56,16 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
     'providers' => [
-        'users' => [
+        'usuario' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => \Modules\Protocolos\Entities\Usuario::class,
         ],
-
-        // 'users' => [
+        // 'usuario' => [
         //     'driver' => 'database',
-        //     'table' => 'users',
+        //     'table' => 'usuario',
         // ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords
@@ -90,13 +80,12 @@ return [
     | they have less time to be guessed. You may change this as needed.
     |
     */
-
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'usuario' => [
+            'provider' => 'usuario',
             'table' => 'password_resets',
             'expire' => 60,
         ],
     ],
-
 ];
+

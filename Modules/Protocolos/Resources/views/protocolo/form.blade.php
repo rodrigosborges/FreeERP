@@ -11,7 +11,7 @@
         @if($data['model'])
             @method('PUT')
         @endif
-
+        
         <div class="row">
             <div class="col-lg-9">
                 <div class="form-group">
@@ -30,11 +30,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="nome" class="control-label">Tipo de processo: <span class="required-symbol">*</span></label>
+                    <label for="nome" class="control-label">Tipo de Protocolo: <span class="required-symbol">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="material-icons">person</i>
+                                <i class="material-icons">description</i>
                             </span>
                         </div>
                         <select required name="protocolo[tipo_protocolo_id]" class="form-control">
