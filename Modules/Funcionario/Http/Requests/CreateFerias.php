@@ -23,7 +23,12 @@ class CreateFerias extends FormRequest
     public function rules()
     {
         return [
-            'data_inicio' => 'required|date|after:fim_periodo_aquisitivo'
+            'data_inicio'     => 'required|date',
+            'data_fim'        => 'required|date',
+            'dias_ferias'     => 'required|numeric|max:30',
+            'data_pagamento'  => 'required|date',
+            'data_aviso'      => 'required|date',
+            'observacao'      => 'nullable'
         ];
     }
 }

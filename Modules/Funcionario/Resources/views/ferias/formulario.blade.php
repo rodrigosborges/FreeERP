@@ -6,6 +6,11 @@
 
 @section('body')
 
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            <div class="alert alert-danger">{{$error}}</div>
+        @endforeach
+    @endif
     <section>
         <div class="row">
             <div class="form-group col-6">
@@ -39,7 +44,7 @@
     </section>
 
     <section>
-    <form action="{{url('funcionario/ferias')}}" method="POST">
+    <form action="{{url('funcionario/ferias')}}" method="POST" id="form">
     <h4>Período Gozo</h4>
     {{csrf_field()}}
         <div class="row">
@@ -49,13 +54,10 @@
         <input type="text" hidden name="limite_periodo_aquisitivo" id="limite_periodo_aquisitivo" value="{{$data['limite_periodo_aquisitivo']}}">
         <input type="text" name="funcionario_id" style="display:none;" value="{{$data['funcionario']->id}}">
 
-
-        
-
             <div class="form-group col-4">
                 <label for="data_inicio">Data Início:</label>
                 <input type="date" name="data_inicio" id="data_inicio" class="form-control" >
-                {{$errors->first('data_inicio')}}
+                
             </div>
             
             <div class="form-group col-4">
@@ -119,13 +121,11 @@
     </section>
 
 @endsection
-
-
-
+            
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="{{Module::asset('funcionario:js/helpers.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/form.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/validations.js')}}"></script>
-    
+    <script src="{{Module::asset('funcionario:js/views/ferias/form.js')}}"></script>
 @endsection
