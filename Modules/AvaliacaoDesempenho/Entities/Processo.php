@@ -9,9 +9,9 @@ class Processo extends Model
 {
     protected $table = 'processo';
     protected $fillable = ['data_inicio', 'data_fim', 'funcionario_id'];
-    // use SoftDeletes;
+    use SoftDeletes;
 
     public function responsavel() {
-        return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Funcionario');
+        return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Funcionario', 'funcionario_id');
     }
 }

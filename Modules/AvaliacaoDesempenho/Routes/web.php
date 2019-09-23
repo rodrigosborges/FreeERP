@@ -15,21 +15,25 @@ Route::prefix('avaliacaodesempenho')->group(function() {
 
     Route::get('/', 'DashboardController@index');
 
-    Route::get('/processos', 'ProcessoController@index');
-    Route::get('/processos/create', 'ProcessoController@create');
-    Route::post('/processos/store', 'ProcessoController@store');
-    Route::get('/processos/edit/{id}', 'ProcessoController@edit');
-    Route::put('/processos/{id}', 'ProcessoController@update');
-    // Route::delete('/processos/{id}', 'ProcessoController@delete');
-    Route::get('/processos/delete/{id}', 'ProcessoController@delete');
-    Route::get('/processos/restore/{id}', 'ProcessoController@restore');
-    Route::post('/processos/ajax/search', 'ProcessoController@search');
+    Route::get('/processo', 'ProcessoController@index');
+    Route::get('/processo/create', 'ProcessoController@create');
+    Route::post('/processo/store', 'ProcessoController@store');
+    Route::get('/processo/{id}/edit', 'ProcessoController@edit');
+    Route::put('/processo/{id}', 'ProcessoController@update');
+    Route::delete('/processo/{id}', 'ProcessoController@destroy');
+    Route::post('/processo/ajax/search', 'ProcessoController@search');
 
-    Route::get('/avaliacoes', 'AvaliacaoController@index');
+    Route::get('/avaliacao', 'AvaliacaoController@index');
 
-    Route::get('/questoes', 'QuestaoController@index');
+    Route::get('/questao', 'QuestaoController@index');
+    Route::get('/questao/create', 'QuestaoController@create');
+    Route::post('/questao/store', 'QuestaoController@store');
+    Route::get('/questao/{id}/edit', 'QuestaoController@edit');
+    Route::put('/questao/{id}', 'QuestaoController@update');
+    Route::delete('/questao/{id}', 'QuestaoController@destroy');
+    Route::post('/questao/ajax/search', 'QuestaoController@search');
     
-    Route::get('/categorias', 'CategoriaController@index');
+    Route::get('/categoria', 'CategoriaController@index');
     
-    Route::get('/relatorios', 'RelatorioController@index');
+    Route::get('/relatorio', 'RelatorioController@index');
 });

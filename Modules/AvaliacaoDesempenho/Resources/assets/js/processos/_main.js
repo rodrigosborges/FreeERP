@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/processos/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/processo/ajax/search',
         data: {
             _token: _token,
             term: ''
@@ -24,7 +24,7 @@ $(document).on('keyup keydown paste', '.search_field', function () {
 
         $.ajax({
             method: 'POST',
-            url: 'http://localhost/tcc/public/avaliacaodesempenho/processos/ajax/search',
+            url: 'http://localhost/tcc/public/avaliacaodesempenho/processo/ajax/search',
             data: {
                 _token: _token,
                 term: search
@@ -37,7 +37,7 @@ $(document).on('keyup keydown paste', '.search_field', function () {
     }
 })
 
-function confirmDelete(id, msg, funcao) {
+function confirmDelete(msg) {
     bootbox.confirm({
         message: msg,
         buttons: {
@@ -52,7 +52,8 @@ function confirmDelete(id, msg, funcao) {
         },
         callback: function (result) {
             if (result == true)
-                window.location.href = 'http://localhost/tcc/public/avaliacaodesempenho/processos/' + funcao + '/' + id;
+                $('#deleteForm').submit()
+                // window.location.href = 'http://localhost/tcc/public/avaliacaodesempenho/processos/' + funcao + '/' + id;
         }
     });
 }

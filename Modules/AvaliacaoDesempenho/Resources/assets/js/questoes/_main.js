@@ -4,13 +4,13 @@ $(document).ready(function () {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/processo/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/questao/ajax/search',
         data: {
             _token: _token,
             term: ''
         },
         success: function (data) {
-            $('#ProcessoTable').append(data.html)
+            $('#QuestaoListar').append(data.html)
         }
     })
 })
@@ -24,14 +24,14 @@ $(document).on('keyup keydown paste', '.search_field', function () {
 
         $.ajax({
             method: 'POST',
-            url: 'http://localhost/tcc/public/avaliacaodesempenho/processo/ajax/search',
+            url: 'http://localhost/tcc/public/avaliacaodesempenho/questao/ajax/search',
             data: {
                 _token: _token,
                 term: search
             },
             success: function (data) {
-                $('#ProcessoTable').html('')
-                $('#ProcessoTable').append(data)
+                $('#QuestaoListar').html('')
+                $('#QuestaoListar').append(data)
             }
         })
     }
@@ -53,7 +53,6 @@ function confirmDelete(msg) {
         callback: function (result) {
             if (result == true)
                 $('#deleteForm').submit()
-                // window.location.href = 'http://localhost/tcc/public/avaliacaodesempenho/processos/' + funcao + '/' + id;
         }
     });
 }

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\AvaliacaoDesempenho\Entities\Funcionario;
 use Modules\AvaliacaoDesempenho\Entities\Processo;
-use Modules\AvaliacaoDesempenho\Http\Requests\StoreProcesso;
 
 class ProcessoController extends Controller
 {
@@ -25,11 +24,12 @@ class ProcessoController extends Controller
 
         $this->menu = [
             ['icon' => 'add_box', 'tool' => 'DashBoard', 'route' => '/tcc/public/avaliacaodesempenho'],
-            ['icon' => 'add_box', 'tool' => 'Processos', 'route' => '/tcc/public/avaliacaodesempenho/processos'],
-            ['icon' => 'add_box', 'tool' => 'Avaliações', 'route' => '/tcc/public/avaliacaodesempenho/avaliacoes'],
-            ['icon' => 'add_box', 'tool' => 'Questões', 'route' => '/tcc/public/avaliacaodesempenho/questoes'],
-            ['icon' => 'add_box', 'tool' => 'Categorias', 'route' => '/tcc/public/avaliacaodesempenho/categorias'],
-            ['icon' => 'add_box', 'tool' => 'Relatorios', 'route' => '/tcc/public/avaliacaodesempenho/relatorios'],
+            ['icon' => 'add_box', 'tool' => 'Processos', 'route' => '/tcc/public/avaliacaodesempenho/processo'],
+            ['icon' => 'add_box', 'tool' => 'Avaliações', 'route' => '/tcc/public/avaliacaodesempenho/avaliacao'],
+            ['icon' => 'add_box', 'tool' => 'Questões', 'route' => '/tcc/public/avaliacaodesempenho/questao'],
+            ['icon' => 'add_box', 'tool' => 'Setor', 'route' => '/tcc/public/avaliacaodesempenho/setor'],
+            ['icon' => 'add_box', 'tool' => 'Categorias', 'route' => '/tcc/public/avaliacaodesempenho/categoria'],
+            ['icon' => 'add_box', 'tool' => 'Relatorios', 'route' => '/tcc/public/avaliacaodesempenho/relatorio'],
         ];
     }
 
@@ -52,22 +52,30 @@ class ProcessoController extends Controller
         return view('avaliacaodesempenho::processos/create', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function store(StoreProcesso $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
 
         try {
 
-            $input = $request->input();
-            echo '<pre>';print_r($input);exit;
+            $input = $request->input('processo');
+
+            foreach ($input as $key => $value) {
+                if (empty($value)) {
+                    return back()->with('error', 'Todos os campos são obrigatórios.');
+                }
+            }
 
             $processo = Processo::create($input);
 
             DB::commit();
-            return redirect('/avaliacaodesempenho/processos')->with('success', 'Processo Criado com Sucesso');
+
+            return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo Criado com Sucesso');
 
         } catch (\Throwable $th) {
-            // echo '<pre>';print_r($th->getMessage());exit;
+
+            echo '<pre>';
+            print_r($th->getMessage());exit;
 
             return back()->with('error', 'Não foi possível cadastrar o Processo');
         }
@@ -84,7 +92,7 @@ class ProcessoController extends Controller
         $menu = $this->menu;
         $data = [
             'processo' => Processo::findOrFail($id),
-            'funcionarios' => Funcionario::all()
+            'funcionarios' => Funcionario::all(),
         ];
 
         return view('avaliacaodesempenho::processos/edit', compact('moduleInfo', 'menu', 'data'));
@@ -92,20 +100,62 @@ class ProcessoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $moduleInfo = $this->moduleInfo;
-        $menu = $this->menu;
+        DB::beginTransaction();
 
-        // Logica de inserçao
-        $teste = $request->input();
-        echo '<pre>';
-        print_r($teste);exit;
+        try {
+            $processo = Processo::findOrFail($id);
 
-        return view('avaliacaodesempenho::processos/index', compact('moduleInfo', 'menu'));
+            $input = $request->input('processo');
+
+            foreach ($input as $key => $value) {
+                if (empty($value)) {
+                    return back()->with('error', 'Todos os campos são obrigatórios.');
+                }
+            }
+
+            $processo->update($input);
+
+            DB::commit();
+            return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo Criado com Sucesso');
+
+        } catch (\Throwable $th) {
+
+            echo '<pre>';
+            print_r($th->getMessage());exit;
+
+            return back()->with('error', 'Não foi possível cadastrar o Processo');
+        }
     }
 
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $processo = Processo::findOrFail($id);
+
+            if($processo->trashed()) {
+
+                $processo->restore();
+
+                DB::commit();
+                
+                return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo ativado com Sucesso');
+
+            } else {
+                
+                $processo->delete();
+                
+                DB::commit();
+
+                return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo desativado com Sucesso');
+            }
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            return redirect('/avaliacaodesempenho/processo')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
+        }
     }
 
     public function search(Request $request)
@@ -115,7 +165,7 @@ class ProcessoController extends Controller
 
         if (empty($term)) {
 
-            $processos = Processo::all();
+            $processos = Processo::withTrashed()->get();
 
         } else {
 

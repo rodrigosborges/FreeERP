@@ -1,9 +1,9 @@
 @if(isset($data['processo']->id))
-    <form action="/tcc/public/avaliacaodesempenho/processos/{{$data['processo']->id}}" method="POST">
-    {{ csrf_field() }}  
-    <input type="hidden" name="_method" value="PUT">       
+    <form action="{{ url('avaliacaodesempenho/processo', [$data['processo']->id]) }}" method="POST">
+    @method('PUT')
+    {{ csrf_field() }}      
 @else
-    <form action='/tcc/public/avaliacaodesempenho/processos/store' method="POST">
+    <form action='{{ url("avaliacaodesempenho/processo/store") }}' method="POST">
     {{ csrf_field() }} 
 @endif
 
@@ -36,7 +36,7 @@
 
                             <div class='input-group-prepend'>
                                 <span class="input-group-text">
-                                    <i class="material-icons android"></i>
+                                    <i class="material-icons">android</i>
                                 </span>
                             </div>
 
@@ -61,7 +61,7 @@
 
                             <div class='input-group-prepend'>
                                 <span class="input-group-text">
-                                    <i class="material-icons android"></i>
+                                    <i class="material-icons">android</i>
                                 </span>
                             </div>
 
@@ -86,7 +86,7 @@
 
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="material-icons android"></i>
+                                    <i class="material-icons">android</i>
                                 </span>
                             </div>
 
@@ -111,7 +111,7 @@
 
                 <div class="row">
 
-                    <a href="/tcc/public/avaliacaodesempenho/processos" class="btn btn-danger">Cancelar</a>
+                    <a href="{{ url('avaliacaodesempenho/processo') }}" class="btn btn-danger">Cancelar</a>
 
                     <button class="btn btn-success" type='submit'>Salvar</button>
 
