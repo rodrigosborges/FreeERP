@@ -43,8 +43,8 @@
                                     <td>{{$cliente->nome}}</td>
                                     <td>{{$cliente->getDocumento()}}</td> 
                                     <td>{{$cliente->telefonesAll()}}</td>
-                                    <td><a href="" class="btn btn-primary">Pedidos</a></td>
-                                    <td><a href="" class="btn btn-warning">Editar</a></td>
+                                    <td><a href="{{url('cliente/'.$cliente->id.'/pedido')}}" class="btn btn-primary">Pedidos</a></td>
+                                    <td><a href="{{route('cliente.edit', $cliente->id)}}" class="btn btn-warning">Editar</a></td>
                                     <td>
                                         <form action="{{url('/cliente/cliente/'.$cliente->id)}}" method="POST">
                                             @method('DELETE')
