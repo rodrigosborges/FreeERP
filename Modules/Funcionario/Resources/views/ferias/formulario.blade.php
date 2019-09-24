@@ -67,7 +67,7 @@
 
             <div class="form-group col-4">
                 <label for="dias_ferias">Dias de Férias:</label>
-                <input type="text" id="dias_ferias" maxlength="2" name="dias_ferias" class="form-control" placeholder="Ex: 2">
+                <input type="text" id="dias_ferias"  name="dias_ferias" class="form-control" placeholder="Ex: 2">
             </div>
         </div>
 
@@ -96,6 +96,11 @@
                     <option value="marcadas">Marcadas</option>
                     <option value="naoMarcadas">Não Marcadas</option>
                 </select>
+            </div>
+
+            <div class="form-group col-3">
+                <label for="saldo_total">Férias excedentes</label>
+                <input type="text" name="saldo_total" id="saldo_total" class="form-control" value="{{$data['saldo_total']}}" disabled>
             </div>
 
         </div>
@@ -127,5 +132,19 @@
     <script src="{{Module::asset('funcionario:js/helpers.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/form.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/validations.js')}}"></script>
-    <script src="{{Module::asset('funcionario:js/views/ferias/form.js')}}"></script>
+   
+
+    <script>
+        $(document).ready(function(){
+            $('#data_fim').on("focusout", function(){
+                var data_inicio = new Date(document.getElementById('data_inicio').value);
+                var data_fim = new Date(document.getElementById('data_fim').value);
+                var diferenca = data_fim - data_inicio;
+                var diferenca_dias = diferenca/(1000 * 60 * 60 * 24);
+                
+                document.getElementById('dias_ferias').value = diferenca_dias;
+            })
+        });
+    </script>
 @endsection
+

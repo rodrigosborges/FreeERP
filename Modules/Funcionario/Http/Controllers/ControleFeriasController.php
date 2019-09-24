@@ -97,31 +97,52 @@ class ControleFeriasController extends Controller
         $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
         $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
         $ano_atual = date('Y', time());
-
+        //$ano_atual = "2021";
         if($ano == $ano_atual){
             $inicio_periodo_aquisitivo = date('d/m/Y', strtotime($admissao));
             $anos_trampo = 364;
             
         } else {
-            $anos_trampo = (($ano_atual-$ano)-1)*364;
-            $inicio_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao))) ;
-            $teste = $anos_trampo+364;
+            $anos_trampo = (($ano_atual-$ano))*364;
+            $anos_trampo_inicio = $anos_trampo - 364;
+            $inicio_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo_inicio days", strtotime($admissao)));
         }
+
         $fim_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
         
         $limite_periodo_aquisitivo = $fim_periodo_aquisitivo;
         $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
         $limite_periodo_aquisitivo->add(new DateInterval('P330D')); // Essa linha adiciona 330 dias(11 meses)
 
-        $teste = DB::table('controle_ferias')->where('funcionario_id', '=', $id)->count();
+        $teste = DB::table('controle_ferias')->where('funcionario_id', '=', $id)->count(); //Verifica se há algum registro de férias já adicionado.
         
-        if($teste > 0){
+        /*Se há registro, a variável $saldo_periodo armazena o útlimo saldo cadastrado; a váriavel $ultimo_fim_periodo salva o último fim_periodo_aquisitivo, 
+        para que seja calculada o saldo excendente*/ 
+        if($teste > 0){ 
             $saldo_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
+            $ultimo_fim_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->fim_periodo_aquisitivo;
             
+            //Código de saldo_total
+            $data_inicial = $ultimo_fim_periodo; // armazena o fim do periodo em questão 
+            $data_final = '2020-11-25'; //Dia que o usuário está usando o software. Essa data é simulada para testes.
+            $diferenca = strtotime($data_final) - strtotime($data_inicial);
+            //Calcula a diferença em dias
+            $dias = floor($diferenca / (60 * 60 * 24));
+            $meses = floor($dias/30);
+            
+            $saldo_total = $meses * 2.5; //dias excedentes para se adicionar no saldo_total
+            $saldo_periodo += $saldo_total;
+
+        //Senão, manda o saldo de 30 dias, pois não há registro na tabela.
         } else {
             $saldo_periodo = 30;
+            $saldo_total = 0;
         }
         
+       
+        
+       
+
         /*O formato da variavel limite_periodo_aquisito é passado dentro do array pois ele é considerado um objeto, para que ele seja uma string,
         o formato que será apresentado na view deve ser passado dentro do array*/
         $data = [
@@ -132,7 +153,8 @@ class ControleFeriasController extends Controller
             'inicio_periodo_aquisitivo' => $inicio_periodo_aquisitivo,
             'fim_periodo_aquisitivo'    => $fim_periodo_aquisitivo,
             'limite_periodo_aquisitivo' => $limite_periodo_aquisitivo->format('d/m/Y'),
-            'saldo_periodo'             => $saldo_periodo 
+            'saldo_periodo'             => $saldo_periodo,
+            'saldo_total'               => $saldo_total
         ];
 
         return view('funcionario::ferias.formulario', compact('data'));
