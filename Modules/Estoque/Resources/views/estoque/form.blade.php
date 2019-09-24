@@ -136,7 +136,7 @@
                 '_token': $('input[name=_token]').val(),
             }
         }).done(function(e) {
-            //console.log("Ok:" + e);
+            console.log("Ok:" + e);
             var options = "<option value ='-1'>Selecione</option>"
             var data = $.parseJSON(e);
             console.log("Data:" + data)

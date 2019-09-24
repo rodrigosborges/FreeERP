@@ -169,6 +169,7 @@ class EstoqueController extends Controller
     }
     public function buscaUnidades(Request $request)
     {
+        $data2 = array();
         $itens = DB::table('estoque')
             ->join('estoque_has_produto', function ($join) use ($request) {
                 $join->where('produto_id', $request->id)->whereraw('estoque.id = estoque_has_produto.estoque_id');
