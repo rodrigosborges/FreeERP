@@ -139,10 +139,6 @@ class ControleFeriasController extends Controller
             $saldo_total = 0;
         }
         
-       
-        
-       
-
         /*O formato da variavel limite_periodo_aquisito é passado dentro do array pois ele é considerado um objeto, para que ele seja uma string,
         o formato que será apresentado na view deve ser passado dentro do array*/
         $data = [
