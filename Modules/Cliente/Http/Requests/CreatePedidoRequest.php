@@ -13,7 +13,6 @@ class CreatePedidoRequest extends FormRequest
     public function messages()
     {
         return [
-            // 'cliente_id'             => 'Cliente invalido',
             'numero'                 => 'Informe um numero válido para o pedido',
             'desconto'               => 'Desconto deve ser entre 0 e 100',
             'data'                   => 'Uma data deve ser informada',
@@ -27,7 +26,6 @@ class CreatePedidoRequest extends FormRequest
     {
         $rules = [
            
-            // 'cliente_id'             => ['required','exists:cliente,id'],
             'numero'                 => ['required','numeric'],
             'desconto'               => ['required','numeric','min:0','max:100'],
             'data'                   => ['required','date'],
@@ -47,8 +45,6 @@ class CreatePedidoRequest extends FormRequest
 
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * 
      */
     public function authorize()
     {

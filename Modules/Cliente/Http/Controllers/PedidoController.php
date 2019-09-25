@@ -43,7 +43,7 @@ class PedidoController extends Controller
         $id_cliente = $id_cliente[1];
         
         $pedido = Pedido::firstOrCreate( ['cliente_id' => $id_cliente], $request->all() );
-
+        
         DB::beginTransaction();
         try{
             $produtos = $request->input('produtos');
@@ -67,12 +67,6 @@ class PedidoController extends Controller
 
         return back()->with('sucess','Pedido Salvo');
     }
-
-    
-    // public function show($id)
-    // {
-    //     return view('cliente::show');
-    // }
 
     
     public function edit($pedido_id)
@@ -111,15 +105,40 @@ class PedidoController extends Controller
             return back()->with('error', 'Ocorreu um erro ao salvar');
         }
 
-        // $pedido->produtos()->sync($dados);
-        // return back()->with('sucess', 'Pedido editado');
     }
 
     public function deleteMultiples(Request $request){
         $ids = $request->ids;
+        $tipo = $request->tipo;
 
-        Pedido::whereIn('id',explode(",",$ids))->delete();
-        return response()->json(['status'=>true, 'message'=>"Compra excluida com sucesso"]);
+        DB::beginTransaction();
+            try{
+                if($tipo == "delete"){
+                    Pedido::whereIn('id', $ids)->delete();
+                    DB::commit();
+                    return response()->json(['status'=>true, 'message'=>"Compras excluidas com sucesso"]);
+                }else{
+                    Pedido::whereIn('id', $ids)->restore();
+                    DB::commit();
+                    return response()->json(['status'=>true, 'message'=>"Compras recuperadas com sucesso"]);
+                }
+            }catch(\Exception $e){
+                DB::rollback();
+                return response()->json(['status'=>false, 'message'=>"Operação não realizada"]);
+            }
+    }
+    public function restoreMultiples(Request $request){
+        $ids = $request->ids;
+        
+        DB::beginTransaction();
+        try{
+            Pedido::whereIn('id', $ids)->restore();
+            DB::commit();
+            return response()->json(['status'=>true, 'message'=>"Compras excluidas com sucesso"]);
+        }catch(\Exception $e){
+            DB::rollback();
+            return response()->json(['status'=>false, 'message'=>"Compra não excluida"]);
+        }
     }
 
 

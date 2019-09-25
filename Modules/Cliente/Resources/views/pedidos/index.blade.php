@@ -24,7 +24,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                               search
                           </i> Buscar
                       </button>
-                      <button class="btn btn-outline-dark d-flex" id="filtroReset" type="button">
+                      <button class="btn btn-outline-dark d-flex" id="filtroReset" type="reset">
                           <i class="material-icons">
                             undo
                           </i>Resetar
@@ -50,9 +50,10 @@ Cadastro de Compras - {{ $cliente->nome }}
            <a class="nav-link" href="#inativos" id="profile-tab" data-toggle="tab" href="#perfil" role="tab" aria-controls="profile" aria-selected="false">Inativos</a>
         </li>
       </ul>
-
+      
       <div class="card-body pt-1">
       <div class="tab-content" id="tabContent">
+      {{-- Inicio da tab Ativos --}}
       <div  id="ativos" class="tab-pane fade show active" role="tabpanel" aria-labelledby="ativos-tab">
           <div class="d-flex col-12 pb-1 justify-content-end">
               <button class="btn btn-danger" id="excluirSelecionados" disabled="">
@@ -152,9 +153,15 @@ Cadastro de Compras - {{ $cliente->nome }}
                
               </tbody>
             </table>
-      </div><!--Final tabela e div -->
-
+      </div>
+      <!--Final tabela e div -->
+      {{-- Inicio da tab Inativos --}}
       <div class="tab-pane fade" id="inativos" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="d-flex col-12 pb-1 justify-content-end">
+              <button class="btn btn-success" id="recSelecionados" disabled="">
+                   Recuperar selecionados
+              </button>
+          </div>
           <table class="table bordered text-center col-md-12">
               <thead>
                 <tr>
@@ -165,6 +172,9 @@ Cadastro de Compras - {{ $cliente->nome }}
                   <th>Desconto Aplicado</th>
                   <th>Opções</th>
                   <th>Ver mais</th>
+                  <th>
+                    <input type="checkbox" id="todosInativos" />
+                 </th>
                 </tr>
               </thead>
               <tbody>
@@ -172,7 +182,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                 <tr>
                      <th scope="row">{{$pedido->id}}</th>
                         <td>{{$pedido->numero}}</td>
-                        <td>{{ \Carbon\Carbon::parse($pedido->data)->format('d/m/Y') }}</td>
+                        <td name="dtPedido">{{ $pedido->data }}</td>
                         <td>{{"R$ ".number_format($pedido->vl_total_pedido(), 2, ',', '.') }}</td>
                         <td>{{ ($pedido->desconto). "%" }}</td>
                         <td><!--BOTOES -->
@@ -181,7 +191,6 @@ Cadastro de Compras - {{ $cliente->nome }}
                               {!! Form::open(['method' => 'DELETE','route' => ['delete.pedido', $pedido->id] ]) !!}
                               <button type="submit" class="btn btn-sm btn-success" name="restaurar">Restaurar</button>
                               {!! Form::close() !!}
-                            </form>
                           </div>
                         </td>
 
@@ -192,6 +201,9 @@ Cadastro de Compras - {{ $cliente->nome }}
                                         arrow_drop_down
                                     </i>
                             </button>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="selecionado_rec" value="{{$pedido->id}}">
                         </td>
                 </tr>
                 <tr>
@@ -242,27 +254,30 @@ Cadastro de Compras - {{ $cliente->nome }}
   
 
   <script>
-    $("#excluirSelecionados").on("click", function(e){
+    $("#excluirSelecionados").on("click", function(){
         let selecionados = [];
 
         $(document).find("input[name='selecionado']").each( function(){
             if( $(this).is(":checked") == true ){
               let id = $(this).val();
-              selecionados.push(id);
+              selecionados.push(parseInt(id));
             }
         });
           if( confirm("Excluir todos selecionados?") ){
-              deletarSelecionados(selecionados);
+              deletarSelecionados(selecionados, "delete");
           }
     });
+    $("#recSelecionados").on("click",function(){
 
-    function deletarSelecionados(selecionados){
-       let strIds = selecionados.join(",");
-        $.ajax({
-          url: "/cliente/pedido",
-          type: 'DELETE',
-          data: 'pedido_id='+strIds,
-          '_token': $('input[name=_token]').val(),
+    })
+    function deletarSelecionados(selecionados, tipo){
+      console.log(selecionados);  
+      $.ajax({
+          url: "/cliente/pedido/",
+          type: 'POST',
+          
+          data: { ids: selecionados, _method: "delete", '_token': $('input[name=_token]').val(), tipo: tipo}
+          ,
           success: function (data) {
               if (data['status']==true) {
                   $(document).find("input[name='selecionado']").each( function(){
@@ -270,12 +285,13 @@ Cadastro de Compras - {{ $cliente->nome }}
                         let avo = $(this).parent().parent();
                         avo.fadeOut("slow");
                     }
-                    alert(data['message']);
+                    
+                    window.location.reload();
                   });
+                  alert(data['message']);
               }else{
-                  alert("Um erro ocorreu");
+                  alert("Ocorreu um erro ao efetuar a operacao");
               }
-            
           }, error: function (data) {
               alert(data.responseText);
           }
@@ -336,6 +352,7 @@ Cadastro de Compras - {{ $cliente->nome }}
     // Resetar o filtro de busca
     function reseta_busca(){
       $(document).find("[name='dtPedido']").each(function(){
+          $("#dtInicial").val("");
           $(this).parent().fadeIn("slow");
       })
     }
@@ -344,7 +361,7 @@ Cadastro de Compras - {{ $cliente->nome }}
       reseta_busca();
     });
 
-    //confirmação exclusao
+    //confirmação exclusao individual
     $("[name='delete']").on("click", function(e){
         if(!confirm("Excluir pedido?")){
             e.preventDefault();
