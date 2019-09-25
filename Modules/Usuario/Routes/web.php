@@ -13,6 +13,7 @@
 Route::get('/', 'LoginController@index')->name('login');
 Route::post('logar', 'LoginController@authenticate');
 Route::get('logout', 'LoginController@logoutUsuario');
+Route::get('/forgot_password', 'ForgotPasswordController@logoutUsuario');
 
 Route::prefix('usuario')->group(function() {
     //Trocar Senha

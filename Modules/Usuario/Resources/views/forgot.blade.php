@@ -41,3 +41,9 @@
 <script src="{{Module::asset('usuario:js/login/validacao-form.js')}}"></script>
 @endsection
 @endsection
+
+<form action="{{url('/forgot_password')}}" method="POST">
+        {{ csrf_field() }}
+        <input type="email" name="email" id="email">
+        <button type="submit">Recuperar</button>
+    </form>
