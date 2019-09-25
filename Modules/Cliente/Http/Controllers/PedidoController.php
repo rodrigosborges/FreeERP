@@ -38,10 +38,11 @@ class PedidoController extends Controller
     
     public function store(CreatePedidoRequest $request)
     {
-        $pedido = Pedido::create( $request->all() );
-        dd($request);
-        $data = str_replace("/", "-", $_POST["data"]);
-            dd( date('Y-m-d', strtotime($data)) );
+        $id_cliente = $request->path();
+        $id_cliente = explode('/', $id_cliente, 3);
+        $id_cliente = $id_cliente[1];
+        
+        $pedido = Pedido::firstOrCreate( ['cliente_id' => $id_cliente], $request->all() );
 
         DB::beginTransaction();
         try{
@@ -92,15 +93,15 @@ class PedidoController extends Controller
         DB::beginTransaction();
         try{
 
-        $pedido->update($params);
-        
-        $dados = [];
-        foreach($produtos as $produto){
-            $dados[$produto['produto_id']] = [
-                    'quantidade' => $produto['quantidade'], 
-                    'desconto' => $produto['desconto']
-                ];
-            }
+            $pedido->update($params);
+            
+            $dados = [];
+            foreach($produtos as $produto){
+                $dados[$produto['produto_id']] = [
+                        'quantidade' => $produto['quantidade'], 
+                        'desconto' => $produto['desconto']
+                    ];
+                }
 
             $pedido->produtos()->sync($dados);
             DB::commit();
@@ -110,9 +111,8 @@ class PedidoController extends Controller
             return back()->with('error', 'Ocorreu um erro ao salvar');
         }
 
-        $pedido->produtos()->sync($dados);
-
-        return back()->with('sucess', 'Pedido editado');
+        // $pedido->produtos()->sync($dados);
+        // return back()->with('sucess', 'Pedido editado');
     }
 
     public function deleteMultiples(Request $request){
@@ -125,7 +125,6 @@ class PedidoController extends Controller
 
     public function destroy($pedido_id)
     {   
-
         $pedido = Pedido::withTrashed()->findOrFail($pedido_id);
         DB::beginTransaction();
         try{
@@ -144,11 +143,5 @@ class PedidoController extends Controller
         }
     }
 
-    public function buscaData(){
-        DB::table('teste')
-    ->whereBetween('data',["2017-02-01","2017-02-08"])
-    ->get();
-    }
-    
 
 }
