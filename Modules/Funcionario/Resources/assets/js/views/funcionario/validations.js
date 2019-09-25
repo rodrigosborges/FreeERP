@@ -48,6 +48,12 @@ $('#form').validate({
         "documentos[serie_ctps][numero]":{
             digits: true,
             maxlength:5 
+        },
+        "cursos[][area_atuacao]":{
+            digits: true,
+        },
+        "cursos[][duracao_horas_curso]":{
+            digits: true,
         }
     },
     messages:{}

@@ -36,6 +36,24 @@ $('#form').validate({
         "telefones[][tipo_telefone_id]": {
             digits: true,
             maxlength: 4
+        },
+        "documentos[pis][numero]":{
+            digits: true,
+            maxlength:13
+        },
+        "documentos[numero_ctps][numero]":{
+            digits: true,
+            maxlength:8 
+        },
+        "documentos[serie_ctps][numero]":{
+            digits: true,
+            maxlength:5 
+        },
+        "cursos[][area_atuacao]":{
+            digits: true,
+        },
+        "cursos[][duracao_horas_curso]":{
+            digits: true,
         }
     },
     messages:{}

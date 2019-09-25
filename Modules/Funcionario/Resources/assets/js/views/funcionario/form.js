@@ -100,15 +100,15 @@ $(document).on('change', '.custom-file-input',function(e){
 
 //#############
 //Cursos Funcionarios
+//ADICIONA E REMOVE DOCUMENTOS
 $(document).on("click", ".add-curso", function() {
-    if($(".cur").hasClass("c-none")) {
-        $(".cur").removeClass("c-none")
-        $(".cursos").fadeIn()
+    if($(".cur").hasClass("dep-none")) {
+        $(".cur").removeClass("dep-none")
+        $(".cursos").hide().removeAttr('disabled').fadeIn("slow")
     }
     else if($(".cur").length < 4) {
         clonar(".cur", "#cursos", true)
         $(".cur").last().find(".cursos").val("")
-       // $(".dep").last().find(".cpf").mask('000.000.000-00')
     } else {
 
         Swal.fire({
@@ -123,12 +123,44 @@ $(document).on("click", ".add-curso", function() {
 $(document).on("click", ".del-cur", function() {
     if($(".cur").length == 1) {
         $(".cur").last().find(".cursos").val("")
-        $('.cur').addClass('c-none')
+        $('.cur').addClass('d-none')
         $(".cursos").attr('disabled', 'disabled')
+        $(".cur").last().find(".custom-file-label").html("Selecione");
+        $(".file_download").remove()
     } else {
         remover(".cur", $(this))
     }
 })
+
+
+// $(document).on("click", ".add-curso", function() {
+//     if($(".cur").hasClass("c-none")) {
+//         $(".cur").removeClass("c-none")
+//         $(".cursos").fadeIn()
+//     }
+//     else if($(".cur").length < 4) {
+//         clonar(".cur", "#cursos", true)
+//         $(".cur").last().find(".cursos").val("")
+//     } else {
+
+//         Swal.fire({
+//             type: 'warning',
+//             title: 'Atenção!',
+//             text: 'Podem ser adicionados no máximo '+$(".cur").length+' cursos',
+//         })
+ 
+//     }
+// })
+
+// $(document).on("click", ".del-cur", function() {
+//     if($(".cur").length == 1) {
+//         $(".cur").last().find(".cursos").val("")
+//         $('.cur').addClass('c-none')
+//         $(".cursos").attr('disabled', 'disabled')
+//     } else {
+//         remover(".cur", $(this))
+//     }
+// })
 
 //###################
 //ENDEREÇO
