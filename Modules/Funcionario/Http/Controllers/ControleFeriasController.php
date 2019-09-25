@@ -115,7 +115,7 @@ class ControleFeriasController extends Controller
         $limite_periodo_aquisitivo->add(new DateInterval('P330D')); // Essa linha adiciona 330 dias(11 meses)
 
         $teste = DB::table('controle_ferias')->where('funcionario_id', '=', $id)->count(); //Verifica se há algum registro de férias já adicionado.
-        
+       
         /*Se há registro, a variável $saldo_periodo armazena o útlimo saldo cadastrado; a váriavel $ultimo_fim_periodo salva o último fim_periodo_aquisitivo, 
         para que seja calculada o saldo excendente*/ 
         if($teste > 0){ 

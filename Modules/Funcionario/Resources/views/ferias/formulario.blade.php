@@ -89,15 +89,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-8">
-                <label for="situacao_ferias">Situação das Férias:</label>
-                <select name="situacao_ferias" class="form-control" id="situacao_ferias">
-                    <option value=""selected>Selecionar</option>
-                    <option value="marcadas">Marcadas</option>
-                    <option value="naoMarcadas">Não Marcadas</option>
-                </select>
-            </div>
-
+            
             <div class="form-group col-3">
                 <label for="saldo_total">Férias excedentes</label>
                 <input type="text" name="saldo_total" id="saldo_total" class="form-control" value="{{$data['saldo_total']}}" disabled>
@@ -128,11 +120,12 @@
 @endsection
             
 @section('script')
+    <script src="{{Module::asset('funcionario:js/views/ferias/form.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="{{Module::asset('funcionario:js/helpers.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/form.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/validations.js')}}"></script>
-   
+    
 
     <script>
         $(document).ready(function(){

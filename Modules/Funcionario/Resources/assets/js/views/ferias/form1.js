@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    
-    let saldo = $('#saldo_periodo').val();
-    console.log(saldo)
+    alert('oi');
+    /*var saldo = $('input[name=saldo_periodo]').val();
+    alert(saldo)
 
     $('#form').validate({
         rules: {
@@ -12,7 +12,7 @@ $(document).ready(function(){
             }
         },
         messages:{}
-    })
+    })*/
 })
 
 
