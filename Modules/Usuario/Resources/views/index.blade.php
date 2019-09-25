@@ -17,9 +17,9 @@
                     @csrf
 
                     <div class="form-group">
-                        <label for="apelido">Apelido</label>
-                        <input required id="apelido" class="form-control" type="text" name="apelido">
-                        {{$errors->first('apelido')}}
+                        <label for="login">Apelido ou email</label>
+                        <input required id="login" class="form-control" type="text" name="login">
+                        {{$errors->first('login')}}
                         <br>
                         <label for="password">Senha</label>
                         <input required id="password" class="form-control" type="password" name="password">

@@ -31,15 +31,18 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         
-        // if(strrpos($request['login'], "@")){
-        //     $credentials = $request->only('login', 'password');
-        //     Auth::attempt(['email' => $request->login , 'password' => $request->password]);
+        if(strrpos($request['login'], "@")){
+            $login = 'email';
+            // Auth::attempt(['email' => $request->login , 'password' => $request->password]);
             
-        // return strrpos($request['login'], "@");
-        // }else{
-        //     $credentials = $request->only('apelido', 'password');
-        // }
-        $credentials = $request->only('apelido', 'password');
+        }else{
+            $login = 'apelido';
+        }
+
+        $credentials = [$login => $request->login , 'password' => $request->password];
+        
+
+       // $credentials = $request->only('apelido', 'password');
 
         if (Auth::guard()->attempt($credentials)) {
             // Authentication passed...
@@ -47,8 +50,8 @@ class LoginController extends Controller
             // return Usuario::firstOrFail()->where('apelido', $value)
             // $results = DB::select('select * from cliente where id = ?', [1]);
         }else{
-            // return back()->withErrors(['apelido' => ['Usuário inválido ou inexistente'],'senha' => ['Senha incorreta']]);
-            return back()->with('error', 'Credenciais não conferem!');
+            // return back()->withErrors(['login' => ['Usuário inválido ou inexistente'],'password' => ['Senha incorreta']]);
+            // return back()->with('error', 'Credenciais não conferem!');
         }
     }
     public function logoutUsuario(Request $request)

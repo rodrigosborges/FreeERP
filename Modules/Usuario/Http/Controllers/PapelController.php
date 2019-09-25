@@ -5,7 +5,7 @@ namespace Modules\Usuario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Usuario\Entities\Papel;
+use Modules\Usuario\Entities\{Usuario,Papel};
 use Modules\Usuario\Http\Requests\PapelRequest;
 use DB;
 
@@ -107,8 +107,13 @@ class PapelController extends Controller
     public function destroy($id)
     {
         $papel = Papel::findOrFail($id);
-        $papel->delete();
-        return back();
+        if(!Usuario::where('papel_id', $id)->first()){
+            $papel->delete();
+            return back();
+      
+        }
+        return redirect()->back()->with('error','Não é possível deletar um papel já atribuido');
+      
     }
 
     public function restore($id){

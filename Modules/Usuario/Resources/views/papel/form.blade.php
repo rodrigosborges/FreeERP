@@ -15,7 +15,7 @@
                 </h5>
             </div>
             <div>
-                <form class="card-body d-flex flex-column" method="post" action="{{ url(isset($papel) ? 'papel/'.$papel->id : 'papel') }}">
+                <form id="papelForm" class="card-body d-flex flex-column" method="post" action="{{ url(isset($papel) ? 'papel/'.$papel->id : 'papel') }}">
                     @if(isset($papel))
                         @method('PUT')
                     @endif
@@ -23,6 +23,7 @@
 
                     <div class="form-group">
                         <input value="{{ old('nome', isset($papel) ? $papel->nome : '') }}" class="form-control" type="text" name="nome" placeholder="Nome do Papel">
+                        {{$errors->first('nome')}}
                     </div>
                     <!-- <div class="form-group">
                         <input value="{{ old('icone', isset($papel) ? $papel->icone : '') }}" class="form-control" type="text" name="icone" placeholder="Ícone do Papel">
@@ -46,28 +47,6 @@
 
 <script src="{{asset('js/jquery.validate.min.js')}}"></script>
 
-<script>
-    $("#papelForm").validate({
-        rules: {
-            nome: {
-                required:true,
-                minlength:3,
-                maxlength:30,
-                lettersonly:true
-            }
-        },
-        messages:{
-            nome: {
-                required: "<span style='color:red'>Favor insira um nome!</span>",
-                minlength: "<span style='color:red'>Mínimo 3 caracteres!</span>",
-                maxlength: "<span style='color:red'>Máximo 30 caracteres!</span>",
-            }
-        }
-    });
-    
-    jQuery.validator.addMethod("lettersonly", function(value, element) 
-    {
-        return this.optional(element) || /^[a-z ]+$/i.test(value);
-    }, "<span style='color:red'>Apenas letras e espaços!</span>");
-</script>
+
+<script src="{{Module::asset('usuario:js/usuario/validacao-form.js')}}"></script>
 @endsection
