@@ -44,9 +44,9 @@ $menu = [
                 <div class="dropdown">
                     <a class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Relatorios</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <button class="dropdown-item" type="button">Saída de produtos</button>
-                            <button class="dropdown-item" type="button">Movimentação de produtos</button>
-                            <button class="dropdown-item" type="button">Custo</button>
+                            <a class="dropdown-item" href="#">Saída de produtos</a>
+                            <a class="dropdown-item" href="#">Movimentação de produtos</a>
+                            <a class="dropdown-item" href="#">Custo</a>
                         </div>
                 </div>
             </li>
