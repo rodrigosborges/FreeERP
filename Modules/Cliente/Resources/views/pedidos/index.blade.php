@@ -4,6 +4,7 @@ Cadastro de Compras - {{ $cliente->nome }}
 @endsection
 @section('content')
 <div class = "card">
+    
       <div id="opcoes" class="card-header flex">
       <div class="row col-12"><h3>Compras cliente {{ $cliente->nome }}</h3></div>
 
@@ -48,15 +49,9 @@ Cadastro de Compras - {{ $cliente->nome }}
       <div class="tab-content" id="tabContent">
       <div  id="ativos" class="tab-pane fade show active" role="tabpanel" aria-labelledby="ativos-tab">
           <div class="d-flex col-12 pb-1 justify-content-end">
-
-              <form action="" method="post" id="excluir_varios">
-                <button type="submit" class="btn btn-danger" id="excluirSelecionados" disabled="">
-                    {{method_field('DELETE')}}
-                    {{ csrf_field() }}
+              <button class="btn btn-danger" id="excluirSelecionados" disabled="">
                    Excluir selecionados
-                </button>
-              </form>
-
+              </button>
           </div>
             <table class="table bordered text-center col-md-12">
               <thead>
@@ -70,7 +65,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                   <th>Opções</th>
                   <th>Ver mais</th>
                   <th>
-                       <input type="checkbox" name="todos" id="selecionaTodos" />
+                       <input type="checkbox" id="selecionaTodos" />
                   </th>
                 </tr>
               </thead>
@@ -83,17 +78,16 @@ Cadastro de Compras - {{ $cliente->nome }}
                         <td>{{ "R$ ".number_format($pedido->vl_itens_desconto(), 2, ',', '.') }}</td>
                         <td>{{ "R$ ".number_format($pedido->vl_total_pedido(), 2, ',', '.') }}</td>
                         <td>{{ ($pedido->desconto). "%" }}</td>
-                        <td><!--BOTOES -->
+                        <td>
                           <div class="flex row justify-content-around">
+                            {{-- Editar pedido --}}
                               <a href="{{url("/cliente/pedido/".$pedido->id )}}" 
                                   class="btn btn-sm btn-warning" name="edit">Editar</button>
                               </a>
-                              <form action={{url( "/cliente/pedido/".$pedido->id ) }} method="post">
-                                  {{method_field('DELETE')}}
-                                  {{ csrf_field() }}
+                              {{-- BOTAO PARA EXCLUSAO DO ITEM INDIVIDUALMENTE --}}
+                              {!! Form::open(['method' => 'DELETE','route' => ['delete.pedido', $pedido->id] ]) !!}
                                   <button type="submit" class="btn btn-sm btn-danger" name="delete">Excluir</button>
-                              </form>
-
+                              {!! Form::close() !!}
                           </div>
                         </td>
 
@@ -106,11 +100,10 @@ Cadastro de Compras - {{ $cliente->nome }}
                             </button>
                         </td>
                         <td>
-                            <input type="checkbox" name="selecionado" value="{{$pedido->id}}[]">
+                            <input type="checkbox" name="selecionado" value="{{$pedido->id}}">
                         </td>
                 </tr>
-              
-
+              {{-- checkbox individual acima --}}
                 <tr>
                   <td colspan="100%" style="height: 0px; padding: 0px; margin:0px;">
                     <div class="collapse" id="collapse{{$pedido->id}}">
@@ -142,7 +135,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                               </div>
                               @empty
                               <div class = "col-6 pt-1 text-center">
-                                  <h5>Compra sem itens cadastrados</h5>
+                                  <h5>Compra sem item cadastrado</h5>
                               </div>
                           @endforelse
                        </div>
@@ -154,7 +147,11 @@ Cadastro de Compras - {{ $cliente->nome }}
               </tbody>
             </table>
       </div><!--Final tabela e div -->
+
       <div class="tab-pane fade" id="inativos" role="tabpanel" aria-labelledby="profile-tab">
+         
+      
+          
           <table class="table bordered text-center col-md-12">
               <thead>
                 <tr>
@@ -177,11 +174,11 @@ Cadastro de Compras - {{ $cliente->nome }}
                         <td>{{ ($pedido->desconto). "%" }}</td>
                         <td><!--BOTOES -->
                           <div class="flex row justify-content-around">
-                              <form action={{url( "/cliente/pedido/".$pedido->id ) }} method="post" onsubmit=" return restaurar( {{$pedido->id}} )">
-                                  {{method_field('DELETE')}}
-                                  {{ csrf_field() }}
+                            {{-- Restaurar pedido apagado --}}
+                              {!! Form::open(['method' => 'DELETE','route' => ['delete.pedido', $pedido->id] ]) !!}
                               <button type="submit" class="btn btn-sm btn-success" name="restaurar">Restaurar</button>
-                              </form>
+                              {!! Form::close() !!}
+                            </form>
                           </div>
                         </td>
 
@@ -242,45 +239,47 @@ Cadastro de Compras - {{ $cliente->nome }}
   
 
   <script>
-    function deletarSelecionados(selecionados){
-        $.ajax({
-            url: "/deletarSelecionados",
-            data: {
-              pedido_id : selecionados,
-            },
-            type: "post",
-            '_token': $('input[name=_token]').val(),
-        }).done(function(data){
-          $(document).find("input[name='selecionado']").each( function(){
-            if( $(this).is(":checked") == true ){
-              var avo = $(this).parent().parent();
-              avo.fadeOut("slow");
-            }
-
-
-          });
-            
-        }).fail(function(){
-            console.log("fail")
-        }).always(function(){ })
-    }
-
     $("#excluirSelecionados").on("click", function(e){
-      e.preventDefault();
-      var selecionados = [];
+        var selecionados = [];
 
-      $(document).find("input[name='selecionado']").each( function(){
+        $(document).find("input[name='selecionado']").each( function(){
             if( $(this).is(":checked") == true ){
               var id = $(this).val();
               selecionados.push(id);
             }
-      });
-      if( confirm("Excluir todos selecionados?") ){
-        deletarSelecionados(selecionados);
-        selecionados.forEach(function (item, indice, array) {
         });
-      }
+          if( confirm("Excluir todos selecionados?") ){
+              deletarSelecionados(selecionados);
+          }
     });
+
+    function deletarSelecionados(selecionados){
+       var strIds = selecionados.join(",");
+        $.ajax({
+          url: "/cliente/pedido",
+          type: 'DELETE',
+          data: 'pedido_id='+strIds,
+          '_token': $('input[name=_token]').val(),
+          success: function (data) {
+              if (data['status']==true) {
+                  $(document).find("input[name='selecionado']").each( function(){
+                    if( $(this).is(":checked") == true ){
+                        var avo = $(this).parent().parent();
+                        avo.fadeOut("slow");
+                    }
+                    alert(data['message']);
+                  });
+              }else{
+                  alert("Um erro ocorreu");
+              }
+            
+          }, error: function (data) {
+              alert(data.responseText);
+          }
+        });
+    }
+
+
 
     $("[name='delete']").on("click", function(e){
         if(!confirm("Excluir pedido?")){
@@ -319,9 +318,6 @@ Cadastro de Compras - {{ $cliente->nome }}
 
         if(!checado){
             botao.prop("disabled","disabled");
-            // if( $("#selecionaTodos").is(":checked") == true){
-            //    $("#selecionaTodos").prop("checked",false);
-            // }
         }else{
             if(botao.is(":disabled")){
               botao.removeAttr('disabled');

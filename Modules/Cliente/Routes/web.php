@@ -18,13 +18,13 @@ Route::prefix('cliente')->group(function() {
     Route::get('{cliente_id}/pedido', 'PedidoController@index');//Lista pedidos
     Route::get('{cliente_id}/pedido/novo', 'PedidoController@novo');// Novo pedido
 
-    Route::delete('pedido/{pedido_id}', 'PedidoController@destroy');//Deletar pedido
+    Route::delete('pedido/{pedido_id}', 'PedidoController@destroy')->name('delete.pedido');//Deletar pedido
     Route::get('pedido/{pedido_id}','PedidoController@edit');//Abrir view eddição
 
 
     Route::put('pedido/{pedido_id}','PedidoController@update'); //Salvar alteracao
     Route::post('{cliente_id}/pedido/','PedidoController@store');//Salvar Novo pedido
-
+    Route::delete('pedido','PedidoController@deleteMultiples');
 
     Route::get('/','ClienteController@index');
 });
