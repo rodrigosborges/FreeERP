@@ -12,25 +12,17 @@
                 This view is loaded from module: {!! config('usuario.name') !!}
             </p> -->
 
-            <form id="loginForm" method="POST" action="/logar">
-                        
-                    @csrf
-
-                    <div class="form-group">
-                        <label for="login">Apelido ou email</label>
-                        <input required id="login" class="form-control" type="text" name="login">
-                        {{$errors->first('login')}}
-                        <br>
-                        <label for="password">Senha</label>
-                        <input required id="password" class="form-control" type="password" name="password">
-                        {{$errors->first('password')}}
-                        <br>
-                        <label for="password"><a href="{{url('/forgotPassword')}}">Esqueci a senha</a></label>
-                    </div>
-                    <button type="submit" class="btn btn-success">Entrar</button>
+            <form id="forgotForm" method="POST" action="{{url('/forgot_password')}}}">
+                    {{ csrf_field() }}
+                    <label for="email">Email para recuperar a senha</label>
+                    <input type="email" class="form-control" name="email" id="email">
+                    <br>
+                    <button type="submit" class="btn btn-success">Recuperar</button>
                     <br>
                     <br>
-                </form>
+                    <br>
+                    <br>
+            </form>
         </div>
     </div>
 </div>
@@ -41,9 +33,3 @@
 <script src="{{Module::asset('usuario:js/login/validacao-form.js')}}"></script>
 @endsection
 @endsection
-
-<form action="{{url('/forgot_password')}}" method="POST">
-        {{ csrf_field() }}
-        <input type="email" name="email" id="email">
-        <button type="submit">Recuperar</button>
-    </form>
