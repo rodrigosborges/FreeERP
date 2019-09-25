@@ -56,7 +56,8 @@ Route::prefix('estoque')->group(function () {
     Route::post('/movimentacao/buscar', 'MovimentacaoEstoqueController@buscar');
     Route::resource('/movimentacao', 'MovimentacaoEstoqueController');
 
-
+    //Rotas de Relatório
+    Route::get('/relatorio/custos', 'EstoqueController@relatorioCusto');
 
     //Rotas do Estoque
     Route::post('/buscar', 'EstoqueController@buscar');
