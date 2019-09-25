@@ -5,8 +5,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
 @section('body')
 
 
-    <form id="form" action="{{isset($pedido) ? '/pedido/'.$pedido->id : $cliente->id.'/pedido'}}" method="`POST">
-        @csrf
+    <form id="form" action="{{isset($pedido) ? url('/pedido/'.$pedido->id) : url('/cliente/'.$cliente->id.'/pedido')}}" method="POST">
         @if(isset($pedido)) 
             @method('put')
         @endif
@@ -17,8 +16,8 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="material-icons">calendar_today</i></span>    
                     </div>
-                    <input type="text" required name="data" id="data" class="form-control" value="{{ isset($pedido->data) ? $pedido->data : old('data', '') }}">
-                    
+                    <input type="text" required name="data" placeholder="DD/MM/AAAA" id="data" class="form-control" value="{{ isset($pedido->data) ? $pedido->data : old('data', '') }}">
+
                 </div>                        
             </div>
 
@@ -47,7 +46,50 @@ Cadastro Nova Compra - {{ $cliente->nome }}
         <hr>
         <div class="produtos">
             <h3>Produto(s)</h3>
-            
+        
+            @if(isset($pedido))
+                @foreach ($pedido->produtos as $prod)
+                <div class="row produto ">
+                    <hr>
+                    
+                    <div class="col-lg col-md form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
+                            </div>
+                            <select name="produtos[0][produto_id] produto_id" required id="" class="form-control">
+                                @foreach($produtos as $produto)   
+                                    @if ($produto->id == $prod->pivot->produto_id)
+                                    <option value="{{$produto->id}}" selected>{{$produto->nome}}</option>
+                                    @endif        
+                                    
+                                @endforeach        
+                            </select>                
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-11 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="material-icons">add_shopping_cart</i></span>
+                            </div>
+                            <input type="text" required class="form-control produto_quantidade" value="{{$prod->pivot->quantidade}}"  name="produtos[0][quantidade]" placeholder="Quantidade">
+                        </div>                 
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-11 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="material-icons">trending_down</i></span>
+                            </div>
+                            <input type="text" required class="form-control produto_desconto desconto" value="{{$prod->pivot->desconto}}" name="produtos[0][desconto]" placeholder="Desconto">
+                        </div>  
+                    </div>
+                    <div class="col-lg-1 col-sm-12 form-group d-none">
+                        <button type="button" class="btn btn-danger btn-block excluir-produto"><strong>X</strong></button>
+                    </div>
+                    <hr>
+                </div>
+                @endforeach
+            @else
             <div class="row produto ">
                 <hr>
                 <div class="col-lg col-md form-group">
@@ -84,12 +126,14 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                 </div>
                 <hr>
             </div>
+            @endif
+
         </div>
         <div class="text-center">
             <button type="button" id="adicionar-produto" class="btn btn-success"><strong>+</strong></button>
         </div>
         
-        <button type="submit" class="btn btn-primary">Cadastrar compra</button>
+        <button class="btn btn-primary">Cadastrar compra</button>
 
     </form>
 
@@ -164,30 +208,6 @@ Cadastro Nova Compra - {{ $cliente->nome }}
         });
         $('#data').mask('00/00/0000');
     });
-
-
-
-
-// var itens_compra = [];
-// function add_item(){
-//     var opt = $("[name='produto_id'] option:selected");     
-//     dados = opt.text().split("-");
-//     novaTabela(dados);
-//     alert(opt.val() + " " + opt.text());
-//     itens_compra.push(opt.val());
-// }
-// $("#add").click(function(){
-//     var opt = $("[name='produto_id'] option:selected");     
-//     console.log();
-//     var nome = opt.attr("data-nome");
-//     var preco = opt.attr("data-preco");
-//     var codigo = opt.attr("data-codigo")
-//     var quantidade = $('#qtde').val();
-//     var desconto = $('#desconto').val();
-//      //CRIAR TBODY
-//     var row = "<tr><td>" +  codigo + "</td><td>" + nome + "</td><td>" + preco +"</td><td>" + quantidade + "</td><td>" + desconto + "</td></tr>";
-//     $("#adicionados tbody").append(row);
-// });
 
 </script>
 @endsection

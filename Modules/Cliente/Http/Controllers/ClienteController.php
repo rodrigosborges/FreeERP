@@ -86,7 +86,7 @@ class ClienteController extends Controller
 
     public function edit($id)
     {
-        return view('cliente::edit');
+        return 'view do editar';
     }
 
     public function update(CreateClienteRequest $request, $id){
