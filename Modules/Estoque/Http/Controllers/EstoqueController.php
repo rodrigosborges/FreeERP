@@ -5,7 +5,7 @@ namespace Modules\Estoque\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Estoque\Entities\{Produto, Estoque, TipoUnidade, MovimentacaoEstoque};
+use Modules\Estoque\Entities\{Produto, Estoque, Categoria, TipoUnidade, MovimentacaoEstoque};
 use DB;
 
 class EstoqueController extends Controller
@@ -267,5 +267,10 @@ class EstoqueController extends Controller
     {
         $itens = Estoque::where('quantidade', '<=', DB::raw('quantidade_notificacao'))->paginate(10);
         return count($itens);
+    }
+
+    public function relatorioCusto(){
+        $categorias = Categoria::all();
+        return view('estoque::estoque.relatorios.custo', compact('categorias'));
     }
 }

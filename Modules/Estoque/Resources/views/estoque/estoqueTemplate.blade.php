@@ -17,9 +17,9 @@ $menu = [
 @section('content')
 <div class="container">
 
-    <div class="card text-center">
+    <div class="card">
 
-        <div class="card-header">
+        <div class="card-header text-center">
             <h5 style="font-size:25px;">@yield('title')</h5>
 
         </div>
@@ -45,8 +45,8 @@ $menu = [
                     <a class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Relatorios</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                             <a class="dropdown-item" href="#">Saída de produtos</a>
-                            <a class="dropdown-item" href="#">Movimentação de produtos</a>
-                            <a class="dropdown-item" href="#">Custo</a>
+                            <a class="dropdown-item" href="{{url('/estoque/relatorio/movimentacao')}}">Movimentação de produtos</a>
+                            <a class="dropdown-item" href="{{url('/estoque/relatorio/custos')}}">Custo</a>
                         </div>
                 </div>
             </li>
