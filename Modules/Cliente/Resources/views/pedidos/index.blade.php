@@ -48,9 +48,14 @@ Cadastro de Compras - {{ $cliente->nome }}
       <div class="tab-content" id="tabContent">
       <div  id="ativos" class="tab-pane fade show active" role="tabpanel" aria-labelledby="ativos-tab">
           <div class="d-flex col-12 pb-1 justify-content-end">
-              <button type="submit" class="btn btn-danger" id="excluirSelecionados" disabled="">
-                  Excluir selecionados
-              </button>
+
+              <form action="" method="post" id="excluir_varios">
+                <button type="submit" class="btn btn-danger" id="excluirSelecionados" disabled="">
+                    {{method_field('DELETE')}}
+                    {{ csrf_field() }}
+                   Excluir selecionados
+                </button>
+              </form>
 
           </div>
             <table class="table bordered text-center col-md-12">
@@ -64,7 +69,8 @@ Cadastro de Compras - {{ $cliente->nome }}
                   <th>Desconto Pedido</th>
                   <th>Opções</th>
                   <th>Ver mais</th>
-                  <th><input type="checkbox" name="todos" id="selecionaTodos" />
+                  <th>
+                       <input type="checkbox" name="todos" id="selecionaTodos" />
                   </th>
                 </tr>
               </thead>
@@ -100,7 +106,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                             </button>
                         </td>
                         <td>
-                            <input type="checkbox" name="selecionado" value="{{$pedido->id}}">  
+                            <input type="checkbox" name="selecionado" value="{{$pedido->id}}[]">
                         </td>
                 </tr>
               
@@ -233,8 +239,49 @@ Cadastro de Compras - {{ $cliente->nome }}
 </div>
   @endsection
   @section('script')
+  
+
   <script>
-   
+    function deletarSelecionados(selecionados){
+        $.ajax({
+            url: "/deletarSelecionados",
+            data: {
+              pedido_id : selecionados,
+            },
+            type: "post",
+            '_token': $('input[name=_token]').val(),
+        }).done(function(data){
+          $(document).find("input[name='selecionado']").each( function(){
+            if( $(this).is(":checked") == true ){
+              var avo = $(this).parent().parent();
+              avo.fadeOut("slow");
+            }
+
+
+          });
+            
+        }).fail(function(){
+            console.log("fail")
+        }).always(function(){ })
+    }
+
+    $("#excluirSelecionados").on("click", function(e){
+      e.preventDefault();
+      var selecionados = [];
+
+      $(document).find("input[name='selecionado']").each( function(){
+            if( $(this).is(":checked") == true ){
+              var id = $(this).val();
+              selecionados.push(id);
+            }
+      });
+      if( confirm("Excluir todos selecionados?") ){
+        deletarSelecionados(selecionados);
+        selecionados.forEach(function (item, indice, array) {
+        });
+      }
+    });
+
     $("[name='delete']").on("click", function(e){
         if(!confirm("Excluir pedido?")){
             e.preventDefault();
@@ -248,15 +295,15 @@ Cadastro de Compras - {{ $cliente->nome }}
     })
 
     $("#selecionaTodos").on("click", function(){
-        $("[name='selecionado']").not(this).prop('checked', this.checked);//Marca os outros
-
+        $("[name='selecionado']").prop('checked', this.checked);//Marca os outros
         var botao = $("#excluirSelecionados");
-         if( botao.is(":disabled")  ){
-             botao.removeAttr('disabled');
-         }else{
-              if($("[name='selecionado']").is(":checked") == false);
-                botao.prop("disabled","disabled");
-         }
+
+        if(this.checked)
+            botao.removeAttr('disabled');
+        else
+            botao.prop("disabled","disabled");
+        
+        
     })
 
     //habilitar desabilitar botao excluir
@@ -272,9 +319,9 @@ Cadastro de Compras - {{ $cliente->nome }}
 
         if(!checado){
             botao.prop("disabled","disabled");
-            if( $("#selecionaTodos").is(":checked")==true){
-               $("#selecionaTodos").prop("checked",false);
-            }
+            // if( $("#selecionaTodos").is(":checked") == true){
+            //    $("#selecionaTodos").prop("checked",false);
+            // }
         }else{
             if(botao.is(":disabled")){
               botao.removeAttr('disabled');

@@ -23,10 +23,13 @@ Route::prefix('cliente')->group(function() {
     Route::delete('pedido/{pedido_id}', 'PedidoController@destroy');//Deletar pedido
     Route::get('pedido/{pedido_id}','PedidoController@edit');//Abrir view eddição
 
+
     Route::put('pedido/{pedido_id}','PedidoController@update'); //Salvar alteracao
     Route::post('{cliente_id}/pedido/','PedidoController@store');//Salvar Novo pedido
 
 
     Route::get('/','ClienteController@index');
 });
+
+    Route::post("/deletarSelecionados", 'PedidoController@teste');
 

@@ -39,6 +39,10 @@ class PedidoController extends Controller
     public function store(CreatePedidoRequest $request)
     {
         $pedido = Pedido::create( $request->all() );
+        dd($request);
+        $data = str_replace("/", "-", $_POST["data"]);
+            dd( date('Y-m-d', strtotime($data)) );
+
         DB::beginTransaction();
         try{
             $produtos = $request->input('produtos');
@@ -111,15 +115,60 @@ class PedidoController extends Controller
         return back()->with('sucess', 'Pedido editado');
     }
 
+    public function teste(Request $request){
+
+        
+        return "1";
+    }
     public function destroy($pedido_id)
     {   
-        $pedido = Pedido::withTrashed()->findOrFail($pedido_id);
-        if( $pedido->trashed() ){
-            $pedido->restore();
-            return back()->with('sucess', 'Pedido restaurado');
+        if(is_array($pedido_id)){
+            foreach($pedido_id as $id){
+                $pedido = Pedido::withTrashed()->findOrFail($pedido_id);
+                if( $pedido->trashed() ){
+                    $pedido->restore();
+                    return back()->with('sucess', 'Pedido restaurado');
+                }else{
+                    $pedido->delete();
+                    return back()->with('success', 'Pedido deletado');
+                }
+            }
         }else{
-            $pedido->delete();
-            return back()->with('success', 'Pedido deletado');
+
+        $pedido = Pedido::withTrashed()->findOrFail($pedido_id);
+            if( $pedido->trashed() ){
+                $pedido->restore();
+                return back()->with('sucess', 'Pedido restaurado');
+            }else{
+                $pedido->delete();
+                return back()->with('success', 'Pedido deletado');
+            }
         }
     }
+    // public function destroy($pedido_id)
+    // {   
+    //     if(is_array($pedido_id)){
+    //         foreach($pedido_id as $id){
+    //             $pedido = Pedido::withTrashed()->findOrFail($pedido_id);
+    //             if( $pedido->trashed() ){
+    //                 $pedido->restore();
+    //                 return back()->with('sucess', 'Pedido restaurado');
+    //             }else{
+    //                 $pedido->delete();
+    //                 return back()->with('success', 'Pedido deletado');
+    //             }
+    //         }
+    //     }else{
+
+    //     $pedido = Pedido::withTrashed()->findOrFail($pedido_id);
+    //         if( $pedido->trashed() ){
+    //             $pedido->restore();
+    //             return back()->with('sucess', 'Pedido restaurado');
+    //         }else{
+    //             $pedido->delete();
+    //             return back()->with('success', 'Pedido deletado');
+    //         }
+    //     }
+    // }
+
 }
