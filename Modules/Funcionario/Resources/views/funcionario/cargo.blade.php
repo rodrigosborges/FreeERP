@@ -82,4 +82,30 @@
     <script src="{{Module::asset('funcionario:js/views/funcionario/form.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/helpers.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/validations.js')}}"></script>
+    <script>
+        $( document ).ready(function() {
+            $("#data_admissao").change(function (){
+                var d = new Date();
+                
+                //data 1
+                var startDt = $('#data_admissao').val().split('/');
+                var startDt = startDt[2] + '-' + startDt[1] + '-' + startDt[0]
+                //data 2
+                var month = d.getMonth()+1;
+                var day = d.getFullYear();
+                var endDt = (day<10 ? '0' : '') + day + '-' +
+                    (month<10 ? '0' : '') + month + '-' +
+                    d.getDate();
+
+                //comparação
+                if( (new Date(startDt).getTime() == new Date(endDt).getTime()) ){
+                    $(".sendForm").attr("disabled", false);
+                    $(".errors").text("");
+                }else{
+                    $(".errors").text("Insira a data atual");
+                    $(".sendForm").attr("disabled", true);
+                }
+            })
+        }); 
+    </script>
 @endsection
