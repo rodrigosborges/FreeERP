@@ -3,7 +3,7 @@ $('#form').validate({
        "data":{
             date: true,
             maxlength: 10,
-            dataBR: true
+            dataAteHoje: true
        },
        "numero":{
             digits: true,
@@ -20,19 +20,22 @@ $('#form').validate({
 
     messages: {}
 })
-jQuery.validator.addMethod("dataBR", function (value, element) {
-    //contando chars
-    if (value.length != 10) return (this.optional(element) || false);
-    // verificando data
-    var data = new Date();
-    var anoAtual = data.getYear();
-    var mesAtual = data.getMonth() + 1;
-    var diaAtual = data.getDate();
-    if (anoAtual < 1000){
-      anoAtual+=1900;
+
+jQuery.extend(jQuery.validator.methods, {
+    date: function (value, element) {
+        return this.optional(element) || /^\d\d?\/\d\d?\/\d\d\d?\d?$/.test(value);
+    },
+    number: function (value, element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
     }
-   
-  
+});
+
+jQuery.validator.addMethod("dataAteHoje", function (value, element) {
+    var hoje = new Date()
+    var mesAtual = '' + (hoje.getMonth() + 1)
+    var diaAtual = '' + hoje.getDate()
+    var anoAtual = hoje.getFullYear()
+
     var data = value;
     var dia = data.substr(0, 2);
     var barra1 = data.substr(2, 1);
@@ -40,12 +43,12 @@ jQuery.validator.addMethod("dataBR", function (value, element) {
     var barra2 = data.substr(5, 1);
     var ano = data.substr(6, 4);
 
-    if (data.length != 10 || barra1 != "/" || barra2 != "/" || isNaN(dia) || isNaN(mes) || isNaN(ano) || dia > 31 || mes > 12) return (this.optional(element) || false);
-    if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia == 31) return (this.optional(element) || false);
-    if (mes == 2 && (dia > 29 || (dia == 29 && ano % 4 != 0))) return (this.optional(element) || false);
-    if (ano < 1900 || ano > anoAtual) return (this.optional(element) || false);
-    if (ano >= anoAtual && mes > mesAtual) return (this.optional(element) || false);
-    if ((ano >= anoAtual && dia > diaAtual) && (mes >= mesAtual && dia > diaAtual)) return (this.optional(element) || false);
-  
+    if(anoAtual < ano)                                          return (this.optional(element) || false);
+    if(anoAtual >= ano && mesAtual < mes)                       return (this.optional(element) || false);
+    if(anoAtual >= ano && mesAtual >= mes && diaAtual < dia)    return (this.optional(element) || false);
+    
     return (this.optional(element) || true);
-  }, "Informe uma data válida.");  // Mensagem padrão
+
+
+  }, "Informe uma data anterior ao dia de hoje.");  // Mensagem padrão
+  
