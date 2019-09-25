@@ -4,7 +4,6 @@ Cadastro de Compras - {{ $cliente->nome }}
 @endsection
 @section('content')
 <div class = "card">
-    
       <div id="opcoes" class="card-header flex">
       <div class="row col-12"><h3>Compras cliente {{ $cliente->nome }}</h3></div>
 
@@ -18,12 +17,19 @@ Cadastro de Compras - {{ $cliente->nome }}
                       <label class="mr-sm-2" for="dtFim">Data Final</label>
                         <input type="date" id="dtFim" class="form-control">
                   </div>
-                  <div class="col-3 align-self-end">
-                    <button class="btn btn-outline-info d-flex" type="submit">
-                        <i class="material-icons">
-                            search
-                        </i> Buscar
-                    </button>
+                  <div class="col-4 align-self-end">
+                    <div class="row justify-content-around ">
+                      <button class="btn btn-outline-info d-flex" id="filtraData" type="button">
+                          <i class="material-icons">
+                              search
+                          </i> Buscar
+                      </button>
+                      <button class="btn btn-outline-dark d-flex" id="filtroReset" type="button">
+                          <i class="material-icons">
+                            undo
+                          </i>Resetar
+                      </button>
+                    </div>
                   </div>
               </form>
 
@@ -53,7 +59,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                    Excluir selecionados
               </button>
           </div>
-            <table class="table bordered text-center col-md-12">
+            <table class="table bordered text-center col-md-12" id="tablePedidos">
               <thead>
                 <tr>
                   <th>Id_Compra</th>
@@ -74,7 +80,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                 <tr>
                      <th scope="row">{{$pedido->id}}</th>
                         <td>{{$pedido->numero}}</td>
-                        <td>{{ \Carbon\Carbon::parse($pedido->data)->format('d/m/Y') }}</td>
+                        <td name="dtPedido">{{ \Carbon\Carbon::parse($pedido->data)->format('d/m/Y') }}</td>
                         <td>{{ "R$ ".number_format($pedido->vl_itens_desconto(), 2, ',', '.') }}</td>
                         <td>{{ "R$ ".number_format($pedido->vl_total_pedido(), 2, ',', '.') }}</td>
                         <td>{{ ($pedido->desconto). "%" }}</td>
@@ -149,9 +155,6 @@ Cadastro de Compras - {{ $cliente->nome }}
       </div><!--Final tabela e div -->
 
       <div class="tab-pane fade" id="inativos" role="tabpanel" aria-labelledby="profile-tab">
-         
-      
-          
           <table class="table bordered text-center col-md-12">
               <thead>
                 <tr>
@@ -240,11 +243,11 @@ Cadastro de Compras - {{ $cliente->nome }}
 
   <script>
     $("#excluirSelecionados").on("click", function(e){
-        var selecionados = [];
+        let selecionados = [];
 
         $(document).find("input[name='selecionado']").each( function(){
             if( $(this).is(":checked") == true ){
-              var id = $(this).val();
+              let id = $(this).val();
               selecionados.push(id);
             }
         });
@@ -254,7 +257,7 @@ Cadastro de Compras - {{ $cliente->nome }}
     });
 
     function deletarSelecionados(selecionados){
-       var strIds = selecionados.join(",");
+       let strIds = selecionados.join(",");
         $.ajax({
           url: "/cliente/pedido",
           type: 'DELETE',
@@ -264,7 +267,7 @@ Cadastro de Compras - {{ $cliente->nome }}
               if (data['status']==true) {
                   $(document).find("input[name='selecionado']").each( function(){
                     if( $(this).is(":checked") == true ){
-                        var avo = $(this).parent().parent();
+                        let avo = $(this).parent().parent();
                         avo.fadeOut("slow");
                     }
                     alert(data['message']);
@@ -279,42 +282,101 @@ Cadastro de Compras - {{ $cliente->nome }}
         });
     }
 
+    // Filtro de data na tabela
+    $("#filtraData").on("click", function(){
+      let dt_inicio = $("#dtInicio").val();
+        if( dt_inicio != '' ){
+            dt_inicio = dt_inicio.split("-");
+            dt_inicio = new Date(dt_inicio[0], dt_inicio[1]-1, dt_inicio[2]);
+        };
 
+        let dt_fim = $("#dtFim").val();
+        if( dt_fim != '' ){
+            dt_fim = dt_fim.split("-");
+            dt_fim = new Date(dt_fim[0], dt_fim[1]-1, dt_fim[2]);
+        }
 
+        if ( dt_inicio != "" && dt_fim != "" ){
+            $(document).find("[name='dtPedido']").each(function(){
+                let parts = $(this).text().split('/');
+                let date = new Date(parts[2], parts[1] - 1, parts[0]);
+            
+                if( dt_inicio <= date && dt_fim >= date){ 
+                    $(this).parent().fadeIn();
+                }else{
+                    $(this).parent().fadeOut("slow");
+                }
+            });
+        }else if(dt_inicio != ""){
+            $(document).find("[name='dtPedido']").each(function(){
+                let parts = $(this).text().split('/');
+                let date = new Date(parts[2], parts[1] - 1, parts[0]);
+            
+                if( date >= dt_inicio ){ 
+                    $(this).parent().fadeIn();
+                }else{
+                    $(this).parent().fadeOut("slow");
+                }
+            });
+        }else if(dt_fim != ""){
+            $(document).find("[name='dtPedido']").each(function(){
+                let parts = $(this).text().split('/');
+                let date = new Date(parts[2], parts[1] - 1, parts[0]);
+            
+                if( date <= dt_fim ){
+                    $(this).parent().fadeIn();
+                }else{
+                    $(this).parent().fadeOut("slow");
+                }
+            });
+        }else{
+          reseta_busca();
+        }
+    })
+    // Resetar o filtro de busca
+    function reseta_busca(){
+      $(document).find("[name='dtPedido']").each(function(){
+          $(this).parent().fadeIn("slow");
+      })
+    }
+    //Acao botao reseta busca
+    $("#filtroReset").on("click", function(){
+      reseta_busca();
+    });
+
+    //confirmação exclusao
     $("[name='delete']").on("click", function(e){
         if(!confirm("Excluir pedido?")){
             e.preventDefault();
         }
     })
-
+    //Confirmação restauracao
     $("[name='restaurar']").on("click", function(e){
         if(!confirm("Restaurar pedido?")){
             e.preventDefault();
         }
     })
-
+    // Habilita botao excluir todos pelo checkBox seleciona todos
     $("#selecionaTodos").on("click", function(){
         $("[name='selecionado']").prop('checked', this.checked);//Marca os outros
-        var botao = $("#excluirSelecionados");
+        let botao = $("#excluirSelecionados");
 
         if(this.checked)
             botao.removeAttr('disabled');
         else
             botao.prop("disabled","disabled");
-        
-        
     })
 
-    //habilitar desabilitar botao excluir
+    //habilitar desabilitar botao excluir pelos checkbox individuais
       $("[name='selecionado']").on("click", function(){
-        var checado = false;
+        let checado = false;
 
         $(document).find("input[name='selecionado']").each( function(){
             if( $(this).is(":checked") == true ){
                 checado = true;
             }
         });
-        var botao = $("#excluirSelecionados");
+        let botao = $("#excluirSelecionados");
 
         if(!checado){
             botao.prop("disabled","disabled");

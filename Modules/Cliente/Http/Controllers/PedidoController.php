@@ -127,14 +127,27 @@ class PedidoController extends Controller
     {   
 
         $pedido = Pedido::withTrashed()->findOrFail($pedido_id);
+        DB::beginTransaction();
+        try{
             if( $pedido->trashed() ){
                 $pedido->restore();
+                DB::commit();
                 return back()->with('success', 'Pedido restaurado');
             }else{
                 $pedido->delete();
+                DB::commit();
                 return back()->with('success', 'Pedido deletado');
             }
-        
+        } catch (\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Ocorreu um erro ao efetuar a operação');
+        }
+    }
+
+    public function buscaData(){
+        DB::table('teste')
+    ->whereBetween('data',["2017-02-01","2017-02-08"])
+    ->get();
     }
     
 
