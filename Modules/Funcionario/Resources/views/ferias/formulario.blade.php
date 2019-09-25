@@ -135,7 +135,7 @@
                 var diferenca = data_fim - data_inicio;
                 var diferenca_dias = diferenca/(1000 * 60 * 60 * 24);
                 
-                document.getElementById('dias_ferias').value = diferenca_dias;
+                document.getElementById('dias_ferias').value = diferenca_dias+1;
             })
         });
     </script>
