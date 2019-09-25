@@ -39,9 +39,18 @@ $menu = [
             <li class="nav-item ">
                 <a class="nav-link text-white " href="{{url('estoque/movimentacao')}}">Movimentação de estoque</a>
             </li>
+        
             <li class="nav-item ">
-                <a class="nav-link text-white" href="#">Relatorios</a>
+                <div class="dropdown">
+                    <a class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Relatorios</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <button class="dropdown-item" type="button">Saída de produtos</button>
+                            <button class="dropdown-item" type="button">Movimentação de produtos</button>
+                            <button class="dropdown-item" type="button">Custo</button>
+                        </div>
+                </div>
             </li>
+           
         </ul>
         <div class="card-body">
 
