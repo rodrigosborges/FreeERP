@@ -3,8 +3,13 @@
 namespace Modules\Usuario\Http\Controllers\auth;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
+use Sentinel;
+use Reminder;
+use Modules\Usuario\Entities\Usuario;
+use Mail;
 
 class ForgotPasswordController extends Controller
 {
@@ -36,26 +41,26 @@ class ForgotPasswordController extends Controller
     }
 
     public function senha(Request $request){
-        $user = User::whereEmail($request->email)->first();
+        $user = Usuario::whereEmail($request->email)->first();
         
-        if(count($user) == 0){
-            return redirect()->back()->with(['error'=> 'Email not exists']);
+        if($user==null){
+            return redirect()->back()->with(['error'=> 'Email não cadastrado']);
         }
-
+        // return $user;
         $user = Sentinel::findById($user->id);
         $reminder = Reminder::exists($user) ? : Reminder::create($user);
-        $this->sendEmail($user, $reminder->code);
+        $this->enviarEmail($user, $reminder->code);
 
         return redirect()->back()->with(['success'=>'Reset code enviado para o seu email. ']);
     }
 
-    public function sendEmail($user, $code){
+    public function enviarEmail($user, $code){
         Mail::send(
-            'email.activation',
+            'email.forgot',
             ['user'=>$user, 'code'=>$code],
             function($message) use ($user){
                 $message->to($user->email);
-                $message->subject("Olá $user->apelido","");
+                $message->subject("Olá $user->apelido",", resete sua senha");
             }
         );
     }

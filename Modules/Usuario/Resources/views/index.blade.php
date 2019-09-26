@@ -25,7 +25,7 @@
                         <input required id="password" class="form-control" type="password" name="password">
                         {{$errors->first('password')}}
                         <br>
-                        <label for="password"><a href="{{url('/forgotPassword')}}">Esqueci a senha</a></label>
+                        <label for="password"><a href="{{url('/esqueciSenha')}}">Esqueci a senha</a></label>
                     </div>
                     <button type="submit" class="btn btn-success">Entrar</button>
                     <br>
