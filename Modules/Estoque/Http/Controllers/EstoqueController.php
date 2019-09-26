@@ -148,7 +148,9 @@ class EstoqueController extends Controller
         DB::beginTransaction();
         try {
             $estoque = Estoque::findOrFail($id);
+         
             $observacao = $this->verificaAlteracoes($request, $estoque);
+         
             $qtdInicial = $estoque->quantidade;
             $qtdMovimentacao =  $request['quantidade'] - $qtdInicial;
             $estoque->update($request->all());
@@ -182,12 +184,7 @@ class EstoqueController extends Controller
     public function verificaAlteracoes($request, $estoque)
     {
         $observacao = "Este item foi atualizado \n";
-        if ($request->produto_id != $estoque->produtos->last()->id) {
-            $produto = Produto::findOrFail($request->produto_id);
-            $observacao .= "\n Alteração de produto de " . $estoque->produtos->last()->nome . " para " . $produto->nome;
-            $estoque->produtos()->detach($estoque->produtos->last());
-            $estoque->produtos()->attach($produto);
-        }
+      
         if (intval($request->tipo_unidade_id) != $estoque->tipo_unidade_id) {
             return  "Request unidade id =" . intval($request->tipo_unidade_id) . "Produto Unidade id = " . $produto->unidade_id;
             $novaUnidade = TipoUnidade::find($request->tipo_unidade_id);
