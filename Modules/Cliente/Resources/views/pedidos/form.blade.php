@@ -2,13 +2,26 @@
 @section('title')
 Cadastro Nova Compra - {{ $cliente->nome }}
 @endsection
+@section('css')
+<style>
+.mensagem-erro{
+    color: red;
+    list-style-type: none;
+}
+</style>
+@endsection
 @section('body')
 
 
-    <form id="form" action="{{isset($pedido) ? url('/pedido/'.$pedido->id) : url('/cliente/'.$cliente->id.'/pedido')}}" method="POST">
+    <form id="form" action="{{isset($pedido) ? url('/cliente/pedido/'.$pedido->id) : url('/cliente/'.$cliente->id.'/pedido')}}" method="POST">
         @if(isset($pedido)) 
             @method('put')
         @endif
+        <ul class="mensagem-erro">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
         <div class="row">
             <div class="col-lg-4 col-md-12 form-group">
                 <label for="data">Data da compra:</label>
@@ -17,7 +30,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                         <span class="input-group-text"><i class="material-icons">calendar_today</i></span>    
                     </div>
                     <input type="text" required name="data" placeholder="DD/MM/AAAA" id="data" class="form-control" value="{{ isset($pedido->data) ? $pedido->data : old('data', '') }}">
-
+                    
                 </div>                        
             </div>
 
@@ -57,11 +70,13 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
                             </div>
-                            <select name="produtos[0][produto_id] produto_id" required id="" class="form-control">
+                            <select name="produtos[0][produto_id]" required id="" class="form-control">
                                 @foreach($produtos as $produto)   
                                     @if ($produto->id == $prod->pivot->produto_id)
                                     <option value="{{$produto->id}}" selected>{{$produto->nome}}</option>
-                                    @endif        
+                                    @else
+                                    <option value="{{$produto->id}}" selected>{{$produto->nome}}</option>
+                                    @endif
                                     
                                 @endforeach        
                             </select>                
@@ -97,7 +112,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
                         </div>
-                        <select name="produtos[0][produto_id] produto_id" required id="" class="form-control">
+                        <select name="produtos[0][produto_id]" required id="" class="form-control">
                             <option value="" selected>Selecione o produto</option>
                             @foreach($produtos as $produto)           
                                 <option value="{{$produto->id}}">{{$produto->nome}}</option>
@@ -133,7 +148,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
             <button type="button" id="adicionar-produto" class="btn btn-success"><strong>+</strong></button>
         </div>
         
-        <button class="btn btn-primary">Cadastrar compra</button>
+        <button class="btn btn-primary" >Cadastrar compra</button>
 
     </form>
 
@@ -146,7 +161,10 @@ Cadastro Nova Compra - {{ $cliente->nome }}
     $(document).on('click', '#adicionar-produto', function(){
         $('.excluir-produto').parent().removeClass('d-none');
         var pedido = $(".produto").last().clone();
+
         pedido.find('.error').remove();
+        pedido.find('.has-error').removeClass('has-error')
+
         var inputs = pedido.find('select, input');
         inputs.val("");
         inputs.map((i, input)=> {
@@ -156,7 +174,12 @@ Cadastro Nova Compra - {{ $cliente->nome }}
             $(input).attr('name', newName)
         })
 
-        pedido.appendTo($(".produtos"))
+        pedido.appendTo($(".produtos"));
+        pedido.find("[name$='[quantidade]']").removeAttr('aria-describedby').rules('add', {digits: true, required:true, maxlength: 6})
+        pedido.find("[name$='[desconto]']").removeAttr('aria-describedby').rules('add', {required:true}) 
+        pedido.find("[name$='[produto_id]']").removeAttr('aria-describedby').rules('add', {required:true})
+        
+
         pedido.find("[name$='[desconto]']").inputmask("decimal", {
             'alias': 'numeric',
             'groupSeparator': '',
@@ -166,10 +189,12 @@ Cadastro Nova Compra - {{ $cliente->nome }}
             'digitsOptional': false,
             'allowMinus': false,
             'prefix': '',
+            'suffix':' %',
             'placeholder': '',
             'min': 0,
             'max': 100,
-            'rightAlign': false
+            'rightAlign': false,
+            'removeMaskOnSubmit':true
         });
     });
     $(document).on('click', '.excluir-produto',function(){
@@ -181,16 +206,6 @@ Cadastro Nova Compra - {{ $cliente->nome }}
         }
     });
 
-    function checkDate() {
-        var dateString = document.getElementById('data').value;
-        var arrayData = dateString.split("-");
-        var selectedDate = new Date(arrayData[0], arrayData[2], arrayData[1]);
-        var now = new Date(); 
-        if (selectedDate > now) {  //bloquear botão de cadastrar compra  
-            alert("Data inválida");
-        }
-    }
-
     $(document).ready(function(){
         $(".desconto").inputmask("decimal", {
             'alias': 'numeric',
@@ -201,10 +216,12 @@ Cadastro Nova Compra - {{ $cliente->nome }}
             'digitsOptional': false,
             'allowMinus': false,
             'prefix': '',
+            'suffix':' %',
             'placeholder': '',
             'min': 0,
             'max': 100,
-            'rightAlign': false
+            'rightAlign': false,
+            'removeMaskOnSubmit':true,
         });
         $('#data').mask('00/00/0000');
     });

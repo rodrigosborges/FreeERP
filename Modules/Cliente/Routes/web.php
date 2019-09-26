@@ -24,10 +24,9 @@ Route::prefix('cliente')->group(function() {
 
     Route::put('pedido/{pedido_id}','PedidoController@update'); //Salvar alteracao
     Route::post('{cliente_id}/pedido/','PedidoController@store');//Salvar Novo pedido
-    Route::delete('pedido','PedidoController@deleteMultiples');
+    Route::delete('pedido','PedidoController@deleteMultiples');//Deletar varios
 
     Route::get('/','ClienteController@index');
 });
 
-    Route::post("/deletarSelecionados", 'PedidoController@teste');
 

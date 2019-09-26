@@ -14,6 +14,17 @@ class Pedido extends Model
     protected $table = "pedido";    
     protected $fillable = ['numero','desconto','data','cliente_id'];
 
+    public function setDataAttribute($val){
+        $this->attributes["data"]= date("Y-m-d",strtotime($val));
+    }
+
+    public function getDataAttribute(){
+        return date("d/m/Y", strtotime($this->attributes["data"]));
+    }
+
+
+
+
     public function produtos(){
         return $this->belongsToMany('Modules\Cliente\Entities\Produto', 'pedido_has_produto')->withPivot('quantidade','desconto');
     }
