@@ -271,9 +271,9 @@ class EstoqueController extends Controller
 
     public function relatorioCusto(){
         $categorias = Categoria::all();
-        $labels = ['oi', 'tchau', 'eae'];
-        //return $labels;
-        return view('estoque::estoque.relatorios.custo', compact('categorias', 'labels'));
+        $l = ['oi', 'tchau', 'eae'];
+        $dados = json_encode($l);
+        return view('estoque::estoque.relatorios.custo', compact('categorias', 'dados'));
     }
 
     public function chartCusto(){

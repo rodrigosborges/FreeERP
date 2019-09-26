@@ -33,7 +33,7 @@
                     </div>
                     <div class="row float-right">
                         <div class="form-group col-12">
-                            <button type="submit" name="btn" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
+                            <button onClick="gerarGrafico();" name="btn" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
                         </div>
                     </div>
                         
@@ -45,10 +45,12 @@
         <canvas id="myChart"></canvas>
     </div>
 </div>
-
+{{$dados}}
 <script>
+
+function gerarGrafico() {
     var ctx = document.getElementById('myChart').getContext('2d');
-    var teste = ['teste', '2', '3'];
+    var teste = <?php echo $dados; ?>;
     var chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'line',
@@ -67,6 +69,7 @@
         // Configuration options go here
         options: {}
     });
+}
 </script>
 
 @endsection
