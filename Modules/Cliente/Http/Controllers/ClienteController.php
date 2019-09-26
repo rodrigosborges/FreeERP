@@ -31,11 +31,13 @@ class ClienteController extends Controller
         $tipo_cliente = TipoCliente::all();
         $tipo_telefone = TipoTelefone::all();
         $estados = Estado::all();
+    
         return view('cliente::cliente.form', compact('tipo_cliente', 'tipo_telefone', 'estados'));
     }
 
 
     public function store(CreateClienteRequest $request) {
+        
         DB::beginTransaction();
         try {
             $dados = $request->all();
@@ -86,7 +88,13 @@ class ClienteController extends Controller
 
     public function edit($id)
     {
-        return 'view do editar';
+        $tipo_cliente = TipoCliente::all();
+        $tipo_telefone = TipoTelefone::all();
+        $estados = Estado::all();
+        $cliente = Cliente::FindOrFail($id);
+        return $cliente;
+        
+        return view('cliente::cliente.form', compact('tipo_cliente', 'tipo_telefone', 'estados'));
     }
 
     public function update(CreateClienteRequest $request, $id){

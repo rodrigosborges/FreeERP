@@ -1,17 +1,25 @@
 @extends('cliente::template') @section('title','Cadastro de Cliente') @section('body')
 
-<div class="container">
-    <div class="container">
-    <form id="form" method="POST" action="{{ url('cliente/cliente') }}">
-            <div class='row'>
-                <div class="col my-3">
-                    <h5>Dados Cadastrais</h5>
-                </div>
+
+    
+    <form id="form" method="POST" action="{{isset($cliente) ? url('/cliente/cliente/'.$cliente->id) : url('/cliente/cliente')}}">
+            @if(isset($cliente)) 
+                @method('put')
+            @endif
+            <ul class="mensagem-erro">
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <div class="row my-3">
+                    
+                        <h5 class="mx-3 center">Dados Cadastrais</h5>
+                    
             </div>
             <div class="row">
                 <div class="form-group col-md-2">
                     <label for="tipo_pessoa" class="">Pessoa</label>
-                    <select class="custom-select" name='cliente[tipo_cliente_id]' id="tipo_pessoa">
+                    <select class="custom-select required" name='cliente[tipo_cliente_id]' id="tipo_pessoa">
                         <option value="">Selecione</option>
                         @foreach($tipo_cliente as $tipo)
                         <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
@@ -21,7 +29,7 @@
                 </div>
                 <div class="form-group col-md">
                     <label for="nome" class="">Nome</label>
-                    <input type="text" class="form-control required" name="cliente[nome]" id="nome">
+                    <input type="text" class="form-control required" name="cliente[nome]" id="nome" value="{{ isset($cliente->nome) ? $cliente->nome : old('cliente[nome]', '') }}">
                 </div>
                 <div class="form-group col-md d-none" id="div_nome_fantasia">
                     <label for="nome_fantasia" class="">Nome Fantasia</label>
@@ -29,24 +37,24 @@
                 </div>
                 <div class="form-group col-12">
                     <label for="email" class="">E-mail</label>
-                    <input type="email" name="email[email]" class="form-control" id="email">
+                    <input type="email" name="email[email]" class="form-control required" id="email">
                 </div>
             </div>
-            <div class='row'>
-                <div class="col my-3">
-                    <h6>Contato</h6>
-                </div>
+            <div class="row my-3">
+                
+                    <h6 class="mx-3">Contato</h6>
+                
             </div>
             <div id="telefones">
 
-                <div class="row my-3 telefone-div">
+                <div class="row telefone-div">
                     <div class="form-group col">
-                        <label for="telefone" class="">Número</label>
-                        <input type="text" class="form-control input-telefone" name="telefone[0][numero]">
+                        <label for="telefone">Número</label>
+                        <input type="text" class="form-control input-telefone required" name="telefones[0][numero]">
                     </div>
                     <div class="form-group col">
-                        <label for="tipo_telefone" class="">Tipo</label>
-                        <select class="custom-select" name="telefone[0][tipo_telefone_id]" id="tipo_telefone">
+                        <label for="tipo_telefone">Tipo</label>
+                        <select class="custom-select required" name="telefones[0][tipo_telefone_id]" id="tipo_telefone">
                             <option value="">Selecione</option>
                             @foreach($tipo_telefone as $tipo){
                             <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
@@ -61,54 +69,54 @@
             </div>
             <button type="button" class="btn btn-primary adicionar_telefone">Adicionar</button>
             
-        </div>
-        <div class="container">
+       
+        
             <div class="row my-3">
-                <div class="col my-3">
-                    <h5>Documentação</h5>
-                </div>
+                
+                    <h5 class="mx-3">Documentação</h5>
+                
             </div>
-            <div class="row my-3 documento-div">
+            <div class="row documento-div">
                 <div class="form-group col">
                     <label for="numero_documento" class="">Selecione o tipo de Pessoa</label>
-                    <input type="text" class="form-control" name="documento[documento]" disabled>
+                    <input type="text" class="form-control required" name="documento[documento]" disabled>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col my-3">
-                    <h5>Endereço</h5>
-                </div>
-            </div>
+       
+        
             <div class="row my-3">
+                
+                    <h5 class="mx-3">Endereço</h5>
+                
+            </div>
+            <div class="row">
                 <div class="form-group col-3">
                     <label for="cep" class="">CEP</label>
                     <input type="text" class="form-control" name="endereco[cep]" id="cep">
                 </div>
                 <div class="form-group col-7">
                     <label for="logradouro" class="">Logradouro</label>
-                    <input type="text" class="form-control" name="endereco[logradouro]">
+                    <input type="text" class="form-control required" name="endereco[logradouro]">
                 </div>
                 <div class="form-group col-2">
                     <label for="numero" class=" text-left">Número</label>
-                    <input type="text" class="form-control" name="endereco[numero]">
+                    <input type="text" class="form-control required" name="endereco[numero]">
                 </div>
             </div>
-            <div class="row my-3">
+            <div class="row ">
                 <div class="form-group col">
                     <label for="complemento" class=" text-left">Complemento</label>
                     <input type="text" class="form-control" name="endereco[complemento]">
                 </div>
             </div>
-            <div class="row my-3">
+            <div class="row">
                 <div class="form-group col-4">
                     <label for="bairro" class="">Bairro</label>
-                    <input type="text" class="form-control" name="endereco[bairro]">
+                    <input type="text" class="form-control required" name="endereco[bairro]">
                 </div>
                 <div class="form-group col">
                     <label for="estado" class="">Estado</label>
-                    <select class="custom-select" name="endereco[estado_id]" id="estado">
+                    <select class="custom-select required" name="endereco[estado_id]" id="estado">
                         <option value="">Selecione</option>
                         @foreach($estados as $estado){
                         <option value="{{$estado->id}}" uf="{{$estado->uf}}">{{ $estado->nome }}</option>
@@ -118,14 +126,13 @@
                 </div>
                 <div class="form-group col">
                     <label for="cidade" class="">Cidade</label>
-                    <select class="custom-select" name="endereco[cidade_id]" id="cidade"></select>
+                    <select class="custom-select required" name="endereco[cidade_id]" id="cidade"></select>
                 </div>
             </div>
             </h1> <button type="submit" class="btn btn-success sendForm">Enviar</button>
-        </div>
+        
     </form>
 
-</div>
 
 
 @endsection @section('script')
@@ -228,11 +235,15 @@
     })
 
     $(document).on('change', '#tipo_pessoa', function() {
+        $("[name='documento[documento]']").rules('remove'); 
         var documento = $("[name='documento[documento]']")
 
         if ($("[name='cliente[tipo_cliente_id]']").val() == 2) {
             documento.prop("disabled", false);
-            $("[name='cliente[nome]']").parent().find('label').text("Razão social")
+            $("[name='cliente[nome]']").parent().find('label').text("Razão Social")
+             $("[name='documento[documento]']").rules('add', {
+                cnpj: true
+            }); 
 
 
             documento.parent().find('label').text("CNPJ")
@@ -241,6 +252,11 @@
 
             $("#div_nome_fantasia").removeClass("d-none");
         } else if ($('#tipo_pessoa').val() == 1){
+            
+            $("[name='documento[documento]']").rules('add', {
+                cpf: true
+            }); 
+
             documento.prop("disabled", false);
             $("[name='cliente[nome]']").parent().find('label').text("Nome")
             documento.parent().find('label').text("CPF")

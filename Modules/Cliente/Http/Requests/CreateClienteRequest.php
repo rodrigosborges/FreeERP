@@ -34,21 +34,21 @@ class CreateClienteRequest extends FormRequest
         }
         return $rules;
     }
-    // public function messages() {
-    //     return [
-    //         'cliente.nome'                  => 'Digite o nome do cliente.',
-    //         'cliente.tipo_cliente_id'       => 'Informe o tipo de cliente.',
-    //         'telefones.*.numero'            => 'Informe o numero do telefone.',
-    //         'telefones.*.tipo_telefone_id'  => 'Informe o tipo de telefone.',
-    //         'documento.documento'           => 'Informe o documento.',
-    //         'email.email'                   => 'Informe o email do cliente.',
-    //         'endereco.logradouro'           => 'Informe a rua/avenida.',
-    //         'endereco.bairro'               => 'Informe o bairro.',
-    //         'endereco.numero'               => 'Informe o numero da casa.',
-    //         'endereco.cidade_id'            => 'Informe a cidade.',
-    //         'endereco.cep'                  => 'Informe o cep.',
-    //     ];
-    // }
+    public function messages() {
+        return [
+            'cliente.nome'                  => 'Digite o nome do cliente.',
+            'cliente.tipo_cliente_id'       => 'Informe o tipo de cliente.',
+            'telefones.*.numero'            => 'Informe o numero do telefone.',
+            'telefones.*.tipo_telefone_id'  => 'Informe o tipo de telefone.',
+            'documento.documento'           => 'Informe o documento.',
+            'email.email'                   => 'Informe o email do cliente.',
+            'endereco.logradouro'           => 'Informe a rua/avenida.',
+            'endereco.bairro'               => 'Informe o bairro.',
+            'endereco.numero'               => 'Informe o numero da casa.',
+            'endereco.cidade_id'            => 'Informe a cidade.',
+            'endereco.cep'                  => 'Informe o cep.',
+        ];
+    }
         
     
     public function authorize()
