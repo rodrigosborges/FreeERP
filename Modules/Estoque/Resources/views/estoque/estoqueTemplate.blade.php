@@ -9,6 +9,7 @@ $menu = [
     ['icon' => 'store', 'tool' =>  'Estoque', 'route' => url('estoque')],
 ];
 ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
 @extends('template')
 

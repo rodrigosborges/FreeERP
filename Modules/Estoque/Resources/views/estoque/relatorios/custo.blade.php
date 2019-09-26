@@ -7,11 +7,13 @@
                     @csrf
 
                     <div class="row">
-                        <div class="form-group col-8">
+                        <div class="form-group col-12">
                             <label for="nome">Nome do Produto</label>
                             <input id="search-input" placeholder="Insira o nome do produto" maxlength="45" class="form-control" type="text" name="nome">
                         </div>
-                        <div class="form-group col-4">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
                             <label for="categoria">Categoria</label>
                             <select required class="form-control" name="categoria">
                                 <option value="-1" selected>Todas Categorias</option>
@@ -20,8 +22,6 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col-3">
                             <label for="dataInicial">Data Inicial</label>
                             <input type="date" name="dataInicial" class="form-control" required>
@@ -31,7 +31,7 @@
                             <input type="date" name="dataFinal" class="form-control" required>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row float-right">
                         <div class="form-group col-12">
                             <button type="submit" name="btn" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
                         </div>
@@ -40,21 +40,33 @@
                     </div>
                 </form>
 
+<div class="row mt-5 mb-5">
+    <div class="col-6">
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
 
-    <thead class="">
-        
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Produto</th>
-            <th scope="col">Quantidade</th>
-            <th scope="col">Data</th>
-            <th scope="col">Detalhes</th>
-        </tr>
-    </thead>
-    <tbody>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var teste = ['teste', '2', '3'];
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
 
-    </tbody>
-    <tfoot>
-    </tfoot>
-</table>
+        // The data for our dataset
+        data: {
+            labels: teste,
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5]
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
+</script>
+
 @endsection
