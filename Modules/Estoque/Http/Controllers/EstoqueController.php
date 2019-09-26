@@ -262,6 +262,9 @@ class EstoqueController extends Controller
         $notificacoes = $this->verificarNotificacoes();
         return view('estoque::estoque.notificacoes.index', compact('itens', 'notificacoes'));
     }
+    public function saidaProdutos(){
+      return view('estoque::estoque.relatorios.saidaProdutos');
+    }
 
     public static function verificarNotificacoes()
     {
@@ -279,5 +282,6 @@ class EstoqueController extends Controller
     public function chartCusto(){
         $result = MovimentacaoEstoque::orderBy('created_at')->get();
         return response()->json($result);
+        return view('estoque::estoque.relatorios.custo', compact('categorias'));
     }
 }
