@@ -58,9 +58,14 @@ class FeriasController extends Controller
 
             //Verificação se há, se houver, ele pega o último atributo que está salvo no banco e subtrai com os dias inseridos no input.
             if($verificarRegistroTabela > 0){ // esse if verifica caso seja no mesmo período
-                $saldoTotalBanco = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo;
-                $saldo_periodo = $saldoTotalBanco - $request->dias_ferias;
-                $saldo_total = 0;
+                
+                $ultimo_periodo_aquisitivo = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->fim_periodo_aquisitivo;
+
+                if($ultimo_periodo_aquisitivo == $fim_periodo_aquisitivo){
+                    $saldoTotalBanco = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo;
+                    $saldo_periodo = $saldoTotalBanco - $request->dias_ferias;
+                    $saldo_total = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_total;
+                }
 
             //Senão, ele subtrai os dias inseridos por 30, pois a cada periodo aquisitivo o funcionário tem direito a 30 dias.     
             } else {
