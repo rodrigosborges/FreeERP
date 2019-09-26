@@ -16,11 +16,16 @@ class PagamentoController extends Controller
      */
     public function index(Request $request)
     {
+        if(isset($request->search) || $request->search != ""){
+            $funcionarios = Funcionario::where('nome', 'like', '%'.$request->search.'%')->get();
+        }else{
+            $funcionarios = Funcionario::all();
+        }
 
         $data = [
             'title'         => "Pagamentos",
             'url' => url('funcionario/pagamento/create'),
-            'funcionarios' => Funcionario::all(),
+            'funcionarios' => $funcionarios,
         ];
 
         //$pagamentos = Pagamento::paginate(5);
