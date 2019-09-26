@@ -36,13 +36,11 @@ class PedidoController extends Controller
     }
 
     
-    public function store(CreatePedidoRequest $request)
+    public function store(CreatePedidoRequest $request, $id_cliente)
     {
-        $id_cliente = $request->path();
-        $id_cliente = explode('/', $id_cliente, 3);
-        $id_cliente = $id_cliente[1];
-        
-        $pedido = Pedido::firstOrCreate( ['cliente_id' => $id_cliente], $request->all() );
+        $valores = $request->all();
+        $valores["cliente_id"] = $id_cliente;
+        $pedido = Pedido::create($valores);
         
         DB::beginTransaction();
         try{
@@ -58,10 +56,12 @@ class PedidoController extends Controller
                 $pedido->produtos()->sync($dados);
 
             DB::commit();
-                return back()->with('sucess','Pedido Salvo');
+            return "OK";
+            // return back()->with('sucess','Pedido Salvo');
         } catch (\Exception $e){
             DB::rollback();
-                return back()->with('error', 'Ocorreu um erro ao salvar');
+            return $e;
+                // return back()->with('error', 'Ocorreu um erro ao salvar');
         }
         $pedido->produtos()->sync($dados);
 

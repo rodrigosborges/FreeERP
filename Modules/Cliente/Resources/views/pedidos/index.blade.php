@@ -8,6 +8,7 @@ Cadastro de Compras - {{ $cliente->nome }}
       <div class="row col-12"><h3>Compras cliente {{ $cliente->nome }}</h3></div>
 
           <div class="row input-group justify-content-between">  
+
               <form class="d-flex form-inline justify-content-between" action="">    
                   <div class="col-4">
                       <label class="mr-sm-2" for="dtInicio">Data Inicial</label>
@@ -19,11 +20,13 @@ Cadastro de Compras - {{ $cliente->nome }}
                   </div>
                   <div class="col-4 align-self-end">
                     <div class="row justify-content-around ">
+                      {{-- Botão buscar --}}
                       <button class="btn btn-outline-info d-flex" id="filtraData" type="button">
                           <i class="material-icons">
                               search
                           </i> Buscar
                       </button>
+                      {{-- Botão Resetar --}}
                       <button class="btn btn-outline-dark d-flex" id="filtroReset" type="reset">
                           <i class="material-icons">
                             undo
@@ -32,7 +35,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                     </div>
                   </div>
               </form>
-
+              {{-- Botao nova compra --}}
               <div class="align-self-end text-right">
                   <a class="btn btn-primary" href="/cliente/{{$cliente->id}}/pedido/novo" style="color: white;">Adicionar Compra</a>
               </div>
@@ -40,7 +43,7 @@ Cadastro de Compras - {{ $cliente->nome }}
           </div>
             
       </div>
-      
+      {{-- Inicio das Tabs --}}
       <ul class="nav nav-tabs justify-content-center" id="tab" role="tablist">
         <li class="nav-item">
            <a class="nav-link active" href="#ativos" data-toggle="tab" id="ativos-tab" data-toggle="tab" 
@@ -81,7 +84,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                 <tr>
                      <th scope="row">{{$pedido->id}}</th>
                         <td>{{$pedido->numero}}</td>
-                        <td name="dtPedido">{{ \Carbon\Carbon::parse($pedido->data)->format('d/m/Y') }}</td>
+                        <td name="dtPedido">{{ $pedido->data }}</td>
                         <td>{{ "R$ ".number_format($pedido->vl_itens_desconto(), 2, ',', '.') }}</td>
                         <td>{{ "R$ ".number_format($pedido->vl_total_pedido(), 2, ',', '.') }}</td>
                         <td>{{ ($pedido->desconto). "%" }}</td>
@@ -106,11 +109,12 @@ Cadastro de Compras - {{ $cliente->nome }}
                                     </i>
                             </button>
                         </td>
-                        <td>
+                        
+                        <td> {{-- checkbox individual --}}
                             <input type="checkbox" name="selecionado" value="{{$pedido->id}}">
                         </td>
                 </tr>
-              {{-- checkbox individual acima --}}
+                {{-- Tabela detalhando --}}
                 <tr>
                   <td colspan="100%" style="height: 0px; padding: 0px; margin:0px;">
                     <div class="collapse" id="collapse{{$pedido->id}}">
