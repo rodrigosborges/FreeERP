@@ -272,22 +272,20 @@ class EstoqueController extends Controller
     public function relatorioCusto(){
         $categorias = Categoria::all();
         $movimentacoes = MovimentacaoEstoque::orderBy('created_at', 'DESC')->get();
-
-        $ms = MovimentacaoEstoque::where('created_at', 'like', DB::raw('created_at'))
-        ->select('id', DB::raw('COUNT(id) as count'))
-        ->groupBy('id')
+        $ms = DB::table('movimentacao_estoque')
+            ->select(DB::raw('distinct substring_index(created_at, " ", 1) as data, (SELECT COUNT(id) FROM movimentacao_estoque WHERE data = SUBSTRING_INDEX(created_at, " ", 1)) as qtd'))
         ->get();
-        return $ms;
+        
 
         $mo = [];
-        foreach($movimentacoes as $m){
-            array_push($mo, date_format($m->created_at, "d-m-Y"));
+        foreach($ms as $m){
+            array_push($mo, $m->data);
         }
         $labels = json_encode($mo);
 
         $da = [];
-        foreach($movimentacoes as $d){
-            array_push($da, $d->quantidade);
+        foreach($ms as $d){
+            array_push($da, $d->qtd);
         }
         $dados = json_encode($da);
 
