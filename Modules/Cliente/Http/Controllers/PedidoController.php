@@ -35,7 +35,7 @@ class PedidoController extends Controller
         return view('cliente::create');
     }
 
-    
+    //Salvar Pedido
     public function store(CreatePedidoRequest $request, $id_cliente)
     {
         $valores = $request->all();
@@ -46,6 +46,7 @@ class PedidoController extends Controller
         try{
             $produtos = $request->input('produtos');
             $dados = [];
+
             foreach($produtos as $produto){
                 $dados[$produto['produto_id']] = [
                         'quantidade' => $produto['quantidade'], 
@@ -56,12 +57,10 @@ class PedidoController extends Controller
                 $pedido->produtos()->sync($dados);
 
             DB::commit();
-            return "OK";
-            // return back()->with('sucess','Pedido Salvo');
+            return back()->with('sucess','Pedido Salvo');
         } catch (\Exception $e){
             DB::rollback();
-            return $e;
-                // return back()->with('error', 'Ocorreu um erro ao salvar');
+            return back()->with('error', $e);
         }
         $pedido->produtos()->sync($dados);
 
@@ -106,7 +105,7 @@ class PedidoController extends Controller
         }
 
     }
-
+    // Deletar ou restaurar varios
     public function deleteMultiples(Request $request){
         $ids = $request->ids;
         $tipo = $request->tipo;
@@ -126,19 +125,6 @@ class PedidoController extends Controller
                 DB::rollback();
                 return response()->json(['status'=>false, 'message'=>"Operação não realizada"]);
             }
-    }
-    public function restoreMultiples(Request $request){
-        $ids = $request->ids;
-        
-        DB::beginTransaction();
-        try{
-            Pedido::whereIn('id', $ids)->restore();
-            DB::commit();
-            return response()->json(['status'=>true, 'message'=>"Compras excluidas com sucesso"]);
-        }catch(\Exception $e){
-            DB::rollback();
-            return response()->json(['status'=>false, 'message'=>"Compra não excluida"]);
-        }
     }
 
 

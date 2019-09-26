@@ -28,7 +28,7 @@ class CreatePedidoRequest extends FormRequest
            
             'numero'                 => ['required','numeric'],
             'desconto'               => ['required','numeric','min:0','max:100'],
-            'data'                   => ['required','date'],
+            'data'                   => ['required', 'date_format:d/m/Y'],
 
             'produtos.0.produto_id'  => ['required','numeric','exists:produto,id'],
             'produtos.0.quantidade'  => ['required', 'numeric','min:1'],

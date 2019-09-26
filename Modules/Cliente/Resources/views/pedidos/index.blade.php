@@ -177,11 +177,13 @@ Cadastro de Compras - {{ $cliente->nome }}
                   <th>Opções</th>
                   <th>Ver mais</th>
                   <th>
+                    {{-- CheckBox  selecionar todos inativos --}}
                     <input type="checkbox" id="todosInativos" />
                  </th>
                 </tr>
               </thead>
               <tbody>
+                {{-- Preenche apagados --}}
                 @foreach ($pedidosApagados as $pedido)
                 <tr>
                      <th scope="row">{{$pedido->id}}</th>
@@ -199,15 +201,17 @@ Cadastro de Compras - {{ $cliente->nome }}
                         </td>
 
                         <td>
+                          {{-- Exibir mais --}}
                             <button id="ocultar" type="button" data-toggle="collapse" data-target="#collapse{{$pedido->id}}" 
-                        aria-expanded="false" aria-controls="collapse{{$pedido->id}}">
+                                aria-expanded="false" aria-controls="collapse{{$pedido->id}}">
                                     <i class="material-icons">
                                         arrow_drop_down
                                     </i>
                             </button>
                         </td>
                         <td>
-                            <input type="checkbox" name="selecionado_rec" value="{{$pedido->id}}">
+                          {{-- CheckBox individual --}}
+                            <input type="checkbox" name="selRec" value="{{$pedido->id}}">
                         </td>
                 </tr>
                 <tr>
@@ -258,6 +262,7 @@ Cadastro de Compras - {{ $cliente->nome }}
   
 
   <script>
+    // Acao botao excluir todos
     $("#excluirSelecionados").on("click", function(){
         let selecionados = [];
 
@@ -271,9 +276,22 @@ Cadastro de Compras - {{ $cliente->nome }}
               deletarSelecionados(selecionados, "delete");
           }
     });
-    $("#recSelecionados").on("click",function(){
+    //Acao restaurar
+    $("#recSelecionados").on("click", function(){
+        let selecionados = [];
 
-    })
+        $(document).find("input[name='selRec']").each( function(){
+            if( $(this).is(":checked") == true ){
+              let id = $(this).val();
+              selecionados.push(parseInt(id));
+            }
+        });
+          if( confirm("Restaurar todos selecionados?") ){
+              deletarSelecionados(selecionados, "restore");
+          }
+    });
+    
+    // AJAX APAGAR/RECUPERAR TODOS
     function deletarSelecionados(selecionados, tipo){
       console.log(selecionados);  
       $.ajax({
@@ -285,6 +303,7 @@ Cadastro de Compras - {{ $cliente->nome }}
           success: function (data) {
               if (data['status']==true) {
                   $(document).find("input[name='selecionado']").each( function(){
+                    
                     if( $(this).is(":checked") == true ){
                         let avo = $(this).parent().parent();
                         avo.fadeOut("slow");
@@ -293,6 +312,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                     window.location.reload();
                   });
                   alert(data['message']);
+                  window.location.reload();
               }else{
                   alert("Ocorreu um erro ao efetuar a operacao");
               }
@@ -314,45 +334,48 @@ Cadastro de Compras - {{ $cliente->nome }}
         if( dt_fim != '' ){
             dt_fim = dt_fim.split("-");
             dt_fim = new Date(dt_fim[0], dt_fim[1]-1, dt_fim[2]);
-        }
-
+        };
+        // Dois campos preenchidos, filtra por range
         if ( dt_inicio != "" && dt_fim != "" ){
             $(document).find("[name='dtPedido']").each(function(){
                 let parts = $(this).text().split('/');
                 let date = new Date(parts[2], parts[1] - 1, parts[0]);
             
-                if( dt_inicio <= date && dt_fim >= date){ 
+                if( dt_inicio <= date && dt_fim >= date)
                     $(this).parent().fadeIn();
-                }else{
+                else
                     $(this).parent().fadeOut("slow");
-                }
+                
             });
+            // Somente data inicio
         }else if(dt_inicio != ""){
             $(document).find("[name='dtPedido']").each(function(){
                 let parts = $(this).text().split('/');
                 let date = new Date(parts[2], parts[1] - 1, parts[0]);
             
-                if( date >= dt_inicio ){ 
+                if( date >= dt_inicio )
                     $(this).parent().fadeIn();
-                }else{
+                else
                     $(this).parent().fadeOut("slow");
-                }
+                
             });
+            // Somente data fim
         }else if(dt_fim != ""){
             $(document).find("[name='dtPedido']").each(function(){
                 let parts = $(this).text().split('/');
                 let date = new Date(parts[2], parts[1] - 1, parts[0]);
             
-                if( date <= dt_fim ){
+                if( date <= dt_fim )
                     $(this).parent().fadeIn();
-                }else{
+                else
                     $(this).parent().fadeOut("slow");
-                }
+                
             });
         }else{
+          // Sem nenhum campo
           reseta_busca();
-        }
-    })
+        };
+    });
     // Resetar o filtro de busca
     function reseta_busca(){
       $(document).find("[name='dtPedido']").each(function(){
@@ -387,7 +410,35 @@ Cadastro de Compras - {{ $cliente->nome }}
         else
             botao.prop("disabled","disabled");
     })
+    // habilita botao Recuperar checkbox todos
+    $("#todosInativos").on("click",function(){
+      $("[name='selRec']").prop('checked', this.checked);//Marca os outros
+        let botao = $("#recSelecionados");
 
+        if(this.checked)
+            botao.removeAttr('disabled');
+        else
+            botao.prop("disabled","disabled");
+    })
+    //habilitar desabilitar botao excluir pelos checkbox individuais
+    $("[name='selRec']").on("click", function(){
+        let checado = false;
+
+        $(document).find("input[name='selRec']").each( function(){
+            if( $(this).is(":checked") == true ){
+                checado = true;
+            }
+        });
+        let botao = $("#recSelecionados");
+
+        if(!checado){
+            botao.prop("disabled","disabled");
+        }else{
+            if(botao.is(":disabled")){
+              botao.removeAttr('disabled');
+          }
+        }
+      })
     //habilitar desabilitar botao excluir pelos checkbox individuais
       $("[name='selecionado']").on("click", function(){
         let checado = false;
