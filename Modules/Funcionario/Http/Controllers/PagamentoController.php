@@ -73,15 +73,31 @@ class PagamentoController extends Controller
     }
 
 
-    public function listar($id)
+    public function listar($id, Request $request)
     {   
-        
+        if(isset($request->search) || $request->search != ""){
+            $from= $request->search." 00:00:00";
+            $to= $request->search." 23:59:59";
+            $pagamentos = Pagamento::
+            where('funcionario_id', '=', $id)
+            ->whereBetween('created_at', array($from, $to))->get();
+
+            // DB::enableQueryLog(); // Enable query log
+            // // Your Eloquent query
+            // dd(DB::getQueryLog($pagamentos = Pagamento::
+            // where('funcionario_id', '=', $id)
+            // ->whereBetween('created_at', array($from, $to))->get()));
+                
+                
+        }else{
+            $pagamentos = Pagamento::where('funcionario_id','=',$id)->get();
+        }
         $data = [
-            'title' => 'Lista de Funcionários',
-            'pagamento' => Pagamento::where('funcionario_id','=',$id)->get(),
+            'title' => 'Lista de Pagamentos',
+            'pagamentos' => $pagamentos,
         ];
        
-        return view('funcionario::pagamento.listar', compact('data'));
+        return view('funcionario::pagamentos.listar', compact('data'));
     }
 
     /**

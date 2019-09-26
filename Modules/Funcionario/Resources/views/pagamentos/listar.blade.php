@@ -4,6 +4,14 @@
 
 @section('body')
 
+<!-- Search form -->
+<form class="form-inline ml-auto mb-2">
+  <div class="md-form my-0">
+    <input class="form-control" name="search" type="date" placeholder="dd/mm/yyyy" aria-label="Search">
+  </div>
+  <button class="btn btn-primary btn-md my-0 ml-sm-2" type="submit">Pesquisar</button>
+</form>
+
 <table class="table text-center">
   <thead>
       <tr>
@@ -15,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($pagamentos as $pagamento)
+      @foreach($data['pagamentos'] as $pagamento)
     <tr>
       <td>{{ $pagamento->funcionario->nome }} </td>
       <td>{{ $pagamento->total}} </td>

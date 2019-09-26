@@ -13,9 +13,9 @@ class Pagamento extends Model
 
     protected $fillable = ['valor', 'horas_extras', 'adicional_noturno', 
                            'inss', 'faltas', 'emissao', 'tipo_pagamento', 'funcionario_id', 'total',
-                        'tipo_hora_extra'];
+                        'tipo_hora_extra', 'created_at'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function funcionario()
     {

@@ -26,7 +26,8 @@ class CreateFolhaPagamento extends Migration
             $table->double('total', 9,2);
             $table->string('tipo_pagamento');
             $table->integer('funcionario_id')->index('fk_folha_pagamento_funcionario1');
-           	$table->softDeletes();
+            $table->softDeletes();
+            $table->timestamps();
 		});
     }
 

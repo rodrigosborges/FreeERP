@@ -4,7 +4,7 @@
 
 @section('body')
 <!-- Search form -->
-<form class="form-inline ml-auto">
+<form class="form-inline ml-auto mb-2 ">
   <div class="md-form my-0">
     <input class="form-control" name="search" type="text" placeholder="Nome" aria-label="Search">
   </div>
