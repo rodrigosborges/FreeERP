@@ -51,7 +51,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="material-icons">arrow_downward</i></span>
                     </div>                      
-                    <input type="text" required name="desconto" placeholder="Desconto da compra" class="form-control desconto" value="{{isset($pedido->desconto) ? $pedido->desconto : old('pedido', '')}}">
+                    <input type="text" required name="desconto" placeholder="Desconto da compra" class="form-control desconto" value="{{isset($pedido->desconto) ? $pedido->desconto : old('desconto', '')}}">
                 </div>
             </div>
             
@@ -61,7 +61,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
             <h3>Produto(s)</h3>
         
             @if(isset($pedido))
-                @foreach ($pedido->produtos as $prod)
+                @foreach ($pedido->produtos as $key => $prod)
                 <div class="row produto ">
                     <hr>
                     
@@ -70,12 +70,13 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
                             </div>
-                            <select name="produtos[0][produto_id]" required id="" class="form-control">
+                            <select name="produtos[{{$key}}][produto_id]" required id="" class="form-control">
                                 @foreach($produtos as $produto)   
+                                    
                                     @if ($produto->id == $prod->pivot->produto_id)
-                                    <option value="{{$produto->id}}" selected>{{$produto->nome}}</option>
+                                    <option value="{{$produto->id}}" selected>{{$produto->nome}} | Preço: R${{$produto->preco}}</option>
                                     @else
-                                    <option value="{{$produto->id}}" selected>{{$produto->nome}}</option>
+                                    <option value="{{$produto->id}}" >{{$produto->nome}} | Preço: R${{$produto->preco}}</option>
                                     @endif
                                     
                                 @endforeach        
@@ -87,7 +88,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="material-icons">add_shopping_cart</i></span>
                             </div>
-                            <input type="text" required class="form-control produto_quantidade" value="{{$prod->pivot->quantidade}}"  name="produtos[0][quantidade]" placeholder="Quantidade">
+                            <input type="text" required class="form-control produto_quantidade" value="{{$prod->pivot->quantidade}}"  name="produtos[{{$key}}][quantidade]" placeholder="Quantidade">
                         </div>                 
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-11 form-group">
@@ -95,7 +96,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="material-icons">trending_down</i></span>
                             </div>
-                            <input type="text" required class="form-control produto_desconto desconto" value="{{$prod->pivot->desconto}}" name="produtos[0][desconto]" placeholder="Desconto">
+                            <input type="text" required class="form-control produto_desconto desconto" value="{{$prod->pivot->desconto}}" name="produtos[{{$key}}][desconto]" placeholder="Desconto">
                         </div>  
                     </div>
                     <div class="col-lg-1 col-sm-12 form-group d-none">
@@ -115,7 +116,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                         <select name="produtos[0][produto_id]" required id="" class="form-control">
                             <option value="" selected>Selecione o produto</option>
                             @foreach($produtos as $produto)           
-                                <option value="{{$produto->id}}">{{$produto->nome}}</option>
+                                <option value="{{$produto->id}}">{{$produto->nome}} | Preço: R${{$produto->preco}}</option>
                             @endforeach        
                         </select>                
                     </div>
@@ -125,7 +126,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="material-icons">add_shopping_cart</i></span>
                         </div>
-                        <input type="text" required class="form-control produto_quantidade"  name="produtos[0][quantidade]" placeholder="Quantidade">
+                        <input type="text" required class="form-control produto_quantidade"  name="produtos[0][quantidade]"value="{{old('produtos[0][quantidade]', '')}}" placeholder="Quantidade">
                     </div>                 
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-11 form-group">
@@ -133,7 +134,7 @@ Cadastro Nova Compra - {{ $cliente->nome }}
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="material-icons">trending_down</i></span>
                         </div>
-                        <input type="text" required class="form-control produto_desconto desconto" name="produtos[0][desconto]" placeholder="Desconto">
+                        <input type="text" required class="form-control produto_desconto desconto" name="produtos[0][desconto]" value="{{old('produtos[0][desconto]', '')}}" placeholder="Desconto">
                     </div>  
                 </div>
                 <div class="col-lg-1 col-sm-12 form-group d-none">
