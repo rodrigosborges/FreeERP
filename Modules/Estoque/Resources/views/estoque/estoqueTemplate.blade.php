@@ -45,7 +45,7 @@ $menu = [
                 <div class="dropdown">
                     <a class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Relatorios</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="dropdown-item" href="#">Saída de produtos</a>
+                            <a class="dropdown-item" href="{{url('/estoque/relatorio/saida-produtos')}}">Saída de produtos</a>
                             <a class="dropdown-item" href="{{url('/estoque/relatorio/movimentacao')}}">Movimentação de produtos</a>
                             <a class="dropdown-item" href="{{url('/estoque/relatorio/custos')}}">Custo</a>
                         </div>
