@@ -46,7 +46,7 @@ class ForgotPasswordController extends Controller
         if($user==null){
             return redirect()->back()->with(['error'=> 'Email não cadastrado']);
         }
-        return $user;
+        // return $user;
         $user = Sentinel::findById($user->id);
         $reminder = Reminder::exists($user) ? : Reminder::create($user);
         $this->enviarEmail($user, $reminder->code);
