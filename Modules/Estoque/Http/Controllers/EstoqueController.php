@@ -279,6 +279,11 @@ class EstoqueController extends Controller
         return view('estoque::estoque.relatorios.custo', compact('categorias', 'dados'));
     }
 
+    public function relatorioMovimentacao(){
+        $categorias = Categoria::all();
+        return view('estoque::estoque.relatorios.movimentacao', compact('categorias'));
+    }
+
     public function chartCusto(){
         $result = MovimentacaoEstoque::orderBy('created_at')->get();
         return response()->json($result);
