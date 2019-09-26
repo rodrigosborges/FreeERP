@@ -274,19 +274,31 @@ class EstoqueController extends Controller
 
     public function relatorioCusto(){
         $categorias = Categoria::all();
-        $l = ['oi', 'tchau', 'eae'];
-        $dados = json_encode($l);
-        return view('estoque::estoque.relatorios.custo', compact('categorias', 'dados'));
+        $movimentacoes = MovimentacaoEstoque::orderBy('created_at', 'DESC')->get();
+
+        $ms = MovimentacaoEstoque::where('created_at', 'like', DB::raw('created_at'))
+        ->select('id', DB::raw('COUNT(id) as count'))
+        ->groupBy('id')
+        ->get();
+        return $ms;
+
+        $mo = [];
+        foreach($movimentacoes as $m){
+            array_push($mo, date_format($m->created_at, "d-m-Y"));
+        }
+        $labels = json_encode($mo);
+
+        $da = [];
+        foreach($movimentacoes as $d){
+            array_push($da, $d->quantidade);
+        }
+        $dados = json_encode($da);
+
+        return view('estoque::estoque.relatorios.custo', compact('categorias', 'labels', 'dados'));
     }
 
     public function relatorioMovimentacao(){
         $categorias = Categoria::all();
         return view('estoque::estoque.relatorios.movimentacao', compact('categorias'));
-    }
-
-    public function chartCusto(){
-        $result = MovimentacaoEstoque::orderBy('created_at')->get();
-        return response()->json($result);
-        return view('estoque::estoque.relatorios.custo', compact('categorias'));
     }
 }

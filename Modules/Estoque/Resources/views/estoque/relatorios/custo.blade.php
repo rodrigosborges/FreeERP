@@ -50,7 +50,7 @@
 
 function gerarGrafico() {
     var ctx = document.getElementById('myChart').getContext('2d');
-    var teste = <?php echo $dados; ?>;
+    var teste = <?php echo $labels; ?>;
     var chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'line',
@@ -62,7 +62,7 @@ function gerarGrafico() {
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5]
+                data: <?php echo $dados; ?>
             }]
         },
 
