@@ -4,12 +4,18 @@
 
 @section('body')
 <!-- Search form -->
-<form class="form-inline ml-auto mb-2 ">
-  <div class="md-form my-0">
-    <input class="form-control" name="search" type="text" placeholder="Nome" aria-label="Search">
+<div class="row">
+  <div class="col-md-8">
+      <form id="form">
+          <div class="form-group">
+              <div class="input-group">
+                  <input id="search-input" class="form-control" type="text" name="search" />
+                  <i id="search-button" class="btn btn-info material-icons ml-2">search</i>
+              </div>
+          </div>
+      </form>
   </div>
-  <button class="btn btn-primary btn-md my-0 ml-sm-2" type="submit">Pesquisar</button>
-</form>
+</div>
 
 <table class="table">
   <thead>
