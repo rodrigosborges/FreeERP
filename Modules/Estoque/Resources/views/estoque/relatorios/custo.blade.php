@@ -7,18 +7,12 @@
                     @csrf
 
                     <div class="row">
-                        <div class="form-group col-12">
-                            <label for="nome">Nome do Produto</label>
-                            <input id="search-input" placeholder="Insira o nome do produto" maxlength="45" class="form-control" type="text" name="nome">
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col-6">
-                            <label for="categoria">Categoria</label>
+                            <label for="nome">Produto</label>
                             <select required class="form-control" name="categoria">
-                                <option value="-1" selected>Todas Categorias</option>
-                                @foreach($categorias as $categoria)
-                                    <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                                <option value="-1" selected>Todo o Estoque</option>
+                                @foreach($estoques as $e)
+                                    <option value="{{$e->id}}">{{$e->produtos->last()->nome}} - {{$e->tipoUnidade->nome}}({{$e->tipoUnidade->quantidade_itens}} itens)</option>
                                 @endforeach
                             </select>
                         </div>
@@ -41,7 +35,7 @@
                 </form>
 
 <div class="row mt-5 mb-5">
-    <div class="col-6">
+    <div class="col-12">
         <canvas id="myChart"></canvas>
     </div>
 </div>
@@ -59,7 +53,7 @@ function gerarGrafico() {
         data: {
             labels: teste,
             datasets: [{
-                label: 'My First dataset',
+                label: 'Custo',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
                 data: <?php echo $dados; ?>

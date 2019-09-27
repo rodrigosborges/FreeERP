@@ -111,7 +111,7 @@ class MovimentacaoEstoqueController extends Controller
                 ]);
                 $estoque->update();
                 DB::commit();
-            return redirect('/estoque/movimentacao/alterar/' . $estoque->produtos->last()->id)->with('success', 'Registro salvo');
+            return redirect('/estoque/movimentacao/alterar/' . $estoque->id)->with('success', 'Registro salvo');
         }catch(\Exception $e){
             return back()->with('error', 'Erro no servidor');
         }

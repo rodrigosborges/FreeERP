@@ -270,16 +270,30 @@ class EstoqueController extends Controller
     }
 
     public function relatorioCusto(){
-        $categorias = Categoria::all();
+        $estoques = Estoque::all();
         $movimentacoes = MovimentacaoEstoque::orderBy('created_at', 'DESC')->get();
-        $ms = DB::table('movimentacao_estoque')
-            ->select(DB::raw('distinct substring_index(created_at, " ", 1) as data, (SELECT COUNT(id) FROM movimentacao_estoque WHERE data = SUBSTRING_INDEX(created_at, " ", 1)) as qtd'))
-        ->get();
-        
+        // $ms = DB::table('movimentacao_estoque')
+        //     ->select(DB::raw('distinct substring_index(created_at, " ", 1) as data, 
+        //     (SELECT COUNT(id) FROM movimentacao_estoque 
+        //     WHERE data = SUBSTRING_INDEX(created_at, " ", 1)) as qtd'))
+        // ->get();
+
+        $ms = DB::select(
+            'SELECT distinct substring_index(created_at, " ", 1) as data,
+            (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = 3)) as nome,
+            (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = 3 AND quantidade > 0) as qtd
+             FROM movimentacao_estoque as me WHERE estoque_id = 3 order by data asc'
+
+            // 'SELECT distinct substring_index(created_at, " ", 1) as data,
+            // (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = me.estoque_id)) as nome,
+            // (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = me.estoque_id AND quantidade > 0) as qtd
+            //  FROM movimentacao_estoque as me'
+            
+        );
 
         $mo = [];
         foreach($ms as $m){
-            array_push($mo, $m->data);
+                array_push($mo, $m->data);
         }
         $labels = json_encode($mo);
 
@@ -289,7 +303,7 @@ class EstoqueController extends Controller
         }
         $dados = json_encode($da);
 
-        return view('estoque::estoque.relatorios.custo', compact('categorias', 'labels', 'dados'));
+        return view('estoque::estoque.relatorios.custo', compact('labels', 'dados', 'estoques'));
     }
 
     public function relatorioMovimentacao(){
