@@ -1,5 +1,5 @@
 {
-    "name": "nwidart/exemplo",
+    "name": "nwidart/eventos",
     "description": "",
     "authors": [
         {
@@ -10,7 +10,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\Exemplo\\Providers\\ExemploServiceProvider"
+                "Modules\\Eventos\\Providers\\EventosServiceProvider"
             ],
             "aliases": {
                 
@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Exemplo\\": ""
+            "Modules\\Eventos\\": ""
         }
     }
 }

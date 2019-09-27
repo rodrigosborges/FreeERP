@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Exemplo\Providers;
+namespace Modules\Eventos\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
-class ExemploServiceProvider extends ServiceProvider
+class EventosServiceProvider extends ServiceProvider
 {
     /**
      * Boot the application events.
@@ -39,10 +39,10 @@ class ExemploServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('exemplo.php'),
+            __DIR__.'/../Config/config.php' => config_path('eventos.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'exemplo'
+            __DIR__.'/../Config/config.php', 'eventos'
         );
     }
 
@@ -53,7 +53,7 @@ class ExemploServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/exemplo');
+        $viewPath = resource_path('views/modules/eventos');
 
         $sourcePath = __DIR__.'/../Resources/views';
 
@@ -62,8 +62,8 @@ class ExemploServiceProvider extends ServiceProvider
         ],'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/exemplo';
-        }, \Config::get('view.paths')), [$sourcePath]), 'exemplo');
+            return $path . '/modules/eventos';
+        }, \Config::get('view.paths')), [$sourcePath]), 'eventos');
     }
 
     /**
@@ -73,12 +73,12 @@ class ExemploServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/exemplo');
+        $langPath = resource_path('lang/modules/eventos');
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'exemplo');
+            $this->loadTranslationsFrom($langPath, 'eventos');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'exemplo');
+            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'eventos');
         }
     }
 

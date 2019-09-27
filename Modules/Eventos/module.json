@@ -1,12 +1,12 @@
 {
-    "name": "Exemplo",
-    "alias": "exemplo",
+    "name": "Eventos",
+    "alias": "eventos",
     "description": "",
     "keywords": [],
     "active": 1,
     "order": 0,
     "providers": [
-        "Modules\\Exemplo\\Providers\\ExemploServiceProvider"
+        "Modules\\Eventos\\Providers\\EventosServiceProvider"
     ],
     "aliases": {},
     "files": [],

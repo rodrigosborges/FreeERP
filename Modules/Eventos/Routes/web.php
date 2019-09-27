@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('exemplo')->group(function() {
-    Route::get('/', 'ExemploController@index');
+Route::prefix('eventos')->group(function() {
+    Route::get('/', 'EventosController@index');
 });

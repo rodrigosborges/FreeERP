@@ -19,8 +19,8 @@ Route::get('/', function () {
     | name (nome do módulo)
     */
     $moduleInfo = [
-        'icon' => 'android',
-        'name' => 'Vendas',
+        'icon' => 'event    ',
+        'name' => 'Eventos',
     ];
     /* 
     | Defina os itens (funcionalidades) do menu principal do módulo
@@ -29,13 +29,13 @@ Route::get('/', function () {
     | route (rota de ação da funcionalidade)
     */
     $menu = [
-        ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => '/'],
+        ['icon' => 'add_box', 'tool' => 'Cadastrar', 'route' => 'cadastrarResponsavel'],
         ['icon' => 'search', 'tool' => 'Buscar', 'route' => '#'],
         ['icon' => 'edit', 'tool' => 'Editar', 'route' => '#'],
         ['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
     ];
     // Passe os parâmetros definidos utilizando as chaves 'moduleInfo' e 'menu'
-    return view('example', [
+    return view('gerente', [
         'moduleInfo' => $moduleInfo,
         'menu' => $menu,
     ]);
