@@ -183,7 +183,7 @@ class ControleFeriasController extends Controller
         } else {
 
                 $ultimo_periodo_aquisitivo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->fim_periodo_aquisitivo;
-                $today = '2021-11-22'; //Dia que o usuário está usando o software. Essa data é simulada para testes. O formato tem de ser YYYY/mm/dd
+                $today = '2020-09-25'; //Dia que o usuário está usando o software. Essa data é simulada para testes. O formato tem de ser YYYY/mm/dd
                 
                     if($today < $ultimo_periodo_aquisitivo){ //Se está no mesmo perído que o registrado anteriormente.
                         $inicio_periodo_aquisitivo = date('d/m/Y', strtotime($admissao));
@@ -199,7 +199,7 @@ class ControleFeriasController extends Controller
 
                     } else { //novo período aquisitivo
                         
-                        $ano_atual =  '2020'; // Essa data é simulada para teste; date('Y', time());
+                        $ano_atual = '2020'; // Essa data é simulada para teste; date('Y', time());
                         $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
                         $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
 
@@ -215,20 +215,21 @@ class ControleFeriasController extends Controller
 
                         $saldo_periodo = 30;
                         $saldo_total = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
+                        $saldo_total += ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_total;
 
-                        if($today > DateTime::createFromFormat('d/m/Y', $fim_periodo_aquisitivo)->format('Y-m-d')){
-                            
-                            $data_inicial = DateTime::createFromFormat('d/m/Y', $fim_periodo_aquisitivo)->format('Y-m-d'); // armazena o fim do periodo em questão 
-                            $data_final = $today; //Dia que o usuário está usando o software. Essa data é simulada para testes.
-                            $diferenca = strtotime($data_final) - strtotime($data_inicial);
-                            
-                            //Calcula a diferença em dias
-                            $dias = floor($diferenca / (60 * 60 * 24));
-                            $meses = floor($dias/30);
-                            
-                            $saldo_total = $meses * 2.5; //dias excedentes para se adicionar no saldo_total
-                            $saldo_periodo = 30;
-                        } 
+                            if($today > DateTime::createFromFormat('d/m/Y', $fim_periodo_aquisitivo)->format('Y-m-d')){
+                                
+                                $data_inicial = DateTime::createFromFormat('d/m/Y', $fim_periodo_aquisitivo)->format('Y-m-d'); // armazena o fim do periodo em questão 
+                                $data_final = $today; //Dia que o usuário está usando o software. Essa data é simulada para testes.
+                                $diferenca = strtotime($data_final) - strtotime($data_inicial);
+                                
+                                //Calcula a diferença em dias
+                                $dias = floor($diferenca / (60 * 60 * 24));
+                                $meses = floor($dias/30);
+                                
+                                $saldo_total += $meses * 2.5; //dias excedentes para se adicionar no saldo_total
+                                $saldo_periodo = 30;
+                            } 
                     }
 
         }

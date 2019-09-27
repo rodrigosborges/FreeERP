@@ -41,7 +41,7 @@ class FeriasController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(CreateFerias $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
 
@@ -52,20 +52,44 @@ class FeriasController extends Controller
             $inicio_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $request['inicio_periodo_aquisitivo']);
             $fim_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $request['fim_periodo_aquisitivo'])->format('Y-m-d');
             $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $request['limite_periodo_aquisitivo']);
-
+            
+            
             //Esta linha verifica se já há algum registro na tabela controle_ferias.
             $verificarRegistroTabela = DB::table('controle_ferias')->where('funcionario_id', '=', $request['funcionario_id'])->count();
 
-            //Verificação se há, se houver, ele pega o último atributo que está salvo no banco e subtrai com os dias inseridos no input.
-            if($verificarRegistroTabela > 0){ // esse if verifica caso seja no mesmo período
+            
+            if($verificarRegistroTabela > 0){ // esse if verifica caso haja pelo menos uma férias cadastrada
                 
                 $ultimo_periodo_aquisitivo = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->fim_periodo_aquisitivo;
 
-                if($ultimo_periodo_aquisitivo == $fim_periodo_aquisitivo){
-                    $saldoTotalBanco = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo;
-                    $saldo_periodo = $saldoTotalBanco - $request->dias_ferias;
+                if($ultimo_periodo_aquisitivo == $fim_periodo_aquisitivo){ //Se está no mesmo período.
+                    $saldo_periodo = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo;
                     $saldo_total = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_total;
-                }
+                    
+                    if($request->dias_ferias <= $saldo_periodo){
+                        $saldo_periodo = $saldo_periodo - $request->dias_ferias;
+                        
+                    } else {
+                        $saldo_periodo = 0;
+                        $saldo_total = ($saldo_total+$saldo_periodo) - $request->dias_ferias;
+                    }
+
+                } else { //aqui vc modifica o saldo_total - novo período
+                   
+                   $saldo_total_input = $request['saldo_total'];
+                   $dias_ferias = $request['dias_ferias'];
+                   $saldo_periodo = $request['saldo_periodo'];
+                 
+                   if($saldo_total_input > 0){
+                       $dias_ferias -= $saldo_total_input;
+                       $saldo_total = 0;
+                       $saldo_periodo = $saldo_periodo - $dias_ferias;  
+
+                   } else {
+                       $saldo_periodo = $saldo_periodo - $dias_ferias;
+                       $saldo_total = 0;
+                   }
+                } 
 
             //Senão, ele subtrai os dias inseridos por 30, pois a cada periodo aquisitivo o funcionário tem direito a 30 dias.     
             } else {
