@@ -14,7 +14,7 @@ class AddForeignKeysToVagaTable extends Migration
     public function up()
     {
         Schema::table('vaga', function (Blueprint $table) {
-            $table->foreign('cargo_id', 'fk_vaga_cargo1')->references('id')->on('cargo')->onUpdate('NO ACTION')->onDelete('CASCADE');
+            $table->foreign('cargo_id', 'fk_vaga_cargo1')->references('id')->on('cargo')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 

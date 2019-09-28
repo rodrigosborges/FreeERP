@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCargoTable extends Migration
+class CreateCandidatoHasEtapaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateCargoTable extends Migration
      */
     public function up()
     {
-        Schema::create('cargo', function (Blueprint $table) {
+        Schema::create('candidato_has_etapa', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('nome');
-            $table->integer('categoria_id')->index('fk_cargo_categoria1');
-            $table->timestamps();
-            $table->softDeletes();
+			$table->integer('nota');
+			$table->integer('candidato_id')->index('fk_candidato_has_etapa_candidato1');
+			$table->integer('etapa_id')->index('fk_candidato_has_etapa_pedido1');
+			$table->timestamps();
+			$table->softDeletes();
         });
     }
 
@@ -29,6 +30,6 @@ class CreateCargoTable extends Migration
      */
     public function down()
     {
-        Schema::drop('cargo');
+        Schema::drop('candidato_has_etapa');
     }
 }
