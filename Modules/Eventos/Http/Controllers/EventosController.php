@@ -5,6 +5,7 @@ namespace Modules\Eventos\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Eventos\Entities\Evento;
 
 class EventosController extends Controller
 {
@@ -15,20 +16,17 @@ class EventosController extends Controller
        
     //EXIBE AS VIEWS
     public function index(){
-        // Passe os parâmetros definidos utilizando as chaves 'moduleInfo' e 'menu'
-        
-        return view('eventos::index');
+        $eventos = Evento::all();
+        return view('eventos::index', ['eventos' => $eventos]);
     }
     
     public function eventos(){
-        // Passe os parâmetros definidos utilizando as chaves 'moduleInfo' e 'menu'
-        
         return view('eventos::eventos');
     }
     
     public function pessoas(){
-        // Passe os parâmetros definidos utilizando as chaves 'moduleInfo' e 'menu'
-        return view('eventos::pessoas');
+        $eventos = Evento::orderBy('nome')->get(); //RETORNA OS EVENTOS ORDENADOS PELO NOME
+        return view('eventos::pessoas', ['eventos' => $eventos]);
     }
 
     /**

@@ -7,7 +7,7 @@
     ];
     $menu = [
         ['icon' => 'home', 'tool' => 'Início', 'route' => route('eventos.index')],
-        ['icon' => 'event', 'tool' => 'Eventos', 'route' => route('eventos.eventos')],
+        ['icon' => 'event', 'tool' => 'Eventos', 'route' => '#'],
         ['icon' => 'people', 'tool' => 'Pessoas', 'route' => route('eventos.pessoas')],
         ['icon' => 'school', 'tool' => 'Certificados', 'route' => '#'],
     ];

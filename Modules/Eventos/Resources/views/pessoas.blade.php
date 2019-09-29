@@ -8,14 +8,13 @@
             <form>
                 <div class="form-group" style="margin-top: 25px;">
                     <label for="exampleFormControlSelect1">Selecione o evento</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                    <select class="form-control">
+                        @foreach ($eventos as $evento)
+                            <option>{{$evento->nome}}</option>
+                        @endforeach
                     </select>
                 </div>
+                <button type="submit" class="btn btn-default">Ok</button>
             </form>
         </div>
         
