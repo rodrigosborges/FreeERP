@@ -12,9 +12,23 @@ class EventosController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
-    {
+       
+    //EXIBE AS VIEWS
+    public function index(){
+        // Passe os parâmetros definidos utilizando as chaves 'moduleInfo' e 'menu'
+        
         return view('eventos::index');
+    }
+    
+    public function eventos(){
+        // Passe os parâmetros definidos utilizando as chaves 'moduleInfo' e 'menu'
+        
+        return view('eventos::eventos');
+    }
+    
+    public function pessoas(){
+        // Passe os parâmetros definidos utilizando as chaves 'moduleInfo' e 'menu'
+        return view('eventos::pessoas');
     }
 
     /**
