@@ -32,7 +32,7 @@
             <div class="col-12">
                 <p>Recebemos do cliente {{$pagamento->conserto->cliente->nome}}, CPF:
                     {{$pagamento->conserto->cliente->cpf}} a importancia liquida de {{$pagamento->conserto->valor}}
-                    referente a ordem de serviço nº{{$pagamento->conserto->numeroOrdem}} na data de ""</p>
+                    referente a ordem de serviço nº{{$pagamento->conserto->numeroOrdem}} na data de {{date("d/m/y")}}.</p>
             </div>
         </div>
 

@@ -9,51 +9,40 @@
     
 </head>
 <body>
-        <div class="row">Ordem de serviço nº {{$conserto->numeroOrdem}}</div>
-        <hr>
-        <div class="row">
-           Cliente
-        </div>
-        <div class="row">
-            <div class="col-6">
-                Nome: {{$conserto->cliente->nome}}
-            </div>
-            <div class="offset-6 col-6">
-                CPF: {{$conserto->cliente->cpf}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                {{$conserto->cliente->celnumero}}
-            </div>
-            <div class="offset-6 col-6">
-                {{$conserto->cliente->telefonenumero}}
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-           Aparelho
-        </div>
-        <div class="row">
-            <div class="col-6">
-                Nome: {{$conserto->cliente->nome}}
-            </div>
-            <div class="offset-6 col-6">
-                CPF: {{$conserto->cliente->cpf}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                {{$conserto->cliente->celnumero}}
-            </div>
-            <div class="offset-6 col-6">
-                {{$conserto->cliente->telefonenumero}}
-            </div>
-        </div>
-        <hr>
+        <div class="row"><h3>Ordem de serviço nº {{$conserto->numeroOrdem}}</h3></div>
         <hr>
         <div class="text-center">
-            <h3>Checklist</h3>
+            <h4>Cliente</h4>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                Nome: {{$conserto->cliente->nome}}
+            </div>
+            <div class="offset-6 col-6">
+                CPF: {{$conserto->cliente->cpf}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                {{$conserto->cliente->celnumero}}
+            </div>
+            <div class="offset-6 col-6">
+                {{$conserto->cliente->telefonenumero}}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                Aparelho: {{$conserto->modelo_aparelho}}
+            </div>
+            <div class="offset-6 col-6">
+                Marca: {{$conserto->marca_aparelho}}
+            </div>
+        </div>
+       
+     
+        <div class="text-center">
+            <h4>Checklist</h4>
         </div>
         <div class="row">
             <div class="col-12">
@@ -72,22 +61,13 @@
         </div>
         <hr>
         <div class="row">
-            Funcionamento - Os componentes do dispositivo estão funcionando corretamente? S ou N.
-            (  ) Touch
-            (  ) Lanterna/Flash
-            (  ) Leitor de cartão de memória
-            (  ) Leitor do SIM
-            (  ) Antena de rede
-            (  ) Antena Wifi/Bluetooth
-            (  ) Sensor de proximidade
-            (  ) Microfone
-            (  ) Auto-falante
-            (  ) Auricular
-            (  ) Conector de carga
-            (  ) Conector P2
-            (  ) Botões
-            (  ) Camera Traseira
-            (  ) Camera frontal
+            <div>
+                Funcionamento - Os componentes do dispositivo estão funcionando corretamente? S ou N (  ) <br>
+                (  ) Touch | (  ) Lanterna/Flash | (  ) Leitor de cartão de memória | (  ) Leitor do SIM <br>
+                (  ) Antena de rede | (  ) Antena Wifi/Bluetooth | (  ) Sensor de proximidade | (  ) Microfone <br>
+                (  ) Auto-falante | (  ) Auricular | (  ) Conector de carga | (  ) Conector P2 | (  ) Botões <br>
+                (  ) Camera Traseira | (  ) Camera frontal 
+            </div>
         </div>
         <hr>
         <div class="row">
@@ -98,6 +78,15 @@
                 Observações:
             </div>
         </div>
+        <div class="row">
+            <div class="col-6">
+                {{$conserto->defeito}}
+            </div>
+            <div class="offset-6 col-6">
+                {{$conserto->obs}}
+            </div>
+        </div>
+        <hr>
         <div class="row">
             <div class="col-6">
                 Funcionario:<br><br>

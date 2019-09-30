@@ -86,11 +86,15 @@ class ConsertoController extends Controller
       return view('assistencia::paginas.consertos.editarConserto', compact('conserto', 'clientes', 'id', 'pecas', 'servicos','pecaOS','itemServico','tecnicos'));
     }
     public function atualizar(Request $req, $id){
-      DB::beginTransaction();
-      try{
+     
         $dados  = $req->all();
         ConsertoAssistenciaModel::find($id)->update($dados);
 
+        $conserto = ConsertoAssistenciaModel::find($id)->latest()->first();
+        $pagamento = PagamentoAssistenciaModel::find($id);
+        $pagamento->valor = $conserto->valor;
+        $pagamento->save();
+       
         $pecaOS = PecaOs::where('idConserto', $id)->get();
         $itemServico = ItemServico::where('idConserto', $id)->get();
         
@@ -119,13 +123,12 @@ class ConsertoController extends Controller
             $servicos->save();
           }
         }
+        
+        
 
-        DB::commit();
+       
         return redirect()->route('consertos.localizar')->with('success','Ordem de serviço alterada com sucesso');
-      } catch (\Exception $e){
-        DB::rollback();
-        return back();
-      }
+      
       
       
     }

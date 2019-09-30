@@ -21,11 +21,16 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
+            <div class="row ">
+                <div class="col-12">
+                    <a href="{{url('/assistencia/consertos')}}"><i class="material-icons mr-2">home</i></button></a>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-11">
                     <h4>Vizualização da ordem de serviço</h4>
                 </div>
-                <div class="col-1"><a href="{{route('consertos.imprimir', $conserto->id)}}"><button>Imprimir</button></a></div>
+                <div class="col-1"><a target="_blank" href="{{route('consertos.imprimir', $conserto->id)}}"><button>Imprimir</button></a></div>
             </div>
 
         </div>
