@@ -58,6 +58,7 @@ Route::prefix('estoque')->group(function () {
 
     //Rotas de Relatório
     Route::get('/relatorio/custos', 'EstoqueController@relatorioCusto');
+    Route::post('/relatorio/custos', 'EstoqueController@relatorioCustoBusca');
     Route::get('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacao');
     Route::get('/relatorio/saida-produtos', 'EstoqueController@saidaProdutos');
    // Route::get('/relatorio/custos/chart', 'EstoqueController@chartCusto');

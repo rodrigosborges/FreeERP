@@ -306,6 +306,43 @@ class EstoqueController extends Controller
         return view('estoque::estoque.relatorios.custo', compact('labels', 'dados', 'estoques'));
     }
 
+    public function relatorioCustoBusca(Request $req){
+        $estoques = Estoque::all();
+        $ms = [];
+        if($req->estoque_id == -1){
+            $ms = DB::select(
+                'SELECT distinct substring_index(created_at, " ", 1) as data,
+                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtd
+                 FROM movimentacao_estoque as me WHERE
+                 substring_index(created_at, " ", 1) BETWEEN "'.$req->data_inicial.'" AND "'.$req->data_final.'"
+                  order by data asc'   
+            );    
+        }else{
+            $ms = DB::select(
+                'SELECT distinct substring_index(created_at, " ", 1) as data,
+                (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = '.$req->estoque_id .')) as nome,
+                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = '.$req->estoque_id .' AND quantidade > 0) as qtd
+                 FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id .' AND 
+                 substring_index(created_at, " ", 1) BETWEEN "'.$req->data_inicial.'" AND "'.$req->data_final.'"
+                  order by data asc'   
+            );
+        }
+
+        $mo = [];
+        foreach($ms as $m){
+                array_push($mo, $m->data);
+        }
+        $labels = json_encode($mo);
+
+        $da = [];
+        foreach($ms as $d){
+            array_push($da, $d->qtd);
+        }
+        $dados = json_encode($da);
+
+        return view('estoque::estoque.relatorios.custo', compact('labels', 'dados', 'estoques'));
+    } 
+
     public function relatorioMovimentacao(){
         $categorias = Categoria::all();
         return view('estoque::estoque.relatorios.movimentacao', compact('categorias'));
