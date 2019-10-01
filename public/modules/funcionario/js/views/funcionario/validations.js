@@ -37,21 +37,30 @@ $('#form').validate({
             digits: true,
             maxlength: 4
         },
-        // "documentos[pis][numero]":{
-        //     digits: true,
-        // },
-        // "documentos[numero_ctps][numero]":{
-        //     digits: true,
-        // },
-        // "documentos[serie_ctps][numero]":{
-        //     digits: true,
-        // },
-        // "cursos[][area_atuacao]":{
-        //     digits: true,
-        // },
-        // "cursos[][duracao_horas_curso]":{
-        //     digits: true,
-        // }
+        "documentos[pis][numero]":{
+            minlength: 14,
+        },
+        "documentos[numero_ctps][numero]":{
+            minlength: 8,
+        },
+        "documentos[serie_ctps][numero]":{
+            minlength: 11111,
+        },
+        "cursos[][area_atuacao]":{
+            letras: true,
+        },
+        "cursos[][nome]":{
+            letras: true,
+        },
+        "cursos[][duracao_horas_curso]":{
+            digits: true,
+        },
+        "cursos[][data_realizacao]":{
+            dataBR: true,
+        },
+        "cursos[][validade_curso]":{
+            dataBR: true,
+        }
     },
     messages:{}
 })
