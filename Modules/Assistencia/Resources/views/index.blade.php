@@ -12,6 +12,8 @@
 @stop
 
 @section('content')
+<input type="hidden" name="pago" value="{{$pago}}">
+<input type="hidden" name="pendente" value="{{$pendente}}">
 <div class="card">
 
     <div class="card-header caixa">
@@ -60,7 +62,7 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body text-center">
-                    <div id="donutchart" style="width: 300px; height: 200px;"></div>
+                    <div id="donutchart" style="width: 400px; height: 250px;"></div>
                 </div>
             </div>
         </div>
@@ -78,19 +80,20 @@ google.charts.load("current", {
     packages: ["corechart"]
 });
 google.charts.setOnLoadCallback(drawChart);
-
 function drawChart() {
+    var pago = parseInt($("input[name='pago']").val());
+    var pendente = parseInt($("input[name='pendente']").val());
+
     var data = google.visualization.arrayToDataTable([
-        ['Vendas', 'q iso'],
-        ['Peças', 5],
-        ['Serviços', 5],
-        ['Produtos', 5],
-        ['Softwares', 5]
+        ['Pagamentos', 'pedente ou pago'],
+        ['Pendente', pendente],
+        ['pago', pago],
+
 
     ]);
 
     var options = {
-        title: 'Vendas da empresa',
+        title: 'Pagamentos',
         pieHole: 0.4,
     };
 

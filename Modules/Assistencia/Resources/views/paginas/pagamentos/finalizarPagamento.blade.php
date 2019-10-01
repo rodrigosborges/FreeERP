@@ -1,15 +1,14 @@
 @extends('assistencia::layouts.master')
 @section('css')
 <style type="text/css">
-.importante {
-    font-size: 25px;
-    color: red;
-    font-weight:
-}
+    .importante {
+        font-size: 25px;
+        color: red;
+        font-weight:
+    }
 </style>
 @stop
 @section('content')
-
 <div class="card">
     <div class="card-header">
         Confirmação de pagamento
@@ -75,12 +74,8 @@
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
-
             <div class="row text-center">
                 <div class="col-12">
                     <button type="submit" class="btn btn-succes">Confirmar pagamento</button>

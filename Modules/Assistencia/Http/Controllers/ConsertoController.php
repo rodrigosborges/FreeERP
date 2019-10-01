@@ -12,7 +12,7 @@ use Modules\Assistencia\Http\Requests\StoreConsertosRequest;
 class ConsertoController extends Controller
 {
     public function index() {
-
+      
       return view('assistencia::paginas.conserto');
     }
 

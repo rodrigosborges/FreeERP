@@ -19,8 +19,8 @@
 @section('content')
 <div class="card" style="width:40%;">
     <div class="card-body">
-        <div class="card-header">
-            <div class="col-1"><a target="_blank" href="{{route('pagamento.imprimir', $pagamento->id)}}">Imprimir</a></div>
+        <div class="row">
+            <div class="col-4"><a target="_blank" href="{{route('pagamento.imprimir', $pagamento->id)}}">Imprimir</a></div>
         </div>
         <div class="card-body">
             <div class="header">
