@@ -4,8 +4,9 @@
         'name' => 'Cliente',
     ];
     $menu = [
-        ['icon' => 'people', 'tool' => 'Pedido', 'route' => url('cliente/pedido')],
-        // ['icon' => 'work', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
+        ['icon' => 'people', 'tool' => 'Clientes', 'route' => url('cliente/cliente')],
+        ['icon' => 'dashboard', 'tool' => 'Dashboard', 'route' => url('cliente/dashboard')],
+        ['icon' => 'assessment', 'tool' => 'Relatórios', 'route' => url('cliente/relatorios')],
     ];
 ?>
 
