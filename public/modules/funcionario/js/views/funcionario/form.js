@@ -100,10 +100,10 @@ $(document).on('change', '.custom-file-input',function(e){
 
 //#############
 //Cursos Funcionarios
-//ADICIONA E REMOVE DOCUMENTOS
+//ADICIONA E REMOVE Cursos
 $(document).on("click", ".add-curso", function() {
-    if($(".cur").hasClass("dep-none")) {
-        $(".cur").removeClass("dep-none")
+    if($(".cur").hasClass("c-none")) {
+        $(".cur").removeClass("c-none")
         $(".cursos").hide().removeAttr('disabled').fadeIn("slow")
     }
     else if($(".cur").length < 4) {
@@ -123,10 +123,8 @@ $(document).on("click", ".add-curso", function() {
 $(document).on("click", ".del-cur", function() {
     if($(".cur").length == 1) {
         $(".cur").last().find(".cursos").val("")
-        $('.cur').addClass('d-none')
+        $('.cur').addClass('c-none')
         $(".cursos").attr('disabled', 'disabled')
-        $(".cur").last().find(".custom-file-label").html("Selecione");
-        $(".file_download").remove()
     } else {
         remover(".cur", $(this))
     }

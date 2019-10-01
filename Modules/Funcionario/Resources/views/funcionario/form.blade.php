@@ -637,7 +637,7 @@
 
         <div id="cursos">
             @foreach(old('cursos', $data['cursos']) as $key => $curso)
-            <div class="cur {{ old('cursos.$key.nome', isset($curso->nome) ? $curso->nome : '') ? '' : 'dep-none'}} mb-4">
+            <div  class="cur {{ old('cursos.$key.nome', isset($curso->nome) ? $curso->nome : '') ? '' : 'c-none'}} mb-4">
                 
                     @if(isset($curso->id))
                         <input type="hidden" class="cursos" value="{{ isset($curso->id) ? $curso->id : ''}}" name="cursos[{{$key}}][id]">
