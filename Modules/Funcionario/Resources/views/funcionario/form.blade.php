@@ -705,7 +705,7 @@
                                         <i class="material-icons">date_range</i>
                                     </span>
                                 </div>
-                                <input required type="date" placeholder="00/00/0000" name="cursos[{{$key}}][data_realizacao]" id="data_realizacao_cur_{{$key}}" class="form-control data cursos" value="{{ old('cursos.$key.data_realizacao', isset($curso->data_realizacao) ? $curso->data_realizacao : '') }}">
+                                <input required type="date" placeholder="00/00/0000" name="cursos[{{$key}}][data_realizacao]" id="data_realizacao_cur_{{$key}}" class="form-control  cursos" value="{{ old('cursos.$key.data_realizacao', isset($curso->data_realizacao) ? $curso->data_realizacao : '') }}">
                             </div>
                             <span class="errors"> {{ $errors->first('cursos.'.$key.'.data_realizacao') }} </span>
                         </div>
