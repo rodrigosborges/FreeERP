@@ -74,7 +74,8 @@ Route::prefix('assistencia')->group(function() {
     Route::get('pagamento', ['as'=>'pagamento.index','uses'=>'PagamentoController@index']);
     Route::post('pagamento/{id}/salvar', ['as'=>'pagamento.salvar','uses'=>'PagamentoController@salvar']);
     Route::get('pagamento/recibo-{id}', ['as'=>'pagamento.recibo','uses'=>'PagamentoController@recibo']);
-
+    Route::get('pagamento/imprimir/{id}',[ 'as' =>'pagamento.imprimir','uses' => 'PagamentoController@imprimir']);
+    
 });
 
 

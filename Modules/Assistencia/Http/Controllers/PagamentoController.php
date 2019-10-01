@@ -33,37 +33,43 @@ class PagamentoController extends Controller
     public function salvar(Request $req, $id) {
         DB::beginTransaction();
         try {
+            $dados = $req->all();
+            $forma = '';
+            if($dados['forma']==1){
+                $forma = 'Dinheiro';
+            } else if ($dados['forma']==2) {
+                $forma = 'Cartão';
+            }
+
+            $pagamento =  PagamentoAssistenciaModel::find($id);
+            $pagamento->status = 'Pago';
+            $pagamento->forma = $forma;
+            $pagamento->delete();
+            $pagamento->save();
+            
+            $conserto = ConsertoAssistenciaModel::find($id);
+            $conserto->delete();
+            $conserto->save();
+
             DB::commit();
+            if ($dados['recibo']=='N') {
+                return redirect()->route('consertos.localizar');
+            } else if ($dados['recibo']=='S') {
+                return redirect()->route('pagamento.recibo', $pagamento->id);
+            }
+       
         } catch (\Exception $e) {
             DB::rollback();
             return back();
         }
 
-        $dados = $req->all();
-        $forma = '';
-        if($dados['forma']==1){
-            $forma = 'Dinheiro';
-        } else if ($dados['forma']==2) {
-            $forma = 'Cartão';
-        }
-
-        $pagamento =  PagamentoAssistenciaModel::find($id);
-        $pagamento->status = 'Pago';
-        $pagamento->forma = $forma;
-        $pagamento->delete();
-        $pagamento->save();
-        
-        $conserto = ConsertoAssistenciaModel::find($id);
-        $conserto->delete();
-        $conserto->save();
-
-        if ($dados['recibo']=='N') {
-            return redirect()->route('consertos.localizar');
-        } else if ($dados['recibo']=='S') {
-             return redirect()->route('pagamento.recibo', $pagamento->id);
-        }
-
     }
+    public function imprimir($id) {
+        $pagamento =  PagamentoAssistenciaModel::find($id);
+
+        return \PDF::loadView('assistencia::paginas.pagamentos._recibo', compact('pagamento'))->stream();
+                  
+      }
 
     /**
      * Store a newly created resource in storage.

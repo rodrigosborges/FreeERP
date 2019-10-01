@@ -19,30 +19,34 @@
 @section('content')
 <div class="card" style="width:40%;">
     <div class="card-body">
-        <div class="header">
-            <div class="imagem">
-                <img class="img-fluid" src="{{ URL::to('/') }}/img/logo.png">
+        <div class="card-header">
+            <div class="col-1"><a target="_blank" href="{{route('pagamento.imprimir', $pagamento->id)}}">Imprimir</a></div>
+        </div>
+        <div class="card-body">
+            <div class="header">
+                <div class="imagem">
+                    <img class="img-fluid" src="{{ URL::to('/') }}/img/logo.png">
+                </div>
+                <div class="">
+                    <h6>Recibo nº {{$pagamento->conserto->numeroOrdem}}</h6>
+                </div>
             </div>
-            <div class="">
-                <h6>Recibo nº {{$pagamento->conserto->numeroOrdem}}</h6>
+
+            <div class="row">
+                <div class="col-12">
+                    <p>Recebemos do cliente {{$pagamento->conserto->cliente->nome}}, CPF:
+                        {{$pagamento->conserto->cliente->cpf}} a importancia liquida de {{$pagamento->conserto->valor}}
+                        referente a ordem de serviço nº{{$pagamento->conserto->numeroOrdem}} na data de {{date("d/m/y")}}.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    _____________________________________<br>
+                    Funcionario
+                </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-12">
-                <p>Recebemos do cliente {{$pagamento->conserto->cliente->nome}}, CPF:
-                    {{$pagamento->conserto->cliente->cpf}} a importancia liquida de {{$pagamento->conserto->valor}}
-                    referente a ordem de serviço nº{{$pagamento->conserto->numeroOrdem}} na data de {{date("d/m/y")}}.</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12 text-center">
-                _____________________________________<br>
-                Funcionario
-            </div>
-        </div>
-
     </div>
 </div>
 @stop

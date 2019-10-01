@@ -64,7 +64,7 @@
                         </div>
                         <div class="col-2">
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="reciboSim" name="recibo" value="S" class="custom-control-input">
+                                <input type="radio" id="reciboSim" name="recibo" required value="S" class="custom-control-input">
                                 <label class="custom-control-label" for="reciboSim">Sim</label>
                             </div>
                         </div>
