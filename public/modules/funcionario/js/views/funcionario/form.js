@@ -95,15 +95,46 @@ $(document).on('change', '.custom-file-input',function(e){
 //###########################
 
 //ADICIONA E REMOVE DEPENDENTES
+$(document).on("click", ".add-dep", function() {
+    if($(".dep").hasClass("d-none")) {
+        $(".dep").removeClass("d-none")
+        $(".dependentes").hide().removeAttr('disabled').fadeIn("slow")
+    }
+    else if($(".dep").length < 4) {
+        clonar(".dep", "#dependentes", true)
+        $(".dep").last().find(".dependentes").val("")
+    } else {
+
+        Swal.fire({
+            type: 'warning',
+            title: 'Atenção!',
+            text: 'Podem ser adicionados no máximo '+$(".cur").length+' cursos',
+        })
+ 
+    }
+})
+
+$(document).on("click", ".del-dep", function() {
+    if($(".dep").length == 1) {
+        $(".dep").last().find(".dependentes").val("")
+        $('.dep').addClass('d-none')
+        $(".dependentes").attr('disabled', 'disabled')
+    } else {
+        remover(".dep", $(this))
+    }
+})
+
+
+
 
 //############################
 
 //#############
 //Cursos Funcionarios
-//ADICIONA E REMOVE Cursos
+//ADICIONA E REMOVE DOCUMENTOS
 $(document).on("click", ".add-curso", function() {
-    if($(".cur").hasClass("c-none")) {
-        $(".cur").removeClass("c-none")
+    if($(".cur").hasClass("d-none")) {
+        $(".cur").removeClass("d-none")
         $(".cursos").hide().removeAttr('disabled').fadeIn("slow")
     }
     else if($(".cur").length < 4) {
@@ -123,7 +154,7 @@ $(document).on("click", ".add-curso", function() {
 $(document).on("click", ".del-cur", function() {
     if($(".cur").length == 1) {
         $(".cur").last().find(".cursos").val("")
-        $('.cur').addClass('c-none')
+        $('.cur').addClass('d-none')
         $(".cursos").attr('disabled', 'disabled')
     } else {
         remover(".cur", $(this))
@@ -131,34 +162,7 @@ $(document).on("click", ".del-cur", function() {
 })
 
 
-// $(document).on("click", ".add-curso", function() {
-//     if($(".cur").hasClass("c-none")) {
-//         $(".cur").removeClass("c-none")
-//         $(".cursos").fadeIn()
-//     }
-//     else if($(".cur").length < 4) {
-//         clonar(".cur", "#cursos", true)
-//         $(".cur").last().find(".cursos").val("")
-//     } else {
 
-//         Swal.fire({
-//             type: 'warning',
-//             title: 'Atenção!',
-//             text: 'Podem ser adicionados no máximo '+$(".cur").length+' cursos',
-//         })
- 
-//     }
-// })
-
-// $(document).on("click", ".del-cur", function() {
-//     if($(".cur").length == 1) {
-//         $(".cur").last().find(".cursos").val("")
-//         $('.cur').addClass('c-none')
-//         $(".cursos").attr('disabled', 'disabled')
-//     } else {
-//         remover(".cur", $(this))
-//     }
-// })
 
 //###################
 //ENDEREÇO
