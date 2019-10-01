@@ -45,9 +45,8 @@ class PedidoController extends Controller
         try{
             $produtos = $request->input('produtos');
             $dados = [];
-
             foreach($produtos as $produto){
-                $dados[$produto['produto_id']] = [
+                $dados[ $produto['produto_id'] ] = [
                         'quantidade' => $produto['quantidade'], 
                         'desconto' => $produto['desconto']
                     ];
