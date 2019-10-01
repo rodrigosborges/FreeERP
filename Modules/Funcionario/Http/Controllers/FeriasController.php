@@ -66,17 +66,12 @@ class FeriasController extends Controller
                     $saldo_periodo = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo;
                     $saldo_total = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_total;
                     
-                    if($request->dias_ferias <= $saldo_periodo){
-                        $saldo_periodo = $saldo_periodo - $request->dias_ferias;
-                        
-                    } else {
-                        $saldo_periodo = 0;
-                        $saldo_total = ($saldo_total+$saldo_periodo) - $request->dias_ferias;
-                    }
+                    $saldo_periodo = $saldo_periodo - $request->dias_ferias;
+                    $saldo_total = $saldo_total - $request->dias_ferias;
 
                 } else { //aqui vc modifica o saldo_total - novo período
                    
-                   $saldo_total_input = $request['saldo_total'];
+                   /*$saldo_total_input = $request['saldo_total'];
                    $dias_ferias = $request['dias_ferias'];
                    $saldo_periodo = $request['saldo_periodo'];
                  
@@ -88,13 +83,13 @@ class FeriasController extends Controller
                    } else {
                        $saldo_periodo = $saldo_periodo - $dias_ferias;
                        $saldo_total = 0;
-                   }
+                   }*/
                 } 
 
             //Senão, ele subtrai os dias inseridos por 30, pois a cada periodo aquisitivo o funcionário tem direito a 30 dias.     
             } else {
                 $saldo_periodo = 30 - $request->dias_ferias;
-                $saldo_total = 0;
+                $saldo_total = 30 - $request->dias_ferias;
             }
 
             $controleFerias = ControleFerias::Create([
