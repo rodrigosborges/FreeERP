@@ -1,4 +1,4 @@
-@extends('protocolos::layouts.informacoes')
+@extends('protocolos::template')
 
 @section('title', 'Usuário')
 
@@ -8,21 +8,27 @@
         @if($data['model'])
             @method('PUT')
         @endif
-                 
+
         <div class="form-group mt-5">
-            <label for="apelido">Apelido</label>
+            <label for="nome">Nome completo:<span class="required-symbol">*</span></label>
+            <input required minlenght='3' id="nome" maxlenght='50' value="{{old('nome', isset($usuario) ? $usuario->nome : '')}}" class="form-control" type="text" name="nome">
+            {{$errors->first('nome')}}
+        </div>
+
+        <div class="form-group">
+            <label for="apelido">Apelido:<span class="required-symbol">*</span></label>
             <input required minlenght='3' id="apelido" maxlenght='50' value="{{old('apelido', isset($usuario) ? $usuario->apelido : '')}}" class="form-control" type="text" name="apelido">
             {{$errors->first('apelido')}}
         </div>
 
         <div class="form-group">
-            <label for="email">E-mail</label>
+            <label for="email">E-mail:<span class="required-symbol">*</span></label>
             <input required id='email' value="{{old('email', isset($usuario) ? $usuario->email : '')}}" class="form-control" type="email" name="email">
             {{$errors->first('email')}}
         </div>
 
         <div class="form-group">
-            <label for="nome" class="control-label">Setor de Criação: <span class="required-symbol">*</span></label>
+            <label for="nome" class="control-label">Setor do usuário: <span class="required-symbol">*</span></label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -40,13 +46,13 @@
 
         @if(!isset($usuario))
             <div class="form-group">
-            <label for="password">Senha</label>
+            <label for="password">Senha:<span class="required-symbol">*</span></label>
                 <input id='password' required class="form-control" type="password" name="password">
                 {{$errors->first('password')}}
             </div>
 
             <div class="form-group">
-                <label>Confirmar Senha</label>
+                <label>Confirmar Senha:<span class="required-symbol">*</span></label>
                 <input required class="form-control" type="password" name="repeat_password">
             </div>
         @endif

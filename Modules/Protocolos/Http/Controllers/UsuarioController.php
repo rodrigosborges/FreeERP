@@ -40,6 +40,7 @@ class UsuarioController extends Controller
         try{
             
             $usuario = Usuario::create([
+                'nome'      => $request->nome,
                 'apelido'   => $request->apelido,
                 'email'     => $request->email,
                 'setor_id'  => $request->usuario['setor_id'],

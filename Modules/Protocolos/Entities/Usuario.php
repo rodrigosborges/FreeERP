@@ -15,7 +15,7 @@ class Usuario extends Authenticatable
 
     protected $table = 'usuario';
 
-    protected $fillable = ['apelido', 'email', 'setor_id', 'password'];
+    protected $fillable = ['nome','apelido', 'email', 'setor_id', 'password'];
 
     public function setor(){
         return $this->belongsTo('Modules\Protocolos\Entities\Setor');

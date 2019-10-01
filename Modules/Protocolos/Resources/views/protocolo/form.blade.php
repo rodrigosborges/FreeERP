@@ -11,24 +11,26 @@
         @if($data['model'])
             @method('PUT')
         @endif
-        
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg">
+
                 <div class="form-group">
                     <label for="nome" class="control-label">Interessados: <span class="required-symbol">*</span></label>
-                        <div class="input-group">
-                       
-                            <input id="arrayInteressados" type="hidden" value="{{isset($interessado->id) ? $interessado->id : ''}}" name="interessados">
-                           
-                        <div id="interessados" class="interessados">
-
-                        </div>
+                    <div class="input-group">
+                        <input id="arrayInteressados" type="hidden" value="{{isset($interessado->id) ? $interessado->id : ''}}" name="interessados">
+                        <div id="interessados" class="interessados"></div>
                     </div>
                     <br>
                     <div class="input-group">
-                        <input id="pesquisa" class="form-control" type="text" name="pesquisa"/>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">search</i>
+                            </span>
+                        </div>
+                        <input id="pesquisa" placeholder="Pesquise aqui" class="form-control" type="text" name="pesquisa"/>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="nome" class="control-label">Tipo de Protocolo: <span class="required-symbol">*</span></label>
                     <div class="input-group">
