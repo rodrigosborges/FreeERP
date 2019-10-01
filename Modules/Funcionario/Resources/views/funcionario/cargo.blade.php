@@ -92,13 +92,16 @@
                 var startDt = startDt[2] + '-' + startDt[1] + '-' + startDt[0]
                 //data 2
                 var month = d.getMonth()+1;
-                var day = d.getFullYear();
-                var endDt = (day<10 ? '0' : '') + day + '-' +
+                var year = d.getFullYear();
+                var day = d.getDay()-1;
+
+                var endDt =  year + '-' +
                     (month<10 ? '0' : '') + month + '-' +
-                    d.getDate();
+                    (day<10 ? '0' : '')+day;
 
                 //comparação
-                if( (new Date(startDt).getTime() == new Date(endDt).getTime()) ){
+              
+                if( startDt == endDt ){
                     $(".sendForm").attr("disabled", false);
                     $(".errors").text("");
                 }else{
