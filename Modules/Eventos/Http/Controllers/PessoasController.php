@@ -6,22 +6,29 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Eventos\Entities\Evento;
+use Illuminate\Support\Facades\DB;
 
-class EventosController extends Controller
+
+class PessoasController extends Controller
 {
     /**
      * Display a listing of the resource.
      * @return Response
      */
-       
-    //EXIBE AS VIEWS
-    public function index(){
-        $eventos = Evento::all();
-        return view('eventos::index', ['eventos' => $eventos]);
+    public function index()
+    {
+        $eventos = Evento::orderBy('nome')->get(); //RETORNA OS EVENTOS ORDENADOS PELO NOME
+        $eventoId = null;
+        return view('eventos::pessoas', ['eventos' => $eventos, 'eventoId' => $eventoId]);
     }
     
-    public function eventos(){
-        return view('eventos::eventos');
+    function exibir(Request $request)
+    {
+        $eventoId = $request->input('eventoSelecionado');
+        $pessoasId = DB::table('evento_has_pessoa')->select('pessoa_id')->where('evento_id', $eventoId)->get(); //arrumar
+        $evento_pessoas = DB::table('pessoa')->where('id', $pessoasId)->get();
+        dd($pessoasId);
+        //return view('eventos::pessoas', ['eventoId' => $eventoId, 'evento_pessoas' => $evento_pessoas]);
     }
 
     /**

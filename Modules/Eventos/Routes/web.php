@@ -12,4 +12,5 @@
 */
 
 Route::get('/eventos', 'EventosController@index')->name('eventos.index');
-Route::get('/eventos/pessoas', 'EventosController@pessoas')->name('eventos.pessoas');
+Route::get('/eventos/pessoas', 'PessoasController@index')->name('eventos.pessoas');
+Route::post('/eventos/exibePessoas', 'PessoasController@exibir')->name('pessoas.exibir');

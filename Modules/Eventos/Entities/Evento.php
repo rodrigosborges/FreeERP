@@ -11,6 +11,11 @@ class Evento extends Model
     protected $table = 'evento'; //TABELA COM NOME DIVERGENTE DO DEFAULT
     public $timestamps = false; //NÃO VOU UTILIZAR TIMESTAMPS
     
+    public function pessoas()
+    {
+        return $this->belongsToMany(Pessoa::class);
+    }
+    
     public function programacao()
     {
         return $this->hasMany('Programacao');
