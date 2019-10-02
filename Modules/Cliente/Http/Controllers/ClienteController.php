@@ -93,9 +93,13 @@ class ClienteController extends Controller
         $tipo_telefone = TipoTelefone::all();
         $estados = Estado::all();
         $cliente = Cliente::FindOrFail($id);
-        return $cliente;
+        $telefones = $cliente->telefones;
         
-        return view('cliente::cliente.form', compact('tipo_cliente', 'tipo_telefone', 'estados'));
+        
+        
+        
+        
+        return view('cliente::cliente.form', compact('tipo_cliente', 'tipo_telefone', 'estados', 'cliente'));
     }
 
     public function update(CreateClienteRequest $request, $id){
