@@ -6,7 +6,7 @@ Cadastro de Compras - {{ $cliente->nome }}
 <div class="card">
   <div id="opcoes" class="card-header flex">
     <div class="row col-12">
-      <h3>Compras cliente {{ $cliente->nome }}</h3>
+      <h3>Lista de Pedidos - {{ $cliente->nome }}</h3>
     </div>
 
     <div class="row input-group justify-content-between">
@@ -70,12 +70,12 @@ Cadastro de Compras - {{ $cliente->nome }}
         <table class="table bordered text-center col-md-12" id="tablePedidos">
           <thead>
             <tr>
-              <th>Id_Compra</th>
-              <th>Num_Compra</th>
+
+              <th>Número</th>
               <th>Data</th>
-              <th>Vl Liquido itens</th>
-              <th>Vl Liquido Pedido</th>
-              <th>Desconto Pedido</th>
+              <th>Valor dos Itens</th>
+              <th>Valor do Pedido</th>
+              <th>Desconto do Pedido</th>
               <th>Opções</th>
               <th>Ver mais</th>
               <th>
@@ -98,29 +98,29 @@ Cadastro de Compras - {{ $cliente->nome }}
                   </div>
                   <div class="modal-body">
                     <ul class="list-group p-3">
-                      <li class="list-group-item active">
+                      <li class="list-group-item bg-light">
                         <div class="row">
-                          <div class="col">Nome</div>
+                          <div class="col">Produto</div>
                           <div class="col">Quantidade</div>
                           <div class="col">Preço Unitário</div>
                           <div class="col">Desconto</div>
-                          <div class="col">Valor Total</div>                        
+                          <div class="col">Valor Total</div>
                         </div>
                       </li>
 
                       @forelse ($pedido->vl_total_itens() as $item)
 
-                      <li class="list-group-item"> 
-                         <div class="row">
+                      <li class="list-group-item">
+                        <div class="row">
 
-                            <div class="col">{{ $item->nome }}</div>
-                            <div class="col">{{$item->quantidade}}</div>
-                            <div class="col">{{ "R$ ".number_format($item->preco, 2, ',', '.') }}</div>
-                            <div class="col">{{ $item->desconto." %"}}</div>
-                            <div class="col">{{ "R$ ".number_format($item->valor_total, 2, ',', '.')}}</div>
+                          <div class="col">{{ $item->nome }}</div>
+                          <div class="col">{{$item->quantidade}}</div>
+                          <div class="col">{{ "R$ ".number_format($item->preco, 2, ',', '.') }}</div>
+                          <div class="col">{{ $item->desconto." %"}}</div>
+                          <div class="col">{{ "R$ ".number_format($item->valor_total, 2, ',', '.')}}</div>
 
-                         </div>
-                        
+                        </div>
+
                       </li>
 
                       @empty
@@ -135,7 +135,7 @@ Cadastro de Compras - {{ $cliente->nome }}
             </div>
 
             <tr>
-              <th scope="row">{{$pedido->id}}</th>
+
               <td>{{$pedido->numero}}</td>
               <td name="dtPedido">{{ $pedido->data }}</td>
               <td>{{ "R$ ".number_format($pedido->vl_itens_desconto(), 2, ',', '.') }}</td>
@@ -158,7 +158,7 @@ Cadastro de Compras - {{ $cliente->nome }}
                 <button class="btn btn-sm btn-light" id="ocultar" type="button" data-toggle="modal"
                   data-target="#modal{{$pedido->id}}" aria-expanded="false" aria-controls="collapse{{$pedido->id}}">
                   <i class="material-icons">
-                    arrow_drop_down
+                    more_horiz
                   </i>
                 </button>
               </td>
@@ -194,11 +194,10 @@ Cadastro de Compras - {{ $cliente->nome }}
         <table class="table bordered text-center col-md-12">
           <thead>
             <tr>
-              <th>Id_Compra</th>
-              <th>Num_Compra</th>
+              <th>Número</th>
               <th>Data</th>
               <th>Valor Liquido</th>
-              <th>Desconto Aplicado</th>
+              <th>Desconto do Pedido</th>
               <th>Opções</th>
               <th>Ver mais</th>
               <th>
@@ -210,8 +209,58 @@ Cadastro de Compras - {{ $cliente->nome }}
           <tbody>
             {{-- Preenche apagados --}}
             @foreach ($pedidosApagados as $pedido)
+            <!-- Modal -->
+
+            <div class="modal fade" id="modalInativo{{$pedido->id}}" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Itens do pedido {{$pedido->numero}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <ul class="list-group p-3">
+                      <li class="list-group-item bg-light">
+                        <div class="row">
+                          <div class="col">Produto</div>
+                          <div class="col">Quantidade</div>
+                          <div class="col">Preço Unitário</div>
+                          <div class="col">Desconto</div>
+                          <div class="col">Valor Total</div>
+                        </div>
+                      </li>
+
+                      @forelse ($pedido->vl_total_itens() as $item)
+
+                      <li class="list-group-item">
+                        <div class="row">
+
+                          <div class="col">{{ $item->nome }}</div>
+                          <div class="col">{{$item->quantidade}}</div>
+                          <div class="col">{{ "R$ ".number_format($item->preco, 2, ',', '.') }}</div>
+                          <div class="col">{{ $item->desconto." %"}}</div>
+                          <div class="col">{{ "R$ ".number_format($item->valor_total, 2, ',', '.')}}</div>
+
+                        </div>
+
+                      </li>
+
+                      @empty
+                      <div class="pt-1 text-center">
+                        <h5>Compra sem item cadastrado</h5>
+                      </div>
+                      @endforelse
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <tr>
-              <th scope="row">{{$pedido->id}}</th>
               <td>{{$pedido->numero}}</td>
               <td name="dtPedido">{{ $pedido->data }}</td>
               <td>{{"R$ ".number_format($pedido->vl_total_pedido(), 2, ',', '.') }}</td>
@@ -228,10 +277,10 @@ Cadastro de Compras - {{ $cliente->nome }}
 
               <td>
                 {{-- Exibir mais --}}
-                <button id="ocultar" type="button" data-toggle="collapse" data-target="#collapse{{$pedido->id}}"
-                  aria-expanded="false" aria-controls="collapse{{$pedido->id}}">
+                <button class="btn btn-sm btn-light" id="ocultar" type="button" data-toggle="modal" data-target="#modalInativo{{$pedido->id}}"
+                  aria-expanded="false" aria-controls="modal{{$pedido->id}}">
                   <i class="material-icons">
-                    arrow_drop_down
+                    more_horiz
                   </i>
                 </button>
               </td>
@@ -239,38 +288,15 @@ Cadastro de Compras - {{ $cliente->nome }}
                 {{-- CheckBox individual --}}
                 <input type="checkbox" name="selRec" value="{{$pedido->id}}">
               </td>
+
             </tr>
+
             <tr>
               <td colspan="100%" style="height: 0px; padding: 0px; margin:0px;">
                 <div class="collapse" id="collapse{{$pedido->id}}">
                   <div class="row d-flex justify-content-between">
 
-                    @forelse ($pedido->vl_total_itens() as $item)
-                    <div class="col-6 pt-1">
-                      <table class="table table-responsive table-sm table-borderless">
-                        <thead>
-                          <th scope="col" class="table-light">Produto</th>
-                          <th scope="col" class="table-light">Quantidade</th>
-                          <th scope="col" class="table-light">Valor Item</th>
-                          <th scope="col" class="table-light">Desconto Item</th>
-                          <th scope="col" class="table-light">Total</th>
-
-                        </thead>
-                        <tbody>
-                          <td>{{ $item->nome }}</td>
-                          <td>{{$item->quantidade}}</td>
-                          <td>{{ "R$ ".number_format($item->preco, 2, ',', '.') }}</td>
-                          <td>{{ $item->desconto." %"}}</td>
-                          <td>{{ "R$ ".number_format($item->valor_total, 2, ',', '.')}}</td>
-                        </tbody>
-                      </table>
-
-                    </div>
-                    @empty
-                    <div class="col-6 pt-1">
-                      <h5>Compra sem itens cadastrados</h5>
-                    </div>
-                    @endforelse
+                   
                   </div>
                 </div>
               </td>
