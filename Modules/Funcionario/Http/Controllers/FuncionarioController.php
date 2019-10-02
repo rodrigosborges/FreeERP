@@ -215,25 +215,29 @@ class FuncionarioController extends Controller{
     public function edit($id){
 
         $funcionario = Funcionario::findOrFail($id);
+        if(count($funcionario->documento()->get()) > 6){
+            $documentos = $funcionario->documento()->get();
+        }else{
+            $documentos = null;
+        }
+        $cursos = Curso::where('funcionario_id','=',$id)->get();
 
-        $documentos = Documento::whereNotIn('tipo_documento_id', [1,2])->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$id)->where('relacao.tabela_origem','funcionario')->where('relacao.tabela_destino','documento')->select('documento.*')->get();
-        
         $data = [
             "url" 	 	        => url("funcionario/funcionario/$id"),
             "model"		        => $funcionario,
             'tipo_documentos'   => TipoDocumento::whereNotIn("id",[1,2])->get(),
-            'documentos'        => count($documentos) ? $documentos : [new Documento],
-            'dependentes'       => count($funcionario->dependentes) ? $funcionario->dependentes : [new Dependente],
+            'documentos'        => isset($documentos) ? $documentos : [new Documento],
+            'dependentes'       => isset($funcionario->dependentes) ? $funcionario->dependentes : [new Dependente],
             'parentescos'       => Parentesco::all(),
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
-            'telefones'         => $funcionario->telefones(),
+            'telefones'         => $funcionario->telefone(),
             'estados'           => Estado::all(),
             'cargos'            => Cargo::all(),
             'title'		        => "Atualizar Funcionário",
-			"button" 	        => "Atualizar",
+            "button" 	        => "Atualizar",
+            'cursos'            =>  isset($cursos) ? $cursos : [new Curso]
         ];
-
 	    return view('funcionario::funcionario.form', compact('data'));
     }
 
