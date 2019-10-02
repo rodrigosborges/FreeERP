@@ -56,17 +56,14 @@ class FeriasController extends Controller
             
             //Esta linha verifica se já há algum registro na tabela controle_ferias.
             $verificarRegistroTabela = DB::table('controle_ferias')->where('funcionario_id', '=', $request['funcionario_id'])->count();
-
             
             if($verificarRegistroTabela > 0){ // esse if verifica caso haja pelo menos uma férias cadastrada
                 
                 $saldo_periodo = $request['saldo_periodo'];
                 $saldo_periodo -= $request->dias_ferias;
-
-            //Senão, ele subtrai os dias inseridos por 30, pois a cada periodo aquisitivo o funcionário tem direito a 30 dias.     
+    
             } else {
-                $saldo_periodo = 30 - $request->dias_ferias;
-             
+                $saldo_periodo = $request->saldo_periodo - $request->dias_ferias;
             }
 
             $controleFerias = ControleFerias::Create([

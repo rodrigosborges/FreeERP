@@ -44,7 +44,7 @@ $('#form').validate({
             minlength: 8,
         },
         "documentos[serie_ctps][numero]":{
-            minlength: 11111,
+            minlength: 5,
         },
         "cursos[][area_atuacao]":{
             letras: true,

@@ -83,17 +83,13 @@
             </div>
 
             <div class="form-group col-3">
-                <label for="saldo_total">Férias a marcar</label>
+                <label for="saldo_total">Saldo total</label>
                 <input type="text"  id="saldo_periodo" class="form-control" value="{{$data['saldo_periodo']}}" disabled>
                 <input type="text" hidden name="saldo_periodo" value="{{$data['saldo_periodo']}}" >
             </div>
         </div>
 
-        <div class="row">
-            
-
-        </div>
-
+        
         <div class="row">
             <div class="form-check col-12">
                 <label for="pagamento_parcela13">Pagamento 1ª Parcela 13º:&nbsp</label>
