@@ -40,31 +40,42 @@ class PedidoController extends Controller
     {
         $valores = $request->all();
         $valores["cliente_id"] = $id_cliente;
-        $pedido = Pedido::create($valores);
+
+
+        return back()->withInput();
         
+        $pedido = Pedido::create($valores);
         DB::beginTransaction();
         try{
             $produtos = $request->input('produtos');
+
             $dados = [];
 
             foreach($produtos as $produto){
-                $dados[$produto['produto_id']] = [
+                if(array_key_exists($produto['produto_id'], $dados)){
+                    $dados[$produto['produto_id']]['quantidade'] += $produto['quantidade'];
+                }else {
+                    $dados[$produto['produto_id']] = [
                         'quantidade' => $produto['quantidade'], 
                         'desconto' => $produto['desconto']
                     ];
                 }
+                
+            }
+            $pedido->produtos()->sync($dados);
 
-                $pedido->produtos()->sync($dados);
 
             DB::commit();
-            return back()->with('sucess','Pedido Salvo');
-        } catch (\Exception $e){
-            DB::rollback();
-            return back()->with('error', $e);
-        }
-        $pedido->produtos()->sync($dados);
 
-        return back()->with('sucess','Pedido Salvo');
+            return redirect('cliente/'.$id_cliente.'/pedido')->with('success','Pedido Salvo!');
+        
+        } catch (\Exception $e){
+
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor!');
+        }
+
+       
     }
 
     
@@ -98,7 +109,8 @@ class PedidoController extends Controller
 
             $pedido->produtos()->sync($dados);
             DB::commit();
-            return back()->with('sucess', 'Pedido editado');
+           
+            return redirect('cliente/'.$pedido->cliente->id.'/pedido')->with('success', 'Pedido editado');
         } catch (\Exception $e){
             DB::rollback();
             return back()->with('error', 'Ocorreu um erro ao salvar');

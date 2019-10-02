@@ -41,6 +41,7 @@ class ClienteController extends Controller
         DB::beginTransaction();
         try {
             $dados = $request->all();
+            
 
             $dados['documento']['documento'] = preg_replace('/\D/', '', $dados['documento']['documento']);
 
