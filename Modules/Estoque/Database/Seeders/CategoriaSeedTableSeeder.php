@@ -4,6 +4,8 @@ namespace Modules\Estoque\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
 class CategoriaSeedTableSeeder extends Seeder{
     public function run()
     {
