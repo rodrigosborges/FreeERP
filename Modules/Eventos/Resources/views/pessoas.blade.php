@@ -8,7 +8,7 @@
         @if(empty($eventoId))
         <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
             <h1 style="text-align: center;">Pessoas</h1>
-            <form method="post" action="/eventos/exibePessoas"  >
+            <form method="post" action="/eventos/exibePessoas">
                 {{ csrf_field() }}
                 <div class="form-group" style="margin-top: 25px;">
                     <label for="exampleFormControlSelect1">Selecione o evento</label>
@@ -22,29 +22,42 @@
             </form>  
         </div>
         
+        <!-- Evento selecionado-->
         @else
-        <h1 style="text-align: center;">Pessoas</h1>
-        <table id="pessoas" class="table table-striped">
-            <thead>
-                <tr>
-                    <th class="text-center">Nome</th>
-                    <th class="text-center">E-mail</th>
-                    <th class="text-center">Telefone</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($evento_pessoas as $evento_pessoa)
+        <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12">
+            <h1 style="text-align: center;">Pessoas</h1>
+        </div>
+        <div class="col-xm-6 col-sm-6 col-md-6 col-lg-6">
+            <h3>{{$eventoNome->nome}}</h3>
+        </div>
+        <div class="col-xm-6 col-sm-6 col-md-6 col-lg-6" align="right">
+            <button type="button" class="btn btn-success">Adicionar</button>
+        </div>
+        <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px;">
+            <table id="pessoas" class="table table-striped">
+                <thead>
                     <tr>
-                        <td class="text-center">{{$evento_pessoa->nome}}</td>
-                        <td class="text-center">{{$evento_pessoa->email}}</td>
-                        <td class="text-center">{{$evento_pessoa->telefone}}</td>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">E-mail</th>
+                        <th class="text-center">Telefone</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($evento_pessoas as $evento_pessoa)
+                        <tr>
+                            <td class="text-center">{{$evento_pessoa->nome}}</td>
+                            <td class="text-center">{{$evento_pessoa->email}}</td>
+                            <td class="text-center">{{$evento_pessoa->telefone}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         @endif
     </div>
-    	
+@endsection
+
+@section('js')
     <script>
         $(document).ready(function(){
             $('#pessoas').DataTable({
@@ -53,9 +66,17 @@
                     "zeroRecords": "Nada encontrado",
                     "info": "Mostrando página _PAGE_ de _PAGES_",
                     "infoEmpty": "Nenhum registro disponível",
-                    "infoFiltered": "(filtrado de _MAX_ registros no total)"
+                    "infoFiltered": "(filtrado de _MAX_ registros no total)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primeira",
+                        "last":  "Última",
+                        "next":  "Próxima",
+                        "previous": "Anterior"
+                    },
                 }
             });
         });
     </script>
+
 @endsection

@@ -25,10 +25,18 @@ class PessoasController extends Controller
     function exibir(Request $request)
     {
         $eventoId = $request->input('eventoSelecionado');
-        $pessoasId = DB::table('evento_has_pessoa')->select('pessoa_id')->where('evento_id', $eventoId)->get(); //arrumar
-        $evento_pessoas = DB::table('pessoa')->where('id', $pessoasId)->get();
-        dd($pessoasId);
-        //return view('eventos::pessoas', ['eventoId' => $eventoId, 'evento_pessoas' => $evento_pessoas]);
+        $eventoNome = DB::table('evento')
+            ->select('evento.nome')
+            ->where('id', $eventoId)
+            ->first();
+        //dd($eventoNome);
+        //VARIÁVEL QUE ARMAZENA TODAS AS PESSOAS PARTICIPANTES DO EVENTO SELECIONADO
+        $evento_pessoas = DB::table('pessoa')
+            ->join('evento_has_pessoa', 'evento_has_pessoa.pessoa_id', 'pessoa.id')
+            ->select('pessoa.*', 'evento_has_pessoa.evento_id')
+            ->where('evento_has_pessoa.evento_id', $eventoId)
+            ->get(); 
+        return view('eventos::pessoas', ['eventoId' => $eventoId, 'eventoNome' => $eventoNome, 'evento_pessoas' => $evento_pessoas]);
     }
 
     /**
