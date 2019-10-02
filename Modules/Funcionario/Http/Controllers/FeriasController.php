@@ -146,6 +146,7 @@ class FeriasController extends Controller
      * @return Response
      */
     public function edit($id) {
+        
         $funcionario = funcionario::findorFail($id);   
         $ferias = $funcionario->ferias->last();
        

@@ -26,7 +26,11 @@
     
   </tbody>
 </table>
-<a href="{{url('funcionario/ferias')}}">Voltar</a>
+@section('footer')
+    <div class="text-right">
+    <a class="btn btn-success" href="{{url('funcionario/ferias')}}">Voltar</a>
+    </div>
+@endsection
 @endsection
 
 @section('script')

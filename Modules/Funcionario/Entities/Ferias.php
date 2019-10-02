@@ -9,7 +9,7 @@ class Ferias extends Model
 {
     protected $table = 'ferias';
 
-    protected $fillable = ['data_inicio','data_fim','dias_ferias','data_pagamento','data_aviso','pagamento_parcela13','observacao', 'funcionario_id', 'controle_ferias_id'];
+    protected $fillable = ['data_inicio','data_fim','dias_ferias','data_pagamento','data_aviso','pagamento_parcela13','observacao', 'funcionario_id', 'controle_ferias_id','created_at'];
 
     public function controleFerias() {
         return $this->belongsTo('Modules\Funcionario\Entities\ControleFerias');
