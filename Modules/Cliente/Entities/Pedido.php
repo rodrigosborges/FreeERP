@@ -15,7 +15,8 @@ class Pedido extends Model
     protected $fillable = ['numero','desconto','data','cliente_id'];
 
     public function setDataAttribute($val){
-        $this->attributes["data"]= date("Y-m-d",strtotime($val));
+        $date = \DateTime::createFromFormat('d/m/Y', $val);
+        $this->attributes["data"]= $date->format('Y-m-d');
     }
 
     public function getDataAttribute(){

@@ -36,8 +36,7 @@ class PedidoController extends Controller
     }
 
     //Salvar Pedido
-    public function store(CreatePedidoRequest $request, $id_cliente)
-    {
+    public function store(CreatePedidoRequest $request, $id_cliente) {
         $valores = $request->all();
         $valores["cliente_id"] = $id_cliente;
 
@@ -50,7 +49,6 @@ class PedidoController extends Controller
             $produtos = $request->input('produtos');
 
             $dados = [];
-
             foreach($produtos as $produto){
                 if(array_key_exists($produto['produto_id'], $dados)){
                     $dados[$produto['produto_id']]['quantidade'] += $produto['quantidade'];

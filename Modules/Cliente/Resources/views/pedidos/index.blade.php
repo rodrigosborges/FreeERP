@@ -144,7 +144,7 @@
               <td>
                 <div class="flex row justify-content-around">
                   {{-- Editar pedido --}}
-                  <a href="{{url("/cliente/pedido/".$pedido->id )}}" class="btn btn-sm btn-warning"
+                  <a href="{{ url( "/cliente/pedido/".$pedido->id )}}" class="btn btn-sm btn-warning"
                     name="edit">Editar</button>
                   </a>
                   {{-- BOTAO PARA EXCLUSAO DO ITEM INDIVIDUALMENTE --}}
@@ -321,7 +321,7 @@
   function deletarSelecionados(selecionados, tipo) {
     console.log(selecionados);
     $.ajax({
-      url: "/cliente/pedido/",
+      url: main_url+"/cliente/pedido/",
       type: 'POST',
 
       data: { ids: selecionados, _method: "delete", '_token': $('input[name=_token]').val(), tipo: tipo }
