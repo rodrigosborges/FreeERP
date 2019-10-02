@@ -10,29 +10,51 @@
             <img class="img-fluid" src="{{ URL::to('/') }}/img/user-img.jpg" style="height:150px">
         </div>
         <div class="col-lg-10 change-class-10">
-            <div class="row">
+            <div class="row d-flex justify-content-center"><span class="h2">{{$data["funcionario"]->nome}}</span></div>
+            <hr>
+            <div class="row">{{$data["funcionario"]}}</div>
+
+           <div class="row">
                 <div class="col">
-                    <span class="h2">{{$funcionario->nome}}</span><br><hr class="mt-2">
-                    <span><b>Data de Nascimento:</b> {{$funcionario->data_nascimento}}</span><br>
-                    <span><b>Sexo:</b> {{$funcionario->sexo == 1 ? 'Masculino' : 'Feminino'}}</span><br> 
-                    <span><b>Estado Civil:</b> {{$funcionario->estado_civil->nome}}</span><br>
-                    <span><b>Data Admissão:</b> {{$funcionario->data_admissao}}</span><br>
+                    <span><b>Cargo:</b> {</span><br>
+                    <span><b>Data Admissão:</b> {{$data["funcionario"]->data_admissao}}</span><br>
+                    <span><b>Data de Nascimento:</b> {{$data["funcionario"]->data_nascimento}}</span><br>
+                </div>
+                <div class="col">
+                    <span><b>Sexo:</b> {{$data["funcionario"]->sexo == 1 ? 'Masculino' : 'Feminino'}}</span><br> 
+                    <span><b>Estado Civil:</b> {{$data["funcionario"]->estado_civil->nome}}</span><br>
                 </div>
             </div>              
         </div>
     </div>
     <hr>
-    <h4 class="d-flex align-items-end mb-4"><i class="material-icons mr-2">contact_phone </i> Contatos</h4>
+    <h4 class=" text-center mb-4"><!--<i class="material-icons mr-2">contact_phone </i> -->Contatos</h4>
     <div class="row">
         <div class="col-sm">
             <div class="row">
-                @foreach($funcionario->telefone as $telefone)    
+                @foreach($data["funcionario"]->telefone as $telefone)    
                     <div class="col">
                         <span class="titulo_cargo">Telefone:</span> {{$telefone->numero}}
                     </div>
                 @endforeach
                 <div class="col">
-                    <span class="titulo_cargo">Email:{{$funcionario->email->email}}</span>
+                    <span class="titulo_cargo">Email:{{$data["funcionario"]->email->email}}</span>
+                </div>
+            </div>      
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <div class="row">
+            @foreach($data["funcionario"]->documento()->first()->get() as $doc)
+              
+                {{$doc->numero}} {{$doc->tipo_documento_id}}
+            
+            @endforeach
+                        
+
+                <div class="col">
+                    <span class="titulo_cargo">Email:{{$data["funcionario"]->email->email}}</span>
                 </div>
             </div>      
         </div>
