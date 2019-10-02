@@ -91,11 +91,6 @@
 
         <div class="row">
             
-            <div class="form-group col-3">
-                <label for="saldo_total">Férias excedentes</label>
-                <input type="text" id="saldo_total" class="form-control" value="{{$data['saldo_total']}}" disabled>
-                <input type="text" hidden name="saldo_total" value="{{$data['saldo_total']}}" >
-            </div>
 
         </div>
 
