@@ -471,9 +471,11 @@ class FuncionarioController extends Controller{
 
     public function ficha($id){
         
-        $funcionario = Funcionario::findOrFail($id);
-
-        return view('funcionario::funcionario.ficha', compact('funcionario'));
+        $data = [
+            'funcionario' => Funcionario::findOrFail($id),
+            'doc' => TipoDocumento::all()
+        ];
+        return view('funcionario::funcionario.ficha', compact('data'));
     }
 
     public function getCidades($uf) {
