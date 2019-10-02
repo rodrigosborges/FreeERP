@@ -111,13 +111,15 @@
                 <label for="observacao">Observação:</label>
                 <textarea rows="5" name="observacao" id="observacao" class="form-control"></textarea>
             </div>
-        <div>
-
-        <button type="submit"  class="btn btn-success ">Salvar</button>
-        
-        
-    </form>
+        <div>      
+   
     </section>
+    @section('footer')
+    <div class="text-right">
+    <button type="submit"  class="btn btn-success ">Salvar</button>
+    </div>
+    </form>
+@endsection
 
 @endsection
             
