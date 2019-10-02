@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UnidadeProduto extends Migration
+class Estoque extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class UnidadeProduto extends Migration
      */
     public function up()
     {
-        Schema::create('unidade_produto', function (Blueprint $table) {
+        Schema::create('estoque', function(Blueprint $table){
             $table->bigIncrements('id');
-            $table->string('tipo', 45);
-            $table->timestamps();
+            $table->integer('quantidade');
+            $table->integer('tipo_unidade_id')->unsigned()->index('fk_tipo_unidade');
+            $table->integer('quantidade_notificacao')->nullable();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -28,6 +30,6 @@ class UnidadeProduto extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unidade_produto');
+        //
     }
 }

@@ -31,6 +31,6 @@ class Fornecedor extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('fornecedor');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Tipo extends Migration
+class Categoria extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Tipo extends Migration
      */
     public function up()
     {
-        Schema::create('tipo', function (Blueprint $table) {
+        Schema::create('categoria', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
             $table->softDeletes();
@@ -28,6 +28,6 @@ class Tipo extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo');
+        Schema::dropIfExists('categoria');
     }
 }

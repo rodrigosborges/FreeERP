@@ -17,10 +17,10 @@ class Produto extends Migration
             $table->bigIncrements('id');
             $table->string('nome', 45);
             $table->string('descricao', 300);
-            $table->integer('tipo_id')->unsigned()->index('fk_produtos_tipo');
+            $table->integer('categoria_id')->unsigned()->index('fk_produtos_categoria');
             $table->decimal('preco', 12, 2);
-            $table->integer('unidade_id')->unsgined()->index('fk_produtos_unidade');
-            $table->integer('codigo');
+            $table->integer('unidade_id')->unsigned()->index('fk_produtos_unidade');
+            $table->string('codigo', 13);
             $table->timestamps();
             $table->softDeletes();
         });
