@@ -122,7 +122,7 @@
                 locale: 'pt-br',
                 useCurrent: false,
                 date: localStorage.getItem('cal-data')
-            }, localStorage.setItem('cal-data', moment().toISOString()));
+            }, localStorage.setItem('cal-data', moment().format('DD/MM/YYYY')));
 
             $("#eventoDataInicio").on("change.datetimepicker", function (e) {
                 $('#eventoDataFim').datetimepicker('date', e.date);
@@ -157,7 +157,6 @@
                 $('#eventoDataInicio').datetimepicker('date', moment(evento.data_inicio).format(formato_data));
                 $('#eventoDataFim').datetimepicker('format', formato_input);
                 $('#eventoDataFim').datetimepicker('date', moment(evento.data_fim).format(formato_data));
-
             }
         });
     </script>

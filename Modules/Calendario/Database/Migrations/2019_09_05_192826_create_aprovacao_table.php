@@ -15,7 +15,9 @@ class CreateAprovacaoTable extends Migration
     {
         Schema::create('aprovacao', function (Blueprint $table) {
             $table->bigIncrements('id');
-
+            $table->unsignedBigInteger('compartilhamento_id')->unique();
+            $table->unsignedBigInteger('funcionario_id');
+            $table->foreign('compartilhamento_id')->references('id')->on('compartilhamento')->onDelete('cascade');
             $table->timestamps();
         });
     }

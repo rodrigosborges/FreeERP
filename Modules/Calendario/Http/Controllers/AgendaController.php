@@ -5,6 +5,7 @@ namespace Modules\Calendario\Http\Controllers;
 use Illuminate\Database\QueryException;
 use Illuminate\Routing\Controller;
 use Modules\Calendario\Entities\Agenda;
+use Modules\Calendario\Entities\Aprovacao;
 use Modules\Calendario\Entities\Compartilhamento;
 use Modules\Calendario\Entities\Setor;
 use Modules\Calendario\Entities\Cor;
@@ -33,6 +34,7 @@ class AgendaController extends Controller
                 foreach ($request->agendaCompartilhamento as $setor_id) {
                     $compartilhamento = new Compartilhamento();
                     $compartilhamento->setor()->associate(Setor::find($setor_id));
+                    $compartilhamento->funcionario_id = 1;
                     $agenda->compartilhamentos()->save($compartilhamento);
                 }
             }
@@ -54,7 +56,8 @@ class AgendaController extends Controller
                 foreach ($request->agendaCompartilhamento as $setor_id) {
                     $compartilhamentos[] = Compartilhamento::firstOrCreate([
                         'setor_id' => $setor_id,
-                        'agenda_id' => $agenda->id
+                        'agenda_id' => $agenda->id,
+                        'funcionario_id' => 1
                     ]);
                 }
             }
@@ -97,12 +100,13 @@ class AgendaController extends Controller
     }
 
     public function aprovarCompartilhamento(Compartilhamento $compartilhamento){
-        $compartilhamento->aprovado = true;
-        $compartilhamento->save();
+        $aprovacao = new Aprovacao();
+        $aprovacao->funcionario_id = 1;
+        $compartilhamento->aprovacao()->save($aprovacao);
     }
 
     public function eventos(Agenda $agenda)
     {
-        return view('calendario::eventos.index', ['eventos' => $agenda->eventos, 'agenda' => $agenda->titulo]);
+        return view('calendario::eventos.index', ['eventos' => $agenda->eventos, 'agenda' => $agenda]);
     }
 }

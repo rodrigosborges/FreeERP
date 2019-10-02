@@ -56,7 +56,7 @@
                         @if($agenda->compartilhamentos->count())
                             @foreach($agenda->compartilhamentos as $compartilhamento)
                                 {{$compartilhamento->setor->sigla}}
-                                @if(!$compartilhamento->aprovado)
+                                @if(!$compartilhamento->aprovacao)
                                     <i class="material-icons align-middle" style="font-size: 18px" title="Pendente de aprovação">info</i>
                                 @endif
                                 @if (!$loop->last)
@@ -103,6 +103,15 @@
             </tbody>
         </table>
     </div>
+@endsection
+
+@section('css')
+    @parent
+    <style type="text/css">
+        .acoes form{
+            display: inline;
+        }
+    </style>
 @endsection
 
 @section('js')

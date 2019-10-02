@@ -5,12 +5,12 @@
 @section('content')
     @parent
     <div class="container">
-        <h2>{{$agenda}} > Eventos</h2>
+        <h2>{{$agenda->titulo}} > Eventos</h2>
         <div class="controles clearfix">
             <div class="float-right">
             </div>
             <div class="float-left">
-                <a class="btn btn-primary btn-sm novo" href="{{route('eventos.criar')}}" data-toogle="tooltip" title="Novo evento">
+                <a class="btn btn-primary btn-sm novo" href="{{route('eventos.criar', ['agenda' => $agenda->id])}}" data-toogle="tooltip" title="Novo evento">
                     <i class="material-icons">add</i>
                 </a>
             </div>
@@ -38,7 +38,7 @@
                         </td>
                     @endif
                     <td>@if($evento->nota){{$evento->nota}}@else --- @endif</td>
-                    <td>
+                    <td class="acoes">
                         <form method="POST" action="{{route('eventos.deletar', $evento->id)}}" id="formEvDel">
                             @method('DELETE')
                             @csrf
@@ -56,6 +56,15 @@
             </tbody>
         </table>
     </div>
+@endsection
+
+@section('css')
+    @parent
+    <style type="text/css">
+        .acoes form{
+            display: inline;
+        }
+    </style>
 @endsection
 
 @section('js')

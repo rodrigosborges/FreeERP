@@ -26,7 +26,7 @@ class CalendarioController extends Controller
         $solicitacoes = [];
         foreach ($agendas as $agenda){
             foreach ($agenda->compartilhamentos as $compartilhamento){
-                if(!$compartilhamento->aprovado){
+                if(!$compartilhamento->aprovacao){
                     $solicitacoes[] = $compartilhamento;
                 }
             }
