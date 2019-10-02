@@ -14,8 +14,7 @@ class EstoqueDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
-
+  
         
         $this->call([
             CategoriaSeedTableSeeder::class,    
