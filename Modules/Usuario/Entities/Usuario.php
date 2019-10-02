@@ -2,6 +2,8 @@
 
 namespace Modules\Usuario\Entities;
 
+use Modules\Usuario\Entities\Papel;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -18,5 +20,13 @@ class Usuario extends Authenticatable{
 
     public function papel(){
         return $this->belongsTo('Modules\Usuario\Entities\Papel');
+    }
+
+    public function temAcesso(array $permissoes){
+        $papel = Papel::find($this->papel);
+        if($papel->temAcesso($permissoes)){
+            return true;
+        }
+        return false;
     }
 }

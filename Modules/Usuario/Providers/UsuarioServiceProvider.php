@@ -2,11 +2,18 @@
 
 namespace Modules\Usuario\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
 class UsuarioServiceProvider extends ServiceProvider
 {
+    
+    protected $policies = [
+        'App\Model' => 'App\Policies\ModelPolicy',
+    ];
+
+    
     /**
      * Boot the application events.
      *
@@ -14,11 +21,40 @@ class UsuarioServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerPolicies();
+        //$this->registrarPoliticas();
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+    }
+
+
+    /**
+     * Criar politicas para cada uma das rotas por módulo, por exemplo:
+     * Permissoes{
+     *      Usuario{
+     *           Papel{...},
+     *           Usuario{
+     *              trocar-senha : true,
+     *              cadastrar : true,
+     *              listar : true,
+     *              atualizar : true,
+     *              deletar : true,
+     *              restaurar : true,
+     *           },
+     *           Modulo{...},
+     *      },
+     *      Cliente{...},
+     * }
+     */
+
+    public function registrarPoliticas(){
+        Gate::define('create-post', function($usuario){
+            $usuario->temAcesso(['create-post']);
+            return true;
+        });
     }
 
     /**

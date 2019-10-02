@@ -17,6 +17,9 @@ class UsuarioDatabaseSeeder extends Seeder{
         try{
             DB::table('papel')->insert([
                 'nome' => 'admin',
+                'permissoes' => json_encode([
+                    'create-post' => true,
+                ]),
             ]);
         }catch(\Exception $e){}
         
