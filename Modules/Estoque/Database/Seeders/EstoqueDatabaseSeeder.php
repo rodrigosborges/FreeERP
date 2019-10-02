@@ -19,6 +19,8 @@ class EstoqueDatabaseSeeder extends Seeder
         $this->call([
             CategoriaSeedTableSeeder::class,    
             ProdutoSeedTableSeeder::class,
+            TipoUnidadeSeedTableSeeder::class,
+            EstoqueSeedTableSeeder::class,
         ]);
     }
 }
