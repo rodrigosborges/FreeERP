@@ -187,7 +187,7 @@ class ControleFeriasController extends Controller
                 $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 11 meses
 
                 $saldo_periodo = 30;
-                $saldo_total = 30;
+                
 
             } else { //Else não finalizado;
                 $ano_atual = '2020'; // Essa data é simulada para teste; date('Y', time());
@@ -205,12 +205,11 @@ class ControleFeriasController extends Controller
                 $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 11 meses
 
                 $saldo_periodo = 30;
-                $saldo_total = 30;
             }
              
         } else {
         
-            $data_atual = Carbon::today(); //'2020-9-30'; Data que o sistema está sendo acessado
+            $data_atual =  '2020-11-29'; //Carbon::today(); Data que o sistema está sendo acessado
             $data_atual = Carbon::parse($data_atual)->format('Y-m-d');
             $ultimo_periodo_aquisitivo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->fim_periodo_aquisitivo;
             
@@ -222,11 +221,42 @@ class ControleFeriasController extends Controller
 
                 $limite_periodo_aquisitivo = $fim_periodo_aquisitivo;
                 $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
-                $limite_periodo_aquisitivo->add(new DateInterval('P330D')); // Essa linha adiciona 330 dias(11 meses)
+                $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 330 dias(11 meses)
 
                 $saldo_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
-                $saldo_total = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_total;
+                
 
+            } else {
+                $ano_atual = '2020'; //date('Y', time());
+                $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
+                $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
+
+                $anos_trampo = (($ano_atual-$ano))*728;
+                $anos_trampo_inicio = ($anos_trampo - 364) +1;
+
+                $fim_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
+                $inicio_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo_inicio days", strtotime($admissao)));
+                
+                $limite_periodo_aquisitivo = $fim_periodo_aquisitivo;
+                $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
+                $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 330 dias(11 meses)
+
+                $saldo_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
+
+                $data_inicial = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->fim_periodo_aquisitivo; // armazena o fim do periodo em questão 
+                
+                $data_final = $data_atual; //Dia que o usuário está usando o software. Essa data é simulada para testes.
+                
+                $diferenca = strtotime($data_final) - strtotime($data_inicial);
+                
+                //Calcula a diferença em dias
+                $dias = floor($diferenca / (60 * 60 * 24));
+                $meses = floor($dias/30);
+                
+                $saldo_periodo += $meses * 2.5;
+                
+
+                
             }
              
         }
@@ -242,7 +272,6 @@ class ControleFeriasController extends Controller
             'fim_periodo_aquisitivo'    => $fim_periodo_aquisitivo,
             'limite_periodo_aquisitivo' => $limite_periodo_aquisitivo->format('d/m/Y'),
             'saldo_periodo'             => $saldo_periodo,
-            'saldo_total'               => $saldo_total
         ];
        
         return view('funcionario::ferias.formulario', compact('data'));

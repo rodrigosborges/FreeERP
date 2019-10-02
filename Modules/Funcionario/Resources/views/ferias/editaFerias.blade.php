@@ -71,18 +71,18 @@
             </div>
         </div>
         
-        <div class="text-right">
-            <button type="submit"  class="btn btn-success d-flex justify-content-start ">Salvar</button>
-        </div> 
-    </form>
+       
+   
     </section>
 
 @endsection
 
 @section('footer')
-    
+<div class="text-right d-flex justify-content-end">
+            <button type="submit"  class="btn btn-success">Salvar</button>
+        </div> 
 @endsection
-
+</form>
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="{{Module::asset('funcionario:js/helpers.js')}}"></script>

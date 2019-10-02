@@ -91,11 +91,6 @@
 
         <div class="row">
             
-            <div class="form-group col-3">
-                <label for="saldo_total">Férias excedentes</label>
-                <input type="text" id="saldo_total" class="form-control" value="{{$data['saldo_total']}}" disabled>
-                <input type="text" hidden name="saldo_total" value="{{$data['saldo_total']}}" >
-            </div>
 
         </div>
 
@@ -111,13 +106,15 @@
                 <label for="observacao">Observação:</label>
                 <textarea rows="5" name="observacao" id="observacao" class="form-control"></textarea>
             </div>
-        <div>
-
-        <button type="submit"  class="btn btn-success ">Salvar</button>
-        
-        
-    </form>
+        <div>      
+   
     </section>
+    @section('footer')
+    <div class="text-right">
+    <button type="submit"  class="btn btn-success ">Salvar</button>
+    </div>
+    </form>
+@endsection
 
 @endsection
             

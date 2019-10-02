@@ -60,43 +60,19 @@ class FeriasController extends Controller
             
             if($verificarRegistroTabela > 0){ // esse if verifica caso haja pelo menos uma férias cadastrada
                 
-                $ultimo_periodo_aquisitivo = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->fim_periodo_aquisitivo;
-
-                if($ultimo_periodo_aquisitivo == $fim_periodo_aquisitivo){ //Se está no mesmo período.
-                    $saldo_periodo = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_periodo;
-                    $saldo_total = ControleFerias::where('funcionario_id', '=', $request['funcionario_id'])->get()->last()->saldo_total;
-                    
-                    $saldo_periodo = $saldo_periodo - $request->dias_ferias;
-                    $saldo_total = $saldo_total - $request->dias_ferias;
-
-                } else { //aqui vc modifica o saldo_total - novo período
-                   
-                   /*$saldo_total_input = $request['saldo_total'];
-                   $dias_ferias = $request['dias_ferias'];
-                   $saldo_periodo = $request['saldo_periodo'];
-                 
-                   if($saldo_total_input > 0){
-                       $dias_ferias -= $saldo_total_input;
-                       $saldo_total = 0;
-                       $saldo_periodo = $saldo_periodo - $dias_ferias;  
-
-                   } else {
-                       $saldo_periodo = $saldo_periodo - $dias_ferias;
-                       $saldo_total = 0;
-                   }*/
-                } 
+                $saldo_periodo = $request['saldo_periodo'];
+                $saldo_periodo -= $request->dias_ferias;
 
             //Senão, ele subtrai os dias inseridos por 30, pois a cada periodo aquisitivo o funcionário tem direito a 30 dias.     
             } else {
                 $saldo_periodo = 30 - $request->dias_ferias;
-                $saldo_total = 30 - $request->dias_ferias;
+             
             }
 
             $controleFerias = ControleFerias::Create([
                 'inicio_periodo_aquisitivo'  => $inicio_periodo_aquisitivo->format('Y-m-d'),
                 'fim_periodo_aquisitivo'     => $fim_periodo_aquisitivo,
                 'limite_periodo_aquisitivo'  => $limite_periodo_aquisitivo->format('Y-m-d'),
-                'saldo_total'                => $saldo_total,
                 'saldo_periodo'              => $saldo_periodo,
                 'funcionario_id'             => $request['funcionario_id']
             ]);
@@ -170,6 +146,7 @@ class FeriasController extends Controller
      * @return Response
      */
     public function edit($id) {
+        
         $funcionario = funcionario::findorFail($id);   
         $ferias = $funcionario->ferias->last();
        

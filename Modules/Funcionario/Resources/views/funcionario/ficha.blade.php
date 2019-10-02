@@ -60,6 +60,7 @@
         </div>
     </div>
     <hr>
+</div>
     @endsection
 
 @section('js')
