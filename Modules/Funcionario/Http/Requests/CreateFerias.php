@@ -28,7 +28,9 @@ class CreateFerias extends FormRequest
             'dias_ferias'     => 'required|numeric|max:30',
             'data_pagamento'  => 'required|date',
             'data_aviso'      => 'required|date',
-            'observacao'      => 'nullable'
+            'observacao'      => 'nullable',
+            'data_pagamento'  => 'required|date|before:data_inicio',
+            'data_aviso'      => 'required|date|before:data_inicio'
         ];
     }
 }

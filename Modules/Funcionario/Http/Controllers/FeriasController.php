@@ -41,7 +41,7 @@ class FeriasController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CreateFerias $request)
     {
         DB::beginTransaction();
 
