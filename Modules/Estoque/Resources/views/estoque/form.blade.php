@@ -56,7 +56,7 @@
         </div>
 
         <div class="form-group col-4">
-            <label for="quantidade_notificacao">Notificar estoque baixo</label>
+            <label for="quantidade_notificacao">Notificar estoque abaixo de:</label>
             <input type="number" class="form-control" name="quantidade_notificacao" value="{{isset($data['estoque']) ? $data['estoque']->quantidade_notificacao : ''}}" placeholder="Insira a quantidade" required>
         </div>
     </div>

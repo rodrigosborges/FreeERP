@@ -283,7 +283,7 @@ class EstoqueController extends Controller
             (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = 3)) as nome,
             (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = 3 AND quantidade > 0) as qtd
              FROM movimentacao_estoque as me WHERE estoque_id = 3 order by data asc'
-
+    
             // 'SELECT distinct substring_index(created_at, " ", 1) as data,
             // (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = me.estoque_id)) as nome,
             // (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = me.estoque_id AND quantidade > 0) as qtd
@@ -319,7 +319,7 @@ class EstoqueController extends Controller
             );    
         }else{
             $ms = DB::select(
-                'SELECT distinct substring_index(created_at, " ", 1) as data,
+                'SELECT distinct substri0ng_index(created_at, " ", 1) as data,
                 (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = '.$req->estoque_id .')) as nome,
                 (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = '.$req->estoque_id .' AND quantidade > 0) as qtd
                  FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id .' AND 
@@ -345,6 +345,8 @@ class EstoqueController extends Controller
 
     public function relatorioMovimentacao(){
         $categorias = Categoria::all();
+        
+        
         return view('estoque::estoque.relatorios.movimentacao', compact('categorias'));
     }
 }
