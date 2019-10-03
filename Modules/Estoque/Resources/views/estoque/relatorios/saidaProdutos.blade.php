@@ -78,18 +78,19 @@ $(document).ready(function(){
       var dataFinal = $('.dataFinal').val()
       var categoria = $('.categoria').val()
       var produto = $('.produto').val()
-      $.ajax({ 
-          url: '/estoque/relatorio/saida',
+      $.ajax({
+          url: 'saida',
           type: 'POST',
           data:{
               inicio: dataInicial,
               fim : dataFinal,
               categoria : categoria,
               produto : produto,
+              '_token': $('input[name=_token]').val(),
 
           }
       }).done(function(data){
-        console.log(data)
+       mostraGrafico(data)
       }).fail(function(){
         console.log("fail")
       })
@@ -97,4 +98,7 @@ $(document).ready(function(){
    //   e.preventDefault();
   })
 })
+function mostraGrafico(data){
+    
+}
 </script>

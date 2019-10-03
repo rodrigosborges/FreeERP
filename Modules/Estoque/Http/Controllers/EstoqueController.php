@@ -365,7 +365,8 @@ class EstoqueController extends Controller
 
     public function getSaidaProdutos(Request $request)
     {
-        return 1;
+        $produtos = DB::table('estoque')->where('deleted_at','<>',null)->get();
+        return json_encode($produtos);
 
     }
 }

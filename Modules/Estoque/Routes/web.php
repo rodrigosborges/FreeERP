@@ -71,4 +71,4 @@ Route::resource('/estoque', 'EstoqueController');
 //Rotas Ajax
 Route::post('verificaNomeCategoria', 'CategoriaController@verificaNome');
 Route::post('buscaUnidades', 'EstoqueController@buscaUnidades');
-Route::post('/relatorio/saida', 'EstoqueController@getSaidaProdutos');
+Route::post('estoque/relatorio/saida', 'EstoqueController@getSaidaProdutos');

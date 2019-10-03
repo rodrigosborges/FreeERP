@@ -10,7 +10,6 @@ $menu = [
 ];
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<script src="jquery-3.4.1.min.js"></script>
 
 @extends('template')
 
