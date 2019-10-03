@@ -59,7 +59,7 @@
                         <select required name="funcionario[estado_civil_id]" class="form-control">
                             <option value="">Selecione</option>
                             @foreach($data['estado_civil'] as $item)
-                                <option value="{{ $item->id }}" {{ old('funcionario.estado_civil_id', $data['model']? $data['model']->estado_civil()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
+                                <option value="{{ $item->id }}" {{ old('funcionario.estado_civil_id', $data['model']? $data['model']->estado_civil()->first()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
                             @endforeach 
                         </select>
                     </div>
@@ -129,9 +129,9 @@
                                 </span>
                             </div>
                             @if($data['model'])
-                                <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->cpf()->id}}">
+                                <input type="hidden" name="documentos[cpf][id]" value="{{$data['model']->documento()->get()[0]->id}}">
                             @endif
-                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control rounded-right cpf" value="{{ old('documentos.cpf.numero', $data['model'] ? $data['model']->cpf()->numero : '') }}">
+                            <input required type="text" placeholder="XXX.XXX.XXX-XX" name="documentos[cpf][numero]" id="cpf" class="form-control rounded-right cpf" value="{{ old('documentos.cpf.numero', $data['model'] ? $data['model']->documento()->get()[0]->numero : '') }}">
                             <input required type="hidden" name="documentos[cpf][tipo_documento_id]" value="1">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.cpf.numero') }}</span>
@@ -147,9 +147,9 @@
                                 </span>
                             </div>
                             @if($data['model'])
-                                <input type="hidden" name="documentos[rg][id]" value="{{$data['model']->rg()->id}}">
+                                <input type="hidden" name="documentos[rg][id]" value="{{$data['model']->documento()->get()[1]->id}}">
                             @endif
-                            <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="rounded-right form-control" value="{{ old('documentos.rg.numero', $data['model'] ? $data['model']->rg()->numero : '') }}">
+                            <input required type="text" placeholder="RG" name="documentos[rg][numero]" id="rg" class="rounded-right form-control" value="{{ old('documentos.rg.numero', $data['model'] ? $data['model']->documento()->get()[1]->numero : '') }}">
                             <input required type="hidden" name="documentos[rg][tipo_documento_id]" value="2">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.rg.numero') }}</span>
@@ -166,10 +166,10 @@
                                 </span>
                             </div>
                             @if($data['model'])
-                                <input type="hidden" name="documentos[pis][id]" value="{{$data['model']->pis()->id}}">
+                                <input type="hidden" name="documentos[pis][id]" value="{{$data['model']->documento()->get()[2]->id}}">
                             @endif
                             <input required type="text" placeholder="PIS" name="documentos[pis][numero]" id="pis" class="pis rounded-right
-                             form-control" value="{{ old('documentos.pis.numero', $data['model'] ? $data['model']->pis()->numero : '') }}">
+                             form-control" value="{{ old('documentos.pis.numero', $data['model'] ? $data['model']->documento()->get()[2]->numero : '') }}">
                             <input required type="hidden" name="documentos[pis][tipo_documento_id]" value="7">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.pis.numero') }}</span>
@@ -191,9 +191,9 @@
                                 </span>
                             </div>
                             @if($data['model'])
-                                <input  class="form-control" type="hidden" name="documentos[numero_ctps][id]" value="{{$data['model']->numero_ctps()->id}}">
+                                <input  class="form-control" type="hidden" name="documentos[numero_ctps][id]" value="{{$data['model']->documento()->get()[3]->id}}">
                             @endif
-                            <input required type="text" class="form-control rounded-right ctps numero_ctps " placeholder="Numero CTPS" required name="documentos[numero_ctps][numero]" id="numero_ctps"  value="{{ old('documentos.numero_ctps.numero', $data['model'] ? $data['model']->numero_ctps()->numero : '') }}">
+                            <input required type="text" class="form-control rounded-right ctps numero_ctps " placeholder="Numero CTPS" required name="documentos[numero_ctps][numero]" id="numero_ctps"  value="{{ old('documentos.numero_ctps.numero', $data['model'] ? $data['model']->documento()->get()[3]->numero : '') }}">
                             <input required type="hidden" name="documentos[numero_ctps][tipo_documento_id]" value="4">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.numero_ctps.numero') }}</span>
@@ -211,9 +211,9 @@
                                 </span>
                             </div>
                             @if($data['model'])
-                                <input type="hidden" class="form-control" name="documentos[serie_ctps][id]" value="{{$data['model']->serie_ctps()->id}}">
+                                <input type="hidden" class="form-control" name="documentos[serie_ctps][id]" value="{{$data['model']->documento()->get()[4]->id}}">
                             @endif
-                            <input required type="text" placeholder="Série da CTPS" name="documentos[serie_ctps][numero]" id="serie_ctps" class="serie-ctps form-control rounded-right" value="{{ old('documentos.serie_ctps.numero', $data['model'] ? $data['model']->serie_ctps()->numero : '') }}">
+                            <input required type="text" placeholder="Série da CTPS" name="documentos[serie_ctps][numero]" id="serie_ctps" class="serie-ctps form-control rounded-right" value="{{ old('documentos.serie_ctps.numero', $data['model'] ? $data['model']->documento()->get()[4]->numero : '') }}">
                             <input required type="hidden" name="documentos[serie_ctps][tipo_documento_id]" value="8">
                         </div>
                         <span class="errors"> {{ $errors->first('documentos.serie_ctps.numero') }}</span>
@@ -231,12 +231,12 @@
                                 </span>
                             </div>
                             @if($data['model'])
-                                <input type="hidden"  name="documentos[uf_ctps][id]" value="{{$data['model']->uf_ctps()->id}}">
+                                <input type="hidden"  name="documentos[uf_ctps][id]" value="{{$data['model']->documento()->get()[5]->id}}">
                             @endif
-                            <select name="documentos[uf_ctps][numero]" required data-cidade="{{old('endereco.cidade_id', $data['model'] ? $data['model']->endereco()->cidade_id : '')}}" class="form-control estados">
+                            <select name="documentos[uf_ctps][numero]" required data-cidade="{{old('endereco.cidade_id', $data['model'] ? $data['model']->documento()->get()[5]->id : '')}}" class="form-control estados">
                                 <option value="">Selecione</option>
                                 @foreach($data['estados'] as $estado))
-                                    <option data-uf="{{$estado->uf}}" value="{{ $estado->nome }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco()->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                                    <option data-uf="{{$estado->uf}}" value="{{ $estado->nome }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->documento()->get()[5]->numero : '') == $estado->nome ? 'selected' : '' }}>{{ $estado->nome }}</option>
                                 @endforeach
                             </select>
                             <input required type="hidden" name="documentos[uf_ctps][tipo_documento_id]" value="9">
@@ -329,7 +329,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ old('endereco.cep', $data['model'] ? $data['model']->endereco()->cep : '') }}">
+                        <input type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control" value="{{ old('endereco.cep', $data['model'] ? $data['model']->endereco()->first()->cep : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
                 </div>
@@ -343,10 +343,10 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <select required data-cidade="{{old('endereco.cidade_id', $data['model'] ? $data['model']->endereco()->cidade_id : '')}}" name="endereco[estado_id]" id="estado_id" class="form-control estados">
+                        <select required data-cidade="{{old('endereco.cidade_id', $data['model'] ? $data['model']->endereco()->first()->cidade_id : '')}}" name="endereco[estado_id]" id="estado_id" class="form-control estados">
                             <option value="">Selecione</option>
                             @foreach($data['estados'] as $estado))
-                                <option data-uf="{{$estado->uf}}" value="{{ $estado->id }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco()->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                                <option data-uf="{{$estado->uf}}" value="{{ $estado->id }}" {{ old('endereco.estado_id', $data['model'] ? $data['model']->endereco()->first()->cidade->estado_id : '') == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -380,7 +380,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control bairro" value="{{ old('endereco.bairro', $data['model'] ? $data['model']->endereco()->bairro : '') }}">
+                        <input required type="text" placeholder="Bairro" name="endereco[bairro]" id="bairro" class="form-control bairro" value="{{ old('endereco.bairro', $data['model'] ? $data['model']->endereco()->first()->bairro : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.bairro') }} </span>
                 </div>
@@ -394,7 +394,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control logradouro" value="{{ old('endereco.logradouro', $data['model'] ? $data['model']->endereco()->logradouro : '') }}">
+                        <input required type="text" placeholder="Logradouro" name="endereco[logradouro]" id="logradouro" class="form-control logradouro" value="{{ old('endereco.logradouro', $data['model'] ? $data['model']->endereco()->first()->logradouro : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.logradouro') }} </span>
                 </div>
@@ -408,7 +408,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control numero" value="{{ old('endereco.numero', $data['model'] ? $data['model']->endereco()->numero : '') }}">
+                        <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control numero" value="{{ old('endereco.numero', $data['model'] ? $data['model']->endereco()->first()->numero : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
                 </div>
@@ -424,7 +424,7 @@
                                 <i class="material-icons">location_on</i>
                             </span>
                         </div>
-                        <input type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ old('endereco.complemento', $data['model'] ? $data['model']->endereco()->complemento : '') }}">
+                        <input type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ old('endereco.complemento', $data['model'] ? $data['model']->endereco()->first()->complemento : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
                 </div>
@@ -443,7 +443,7 @@
                                 <i class="material-icons">email</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="E-mail" name="email" id="email" class="form-control" value="{{ old('email', $data['model'] ? $data['model']->email()->email : '') }}">
+                        <input required type="text" placeholder="E-mail" name="email" id="email" class="form-control" value="{{ old('email', $data['model'] ? $data['model']->email()->first()->email : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('email') }} </span>
                 </div>
@@ -634,8 +634,8 @@
 
         <strong><h6 class="mt-5 mb-3">Cursos</h6></strong>
         <hr>
-
         <div id="cursos">
+            
             @foreach(old('cursos', $data['cursos']) as $key => $curso)
             <div class="cur {{ old('cursos.$key.nome', isset($curso->nome) ? $curso->nome : '') ? '' : 'd-none'}} mb-4">
                 
@@ -731,6 +731,7 @@
                
             </div>
             @endforeach
+
         </div>
     </div>
         <div class="mt-2 d-flex justify-content-start">

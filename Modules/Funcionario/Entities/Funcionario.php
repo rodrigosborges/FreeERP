@@ -44,4 +44,8 @@ class Funcionario extends Model {
     public function controle_ferias(){
         return $this->hasMany('Modules\Funcionario\Entities\ControleFerias');
     }
+
+    public function Atestado(){
+        return $this->hasMany('Modules\Funcionario\Entities\Atestado');
+    }
 }

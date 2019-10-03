@@ -23,6 +23,9 @@
                     <td class="min">                       
                         <a class="btn btn-info" href='{{ url("funcionario/funcionario/ficha/$funcionario->id") }}'>Ficha</a>
                     </td>
+                    <td class="min">
+                    <a class="btn btn-outline-info" href='{{ url("funcionario/funcionario/atestado/$funcionario->id") }}'>Atestado</a>
+                    </td>
                     @endif
                     <td class="min">
                         <form action="{{url('funcionario/funcionario', [$funcionario->id])}}" class="input-group" method="POST">
@@ -31,6 +34,7 @@
                                 <input type="submit" class="btn btn-{{$funcionario->trashed() ? 'success' : 'danger'}}" value="{{$funcionario->trashed() ? 'Restaurar' : 'Deletar'}}"/>
                         </form>
                     </td>
+                    
                 </tr>
             @endforeach
         </tbody>
