@@ -13,8 +13,10 @@
 Route::get('/', 'LoginController@index')->name('login');
 Route::post('logar', 'LoginController@authenticate');
 Route::get('logout', 'LoginController@logoutUsuario');
-Route::get('/forgotPassword', 'auth\ForgotPasswordController@esqueceu');
-Route::post('/forgotPassword', 'auth\ForgotPasswordController@recuperarSenha');
+Route::get('/esqueciSenha', 'auth\ForgotPasswordController@esqueceu');
+Route::post('/esqueciSenha', 'auth\ForgotPasswordController@recuperarSenha');
+Route::get('/recuperarSenha', 'auth\ForgotPasswordController@resetarSenha');
+Route::put('/recuperarSenha', 'auth\ForgotPasswordController@trocarSenhaUpdate');
 
 Route::prefix('usuario')->group(function() {
     //Trocar Senha

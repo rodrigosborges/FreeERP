@@ -3,16 +3,14 @@
 namespace Modules\Usuario\Http\Controllers\auth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Modules\Usuario\Entities\{Usuario,Papel};
 use Modules\Usuario\Emails\PasswordReset;
+use Modules\Usuario\Http\Requests\TrocarSenhaRequest;
+use Illuminate\Support\Facades\Hash;
+use DB;
 use Mail;
 
-use Sentinel;
-use Reminder;
-use Modules\Usuario\Entities\Usuario;
-use Mail;
 
 class ForgotPasswordController extends Controller
 {
@@ -57,9 +55,9 @@ class ForgotPasswordController extends Controller
         $user->remember_token=$token;
         $user->save();
 
-        Mail::to($request->email)->locale('pt-br')->send(
-            new PasswordReset($token)
-        );
+        // Mail::to($request->email)->locale('pt-br')->send(
+        //     new PasswordReset($token)
+        // );
 
 
 
@@ -74,22 +72,42 @@ class ForgotPasswordController extends Controller
 
 
     public function resetarSenha(Request $request){
-        $user = Usuario::where($request->token)->first();
+        // return 'funfou';
         
-        if($user == null){
-            return redirect()->back()->with(['error'=> 'Token does not exists']);
-        }
         $token = $request->token;
-        return view('usuario::usuario.trocarSenha',compact('token'));
+        return view('usuario::recover',compact('token'));
     
     }
 
-    public function trocarSenhaUpdate(TrocarSenhaRequest $request , $id){
-        $usuario = Usuario::where('remember_token',$request->token);
-        $usuario->update([
-            'password' => Hash::make($request->password)
-        ]);
-        return redirect('/');
+    public function trocarSenhaUpdate(TrocarSenhaRequest $request){
+
+        $usuario = Usuario::where('remember_token',$request->token); 
+        $null = null;
+
+        if(!$usuario->first()){
+            return redirect()->back()->with(['error'=> 'Token does not exists']);
+        }
+
+        DB::beginTransaction();
+        try {
+            $usuario->update([
+                'password' => Hash::make($request->password),
+            ]);
+
+            $usuario = Usuario::findOrFail($usuario->first()->id);
+
+            $usuario->remember_token = null;
+            $usuario->save();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e;
+            return redirect()->back()->with(['error'=> 'Erro no servidor']);
+        }
+
+        
+        return redirect('/')->with(['success'=>'Senha atualizada com sucesso, acesse agora a sua conta. ']);
     }
 
     // public function sendEmail($user, $code){
