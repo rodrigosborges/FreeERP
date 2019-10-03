@@ -6,9 +6,9 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\AvaliacaoDesempenho\Entities\Categoria;
+use Modules\AvaliacaoDesempenho\Entities\Setor;
 
-class CategoriaController extends Controller
+class SetorController extends Controller
 {
     
     protected $moduleInfo;
@@ -37,7 +37,7 @@ class CategoriaController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        return view('avaliacaodesempenho::categorias/index', compact('moduleInfo', 'menu'));
+        return view('avaliacaodesempenho::setores/index', compact('moduleInfo', 'menu'));
     }
 
     public function create()
@@ -45,7 +45,7 @@ class CategoriaController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        return view('avaliacaodesempenho::categorias/create', compact('moduleInfo', 'menu'));
+        return view('avaliacaodesempenho::setores/create', compact('moduleInfo', 'menu'));
     }
 
     public function store(Request $request)
@@ -54,7 +54,7 @@ class CategoriaController extends Controller
 
         try {
 
-            $input = $request->input('categoria');
+            $input = $request->input('setor');
 
             foreach ($input as $key => $value) {
                 if (empty($value)) {
@@ -62,18 +62,18 @@ class CategoriaController extends Controller
                 }
             }
 
-            $categoria = Categoria::create($input);
+            $setor = Setor::create($input);
 
             DB::commit();
 
-            return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria Criado com Sucesso');
+            return redirect('/avaliacaodesempenho/setor')->with('success', 'Setor Criado com Sucesso');
 
         } catch (\Throwable $th) {
 
             echo '<pre>';
             print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar a Categoria');
+            return back()->with('error', 'Não foi possível cadastrar o Setor');
         }
     }
 
@@ -87,10 +87,10 @@ class CategoriaController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-            'categoria' => Categoria::findOrFail($id)
+            'setor' => Setor::findOrFail($id)
         ];
 
-        return view('avaliacaodesempenho::categorias/edit', compact('moduleInfo', 'menu', 'data'));
+        return view('avaliacaodesempenho::setores/edit', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function update(Request $request, $id)
@@ -98,9 +98,9 @@ class CategoriaController extends Controller
         DB::beginTransaction();
 
         try {
-            $categoria = Categoria::findOrFail($id);
+            $setor = Categoria::findOrFail($id);
 
-            $input = $request->input('categoria');
+            $input = $request->input('setor');
 
             foreach ($input as $key => $value) {
                 if (empty($value)) {
@@ -111,14 +111,14 @@ class CategoriaController extends Controller
             $categoria->update($input);
 
             DB::commit();
-            return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria Criado com Sucesso');
+            return redirect('/avaliacaodesempenho/setor')->with('success', 'Setor Criado com Sucesso');
 
         } catch (\Throwable $th) {
 
             echo '<pre>';
             print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar a Categoria');
+            return back()->with('error', 'Não foi possível cadastrar o Setor');
         }
     }
 
@@ -127,30 +127,30 @@ class CategoriaController extends Controller
         DB::beginTransaction();
 
         try {
-            $categoria = Categoria::withTrashed()->findOrFail($id);
+            $setor = Setor::withTrashed()->findOrFail($id);
 
-            if($categoria->trashed()) {
+            if($setor->trashed()) {
 
-                $categoria->restore();
+                $setor->restore();
 
                 DB::commit();
                 
-                return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria ativada com Sucesso');
+                return redirect('/avaliacaodesempenho/setor')->with('success', 'Setor ativado com Sucesso');
 
             } else {
                 
-                $categoria->delete();
+                $setor->delete();
                 
                 DB::commit();
 
-                return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria desativada com Sucesso');
+                return redirect('/avaliacaodesempenho/setor')->with('success', 'Setor desativado com Sucesso');
             }
 
         } catch (\Throwable $th) {
             echo '<pre>';print_r($th->getMessage());exit;
             DB::rollback();
 
-            return redirect('/avaliacaodesempenho/categoria')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
+            return redirect('/avaliacaodesempenho/setor')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
         }
     }
 
@@ -161,16 +161,16 @@ class CategoriaController extends Controller
 
         if (empty($term)) {
 
-            $categorias = Categoria::withTrashed()->get();
+            $setores = Setor::withTrashed()->get();
 
         } else {
 
-            $categorias = Categoria::withTrashed()->where('nome', 'LIKE', '%' . $term . '%')
+            $setores = Setor::withTrashed()->where('nome', 'LIKE', '%' . $term . '%')
                 ->orWhere('crm', 'LIKE', '%' . $term . '%')
                 ->get();
         }
 
-        $table = view('avaliacaodesempenho::categorias/_table', compact('categorias'))->render();
+        $table = view('avaliacaodesempenho::setores/_table', compact('setores'))->render();
         return response()->json(['success' => true, 'html' => $table]);
     }
 }

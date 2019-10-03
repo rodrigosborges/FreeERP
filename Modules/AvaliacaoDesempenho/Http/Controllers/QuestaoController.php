@@ -140,7 +140,7 @@ class QuestaoController extends Controller
         DB::beginTransaction();
 
         try {
-            $questao = Questao::findOrFail($id);
+            $questao = Questao::withTrashed()->findOrFail($id);
 
             if($questao->trashed()) {
 

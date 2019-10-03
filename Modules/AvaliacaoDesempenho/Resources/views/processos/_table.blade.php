@@ -40,16 +40,16 @@
   
             <a class="btn btn-warning btn-edit {{ !empty($processo->deleted_at) ? 'disabled' : '' }}" title="Editar" href="/tcc/public/avaliacaodesempenho/processo/{{ $processo->id }}/edit"><i class="material-icons md-14 md-light">edit</i></a>
               
-            <form action="{{ url('avaliacaodesempenho/processo', [$processo->id]) }}" id="deleteForm" method="POST">
+            <form action="{{ url('avaliacaodesempenho/processo', [$processo->id]) }}" id="deleteForm_{{$processo->id}}" method="POST">
               @method('DELETE')
               {{ csrf_field() }}
               @if (empty($processo->deleted_at))
     
-                <button class="btn btn-danger" type="button" id="btn-delete" title="Desativar" onclick="confirmDelete('Deseja desativar o Processo?')"><i class="material-icons md-14">close</i></button>
+                <button class="btn btn-danger" type="button" id="btn-delete" title="Desativar" onclick="confirmDelete({{$processo->id}}, 'Deseja desativar o Processo?')"><i class="material-icons md-14">close</i></button>
     
               @else
     
-                <button class="btn btn-success" type="button" id="btn-delete" title="Ativar" onclick="confirmDelete('Deseja ativar o Processo?')"><i class="material-icons md-14">restore_from_trash</i></button>
+                <button class="btn btn-success" type="button" id="btn-delete" title="Ativar" onclick="confirmDelete({{$processo->id}}, 'Deseja ativar o Processo?')"><i class="material-icons md-14">restore_from_trash</i></button>
     
               @endif
             </form>

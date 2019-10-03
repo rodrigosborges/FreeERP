@@ -37,7 +37,7 @@ $(document).on('keyup keydown paste', '.search_field', function () {
     }
 })
 
-function confirmDelete(msg) {
+function confirmDelete(id, msg) {
     bootbox.confirm({
         message: msg,
         buttons: {
@@ -52,8 +52,7 @@ function confirmDelete(msg) {
         },
         callback: function (result) {
             if (result == true)
-                $('#deleteForm').submit()
-                // window.location.href = 'http://localhost/tcc/public/avaliacaodesempenho/processos/' + funcao + '/' + id;
+                $('#deleteForm_'+id).submit()
         }
     });
 }

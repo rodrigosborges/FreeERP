@@ -4,13 +4,13 @@ $(document).ready(function () {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/questao/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/setor/ajax/search',
         data: {
             _token: _token,
             term: ''
         },
         success: function (data) {
-            $('#QuestaoListar').append(data.html)
+            $('#SetorTable').append(data.html)
         }
     })
 })
@@ -24,14 +24,14 @@ $(document).on('keyup keydown paste', '.search_field', function () {
 
         $.ajax({
             method: 'POST',
-            url: 'http://localhost/tcc/public/avaliacaodesempenho/questao/ajax/search',
+            url: 'http://localhost/tcc/public/avaliacaodesempenho/setor/ajax/search',
             data: {
                 _token: _token,
                 term: search
             },
             success: function (data) {
-                $('#QuestaoListar').html('')
-                $('#QuestaoListar').append(data)
+                $('#SetorTable').html('')
+                $('#SetorTable').append(data)
             }
         })
     }

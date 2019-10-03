@@ -40,7 +40,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='processo[data_inicio]' type="date" value=''
+                            <input class="form-control" name='processo[data_inicio]' type="date" value="{{ old('processo.data_inicio', $data['processo'] ? $data['processo']->data_inicio : '') }}"
                                 placeholder="Selecione a data de inicio">
 
                             <div class="invalid-feedback">
@@ -65,7 +65,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='processo[data_fim]' type="date" value=''
+                            <input class="form-control" name='processo[data_fim]' type="date" value="{{ old('processo.data_fim', $data['processo'] ? $data['processo']->data_fim : '') }}"
                                 placeholder="Selecione a data final">
 
                             <div class="invalid-feedback"></div>
@@ -94,7 +94,7 @@
                                 id="processo[funcionario_id]">
                                 <option value="">Selecione o Funcionario Responsavel pelo Processo</option>
                                 @foreach( $data['funcionarios'] as $funcionario)
-                                    <option value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
+                                    <option {{ old('processo.funcionario_id', $data['processo'] ? $data['processo']->funcionario_id : '') == $funcionario->id ? 'selected' : ''}} value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
                                 @endforeach
                             </select>
 

@@ -5,9 +5,9 @@ namespace Modules\AvaliacaoDesempenho\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Categoria extends Model
+class Setor extends Model
 {
-    protected $table = 'categoria';
+    protected $table = 'setor';
     protected $fillable = ['nome'];
     use SoftDeletes;
 }

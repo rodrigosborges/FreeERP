@@ -1,3 +1,13 @@
 .card {
     margin-bottom: 30px !important;
 }
+
+ul {
+    list-style: none;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.inactive {
+    background: rgba(255, 213, 213, 0.815);
+}

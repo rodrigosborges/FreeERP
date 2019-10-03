@@ -132,7 +132,7 @@ class ProcessoController extends Controller
         DB::beginTransaction();
 
         try {
-            $processo = Processo::findOrFail($id);
+            $processo = Processo::withTrashed()->findOrFail($id);
 
             if($processo->trashed()) {
 
@@ -152,6 +152,7 @@ class ProcessoController extends Controller
             }
 
         } catch (\Throwable $th) {
+            echo '<pre>';print_r($th->getMessage());exit;
             DB::rollback();
 
             return redirect('/avaliacaodesempenho/processo')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
