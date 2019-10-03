@@ -466,13 +466,30 @@ class FuncionarioController extends Controller{
     }
 
     public function ficha($id){
-        
+        $funcionario = Funcionario::findOrFail($id);
+
         $data = [
             'funcionario' => Funcionario::findOrFail($id),
-            'doc' => TipoDocumento::all()
+            
+            'docs' => DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', 'funcionario.id')
+                ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
+                ->join('tipo_documento', 'tipo_documento.id', '=', 'documento.tipo_documento_id')
+                ->select('tipo_documento.nome', 'documento.numero')->get(),
+            
+            'cidade' => DB::table('funcionario')->join('endereco', 'funcionario.endereco_id', 'endereco.id')
+                ->join('cidade', 'endereco.cidade_id', 'cidade.id')->get('cidade.nome')->last(),
+            
+            'estado' => DB::table('funcionario')->join('endereco', 'funcionario.endereco_id', 'endereco.id')
+            ->join('cidade', 'endereco.cidade_id', 'cidade.id')
+            ->join('estado', 'cidade.estado_id','estado.id')->get('estado.nome')->last()
         ];
+    
         return view('funcionario::funcionario.ficha', compact('data'));
     }
+
+
+
+
 
     public function getCidades($uf) {
 

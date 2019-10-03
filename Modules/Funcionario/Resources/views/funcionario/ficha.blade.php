@@ -7,57 +7,89 @@
     <div class="container">
     <div class="row">
         <div class="col-lg-2 text-center change-class-2">
-            <img class="img-fluid" src="{{ URL::to('/') }}/img/user-img.jpg" style="height:150px">
+            <img class="img-fluid" src="{{ URL::to('/') }}/img/user-img.jpg" style="height:170px; width:200px;">
         </div>
         <div class="col-lg-10 change-class-10">
             <div class="row d-flex justify-content-center"><span class="h2">{{$data["funcionario"]->nome}}</span></div>
             <hr>
-            <div class="row">{{$data["funcionario"]}}</div>
-
            <div class="row">
                 <div class="col">
-                    <span><b>Cargo:</b> {</span><br>
-                    <span><b>Data Admissão:</b> {{$data["funcionario"]->data_admissao}}</span><br>
-                    <span><b>Data de Nascimento:</b> {{$data["funcionario"]->data_nascimento}}</span><br>
+                    <p><span class="font-weight-bold">Cargo: {{$data["funcionario"]->cargos()->get()->first()->nome}}</p>
+                    <p><span class="font-weight-bold">Data Admissão: </span>{{$data["funcionario"]->data_admissao}}</p>
+                    <p><span class="font-weight-bold">Data de Nascimento: </span>{{$data["funcionario"]->data_nascimento}}</p>
                 </div>
                 <div class="col">
-                    <span><b>Sexo:</b> {{$data["funcionario"]->sexo == 1 ? 'Masculino' : 'Feminino'}}</span><br> 
-                    <span><b>Estado Civil:</b> {{$data["funcionario"]->estado_civil->nome}}</span><br>
+                    <p><span class="font-weight-bold">Sexo: </span>{{$data["funcionario"]->sexo == 1 ? 'Masculino' : 'Feminino'}}</p> 
+                    <p><span class="font-weight-bold">Estado Civil: </span>{{$data["funcionario"]->estado_civil->nome}}</p>
+                    @foreach($data["funcionario"]->telefone as $telefone)    
+                        <p><span class="font-weight-bold">Telefone:</span> {{$telefone->numero}}</p>
+                    @endforeach
                 </div>
             </div>              
         </div>
     </div>
     <hr>
-    <h4 class=" text-center mb-4"><!--<i class="material-icons mr-2">contact_phone </i> -->Contatos</h4>
+    <h4 class=" text-center mb-4"><!--<i class="material-icons mr-2">contact_phone </i> -->Documento</h4>
     <div class="row">
         <div class="col-sm">
             <div class="row">
-                @foreach($data["funcionario"]->telefone as $telefone)    
-                    <div class="col">
-                        <span class="titulo_cargo">Telefone:</span> {{$telefone->numero}}
-                    </div>
-                @endforeach
-                <div class="col">
-                    <span class="titulo_cargo">Email:{{$data["funcionario"]->email->email}}</span>
-                </div>
+               
             </div>      
         </div>
     </div>
     <div class="row">
         <div class="col-sm">
             <div class="row">
-            @foreach($data["funcionario"]->documento()->first()->get() as $doc)
-              
-                {{$doc->numero}} {{$doc->tipo_documento_id}}
-            
-            @endforeach
-                        
-
-                <div class="col">
-                    <span class="titulo_cargo">Email:{{$data["funcionario"]->email->email}}</span>
+            @foreach ($data["docs"] as $doc)
+                <div class="col-6">
+                        <span class="font-weight-bold">{{$doc->nome}}:</span>{{$doc->numero}} 
                 </div>
+            @endforeach
             </div>      
         </div>
+    </div>
+    <hr>
+
+    <h4 class=" text-center mb-4">Endereço</h4>    
+    
+    <div class="row">        
+        <div class="col-6">   
+                <span class="font-weight-bold">CEP: </span>{{$data["funcionario"]->endereco->cep}}
+        </div>
+
+        <div class="col-6">
+                <span class="font-weight-bold">Bairro: </span>{{$data["funcionario"]->endereco->bairro}}
+        </div>
+
+        <div class="col-6">
+                <span class="font-weight-bold">N°: </span>{{$data["funcionario"]->endereco->numero}}
+        </div>
+
+        <div class="col-6">
+                <span class="font-weight-bold">complemento: </span>{{$data["funcionario"]->endereco->complemento}}
+        </div>
+
+        <div class="col-6">
+                <span class="font-weight-bold">Cidade: </span>{{$data["cidade"]->nome}}
+        </div>
+
+        <div class="col-6">
+                <span class="font-weight-bold">Estado: </span>{{$data["estado"]->nome}}
+        </div>
+
+        <div class="col-6">
+                <span class="font-weight-bold">lougradouro: </span>{{$data["funcionario"]->endereco->lougradouro}}
+        </div>
+    </div>
+    <hr>
+
+    <h4 class=" text-center mb-4">Contato</h4>
+    <div class="row">   
+
+        <div class="col-6">
+                <span class="font-weight-bold">E-mail: </span>{{$data["funcionario"]->email->email}}
+        </div>
+
     </div>
     <hr>
 </div>
