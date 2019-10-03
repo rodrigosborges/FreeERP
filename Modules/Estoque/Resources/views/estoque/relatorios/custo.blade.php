@@ -9,7 +9,7 @@
                 <label for="estoque_id">Produto</label>
                 <select required class="form-control" name="estoque_id">
                     <option value="-1" selected>Todo o Estoque</option>
-                    @foreach($estoques as $e)
+                    @foreach($data['estoque'] as $e)
                         <option value="{{$e->id}}">{{$e->produtos->last()->nome}} - {{$e->tipoUnidade->nome}}({{$e->tipoUnidade->quantidade_itens}} itens)</option>
                     @endforeach
                 </select>
@@ -28,6 +28,7 @@
         </div>
     </form>
 </div>
+@if($data['flag'] == 1)
 <div class="container">
     <div class="row d-flex justify-content-between">
         <div class="form-group col-lg-4 col-sm-12">
@@ -46,14 +47,14 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">date_range</div>
                         </div>
-                            <input type="text" disabled class="form-control" name="produto">
+                            <input type="text" disabled class="form-control" value="{{isset($data['data_inicial']) ? $data['data_inicial'] : ''}}">
                     </div>
                     Período final
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">date_range</div>
                         </div>
-                            <input type="text" disabled class="form-control" name="produto">
+                        <input type="text" disabled class="form-control" value="{{isset($data['data_inicial']) ? $data['data_final'] : ''}}">
                     </div>
                     Preço de custo médio
                     <div class="input-group mb-2">
@@ -132,26 +133,33 @@
                                 <th scope="col">Data</th>
                                 <th scope="col">Quantidade</th>
                                 <th scope="col">Preço unitario</th>
-                                <th scope="col">Total</th>
+                                <th scope="col">Custo Total</th>
                             </tr>
-                        </thead>
-                        
                         <tbody>
-                        
+                            @if(isset($data['movimentacao']))
+                                @foreach($data['movimentacao'] as $m)
+                                <tr>
+                                    <td>{{$m->id}}</td>
+                                    <td>{{$m->created_at}}</td>
+                                    <td>{{$m->quantidade}}</td>
+                                    <td>R${{$m->preco_custo}}</td>
+                                    <td>R${{$m->preco_custo*$m->quantidade}}</td>
+                                </tr>
+                                @endforeach
+                            @endif
                         </tbody>
-                        <tfoot>
-                        </tfoot>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endif
 <script>
 
 window.onload = function() {
     var ctx = document.getElementById('myChart').getContext('2d');
-    var teste = <?php echo $labels; ?>;
+    var teste = <?php echo $data['labels']; ?>;
     var chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'line',
@@ -163,7 +171,7 @@ window.onload = function() {
                 label: 'Custo',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: <?php echo $dados; ?>
+                data: <?php echo $data['dados']; ?>
             }]
         },
 

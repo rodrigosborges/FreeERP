@@ -282,56 +282,44 @@ class EstoqueController extends Controller
 
     public function relatorioCusto()
     {
-        $estoques = Estoque::all();
-        $movimentacoes = MovimentacaoEstoque::orderBy('created_at', 'DESC')->get();
-        // $ms = DB::table('movimentacao_estoque')
-        //     ->select(DB::raw('distinct substring_index(created_at, " ", 1) as data,
-        //     (SELECT COUNT(id) FROM movimentacao_estoque
-        //     WHERE data = SUBSTRING_INDEX(created_at, " ", 1)) as qtd'))
-        // ->get();
-
-        $ms = DB::select(
+        $query_result = DB::select(
             'SELECT distinct substring_index(created_at, " ", 1) as data,
             (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = 3)) as nome,
             (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = 3 AND quantidade > 0) as qtd
              FROM movimentacao_estoque as me WHERE estoque_id = 3 order by data asc'
-
-            // 'SELECT distinct substring_index(created_at, " ", 1) as data,
-            // (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = me.estoque_id)) as nome,
-            // (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = me.estoque_id AND quantidade > 0) as qtd
-            //  FROM movimentacao_estoque as me'
-
         );
+        $labels = [];
+        $dados = [];
+        $data = [
+            'estoque' => Estoque::all(),
+            'labels' => json_encode($labels),
+            'dados' => json_encode($dados),
+            'flag' => "0"
+        ];
 
-        $mo = [];
-        foreach ($ms as $m) {
-            array_push($mo, $m->data);
-        }
-        $labels = json_encode($mo);
-
-        $da = [];
-        foreach ($ms as $d) {
-            array_push($da, $d->qtd);
-        }
-        $dados = json_encode($da);
-
-        return view('estoque::estoque.relatorios.custo', compact('labels', 'dados', 'estoques'));
+        return view('estoque::estoque.relatorios.custo', compact('data'));
     }
 
     public function relatorioCustoBusca(Request $req)
     {
-        $estoques = Estoque::all();
-        $ms = [];
+        //Se for para selecionar o período com todos os estoques
+        $query_result = [];
+        $movimentacao = [];
+        $estoque_selecionado = "";
+        if($req->estoque_id != -1)
+            $estoque_selecionado = Estoque::findOrFail($req->estoque_id);
         if ($req->estoque_id == -1) {
-            $ms = DB::select(
+            $query_result = DB::select(
                 'SELECT distinct substring_index(created_at, " ", 1) as data,
                 (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtd
                  FROM movimentacao_estoque as me WHERE
                  substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '"
                   order by data asc'
             );
+            $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->get();
+        //Se for para selecionar o período com um estoque específico
         } else {
-            $ms = DB::select(
+            $query_result = DB::select(
                 'SELECT distinct substring_index(created_at, " ", 1) as data,
                 (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = ' . $req->estoque_id . ')) as nome,
                 (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = ' . $req->estoque_id . ' AND quantidade > 0) as qtd
@@ -339,21 +327,29 @@ class EstoqueController extends Controller
                  substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '"
                   order by data asc'
             );
+            $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->where('estoque_id', $req->estoque_id)->get();
         }
 
-        $mo = [];
-        foreach ($ms as $m) {
-            array_push($mo, $m->data);
+        //Transfere as datas e os valores para um array especifico que será utilizado como labels e dados do gráfico
+        $labels = [];
+        $dados = [];
+        foreach ($query_result as $q) {
+            array_push($dados, $q->qtd);
+            array_push($labels, $q->data);
         }
-        $labels = json_encode($mo);
 
-        $da = [];
-        foreach ($ms as $d) {
-            array_push($da, $d->qtd);
-        }
-        $dados = json_encode($da);
+        $data = [
+            'estoque' => Estoque::all(),
+            'estoque_selecionado' => $estoque_selecionado,
+            'labels' => json_encode($labels),
+            'dados' => json_encode($dados),
+            'flag' => "1",
+            'movimentacao' => $movimentacao,
+            'data_inicial' => $req->data_inicial,
+            'data_final' => $req->data_final
+        ];
 
-        return view('estoque::estoque.relatorios.custo', compact('labels', 'dados', 'estoques'));
+        return view('estoque::estoque.relatorios.custo', compact('data'));
     }
 
     public function relatorioMovimentacao()
