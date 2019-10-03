@@ -2,11 +2,16 @@
 
 namespace Modules\Estoque\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Estoque\Entities\{Produto, Estoque, Categoria, TipoUnidade, MovimentacaoEstoque};
-use DB;
+use Modules\Estoque\Entities\Categoria;
+use Modules\Estoque\Entities\Estoque;
+use Modules\Estoque\Entities\MovimentacaoEstoque;
+use Modules\Estoque\Entities\Produto;
+
+use Modules\Estoque\Entities\TipoUnidade;
 
 class EstoqueController extends Controller
 {
@@ -49,9 +54,9 @@ class EstoqueController extends Controller
     {
         $notificacoes = $this->verificarNotificacoes();
         $data = [
-            'titulo'  => 'Cadastrar Estoque',
-            'button'  => 'Cadastrar',
-            'url'     => 'estoque',
+            'titulo' => 'Cadastrar Estoque',
+            'button' => 'Cadastrar',
+            'url' => 'estoque',
             'estoque' => null,
             'produtos' => Produto::all(),
             'tipoUnidade' => TipoUnidade::all(),
@@ -70,8 +75,7 @@ class EstoqueController extends Controller
         //   dd($request->all());
 
         //return $unidades;
-       
- 
+
         DB::beginTransaction();
         try {
 
@@ -84,14 +88,14 @@ class EstoqueController extends Controller
                     'estoque_id' => $estoque->id,
                     'quantidade' => $estoque->quantidade,
                     'preco_custo' => $request['preco_custo'],
-                    'observacao' => "Entrada Inicial"
+                    'observacao' => "Entrada Inicial",
                 ]
             );
             DB::commit();
             return redirect('/estoque')->with('success', 'Item de estoque registrado com sucesso!');
         } catch (Exception $ex) {
             DB::rollback();
-            return back()->with('danger', "Erro ao tentar registrar item. cod:" + $ex->getMessage());
+            return back()->with('danger', "Erro ao tentar registrar item. cod:"+$ex->getMessage());
         }
     }
 
@@ -112,7 +116,7 @@ class EstoqueController extends Controller
      */
     public function edit($id)
     {
-        
+
         $notificacoes = $this->verificarNotificacoes();
         $estoque = Estoque::findOrFail($id);
         $idProduto = $estoque->produtos->last()->id;
@@ -120,10 +124,13 @@ class EstoqueController extends Controller
         $itens = DB::table('estoque')
             ->join('estoque_has_produto', function ($join) use ($idProduto) {
                 $join->where('produto_id', $idProduto)->whereraw('estoque.id = estoque_has_produto.estoque_id');
-            })->get();          
-        foreach ($itens as $item)
-            if ($item->tipo_unidade_id != $estoque->tipo_unidade_id)
+            })->get();
+        foreach ($itens as $item) {
+            if ($item->tipo_unidade_id != $estoque->tipo_unidade_id) {
                 $data2[] = $item->tipo_unidade_id;
+            }
+        }
+
         $data = [
             'button' => 'atualizar',
             'url' => 'estoque/' . $id,
@@ -148,18 +155,18 @@ class EstoqueController extends Controller
         DB::beginTransaction();
         try {
             $estoque = Estoque::findOrFail($id);
-         
+
             $observacao = $this->verificaAlteracoes($request, $estoque);
-         
+
             $qtdInicial = $estoque->quantidade;
-            $qtdMovimentacao =  $request['quantidade'] - $qtdInicial;
+            $qtdMovimentacao = $request['quantidade'] - $qtdInicial;
             $estoque->update($request->all());
             MovimentacaoEstoque::create(
                 [
                     'estoque_id' => $estoque->id,
-                    'quantidade' =>  $qtdMovimentacao,
+                    'quantidade' => $qtdMovimentacao,
                     'preco_custo' => $request['preco_custo'],
-                    'observacao' => $observacao
+                    'observacao' => $observacao,
                 ]
             );
             DB::commit();
@@ -176,20 +183,22 @@ class EstoqueController extends Controller
             ->join('estoque_has_produto', function ($join) use ($request) {
                 $join->where('produto_id', $request->id)->whereraw('estoque.id = estoque_has_produto.estoque_id');
             })->get();
-        foreach ($itens as $unidade)
+        foreach ($itens as $unidade) {
             $data2[] = $unidade->tipo_unidade_id;
+        }
+
         $unidades = TipoUnidade::all()->except($data2);
         return json_encode($unidades);
     }
     public function verificaAlteracoes($request, $estoque)
     {
         $observacao = "Este item foi atualizado \n";
-      
+
         if (intval($request->tipo_unidade_id) != $estoque->tipo_unidade_id) {
-            return  "Request unidade id =" . intval($request->tipo_unidade_id) . "Produto Unidade id = " . $produto->unidade_id;
+            return "Request unidade id =" . intval($request->tipo_unidade_id) . "Produto Unidade id = " . $produto->unidade_id;
             $novaUnidade = TipoUnidade::find($request->tipo_unidade_id);
 
-            $observacao  .= "\n Alteração do tipo de unidade de " . $estoque->tipoUnidade->nome . " para " . $novaUnidade->nome;
+            $observacao .= "\n Alteração do tipo de unidade de " . $estoque->tipoUnidade->nome . " para " . $novaUnidade->nome;
         }
         if (floatVal($request->preco_custo) != floatVal($estoque->movimentacaoEstoque->last()->preco_custo)) {
             $observacao .= "\n . Alteração no preço de custo de " . $estoque->movimentacaoEstoque->last()->preco_custo . " para " . $request->preco_custo;
@@ -200,7 +209,6 @@ class EstoqueController extends Controller
         return $observacao;
     }
 
-
     /**
      * Remove the specified resource from storage.
      * @param int $id
@@ -210,14 +218,12 @@ class EstoqueController extends Controller
     {
         $estoque = Estoque::findOrFail($id);
 
-
-
         MovimentacaoEstoque::create(
             [
                 'estoque_id' => $estoque->id,
                 'quantidade' => $estoque->quantidade,
                 'preco_custo' => $estoque->preco_custo,
-                'observacao' => "Item Excluido"
+                'observacao' => "Item Excluido",
             ]
         );
         $estoque->delete();
@@ -259,8 +265,13 @@ class EstoqueController extends Controller
         $notificacoes = $this->verificarNotificacoes();
         return view('estoque::estoque.notificacoes.index', compact('itens', 'notificacoes'));
     }
-    public function saidaProdutos(){
-      return view('estoque::estoque.relatorios.saidaProdutos');
+    public function saidaProdutos()
+    {
+        $data = [
+            'produtos' => Produto::all(),
+            'categorias' => Categoria::all(),
+        ];
+        return view('estoque::estoque.relatorios.saidaProdutos', compact('data'));
     }
 
     public static function verificarNotificacoes()
@@ -269,12 +280,13 @@ class EstoqueController extends Controller
         return count($itens);
     }
 
-    public function relatorioCusto(){
+    public function relatorioCusto()
+    {
         $estoques = Estoque::all();
         $movimentacoes = MovimentacaoEstoque::orderBy('created_at', 'DESC')->get();
         // $ms = DB::table('movimentacao_estoque')
-        //     ->select(DB::raw('distinct substring_index(created_at, " ", 1) as data, 
-        //     (SELECT COUNT(id) FROM movimentacao_estoque 
+        //     ->select(DB::raw('distinct substring_index(created_at, " ", 1) as data,
+        //     (SELECT COUNT(id) FROM movimentacao_estoque
         //     WHERE data = SUBSTRING_INDEX(created_at, " ", 1)) as qtd'))
         // ->get();
 
@@ -283,22 +295,22 @@ class EstoqueController extends Controller
             (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = 3)) as nome,
             (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = 3 AND quantidade > 0) as qtd
              FROM movimentacao_estoque as me WHERE estoque_id = 3 order by data asc'
-    
+
             // 'SELECT distinct substring_index(created_at, " ", 1) as data,
             // (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = me.estoque_id)) as nome,
             // (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = me.estoque_id AND quantidade > 0) as qtd
             //  FROM movimentacao_estoque as me'
-            
+
         );
 
         $mo = [];
-        foreach($ms as $m){
-                array_push($mo, $m->data);
+        foreach ($ms as $m) {
+            array_push($mo, $m->data);
         }
         $labels = json_encode($mo);
 
         $da = [];
-        foreach($ms as $d){
+        foreach ($ms as $d) {
             array_push($da, $d->qtd);
         }
         $dados = json_encode($da);
@@ -306,47 +318,55 @@ class EstoqueController extends Controller
         return view('estoque::estoque.relatorios.custo', compact('labels', 'dados', 'estoques'));
     }
 
-    public function relatorioCustoBusca(Request $req){
+    public function relatorioCustoBusca(Request $req)
+    {
         $estoques = Estoque::all();
         $ms = [];
-        if($req->estoque_id == -1){
+        if ($req->estoque_id == -1) {
             $ms = DB::select(
                 'SELECT distinct substring_index(created_at, " ", 1) as data,
                 (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtd
                  FROM movimentacao_estoque as me WHERE
-                 substring_index(created_at, " ", 1) BETWEEN "'.$req->data_inicial.'" AND "'.$req->data_final.'"
-                  order by data asc'   
-            );    
-        }else{
+                 substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '"
+                  order by data asc'
+            );
+        } else {
             $ms = DB::select(
                 'SELECT distinct substri0ng_index(created_at, " ", 1) as data,
-                (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = '.$req->estoque_id .')) as nome,
-                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = '.$req->estoque_id .' AND quantidade > 0) as qtd
-                 FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id .' AND 
-                 substring_index(created_at, " ", 1) BETWEEN "'.$req->data_inicial.'" AND "'.$req->data_final.'"
-                  order by data asc'   
+                (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = ' . $req->estoque_id . ')) as nome,
+                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = ' . $req->estoque_id . ' AND quantidade > 0) as qtd
+                 FROM movimentacao_estoque as me WHERE estoque_id = ' . $req->estoque_id . ' AND
+                 substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '"
+                  order by data asc'
             );
         }
 
         $mo = [];
-        foreach($ms as $m){
-                array_push($mo, $m->data);
+        foreach ($ms as $m) {
+            array_push($mo, $m->data);
         }
         $labels = json_encode($mo);
 
         $da = [];
-        foreach($ms as $d){
+        foreach ($ms as $d) {
             array_push($da, $d->qtd);
         }
         $dados = json_encode($da);
 
         return view('estoque::estoque.relatorios.custo', compact('labels', 'dados', 'estoques'));
-    } 
+    }
 
-    public function relatorioMovimentacao(){
+    public function relatorioMovimentacao()
+    {
         $categorias = Categoria::all();
-        
-        
+
         return view('estoque::estoque.relatorios.movimentacao', compact('categorias'));
+    }
+
+    public function getSaidaProdutos(Request $request)
+    {
+        $produtos = DB::table('estoque')->where('deleted_at','<>',null)->get();
+        return json_encode($produtos);
+
     }
 }
