@@ -12,7 +12,7 @@
                 This view is loaded from module: {!! config('usuario.name') !!}
             </p> -->
 
-            <form id="forgotForm" method="POST" action="{{url('/forgotPassword')}}">
+            <form id="forgotForm" method="POST" action="{{url('/esqueciSenha')}}">
                     {{ csrf_field() }}
 
                     @if(session('error'))

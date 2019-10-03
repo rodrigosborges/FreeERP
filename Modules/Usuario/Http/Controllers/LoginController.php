@@ -51,7 +51,7 @@ class LoginController extends Controller
             // $results = DB::select('select * from cliente where id = ?', [1]);
         }else{
             // return back()->withErrors(['login' => ['Usuário inválido ou inexistente'],'password' => ['Senha incorreta']]);
-            // return back()->with('error', 'Credenciais não conferem!');
+            return back()->with('error', 'Credenciais não conferem!');
         }
     }
     public function logoutUsuario(Request $request)
