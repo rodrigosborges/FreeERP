@@ -31,7 +31,7 @@ class ClienteController extends Controller
         $tipo_cliente = TipoCliente::all();
         $tipo_telefone = TipoTelefone::all();
         $estados = Estado::all();
-    
+        
         return view('cliente::cliente.form', compact('tipo_cliente', 'tipo_telefone', 'estados'));
     }
 
@@ -94,15 +94,17 @@ class ClienteController extends Controller
         $estados = Estado::all();
         $cliente = Cliente::FindOrFail($id);
         $telefones = $cliente->telefones;
+        $cidades = $cliente->endereco->cidade->estado->cidades;
         
         
+    
+      
         
-        
-        
-        return view('cliente::cliente.form', compact('tipo_cliente', 'tipo_telefone', 'estados', 'cliente'));
+        return view('cliente::cliente.form', compact('tipo_cliente', 'tipo_telefone', 'estados', 'cliente', 'cidades'));
     }
 
     public function update(CreateClienteRequest $request, $id){
+            //return back()->withInput();
             $dados = $request->all();
 
       

@@ -41,11 +41,11 @@
                 </div>
                 <div class="form-group col-md d-none" id="div_nome_fantasia">
                     <label for="nome_fantasia" class="">Nome Fantasia</label>
-                    <input type="text" class="form-control" name="cliente[nome_fantasia]" id="nome_fantasia">
+                    <input type="text" class="form-control" name="cliente[nome_fantasia]" id="nome_fantasia" value="{{ isset($cliente->nome_fantasia) ? $cliente->nome_fantasia : old('cliente[nome_fantasia]', '') }}">
                 </div>
                 <div class="form-group col-12">
                     <label for="email" class="">E-mail</label>
-                    <input type="email" name="email[email]" class="form-control required" id="email" value="{{ isset($cliente->email) ? $cliente->email->email : old('email[email]', '') }}" >
+                    <input type="email" name="email[email]" class="form-control required" id="email" value="{{ old('email.email', isset($cliente->email) ? $cliente->email->email : '') }}" >
                 </div>
             </div>
             <div class="row my-3">
@@ -86,8 +86,13 @@
             </div>
             <div class="row documento-div">
                 <div class="form-group col">
-                    <label for="numero_documento" class="">Selecione o tipo de Pessoa</label>
-                    <input type="text" class="form-control required" name="documento[documento]" disabled value="{{ isset($cliente->documento) ? $cliente->documento->numero : old('documento[documento]', '') }}">
+                    @if(empty($cliente))
+                         <label for="numero_documento">Selecione o tipo de Pessoa</label>
+                         <input type="text" class="form-control required" name="documento[documento]" disabled value="{{ isset($cliente->documento) ? $cliente->documento->numero : old('documento[documento]', '') }}">
+                    @else
+                        <label for="numero_documento">{{$cliente->documento->tipo_documento->nome}}</label>
+                        <input type="text" class="form-control required" name="documento[documento]" value="{{ isset($cliente->documento) ? $cliente->documento->numero : old('documento[documento]', '') }}">
+                    @endif
                 </div>
             </div>
        
@@ -111,7 +116,7 @@
                     <input type="text" class="form-control required" name="endereco[numero]" value="{{ isset($cliente->endereco) ? $cliente->endereco->numero : old('endereco[numero]', '') }}">
                 </div>
             </div>
-            <div class="row ">
+            <div class="row">
                 <div class="form-group col">
                     <label for="complemento" class=" text-left">Complemento</label>
                     <input type="text" class="form-control" name="endereco[complemento]" value="{{ isset($cliente->endereco->complemento) ? $cliente->endereco->complemento : old('endereco[complemento]', '') }}">
@@ -134,7 +139,14 @@
                 </div>
                 <div class="form-group col">
                     <label for="cidade" class="">Cidade</label>
-                    <select class="custom-select required" name="endereco[cidade_id]" id="cidade"></select>
+                    <select class="custom-select required" name="endereco[cidade_id]" id="cidade">
+                        @isset($cidades)
+                            @foreach($cidades as $cidade)
+                                <option value="{{$cidade->id}}" {{ isset($cliente->endereco) && ($cidade->id == $cliente->endereco->cidade_id) ? 'selected' : old('endereco[cidade_id]', '') }}>{{ $cidade->nome }}</option> 
+                            @endforeach
+                        @endisset
+                        
+                    </select>   
                 </div>
             </div>
             </h1> <button type="submit" class="btn btn-success sendForm">Enviar</button>
@@ -231,17 +243,15 @@
     })
 
     $(document).on('click', '.excluir_telefone', function() {
-
+        
         if ($(".telefone-div").length == 2) {
             $(this).closest('.telefone-div').remove();
-            $('.telefone-div').parent().addClass('d-none');
+            $('.excluir_telefone').parent().addClass('d-none')
         }
         else if($('.telefone-div').length >= 2) {
             $(this).closest('.telefone-div').remove();
         }
-        else{
-            
-        }
+        
     })
 
     $(document).on('change', '#tipo_pessoa', function() {
