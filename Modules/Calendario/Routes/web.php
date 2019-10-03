@@ -23,7 +23,9 @@ Route::patch('/calendario/agendas/{agenda}', 'AgendaController@restaurar')->name
 Route::post('/calendario/agendas', 'AgendaController@salvar')->name('agendas.salvar');
 Route::get('/calendario/agendas/{agenda}/eventos', 'AgendaController@eventos')->name('agendas.eventos.index');
 Route::delete('/calendario/agendas/{agenda}', 'AgendaController@deletar')->name('agendas.deletar');
-Route::get('/calendario/agendas/compartilhamentos/{compartilhamento}/aprovar', 'AgendaController@aprovarCompartilhamento')->name('compartilhamentos.aprovar');
+Route::get('/calendario/agendas/compartilhamentos/{compartilhamento}/aprovar', 'AgendaController@aprovar_compartilhamento')->name('compartilhamentos.aprovar');
+Route::get('/calendario/agendas/compartilhamentos/{compartilhamento}/negar', 'AgendaController@negar_compartilhamento')->name('compartilhamentos.negar');
+Route::get('/calendario/agendas/compartilhamentos/{compartilhamento}/revogar', 'AgendaController@revogar_aprovacao')->name('compartilhamentos.revogar');
 
 Route::get('/calendario/agendas/eventos/criar', 'EventoController@criarOuEditar')->name('eventos.criar');
 Route::get('/calendario/agendas/eventos/{evento}', 'EventoController@criarOuEditar')->name('eventos.editar');

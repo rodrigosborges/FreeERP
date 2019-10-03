@@ -99,10 +99,21 @@ class AgendaController extends Controller
         return redirect()->route('agendas.index')->with('success', 'Agenda restaurada com sucesso.');
     }
 
-    public function aprovarCompartilhamento(Compartilhamento $compartilhamento){
+    public function aprovar_compartilhamento(Compartilhamento $compartilhamento){
         $aprovacao = new Aprovacao();
         $aprovacao->funcionario_id = 1;
         $compartilhamento->aprovacao()->save($aprovacao);
+        return redirect()->back();
+    }
+
+    public function negar_compartilhamento(Compartilhamento $compartilhamento){
+        $compartilhamento->delete();
+        return redirect()->back();
+    }
+
+    public function revogar_aprovacao(Compartilhamento $compartilhamento){
+        $compartilhamento->aprovacao()->delete();
+        return redirect()->back();
     }
 
     public function eventos(Agenda $agenda)

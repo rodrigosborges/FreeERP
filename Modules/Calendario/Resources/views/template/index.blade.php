@@ -49,7 +49,7 @@ $menu = [
             color: #ffffff;
         }
 
-        .acoes button {
+        .acoes button, .acoes a {
             float: right;
             margin-left: 5px;
         }

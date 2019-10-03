@@ -23,11 +23,15 @@ class CalendarioController extends Controller
 
     public function compartilhamentos(){
         $agendas = Agenda::all();
-        $solicitacoes = [];
+        $solicitacoes['pendentes'] = [];
+        $solicitacoes['aprovadas'] = [];
         foreach ($agendas as $agenda){
             foreach ($agenda->compartilhamentos as $compartilhamento){
                 if(!$compartilhamento->aprovacao){
-                    $solicitacoes[] = $compartilhamento;
+                    array_push($solicitacoes['pendentes'], $compartilhamento);
+                }
+                else{
+                    array_push($solicitacoes['aprovadas'], $compartilhamento);
                 }
             }
         }
