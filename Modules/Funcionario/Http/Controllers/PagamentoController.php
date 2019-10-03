@@ -152,8 +152,13 @@ class PagamentoController extends Controller
      */
     public function show($id)
     {
-        return "";
-        return view('funcionario::show');
+        $data = [
+            'title' => 'Holerite',
+            'pagamento' => Pagamento::findOrFail($id)
+        ];
+
+        return view('funcionario::pagamentos.show', compact('data'));
+        
     }
 
     /**

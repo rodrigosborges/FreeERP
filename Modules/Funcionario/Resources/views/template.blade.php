@@ -9,6 +9,7 @@
         ['icon' => 'work', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
         ['icon' => 'monetization_on', 'tool' => 'Pagamentos', 'route' => url('funcionario/pagamento')],
         ['icon' => 'work_off', 'tool' => 'Férias', 'route' => url('funcionario/ferias')],
+        
 
     ];
 ?>

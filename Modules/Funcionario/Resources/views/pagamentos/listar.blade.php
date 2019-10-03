@@ -37,8 +37,9 @@
       <td>{{ $pagamento->tipo_pagamento}}</td>
       <td>{{ $pagamento->emissao}} </td>
       <td>
-        <a href="pagamento/{{ $pagamento->id }}/edit" class="btn btn-warning"><i class="material-icons">edit</i></a>
-        <a href="" class="btn btn-danger"><i class="material-icons">delete</i></a>
+        <a href="{{ url('funcionario/pagamento/'.$pagamento->id) }}" class="btn btn-sm btn-primary"><i class="material-icons">remove_red_eye</i></a>
+        <a href="pagamento/{{ $pagamento->id }}/edit" class="btn btn-sm btn-warning"><i class="material-icons">edit</i></a>
+        <a href="" class="btn btn-sm btn-danger"><i class="material-icons">delete</i></a>
       </td>
     </tr>
   </tbody>
