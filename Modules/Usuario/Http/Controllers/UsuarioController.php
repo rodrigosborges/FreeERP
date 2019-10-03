@@ -2,6 +2,7 @@
 
 namespace Modules\Usuario\Http\Controllers;
 
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -17,7 +18,7 @@ class UsuarioController extends Controller
 {
   
     public function index(Request $request){
-        
+ 
         if ($request->has('busca')) {
             $busca = $request->get('busca');
             $data = [
@@ -42,7 +43,10 @@ class UsuarioController extends Controller
     public function create()
     {
         $papeis = Papel::all();
-        return view('usuario::usuario.form',compact('papeis'));
+        if (Gate::allows('create', Auth::user())) {
+            return view('usuario::usuario.form',compact('papeis'));
+        }
+         return abort(403);
     }
 
     public function store(UsuarioStoreRequest $request)
