@@ -62,11 +62,14 @@ Route::prefix('estoque')->group(function () {
     Route::get('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacao');
     Route::post('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacaoBusca');
     Route::get('/relatorio/saida-produtos', 'EstoqueController@saidaProdutos');
+
    // Route::get('/relatorio/custos/chart', 'EstoqueController@chartCusto');
     //Rotas do Estoque
     Route::post('/buscar', 'EstoqueController@buscar');
 
 });
+Route::resource('/estoque', 'EstoqueController');
+//Rotas Ajax
 Route::post('verificaNomeCategoria', 'CategoriaController@verificaNome');
 Route::post('buscaUnidades', 'EstoqueController@buscaUnidades');
-Route::resource('/estoque', 'EstoqueController');
+Route::post('estoque/relatorio/saida', 'EstoqueController@getSaidaProdutos');

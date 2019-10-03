@@ -2,41 +2,46 @@
 @section('title','Saída de Produtos')
 @section('body')
 <form method="POST" action="" id="form">
-                    @csrf
+    @csrf
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label for="nome">Nome do Produto</label>
+          <select name="produto" id="" class="custom-select produto">
+          <option value="0">Todos os Produtos</option>
+          @foreach($data['produtos'] as $produto)
+            <option value="{{$produto->id}}">{{$produto->nome}}</option>
+          @endforeach
+          </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-lg-4 com-md-6 col-sm-12">
+            <label for="categoria">Categoria</label>
+            <select  class="custom-select categoria"  name="categoria">
+                <option value="0" selected>Todas Categorias</option>
+                @foreach($data['categorias'] as $categoria)
+                <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+          @endforeach
 
-                    <div class="row">
-                        <div class="form-group col-12">
-                            <label for="nome">Nome do Produto</label>
-                            <input id="search-input" placeholder="Insira o nome do produto" maxlength="45" class="form-control" type="text" name="nome">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="categoria">Categoria</label>
-                            <select  class="form-control" name="categoria">
-                                <option value="-1" selected>Todas Categorias</option>
-                               
-                            </select>
-                        </div>
-                        <div class="form-group col-3">
-                            <label for="dataInicial">Data Inicial</label>
-                            <input type="date" name="dataInicial" class="form-control" >
-                        </div>
-                        <div class="form-group col-3">
-                            <label for="dataFinal">Data Final</label>
-                            <input type="date" name="dataFinal" class="form-control" >
-                        </div>
-                    </div>
-                    <div class="row float-right">
-                        <div class="form-group col-12">
-                            <button type="submit" name="btn" class="btn btn-sm btn-secondary btn-search" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
-                        </div>
-                    </div>
-                        
-                    
-                </form>
-<canvas id="myChart" class="chart_custo" width="300"></canvas>
+            </select>
+        </div>
+        <div class="form-group col-lg-3 col-md-6 col-sm-12">
+            <label for="dataInicial">Data Inicial</label>
+            <input type="date" name="dataInicial" class="form-control dataIncial" >
+        </div>
+        <div class="form-group col-lg-3 col-md-6 col-sm-12">
+            <label for="dataFinal">Data Final</label>
+            <input type="date" name="dataFinal" class="form-control dataFinal " >
+        </div>
 
+        <div class="form-group col-lg-2 col-md col-sm-12">
+            <button type="submit" name="btn" class="btn btn-sm btn-secondary btn-search" style="font-size:18px; margin-top:30px"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
+        </div>
+    </div>
+</form>
+<div class=" col-sm-6">
+    <canvas id="myChart" class="chart_custo" width="300"></canvas>
+</div>
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
 var chart = new Chart(ctx, {
@@ -61,15 +66,39 @@ var chart = new Chart(ctx, {
 
 @endsection
 @yield('js')
+
 <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
 <script>
 $(document).ready(function(){
-  $('.chart_custo').hide();  
+  $('.chart_custo').hide();
   $('.btn-search').click(function(e){
+      e.preventDefault()
+      var dataInicial = $('.dataInicial').val()
+      var dataFinal = $('.dataFinal').val()
+      var categoria = $('.categoria').val()
+      var produto = $('.produto').val()
+      $.ajax({
+          url: 'saida',
+          type: 'POST',
+          data:{
+              inicio: dataInicial,
+              fim : dataFinal,
+              categoria : categoria,
+              produto : produto,
+              '_token': $('input[name=_token]').val(),
+
+          }
+      }).done(function(data){
+       mostraGrafico(data)
+      }).fail(function(){
+        console.log("fail")
+      })
       $('.chart_custo').show('slow')
-      e.preventDefault();
+   //   e.preventDefault();
   })
 })
+function mostraGrafico(data){
+    
+}
 </script>
-
-
