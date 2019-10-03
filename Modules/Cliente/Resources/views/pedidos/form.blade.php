@@ -21,11 +21,7 @@
         @if(isset($pedido)) 
             @method('put')
         @endif
-        <ul class="mensagem-erro">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+      
         <div class="row">
             <div class="col-lg-4 col-md-12 form-group">
                 <label for="data">Data da compra:</label>
@@ -65,31 +61,28 @@
         <hr>
         
         <?php
-            
-            $pedidosProdutos = old('produtos', isset($pedido) ? $pedido->produtos : [[]]);
-            
+            $pedidosProdutos = old('produtos', isset($pedido) ? $pedido->produtos : [[]]);       
+       
         ?>
 
         <div class="produtos">
             <h3>Produto(s)</h3>
-        
-
                 @foreach ($pedidosProdutos as $key => $prod)
                 <div class="row produto ">
                     <hr>
-                    
                     <div class="col-lg col-md form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="material-icons">format_list_numbered</i></span>
                             </div>
+                         
                             <select name="produtos[{{$key}}][produto_id]" required id="" class="form-control">
+                                <option value="" {{isset($pedido) ? '' : 'selected'}} disabled>Selecione um produto</option>
                                 @foreach($produtos as $produto)   
-                                    
-                                    <option {{(isset($pedido) ? $prod->pivot->produto_id : '') == $produto->id ? 'selected' : ''}} value="{{$produto->id}}" >{{$produto->nome}} | Preço: R${{$produto->preco}}</option>
-                                    
+                                    <option value="{{$produto->id}}" {{ (array_key_exists('produto_id', $prod) ? $prod['produto_id'] : (isset($prod->pivot) ? $prod['pivot']['produto_id'] : '')) == $produto->id ? 'selected' : '' }}   >{{$produto->nome}} | Preço: R${{$produto->preco}}</option>
                                 @endforeach        
-                            </select>     
+                            </select>  
+                            <span class="mensagem-erro">{{$errors->first('produtos.'.$key.'.produto_id')}}</span>
                                        
                         </div>
                     </div>
@@ -98,7 +91,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="material-icons">add_shopping_cart</i></span>
                             </div>
-                            <input type="text" required class="form-control produto_quantidade" value="{{$prod->pivot->quantidade}}"  name="produtos[{{$key}}][quantidade]" placeholder="Quantidade">
+                            <input type="text" required class="form-control produto_quantidade" value="{{array_key_exists('quantidade', $prod) ? $prod['quantidade'] : (isset($prod->pivot) ? $prod['pivot']['quantidade'] : '')}}"  name="produtos[{{$key}}][quantidade]" placeholder="Quantidade">
+                            <span class="mensagem-erro">{{$errors->first('produtos.'.$key.'.quantidade')}}</span>
                         </div>                 
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-11 form-group">
@@ -106,7 +100,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="material-icons">trending_down</i></span>
                             </div>
-                            <input type="text" required class="form-control produto_desconto desconto" value="{{$prod->pivot->desconto}}" name="produtos[{{$key}}][desconto]" placeholder="Desconto">
+                            <input type="text" required class="form-control produto_desconto desconto" value="{{array_key_exists('desconto', $prod) ? $prod['desconto'] : (isset($prod->pivot) ? $prod['pivot']['desconto'] : '')}}" name="produtos[{{$key}}][desconto]" placeholder="Desconto">
+                            <span class="mensagem-erro">{{$errors->first('produtos.'.$key.'.desconto')}}</span>
                         </div>  
                     </div>
                     <div class="col-lg-1 col-sm-12 form-group d-none">
@@ -122,7 +117,7 @@
             <button type="button" id="adicionar-produto" class="btn btn-success"><strong>+</strong></button>
         </div>
         
-        <button class="btn btn-primary" >Cadastrar compra</button>
+        <button class="btn btn-primary" >{{isset($pedido) ? 'Atualizar compra' : 'Cadastrar compra'}}</button>
 
     </form>
 
@@ -134,6 +129,7 @@
 <script src="{{Module::asset('cliente:js/views/pedido/inputmask.js')}}"></script>
 <script>
     $(document).on('click', '#adicionar-produto', function(){
+       
         $('.excluir-produto').parent().removeClass('d-none');
         var pedido = $(".produto").last().clone();
 
@@ -182,6 +178,9 @@
     });
 
     $(document).ready(function(){
+        if($('.produto').length >= 2){ //quando for edição e tiver mais de um produto ele mostra o boão de exclusão da produto
+            $('.produto').children('.d-none').removeClass('d-none')
+        }
         $(".desconto").inputmask("decimal", {
             'alias': 'numeric',
             'groupSeparator': '',

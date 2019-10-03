@@ -39,9 +39,6 @@ class PedidoController extends Controller
     public function store(CreatePedidoRequest $request, $id_cliente) {
         $valores = $request->all();
         $valores["cliente_id"] = $id_cliente;
-
-
-        return back()->withInput();
         
         $pedido = Pedido::create($valores);
         DB::beginTransaction();
@@ -99,11 +96,16 @@ class PedidoController extends Controller
             
             $dados = [];
             foreach($produtos as $produto){
-                $dados[$produto['produto_id']] = [
+                if(array_key_exists($produto['produto_id'], $dados)){
+                    $dados[$produto['produto_id']]['quantidade'] += $produto['quantidade'];
+                }else {
+                    $dados[$produto['produto_id']] = [
                         'quantidade' => $produto['quantidade'], 
                         'desconto' => $produto['desconto']
                     ];
                 }
+   
+            }
 
             $pedido->produtos()->sync($dados);
             DB::commit();
