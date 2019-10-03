@@ -5,12 +5,13 @@ namespace Modules\Usuario\Providers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-
+use Modules\Polices\UsuarioPolicy; 
 class UsuarioServiceProvider extends ServiceProvider
 {
     
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        Usuario::class => UsuarioPolicy::class,
     ];
 
     

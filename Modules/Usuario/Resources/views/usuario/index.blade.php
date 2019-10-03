@@ -1,5 +1,6 @@
 @extends('usuario::layouts.informacoes')
 @section('content')
+@can('create')
 <div class="row justify-content-center align-items-center" style="height:100%">
     <div class="col-xm-12 col-sm-10">
         <div class="card mt-4 shadow-sm">
@@ -147,4 +148,5 @@
         </div>
     </div>
 </div>
+@endcan
 @endsection

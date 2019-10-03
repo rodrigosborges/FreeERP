@@ -47,6 +47,7 @@ class UsuarioController extends Controller
 
     public function store(UsuarioStoreRequest $request)
     {
+        
         DB::beginTransaction();
         try{
             $avatar = $request->file('avatar');
