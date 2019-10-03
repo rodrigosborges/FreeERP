@@ -399,6 +399,16 @@ class FuncionarioController extends Controller{
 
 		return $cargos;
 
-	}
+    }
+    
+    //parte de atestado
+
+    public function atestado($id){
+        $data = [
+            'title' => 'Cadastro de Atestado',
+            'funcionario' => Funcionario::findOrFail($id)
+        ];
+        return view('funcionario::funcionario.atestado',compact('data'));
+    }
 
 }
