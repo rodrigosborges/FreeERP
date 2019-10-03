@@ -1,4 +1,12 @@
-@extends('cliente::template') @section('title','Cadastro de Cliente') @section('body')
+@extends('cliente::template') 
+@section('title')
+    @if(isset($cliente))
+        Edição de cliente - {{$cliente->nome}}
+    @else
+        Cadastro de Cliente
+    @endif
+@endsection
+@section('body')
 
 
     
@@ -22,7 +30,7 @@
                     <select class="custom-select required" name='cliente[tipo_cliente_id]' id="tipo_pessoa">
                         <option value="">Selecione</option>
                         @foreach($tipo_cliente as $tipo)
-                        <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
+                        <option value="{{$tipo->id}}" {{ isset($cliente->tipo_cliente_id) && ($tipo->id == $cliente->tipo_cliente_id) ? 'selected ' : '' }}>{{$tipo->nome}}</option>
 
                         @endforeach
                     </select>
@@ -33,11 +41,11 @@
                 </div>
                 <div class="form-group col-md d-none" id="div_nome_fantasia">
                     <label for="nome_fantasia" class="">Nome Fantasia</label>
-                    <input type="text" class="form-control" name="cliente[nome_fantasia]" id="nome_fantasia">
+                    <input type="text" class="form-control" name="cliente[nome_fantasia]" id="nome_fantasia" value="{{ isset($cliente->nome_fantasia) ? $cliente->nome_fantasia : old('cliente[nome_fantasia]', '') }}">
                 </div>
                 <div class="form-group col-12">
                     <label for="email" class="">E-mail</label>
-                    <input type="email" name="email[email]" class="form-control required" id="email">
+                    <input type="email" name="email[email]" class="form-control required" id="email" value="{{ old('email.email', isset($cliente->email) ? $cliente->email->email : '') }}" >
                 </div>
             </div>
             <div class="row my-3">
@@ -50,14 +58,14 @@
                 <div class="row telefone-div">
                     <div class="form-group col">
                         <label for="telefone">Número</label>
-                        <input type="text" class="form-control input-telefone required" name="telefones[0][numero]">
+                        <input type="text" class="form-control input-telefone required" name="telefones[0][numero]" value="{{ isset($cliente) ? $cliente->telefones[0]->numero : old('telefones[0][numero]', '') }}">
                     </div>
                     <div class="form-group col">
                         <label for="tipo_telefone">Tipo</label>
                         <select class="custom-select required" name="telefones[0][tipo_telefone_id]" id="tipo_telefone">
                             <option value="">Selecione</option>
                             @foreach($tipo_telefone as $tipo){
-                            <option value="{{$tipo->id}}">{{$tipo->nome}}</option>
+                            <option value="{{$tipo->id}}" {{ isset($cliente->telefones) && ($tipo->id == $cliente->telefones[0]->tipo_telefone_id) ? 'selected ' : '' }}>{{$tipo->nome}}</option>
                             }
                             @endforeach
                         </select>
@@ -78,8 +86,13 @@
             </div>
             <div class="row documento-div">
                 <div class="form-group col">
-                    <label for="numero_documento" class="">Selecione o tipo de Pessoa</label>
-                    <input type="text" class="form-control required" name="documento[documento]" disabled>
+                    @if(empty($cliente))
+                         <label for="numero_documento">Selecione o tipo de Pessoa</label>
+                         <input type="text" class="form-control required" name="documento[documento]" disabled value="{{ isset($cliente->documento) ? $cliente->documento->numero : old('documento[documento]', '') }}">
+                    @else
+                        <label for="numero_documento">{{$cliente->documento->tipo_documento->nome}}</label>
+                        <input type="text" class="form-control required" name="documento[documento]" value="{{ isset($cliente->documento) ? $cliente->documento->numero : old('documento[documento]', '') }}">
+                    @endif
                 </div>
             </div>
        
@@ -92,41 +105,48 @@
             <div class="row">
                 <div class="form-group col-3">
                     <label for="cep" class="">CEP</label>
-                    <input type="text" class="form-control" name="endereco[cep]" id="cep">
+                    <input type="text" class="form-control" name="endereco[cep]" id="cep" value="{{ isset($cliente->endereco->cep) ? $cliente->endereco->cep : old('endereco[cep]', '') }}">
                 </div>
                 <div class="form-group col-7">
                     <label for="logradouro" class="">Logradouro</label>
-                    <input type="text" class="form-control required" name="endereco[logradouro]">
+                    <input type="text" class="form-control required" name="endereco[logradouro]" value="{{ isset($cliente->endereco) ? $cliente->endereco->logradouro : old('endereco[logradouro]', '') }}">
                 </div>
                 <div class="form-group col-2">
                     <label for="numero" class=" text-left">Número</label>
-                    <input type="text" class="form-control required" name="endereco[numero]">
+                    <input type="text" class="form-control required" name="endereco[numero]" value="{{ isset($cliente->endereco) ? $cliente->endereco->numero : old('endereco[numero]', '') }}">
                 </div>
             </div>
-            <div class="row ">
+            <div class="row">
                 <div class="form-group col">
                     <label for="complemento" class=" text-left">Complemento</label>
-                    <input type="text" class="form-control" name="endereco[complemento]">
+                    <input type="text" class="form-control" name="endereco[complemento]" value="{{ isset($cliente->endereco->complemento) ? $cliente->endereco->complemento : old('endereco[complemento]', '') }}">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-4">
                     <label for="bairro" class="">Bairro</label>
-                    <input type="text" class="form-control required" name="endereco[bairro]">
+                    <input type="text" class="form-control required" name="endereco[bairro]" value="{{ isset($cliente->endereco) ? $cliente->endereco->bairro : old('endereco[bairro]', '') }}">
                 </div>
                 <div class="form-group col">
                     <label for="estado" class="">Estado</label>
                     <select class="custom-select required" name="endereco[estado_id]" id="estado">
                         <option value="">Selecione</option>
                         @foreach($estados as $estado){
-                        <option value="{{$estado->id}}" uf="{{$estado->uf}}">{{ $estado->nome }}</option>
+                        <option value="{{$estado->id}}" uf="{{$estado->uf}}" {{ isset($cliente->endereco) && ($cliente->endereco->cidade->estado_id == $estado->id) ? 'selected' : old('endereco[bairro]', '') }}>{{ $estado->nome }}</option>
                         }
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group col">
                     <label for="cidade" class="">Cidade</label>
-                    <select class="custom-select required" name="endereco[cidade_id]" id="cidade"></select>
+                    <select class="custom-select required" name="endereco[cidade_id]" id="cidade">
+                        @isset($cidades)
+                            @foreach($cidades as $cidade)
+                                <option value="{{$cidade->id}}" {{ isset($cliente->endereco) && ($cidade->id == $cliente->endereco->cidade_id) ? 'selected' : old('endereco[cidade_id]', '') }}>{{ $cidade->nome }}</option> 
+                            @endforeach
+                        @endisset
+                        
+                    </select>   
                 </div>
             </div>
             </h1> <button type="submit" class="btn btn-success sendForm">Enviar</button>
@@ -223,15 +243,15 @@
     })
 
     $(document).on('click', '.excluir_telefone', function() {
-
+        
         if ($(".telefone-div").length == 2) {
             $(this).closest('.telefone-div').remove();
-            $('.telefone-div').parent().addClass('d-none');
+            $('.excluir_telefone').parent().addClass('d-none')
         }
         else if($('.telefone-div').length >= 2) {
             $(this).closest('.telefone-div').remove();
         }
-    
+        
     })
 
     $(document).on('change', '#tipo_pessoa', function() {

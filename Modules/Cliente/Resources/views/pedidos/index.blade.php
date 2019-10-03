@@ -1,7 +1,7 @@
 @extends('cliente::template')
-@section('title')
-Cadastro de Compras - {{ $cliente->nome }}
-@endsection
+  @section('title')
+    Cadastro de Compras - {{ $cliente->nome }}
+  @endsection
 @section('content')
 <div class="card">
   <div id="opcoes" class="card-header flex">
@@ -39,7 +39,7 @@ Cadastro de Compras - {{ $cliente->nome }}
       </form>
       {{-- Botao nova compra --}}
       <div class="align-self-end text-right">
-        <a class="btn btn-primary" href="/cliente/{{$cliente->id}}/pedido/novo" style="color: white;">Adicionar
+        <a class="btn btn-primary" href="{{url('/cliente/'.$cliente->id.'/pedido/novo')}}" style="color: white;">Adicionar
           Compra</a>
       </div>
 
