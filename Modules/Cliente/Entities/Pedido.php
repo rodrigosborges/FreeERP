@@ -67,6 +67,17 @@ class Pedido extends Model
         return $valor;
     }
 
+    public function media_desconto_itens(){
+        $produtos = $this->vl_total_itens();
+        $desc_total = 0;
+
+        foreach($produtos as $produto){
+            $desc_total += $produto->desconto;
+        }
+
+        $media = $desc_total/count($produtos);
+    }
+
 
 
 

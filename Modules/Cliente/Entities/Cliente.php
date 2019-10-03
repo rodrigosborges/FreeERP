@@ -53,6 +53,22 @@ class Cliente extends Model
         return $this->hasMany('Modules\Cliente\Entities\Pedido');
     }
 
+    public function vl_total_liquido_pedidos($start, $end){
+        $vl_total = 0;
+        $vl_desc = 0;
+
+        $pedidos = $this->pedidos()->whereBetween( 'data', [$start, $end] )->get();
+        
+        foreach($pedidos as $pedido){
+            $vl_total += $pedido->vl_total_pedido();
+            $vl_desc += $pedido->media_desconto_itens();
+        }
+        $vl_desc = $vl_desc / count($pedidos);
+
+        $data = ["vl_total" => $vl_total, "media_desc_item" => $vl_desc];
+        return $data;
+    }
+    
     
 
 }

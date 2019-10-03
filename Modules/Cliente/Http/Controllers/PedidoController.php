@@ -8,6 +8,7 @@ use Modules\Cliente\Http\Requests\CreatePedidoRequest;
 use Illuminate\Routing\Controller;
 use Modules\Cliente\Entities\{Cliente, Pedido, Produto};
 use DB;
+use Carbon\Carbon;
 
 class PedidoController extends Controller
 {
@@ -144,6 +145,26 @@ class PedidoController extends Controller
             DB::rollback();
             return back()->with('error', 'Ocorreu um erro ao efetuar a operação');
         }
+    }
+
+
+
+    public function pdf($cliente_id, $start, $end){
+        $cliente = Cliente::findOrFail($cliente_id);
+        $start = new Carbon($start);
+        $end = new Carbon($end);
+
+        $pedidos = $cliente->pedidos()->whereBetween( 'data', [$start, $end] )->orderBy('data')->get();
+
+
+        $data = ['cliente' => $cliente, 'pedidos' => $pedidos, 'start' => $start, 'end'=> $end, 
+        'data' => $cliente->vl_total_liquido_pedidos($start, $end)];
+        
+        // dd($data);
+        // return view('cliente::pedidos.relatorio', compact('cliente', 'pedido'));
+        return \PDF::loadView('cliente::pedidos.relatorio', $data)
+                ->setPaper('a4', 'landscape')
+                ->stream();
     }
 
 
