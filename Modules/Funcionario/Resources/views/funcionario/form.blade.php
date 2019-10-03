@@ -74,7 +74,7 @@
                                 <i class="material-icons">date_range</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_nascimento]" id="data_nascimento" class="form-control data" value="{{ old('funcionario.data_nascimento', $data['model'] ? $data['model']->data_nascimento : '') }}">
+                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_nascimento]" id="data_nascimento" class="form-control data" value="{{ old('funcionario.data_nascimento', $data['model'] ? date('d/m/Y', strtotime($data['model']->data_nascimento)) : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('funcionario.data_nascimento') }} </span>
                 </div>
@@ -88,7 +88,7 @@
                                 <i class="material-icons">date_range</i>
                             </span>
                         </div>
-                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_admissao]" id="data_admissao" class="form-control data" value="{{ old('funcionario.data_admissao', $data['model'] ? $data['model']->data_admissao : '') }}">
+                        <input required type="text" placeholder="00/00/0000" name="funcionario[data_admissao]" id="data_admissao" class="form-control data" value="{{ old('funcionario.data_admissao', $data['model'] ? date('d/m/Y', strtotime($data['model']->data_admissao)) : '') }}">
                     </div>
                     <span class="errors"> {{ $errors->first('funcionario.data_admissao') }} </span>
                 </div>

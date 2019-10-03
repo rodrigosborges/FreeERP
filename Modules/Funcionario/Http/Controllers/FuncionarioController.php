@@ -220,7 +220,16 @@ class FuncionarioController extends Controller{
         }else{
             $documentos = null;
         }
-        $cursos = Curso::where('funcionario_id','=',$id)->get();
+        
+        $variavel = Curso::where('funcionario_id','=',$id)->get();
+        if(count($variavel) > 0){
+            $cursos = $variavel;
+        }else{
+            $cursos = null;
+        }
+        // $cursos = Curso::where('funcionario_id','=',$id)->get();
+        
+        
 
         $data = [
             "url" 	 	        => url("funcionario/funcionario/$id"),
@@ -231,26 +240,39 @@ class FuncionarioController extends Controller{
             'parentescos'       => Parentesco::all(),
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
-            'telefones'         => $funcionario->telefone(),
+            'telefones'         => $funcionario->telefone()->get(),
             'estados'           => Estado::all(),
             'cargos'            => Cargo::all(),
             'title'		        => "Atualizar Funcionário",
             "button" 	        => "Atualizar",
             'cursos'            =>  isset($cursos) ? $cursos : [new Curso]
         ];
+
 	    return view('funcionario::funcionario.form', compact('data'));
     }
 
     public function update(CreateFuncionario $request, $id){
 
+        
         DB::beginTransaction();
 		try{
 
             $funcionario = Funcionario::findOrFail($id);
+            $email = Email::create(['email' => $request->input('email')]);
+            $endereco = Endereco::create($request->input('endereco'));
+            $data_admissao = DateTime::createFromFormat('d/m/Y', $request->funcionario['data_admissao']);
 
-            $funcionario->update($request->input('funcionario'));
-
-            $funcionario->estadoCivilRelacao()->update(['destino_id' => $request->funcionario['estado_civil_id']]);
+            $funcionario->update([
+                'nome' =>$request->funcionario['nome'],
+                'data_nascimento' => date('Y-m-d', strtotime($request->funcionario['data_nascimento'])),
+                'sexo' =>$request->funcionario['sexo'],
+                'data_admissao' => $data_admissao->format('Y-m-d'),
+                'estado_civil_id' =>$request->funcionario['estado_civil_id'],
+                'email_id' => $email->id,
+                'endereco_id' => $endereco->id, 
+                
+            ]);
+            
 
             foreach($request->documentos as $key => $documento) {
                 if($documento['tipo_documento_id'] == 1)
@@ -261,190 +283,28 @@ class FuncionarioController extends Controller{
 
             $funcionario->endereco()->update($request->input('endereco'));
 
-            //remoção de documentos
-
-            $documentosRequestIds = [];
-
-            if($request->input('docs_outros')) {
-                foreach($request->input('docs_outros') as $documento) {
-                    if(isset($documento['id'])) {
-                        $documentosRequestIds[] = $documento['id'];
-                    }
-                }          
-            }
-
-            $documentosFuncionarioIds = [];
-
-            foreach($funcionario->documentos() as $documento) {
-                if($documento->tipo_documento_id != 1 && $documento->tipo_documento_id != 2){
-                    $documentosFuncionarioIds[] = $documento->id;
-                }
-            }
-
-            $documentosExcluir = [];
+            $funcionario->email()->first()->update($request->input('endereco'));
             
-            $documentosRemovidos = array_diff($documentosFuncionarioIds, $documentosRequestIds);
-
-            if(count($documentosRemovidos) > 0) {
-                foreach($documentosRemovidos as $documentoId) {
-                    $documento = Documento::find($documentoId);
-                    $documentosExcluir[] = "funcionario/documentos/".$documento->comprovante; 
-                    $documento->delete();
-                    Relacao::where('tabela_origem','funcionario')->where('origem_id',$funcionario->id)->where('tabela_destino','documento')->where('destino_id',$documentoId)->delete();
-                }
-            }
-            //####################
-
-            if($request->input('docs_outros')) {
-
-                foreach($request->docs_outros as $documento){
-                    if($documento['numero']){
-                        if(isset($documento['comprovante'])) {
-
-                            $nome = uniqid(date('HisYmd'));
-                            $extensao = $documento['comprovante']->extension();
-                            $nomeArquivo = "{$nome}.{$extensao}";
-                            $upload = $documento['comprovante']->storeAs('funcionario/documentos', $nomeArquivo);
+            //Telefone -------
+            //1º verificar quantidade de telefones do usuário
+            //2º verificar quantidade de telefones no input 
+            //3º detach nos telefones do usuário 
+            //4º attach/cadastrar novos telefones 
             
-                            if (!$upload) {
-                                return redirect()->back()->with('warning', 'Falha ao fazer upload de comprovante de documento')->withInput();
-                            }
+            // if(!count($request->telefones) >=2 ){
 
-                            $documento['comprovante'] = $nomeArquivo;
-                        
-                        }
+            //     if(count($request->telefones) == 0){
+            //         if($funcionario->telefone()){
+            //             $funcionario->telefone()->first()->detach();
+            //         }
+            //     }else{
+            //         $funcionario->telefone()->first()->update($request->telefones);
+            //     }
 
-                        if(isset($documento['id'])){
-
-                            $documentoModel = Documento::find($documento['id']);
-
-                            if(isset($documento['comprovante']) && $documentoModel->comprovante)
-                                $documentosExcluir[] = "funcionario/documentos/".$documentoModel->comprovante;
-
-                            $documentoModel->update($documento);
-
-                        }else{
-                            $documentoModel = Documento::create($documento);
-                        }
-
-                        if(!isset($documento['id'])){
-                            Relacao::create([
-                                'tabela_origem'     => 'funcionario',
-                                'origem_id'         => $funcionario->id,
-                                'tabela_destino'    => 'documento',
-                                'destino_id'        => $documentoModel->id,
-                                'modelo'            => 'Documento'
-                            ]);
-                        }
-                    }
-                }
-
-            }
-
-            //remoção de telefones
-            foreach($request->input('telefones') as $telefone) {
-                $telefonesRequestIds[] = $telefone['id'];
-            }
-
-            foreach($funcionario->telefones() as $telefone) {
-                $telefonesFuncionarioIds[] = $telefone->id;
-            }
-
-            $telefonesRemovidos = array_diff($telefonesFuncionarioIds, $telefonesRequestIds);
-
-            if(count($telefonesRemovidos) > 0) {
-                foreach($telefonesRemovidos as $telefoneId) {
-                    Telefone::find($telefoneId)->delete();
-                    Relacao::where('tabela_origem','funcionario')->where('origem_id',$funcionario->id)->where('tabela_destino','telefone')->where('destino_id',$telefoneId)->delete();
-                }
-            }
-            //####################
-
-            foreach($request->input('telefones') as $telefone){
-                if($telefone['id'] != null)
-                    Telefone::find($telefone['id'])->update($telefone);
-                else {
-                    $telefone = Telefone::create($telefone);
-                    
-                    Relacao::create([
-                        'tabela_origem'     => 'funcionario',
-                        'origem_id'         => $funcionario->id,
-                        'tabela_destino'    => 'telefone',
-                        'destino_id'        => $telefone->id,
-                        'modelo'            => 'Telefone'
-                    ]);
-                }
-            }
-
-            //remoção de dependentes
-
-            $dependentesRequestIds = [];
-
-            if($request->input('dependentes')) {
-                foreach($request->input('dependentes') as $dependente) {
-                    if(isset($dependente['id'])) {
-                        $dependentesRequestIds[] = $dependente['id'];
-                    }
-                }          
-            }
-
-            $dependentesFuncionarioIds = [];
-
-            foreach($funcionario->dependentes as $dependente) {
-                $dependentesFuncionarioIds[] = $dependente->id;
-            }
-            
-            $dependentesRemovidos = array_diff($dependentesFuncionarioIds, $dependentesRequestIds);
-
-            if(count($dependentesRemovidos) > 0) {
-                foreach($dependentesRemovidos as $dependenteId) {
-                    $dependente = Dependente::find($dependenteId);
-                    $dependente->delete();
-                    Relacao::where('tabela_origem','dependente')->where('origem_id',$dependente->id)->where('tabela_destino','documento')->where('destino_id',$dependente->cpf()->id)->delete();
-                }
-            }
-            //####################
-
-            if($request->dependentes) {
-
-                foreach($request->dependentes as $dependente){
-
-                    if(isset($dependente['id'])){
-
-                        $dep = Dependente::find($dependente['id']);
-                        $dep->update([$dependente]);
-                        
-                        $cpf = str_replace([".","-"],"",$dependente['cpf']);
-                        $dep->cpf()->update(['numero' => $cpf]);
-
-                    }else{
-
-                        $dependente['funcionario_id'] = $funcionario['id'];
-                        $newDep = Dependente::create($dependente);
-
-                        $doc = [
-                            'tipo_documento_id'   => '1',
-                            'numero'              => str_replace([".","-"],"",$dependente['cpf'])
-                        ];
-                        
-                        $cpf = Documento::create($doc);
-        
-                        Relacao::create([
-                            'tabela_origem'     => 'dependente',
-                            'origem_id'         => $newDep->id,
-                            'tabela_destino'    => 'documento',
-                            'destino_id'        => $cpf->id,
-                            'modelo'            => 'Telefone'
-                        ]);
-
-                    }
-
-                }
-
-            }
-
-            #caso tudo dê certo acima, ele exclui os arquivos inutilizados
-            Storage::delete($documentosExcluir);
+            // }else{
+                
+                
+            // }
 
 			DB::commit();
             return redirect('/funcionario/funcionario')->with('success', 'Funcionário atualizado com successo!');
