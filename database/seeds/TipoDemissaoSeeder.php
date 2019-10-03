@@ -8,7 +8,8 @@ class TipoDemissaoSeeder extends Seeder {
      *
      * @return void
      */
-    public function run() {
+    public function run() 
+    {
         DB::table('tipo_demissao')->insert([
             [
                 'tipo' => 'Pedido de demissão no contrato de experiência',

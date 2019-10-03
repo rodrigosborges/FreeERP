@@ -26,7 +26,7 @@ class Funcionario extends Model {
     public function telefone(){
         return $this->belongsToMany('App\Entities\Telefone','funcionario_has_telefone','funcionario_id','telefone_id');
     }
-    public function documento(){
+    public function documento(){//NxN
         return $this->belongsToMany('App\Entities\Documento', 'funcionario_has_documento','funcionario_id','documento_id');
     }
     public function cargos(){
@@ -47,5 +47,9 @@ class Funcionario extends Model {
 
     public function Atestado(){
         return $this->hasMany('Modules\Funcionario\Entities\Atestado');
+    }
+
+    public function Demissao(){
+        return $this->hasOne('Modules\Funcionario\Entities\Demissao');
     }
 }

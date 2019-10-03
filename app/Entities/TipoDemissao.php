@@ -9,4 +9,8 @@ class tipo_demissao extends Model {
     protected $fillable = ['tipo'];
 
     public $timestamps = false;
+
+    public function demissao(){
+        return $this->hasOne('Modules\Funcionario\Entities\Demissao');
+    }
 }
