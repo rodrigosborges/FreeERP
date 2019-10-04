@@ -20,6 +20,7 @@ class EstoqueDatabaseSeeder extends Seeder
             CategoriaSeedTableSeeder::class,    
             ProdutoSeedTableSeeder::class,
             TipoUnidadeSeedTableSeeder::class,
+            UnidadeProdutoTableSeeder::class,
             EstoqueSeedTableSeeder::class,
         ]);
     }
