@@ -22,9 +22,7 @@ class CreateAgendaTable extends Migration
             $table->string('descricao', 500)->nullable();
             $table->unsignedBigInteger('cor_id');
             $table->unsignedBigInteger('funcionario_id');
-            $table->unsignedBigInteger('setor_id')-> nullable();
             $table->foreign('cor_id')->references('id')->on('cor');
-            $table->foreign('setor_id')->references('id')->on('setor');
             $table->softDeletes();
             $table->timestamps();
         });

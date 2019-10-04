@@ -7,7 +7,9 @@ $moduleInfo = [
 
 $menu = [
     ['icon' => 'calendar_view_day', 'tool' => 'Visão Geral', 'route' => route('calendario.index')],
-    ['icon' => 'calendar_today', 'tool' => 'Agendas', 'route' => route('agendas.index')]
+    ['icon' => 'calendar_today', 'tool' => 'Minhas Agendas', 'route' => route('agendas.index')],
+    ['icon' => 'people', 'tool' => 'Convites', 'route' => route('convites.index')],
+    ['icon' => 'share', 'tool' => 'Compartilhamentos', 'route' => route('compartilhamentos.index')],
 ];
 
 ?>
@@ -67,8 +69,14 @@ $menu = [
                         case 'Visão Geral':
                             $(this).parent('a').addClass('visao-geral');
                             break;
-                        case 'Agendas':
+                        case 'Minhas Agendas':
                             $(this).parent('a').addClass('agendas');
+                            break;
+                        case 'Convites':
+                            $(this).parent('a').addClass('convites');
+                            break;
+                        case 'Compartilhamentos':
+                            $(this).parent('a').addClass('compartilhamentos');
                             break;
                     }
                 }))
@@ -81,6 +89,12 @@ $menu = [
                         case 'agendas.editar':
                         case 'agendas.eventos.index':
                             $('.agendas').addClass('active');
+                            break;
+                        case 'convites.index':
+                            $('.convites').addClass('active');
+                            break;
+                        case 'compartilhamentos.index':
+                            $('.compartilhamentos').addClass('active');
                             break;
                     }
                 });

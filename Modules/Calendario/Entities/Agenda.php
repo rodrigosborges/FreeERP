@@ -11,10 +11,6 @@ class Agenda extends Model
 
     protected $table = 'agenda';
 
-    public function setor(){
-        return $this->belongsTo('Modules\Calendario\Entities\Setor');
-    }
-
     public function cor(){
         return $this->belongsTo('Modules\Calendario\Entities\Cor');
     }

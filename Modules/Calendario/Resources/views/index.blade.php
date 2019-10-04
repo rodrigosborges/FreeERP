@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-header">
                     <a class="card-link" data-toggle="collapse" href="#filtrar">
-                        Filtrar agendas <i class="material-icons">arrow_drop_down</i>
+                        <i class="material-icons">filter_list</i> Agendas e eventos
                     </a>
                 </div>
                 <div id="filtrar" class="collapse" data-parent="#agendas">
@@ -19,10 +19,12 @@
                                 <input type="checkbox" id="agenda{{$agenda->id}}" class="custom-control-input"
                                        value="{{$agenda->id}}" name="agenda{{$agenda->id}}" checked>
                                 <label class="custom-control-label" for="agenda{{$agenda->id}}"
-                                       style="padding-bottom: 3px; border-bottom: 3px solid #{{$agenda->cor->codigo}}">{{$agenda->titulo}}
+                                       style="padding-bottom: 3px; border-bottom: 3px solid #{{$agenda->cor->codigo}}">{{$agenda->titulo}} ({{$agenda->eventos->count()}})
                                     @if($agenda->compartilhamentos->count())
                                         @foreach($agenda->compartilhamentos as $compartilhamento)
-                                            <a href="#" class="badge badge-secondary">{{$compartilhamento->setor->sigla}}</a>
+                                            @if($compartilhamento->aprovacao)
+                                                <a href="#" class="badge badge-secondary">{{$compartilhamento->setor->sigla}}</a>
+                                            @endif
                                         @endforeach
                                     @endif
                                 </label>

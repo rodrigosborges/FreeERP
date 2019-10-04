@@ -14,7 +14,8 @@
 Route::get('/calendario', 'CalendarioController@index')->name('calendario.index');
 Route::get('/calendario/agendas', 'CalendarioController@agendas')->name('agendas.index');
 Route::get('/calendario/agendas/eventos', 'CalendarioController@eventos')->name('eventos.index');
-Route::get('/calendario/agendas/compartilhamentos', 'CalendarioController@compartilhamentos')->name('compartilhamentos.index');
+Route::get('/calendario/compartilhamentos', 'CalendarioController@compartilhamentos')->name('compartilhamentos.index');
+Route::get('/calendario/convites', 'CalendarioController@convites')->name('convites.index');
 
 Route::get('/calendario/agendas/criar', 'AgendaController@criarOuEditar')->name('agendas.criar');
 Route::get('/calendario/agendas/{agenda}', 'AgendaController@criarOuEditar')->name('agendas.editar');

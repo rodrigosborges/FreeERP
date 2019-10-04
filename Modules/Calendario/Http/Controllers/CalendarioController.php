@@ -38,6 +38,10 @@ class CalendarioController extends Controller
         return view('calendario::agendas.compartilhamentos', ['solicitacoes' => $solicitacoes]);
     }
 
+    public function convites(){
+        return redirect()->back();
+    }
+
     public function eventos()
     {
         $eventos = [];

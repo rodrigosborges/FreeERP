@@ -3,9 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b84905e5-ba51-4cac-9254-655e0db8a3b8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_07_15_152800_create_agenda_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_07_15_152800_create_agenda_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" afterDir="false" />
     </list>
@@ -243,7 +246,8 @@
       <workItem from="1569266624035" duration="4000" />
       <workItem from="1569611059880" duration="226000" />
       <workItem from="1570015312533" duration="12002000" />
-      <workItem from="1570130720301" duration="7657000" />
+      <workItem from="1570130720301" duration="7710000" />
+      <workItem from="1570220838187" duration="5200000" />
     </task>
     <task id="LOCAL-00001" summary="Calendário exibindo todos eventos do usuário e algumas refatorações">
       <created>1562796695507</created>
@@ -385,7 +389,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570033597040</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Adicionado revogação do compartilhamento">
+      <created>1570142861582</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1570142861582</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -441,7 +452,8 @@
     <MESSAGE value="Iniciando aprovação de compartilhamento de agenda" />
     <MESSAGE value="Separando a aprovação do compartilhamento" />
     <MESSAGE value="Criado model e migration para aprovação de compartilhamento" />
-    <option name="LAST_COMMIT_MESSAGE" value="Criado model e migration para aprovação de compartilhamento" />
+    <MESSAGE value="Adicionado revogação do compartilhamento" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionado revogação do compartilhamento" />
   </component>
   <component name="masterDetails">
     <states>
