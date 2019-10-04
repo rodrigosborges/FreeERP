@@ -52,4 +52,8 @@ class Funcionario extends Model {
     public function Demissao(){
         return $this->hasOne('Modules\Funcionario\Entities\Demissao');
     }
+
+    public function avisoPrevio(){
+        return $this->hasOne('Modules\Funcionario\Entities\AvisoPrevio');
+    }
 }
