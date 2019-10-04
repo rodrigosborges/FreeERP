@@ -12,12 +12,12 @@
             @method('PUT')
         @endif
         <div class="row">
+        <input id="usuario_id" type="hidden" value="{{Auth::user()->id}}" name="protocolo['usuario_id']">    
             <div class="col-lg">
-
                 <div class="form-group">
                     <label for="nome" class="control-label">Interessados: <span class="required-symbol">*</span></label>
                     <div class="input-group">
-                        <input id="arrayInteressados" type="hidden" value="{{isset($interessado->id) ? $interessado->id : ''}}" name="interessados">
+                        <input id="arrayInteressados" type="hidden" value="" name="interessados">    
                         <div id="interessados" class="interessados"></div>
                     </div>
                     <br>
@@ -63,22 +63,6 @@
                             <option value="">Selecione</option>
                             @foreach($data['tipo_acesso'] as $item)
                                 <option value="{{ $item->id }}" {{ old('tipo_acesso.tipo_acesso_id', $data['model']? $data['model']->tipo_acesso()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->tipo }} </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="nome" class="control-label">Setor de Criação: <span class="required-symbol">*</span></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="material-icons">business</i>
-                            </span>
-                        </div>
-                        <select required name="protocolo[setor_id]" class="form-control">
-                            <option value="">Selecione</option>
-                            @foreach($data['setor'] as $item)
-                                <option value="{{ $item->id }}" {{ old('setor.setor_id', $data['model']? $data['model']->setor()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->nome }} </option>
                             @endforeach
                         </select>
                     </div>

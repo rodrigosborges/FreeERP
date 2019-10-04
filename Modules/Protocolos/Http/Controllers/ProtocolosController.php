@@ -5,8 +5,9 @@ namespace Modules\Protocolos\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Interessado, Protocolo, Setor};
+use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Protocolo, Usuario};
 use Modules\Protocolos\Http\Requests\{CreateProtocolo};
+use Illuminate\Support\Facades\Auth;
 use DB;
 
 class ProtocolosController extends Controller
@@ -26,13 +27,26 @@ class ProtocolosController extends Controller
     }
 
     public function list(Request $request, $status){
-		$protocolos = new Protocolo;
+
+        $id = Auth::user()->id;
+        
+        $protocolo = new Protocolo;
+        
+        //Retorna os protocolos que o usuário foi cadastrado como interessado.
+        $protocolos = DB::table('protocolo')->join('protocolo_has_usuario', 'protocolo_has_usuario.protocolo_id', 'protocolo.id')
+                ->where('protocolo_has_usuario.usuario_id','=', $id);
+
+        //$protocolos = DB::table('protocolo')->where('usuario_id', '=', $id); Retorna os protocolos criados pelo usuário logado.
+
 		if($request['pesquisa']) {
             $protocolos = $protocolos->where('assunto', 'like', '%'.$request['pesquisa'].'%');
         }
-		if($status == "inativos")
-			$protocolos = $protocolos->onlyTrashed();
-		$protocolos = $protocolos->paginate(10);
+		if($status == "inativos"){
+            $protocolos = $protocolos->onlyTrashed();
+        }
+            
+        $protocolos = $protocolos->paginate(10);
+        
 		return view('protocolos::protocolo.table', compact('protocolos','status'));
 	}
 
@@ -45,11 +59,10 @@ class ProtocolosController extends Controller
         $data = [
             'url'               => url("protocolos/protocolos"),
             'model'             => '',
-            'interessados'      => [new Interessado],
+            'interessados'      => [new Usuario],
             'tipo_protocolo'    => TipoProtocolo::all(),
             'tipo_acesso'       => TipoAcesso::all(),
-            'interessado'       => Interessado::all(),
-            'setor'             => Setor::all(),
+            'usuario'           => Usuario::all(),
             'title'             => 'Cadastro de Protocolo',
             'button'            => 'Salvar',
         ];
@@ -84,9 +97,10 @@ class ProtocolosController extends Controller
 
         foreach($interessados as $interessado) {
             $interessadosArray[] = [
-                'interessado_id' => $interessado
+                'usuario_id' => $interessado
             ];
         }
+        
 
         DB::beginTransaction();
 
@@ -96,7 +110,7 @@ class ProtocolosController extends Controller
                 'assunto'               => $request['assunto'],
                 'tipo_protocolo_id'     => $request->protocolo['tipo_protocolo_id'],
                 'tipo_acesso_id'        => $request->protocolo['tipo_acesso_id'],
-                'setor_id'              => $request->protocolo['setor_id']
+                'usuario_id'            => Auth::user()->id,
             ]);
             
             // foreach($request->interessados as $interessado){

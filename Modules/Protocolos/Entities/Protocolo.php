@@ -12,7 +12,7 @@ class Protocolo extends Model
 
     protected $table = 'protocolo';
 
-    protected $fillable = ['assunto', 'tipo_protocolo_id', 'tipo_acesso_id', 'setor_id'];
+    protected $fillable = ['assunto', 'tipo_protocolo_id', 'tipo_acesso_id', 'usuario_id'];
 
     //Relação com a tabela tipo_protocolo
     public function tipo_protocolo(){
@@ -24,13 +24,13 @@ class Protocolo extends Model
         return $this->belongsTo('Modules\Protocolos\Entities\Tipo_acesso');
     }
 
-    //Relação com a tabela interessado 
+    //Relação com a tabela usuario 
     public function interessado(){
-        return $this->belongsToMany('Modules\Protocolos\Entities\Interessado', 'protocolo_has_interessado', 'protocolo_id', 'interessado_id');
+        return $this->belongsToMany('Modules\Protocolos\Entities\Usuario', 'protocolo_has_usuario', 'protocolo_id', 'usuario_id');
     }
 
-    //Relação com a tabela setor
-    public function setor(){
-        return $this->belongsTo('Modules\Protocolos\Entities\Setor');
+    //Relação com a tabela usuario
+    public function usuario(){
+        return $this->belongsTo('Modules\Protocolos\Entities\Usuario');
     }  
 }

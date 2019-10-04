@@ -17,8 +17,7 @@ class CreateProtocolo extends FormRequest
             'protocolo.interessado'                     => 'required',
             'protocolo.tipo_protocolo_id'               => 'required',
             'protocolo.assunto'                         => 'required|max:100',
-            'protocolo.nivel_acesso_id'                 => 'required',
-            'protocolo.setor_criacao_id'                => 'required'
+            'protocolo.nivel_acesso_id'                 => 'required'
         ];
     }
 
