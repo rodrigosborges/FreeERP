@@ -26,9 +26,9 @@ class CreateClienteRequest extends FormRequest
             'endereco.cep'                  => ['regex:^[0-9]{5}-[0-9]{3}$^']          
         ];
         
-        if($this->input('cliente.tipo_cliente_id') == 1){
+        if($this->input('cliente.tipo_cliente_id') == 1) {
             $rules['documento.documento'][] = 'cpf';
-        } else if ($this->input('cliente.tipo_cliente_id') == 2){
+        } else if ($this->input('cliente.tipo_cliente_id') == 2) {
             $rules['documento.documento'][] = 'cnpj';
             $rules['cliente.nome_fantasia'] = 'required|max:100';
         }

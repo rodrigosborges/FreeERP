@@ -11,12 +11,12 @@ class DocUniqueValidator
 
     protected function isValidate($attribute, $value,$parameters)
     {
+        $value = preg_replace('/\D/', '', $value);
         
         $documento = Documento::join('cliente' , 'documento.id', '=', 'cliente.documento_id')
-                    ->where('cliente.id', '<>', $parameters[0])
-                    ->where('numero', '=', $value)->count();
-        
-        
+                                ->where('cliente.id', '<>', $parameters[0])
+                                ->where('numero', '=', $value)->count();
+
         return $documento == 0;
 
     }

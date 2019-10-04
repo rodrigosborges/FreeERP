@@ -8,6 +8,7 @@ use Modules\Cliente\Http\Requests\CreatePedidoRequest;
 use Illuminate\Routing\Controller;
 use Modules\Cliente\Entities\{Cliente, Pedido, Produto};
 use DB;
+use Carbon\Carbon;
 
 class PedidoController extends Controller
 {
@@ -39,31 +40,38 @@ class PedidoController extends Controller
     public function store(CreatePedidoRequest $request, $id_cliente) {
         $valores = $request->all();
         $valores["cliente_id"] = $id_cliente;
-        $pedido = Pedido::create($valores);
         
+        $pedido = Pedido::create($valores);
         DB::beginTransaction();
         try{
             $produtos = $request->input('produtos');
-            $dados = [];
 
+            $dados = [];
             foreach($produtos as $produto){
-                $dados[$produto['produto_id']] = [
+                if(array_key_exists($produto['produto_id'], $dados)){
+                    $dados[$produto['produto_id']]['quantidade'] += $produto['quantidade'];
+                }else {
+                    $dados[$produto['produto_id']] = [
                         'quantidade' => $produto['quantidade'], 
                         'desconto' => $produto['desconto']
                     ];
                 }
+                
+            }
+            $pedido->produtos()->sync($dados);
 
-                $pedido->produtos()->sync($dados);
 
             DB::commit();
-            return back()->with('success','Pedido Salvo');
-        } catch (\Exception $e){
-            DB::rollback();
-            return back()->with('error', $e);
-        }
-        $pedido->produtos()->sync($dados);
 
-        return back()->with('success','Pedido Salvo');
+            return redirect('cliente/'.$id_cliente.'/pedido')->with('success','Pedido Salvo!');
+        
+        } catch (\Exception $e){
+
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor!');
+        }
+
+       
     }
 
     
@@ -89,15 +97,21 @@ class PedidoController extends Controller
             
             $dados = [];
             foreach($produtos as $produto){
-                $dados[$produto['produto_id']] = [
+                if(array_key_exists($produto['produto_id'], $dados)){
+                    $dados[$produto['produto_id']]['quantidade'] += $produto['quantidade'];
+                }else {
+                    $dados[$produto['produto_id']] = [
                         'quantidade' => $produto['quantidade'], 
                         'desconto' => $produto['desconto']
                     ];
                 }
+   
+            }
 
             $pedido->produtos()->sync($dados);
             DB::commit();
-            return back()->with('success', 'Pedido editado');
+           
+            return redirect('cliente/'.$pedido->cliente->id.'/pedido')->with('success', 'Pedido editado');
         } catch (\Exception $e){
             DB::rollback();
             return back()->with('error', 'Ocorreu um erro ao salvar');
@@ -145,6 +159,26 @@ class PedidoController extends Controller
             DB::rollback();
             return back()->with('error', 'Ocorreu um erro ao efetuar a operação');
         }
+    }
+
+
+
+    public function pdf($cliente_id, $start, $end){
+        $cliente = Cliente::findOrFail($cliente_id);
+        $start = new Carbon($start);
+        $end = new Carbon($end);
+
+        $pedidos = $cliente->pedidos()->whereBetween( 'data', [$start, $end] )->orderBy('data')->get();
+
+
+        $data = ['cliente' => $cliente, 'pedidos' => $pedidos, 'start' => $start, 'end'=> $end, 
+        'data' => $cliente->vl_total_liquido_pedidos($start, $end)];
+        
+        // dd($data);
+        // return view('cliente::pedidos.relatorio', compact('cliente', 'pedido'));
+        return \PDF::loadView('cliente::pedidos.relatorio', $data)
+                ->setPaper('a4', 'landscape')
+                ->stream();
     }
 
 

@@ -26,6 +26,8 @@ Route::prefix('cliente')->group(function() {
     Route::post('{cliente_id}/pedido/','PedidoController@store');//Salvar Novo pedido
     Route::delete('pedido','PedidoController@deleteMultiples');//Deletar varios
 
+    Route::get('{cliente_id}/pedidos/pdf/{start}/{end}', 'PedidoController@pdf'); //Teste pdf
+
     Route::get('/','ClienteController@index');
 });
 

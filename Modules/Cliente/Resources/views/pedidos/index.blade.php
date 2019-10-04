@@ -1,7 +1,7 @@
 @extends('cliente::template')
-@section('title')
-Cadastro de Compras - {{ $cliente->nome }}
-@endsection
+  @section('title')
+    Cadastro de Compras - {{ $cliente->nome }}
+  @endsection
 @section('content')
 <div class="card">
   <div id="opcoes" class="card-header flex">
@@ -39,7 +39,7 @@ Cadastro de Compras - {{ $cliente->nome }}
       </form>
       {{-- Botao nova compra --}}
       <div class="align-self-end text-right">
-        <a class="btn btn-primary" href="/cliente/{{$cliente->id}}/pedido/novo" style="color: white;">Adicionar
+        <a class="btn btn-primary" href="{{url('/cliente/'.$cliente->id.'/pedido/novo')}}" style="color: white;">Adicionar
           Compra</a>
       </div>
 
@@ -144,7 +144,7 @@ Cadastro de Compras - {{ $cliente->nome }}
               <td>
                 <div class="flex row justify-content-around">
                   {{-- Editar pedido --}}
-                  <a href="{{url("/cliente/pedido/".$pedido->id )}}" class="btn btn-sm btn-warning"
+                  <a href="{{ url( "/cliente/pedido/".$pedido->id )}}" class="btn btn-sm btn-warning"
                     name="edit">Editar</button>
                   </a>
                   {{-- BOTAO PARA EXCLUSAO DO ITEM INDIVIDUALMENTE --}}
@@ -347,7 +347,7 @@ Cadastro de Compras - {{ $cliente->nome }}
   function deletarSelecionados(selecionados, tipo) {
     console.log(selecionados);
     $.ajax({
-      url: "/cliente/pedido/",
+      url: main_url+"/cliente/pedido/",
       type: 'POST',
 
       data: { ids: selecionados, _method: "delete", '_token': $('input[name=_token]').val(), tipo: tipo }
