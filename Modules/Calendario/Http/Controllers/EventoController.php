@@ -7,11 +7,22 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
 use Modules\Calendario\Entities\Agenda;
+use Modules\Calendario\Entities\Convite;
 use Modules\Calendario\Entities\Evento;
 use Modules\Calendario\Entities\Notificacao;
 
 class EventoController extends Controller
 {
+    public function eventos()
+    {
+        $eventos = [];
+        $agendas = Agenda::where('funcionario_id', 1)->get();
+        foreach ($agendas as $agenda) {
+            $eventos = array_merge($eventos, $agenda->eventos_json);
+        }
+        return $eventos;
+    }
+
     public function criarOuEditar(Evento $evento = null, Request $request)
     {
         $agendas = Agenda::all();
@@ -89,6 +100,17 @@ class EventoController extends Controller
             return redirect()->route('agendas.eventos.index', $evento->agenda->id)->with('error', 'Falha ao deletar evento. Erro: ' . $e->getCode());
         }
         return redirect()->route('agendas.eventos.index', $evento->agenda->id)->with('success', 'Evento deletado com sucesso.');
+    }
+
+    public function convites(){
+        $convites['pendentes'] = Convite::where('status', null)->get();
+        $convites['definidos'] = Convite::where('status', '<>', null)->get();
+        return view('calendario::eventos.convites', ['convites' => $convites]);
+    }
+
+    public function aceitar_convite(Convite $convite){
+        $convite->status = true;
+        $convite->save();
     }
 
     private function formatar_data($data)

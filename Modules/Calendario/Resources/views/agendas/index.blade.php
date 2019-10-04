@@ -20,6 +20,7 @@
                 </a>
             </div>
         </div>
+
         <table class="table table-striped table-hover">
             <thead>
             <tr>
@@ -87,7 +88,7 @@
                             <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" id="formAgDel">
                                 @method('DELETE')
                                 @csrf
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Deletar">
+                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" title="Deletar">
                                     <i class="material-icons">delete</i>
                                 </button>
                             </form>
@@ -171,10 +172,10 @@
             $('.lixeira').on('click', function () {
                 $('.trashed').toggle(function () {
                     if ($(this).is(':visible')) {
-                        $('.lixeira').removeClass('btn-secondary').addClass('btn-info');
+                        $('.lixeira').removeClass('btn-secondary').addClass('btn-dark');
                         $('.vazio').hide();
                     } else {
-                        $('.lixeira').removeClass('btn-info').addClass('btn-secondary');
+                        $('.lixeira').removeClass('btn-dark').addClass('btn-secondary');
                         $('.vazio').show();
                     }
                 });

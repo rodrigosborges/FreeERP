@@ -20,4 +20,8 @@ class Evento extends Model
     public function notificacao(){
         return $this->hasOne('Modules\Calendario\Entities\Notificacao');
     }
+
+    public function convites(){
+        return $this->hasMany('Modules\Calendario\Entities\Convites');
+    }
 }

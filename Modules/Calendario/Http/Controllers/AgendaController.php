@@ -13,6 +13,13 @@ use Modules\Calendario\Http\Requests\AgendaSalvarRequest;
 
 class AgendaController extends Controller
 {
+    public function agendas()
+    {
+        $agendas = Agenda::withTrashed('funcionario_id', 1)->orderByRaw('deleted_at DESC, created_at DESC')->get();
+        $lixeira = Agenda::onlyTrashed()->where('funcionario_id', 1)->count();
+        return view('calendario::agendas.index', ['agendas' => $agendas, 'lixeira' => $lixeira]);
+    }
+
     public function criarOuEditar(Agenda $agenda = null)
     {
         $cores = Cor::all();
@@ -97,6 +104,23 @@ class AgendaController extends Controller
             return redirect()->route('agendas.index')->with('error', 'Falha ao restaurar agenda. Erro: ' . $e->getMessage());
         }
         return redirect()->route('agendas.index')->with('success', 'Agenda restaurada com sucesso.');
+    }
+
+    public function compartilhamentos(){
+        $agendas = Agenda::all();
+        $solicitacoes['pendentes'] = [];
+        $solicitacoes['aprovadas'] = [];
+        foreach ($agendas as $agenda){
+            foreach ($agenda->compartilhamentos as $compartilhamento){
+                if(!$compartilhamento->aprovacao){
+                    array_push($solicitacoes['pendentes'], $compartilhamento);
+                }
+                else{
+                    array_push($solicitacoes['aprovadas'], $compartilhamento);
+                }
+            }
+        }
+        return view('calendario::agendas.compartilhamentos', ['solicitacoes' => $solicitacoes]);
     }
 
     public function aprovar_compartilhamento(Compartilhamento $compartilhamento){

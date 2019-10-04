@@ -42,7 +42,7 @@
                         <form method="POST" action="{{route('eventos.deletar', $evento->id)}}" id="formEvDel">
                             @method('DELETE')
                             @csrf
-                            <button type="button" class="btn btn-danger btn-sm">
+                            <button type="button" class="btn btn-secondary btn-sm">
                                 <i class="material-icons">delete</i>
                             </button>
                         </form>
