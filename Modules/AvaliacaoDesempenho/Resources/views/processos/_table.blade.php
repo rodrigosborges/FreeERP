@@ -21,44 +21,52 @@
     </thead>
   
     <tbody>
-  
-      @foreach($processos as $processo)
-  
-        <tr class="{{ !empty($processo->deleted_at) ? 'table-inactive' : '' }}">
-  
-          <td class="text-center align-middle">{{ $processo->id }}</td>
-  
-          <td class="text-center align-middle">{{ $processo->responsavel->nome }}</td>
-  
-          <td class="text-center align-middle">{{ $processo->data_inicio }}</td>
 
-          <td class="text-center align-middle">{{ $processo->data_fim }}</td>
+      @if ($processos->count())
   
-          <td class="text-center align-middle">{{ is_null($processo->deleted_at) ? 'Ativado' : 'Desativado' }}</td>
-  
-          <td class="text-center align-middle">
-  
-            <a class="btn btn-warning btn-edit {{ !empty($processo->deleted_at) ? 'disabled' : '' }}" title="Editar" href="/tcc/public/avaliacaodesempenho/processo/{{ $processo->id }}/edit"><i class="material-icons md-14 md-light">edit</i></a>
-              
-            <form action="{{ url('avaliacaodesempenho/processo', [$processo->id]) }}" id="deleteForm_{{$processo->id}}" method="POST">
-              @method('DELETE')
-              {{ csrf_field() }}
-              @if (empty($processo->deleted_at))
+        @foreach($processos as $processo)
     
-                <button class="btn btn-danger" type="button" id="btn-delete" title="Desativar" onclick="confirmDelete({{$processo->id}}, 'Deseja desativar o Processo?')"><i class="material-icons md-14">close</i></button>
+          <tr class="{{ !empty($processo->deleted_at) ? 'table-inactive' : '' }}">
     
-              @else
+            <td class="text-center align-middle">{{ $processo->id }}</td>
     
-                <button class="btn btn-success" type="button" id="btn-delete" title="Ativar" onclick="confirmDelete({{$processo->id}}, 'Deseja ativar o Processo?')"><i class="material-icons md-14">restore_from_trash</i></button>
+            <td class="text-center align-middle">{{ $processo->responsavel->nome }}</td>
     
-              @endif
-            </form>
-  
-          </td>
-  
-        </tr>
-  
-      @endforeach
+            <td class="text-center align-middle">{{ $processo->data_inicio }}</td>
+
+            <td class="text-center align-middle">{{ $processo->data_fim }}</td>
+    
+            <td class="text-center align-middle">{{ is_null($processo->deleted_at) ? 'Ativado' : 'Desativado' }}</td>
+    
+            <td class="text-center align-middle">
+    
+              <a class="btn btn-warning btn-edit {{ !empty($processo->deleted_at) ? 'disabled' : '' }}" title="Editar" href="/tcc/public/avaliacaodesempenho/processo/{{ $processo->id }}/edit"><i class="material-icons md-14 md-light">edit</i></a>
+                
+              <form action="{{ url('avaliacaodesempenho/processo', [$processo->id]) }}" id="deleteForm_{{$processo->id}}" method="POST">
+                @method('DELETE')
+                {{ csrf_field() }}
+                @if (empty($processo->deleted_at))
+      
+                  <button class="btn btn-danger" type="button" id="btn-delete" title="Desativar" onclick="confirmDelete({{$processo->id}}, 'Deseja desativar o Processo?')"><i class="material-icons md-14">close</i></button>
+      
+                @else
+      
+                  <button class="btn btn-success" type="button" id="btn-delete" title="Ativar" onclick="confirmDelete({{$processo->id}}, 'Deseja ativar o Processo?')"><i class="material-icons md-14">restore_from_trash</i></button>
+      
+                @endif
+              </form>
+    
+            </td>
+    
+          </tr>
+    
+        @endforeach
+      
+      @else
+
+        <div class="alert alert-warning">Não foram encontrados registros.</div>
+
+      @endif
   
     </tbody>
   

@@ -42,8 +42,13 @@ class AvaliacaoController extends Controller
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+        $data = [
+            'processos' => Processo::all(),
+            'funcionarios' => Funcionario::all(),
+            'setores' => Setor::all()
+        ];
 
-        return view('avaliacaodesempenho::avaliacoes/index', compact('moduleInfo','menu'));
+        return view('avaliacaodesempenho::avaliacoes/index', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function create()
@@ -134,8 +139,8 @@ class AvaliacaoController extends Controller
             $input = $request->input('avaliacao');
 
             foreach ($input as $key => $value) {
-                if (empty($value)) {
-                    return back()->with('error', 'Todos os campos são obrigatórios.');
+                if ($key != 'gestor' && empty($value)) {
+                    return back()->with('error', 'Todos os campos são obrigatórios. '.$key);
                 }
             }
 
@@ -190,19 +195,30 @@ class AvaliacaoController extends Controller
     public function search(Request $request)
     {
 
-        $term = $request->input('term');
+        $terms = $request->input('term');
+        $status = $request->input('status');
 
-        if (empty($term)) {
+        if (empty($terms) && empty($status)) {
 
-            $avaliacoes = Avaliacao::withTrashed()->get();
+            $avaliacoes = Avaliacao::withTrashed();
 
         } else {
 
-            $avaliacoes = Avaliacao::withTrashed()->where('nome', 'LIKE', '%' . $term . '%')
-                ->orWhere('crm', 'LIKE', '%' . $term . '%')
-                ->get();
-        }
+            if ($status == '1') {
+                $avaliacoes = Avaliacao::where('deleted_at', null);
+            } else if ($status == '0') {
+                $avaliacoes = Avaliacao::onlyTrashed();
+            } else {
+                $avaliacoes = Avaliacao::withTrashed();
+            }
 
+            foreach ($terms as $key => $term) {
+                $avaliacoes = $avaliacoes->where($key, 'LIKE', '%' . $term . '%');
+            }
+
+        }
+        $avaliacoes = $avaliacoes->get();
+        
         $table = view('avaliacaodesempenho::avaliacoes/_table', compact('avaliacoes'))->render();
         return response()->json(['success' => true, 'html' => $table]);
     }

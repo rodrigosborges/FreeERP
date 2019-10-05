@@ -157,19 +157,30 @@ class SetorController extends Controller
     public function search(Request $request)
     {
 
-        $term = $request->input('term');
+        $terms = $request->input('term');
+        $status = $request->input('status');
 
-        if (empty($term)) {
+        if (empty($terms) && empty($status)) {
 
-            $setores = Setor::withTrashed()->get();
+            $setores = Setor::withTrashed();
 
         } else {
 
-            $setores = Setor::withTrashed()->where('nome', 'LIKE', '%' . $term . '%')
-                ->orWhere('crm', 'LIKE', '%' . $term . '%')
-                ->get();
-        }
+            if ($status == '1') {
+                $setores = Setor::where('deleted_at', null);
+            } else if ($status == '0') {
+                $setores = Setor::onlyTrashed();
+            } else {
+                $setores = Setor::withTrashed();
+            }
 
+            foreach ($terms as $key => $term) {
+                $setores = $setores->where($key, 'LIKE', '%' . $term . '%');
+            }
+
+        }
+        $setores = $setores->get();
+        
         $table = view('avaliacaodesempenho::setores/_table', compact('setores'))->render();
         return response()->json(['success' => true, 'html' => $table]);
     }

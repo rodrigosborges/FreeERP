@@ -15,26 +15,39 @@ $(document).ready(function () {
     })
 })
 
-$(document).on('keyup keydown paste', '.search_field', function () {
+$(document).on('click', '#submit-btn', function (e) {
 
-    var search = $(this).val()
-    const _token = $('#token').val()
+    e.preventDefault()
+    
+    const _token = $('input[name="_token"]').val()
 
-    if (search.length < 1 || search.length > 2) {
-
-        $.ajax({
-            method: 'POST',
-            url: 'http://localhost/tcc/public/avaliacaodesempenho/avaliacao/ajax/search',
-            data: {
-                _token: _token,
-                term: search
-            },
-            success: function (data) {
-                $('#AvaliacaoTable').html('')
-                $('#AvaliacaoTable').append(data)
-            }
-        })
+    
+    var search = {
+        nome: $('input[name="_nome"]').val(),
+        processo_id: $('#_processo').children('option:selected').val(),
+        funcionario_id: $('#_responsavel').children('option:selected').val(),
+        setor_id: $('#_setor').children('option:selected').val(),
+        data_inicio: $('input[name="_data_inicio"]').val(),
+        data_fim: $('input[name="_data_fim"]').val()
     }
+
+    var status = $('#_status').children('option:selected').val()
+
+    console.log(_token, search, status)
+
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/avaliacao/ajax/search',
+        data: {
+            _token: _token,
+            term: search,
+            status: status
+        },
+        success: function (data) {
+            $('#AvaliacaoTable').html('')
+            $('#AvaliacaoTable').append(data.html)
+        }
+    })
 })
 
 function confirmDelete(id, msg) {

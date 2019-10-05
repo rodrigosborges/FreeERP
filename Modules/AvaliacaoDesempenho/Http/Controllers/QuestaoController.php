@@ -39,10 +39,11 @@ class QuestaoController extends Controller
         $menu = $this->menu;
 
         $data = [
-            'questoes' => Questao::withTrashed()->get()
+            'questoes' => Questao::withTrashed()->get(),
+            'categorias' => Categoria::all()
         ];
 
-        return view('avaliacaodesempenho::questoes/index', compact('moduleInfo', 'menu'));
+        return view('avaliacaodesempenho::questoes/index', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function create()
@@ -172,20 +173,30 @@ class QuestaoController extends Controller
     public function search(Request $request)
     {
 
-        $term = $request->input('term');
+        $terms = $request->input('term');
+        $status = $request->input('status');
 
-        if (empty($term)) {
+        
+        if (empty($terms) && empty($status)) {
 
-            $questoes = Questao::withTrashed()->get();
+            $questoes = Questao::all();
 
         } else {
 
-            $questoes = Questao::withTrashed()->where('enunciado', 'LIKE', '%' . $term . '%')
-                // ->orWhere('crm', 'LIKE', '%' . $term . '%')
-                ->get();
-        }
+            if ($status == '0') {
+                $questoes = Questao::onlyTrashed();
+            } else {
+                $questoes = Questao::where('deleted_at', null);
+            } 
 
-        $table = view('avaliacaodesempenho::questoes/_listar', compact('questoes'))->render();
-        return response()->json(['success' => true, 'html' => $table]);
+            foreach ($terms as $key => $term) {
+                $questoes = $questoes->where($key, 'LIKE', '%' . $term . '%');
+            }
+            
+            $questoes = $questoes->get();
+        }
+        
+        $list = view('avaliacaodesempenho::questoes/_listar', compact('questoes'))->render();
+        return response()->json(['success' => true, 'html' => $list]);
     }
 }

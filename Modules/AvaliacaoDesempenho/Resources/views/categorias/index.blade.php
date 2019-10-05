@@ -9,11 +9,21 @@
 <div class="card">
 
     <div class="card-header">
-        <div class="row">
+        <div class="row header">
             <h3>Categorias</h3>
             <span>
                 <a href="{{ url('avaliacaodesempenho/categoria/create') }}" class="btn btn-primary">Adicionar</a>
             </span>
+        </div>
+
+        <hr>
+
+        <div class="search-row">
+            <div class="row label">
+                <i class="material-icons md-36">search</i>
+                <h3> Pequisar</h3>
+            </div>
+             @include('avaliacaodesempenho::categorias._search')
         </div>
     </div>
 

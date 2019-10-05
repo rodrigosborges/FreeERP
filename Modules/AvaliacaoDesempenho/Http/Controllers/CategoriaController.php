@@ -157,19 +157,30 @@ class CategoriaController extends Controller
     public function search(Request $request)
     {
 
-        $term = $request->input('term');
+        $terms = $request->input('term');
+        $status = $request->input('status');
 
-        if (empty($term)) {
+        if (empty($terms) && empty($status)) {
 
-            $categorias = Categoria::withTrashed()->get();
+            $categorias = Categoria::withTrashed();
 
         } else {
 
-            $categorias = Categoria::withTrashed()->where('nome', 'LIKE', '%' . $term . '%')
-                ->orWhere('crm', 'LIKE', '%' . $term . '%')
-                ->get();
-        }
+            if ($status == '1') {
+                $categorias = Categoria::where('deleted_at', null);
+            } else if ($status == '0') {
+                $categorias = Categoria::onlyTrashed();
+            } else {
+                $categorias = Categoria::withTrashed();
+            }
 
+            foreach ($terms as $key => $term) {
+                $categorias = $categorias->where($key, 'LIKE', '%' . $term . '%');
+            }
+
+        }
+        $categorias = $categorias->get();
+        
         $table = view('avaliacaodesempenho::categorias/_table', compact('categorias'))->render();
         return response()->json(['success' => true, 'html' => $table]);
     }

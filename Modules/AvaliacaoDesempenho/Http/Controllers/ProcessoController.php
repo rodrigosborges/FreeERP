@@ -37,8 +37,11 @@ class ProcessoController extends Controller
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+        $data = [
+            'funcionarios' => Funcionario::all(),
+        ];
 
-        return view('avaliacaodesempenho::processos/index', compact('moduleInfo', 'menu'));
+        return view('avaliacaodesempenho::processos/index', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function create()
@@ -162,19 +165,30 @@ class ProcessoController extends Controller
     public function search(Request $request)
     {
 
-        $term = $request->input('term');
+        $terms = $request->input('term');
+        $status = $request->input('status');
 
-        if (empty($term)) {
+        if (empty($terms) && empty($status)) {
 
-            $processos = Processo::withTrashed()->get();
+            $processos = Processo::withTrashed();
 
         } else {
 
-            $processos = Processo::withTrashed()->where('nome', 'LIKE', '%' . $term . '%')
-                ->orWhere('crm', 'LIKE', '%' . $term . '%')
-                ->get();
-        }
+            if ($status == '1') {
+                $processos = Processo::where('deleted_at', null);
+            } else if ($status == '0') {
+                $processos = Processo::onlyTrashed();
+            } else {
+                $processos = Processo::withTrashed();
+            }
 
+            foreach ($terms as $key => $term) {
+                $processos = $processos->where($key, 'LIKE', '%' . $term . '%');
+            }
+
+        }
+        $processos = $processos->get();
+        
         $table = view('avaliacaodesempenho::processos/_table', compact('processos'))->render();
         return response()->json(['success' => true, 'html' => $table]);
     }

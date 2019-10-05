@@ -15,26 +15,31 @@ $(document).ready(function () {
     })
 })
 
-$(document).on('keyup keydown paste', '.search_field', function () {
+$(document).on('click', '#submit-btn', function (e) {
 
-    var search = $(this).val()
-    const _token = $('#token').val()
-
-    if (search.length < 1 || search.length > 2) {
-
-        $.ajax({
-            method: 'POST',
-            url: 'http://localhost/tcc/public/avaliacaodesempenho/categoria/ajax/search',
-            data: {
-                _token: _token,
-                term: search
-            },
-            success: function (data) {
-                $('#CategoriaTable').html('')
-                $('#CategoriaTable').append(data)
-            }
-        })
+    e.preventDefault()
+    
+    const _token = $('input[name="_token"]').val()
+    var search = {
+        nome: $('input[name="_nome"]').val()
     }
+    var status = $('#_status').children('option:selected').val()
+
+    console.log(_token, search, status)
+
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/categoria/ajax/search',
+        data: {
+            _token: _token,
+            term: search,
+            status: status
+        },
+        success: function (data) {
+            $('#CategoriaTable').html('')
+            $('#CategoriaTable').append(data.html)
+        }
+    })
 })
 
 function confirmDelete(id, msg) {
