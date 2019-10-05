@@ -70,8 +70,9 @@ class CategoriaController extends Controller
 
         } catch (\Throwable $th) {
 
-            echo '<pre>';
-            print_r($th->getMessage());exit;
+            DB::rollback();
+
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return back()->with('error', 'Não foi possível cadastrar a Categoria');
         }
@@ -115,8 +116,7 @@ class CategoriaController extends Controller
 
         } catch (\Throwable $th) {
 
-            echo '<pre>';
-            print_r($th->getMessage());exit;
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return back()->with('error', 'Não foi possível cadastrar a Categoria');
         }

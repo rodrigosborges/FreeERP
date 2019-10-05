@@ -14,4 +14,8 @@ class Processo extends Model
     public function responsavel() {
         return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Funcionario', 'funcionario_id');
     }
+
+    public function avaliacoes() {
+        return $this->hasMany('Modules\AvaliacaoDesempenho\Entities\Avaliacao', 'processo_id', 'id');
+    }
 }

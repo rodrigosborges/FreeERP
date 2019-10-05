@@ -40,7 +40,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='questao[enunciado]' type='text' value="{{ old('questao.enunciado', $data['questao'] ? $data['questao']->enunciado : '') }}"
+                            <input class="form-control" name='questao[enunciado]' type='text' value="{{ old('questao.enunciado', isset($data['questao']) ? $data['questao']->enunciado : '') }}"
                                 placeholder="Digite o Enunciado da Questão">
 
                             <div class="invalid-feedback">
@@ -72,7 +72,7 @@
                             <select class="form-control" name="questao[categoria_id]" id="questao[categoria_id]">
                                 <option value="">Selecione a Categoria da Questão</option>
                                 @foreach( $data['categorias'] as $categoria)
-                                    <option {{ old('questao.categoria_id', $data['questao'] ? $data['questao']->categoria_id : '') == $categoria->id ? 'selected' : ''}} value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
+                                    <option {{ old('questao.categoria_id', isset($data['questao']) ? $data['questao']->categoria_id : '') == $categoria->id ? 'selected' : ''}} value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
                                 @endforeach
                             </select>
 
@@ -96,7 +96,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='questao[opt1]' type='text' value="{{ old('questao.opt1', $data['questao'] ? $data['questao']->opt1 : '') }}"
+                            <input class="form-control" name='questao[opt1]' type='text' value="{{ old('questao.opt1', isset($data['questao']) ? $data['questao']->opt1 : '') }}"
                                 placeholder="Digite a opção">
 
                             <div class="invalid-feedback"></div>
@@ -121,7 +121,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='questao[opt2]' type='text' value="{{ old('questao.opt2', $data['questao'] ? $data['questao']->opt2 : '') }}"
+                            <input class="form-control" name='questao[opt2]' type='text' value="{{ old('questao.opt2', isset($data['questao']) ? $data['questao']->opt2 : '') }}"
                                 placeholder="Digite a opção">
 
                             <div class="invalid-feedback"></div>
@@ -146,7 +146,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='questao[opt3]' type='text' value="{{ old('questao.opt3', $data['questao'] ? $data['questao']->opt3 : '') }}"
+                            <input class="form-control" name='questao[opt3]' type='text' value="{{ old('questao.opt3', isset($data['questao']) ? $data['questao']->opt3 : '') }}"
                                 placeholder="Digite a opção">
 
                             <div class="invalid-feedback"></div>
@@ -171,7 +171,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='questao[opt4]' type='text' value="{{ old('questao.opt4', $data['questao'] ? $data['questao']->opt4 : '') }}"
+                            <input class="form-control" name='questao[opt4]' type='text' value="{{ old('questao.opt4', isset($data['questao']) ? $data['questao']->opt4 : '') }}"
                                 placeholder="Digite a opção">
 
                             <div class="invalid-feedback"></div>
@@ -196,7 +196,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='questao[opt5]' type='text' value="{{ old('questao.opt5', $data['questao'] ? $data['questao']->opt5 : '') }}"
+                            <input class="form-control" name='questao[opt5]' type='text' value="{{ old('questao.opt5', isset($data['questao']) ? $data['questao']->opt5 : '') }}"
                                 placeholder="Digite a opção">
 
                             <div class="invalid-feedback"></div>

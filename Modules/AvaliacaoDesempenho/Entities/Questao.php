@@ -14,4 +14,8 @@ class Questao extends Model
     public function categoria() {
         return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Categoria', 'categoria_id');
     }
+
+    public function avaliacoes() {
+        return $this->belongsToMany('Modules\AvaliacaoDesempenho\Entities\Avaliacao', 'avaliacao_has_questao', 'questao_id', 'avaliacao_id');
+    }
 }

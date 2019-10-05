@@ -40,7 +40,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='setor[nome]' type="text" value="{{ old('setor.nome', $data['setor'] ? $data['setor']->nome : '') }}"
+                            <input class="form-control" name='setor[nome]' type="text" value="{{ old('setor.nome', isset($data['setor']) ? $data['setor']->nome : '') }}"
                                 placeholder="Digite o nome da setor">
 
                             <div class="invalid-feedback">

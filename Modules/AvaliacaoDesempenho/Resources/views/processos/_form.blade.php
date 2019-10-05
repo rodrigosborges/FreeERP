@@ -26,6 +26,35 @@
 
             <div class='card-body'>
 
+                    <div class='form-row'>
+
+                            <div class='form-group col-md-12'>
+        
+                                <label>Nome do Processo</label>
+        
+                                <div class='input-group'>
+        
+                                    <div class='input-group-prepend'>
+                                        <span class="input-group-text">
+                                            <i class="material-icons">android</i>
+                                        </span>
+                                    </div>
+        
+                                    <input class="form-control" name='processo[nome]' type="text" value="{{ old('processo.nome', isset($data['processo']) ? $data['processo']->nome : '') }}"
+                                        placeholder="Digite o nome do processo">
+        
+                                    <div class="invalid-feedback">
+                                        @error('processo.nome')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+        
+                                </div>
+        
+                            </div>
+        
+                        </div>
+
                 <div class='form-row'>
 
                     <div class='form-group col-md-6'>
@@ -40,7 +69,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='processo[data_inicio]' type="date" value="{{ old('processo.data_inicio', $data['processo'] ? $data['processo']->data_inicio : '') }}"
+                            <input class="form-control" name='processo[data_inicio]' type="date" value="{{ old('processo.data_inicio', isset($data['processo']) ? $data['processo']->data_inicio : '') }}"
                                 placeholder="Selecione a data de inicio">
 
                             <div class="invalid-feedback">
@@ -65,7 +94,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='processo[data_fim]' type="date" value="{{ old('processo.data_fim', $data['processo'] ? $data['processo']->data_fim : '') }}"
+                            <input class="form-control" name='processo[data_fim]' type="date" value="{{ old('processo.data_fim', isset($data['processo']) ? $data['processo']->data_fim : '') }}"
                                 placeholder="Selecione a data final">
 
                             <div class="invalid-feedback"></div>
@@ -94,7 +123,7 @@
                                 id="processo[funcionario_id]">
                                 <option value="">Selecione o Funcionario Responsavel pelo Processo</option>
                                 @foreach( $data['funcionarios'] as $funcionario)
-                                    <option {{ old('processo.funcionario_id', $data['processo'] ? $data['processo']->funcionario_id : '') == $funcionario->id ? 'selected' : ''}} value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
+                                    <option {{ old('processo.funcionario_id', isset($data['processo']) ? $data['processo']->funcionario_id : '') == $funcionario->id ? 'selected' : ''}} value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
                                 @endforeach
                             </select>
 

@@ -10,4 +10,8 @@ class Categoria extends Model
     protected $table = 'categoria';
     protected $fillable = ['nome'];
     use SoftDeletes;
+
+    public function questoes() {
+        return $this->hasMany('Modules\AvaliacaoDesempenho\Entities\Questao', 'categoria_id', 'id');
+    }
 }

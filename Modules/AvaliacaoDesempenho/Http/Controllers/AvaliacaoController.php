@@ -2,9 +2,17 @@
 
 namespace Modules\AvaliacaoDesempenho\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+
+use Modules\AvaliacaoDesempenho\Entities\Processo;
+use Modules\AvaliacaoDesempenho\Entities\Funcionario;
+use Modules\AvaliacaoDesempenho\Entities\Setor;
+use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
+use Modules\AvaliacaoDesempenho\Entities\Avaliado;
+
 
 class AvaliacaoController extends Controller
 {
@@ -35,17 +43,64 @@ class AvaliacaoController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        return view('avaliacaodesempenho::dashboard/index', compact('moduleInfo','menu'));
+        return view('avaliacaodesempenho::avaliacoes/index', compact('moduleInfo','menu'));
     }
 
     public function create()
     {
-        return view('avaliacaodesempenho::create');
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+
+        $data = [
+            'processos' => Processo::all(),
+            'funcionarios' => Funcionario::all(),
+            'setores' => Setor::all()
+        ];
+
+        return view('avaliacaodesempenho::avaliacoes/create', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            $input = $request->input('avaliacao');
+
+            $setor = Setor::findOrFail($input['setor_id']);
+
+            foreach ($input as $key => $value) {
+                if ($key != 'gestor' && empty($value)) {
+                    return back()->with('error', 'Todos os campos são obrigatórios. '.$key);
+                }
+            }
+
+            $avaliacao = Avaliacao::create($input);
+
+            if ($input['gestor'] == 0) {
+                $funcionarios = Funcionario::where('setor_id', $input['setor_id'])->get();
+            }
+            
+            foreach ($funcionarios as $key => $funcionario) {
+
+                if ($funcionario->id != $setor->gestor->id) {
+                    $avaliado = Avaliado::create(['funcionario_id' => $funcionario->id, 'avaliacao_id' => $avaliacao->id]);
+                } 
+            }
+            
+            DB::commit();
+
+            return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação Criada com Sucesso');
+
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+
+            echo '<pre>';print_r($th->getMessage());exit;
+
+            return back()->with('error', 'Não foi possível cadastrar a Avaliação');
+        }
     }
 
     public function show($id)
@@ -55,16 +110,100 @@ class AvaliacaoController extends Controller
 
     public function edit($id)
     {
-        return view('avaliacaodesempenho::edit');
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+
+        $data = [
+            'avaliacao' => Avaliacao::findOrFail($id),
+            'processos' => Processo::all(),
+            'funcionarios' => Funcionario::all(),
+            'setores' => Setor::all()
+        ];
+
+        return view('avaliacaodesempenho::avaliacoes/edit', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            $avaliacao = Avaliacao::findOrFail($id);
+
+            $input = $request->input('avaliacao');
+
+            foreach ($input as $key => $value) {
+                if (empty($value)) {
+                    return back()->with('error', 'Todos os campos são obrigatórios.');
+                }
+            }
+
+            $avaliacao->update($input);
+            
+            DB::commit();
+
+            return redirect('avaliacaodesempenho/avaliacao')->with('success', 'Avaliação cadastrada com sucesso.');
+            
+        } catch (\Throwable $th) {
+            
+            DB::rollback();
+
+            echo '<pre>';print_r($th->getMessage());exit;
+
+            return back()->with('error', 'Não foi possivel editar a Avaliação');
+        }
     }
 
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $categoria = Categoria::withTrashed()->findOrFail($id);
+
+            if($categoria->trashed()) {
+
+                $categoria->restore();
+
+                DB::commit();
+                
+                return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria ativada com Sucesso');
+
+            } else {
+                
+                $categoria->delete();
+                
+                DB::commit();
+
+                return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria desativada com Sucesso');
+            }
+
+        } catch (\Throwable $th) {
+            echo '<pre>';print_r($th->getMessage());exit;
+            DB::rollback();
+
+            return redirect('/avaliacaodesempenho/categoria')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
+        }
+    }
+
+    public function search(Request $request)
+    {
+
+        $term = $request->input('term');
+
+        if (empty($term)) {
+
+            $avaliacoes = Avaliacao::withTrashed()->get();
+
+        } else {
+
+            $avaliacoes = Avaliacao::withTrashed()->where('nome', 'LIKE', '%' . $term . '%')
+                ->orWhere('crm', 'LIKE', '%' . $term . '%')
+                ->get();
+        }
+
+        $table = view('avaliacaodesempenho::avaliacoes/_table', compact('avaliacoes'))->render();
+        return response()->json(['success' => true, 'html' => $table]);
     }
 }
