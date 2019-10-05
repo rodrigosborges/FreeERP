@@ -4,13 +4,13 @@ namespace Modules\Recrutamento\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Entities\{Endereco,Estado,Cidade, Email, Telefone, TipoTelefone};
-use Modules\Recrutamento\Entities\{Candidato,Vaga,Entrevista};
+use Modules\Recrutamento\Entities\{Candidato,Vaga,Mensagem};
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Mail;
 
-class EntrevistaController extends Controller
+class MensagemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,6 +29,8 @@ class EntrevistaController extends Controller
             ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
             ['icon' => 'assignment', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
             ['icon' => 'assignment', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
+            ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
+            ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
 		];
     }
 
@@ -58,17 +60,17 @@ class EntrevistaController extends Controller
     public function store(Request $request)
     {
         $candidato = Candidato::findOrFail($request->candidato_id);
-        $email= $candidato->email()->get()[0]['email'];
-        $entrevista = Entrevista::Create($request->all());
-        if($entrevista){
-            Mail::send('recrutamento::email.entrevista',['entrevista' => $entrevista], function ($m) use ($candidato){
+        $email= $candidato->email()->first()->email;
+        $mensagem = Mensagem::Create($request->all());
+        if($mensagem){
+            Mail::send('recrutamento::email.mensagem',['mensagem' => $mensagem], function ($m) use ($candidato){
                 $m->from('comprateste06@gmail.com', 'RH Empresa');
-                $m->to($candidato->email()->get()[0]['email'], $candidato->nome)->subject('Entrevista Agendada!');
+                $m->to($candidato->email()->first()->email, $candidato->nome)->subject('RH Empresa');
             });
         }else{
             return redirect()->back()->with('error', 'Erro ao Marcar Entrevista');
         }
-        return redirect('recrutamento/candidato')->with('success', 'Entrevista Agendada com sucesso');
+        return redirect('recrutamento/candidato')->with('success', 'Mensagem enviada com sucesso');
     }
 
     /**
@@ -112,17 +114,17 @@ class EntrevistaController extends Controller
         //
     }
 
-    public function marcarEntrevista($id)
+    public function enviarMensagem($id)
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
             'candidato'	=> Candidato::findOrFail($id),
-            'url'       => url("recrutamento/entrevista/"),
-            'button'    => 'Marcar Entrevista',
+            'url'       => url("recrutamento/mensagem/"),
+            'button'    => 'Enviar Email',
             "model"		=> null,
 		]; 
-        return view('recrutamento::entrevista.formulario', compact('data','moduleInfo','menu'));
+        return view('recrutamento::mensagem.formulario', compact('data','moduleInfo','menu'));
     }
 
 }

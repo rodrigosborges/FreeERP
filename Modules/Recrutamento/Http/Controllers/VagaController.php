@@ -26,6 +26,8 @@ class VagaController extends Controller
             ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
             ['icon' => 'assignment', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
             ['icon' => 'assignment', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
+            ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
+            ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
 		];
     }
 
@@ -199,13 +201,21 @@ class VagaController extends Controller
         return view('recrutamento::vaga.vagasDisponiveis', compact('data','moduleInfo','menu'));
     }
 
-    public function candidatos($id)
+    public function candidatos($id, Request $request)
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+        if($request->pesquisa != "" || $request->pesquisa != null){
+            $candidatos = Candidato::where('nome', 'like', '%'.$request->pesquisa.'%')->get();
+            $candidatosInativos = Candidato::onlyTrashed()->where('nome', 'like', '%'.$request->pesquisa.'%');
+        }else{
+            $candidatos = Candidato::where('vaga_id', $id)->get();
+            $candidatosInativos = Candidato::onlyTrashed()->where('vaga_id', $id)->get();
+        }
+
         $data = [
-			'candidatos'		=> Candidato::where('vaga_id', $id)->get(),
-			'candidatos_inativos'		=> Candidato::onlyTrashed()->where('vaga_id', $id)->get(),
+			'candidatos'		=> $candidatos,
+			'candidatos_inativos'		=> $candidatosInativos,
 			'title'		=> "Lista de Candidatos",
 		]; 
         return view('recrutamento::vaga.candidatos', compact('data','moduleInfo','menu'));

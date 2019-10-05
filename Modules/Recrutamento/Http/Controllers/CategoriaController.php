@@ -21,6 +21,8 @@ class CategoriaController extends Controller
             ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
             ['icon' => 'assignment', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
             ['icon' => 'assignment', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
+            ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
+            ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
 		];
     }
 

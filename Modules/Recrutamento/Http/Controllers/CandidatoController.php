@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Entities\{Endereco,Estado,Cidade, Email, Telefone, TipoTelefone};
-use Modules\Recrutamento\Entities\{Candidato,Vaga,};
+use Modules\Recrutamento\Entities\{Candidato,Vaga,Etapa};
 
 class CandidatoController extends Controller
 {
@@ -26,20 +26,27 @@ class CandidatoController extends Controller
             ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
             ['icon' => 'assignment', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
             ['icon' => 'assignment', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
+            ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
+            ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
 		];
     }
-
-
-
-
     
-    public function index()
+    public function index(Request $request)
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+        if($request->pesquisa != "" || $request->pesquisa != null){
+            $candidatos = Candidato::where('nome', 'like', '%'.$request->pesquisa.'%')->get();
+            $candidatosInativos = Candidato::onlyTrashed()->where('nome', 'like', '%'.$request->pesquisa.'%')->get();
+        }else{
+            $candidatos = Candidato::all();
+            $candidatosInativos = Candidato::onlyTrashed()->get();
+        }
+
         $data = [
-            'candidatos'	=> Candidato::all(),
-			'title'		=> "Lista de Curriculo"
+			'candidatos'		=> $candidatos,
+			'candidatos_inativos'		=> $candidatosInativos,
+			'title'		=> "Lista de Candidatos",
 		]; 
         return view('recrutamento::candidato.index', compact('data','moduleInfo','menu'));
     }
@@ -146,7 +153,7 @@ class CandidatoController extends Controller
         $menu = $this->menu;
         $data = [
 			"url" 	 	=> url("recrutamento/candidato/"),
-			"button" 	=> "Marcar Entrevista",
+			"button" 	=> "Enviar Mensagem",
 			"model"		=> null,
             "title"		=> "Candidato",
             "candidato" => Candidato::findOrFail($id),    
@@ -206,7 +213,21 @@ class CandidatoController extends Controller
     {
         $candidato = Candidato::findOrFail($id);
 		$candidato->delete();
-		return back()->with('success',  'Curriculo deletado'); 
+		return back()->with('success',  'Candidato deletado'); 
+    }
+
+    public function restore($id)
+    {
+        DB::beginTransaction();
+		try{    
+            $candidato = Candidato::onlyTrashed()->where('id', $id)->first();
+            $candidato->restore();          
+			DB::commit();
+			return back()->with('success', 'Candidato restaurado com sucesso');
+		}catch(Exception $e){
+			DB::rollback();
+			return back()->with('error', 'Erro no servidor');
+		}
     }
 
     public function novo($id)
@@ -230,4 +251,60 @@ class CandidatoController extends Controller
 		];
         return view('recrutamento::candidato.form',compact('data','moduleInfo','menu'));
     }
+
+
+    public function addEtapa($id)
+    {
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+
+        $candidato = Candidato::findOrFail($id);
+        if(count($candidato->etapas()->get()) > 0){
+            $model = $candidato;
+            $itens_pedido = Candidato::findOrFail($id)->etapas()->get();
+        }else{
+            $model = null;
+            $itens_pedido = [['id' => "",'nota'=>""]];
+        }
+
+        $data = [
+            "url" 	 	=> url("recrutamento/candidato/addEtapa/"),
+            'voltar'    => url("recrutamento/candidato/"),
+			"pedido"	=> $model,
+            "itens"		=> Etapa::all(),
+            "itens_pedido"  => $itens_pedido,
+            'title'		=> "Cadastrar Pedido",
+            'candidato' => $candidato,
+
+        ];
+        
+
+
+        return view('recrutamento::candidato.addetapa',compact('data','moduleInfo','menu'));
+    }
+
+    public function inserirEtapa(Request $request)
+    {
+        DB::beginTransaction();
+		try{
+            $candidato = Candidato::findOrFail($request->candidato_id);
+            
+            if(count($candidato->etapas()->get()) > 0){
+                $candidato->etapas()->detach();
+                $candidato->etapas()->attach($request->itens);
+            }else{
+                $candidato->etapas()->attach($request->itens);
+            }
+
+            
+    
+            DB::commit();
+            return redirect('/recrutamento/candidato')->with('success', 'Etapa inserida com successo');
+		}catch(Exception $e){
+			DB::rollback();
+			return back()->with('error', 'Erro no servidor');
+		}
+    }
+
+
 }

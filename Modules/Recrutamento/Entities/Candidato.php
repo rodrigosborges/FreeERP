@@ -24,7 +24,7 @@ class Candidato extends Model
 
     //Relação Com a tabela Vaga
     public function vaga(){
-        return $this->belongsTo('Modules\Recrutamento\Entities\Vaga');
+        return $this->belongsTo('Modules\Recrutamento\Entities\Vaga')->withTrashed();
         
     }
 
@@ -33,7 +33,13 @@ class Candidato extends Model
         return $this->HasMany('Modules\Recrutamento\Entities\Mensagem','mensagem_id');
         
     }
+    
+    //Relação com a tabela Candidato has Etapa
+    public function etapas(){
+        return $this->belongsToMany('Modules\Recrutamento\Entities\Etapa','candidato_has_etapa')->withPivot('nota');   
+    }
 
+    
 
 
 }

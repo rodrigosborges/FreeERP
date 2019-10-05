@@ -14,6 +14,6 @@ class Cargo extends Model
     protected $fillable = array('id','nome','categoria_id');
 
     public function categoria(){
-        return $this->belongsTo('Modules\Recrutamento\Entities\Categoria');
+        return $this->belongsTo('Modules\Recrutamento\Entities\Categoria')->withTrashed();
     }
 }

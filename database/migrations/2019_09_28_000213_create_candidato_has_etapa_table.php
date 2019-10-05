@@ -15,9 +15,9 @@ class CreateCandidatoHasEtapaTable extends Migration
     {
         Schema::create('candidato_has_etapa', function (Blueprint $table) {
             $table->integer('id', true);
-			$table->integer('nota');
 			$table->integer('candidato_id')->index('fk_candidato_has_etapa_candidato1');
-			$table->integer('etapa_id')->index('fk_candidato_has_etapa_pedido1');
+            $table->integer('etapa_id')->index('fk_candidato_has_etapa_pedido1');
+            $table->integer('nota');
 			$table->timestamps();
 			$table->softDeletes();
         });

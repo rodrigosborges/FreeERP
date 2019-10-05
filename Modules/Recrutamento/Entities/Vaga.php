@@ -22,7 +22,7 @@ class vaga extends Model
     }
 
     public function cargo(){
-        return $this->belongsTo('Modules\Recrutamento\Entities\Cargo');
+        return $this->belongsTo('Modules\Recrutamento\Entities\Cargo')->withTrashed();
     }
 
 }
