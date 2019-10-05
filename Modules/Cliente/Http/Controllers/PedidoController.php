@@ -172,7 +172,7 @@ class PedidoController extends Controller
 
 
         $data = ['cliente' => $cliente, 'pedidos' => $pedidos, 'start' => $start, 'end'=> $end, 
-        'data' => $cliente->vl_total_liquido_pedidos($start, $end)];
+        'data' => $cliente->dados_relatorio($start, $end)];
         
         // dd($data);
         // return view('cliente::pedidos.relatorio', compact('cliente', 'pedido'));

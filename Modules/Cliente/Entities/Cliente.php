@@ -53,19 +53,35 @@ class Cliente extends Model
         return $this->hasMany('Modules\Cliente\Entities\Pedido');
     }
 
-    public function vl_total_liquido_pedidos($start, $end){
-        $vl_total = 0;
-        $vl_desc = 0;
-
+    public function dados_relatorio($start, $end){
+        $vl_liquido_total = 0;
+        $vl_desc_item = 0;
+        $total_itens = 0;
+        $vl_bruto_total = 0;
         $pedidos = $this->pedidos()->whereBetween( 'data', [$start, $end] )->get();
-        
-        foreach($pedidos as $pedido){
-            $vl_total += $pedido->vl_total_pedido();
-            $vl_desc += $pedido->media_desconto_itens();
-        }
-        $vl_desc = $vl_desc / count($pedidos);
+        $total_pedido_desconto = 0;
 
-        $data = ["vl_total" => $vl_total, "media_desc_item" => $vl_desc];
+        foreach($pedidos as $pedido){
+            $vl_liquido_total += $pedido->vl_total_pedido();
+            $total_pedido_desconto += $pedido->desconto;
+
+            foreach($pedido->vl_total_itens() as $produto){
+                $vl_desc_item += $produto->desconto;
+                $total_itens += $produto->quantidade;
+            }
+            $vl_bruto_total += $pedido->vl_bruto_pedido();
+        }
+        
+        $media_desconto_pedido = $total_pedido_desconto / count($pedidos);
+
+        $media_desconto_item = 0;
+        
+        if($vl_desc_item > 0)
+            $media_desconto_item = $vl_desc_item / $total_itens;
+
+        $data = ["vl_liquido_total" => $vl_liquido_total, "media_desc_item" => $media_desconto_item, 
+        "vl_bruto" => $vl_bruto_total, "total_itens"=>$total_itens, "media_desc_pedido"=>$media_desconto_pedido];
+
         return $data;
     }
     

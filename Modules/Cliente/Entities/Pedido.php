@@ -23,9 +23,6 @@ class Pedido extends Model
         return date("d/m/Y", strtotime($this->attributes["data"]));
     }
 
-
-
-
     public function produtos(){
         return $this->belongsToMany('Modules\Cliente\Entities\Produto', 'pedido_has_produto')->withPivot('quantidade','desconto');
     }
@@ -44,6 +41,16 @@ class Pedido extends Model
         
         )->get();
     }
+
+    public function vl_bruto_pedido(){
+         $vl = $this->produtos()->select(DB::raw("produto.preco*pedido_has_produto.quantidade as total_item"))->get();
+         $total = 0;
+         foreach($vl as $valor){
+             $total += $valor["total_item"];
+         }
+         return $total;
+    }
+
     public function vl_itens_desconto(){
         $valor  = 0;
         foreach($this->vl_total_itens() as $pedido){
@@ -54,11 +61,10 @@ class Pedido extends Model
 
     public function vl_total_pedido(){
         $valor = $this->vl_itens_desconto();
-
         
         if($valor > 0){
             if($this->desconto > 0){
-                $valor = $valor - ($valor*($this->desconto /100 ));
+                $valor = $valor - ( $valor*($this->desconto /100 ));
             }else{
                 $this->desconto = 0;
             }
@@ -74,8 +80,10 @@ class Pedido extends Model
         foreach($produtos as $produto){
             $desc_total += $produto->desconto;
         }
+        if($desc_total > 0)
+            return $media = $desc_total/count($produtos);
 
-        $media = $desc_total/count($produtos);
+        return 0;
     }
 
 

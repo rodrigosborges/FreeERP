@@ -6,40 +6,68 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Relatorio de compras - {{ $cliente->nome}}</title>
     <style>
+        *{
+            padding: 0;
+            text-align: center;
+            box-sizing: border-box;
+        }
         table{
             border: 1px solid black;
             border-collapse: collapse;
         }
+        #info tr td{
+            height: 35px;
+            padding-bottom: 5px;
+            text-transform: capitalize;
+        }
         #dados_pedido {
-            background-color: gray;
+            background-color: #D3D3D3;
         }
         span{
             font-weight: bolder;
         }
-        #info{
+        caption{
+            font-size: 28px;
         }
+        
     </style>
 </head>
 <body>
     <div>
-        
-        <table style="width: 100%">
-            <caption>Relatorio de compras: {{ $cliente->nome}}</caption>
+        <table id="info" style="width: 100%">
+            <caption> - Relatório de Compras - </caption>
             <tr>
-                <td style="text-align: center; border: 1px solid black">
-                    <span>Período:</span>{{ $start->format('d/m/Y') }} - {{ $end->format('d/m/Y') }}
+                <td> 
+                    <span>Cliente: </span> {{ $cliente->nome }}
+                </td> 
+                <td>
+                    <span>Período Selecionado: </span>{{ $start->format('d/m/Y') }} - {{ $end->format('d/m/Y') }}
                 </td>
                 <td>
-                    <span>Total de compras no periodo:</span> {{ count($pedidos) }}
+                    <span>Compras no Periodo: </span> {{ count($pedidos) }}
                 </td>
-                <td><span>VL Liquido Total: </span>
-                    {{$data["vl_total"]}}
+                <td>
+                    <span>Itens comprados: </span> {{$data["total_itens"]}}
                 </td>
-            <td><span>Media desconto Item: {{$data["media_desc_item"]}}</span> </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>VL Bruto Total: </span> {{"R$ ".number_format($data["vl_bruto"], 2, ',', '.')}}
+                </td>
+                <td>
+                    <span>VL Liquido Total: </span>
+                            {{"R$ ".number_format($data["vl_liquido_total"], 2, ',', '.')}}
+                </td>
+                <td>
+                    <span>Media Desconto Unidade: </span>{{number_format($data["media_desc_item"], 3, '.', '.')." %"}}
+                </td>
+                <td>
+                    <span>Media Desconto Pedidos: </span>{{number_format($data["media_desc_pedido"], 3, '.', '.')." %"}}
+                </td>
             </tr>
             
         </table>
-       
 
         @foreach ($pedidos as $pedido)
             <div style="width: 100%; ">
@@ -49,9 +77,11 @@
                         <td><span>Num. Pedido:</span> {{$pedido->numero}}</td>
                         <td><span>Dt Pedido: </span>{{$pedido->data}}</td>
                         <td ><span>Desc. Pedido: </span>{{$pedido->desconto}} %</td>
-                        <td colspan="2" style="text-align: center">
+                        <td style="text-align: center">
                             <span>Vl Liquido: </span>{{ "R$ ".number_format($pedido->vl_total_pedido(), 2, ',', '.') }}
                         </td>
+                    <td><span>Itens: </span>{{count($pedido->produtos)}}</td>
+
                     </tr>
                     <tr>
                         <th>Item</th>
