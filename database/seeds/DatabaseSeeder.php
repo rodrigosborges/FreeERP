@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             TipoTelefoneSeeder::class,
             TipoDocumentoSeeder::class,
             ParentescoSeeder::class,
-            TipoDemissaoSeeder::class
+            TipoDemissaoSeeder::class,
+            TipoAvisoPrevioIndicador::class
         ]);
     }
 }

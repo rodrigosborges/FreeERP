@@ -19,6 +19,7 @@ class CreateAvisoPrevioIndenizadoTable extends Migration
             $table->integer('dias_aviso_indenizado');
             $table->string('tipo_reducao_aviso');
             $table->integer('aviso_previo_id')->index('fk_aviso_previo_indenizado_aviso_previo');
+            $table->integer('aviso_previo_indicador_cumprimento_id')->index('fk_aviso_previo_indenizado_aviso_previo_indicador_cumprimento');
         });
     }
 
