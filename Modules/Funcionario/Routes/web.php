@@ -31,7 +31,7 @@ Route::prefix('funcionario')->group(function() {
 
     Route::get('pagamento/listar/{id}','PagamentoController@listar');
     Route::get('pagamento/novoPagamento/{id}','PagamentoController@novoPagamento');
-
+    Route::get('pagamento/{id}/show', 'PagamentoController@show');
 
     Route::resource('controleFerias', 'ControleFeriasController');
     Route::resource('ferias', 'FeriasController');
