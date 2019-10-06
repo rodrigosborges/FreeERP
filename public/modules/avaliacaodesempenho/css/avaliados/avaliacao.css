@@ -1,0 +1,38 @@
+.prova {
+    margin: 30px;
+    box-shadow: 0 0 5px rgb(230, 230, 230);
+    padding: 10px;
+}
+
+.title {
+    font-weight: bold;
+    margin: 10px;
+    text-align: center;
+    font-size: 23px;
+}
+
+.header {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+}
+
+.informacoes {
+    display: flex;
+    justify-content: space-between;
+    line-height: 10px;
+    padding: 20px;
+}
+
+.funcionario {
+    text-align: left;
+}
+
+.gerais {
+    text-align: left;
+}
+
+.gestor {
+    text-align: left;
+}

@@ -28,6 +28,7 @@ class AvaliadoController extends Controller
         }
 
         $avaliado = Avaliado::where('token', $input['token'])->first();
+        $funcionario = $avaliado->avaliado;
 
         if (empty($avaliado)) {
             return back()->with('error', 'Funcionario não encontrado.');
@@ -39,6 +40,8 @@ class AvaliadoController extends Controller
             return back()->with('error', 'Avaliação não encontrada.');
         }
 
-        return view('avaliacaodesempenho::avaliados/avaliacao', compact('avaliacao'));
+        $questoes = $avaliacao->questoes;
+
+        return view('avaliacaodesempenho::avaliados/avaliacao', compact('avaliacao', 'questoes', 'funcionario'));
     }
 }

@@ -5,14 +5,17 @@
   <div class="card">
       
       <div class="card-header">
-        <b>{{ $questao->enunciado }}</b>
+        <b>Categoria: {{ $questao->categoria->nome }}</b>
         <b>{{ !empty($questao->deleted_at) ? ' | DESATIVADA' : '' }}</b>
-          <span class="float-right">
-            <b>Categoria: {{ $questao->categoria->nome }}</b>
-          </span>
       </div>
 
       <div class="card-body {{ !empty($questao->deleted_at) ? 'inactive' : '' }}">
+        
+        <b>Enunciado:</b>
+        <p>{{ $questao->enunciado }}</p>
+
+        <hr>
+
         <b>Alternativas:</b>
         <ul>
             <li>a) - {{ $questao->opt1 }}</li>
