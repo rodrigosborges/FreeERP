@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Eventos\Entities\Evento;
+use Modules\Eventos\Entities\Pessoa;
 use Illuminate\Support\Facades\DB;
 
 
@@ -29,14 +30,40 @@ class PessoasController extends Controller
             ->select('evento.nome')
             ->where('id', $eventoId)
             ->first();
-        //dd($eventoNome);
         //VARIÁVEL QUE ARMAZENA TODAS AS PESSOAS PARTICIPANTES DO EVENTO SELECIONADO
         $evento_pessoas = DB::table('pessoa')
             ->join('evento_has_pessoa', 'evento_has_pessoa.pessoa_id', 'pessoa.id')
             ->select('pessoa.*', 'evento_has_pessoa.evento_id')
             ->where('evento_has_pessoa.evento_id', $eventoId)
-            ->get(); 
-        return view('eventos::pessoas', ['eventoId' => $eventoId, 'eventoNome' => $eventoNome, 'evento_pessoas' => $evento_pessoas]);
+            ->get();
+        $eventos = []; //PASSANDO VALOR NULL PRA NÃO DAR ERRO QUANDO A FUNÇÃO CADASTRAR REDIECIONAR
+        return view('eventos::pessoas', ['eventoId' => $eventoId, 'eventos' => $eventos,
+            'eventoNome' => $eventoNome, 'evento_pessoas' => $evento_pessoas]);
+    }
+    
+    function cadastrar(Request $request)
+    {
+        //dd($request);
+        $pessoa = new Pessoa();
+        $pessoa->nome = $request->nome;
+        $pessoa->email = $request->email;
+        $pessoa->telefone = $request->telefone;
+        $pessoa->save();
+        $pessoa->eventos()->attach($request->idEvento);
+        
+        $eventoId = $request->idEvento;
+        
+        return view('eventos::pessoas', ['eventoId' => $eventoId]); //->with('success', $request->nome . ' criada com sucesso.')
+    }
+    
+    //FUNÇÃO AINDA NÃO UTILIZADA PARA VERIFICAR NO FORM DO MODAL SE O E-MAIL JÁ FOI CADASTRADO
+    public function verificaEmail(Email $email) //ARRUMAR
+    {
+        $resultado = DB::table('pessoa')
+            ->select('pessoa.id')
+            ->where('pessoa.email', $email)
+            -get();
+        return Response::json($resultado);
     }
 
     /**

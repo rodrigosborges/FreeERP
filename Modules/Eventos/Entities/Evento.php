@@ -13,7 +13,7 @@ class Evento extends Model
     
     public function pessoas()
     {
-        return $this->belongsToMany(Pessoa::class);
+        return $this->belongsToMany(Pessoa::class, 'evento_has_pessoa', 'evento_id', 'pessoa_id');
     }
     
     public function programacao()
