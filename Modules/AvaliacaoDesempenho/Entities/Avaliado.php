@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Avaliado extends Model
 {
     protected $table = 'avaliado';
-    protected $fillable = ['funcionario_id', 'avaliacao_id'];
+    protected $fillable = ['funcionario_id', 'avaliacao_id', 'token'];
     
     public function avaliado() {
         return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Funcionario', 'funcionario_id');

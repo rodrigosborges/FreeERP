@@ -200,6 +200,10 @@
 
                 </div>
 
+                <hr>
+
+                
+
             </div>
 
             <div class='card-footer'>

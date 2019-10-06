@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller;
 use Modules\AvaliacaoDesempenho\Entities\Processo;
 use Modules\AvaliacaoDesempenho\Entities\Funcionario;
 use Modules\AvaliacaoDesempenho\Entities\Setor;
+use Modules\AvaliacaoDesempenho\Entities\Questao;
 use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
 use Modules\AvaliacaoDesempenho\Entities\Avaliado;
 
@@ -59,7 +60,8 @@ class AvaliacaoController extends Controller
         $data = [
             'processos' => Processo::all(),
             'funcionarios' => Funcionario::all(),
-            'setores' => Setor::all()
+            'setores' => Setor::all(),
+            'questoes' => Questao::all()
         ];
 
         return view('avaliacaodesempenho::avaliacoes/create', compact('moduleInfo', 'menu', 'data'));
@@ -90,7 +92,8 @@ class AvaliacaoController extends Controller
             foreach ($funcionarios as $key => $funcionario) {
 
                 if ($funcionario->id != $setor->gestor->id) {
-                    $avaliado = Avaliado::create(['funcionario_id' => $funcionario->id, 'avaliacao_id' => $avaliacao->id]);
+                    $token =  bin2hex(random_bytes(16));
+                    $avaliado = Avaliado::create(['funcionario_id' => $funcionario->id, 'avaliacao_id' => $avaliacao->id, 'token' => $token]);
                 } 
             }
             

@@ -34,6 +34,10 @@ Route::prefix('avaliacaodesempenho')->group(function() {
     Route::delete('/avaliacao/{id}', 'AvaliacaoController@destroy');
     Route::post('/avaliacao/ajax/search', 'AvaliacaoController@search');
 
+    // REALIZAR AVALIAÇÃO ROUTES
+    Route::get('/avaliacao/responder', 'AvaliadoController@index');
+    Route::post('/avaliacao/responder', 'AvaliadoController@responder');
+
     // QUESTÃO ROUTES
     Route::get('/questao', 'QuestaoController@index');
     Route::get('/questao/create', 'QuestaoController@create');
