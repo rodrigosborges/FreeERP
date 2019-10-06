@@ -2,9 +2,14 @@
 
 namespace Modules\EstoqueMadeireira\Http\Controllers;
 
+
+use Modules\EstoqueMadeireira\Entities\Produto;
+use Modules\EstoqueMadeireira\Entities\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use DB;
+
 
 class ProdutoController extends Controller
 {
@@ -12,8 +17,10 @@ class ProdutoController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
-    {
+
+
+    public $template;
+    public function __construct(){
         $moduleInfo = [
             'icon' => 'android',
             'name' => 'Estoque Madeireira',
@@ -24,8 +31,18 @@ class ProdutoController extends Controller
             ['icon' => 'search', 'tool' => 'Pedidos', 'route' => '#'],
             ['icon' => 'edit', 'tool' => 'Estoque', 'route' => '#'],
         ];
+        $this->template = [
+            'moduleInfo' => $moduleInfo,
+            'menu' => $menu
+        ];
+    }
 
-        return view('estoquemadeireira::/Produtos/index',compact('moduleInfo','menu'));
+
+    public function index()
+    {
+
+
+        return view('estoquemadeireira::Produtos/index',$this->template);
     }
 
     /**
@@ -34,7 +51,13 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        return view('estoquemadeireira::create');
+        $categorias = Categoria::all();
+        // $fornecedores = Fornecedor::all();
+        
+        return view('estoquemadeireira::Produtos/form', $this->template, compact('categorias'));
+        //return view('estoquemadeireira::Produtos/form', $this->template, compact('categorias', 'fornecedores'));
+
+        
     }
 
     /**
@@ -74,6 +97,10 @@ class ProdutoController extends Controller
      * @return Response
      */
   
+
+
+
+
      public function update(Request $request, $id)
     {
         //
