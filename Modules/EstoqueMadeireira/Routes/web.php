@@ -13,12 +13,17 @@
 
 Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/', 'EstoqueMadeireiraController@index');
-   
-    Route::get('/cadastrooperador', function(){
-        
-        return "ae";
-    });
 
+    //ROTA DE PROTUDOS
+    // Route::resource('/produtos', 'ProdutoController');
+    Route::get('/produtos', 'ProdutoController@index');
+
+
+
+    // Route::get('/cadastrooperador', function(){
+        
+    //     return "ae";
+    // });
 
 
 });

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
-class EstoqueMadeireiraController extends Controller
+class ProdutoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,10 +23,9 @@ class EstoqueMadeireiraController extends Controller
             ['icon' => 'add_box', 'tool' => 'Cadastro', 'route' => '/'],
             ['icon' => 'search', 'tool' => 'Pedidos', 'route' => '#'],
             ['icon' => 'edit', 'tool' => 'Estoque', 'route' => '#'],
-            //['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
         ];
 
-        return view('estoquemadeireira::index',compact('moduleInfo','menu'));     
+        return view('estoquemadeireira::/Produtos/index',compact('moduleInfo','menu'));
     }
 
     /**
@@ -74,7 +73,8 @@ class EstoqueMadeireiraController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+  
+     public function update(Request $request, $id)
     {
         //
     }

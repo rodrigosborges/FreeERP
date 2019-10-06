@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Produto extends Migration
+class MovimentacaoEstoque extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class Produto extends Migration
      */
     public function up()
     {
-        Schema::create('produto', function (Blueprint $table) {
+        //
+        Schema::create('movimentacao_estoque', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome', 45);
-            $table->string('descricao', 300);
-            $table->integer('categoria_id')->unsigned()->index('fk_produtos_categoria');
-            $table->decimal('preco', 12, 2);
-            $table->integer('codigo');
+            $table->integer('estoque_id')->unsigned()->index('fk_estoque_pai');
+            $table->decimal('preco_custo', 12,2)->nullable();
+            $table->string('observacao', 256);
+            $table->integer('quantidade');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -32,6 +30,6 @@ class Produto extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('produto');
+        Schema::dropIfExists('movimentacao_estoque');
     }
 }
