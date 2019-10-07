@@ -181,5 +181,10 @@ class PedidoController extends Controller
                 ->stream();
     }
 
+    public function dashboard()
+    {
+        return view('cliente::dashboard.index');
+    }
+
 
 }
