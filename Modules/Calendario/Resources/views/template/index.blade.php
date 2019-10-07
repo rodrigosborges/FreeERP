@@ -87,7 +87,10 @@ $menu = [
                             break;
                         case 'agendas.index':
                         case 'agendas.editar':
+                        case 'agendas.criar':
                         case 'agendas.eventos.index':
+                        case 'eventos.criar':
+                        case 'eventos.editar':
                             $('.agendas').addClass('active');
                             break;
                         case 'convites.index':

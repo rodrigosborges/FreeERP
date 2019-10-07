@@ -22,6 +22,6 @@ class Evento extends Model
     }
 
     public function convites(){
-        return $this->hasMany('Modules\Calendario\Entities\Convites');
+        return $this->hasMany('Modules\Calendario\Entities\Convite');
     }
 }

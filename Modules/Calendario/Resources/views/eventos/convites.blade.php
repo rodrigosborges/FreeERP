@@ -22,7 +22,13 @@
                 @foreach($convites['pendentes'] as $convite)
                     <tr>
                         <td>{{$convite->evento->titulo}}</td>
-                        <td>{{$convite->evento->nota}}</td>
+                        <td>
+                            @if($convite->evento->nota)
+                                {{$convite->evento->nota}}
+                            @else
+                                ---
+                            @endif
+                        </td>
                         @if($convite->evento->dia_todo == true)
                             <td>{{ \Carbon\Carbon::parse($convite->evento->data_inicio)->format('d/m/Y')}}</td>
                         @else
@@ -30,7 +36,7 @@
                                 {{\Carbon\Carbon::parse($convite->evento->data_fim)->format('d/m/Y H:i')}}
                             </td>
                         @endif
-                        <td>{{$convite->evento->agenda->funcionario_id}}</td>
+                        <td>{{$convite->evento->agenda->funcionario->nome}}</td>
                         <td class="acoes">
                             <a href="{{route('convites.aceitar', $convite->id)}}" class="btn btn-secondary btn-sm text-white small">
                                 <i class="material-icons">thumb_down</i>

@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 use Modules\Calendario\Entities\Agenda;
 use Modules\Calendario\Entities\Convite;
 use Modules\Calendario\Entities\Evento;
+use Modules\Calendario\Entities\Funcionario;
 use Modules\Calendario\Entities\Notificacao;
 
 class EventoController extends Controller
@@ -26,8 +27,9 @@ class EventoController extends Controller
     public function criarOuEditar(Evento $evento = null, Request $request)
     {
         $agendas = Agenda::all();
+        $funcionarios = Funcionario::all();
         $agenda_selecionada = $request->agenda;
-        return view('calendario::eventos.criar-editar', ['agendas' => $agendas, 'evento' => $evento, 'agenda_selecionada' => $agenda_selecionada]);
+        return view('calendario::eventos.criar-editar', ['agendas' => $agendas, 'evento' => $evento, 'funcionarios' => $funcionarios, 'agenda_selecionada' => $agenda_selecionada]);
     }
 
     public function salvar(Request $request)
@@ -42,6 +44,7 @@ class EventoController extends Controller
             $agenda = Agenda::find($request->eventoAgenda);
             $evento->agenda()->associate($agenda);
             $evento->save();
+
             if ($request->eventoNotificacaoTempo && $request->eventoNotificacaoPeriodo) {
                 $notificacao = new Notificacao();
                 $notificacao->evento()->associate($evento);
@@ -50,8 +53,17 @@ class EventoController extends Controller
                 $notificacao->email = $request->eventoNotificacaoEmail;
                 $notificacao->save();
             }
+
+            if($request->eventoConvite){
+                foreach ($request->eventoConvite as $funcionario_id){
+                    $convite = new Convite();
+                    $convite->funcionario()->associate(Funcionario::find($funcionario_id));
+                    $convite->evento()->associate($evento);
+                    $convite->save();
+                }
+            }
         } catch (\Exception $e) {
-            return redirect()->route('agendas.eventos.index', $agenda->id)->with('error', 'Falha ao criar evento. Erro: ' . $e->getCode());
+            return redirect()->route('agendas.eventos.index', $agenda->id)->with('error', 'Falha ao criar evento. Erro: ' . $e->getMessage());
         }
         return redirect()->route('agendas.eventos.index', $agenda->id)->with('success', 'Evento criado com sucesso.');
     }
@@ -84,6 +96,24 @@ class EventoController extends Controller
                     $notificacao->email = $request->eventoNotificacaoEmail;
                     $notificacao->save();
                 }
+            }
+            $convites = [];
+            if ($request->eventoConvite) {
+                foreach ($request->eventoConvite as $funcionario_id) {
+                    $convites[] = Convite::firstOrCreate([
+                        'evento_id' => $evento->id,
+                        'funcionario_id' => $funcionario_id
+                    ]);
+                }
+            }
+            foreach ($evento->convites as $evento_convite) {
+                $achou = false;
+                foreach ($convites as $convite) {
+                    if ($convite->is($evento_convite))
+                        $achou = true;
+                }
+                if (!$achou)
+                    $evento_convite->delete();
             }
             $evento->save();
         } catch (\Exception $e) {

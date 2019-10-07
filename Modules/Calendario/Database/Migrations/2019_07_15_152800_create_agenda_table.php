@@ -23,6 +23,7 @@ class CreateAgendaTable extends Migration
             $table->unsignedBigInteger('cor_id');
             $table->unsignedBigInteger('funcionario_id');
             $table->foreign('cor_id')->references('id')->on('cor');
+            $table->foreign('funcionario_id')->references('id')->on('funcionario');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -23,8 +23,8 @@ class Agenda extends Model
         return $this->hasMany('Modules\Calendario\Entities\Compartilhamento');
     }
 
-    public function dono(){
-        return null;
+    public function funcionario(){
+        return $this->belongsTo('Modules\Calendario\Entities\Funcionario');
     }
 
     public function getEventosJsonAttribute(){

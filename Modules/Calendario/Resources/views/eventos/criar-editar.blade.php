@@ -77,11 +77,29 @@
                 <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3">{{isset($evento) ? $evento->nota : old('eventoNota')}}</textarea>
             </div>
 
+            <!-- Convites -->
+            <div class="form-group">
+                <label for="eventoConvite">Convite</label>
+                <select id="eventoConvite" name="eventoConvite[]" class="form-control" multiple>
+                    @foreach($funcionarios as $funcionario)
+                        @php($selected = '')
+                        @if(isset($evento))
+                            @foreach($evento->convites as $convite)
+                                @if($convite->funcionario_id == $funcionario->id)
+                                    @php($selected = 'selected')
+                                @endif
+                            @endforeach
+                        @endif
+                        <option value="{{$funcionario->id}}" {{$selected}}>{{$funcionario->nome}}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <!-- Agenda -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="eventoAgenda">Agenda</label>
-                    <select id="eventoAgenda" class="form-control" name="eventoAgenda" required @if(isset($evento)) disabled @endif>
+                    <select id="eventoAgenda" class="form-control" name="eventoAgenda" required @if(isset($evento)) readonly @endif>
                         @foreach($agendas as $agenda)
                             <option value="{{$agenda->id}}" @if($evento) @if($agenda->id == $evento->agenda->id) selected
                                     @endif @elseif($agenda_selecionada == $agenda->id) selected @endif>{{$agenda->titulo}}
@@ -99,12 +117,17 @@
 @section('css')
     @parent
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen-bootstrap.css')}}">
 @endsection
 
 @section('js')
     @parent
     <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script type="text/javascript"
+            src="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen.jquery.min.js')}}"></script>
     <script type="text/javascript">
         $(function () {
             $('#icone-notificacao').on('click', function (e) {
@@ -158,6 +181,10 @@
                 $('#eventoDataFim').datetimepicker('format', formato_input);
                 $('#eventoDataFim').datetimepicker('date', moment(evento.data_fim).format(formato_data));
             }
+
+            $('#eventoConvite').chosen({
+                placeholder_text_multiple: 'Funcionários'
+            });
         });
     </script>
 @endsection

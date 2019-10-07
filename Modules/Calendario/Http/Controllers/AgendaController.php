@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Modules\Calendario\Entities\Agenda;
 use Modules\Calendario\Entities\Aprovacao;
 use Modules\Calendario\Entities\Compartilhamento;
+use Modules\Calendario\Entities\Funcionario;
 use Modules\Calendario\Entities\Setor;
 use Modules\Calendario\Entities\Cor;
 use Modules\Calendario\Http\Requests\AgendaSalvarRequest;
@@ -35,7 +36,7 @@ class AgendaController extends Controller
             $agenda->descricao = $request->agendaDescricao;
             $agenda->cor()->associate(Cor::find($request->agendaCor));
             //TODO Incluir o usuário logado
-            $agenda->funcionario_id = 1;
+            $agenda->funcionario()->associate(Funcionario::find(1));
             $agenda->save();
             if ($request->agendaCompartilhamento) {
                 foreach ($request->agendaCompartilhamento as $setor_id) {

@@ -73,14 +73,14 @@
                             <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" id="formDelAgPerm">
                                 @method('DELETE')
                                 @csrf
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Deletar permanentemente">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Deletar agenda permanentemente">
                                     <i class="material-icons">delete_forever</i>
                                 </button>
                             </form>
                             <form method="POST" action="{{route('agendas.restaurar', $agenda->id)}}" id="formAgRec">
                                 @method('PATCH')
                                 @csrf
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" title="Restaurar">
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" title="Restaurar agenda">
                                     <i class="material-icons">restore_from_trash</i>
                                 </button>
                             </form>
@@ -88,7 +88,7 @@
                             <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" id="formAgDel">
                                 @method('DELETE')
                                 @csrf
-                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" title="Deletar">
+                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" title="Deletar agenda">
                                     <i class="material-icons">delete</i>
                                 </button>
                             </form>
@@ -98,7 +98,7 @@
             @endforeach
             @if($agendas->count() == $lixeira)
                 <tr class="vazio">
-                    <td colspan="5" class="text-center">Nenhuma agenda cadastrada.</td>
+                    <td colspan="6" class="text-center">Nenhuma agenda cadastrada.</td>
                 </tr>
             @endif
             </tbody>
