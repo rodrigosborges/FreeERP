@@ -305,7 +305,9 @@ class EstoqueController extends Controller
         //Se for para selecionar o período com todos os estoques
         $query_result = [];
         $movimentacao = [];
+        $quantidade_movimentada = 0;
         $estoque_selecionado = "";
+        $custo_total = "";
         if($req->estoque_id != -1)
             $estoque_selecionado = Estoque::findOrFail($req->estoque_id);
         if ($req->estoque_id == -1) {
@@ -317,7 +319,9 @@ class EstoqueController extends Controller
                   order by data asc'
             );
             $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->get();
-        //Se for para selecionar o período com um estoque específico
+            $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' .$req->data_inicial. '" AND "'.$req->data_final.'"');
+            
+            //Se for para selecionar o período com um estoque específico
         } else {
             $query_result = DB::select(
                 'SELECT distinct substring_index(created_at, " ", 1) as data,
@@ -328,6 +332,7 @@ class EstoqueController extends Controller
                   order by data asc'
             );
             $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->where('estoque_id', $req->estoque_id)->get();
+            $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' .$req->data_inicial. '" AND "'.$req->data_final.'" AND estoque_id = '.$req->estoque_id);
         }
 
         //Transfere as datas e os valores para um array especifico que será utilizado como labels e dados do gráfico
@@ -338,7 +343,14 @@ class EstoqueController extends Controller
             array_push($labels, $q->data);
         }
 
+        $total = 0;
+        foreach($dados as $d){
+            $total += $d;
+        }
+
         $data = [
+            'custo_total' => $total,
+            'quantidade_movimentada' => $quantidade_movimentada[0]->qtd,
             'estoque' => Estoque::all(),
             'estoque_selecionado' => $estoque_selecionado,
             'labels' => json_encode($labels),
