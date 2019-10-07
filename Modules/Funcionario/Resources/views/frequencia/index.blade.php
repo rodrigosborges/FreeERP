@@ -31,7 +31,7 @@
                         <tr>
                             <th>Mês</th>
                             <th>Ano</th>
-                            <th>Ações</th>
+                            <th style="width: 230px;">Ações</th>
                             <th width="1px">Situação</th>
                         </tr>
                     </thead>
@@ -40,14 +40,18 @@
                             <tr>
                                 <td>{{ucfirst($ponto->nome_mes)}}</td>
                                 <td>{{$ponto->ano}}</td>
-                                <td></td>
+                                <td>
+                                    <a href='{{ url("funcionario/frequencia/".$ponto->funcionario_id."/xls/".$ponto->ano."/".$ponto->mes) }}' class="btn btn-primary {{$ponto->hasAutomatico == 1 ? 'disabled' : ''}}">XLS</a>
+                                    <a target="__blank" href='{{ url("funcionario/frequencia/".$ponto->funcionario_id."/pdf/".$ponto->ano."/".$ponto->mes) }}' class="ml-2 btn btn-secondary {{$ponto->hasAutomatico == 1 ? 'disabled' : ''}}">PDF</a>
+                                    <a href='{{ url("funcionario/frequencia/".$ponto->funcionario_id."/edit/".$ponto->ano."/".$ponto->mes) }}' class="ml-2 btn btn-warning">Editar</a>
+                                </td>
                                 <td class='text-center'>
-                                    @if(true)
-                                        <div data-toggle="tooltip" data-placement="left" title="Os registros">
+                                    @if($ponto->hasAutomatico == 0)
+                                        <div data-toggle="tooltip" data-placement="left" title="Os registros de ponto não contém irregularidades.">
                                             <i class="material-icons icon-ponto icon-ponto-success">check_circle</i>
                                         </div>
                                     @else
-                                        <div data-toggle="tooltip" data-placement="left" title="Tooltip na parte superior">
+                                        <div data-toggle="tooltip" data-placement="left" title="Os registros de ponto contém registros automáticos, favor verificá-los.">
                                             <i class="material-icons icon-ponto icon-ponto-danger">error</i>
                                         </div>
                                     @endif
@@ -64,4 +68,9 @@
 
 @section('script')
     <script src="{{Module::asset('funcionario:js/views/funcionario/index.js')}}"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 @endsection

@@ -25,4 +25,8 @@ Route::prefix('funcionario')->group(function() {
     Route::resource('cargo', 'CargoController');
 
     Route::get('frequencia/{id}', 'FrequenciaController@index');
+    Route::get('frequencia/{id}/pdf/{ano}/{mes}', 'FrequenciaController@pdf');
+    Route::get('frequencia/{id}/xls/{ano}/{mes}', 'FrequenciaController@xls');
+    Route::get('frequencia/{id}/edit/{ano}/{mes}', 'FrequenciaController@edit');
+    Route::put('frequencia/{id}/update/{ano}/{mes}', 'FrequenciaController@update');
 });
