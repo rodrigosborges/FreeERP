@@ -10,7 +10,7 @@
 
     <div class="card-header">
         <div class="row header">
-            <h3>Avaliacoes</h3>
+            <h3>Avaliações</h3>
             <span>
                 <a href="{{ url('avaliacaodesempenho/avaliacao/create') }}" class="btn btn-primary">Adicionar</a>
             </span>

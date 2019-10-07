@@ -8,12 +8,6 @@
 
     <div class='prova'>
 
-        <pre>
-            {{ $avaliacao }}
-
-            {{ $funcionario }}
-        </pre>
-
         <div class="header">
 
             <p class='title'>INFORMAÇÕES DA AVALIAÇÃO</p>
@@ -41,11 +35,53 @@
 
             </div>
 
+            <hr>
+
             <div class="questoes">
 
-                @foreach($questoes as $questao)
+                <form action="{{ url('avaliacaodesempenho/avaliacao/respostas') }}" method="POST">
+                    {{ csrf_field() }}
 
-                @endforeach
+                    @foreach($questoes as $key => $questao)
+
+                        <div class="card questao">
+
+                            <div class="card-header">
+                                <b>Categoria: {{ $questao->categoria->nome }}</b>
+                            </div>
+
+                            <div class="card-body">
+
+                                <b>Enunciado:</b>
+                                <p>{{ $questao->enunciado }}</p>
+                        
+                                <hr>
+                        
+                                <b>Alternativas:</b>
+                                <ul>
+                                    <br>
+                                    a) <input type="radio" name='avaliacao[gestor_'.$key.']' value='1'> {{ $questao->opt1 }}
+                                    <br>
+                                    b) <input type="radio" name='avaliacao[gestor_'.$key.']' value='2'> {{ $questao->opt2 }}
+                                    <br>
+                                    c) <input type="radio" name='avaliacao[gestor_'.$key.']' value='3'> {{ $questao->opt3 }}
+                                    <br>
+                                    d) <input type="radio" name='avaliacao[gestor_'.$key.']' value='4'> {{ $questao->opt4 }}
+                                    <br>
+                                    e) <input type="radio" name='avaliacao[gestor_'.$key.']' value='5'> {{ $questao->opt5 }}
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                    @endforeach
+
+                    <div class="row">
+                        <button class="btn btn-success col-md-12" type='submit'>Enviar</button>
+                    </div>
+                
+                </form>
 
             </div>
 
