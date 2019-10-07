@@ -9,10 +9,10 @@
     <div class="row justify-content-center align-items-center" style="height:100%">
         
         <!-- Verifica se a variável 'eventoId' está vazia/nula para selecionar o evento -->
-        @if(empty($eventoId))
+        @if(!$evento)
         <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
             <h1 style="text-align: center;">Pessoas</h1>
-            <form method="get" action="{{route('pessoas.exibir')}}">
+            <form method="POST" action="{{route('pessoas.exibir')}}">
                 {{ csrf_field() }}
                 <div class="form-group" style="margin-top: 25px;">
                     <label for="exampleFormControlSelect1">Selecione o evento</label>
@@ -32,7 +32,7 @@
             <h1 style="text-align: center;">Pessoas</h1>
         </div>
         <div class="col-xm-6 col-sm-6 col-md-6 col-lg-6">
-            <h3>{{$eventoNome->nome}}</h3>
+            <h3>{{$evento->nome}}</h3>
         </div>
         <div class="col-xm-6 col-sm-6 col-md-6 col-lg-6" align="right">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCadastrarPessoa" data-whatever="teste">Adicionar</button>
@@ -44,14 +44,19 @@
                         <th class="text-center">Nome</th>
                         <th class="text-center">E-mail</th>
                         <th class="text-center">Telefone</th>
+                        <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($evento_pessoas as $evento_pessoa)
+                    @foreach ($evento->pessoas as $evento_pessoa)
                         <tr>
                             <td class="text-center">{{$evento_pessoa->nome}}</td>
                             <td class="text-center">{{$evento_pessoa->email}}</td>
                             <td class="text-center">{{$evento_pessoa->telefone}}</td>
+                            <td class="text-center">
+                                <a class="btn btn-warning glyphicon glyphicon-pencil" title="Editar" href="#"><i class="material-icons">edit</i></a>
+				<button class="btn btn-danger" type="button" id="btn-delete" title="Desativar" onclick=""><i class="material-icons">delete</i></button>
+                            </td> 
                         </tr>
                     @endforeach
                 </tbody>
@@ -71,9 +76,9 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <!-- Passa o id do evento em que a pessoa está sendo cadastrada -->
-                                <input type="hidden" name="idEvento" value="{{$eventoId}}">
+                                <input type="hidden" name="eventoId" value="{{$evento->id}}">
                             </div>
-                            <div class="form-group">    
+                            <div class="form-group">
                                 <label for="nome" class="col-form-label">Nome:</label>
                                 <input type="text" class="form-control" name="nome" required>
                             </div>
@@ -131,8 +136,6 @@
             // Se necessário, você pode iniciar uma requisição AJAX aqui e, então, fazer a atualização em um callback.
             // Atualiza o conteúdo do modal. Nós vamos usar jQuery, aqui. No entanto, você poderia usar uma biblioteca de data binding ou outros métodos.
             var modal = $(this);
-            //modal.find('.modal-title').text('Nova mensagem para ' + recipient)
-            //modal.find('.modal-body input').val(recipient)
         });
     </script>
 @endsection

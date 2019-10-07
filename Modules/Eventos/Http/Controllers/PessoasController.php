@@ -1,15 +1,11 @@
 <?php
-
 namespace Modules\Eventos\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Eventos\Entities\Evento;
 use Modules\Eventos\Entities\Pessoa;
 use Illuminate\Support\Facades\DB;
-
-
 class PessoasController extends Controller
 {
     /**
@@ -19,41 +15,29 @@ class PessoasController extends Controller
     public function index()
     {
         $eventos = Evento::orderBy('nome')->get(); //RETORNA OS EVENTOS ORDENADOS PELO NOME
-        $eventoId = null;
-        return view('eventos::pessoas', ['eventos' => $eventos, 'eventoId' => $eventoId]);
+        return view('eventos::pessoas', ['eventos' => $eventos, 'evento' => null]);
     }
     
     function exibir(Request $request)
     {
-        $eventoId = $request->input('eventoSelecionado');
-        $eventoNome = DB::table('evento')
-            ->select('evento.nome')
-            ->where('id', $eventoId)
-            ->first();
-        //VARIÁVEL QUE ARMAZENA TODAS AS PESSOAS PARTICIPANTES DO EVENTO SELECIONADO
-        $evento_pessoas = DB::table('pessoa')
-            ->join('evento_has_pessoa', 'evento_has_pessoa.pessoa_id', 'pessoa.id')
-            ->select('pessoa.*', 'evento_has_pessoa.evento_id')
-            ->where('evento_has_pessoa.evento_id', $eventoId)
-            ->get();
-        $eventos = []; //PASSANDO VALOR NULL PRA NÃO DAR ERRO QUANDO A FUNÇÃO CADASTRAR REDIECIONAR
-        return view('eventos::pessoas', ['eventoId' => $eventoId, 'eventos' => $eventos,
-            'eventoNome' => $eventoNome, 'evento_pessoas' => $evento_pessoas]);
+        $eventoId = $request->eventoSelecionado;
+        $evento = Evento::find($eventoId);
+        return view('eventos::pessoas', ['evento' => $evento, 'eventos' => []]);
     }
     
     function cadastrar(Request $request)
     {
-        //dd($request);
         $pessoa = new Pessoa();
         $pessoa->nome = $request->nome;
         $pessoa->email = $request->email;
         $pessoa->telefone = $request->telefone;
         $pessoa->save();
-        $pessoa->eventos()->attach($request->idEvento);
+        $pessoa->eventos()->attach($request->eventoId);
         
-        $eventoId = $request->idEvento;
+        $request->request->add(['eventoSelecionado' => $request->eventoId]);
         
-        return view('eventos::pessoas', ['eventoId' => $eventoId]); //->with('success', $request->nome . ' criada com sucesso.')
+        return redirect()->route('pessoas.exibir', [$request]);
+        //return $this->exibir($request); //->with('success', $request->nome . ' criada com sucesso.')
     }
     
     //FUNÇÃO AINDA NÃO UTILIZADA PARA VERIFICAR NO FORM DO MODAL SE O E-MAIL JÁ FOI CADASTRADO
@@ -65,7 +49,6 @@ class PessoasController extends Controller
             -get();
         return Response::json($resultado);
     }
-
     /**
      * Show the form for creating a new resource.
      * @return Response
@@ -74,7 +57,6 @@ class PessoasController extends Controller
     {
         return view('eventos::create');
     }
-
     /**
      * Store a newly created resource in storage.
      * @param Request $request
@@ -84,7 +66,6 @@ class PessoasController extends Controller
     {
         //
     }
-
     /**
      * Show the specified resource.
      * @param int $id
@@ -94,7 +75,6 @@ class PessoasController extends Controller
     {
         return view('eventos::show');
     }
-
     /**
      * Show the form for editing the specified resource.
      * @param int $id
@@ -104,7 +84,6 @@ class PessoasController extends Controller
     {
         return view('eventos::edit');
     }
-
     /**
      * Update the specified resource in storage.
      * @param Request $request
@@ -115,7 +94,6 @@ class PessoasController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      * @param int $id

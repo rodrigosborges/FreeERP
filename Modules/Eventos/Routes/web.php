@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,8 +9,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/eventos', 'EventosController@index')->name('eventos.index');
 Route::get('/eventos/pessoas', 'PessoasController@index')->name('eventos.pessoas');
-Route::any('/eventos/exibePessoas', 'PessoasController@exibir')->name('pessoas.exibir');
-Route::post('/eventos/cadastrarPessoa', 'PessoasController@cadastrar')->name('pessoas.cadastrar');
+Route::any('/eventos/pessoas/exibir', 'PessoasController@exibir')->name('pessoas.exibir');
+Route::post('/eventos/pessoas/cadastrar', 'PessoasController@cadastrar')->name('pessoas.cadastrar');
