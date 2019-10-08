@@ -5,6 +5,7 @@ namespace Modules\EstoqueMadeireira\Http\Controllers;
 
 use Modules\EstoqueMadeireira\Entities\Produto;
 use Modules\EstoqueMadeireira\Entities\Categoria;
+use Modules\EstoqueMadeireira\Entities\Fornecedor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -52,10 +53,10 @@ class ProdutoController extends Controller
     public function create()
     {
         $categorias = Categoria::all();
-        // $fornecedores = Fornecedor::all();
+        $fornecedores = Fornecedor::all();
         
-        return view('estoquemadeireira::Produtos/form', $this->template, compact('categorias'));
-        //return view('estoquemadeireira::Produtos/form', $this->template, compact('categorias', 'fornecedores'));
+        
+        return view('estoquemadeireira::Produtos/form', $this->template, compact('categorias', 'fornecedores'));
 
         
     }
@@ -67,7 +68,15 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try{
+            Produto::create($request->all());
+            DB::commit();
+
+            return redirect('/estoqueMadeireira/produtos')->with('Success', 'Produto cadastrado com sucesso!');
+        } catch(\Exeception $e) {
+            return back()->with('Error', 'Erro no cadastro de Produto');
+        }
     }
 
     /**
