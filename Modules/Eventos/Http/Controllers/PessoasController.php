@@ -20,7 +20,7 @@ class PessoasController extends Controller
     
     function exibir(Request $request)
     {
-        $eventoId = $request->eventoSelecionado;
+        $eventoId = $request->evento;
         $evento = Evento::find($eventoId);
         return view('eventos::pessoas', ['evento' => $evento, 'eventos' => []]);
     }
@@ -34,10 +34,7 @@ class PessoasController extends Controller
         $pessoa->save();
         $pessoa->eventos()->attach($request->eventoId);
         
-        $request->request->add(['eventoSelecionado' => $request->eventoId]);
-        
-        return redirect()->route('pessoas.exibir', [$request]);
-        //return $this->exibir($request); //->with('success', $request->nome . ' criada com sucesso.')
+        return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])->with('success', $request->nome . ' adicionado(a) com sucesso.');
     }
     
     //FUNÇÃO AINDA NÃO UTILIZADA PARA VERIFICAR NO FORM DO MODAL SE O E-MAIL JÁ FOI CADASTRADO

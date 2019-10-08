@@ -16,7 +16,7 @@
                 {{ csrf_field() }}
                 <div class="form-group" style="margin-top: 25px;">
                     <label for="exampleFormControlSelect1">Selecione o evento</label>
-                    <select class="form-control" name="eventoSelecionado">
+                    <select class="form-control" name="evento">
                         @foreach ($eventos as $evento)
                             <option value="{{$evento->id}}">{{$evento->nome}}</option>
                         @endforeach
@@ -50,12 +50,12 @@
                 <tbody>
                     @foreach ($evento->pessoas as $evento_pessoa)
                         <tr>
-                            <td class="text-center">{{$evento_pessoa->nome}}</td>
-                            <td class="text-center">{{$evento_pessoa->email}}</td>
-                            <td class="text-center">{{$evento_pessoa->telefone}}</td>
-                            <td class="text-center">
-                                <a class="btn btn-warning glyphicon glyphicon-pencil" title="Editar" href="#"><i class="material-icons">edit</i></a>
-				<button class="btn btn-danger" type="button" id="btn-delete" title="Desativar" onclick=""><i class="material-icons">delete</i></button>
+                            <td class="text-center align-middle">{{$evento_pessoa->nome}}</td>
+                            <td class="text-center align-middle">{{$evento_pessoa->email}}</td>
+                            <td class="text-center align-middle">{{$evento_pessoa->telefone}}</td>
+                            <td class="text-center align-middle">
+                                <button class="btn btn-xs" data-toggle="modal" data-target="#modalEditarPessoa" data-whatever="{{$evento_pessoa->id}}" data-nome="{{$evento_pessoa->nome}}" data-email="{{$evento_pessoa->email}}" data-telefone="{{$evento_pessoa->telefone}}"><i class="material-icons">edit</i></button>
+				<button class="btn btn-xs" onclick=""><i class="material-icons">delete</i></button>
                             </td> 
                         </tr>
                     @endforeach
@@ -101,6 +101,39 @@
                 </div>
             </div>
         </form>
+        
+        <!-- Modal para editar pessoa-->
+        <form method="post" action="{{route('pessoas.editar')}}">
+            {{ csrf_field() }}
+            <div class="modal fade" id="modalEditarPessoa" tabindex="-1" role="dialog" aria-labelledby="modalEditarPessoa" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="tituloModal">Editar Pessoa</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="nome" class="col-form-label">Nome:</label>
+                                <input type="text" class="form-control" name="nome" id="nome" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">E-mail:</label>
+                                <input type="text" class="form-control" name="email" id="email" required>
+                                <div id="resultado"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="telefone" class="col-form-label">Telefone:</label>
+                                <input type="text" class="form-control" name="telefone" id="telefone">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
 
     </div>
 @endsection
@@ -131,11 +164,21 @@
     <!-- Modal -->
     <script>
         $('#modalCadastrarPessoa').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Botão que acionou o modal
-            var recipient = button.data('whatever') // Extrai informação dos atributos data-*
-            // Se necessário, você pode iniciar uma requisição AJAX aqui e, então, fazer a atualização em um callback.
-            // Atualiza o conteúdo do modal. Nós vamos usar jQuery, aqui. No entanto, você poderia usar uma biblioteca de data binding ou outros métodos.
+            var button = $(event.relatedTarget);
             var modal = $(this);
+        });
+        
+        $('#modalEditarPessoa').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var nome = button.data('nome');
+            var email = button.data('email');
+            var telefone = button.data('telefone'); //Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this);
+            modal.find('.modal-body #nome').val(nome);
+            modal.find('.modal-body #email').val(email);
+            modal.find('.modal-body #telefone').val(telefone);
         });
     </script>
 @endsection
