@@ -419,7 +419,13 @@ class FuncionarioController extends Controller{
     }
     
     //parte de atestado
+    public function demissao($id){
+        $data = [
+            'funcionario' => Funcionario::findOrFail($id)        
+        ];
 
+        return view('funcionario::funcionario.demissao', compact('data'));
+    }
     public function atestado($id){
         $data = [
             'title' => 'Cadastro de Atestado',

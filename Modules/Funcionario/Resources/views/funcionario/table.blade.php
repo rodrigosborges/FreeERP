@@ -24,15 +24,16 @@
                         <a class="btn btn-info" href='{{ url("funcionario/funcionario/ficha/$funcionario->id") }}'>Ficha</a>
                     </td>
                     <td class="min">
-                    <a class="btn btn-outline-info" href='{{ url("funcionario/funcionario/atestado/$funcionario->id") }}'>Atestado</a>
+                        <a class="btn btn-outline-info" href='{{ url("funcionario/funcionario/atestado/$funcionario->id") }}'>Atestado</a>
                     </td>
                     @endif
                     <td class="min">
-                        <form action="{{url('funcionario/funcionario', [$funcionario->id])}}" class="input-group" method="POST">
+                        <!-- <form action="{{url('funcionario/funcionario', [$funcionario->id])}}" class="input-group" method="POST">
                             {{method_field('DELETE')}}
                             {{ csrf_field() }}
                                 <input type="submit" class="btn btn-{{$funcionario->trashed() ? 'success' : 'danger'}}" value="{{$funcionario->trashed() ? 'Restaurar' : 'Deletar'}}"/>
-                        </form>
+                        </form> -->
+                        <a class="btn btn-danger" href='{{ url("funcionario/funcionario/demissao/$funcionario->id")}}'>Demitir</a>
                     </td>
                     
                 </tr>
