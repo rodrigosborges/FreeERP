@@ -28,13 +28,13 @@ class ProtocolosController extends Controller
 
     public function list(Request $request, $status){
 
-        $id = Auth::user()->id;
+        //$id = Auth::user()->id;
         
-        $protocolo = new Protocolo;
+        $protocolos = new Protocolo;
         
         //Retorna os protocolos que o usuário foi cadastrado como interessado.
-        $protocolos = DB::table('protocolo')->join('protocolo_has_usuario', 'protocolo_has_usuario.protocolo_id', 'protocolo.id')
-                ->where('protocolo_has_usuario.usuario_id','=', $id);
+        // $protocolos = DB::table('protocolo')->join('protocolo_has_usuario', 'protocolo_has_usuario.protocolo_id', 'protocolo.id')
+        //         ->where('protocolo_has_usuario.usuario_id','=', $id);
 
         //$protocolos = DB::table('protocolo')->where('usuario_id', '=', $id); Retorna os protocolos criados pelo usuário logado.
 

@@ -16,10 +16,11 @@
         </div>
         <div class="col-md-4">
             <div class="text-right">
-                <a class="btn btn-success" href="{{ url('protocolos/protocolos/create') }}">Novo Protocolo</a>
+                <a class="btn btn-success" href="{{ url('protocolos/protocolos/create') }}">Novo Funcionário</a>
             </div>
         </div>
     </div>
+    
     <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="ativos-tab" data-toggle="tab" href="#ativos" role="tab" aria-controls="ativos" aria-selected="true">Ativos</a>
@@ -32,13 +33,12 @@
         <div class="tab-pane fade show active" id="ativos" role="tabpanel"></div>
         <div class="tab-pane fade" id="inativos" role="tabpanel"></div>
     </div>
+    
 @endsection
 
 @section('script')
-
-<script>
-console.log($("#form").serialize())
-    search = (url, target) => {
+    <script>
+     search = (url, target) => {
         setLoading(target)
         $.ajax({
             type: "GET",
@@ -77,6 +77,5 @@ console.log($("#form").serialize())
             }
         });
     })
-</script>
-
+    </script>
 @endsection

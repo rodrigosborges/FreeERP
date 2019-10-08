@@ -1,9 +1,9 @@
 <div class="table-responsive">
-    <table class="table table-stripped">
+    <table id="protocolo-table" class="table table-stripped">
         <thead>
             <tr>
-                <th>Assunto</th>
-                <th class="min">Ações</th>
+                <th>Nome</th>
+                <th class="min" colspan="3">Ações</th>
                 @if($status == "ativos")
                     <th class="min"></th>
                 @endif
@@ -14,16 +14,21 @@
                 <tr>
                     <td>{{$protocolo->assunto}}</td>
                     @if($status == "ativos")
-                        <td class="min">                       
-                            <a class="btn btn-success" href=''>Finalizar</a>
-                        </td>
+                    <td class="min">         
+                        <a class="btn btn-warning" href="">Teste</a>
+                    </td>
+                    <td class="min">                       
+                        <a class="btn btn-info" href="">Teste</a>
+                    </td>
                     @endif
                     <td class="min">
-                        <a class="btn btn-primary" href=''>Encaminhar</a>
+                        <form action="{{url('protocolos/protocolos', [$protocolo->id])}}" class="input-group" method="POST">
+                            {{method_field('DELETE')}}
+                            {{ csrf_field() }}
+                                <input type="submit" class="btn btn-{{$protocolo->trashed() ? 'success' : 'danger'}}" value="{{$protocolo->trashed() ? 'Restaurar' : 'Deletar'}}"/>
+                        </form>
                     </td>
-                    <td class="min">
-                        <a class="btn btn-dark" href=''>Adicionar comentário</a>
-                    </td>
+                    
                 </tr>
             @endforeach
         </tbody>
