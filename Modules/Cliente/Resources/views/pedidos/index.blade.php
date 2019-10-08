@@ -37,8 +37,9 @@
           </div>
         </div>
       </form>
-      {{-- Botao nova compra --}}
+      {{-- Botao nova compra e pdf --}}
       <div class="align-self-end text-right">
+        <a class="btn btn-secondary" title="{{$cliente->id}}" href="" id="btn_rel">Gerar PDF</a>
         <a class="btn btn-primary" href="{{url('/cliente/'.$cliente->id.'/pedido/novo')}}" style="color: white;">Adicionar
           Compra</a>
       </div>
@@ -374,7 +375,42 @@
     });
   }
 
+  $("#btn_rel").on("click", function(){
+    let cliente_id = $(this).attr("title");
+    let url = "/cliente/"+cliente_id+"/pedidos/pdf/";
+
+    let dt_inicio = $("#dtInicio").val();
+    if (dt_inicio != '') {
+      dt_inicio = dt_inicio.split("-");
+      dt_inicio = new Date(dt_inicio[0], dt_inicio[1] - 1, dt_inicio[2]);
+    }else{
+      dt_inicio = new Date("01/01/2000");
+    }
+
+    let dt_fim = $("#dtFim").val();
+    if (dt_fim != '') {
+      dt_fim = dt_fim.split("-");
+      dt_fim = new Date(dt_fim[0], dt_fim[1] - 1, dt_fim[2]);
+    }else{
+      dt_fim = new Date("01/01/2100");
+    }
+
+    url += dataFormatada(dt_inicio)+"/"+dataFormatada(dt_fim);
+      $(this).attr("href", url);
+  });
+
+  function dataFormatada(data){
+    let dia = data.getDate().toString(),
+    diaF = (dia.length == 1) ? '0'+dia : dia,
+    mes  = (data.getMonth()+1).toString(),
+    mesF = (mes.length == 1) ? '0'+mes : mes,
+    anoF = data.getFullYear();
+
+    return diaF+"-"+mesF+"-"+anoF;
+  }
+
   // Filtro de data na tabela
+
   $("#filtraData").on("click", function () {
     let dt_inicio = $("#dtInicio").val();
     if (dt_inicio != '') {
