@@ -12,6 +12,8 @@
 */
 
 Route::prefix('cliente')->group(function() {
+
+    Route::get('dashboard','PedidoController@dashboard');
         
     Route::resource('/cliente', 'ClienteController'); //função que cria todas rotas de todas função da Classe
     
@@ -27,6 +29,9 @@ Route::prefix('cliente')->group(function() {
     Route::delete('pedido','PedidoController@deleteMultiples');//Deletar varios
 
     Route::get('{cliente_id}/pedidos/pdf/{start}/{end}', 'PedidoController@pdf'); //Teste pdf
+
+
+    
 
     Route::get('/','ClienteController@index');
 });
