@@ -41,11 +41,32 @@ class ProdutoController extends Controller
 
     public function index()
     {
-
-
-        return view('estoquemadeireira::Produtos/index',$this->template);
+        $categorias = Categoria::all();
+        $fornecedores = Fornecedor::all();
+        $produtos = Produto::paginate(5);
+        $flag = 0;
+      
+        return view('estoquemadeireira::Produtos/form', $this->template, compact('categorias', 'fornecedores', 'produtos', 'flag'));
     }
 
+    public function inativos()
+    {
+        $produtos = Produto::onlyTrashed()->paginate(5);
+        $categorias = Categoria::all();
+        $flag = 1;
+
+        return view('estoquemadeireira::Produtos/index', $this->template, compact('produtos', 'categorias', 'flag'));
+    }
+
+    public function restaurar($id){
+        $produtos = Produto::onlyTrashed()->findOrFail($id);
+        $produtos->restore();
+
+        return redirect('estoquemadeireira::Produtos/index')->with('success', 'Produto restaurado com sucesso!');
+
+
+
+    }
     /**
      * Show the form for creating a new resource.
      * @return Response

@@ -25,7 +25,7 @@
                         <span style="color:red">{{$errors->first('nome')}}</span>
                     </div>
 
-                    <div class="form-group col-4">
+                    <div class="form-group col-3">
                         <label for="preco">Preço</label>
                         <input required type="text" class="form-control" placeholder="R$" name="preco"  onKeyUp="verificaPreco(this);" value="{{isset($produto) ? $produto->preco : ''}}">
                         {{$errors->first('preco')}}
@@ -33,12 +33,12 @@
                 </div>
             
             <div class="row">
-                    <div class="form-group col-4">
+                    <div class="form-group col-3">
                         <label for="codigo">Código de Barras</label>
                         <input required type="number" class="form-control" placeholder="Insira o código do Produto" name="codigo" value="{{isset($produto) ? $produto->codigo : ''}}">
                         {{$errors->first('codigo')}}
                     </div>
-
+    
                     <div class="form-group">
                         <label for="categoria">Categoria</label>
                         <select class="form-control" name="categoria_id">
@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="fornecedor">Fornecedores</label>
+                        <label for="fornecedor">Fornecedor</label>
                         <select name="forcedor_id" class="form-control">
                             @if(isset($fornecedor))
                                 @foreach($fornecedores as $fornecedor)
@@ -82,20 +82,21 @@
                     </div>
 
 
-                    <div class="row">
-                        <div class="form-group col-5">
+            </div>
+            <div class="form-group">            
+                    <div class="row col-12" style="align-items:flex-start;">
+                        <div class="form-group col-12">
                             <label for="descricao">Descrição</label>
-                            <textarea class="forma-control" name="descricao" placeholder="Insira a descrição do Produto" rows="3">{{isset($produto) ? $produto->descricao : ''}}</textarea> 
+                            <textarea class="forma-control" name="descricao" placeholder="Insira a descrição do Produto" rows="4">{{isset($produto) ? $produto->descricao : ''}}</textarea> 
                             {{$errors->first('descricao')}}
                         </div>                                
                     </div>
                 </div>
+                <div class="row col-8" style="justify-content: flex-end;">
+                     <button type="submit" class="btn btn-primary">{{isset($produto) ? 'Salvar' : 'Cadastrar' }}</button>
+        
+                </div>
             
-            <div class="row">
-                <button type="submit" class="btn btn-primary">{{isset($produto) ? 'Salvar' : 'Cadastrar' }}</button>
-            
-            </div>
-
             
 
                 
