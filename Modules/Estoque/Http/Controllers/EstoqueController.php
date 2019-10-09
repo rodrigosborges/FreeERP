@@ -13,6 +13,8 @@ use Modules\Estoque\Entities\Produto;
 
 use Modules\Estoque\Entities\TipoUnidade;
 
+use Barryvdh\DomPDF\Facade as PDF;
+
 class EstoqueController extends Controller
 {
     public $dadosTemplate;
@@ -451,5 +453,13 @@ class EstoqueController extends Controller
         })->get();
         $data['movimentacao'] = $movimentacao;
         return json_encode($data);
+    }
+
+    public function pdf(){
+        $data = [
+            'titulo'=> 'PDF'
+        ];
+        $pdf = PDF::loadView('estoque::estoque.relatorios.pdf', compact('data'));
+        return $pdf->stream();
     }
 }
