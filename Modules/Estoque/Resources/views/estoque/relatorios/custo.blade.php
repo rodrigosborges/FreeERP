@@ -40,28 +40,28 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">store</div>
                         </div>
-                            <input type="text" disabled class="form-control" name="produto">
+                            <input type="text" disabled class="form-control text-right" name="produto">
                     </div>
                     Período inícial
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">date_range</div>
                         </div>
-                            <input type="text" disabled class="form-control text-center" value="{{isset($data['data_inicial']) ? $data['data_inicial'] : ''}}">
+                            <input type="text" disabled class="form-control text-right" value="{{isset($data['data_inicial']) ? $data['data_inicial'] : ''}}">
                     </div>
                     Período final
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">date_range</div>
                         </div>
-                        <input type="text" disabled class="form-control text-center" value="{{isset($data['data_inicial']) ? $data['data_final'] : ''}}">
+                        <input type="text" disabled class="form-control text-right" value="{{isset($data['data_inicial']) ? $data['data_final'] : ''}}">
                     </div>
                     Preço de custo médio
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">attach_money</div>
                         </div>
-                            <input type="text" disabled class="form-control" name="produto">
+                            <input type="text" disabled class="form-control text-right" name="produto" value="R${{isset($data['custo_medio']) ? $data['custo_medio'] : ''}}">
                     </div>
                 </div>
             </div>
@@ -88,43 +88,43 @@
                     <div class="row">
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Quantidade total movimentada</label>
-                            <input type="text" class="form-control" name="quantidade" value="{{isset($data['quantidade_movimentada']) ?  $data['quantidade_movimentada'] : '0'}} unidades" disabled>
+                            <input type="text" class="form-control text-right" name="quantidade" value="{{isset($data['quantidade_movimentada']) ?  $data['quantidade_movimentada'] : '0'}} unidades" disabled>
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="diaMaiorCusto">Custo total no período</label>
-                            <input type="text" class="form-control" name="diaMaiorCusto" value="R${{isset($data['custo_total']) ? $data['custo_total'] : ' '}}" disabled>
+                            <input type="text" class="form-control text-right" name="diaMaiorCusto" value="R${{isset($data['custo_total']) ? $data['custo_total'] : ' '}}" disabled>
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="diaMenorCusto">Quantidade movimentada</label>
-                            <input type="text" class="form-control" name="diaMenorCusto" disabled>
+                            <input type="text" class="form-control text-right" name="diaMenorCusto" disabled>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Dia com maior custo</label>
-                            <input type="text" class="form-control" name="quantidade" disabled>
+                            <input type="text" class="form-control text-right" name="quantidade" disabled>
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Dia com menor custo</label>
-                            <input type="text" class="form-control" name="quantidade" disabled>
+                            <input type="text" class="form-control text-right" name="quantidade" disabled>
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Maior preço unitario</label>
-                            <input type="text" class="form-control" name="quantidade" disabled>
+                            <input type="text" class="form-control text-right" name="quantidade" disabled>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Menor preço unitario</label>
-                            <input type="text" class="form-control" name="quantidade" disabled>
+                            <input type="text" class="form-control text-right" name="quantidade" disabled>
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Dia com maior movimentação</label>
-                            <input type="text" class="form-control" name="quantidade" disabled>
+                            <input type="text" class="form-control text-right" name="quantidade" disabled>
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Dia com menor movimentação</label>
-                            <input type="text" class="form-control" name="quantidade" disabled>
+                            <input type="text" class="form-control text-right" name="quantidade" disabled>
                         </div>
                     </div>
                     <table class="table text-center table-striped">
