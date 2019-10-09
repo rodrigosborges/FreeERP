@@ -6,6 +6,7 @@ class TipoDocumentoSeeder extends Seeder
 {
     public function run()
     {
+        
         DB::table('tipo_documento')->insert([
             [
                 'nome'          => 'CPF',

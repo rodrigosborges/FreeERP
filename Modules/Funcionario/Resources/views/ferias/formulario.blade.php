@@ -57,7 +57,6 @@
             <div class="form-group col-4">
                 <label for="data_inicio">Data Início:</label>
                 <input type="date" name="data_inicio" id="data_inicio" class="form-control" >
-                
             </div>
             
             <div class="form-group col-4">

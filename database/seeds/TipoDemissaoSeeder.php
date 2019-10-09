@@ -2,13 +2,14 @@
 
 use Illuminate\Database\Seeder;
 
-class TipoDemissaoSeeder extends Seeder {
+class TipoDemissaoSeeder extends Seeder
+{
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run() 
+    public function run()
     {
         DB::table('tipo_demissao')->insert([
             [
