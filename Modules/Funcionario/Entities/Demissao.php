@@ -15,6 +15,6 @@ class Demissao extends Model {
     }
 
     public function tipoDemissao(){
-        return $this->belongsTo('App\Entities\TipoDemissao');
+        return $this->belongsTo('Modules\Funcionario\Entities\TipoDemissao');
     }
 }

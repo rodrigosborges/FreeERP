@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Curso};
+use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Curso, TipoDemissao};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
@@ -419,19 +419,26 @@ class FuncionarioController extends Controller{
     }
     
     //parte de atestado
-    public function demissao($id){
-        $data = [
-            'funcionario' => Funcionario::findOrFail($id)        
-        ];
-
-        return view('funcionario::funcionario.demissao', compact('data'));
-    }
     public function atestado($id){
         $data = [
             'title' => 'Cadastro de Atestado',
-            'funcionario' => Funcionario::findOrFail($id)
+            'funcionario'   => Funcionario::findOrFail($id),
+            
         ];
+       
         return view('funcionario::funcionario.atestado',compact('data'));
+    }
+
+    public function demissao($id){
+        $data = [
+            'funcionario'    => Funcionario::findOrFail($id),
+            'tipo_demissao'  => DB::table('tipo_demissao')->get()
+        ];
+        
+        
+  
+        
+        return view('funcionario::funcionario.demissao', compact('data'));
     }
 
 }

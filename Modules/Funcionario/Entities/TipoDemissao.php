@@ -1,11 +1,13 @@
 <?php
-namespace app\Entities;
+
+namespace Modules\Funcionario\Entities;
+
 use Illuminate\Database\Eloquent\Model;
 
-class tipo_demissao extends Model {
+class TipoDemissao extends Model
+{
+    protected $table = ['tipo_demissao'];
     
-    protected $table = 'tipo_demissao';
-
     protected $fillable = ['tipo'];
 
     public $timestamps = false;
