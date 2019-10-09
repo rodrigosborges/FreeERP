@@ -5,6 +5,8 @@ namespace Modules\Cliente\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Cliente\Entities\{Cliente, Pedido, Produto};
+use DateTime;
 
 class DashboardController extends Controller
 {
@@ -99,5 +101,6 @@ class DashboardController extends Controller
                         $vl_meses[$meses] += NUMBER_FORMAT($pedido->vl_total_pedido(), 2);
             }
         }
+        return $vl_meses;
     }
 }
