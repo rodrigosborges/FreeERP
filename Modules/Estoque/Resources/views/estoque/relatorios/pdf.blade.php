@@ -1,3 +1,3 @@
-@foreach($teste as $produto)
-    {{ $produto->nome }}<br>
+@foreach($data['estoque'] as $dados)
+    {{ $dados }}<br>
 @endforeach

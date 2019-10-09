@@ -145,9 +145,10 @@ class EstoqueController extends Controller
         return view('estoque::estoque.form', compact('data', 'notificacoes'));
     }
 
-    public function pdf() {
-        $teste = Produto::all();
-        $pdf = PDF::loadView('estoque::estoque.relatorios.pdf', compact('teste'));
+    public function pdf(Request $request) {
+
+        $dados = $request->data;
+        $pdf = PDF::loadView('estoque::estoque.relatorios.pdf', compact('dados'));
         return $pdf->stream();
     }
 

@@ -12,7 +12,7 @@
 */
 
 Route::prefix('estoque')->group(function () {
-    Route::get('/pdf', 'EstoqueController@pdf');
+    Route::post('/pdf', 'EstoqueController@pdf');
     route::put('/{id}/restore','EstoqueController@restore');
     route::get('/inativos', 'EstoqueController@inativos');
     route::get('/notificacoes', 'EstoqueController@notificacoes');
