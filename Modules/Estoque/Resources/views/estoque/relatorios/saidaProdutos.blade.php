@@ -44,6 +44,7 @@
         <div class="card" style="min-width:250px;">
             <div class="card-header">Relatório:</div>
             <div class="card-body">
+                Item Selecionado
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text material-icons">store</div>
@@ -67,9 +68,9 @@
                 Preço de custo médio
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text material-icons" id="precoCustoBusca">attach_money</div>
+                        <div class="input-group-text material-icons">attach_money</div>
                     </div>
-                    <input type="text" disabled class="form-control" name="produto">
+                    <input type="text" disabled class="form-control"  id="precoCustoBusca" name="produto">
                 </div>
             </div>
         </div>
@@ -151,7 +152,7 @@
                             <th scope="col">Custo Total</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody">
                         <tr>
                             <td>1</td>
                             <td>22/11/2018</td>
@@ -204,19 +205,30 @@
                 data = $.parseJSON(data);
                 console.log ("data",data);
                 var qtdTotalMovimentada = 0;
+                var precoCustoMedio = 0;
                 $.each(data['estoque'], function(chave, valor) {
                     //  console.log(valor[chave]);
                     qtdTotalMovimentada += valor['quantidade']
                     
                 })
-                console.log(qtdTotalMovimentada)
+                $.each(data['movimentacao'], function(chave, valor) {
+                    //  console.log(valor[chave]);
+                    precoCustoMedio += (valor['quantidade'] * valor['preco_custo']) / data['movimentacao'].length;
+                    
+                })
+                
+              //  console.log(qtdTotalMovimentada)
                 if (dataInicial != "" && dataInicial != null) {
                     $('#periodoInicialBusca').val(dataInicial);
-                }
-                if (dataFinal != "" && dataFinal != null) {
+                }else
+                $('#periodoInicialBusca').val("");
+                if (dataFinal != "" && dataFinal != null) 
                     $('#periodoFinalBusca').val(dataFinal);
+                else{
+                    $('#periodoFinalBusca').val("");
                 }
                 $('#qtd_movimentada').val(qtdTotalMovimentada)
+                $('#precoCustoBusca').val(precoCustoMedio)
             }).fail(function() {
                 console.log("fail")
             })

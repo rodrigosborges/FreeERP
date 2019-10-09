@@ -13,8 +13,6 @@ use Modules\Estoque\Entities\Produto;
 
 use Modules\Estoque\Entities\TipoUnidade;
 
-use Barryvdh\DomPDF\Facade as PDF;
-
 class EstoqueController extends Controller
 {
     public $dadosTemplate;
@@ -270,7 +268,7 @@ class EstoqueController extends Controller
     public function saidaProdutos()
     {
         $data = [
-            'estoque' => Estoque::all(),
+            'estoque' => Estoque::withTrashed()->get(),
             'categorias' => Categoria::all(),
         ];
         return view('estoque::estoque.relatorios.saidaProdutos', compact('data'));
@@ -370,12 +368,8 @@ class EstoqueController extends Controller
     public function relatorioMovimentacao()
     {
         $categorias = Categoria::all();
-        $data = [
-            'dados' => "", 
-            'labels' => "", 
-            'estoque' => Estoque::all()
-        ];
-        return view('estoque::estoque.relatorios.movimentacao', compact('categorias', 'data'));
+
+        return view('estoque::estoque.relatorios.movimentacao', compact('categorias'));
     }
 
     public function relatorioMovimentacaoBusca(Request $req)
@@ -403,25 +397,9 @@ class EstoqueController extends Controller
                             order by data asc'
 
             );
-        
         }
-        $labels =[];
-        $dados =[];
-
-        foreach ($query_result as $q){
-            array_push($dados, $q->qtd);
-            array_push($dados, $q->data);
-        }
-        $data = [
-            'labels' => json_encode($labels),
-            'dados' => json_enconde($dados),
-        ];
-     
-    return view('estoque::estoque.relatorios.movimentacao', compact('data'));
-
-        
     }
-    
+
 
 
     public function getSaidaProdutos(Request $request)
@@ -433,10 +411,11 @@ class EstoqueController extends Controller
             'fim' => $request->fim,
 
         ];
-        $movimentacao = ($dataForm['id'] != 0) ? DB::table('movimentacao_estoque')->where('id', $dataForm['id'])->where('observacao', '=', 'Item Excluido')->get() : DB::table('movimentacao_estoque')->where('observacao', '=', 'Item Excluido')->get();
+
+        $movimentacao = ($dataForm['id'] != 0) ? DB::table('movimentacao_estoque')->where('estoque_id', $dataForm['id'])->where('observacao', '=', 'Item Excluido')->get() : DB::table('movimentacao_estoque')->where('observacao', '=', 'Item Excluido')->get();
         $data['estoque'] = DB::table('estoque')->where(function ($query) use ($dataForm) {
             if ($dataForm['id'] != 0) {
-                return 0;
+               
                 $query->where('id', $dataForm['id']);
             }
             if ($dataForm['inicio'] != null) {
@@ -452,13 +431,5 @@ class EstoqueController extends Controller
         })->get();
         $data['movimentacao'] = $movimentacao;
         return json_encode($data);
-    }
-
-    public function pdf(){
-        $data = [
-            'titulo'=> 'PDF'
-        ];
-        $pdf = PDF::loadView('estoque::estoque.relatorios.pdf', compact('data'));
-        return $pdf->stream();
     }
 }
