@@ -4,8 +4,10 @@
         $("[name='endereco[cep]']").mask('99999-999')
         setDocumento()
         telefones()
-        getCidades($('[name="endereco[estado_id]"]').val(), $('[name="endereco[estado_id]"]').attr('cidade'))
-       
+        
+        if($('[name="endereco[estado_id]"]').val()){
+            getCidades($('[name="endereco[estado_id]"]').val(), $('[name="endereco[estado_id]"]').attr('cidade'))
+        }
 
         //Quando o campo cep perde o foco.
         $("[name='endereco[cep]']").blur(function() {
@@ -175,7 +177,7 @@
 
     });
     function getCidades(estado_id,nome_cidade=null){
-        $.get('/api/cidades/' + estado_id, function(cidades) {
+        $.get(main_url+'/api/cidades/' + estado_id, function(cidades) {
                 $('#cidade').empty()
                 $('#cidade').append("<option value=''>Selecione</option>")
                 $.each(cidades, function(key, value) {

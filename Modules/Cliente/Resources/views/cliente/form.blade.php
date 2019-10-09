@@ -24,7 +24,7 @@
             @endif
             
             <div class="row my-3">
-                <h5 class="mx-3 center">Dados Cadastrais</h5>
+                <h5 class="mx-3">Dados Cadastrais</h5>
             </div>
             <div class="row">
                 <div class="form-group col-md-2">
@@ -102,8 +102,8 @@
                             </select>
                             <span class="mensagem-erro">{{$errors->first('telefones.'.$key.'.tipo_telefone_id')}}</span>
                         </div>
-                        <div class="col-1 d-none mt-4">
-                            <button type="button" class="btn btn-danger btn-block excluir_telefone"><strong>X</strong></button>
+                        <div class="col-lg-1 col-sm-1 form-group mt-2 {{(isset($cliente) ? count($telefones) : "") == 1 ? 'd-none' : ''}}">
+                            <button type="button" class="btn btn-danger mt-4 btn-sm btn-block excluir_telefone"><strong>X</strong></button>
                         </div>
                     </div>
                 @endforeach
