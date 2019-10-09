@@ -320,7 +320,7 @@ class EstoqueController extends Controller
                  substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '"
                   order by data asc'
             );
-            $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->get();
+            $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->where('quantidade', '>', 0)->get();
             $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' .$req->data_inicial. '" AND "'.$req->data_final.'"');
             
             //Se for para selecionar o período com um estoque específico
@@ -333,7 +333,7 @@ class EstoqueController extends Controller
                  substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '"
                   order by data asc'
             );
-            $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->where('estoque_id', $req->estoque_id)->get();
+            $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->where('quantidade', '>', 0)->where('estoque_id', $req->estoque_id)->get();
             $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' .$req->data_inicial. '" AND "'.$req->data_final.'" AND estoque_id = '.$req->estoque_id);
         }
 
@@ -351,6 +351,7 @@ class EstoqueController extends Controller
         }
 
         $data = [
+            'custo_medio' => round($total/$quantidade_movimentada[0]->qtd, 2),
             'custo_total' => $total,
             'quantidade_movimentada' => $quantidade_movimentada[0]->qtd,
             'estoque' => Estoque::all(),
