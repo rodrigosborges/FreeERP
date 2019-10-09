@@ -14,8 +14,10 @@ class EstoqueMadeireiraDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
-
-        // $this->call("OthersTableSeeder");
+        $this->call([
+          CategoriaSeedTableSeeder::class,
+          FornecedorSeedTableSeeder::class,
+          ProdutoSeedTableSeeder::class,
+        ]);
     }
 }
