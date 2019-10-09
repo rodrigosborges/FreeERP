@@ -5,11 +5,11 @@
     @csrf
     <div class="row">
         <div class="form-group col-md-12">
-            <label for="nome">Nome do Produto</label>
-            <select name="produto" id="" class="custom-select produto">
-                <option value="0">Todos os Produtos</option>
-                @foreach($data['produtos'] as $produto)
-                <option value="{{$produto->id}}">{{$produto->nome}}</option>
+            <label for="nome">Estoque</label>
+            <select name="estoque" id="" class="custom-select estoque">
+                <option value="0">Itens de Estoque</option>
+                @foreach($data['estoque'] as $estoque)
+                <option value="{{$estoque->id}}">{{$estoque->produtos->last()->nome . '-' . $estoque->tipoUnidade->nome}}</option>
                 @endforeach
             </select>
         </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="form-group col-lg-3 col-md-6 col-sm-12">
             <label for="dataInicial">Data Inicial</label>
-            <input type="date" name="dataInicial" class="form-control dataIncial">
+            <input type="date" name="dataInicial" class="form-control dataInicial">
         </div>
         <div class="form-group col-lg-3 col-md-6 col-sm-12">
             <label for="dataFinal">Data Final</label>
@@ -48,26 +48,26 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text material-icons">store</div>
                     </div>
-                    <input type="text" disabled class="form-control" name="produto">
+                    <input type="text" disabled class="form-control" id="produtoBusca" name="produto">
                 </div>
                 Período inícial
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text material-icons">date_range</div>
                     </div>
-                    <input type="text" disabled class="form-control text-center" value="">
+                    <input type="text" id="periodoInicialBusca" disabled class="form-control " value="">
                 </div>
                 Período final
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text material-icons">date_range</div>
                     </div>
-                    <input type="text" disabled class="form-control text-center" value="">
+                    <input type="text" id="periodoFinalBusca" disabled class="form-control " value="">
                 </div>
                 Preço de custo médio
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text material-icons">attach_money</div>
+                        <div class="input-group-text material-icons" id="precoCustoBusca">attach_money</div>
                     </div>
                     <input type="text" disabled class="form-control" name="produto">
                 </div>
@@ -91,20 +91,20 @@
             <div class="card-body">
                 <div class="form-row">
                     <!--L 1-->
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-lg-4 col-md-12 col-sm-12">
                         <label for="qtd_movimentada">Quantidade Total Movimentada </label>
-                        <input type="text" class="form-control" disabled>
+                        <input type="text" id='qtd_movimentada' class="form-control" disabled>
                     </div>
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-lg-4 col-md-12 col-sm-12">
                         <label for="custo_periodo">Costo no Periíodo </label>
                         <input type="text" class="form-control" disabled>
                     </div>
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-lg-4 col-md-12 col-sm-12">
                         <label for="">Quantidade Movimentada </label>
                         <input type="text" class="form-control" disabled>
                     </div>
                     <!--L 2-->
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-lg-4 col-md-12 col-sm-12">
                         <label for="qtd_movimentada">Dia com maior custo </label>
                         <input type="text" class="form-control" disabled>
                     </div>
@@ -187,7 +187,7 @@
             var dataInicial = $('.dataInicial').val()
             var dataFinal = $('.dataFinal').val()
             var categoria = $('.categoria').val()
-            var produto = $('.produto').val()
+            var estoque = $('.estoque').val()
             $.ajax({
                 url: 'saida',
                 type: 'POST',
@@ -195,18 +195,35 @@
                     inicio: dataInicial,
                     fim: dataFinal,
                     categoria: categoria,
-                    produto: produto,
+                    estoque: estoque,
                     '_token': $('input[name=_token]').val(),
 
                 }
             }).done(function(data) {
-                mostraGrafico()
+               
+                data = $.parseJSON(data);
+                console.log ("data",data);
+                var qtdTotalMovimentada = 0;
+                $.each(data['estoque'], function(chave, valor) {
+                    //  console.log(valor[chave]);
+                    qtdTotalMovimentada += valor['quantidade']
+                    
+                })
+                console.log(qtdTotalMovimentada)
+                if (dataInicial != "" && dataInicial != null) {
+                    $('#periodoInicialBusca').val(dataInicial);
+                }
+                if (dataFinal != "" && dataFinal != null) {
+                    $('#periodoFinalBusca').val(dataFinal);
+                }
+                $('#qtd_movimentada').val(qtdTotalMovimentada)
             }).fail(function() {
                 console.log("fail")
             })
             $('.chart_custo').show('slow')
             //   e.preventDefault();
         })
+        
 
         function mostraGrafico1() {
             var ctx = document.getElementById('chart1').getContext('2d');
@@ -259,7 +276,7 @@
                     },
                     title: {
                         display: true,
-                        text: "Total por sexo"
+                        text: "Total por item de estoque"
                     },
                     legend: {
                         display: false

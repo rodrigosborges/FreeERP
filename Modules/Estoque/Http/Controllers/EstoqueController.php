@@ -97,7 +97,7 @@ class EstoqueController extends Controller
             return redirect('/estoque')->with('success', 'Item de estoque registrado com sucesso!');
         } catch (Exception $ex) {
             DB::rollback();
-            return back()->with('danger', "Erro ao tentar registrar item. cod:"+$ex->getMessage());
+            return back()->with('danger', "Erro ao tentar registrar item. cod:" + $ex->getMessage());
         }
     }
 
@@ -197,7 +197,7 @@ class EstoqueController extends Controller
         $observacao = "Este item foi atualizado \n";
 
         if (intval($request->tipo_unidade_id) != $estoque->tipo_unidade_id) {
-            return "Request unidade id =" . intval($request->tipo_unidade_id) . "Produto Unidade id = " . $produto->unidade_id;
+           // return "Request unidade id =" . intval($request->tipo_unidade_id) . "Produto Unidade id = " . $produto->unidade_id;
             $novaUnidade = TipoUnidade::find($request->tipo_unidade_id);
 
             $observacao .= "\n Alteração do tipo de unidade de " . $estoque->tipoUnidade->nome . " para " . $novaUnidade->nome;
@@ -310,7 +310,7 @@ class EstoqueController extends Controller
         $quantidade_movimentada = 0;
         $estoque_selecionado = "";
         $custo_total = "";
-        if($req->estoque_id != -1)
+        if ($req->estoque_id != -1)
             $estoque_selecionado = Estoque::findOrFail($req->estoque_id);
         if ($req->estoque_id == -1) {
             $query_result = DB::select(
@@ -321,8 +321,8 @@ class EstoqueController extends Controller
                   order by data asc'
             );
             $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->where('quantidade', '>', 0)->get();
-            $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' .$req->data_inicial. '" AND "'.$req->data_final.'"');
-            
+            $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '"');
+
             //Se for para selecionar o período com um estoque específico
         } else {
             $query_result = DB::select(
@@ -334,7 +334,7 @@ class EstoqueController extends Controller
                   order by data asc'
             );
             $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->where('quantidade', '>', 0)->where('estoque_id', $req->estoque_id)->get();
-            $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' .$req->data_inicial. '" AND "'.$req->data_final.'" AND estoque_id = '.$req->estoque_id);
+            $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '" AND estoque_id = ' . $req->estoque_id);
         }
 
         //Transfere as datas e os valores para um array especifico que será utilizado como labels e dados do gráfico
@@ -346,12 +346,12 @@ class EstoqueController extends Controller
         }
 
         $total = 0;
-        foreach($dados as $d){
+        foreach ($dados as $d) {
             $total += $d;
         }
 
         $data = [
-            'custo_medio' => round($total/$quantidade_movimentada[0]->qtd, 2),
+            'custo_medio' => round($total / $quantidade_movimentada[0]->qtd, 2),
             'custo_total' => $total,
             'quantidade_movimentada' => $quantidade_movimentada[0]->qtd,
             'estoque' => Estoque::all(),
@@ -374,41 +374,65 @@ class EstoqueController extends Controller
         return view('estoque::estoque.relatorios.movimentacao', compact('categorias'));
     }
 
-    public function relatorioMovimentacaoBusca(Request $req){
+    public function relatorioMovimentacaoBusca(Request $req)
+    {
         $estoque = Estoque::all();
         $ms = [];
-        
-        if ($req->estoque_id == -1){
+
+        if ($req->estoque_id == -1) {
             $ms  =  DB::select(
-                    'SELECT distinc substring_index(created_at, " ", 1) as data,
+                'SELECT distinc substring_index(created_at, " ", 1) as data,
                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtdEntrada
                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade < 0) as qtdSaida
-                        FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id.' AND
-                        substring_index(created_at, " ", 1) BETWEEN " '.$req->dataInicial.' "AND" '.$req->dataFinal.'"
+                        FROM movimentacao_estoque as me WHERE estoque_id = ' . $req->estoque_id . ' AND
+                        substring_index(created_at, " ", 1) BETWEEN " ' . $req->dataInicial . ' "AND" ' . $req->dataFinal . '"
                             order by data asc'
-        );   
-        }else{
-            $ms  =  DB::select (
-                    'SELECT distinc substring_index(created_at," ", 1) as data,
-                     (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = '.$req->estoque_id.')) as nome,
-                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade > 0) as qtdEntrada
-                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade > 0) as qtSaida
-                        FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id.' AND
-                        substring_index(created_at, " ", 1) BETWEEN" '.$req->dataInicial.' "AND" '.$req->dataFinal.'"
+            );
+        } else {
+            $ms  =  DB::select(
+                'SELECT distinc substring_index(created_at," ", 1) as data,
+                     (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = ' . $req->estoque_id . ')) as nome,
+                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = ' . $req->estoque_id . ' AND quantidade > 0) as qtdEntrada
+                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = ' . $req->estoque_id . ' AND quantidade > 0) as qtSaida
+                        FROM movimentacao_estoque as me WHERE estoque_id = ' . $req->estoque_id . ' AND
+                        substring_index(created_at, " ", 1) BETWEEN" ' . $req->dataInicial . ' "AND" ' . $req->dataFinal . '"
                             order by data asc'
-                
+
             );
         }
-
     }
 
 
 
     public function getSaidaProdutos(Request $request)
     {
-        $produtos = DB::table('estoque')->where('deleted_at','<>',null)->get();
-        return json_encode($produtos);
+        $dataForm = [
+            'created_at' => '',
+            'id' => $request->estoque,
+            'inicio' => $request->inicio,
+            'fim' => $request->fim,
 
+        ];
+        $movimentacao = ($dataForm['id'] != 0) ? DB::table('movimentacao_estoque')->where('id', $dataForm['id'])->where('observacao', '=', 'Item Excluido')->get() : DB::table('movimentacao_estoque')->where('observacao', '=', 'Item Excluido')->get();
+        $data['estoque'] = DB::table('estoque')->where(function ($query) use ($dataForm) {
+            if ($dataForm['id'] != 0) {
+                return 0;
+                $query->where('id', $dataForm['id']);
+            }
+
+            if ($dataForm['inicio'] != null) {
+                $query->where('created_at', '>=', $dataForm['inicio']);
+                if ($dataForm['fim'] != null) {
+                    $query->where('created_at', '<=', $dataForm['fim']);
+                }
+            } else {
+                if ($dataForm['fim'] != null) {
+                    $query->where('created_at', '<=', $dataForm['fim']);
+                }
+            }
+        })->get();
+        $data['movimentacao'] = $movimentacao;
+        return json_encode($data);
     }
 
     public function pdf(){
