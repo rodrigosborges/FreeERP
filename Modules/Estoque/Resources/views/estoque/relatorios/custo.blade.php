@@ -2,6 +2,13 @@
 @section('title', 'Relatório de Custos')
 @section('body')
 <div class="container">
+    <form method="POST" action="{{url('/estoque/pdf')}}">
+    @csrf
+        <input type="text" name="data_inicial" hidden value="{{isset($data['data_inicial']) ? $data['data_inicial'] : ''}}">
+        <input type="text" name="data_final" hidden value="{{isset($data['data_final']) ? $data['data_final'] : ''}}">
+        <input type="text" name="estoque_id" hidden value="{{isset($data['estoque_id']) ? $data['estoque_id'] : ''}}">
+        <button type="submit" class="btn btn-primary">Gerar PDF</button>
+    </form>
     <form method="POST" action="{{url('/estoque/relatorio/custos')}}" id="form">
         @csrf
         <div class="row">
