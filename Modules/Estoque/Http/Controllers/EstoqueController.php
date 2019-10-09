@@ -195,7 +195,7 @@ class EstoqueController extends Controller
         $observacao = "Este item foi atualizado \n";
 
         if (intval($request->tipo_unidade_id) != $estoque->tipo_unidade_id) {
-           // return "Request unidade id =" . intval($request->tipo_unidade_id) . "Produto Unidade id = " . $produto->unidade_id;
+            // return "Request unidade id =" . intval($request->tipo_unidade_id) . "Produto Unidade id = " . $produto->unidade_id;
             $novaUnidade = TipoUnidade::find($request->tipo_unidade_id);
 
             $observacao .= "\n Alteração do tipo de unidade de " . $estoque->tipoUnidade->nome . " para " . $novaUnidade->nome;
@@ -268,7 +268,7 @@ class EstoqueController extends Controller
     public function saidaProdutos()
     {
         $data = [
-            'produtos' => Produto::all(),
+            'estoque' => Estoque::all(),
             'categorias' => Categoria::all(),
         ];
         return view('estoque::estoque.relatorios.saidaProdutos', compact('data'));
@@ -417,7 +417,6 @@ class EstoqueController extends Controller
                 return 0;
                 $query->where('id', $dataForm['id']);
             }
-
             if ($dataForm['inicio'] != null) {
                 $query->where('created_at', '>=', $dataForm['inicio']);
                 if ($dataForm['fim'] != null) {
