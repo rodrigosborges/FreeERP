@@ -30,22 +30,32 @@
                     <select class="custom-select required" name='cliente[tipo_cliente_id]' id="tipo_pessoa">
                         <option value="">Selecione</option>
                         @foreach($tipo_cliente as $tipo)
-                        <option value="{{$tipo->id}}" {{ old('cliente.tipo_cliente_id') == $tipo->id ? 'selected' : '' }} {{ isset($cliente) && $cliente->tipo_cliente_id == $tipo->id ? 'selected' : '' }}>{{$tipo->nome}}</option>
+                        <option value="{{$tipo->id}}" {{ old('cliente.tipo_cliente_id', isset($cliente) ? $cliente->tipo_cliente_id : "") == $tipo->id ? 'selected' : '' }}>{{$tipo->nome}}</option>
 
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md">
-                    <label for="nome">Nome</label>
+                <label for="nome">{{old('cliente.tipo_cliente_id', isset($cliente) ? $cliente->tipo_cliente_id : "") == 1 ? 'Nome' : 'Razão Social'}}</label>
                     <input type="text" class="form-control required" name="cliente[nome]" id="nome" value="{{ old('cliente.nome', isset($cliente) ? $cliente->nome : '') }}">
                 </div>
-            <div class="form-group col-md d-none" id="div_nome_fantasia">
-            <label for="nome_fantasia">Nome Fantasia</label>
-                    <input type="text" class="form-control" name="cliente[nome_fantasia]" id="nome_fantasia" value="{{ old('cliente.nome_fantasia', isset($cliente->nome_fantasia) ? $cliente->nome_fantasia : '') }}">
-                </div>
-                <div class="form-group col-12">
-                    <label for="email">E-mail</label>
-                    <input type="email" name="email[email]" class="form-control required" id="email" value="{{ old('email.email', isset($cliente->email) ? $cliente->email->email : '') }}">
+                    <div class="form-group col-md {{old('cliente.tipo_cliente_id', isset($cliente) ? $cliente->tipo_cliente_id : "") == 1 ? 'd-none' : ''}}" id="div_nome_fantasia">
+                        <label for="nome_fantasia">Nome Fantasia</label>
+                        <input type="text" class="form-control" name="cliente[nome_fantasia]" id="nome_fantasia" value="{{ old('cliente.nome_fantasia', isset($cliente->nome_fantasia) ? $cliente->nome_fantasia : '') }}">
+                    </div>
+                
+            </div>
+            <div>
+                <div class="documento-div">
+                    <div class="form-group">
+                        @if(empty($cliente))
+                             <label for="numero_documento">Selecione o tipo de Pessoa</label>
+                             <input type="text" class="form-control required" name="documento[documento]" disabled value="{{ old('documento[documento]') }}">
+                        @else
+                            <label for="numero_documento">{{$cliente->documento->tipo_documento->nome}}</label>
+                            <input type="text" class="form-control required" name="documento[documento]" value="{{ old('documento.documento', isset($cliente->documento) ? $cliente->documento->numero : '') }}">
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="row my-3">
@@ -53,50 +63,43 @@
                     <h6 class="mx-3">Contato</h6>
                 
             </div>
-            <div id="telefones">
 
-                <div class="row telefone-div">
-                    <div class="form-group col">
-                        <label for="telefone">Número</label>
-                        <input type="text" class="form-control input-telefone required" name="telefones[0][numero]" value="{{ isset($cliente) ? $cliente->telefones[0]->numero : old('telefones[0][numero]', '') }}">
-                    </div>
-                    <div class="form-group col">
-                        <label for="tipo_telefone">Tipo</label>
-                        <select class="custom-select required" name="telefones[0][tipo_telefone_id]" id="tipo_telefone">
-                            <option value="">Selecione</option>
-                            @foreach($tipo_telefone as $tipo){
-                            <option value="{{$tipo->id}}" {{ isset($cliente->telefones) && ($tipo->id == $cliente->telefones[0]->tipo_telefone_id) ? 'selected ' : '' }}>{{$tipo->nome}}</option>
-                            }
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-1 d-none mt-4">
-                        <button type="button" class="btn btn-danger btn-block excluir_telefone"><strong>X</strong></button>
-                    </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label for="email">E-mail</label>
+                    <input type="email" name="email[email]" class="form-control required" id="email" value="{{ old('email.email', isset($cliente->email) ? $cliente->email->email : '') }}">
                 </div>
+            </div>
+            
+            <?php
+            $telefones = old('telefones', isset($cliente) ? $cliente->telefones : [[]]);       
+            ?>
+            
+            <div id="telefones"> 
+                @foreach($telefones as $key => $telefone)
+                    <div class="row telefone-div">
+                        <div class="form-group col">
+                            <label for="telefone">Número</label>
+                        <input type="text" class="form-control input-telefone required" name="telefones[{{$key}}][numero]" value="{{ isset($telefone['numero']) ? $telefone['numero'] : "" }}">
+                        </div>
+                        <div class="form-group col">
+                            <label for="tipo_telefone">Tipo</label>
+                            <select class="custom-select required" name="telefones[{{$key}}][tipo_telefone_id]">
+                                <option value="">Selecione</option>
+                                @foreach($tipo_telefone as $tipo){
+                                    <option value="{{$tipo->id}}" {{ (isset($telefone['tipo_telefone_id']) ? $telefone['tipo_telefone_id'] : "") == $tipo->id ? 'selected' : '' }}>{{$tipo->nome}}</option>
+                                }
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-1 d-none mt-4">
+                            <button type="button" class="btn btn-danger btn-block excluir_telefone"><strong>X</strong></button>
+                        </div>
+                    </div>
+                @endforeach
             </div>
             <button type="button" class="btn btn-primary adicionar_telefone">Adicionar</button>
             
-       
-        
-            <div class="row my-3">
-                
-                    <h5 class="mx-3">Documentação</h5>
-                
-            </div>
-            <div class="row documento-div">
-                <div class="form-group col">
-                    @if(empty($cliente))
-                         <label for="numero_documento">Selecione o tipo de Pessoa</label>
-                         <input type="text" class="form-control required" name="documento[documento]" disabled value="{{ old('documento[documento]') }}">
-                    @else
-                        <label for="numero_documento">{{$cliente->documento->tipo_documento->nome}}</label>
-                        <input type="text" class="form-control required" name="documento[documento]" value="{{ old('documento.documento', isset($cliente->documento) ? $cliente->documento->numero : '') }}">
-                    @endif
-                </div>
-            </div>
-       
-        
             <div class="row my-3">
                 
                     <h5 class="mx-3">Endereço</h5>
@@ -105,34 +108,34 @@
             <div class="row">
                 <div class="form-group col-3">
                     <label for="cep" class="">CEP</label>
-                    <input type="text" class="form-control" name="endereco[cep]" id="cep" value="{{ old('endereco.cep', isset($cliente->endereco->cep) ? $cliente->endereco->cep : '') }}">
+                    <input type="text" class="form-control" name="endereco[cep]" id="cep" value="{{ old('endereco.cep', isset($cliente) ? $cliente->endereco->cep : '') }}">
                 </div>
                 <div class="form-group col-7">
                     <label for="logradouro" class="">Logradouro</label>
-                    <input type="text" class="form-control required" name="endereco[logradouro]" value="{{ old('endereco.logradouro', isset($cliente->endereco) ? $cliente->endereco->logradouro : '') }}">
+                    <input type="text" class="form-control required" name="endereco[logradouro]" value="{{ old('endereco.logradouro', isset($cliente) ? $cliente->endereco->logradouro : '') }}">
                 </div>
                 <div class="form-group col-2">
                     <label for="numero" class=" text-left">Número</label>
-                    <input type="text" class="form-control required" name="endereco[numero]" value="{{ old('endereco.numero', isset($cliente->endereco) ? $cliente->endereco->numero : '') }}">
+                    <input type="text" class="form-control required" name="endereco[numero]" value="{{ old('endereco.numero', isset($cliente) ? $cliente->endereco->numero : '') }}">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col">
                     <label for="complemento" class=" text-left">Complemento</label>
-                    <input type="text" class="form-control" name="endereco[complemento]" value="{{ old('endereco.complemento', isset($cliente->endereco->complemento) ? $cliente->endereco->complemento : '') }}">
+                    <input type="text" class="form-control" name="endereco[complemento]" value="{{ old('endereco.complemento', isset($cliente) ? $cliente->endereco->complemento : '') }}">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-4">
                     <label for="bairro" class="">Bairro</label>
-                    <input type="text" class="form-control required" name="endereco[bairro]" value="{{ old('endereco.bairro', isset($cliente->endereco) ? $cliente->endereco->bairro : '') }}">
+                    <input type="text" class="form-control required" name="endereco[bairro]" value="{{ old('endereco.bairro', isset($cliente) ? $cliente->endereco->bairro : '') }}">
                 </div>
                 <div class="form-group col">
                     <label for="estado" class="">Estado</label>
-                    <select class="custom-select required" name="endereco[estado_id]" id="estado">
+                    <select class="custom-select required" cidade="{{ old('endereco.cidade_id', isset($cliente) ? $cliente->endereco->cidade_id : "")}}" name="endereco[estado_id]" id="estado">
                         <option value="">Selecione</option>
                         @foreach($estados as $estado){
-                        <option value="{{$estado->id}}" uf="{{$estado->uf}}" {{isset($cliente->endereco) && ($cliente->endereco->cidade->estado_id == $estado->id) ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                            <option value="{{$estado->id}}" uf="{{$estado->uf}}" {{ old('endereco.estado_id', isset($cliente) ? $cliente->endereco->cidade->estado_id : "") == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
                         }
                         @endforeach
                     </select>
@@ -140,11 +143,6 @@
                 <div class="form-group col">
                     <label for="cidade" class="">Cidade</label>
                     <select class="custom-select required" name="endereco[cidade_id]" id="cidade">
-                        @isset($cidades)
-                            @foreach($cidades as $cidade)
-                                <option value="{{$cidade->id}}" {{ isset($cliente->endereco) && ($cidade->id == $cliente->endereco->cidade_id) ? 'selected' : old('endereco[cidade_id]', '') }}>{{ $cidade->nome }}</option> 
-                            @endforeach
-                        @endisset
                         
                     </select>   
                 </div>
@@ -162,7 +160,9 @@
     $(document).ready(function() {
         escolheMascaraTel($(".input-telefone"))
         $("[name='endereco[cep]']").mask('99999-999')
-
+        setDocumento()
+        telefones()
+        getCidades($('[name="endereco[estado_id]"]').val(), $('[name="endereco[estado_id]"]').attr('cidade'))
        
 
         //Quando o campo cep perde o foco.
@@ -220,44 +220,54 @@
     });
 
 
-
-    $(document).on('click', '.adicionar_telefone', function() {
-
-        $('.excluir_telefone').parent().removeClass('d-none');
-            if($(".telefone-div").length < 4){
-            var telefone = $(".telefone-div").last().clone();
-            
-            var inputs = telefone.find('select, input');
-            inputs.val("");
-            inputs.map((i, input)=> {
-                var match = $(input).attr('name').match(/\[(\d+)]/g)[0]
-                var contador = parseInt(match.replace('[','').replace(']',''))+1
-                var newName = $(input).attr('name').replace(match, `[${contador}]`)
-                $(input).attr('name', newName)
-            })
-
-            
-            telefone.appendTo($("#telefones"))
-            escolheMascaraTel($(".input-telefone").last())
-        }
-    })
-
-    $(document).on('click', '.excluir_telefone', function() {
+    function telefones() {
         
+        $(document).on('click', '.adicionar_telefone', function() {
+
+            $('.excluir_telefone').parent().removeClass('d-none');
+                if($(".telefone-div").length < 4){
+                var telefone = $(".telefone-div").last().clone();
+                
+                var inputs = telefone.find('select, input');
+                inputs.val("");
+                inputs.map((i, input)=> {
+                    var match = $(input).attr('name').match(/\[(\d+)]/g)[0]
+                    var contador = parseInt(match.replace('[','').replace(']',''))+1
+                    var newName = $(input).attr('name').replace(match, `[${contador}]`)
+                    $(input).attr('name', newName)
+                })
+
+                
+                telefone.appendTo($("#telefones"))
+                escolheMascaraTel($(".input-telefone").last())
+                }
+        })
+
+        $(document).on('click', '.excluir_telefone', function() {
+
         if ($(".telefone-div").length == 2) {
             $(this).closest('.telefone-div').remove();
             $('.excluir_telefone').parent().addClass('d-none')
         }
+
         else if($('.telefone-div').length >= 2) {
             $(this).closest('.telefone-div').remove();
         }
+
+        })
+    }
+
+    $(document).on('change', '#tipo_pessoa', function() {
+        
+        setDocumento()
         
     })
 
-    $(document).on('change', '#tipo_pessoa', function() {
+
+    function setDocumento() {
         $("[name='documento[documento]']").rules('remove'); 
         var documento = $("[name='documento[documento]']")
-
+        
         if ($("[name='cliente[tipo_cliente_id]']").val() == 2) {
             documento.prop("disabled", false);
             $("[name='cliente[nome]']").parent().find('label').text("Razão Social")
@@ -291,10 +301,7 @@
             documento.parent().find('label').text("Selecione o tipo de Pessoa")
         }
 
-    })
-
-
-
+    }
     function escolheMascaraTel(element) {
 
 
@@ -330,7 +337,7 @@
                 $('#cidade').empty()
                 $('#cidade').append("<option value=''>Selecione</option>")
                 $.each(cidades, function(key, value) {
-                    if(nome_cidade == value.nome){
+                    if(nome_cidade == value.nome || nome_cidade == value.id){
                         $('#cidade').append('<option selected value=' + value.id + '>' + value.nome + '</option>')
                     }else{
                         $('#cidade').append('<option  value=' + value.id + '>' + value.nome + '</option>')

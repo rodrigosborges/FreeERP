@@ -93,7 +93,6 @@ class ClienteController extends Controller
         $tipo_telefone = TipoTelefone::all();
         $estados = Estado::all();
         $cliente = Cliente::FindOrFail($id);
-        $telefones = $cliente->telefones;
         $cidades = $cliente->endereco->cidade->estado->cidades;
         
         
@@ -104,7 +103,7 @@ class ClienteController extends Controller
     }
 
     public function update(CreateClienteRequest $request, $id){
-            //return back()->withInput();
+            
             $dados = $request->all();
 
       
