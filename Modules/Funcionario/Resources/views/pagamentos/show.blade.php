@@ -4,56 +4,40 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title text-center">Recibo de Pagamento de Salário</h3>
+        <h3 class="card-title text-center">Folha de Pagamento</h3>
     </div>
     <div class="card-body">
         <table class="table table-bordered border border-primary text-left">
             <tr>
                 <td colspan="3">
-                    <p>Nome da Empresa</p>
+                 <b><p>Nome da Empresa</p></b>
                     <p>Rua Silvio Santos, 10</p>
                     <p>00.000.000/0001-10</p>
 
                 </td>
                 <td colspan="3">
-                    <p>Data de Referência</p>
+                    <b><p>Data de Referência</p></b>
                     <p>{{ $data['pagamento']->emissao}}</p>
                 </td>
             </tr>
             <tr>
-                <td>
-                    <p>Nome: {{ $data['pagamento']->funcionario->nome}}</p>
-                    <p>Cargo: {{ $data['pagamento']->funcionario->cargos->last()->nome}}</p>
+                <td colspan="5">
+                    <span class="p"><b>Nome: </b>{{ $data['pagamento']->funcionario->nome}}</span>
+                    <span class="p"><b>Cargo: </b>{{ $data['pagamento']->funcionario->cargos->last()->nome}}</span>
                 </td>
-                <td>
-                    <p>CBO:</p>
-                    <p>1234-5</p>
-                </td>
-                <td>
-                    <p>Local:</p>
-                    <p>00000</p>
-                </td>
-                <td>
-                    <p>Depto.</p>
-                    <p>00001</p>
-                </td>
-                <td>
-                    <p>Setor:</p>
-                    <p>00007</p>
-                </td>
-                <td>
-                    <p>Folha:</p>
-                    <p>{{$data['pagamento']->id}}</p>
+                <td colspan="1">
+                    <span class="p"><b>Folha:</b> {{$data['pagamento']->id}}</span>
                 </td>
             </tr>
+            
             <tr>
                 <td colspan="1">
-                    <p>Descrição</p>
+                    <b><p>Descrição</p></b>
 
                 </td>
-                <td colspan="3">Referência</td>
-                <td>Vencimentos</td>
-                <td>Descontos</td>
+                <td colspan="3"><b>Referência</b></td>
+                <td class="text-success"><b>Vencimentos</b></td>
+                <td class="text-danger"><b>Descontos</b></td>
             </tr>
             <tr>
                 <td colspan="1">
@@ -64,97 +48,42 @@
                     <p>INSS: </p>
                 <td colspan=3>
                     <p>{{ 30 - $data['pagamento']->faltas }}</p>
-                    <p>-------</p>
+                    <p>-----------</p>
                     <p>-----------</p>
                     <p>{{ $data['pagamento']->faltas}}</p>
                     <p>-----------</p>
                 </td>
                 <td>
-                    <p>{{ $data['pagamento']->funcionario->cargos->last()->salario}}</p>
-                    <p>{{ $data['pagamento']->horas_extras . ',00 '}}</p>
-                    <p>{{ $data['pagamento']->adicional_noturno . ',00 '}}</p>
+                    <p class="text-success">{{ $data['pagamento']->funcionario->cargos->last()->salario}}</p>
+                    <p class="text-success">{{ $data['pagamento']->horas_extras }}</p>
+                    <p class="text-success">{{ $data['pagamento']->adicional_noturno }}</p>
                 </td>
-                <td><p>-----------</p>
-                <p>-----------</p>
-                <p>-----------</p>
-                <p>{{ $valorFalta }}</p>
-                <p>{{ $data['pagamento']->inss }}</p>
+                <td>
+                <p class="text-danger">-----------</p>
+                <p class="text-danger">-----------</p>
+                <p class="text-danger">-----------</p>
+                <p class="text-danger">{{ $valorFalta }}</p>
+                <p class="text-danger">{{ $data['pagamento']->inss }}</p>
                 </td>
             </tr>
             <tr>
-                <td colspan=4 rowspan=2>
-                    <span>Banco:</span>
-                    <span>Agencia:</span>
-                    <span> CC:</span>
-                    <p class="text-center ref">Referente ao Mês de (Mês)/(ano)</p>
+                <td colspan=4 >     
                 </td>
-                <td colspan="1">Total de Vencimentos:
-                    <p>{{ $vencimentos . ',00 '}}</p>
+                <td colspan="1" class="text-success"><b>Total de Vencimentos:</b>
+                    <p>{{ $vencimentos }}</p>
                 </td>
-                <td colspan="2">Total de Descontos:
+                <td colspan="2" class="text-danger"><b>Total de Descontos:</b>
                 <p>{{ $desconto }}</p>
-                </td>
-              
+              </td>              
             </tr>
             <tr>
-                <td colspan="4">
-                    <span> Valor Liquído </span>
-                  <span>  -----></span>
-                    <span>{{ floatVal($vencimentos) - floatVal($desconto) }} </span>
+                <td colspan="6">
+                    <span><b>Valor Liquído:</b><i class="material-icons seta">arrow_right_alt</i><b>R${{ floatVal($vencimentos) - floatVal($desconto) }}</b></span>
                 </td>
-            </tr>
-            <tr>
-                <td colspan=100%></td>
-            </tr>
-
-
-
-
+            </tr>       
         </table>
     </div>
-    <!--<div class="card">
-    <div class="card-header">
-        <h3 class="card-title text-center">Holerite</h3>
-    </div>
-    <div class="card-body">
-       
-        <table class="table table-bordered">
-            <thead class="thead-light">
-            <tr>
-               <td colspan=10 class="text-center bold"><b>{{ $data['pagamento']->funcionario->nome}}</b></td>
-            </tr>
-            <tr>
-                
-                <th>Cargo</th>
-                <th>Emissão</th>
-                <th>Tipo Pagamento</th>
-                <th>Hora Extra</th>
-                <th>Adicional Noturno</th>
-                <th>Faltas</th>
-                <th>INSS</th>
-                <th>Valor</th>
-                <th>Total</th>
-            </tr>
-            </thead>
-            <tr>
-            <td>{{$data['pagamento']->funcionario->cargos->last()->nome}}</td>
-            <td>{{ $data['pagamento']->emissao }}</td>
-            <td>{{ $data['pagamento']->tipo_pagamento }}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            
-            </tr>
-        </table>
-    </div>
-    <div class="card-footer">
-    
-    </div>
-</div>
--->
+
     @stop
     <style>
         span {
@@ -165,4 +94,14 @@
             margin-top: 30px;
             font-weight: 700;
         }
+        .folha{
+            margin-right:100px;
+        }
+        i.seta{
+            font-size: 80px;
+        }
+       .seta{
+           margin-left:300px;
+           margin-right:220px;
+       }
     </style>

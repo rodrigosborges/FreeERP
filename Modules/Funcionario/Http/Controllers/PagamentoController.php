@@ -119,14 +119,16 @@ class PagamentoController extends Controller
             $pagamento->horas_extras = $request->horas_extras;
             $pagamento->adicional_noturno = $request->adicional;
             $pagamento->tipo_hora_extra = $request->tipo_hora_extra;
+            
             $inss = $this->calcularInss($salario);
+        
             if ($request->opcao_pagamento == "2") {
                 $temp = $salario * 0.4;
                 $pagamento->inss = floatVal(number_format($this->calcularInss($temp), 2,',',''));
                 $pagamento->valor *= 0.4;
             } else
                 $pagamento->inss = floatVal(number_format($inss, 2,',',''));
-            // dd($inss);
+             //dd($inss);
             $pagamento->emissao = brToEnDate($request->emissao);
             $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
             $pagamento->funcionario_id = $funcionario->id;
@@ -159,12 +161,11 @@ class PagamentoController extends Controller
 
         ];
         $valorFalta = (floatVal(str_replace('.','',$data['pagamento']->funcionario->cargos->last()->salario)) / 30) * $data['pagamento']->faltas;
-       
         $desconto = $data['pagamento']->inss + $valorFalta;
         $desconto = number_format($desconto, 2, ',', '');
         $valorFalta = number_format($valorFalta, 2, ',', '');
         $vencimentos = floatVal(str_replace('.','',$data['pagamento']->funcionario->cargos->last()->salario)) + $data['pagamento']->horas_extras + $data['pagamento']->adicional_noturno;
-
+        $vencimentos= number_format($vencimentos, 2, ',', '');
         return view('funcionario::pagamentos.show', compact('data', 'desconto','vencimentos','valorFalta'));
     }
 
@@ -204,7 +205,10 @@ class PagamentoController extends Controller
 
             $salario = floatval($funcionario->cargos->find($request->cargos)->salario);
             $salario = str_replace(',', '.', $salario);
+            $salario= number_format($salario, 2, ',', '');
             $pagamento->valor = $salario;
+            $pagamento = str_replace(',', '.', $pagamento);
+
             $pagamento->faltas = $request->faltas;
             $pagamento->horas_extras = $request->horas_extras;
             $pagamento->adicional_noturno = $request->adicional;
@@ -216,7 +220,7 @@ class PagamentoController extends Controller
                 $pagamento->valor *= 0.4;
             } else
                 $pagamento->inss = $inss;
-
+            $inss = str_replace(',', '.', $inss);
             $pagamento->emissao = brToEnDate($request->emissao);
             $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
             $pagamento->funcionario_id = $funcionario->id;
@@ -268,12 +272,11 @@ class PagamentoController extends Controller
 
     public function calcularInss($salario)
     {
-        $formula = ($salario * 8) / 100;
 
         if ($salario <= 1751.81) {
-            $inss = $formula;
+            $inss = ($salario * 8) / 100;
         } else if ($salario > 1751.81) {
-            $inss = ($salario * 9) / 100;;
+            $inss = ($salario * 9) / 100;
         } else {
             $inss = ($salario * 12) / 100;
         }
