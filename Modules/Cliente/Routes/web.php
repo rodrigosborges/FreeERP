@@ -13,7 +13,7 @@
 
 Route::prefix('cliente')->group(function() {
 
-    Route::get('dashboard','PedidoController@dashboard');
+    Route::get('dashboard','DashboardController@index');
         
     Route::resource('/cliente', 'ClienteController'); //função que cria todas rotas de todas função da Classe
     
@@ -30,7 +30,7 @@ Route::prefix('cliente')->group(function() {
 
     Route::get('{cliente_id}/pedidos/pdf/{start}/{end}', 'PedidoController@pdf'); //Teste pdf
 
-
+Route::get('/teste','PedidoController@getData');
     
 
     Route::get('/','ClienteController@index');
