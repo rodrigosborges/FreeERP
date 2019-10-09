@@ -16,6 +16,7 @@ class CreateDependenteTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('nome', 100);
+			$table->string('cpf');
 			$table->boolean('mora_junto');
 			$table->boolean('certidao_matricula');
 			$table->boolean('certidao_vacina');

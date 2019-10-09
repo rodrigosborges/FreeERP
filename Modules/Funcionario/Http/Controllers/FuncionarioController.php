@@ -5,10 +5,17 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+<<<<<<< HEAD
 use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Curso, TipoDemissao};
+=======
+use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Atestado, Curso};
+>>>>>>> 1a3d221f554ceef6e35ba792027e8118b2b0c4a8
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
+
+
+
 use DB;
 use Modules\Funcionario\Entities\Funcionario;
 use DateTime;
@@ -167,14 +174,6 @@ class FuncionarioController extends Controller{
                     $dependente['funcionario_id'] = $funcionario['id'];
 
                     $newDep = Dependente::create($dependente);
-                    
-                    $doc = [
-                        'tipo_documento_id'   => '1',
-                        'numero'              => $dependente['cpf']
-                    ];
-                    
-                    $cpf = Documento::create($doc);
-                    
 
                 }
             }
@@ -228,20 +227,23 @@ class FuncionarioController extends Controller{
             $cursos = null;
         }
         // $cursos = Curso::where('funcionario_id','=',$id)->get();
-        
-        
+
+        if(!$funcionario->dependente->first() == null){
+            $dependente = $funcionario->dependente()->get();
+        }
 
         $data = [
             "url" 	 	        => url("funcionario/funcionario/$id"),
             "model"		        => $funcionario,
             'tipo_documentos'   => TipoDocumento::whereNotIn("id",[1,2])->get(),
             'documentos'        => isset($documentos) ? $documentos : [new Documento],
-            'dependentes'       => isset($funcionario->dependentes) ? $funcionario->dependentes : [new Dependente],
+            'dependentes'       => isset($dependente) ? $funcionario->dependente()->get() : [new Dependente],
             'parentescos'       => Parentesco::all(),
             'tipos_telefone'    => TipoTelefone::all(),
             'estado_civil'      => EstadoCivil::all(),
             'telefones'         => $funcionario->telefone()->get(),
             'estados'           => Estado::all(),
+            'cidades'           => Cidade::all(),
             'cargos'            => Cargo::all(),
             'title'		        => "Atualizar Funcionário",
             "button" 	        => "Atualizar",
@@ -252,7 +254,6 @@ class FuncionarioController extends Controller{
     }
 
     public function update(CreateFuncionario $request, $id){
-
         
         DB::beginTransaction();
 		try{
@@ -273,7 +274,7 @@ class FuncionarioController extends Controller{
                 
             ]);
             
-
+            //Documentos
             foreach($request->documentos as $key => $documento) {
                 if($documento['tipo_documento_id'] == 1)
                     $documento['numero'] = str_replace([".","-"],"",$documento['numero']);
@@ -281,30 +282,112 @@ class FuncionarioController extends Controller{
                 Documento::find($documento['id'])->update($documento);
             }
 
+            //Endereço
             $funcionario->endereco()->update($request->input('endereco'));
 
-            $funcionario->email()->first()->update($request->input('endereco'));
-            
-            //Telefone -------
-            //1º verificar quantidade de telefones do usuário
-            //2º verificar quantidade de telefones no input 
-            //3º detach nos telefones do usuário 
-            //4º attach/cadastrar novos telefones 
-            
-            // if(!count($request->telefones) >=2 ){
+            //Email
+            $email = Email::where('id','=',$funcionario->email_id)->first();
+            $email->update([
+                'email' => $request->email,
+                ]);
 
-            //     if(count($request->telefones) == 0){
-            //         if($funcionario->telefone()){
-            //             $funcionario->telefone()->first()->detach();
-            //         }
-            //     }else{
-            //         $funcionario->telefone()->first()->update($request->telefones);
-            //     }
+            //Telefones
+            $funcionario->telefone()->detach();
+            foreach($request->telefones as $key => $telefone){
+                $tel = Telefone::Create($telefone);
+                $funcionario->telefone()->attach($tel);
+            }
 
-            // }else{
+            //Cursos
+            if(!isset($request->cursos) || $request->cursos[0]['nome'] == null && $request->cursos[0]['area_atuacao'] == null && $request->cursos[0]['duracao_horas_curso'] == null && $request->cursos[0]['data_realizacao'] == null &&  $request->cursos[0]['validade_curso'] == null ){
+                if(count($funcionario->curso()->get()) > 0){
+                    $func_cursos = Curso::where("funcionario_id" , "=", $funcionario->id)->get();
+                    foreach($func_cursos as $fcurso){
+                        $fcurso->delete();
+                    }
+                }
+            }else{
+                foreach($request->cursos as $key => $curso){
+                    if(isset($curso['id']) && $curso['id'] != null){
+                        $cur = Curso::findOrFail($curso['id']);
+                        $cur->update($curso);
+                    }else{
+                        $curso = [
+                            'nome' => $curso['nome'],
+                            'area_atuacao' => $curso['area_atuacao'],
+                            'duracao_horas_curso' => $curso['duracao_horas_curso'],
+                            'data_realizacao' =>  date('Y-m-d', strtotime($curso['data_realizacao'])),
+                            'validade_curso' => $curso['validade_curso'],
+                            'funcionario_id' => $funcionario->id
+                        ];
+                        $newCurso = Curso::create($curso);    
+                    }
+                }
+            }
+
+            //Docs Outros
+            if(isset($request->docs_outros) && $request->docs_outros[0]['tipo_documento_id'] != null && $request->docs_outros[0]['numero'] != null){
+                if(count($funcionario->documento()->get()) > 6 ){                    
+                    foreach($request->docs_outros as $key => $docs){
+                        if(isset($docs['id']) && $docs['id'] != null){
+                            $doc = Documento::findOrFail($docs['id']);
+                            $doc->update($docs);
+                        }else{
+                            $docs = [
+                                'numero' => $docs['numero'],
+                                'tipo_documento_id' => $docs['tipo_documento_id'],
+                            ];
+                            $newDoc = Documento::create($docs);    
+                            $funcionario->documento()->attach($newDoc);
+                        }
+                    }
+                }else{
+                    foreach($request->docs_outros as $key => $docs){
+                        $docs = [
+                            'numero' => $docs['numero'],
+                            'tipo_documento_id' => $docs['tipo_documento_id'],
+                        ];
+                        $newDoc = Documento::create($docs);    
+                        $funcionario->documento()->attach($newDoc);
+                    }
+                }
+            }else{
                 
-                
-            // }
+                if(count($funcionario->documento()->get()) > 6 ){
+                    foreach($request->docs_outros as $key => $docs){
+                        if($key > 6){
+                            $doc = Documento::findOrFail($docs['id']);
+                            $funcionario->document()->detach($doc);
+                        }
+                    }
+                }
+
+
+            }
+
+            //Dependentes
+            if($request->dependentes[0]['parentesco_id'] != "" && $request->dependentes[0]['mora_junto'] != "" && $request->dependentes[0]['nome'] != "" && $request->dependentes[0]['cpf'] != "" && $request->dependentes[0]['certidao_matricula'] != "" && $request->dependentes[0]['certidao_vacina'] != "") {
+                foreach($request->dependentes as $dependente) {
+
+                    if(isset($dependente['id']) && $dependente['id'] != null){
+                        $dep = Dependente::findOrFail($dependente['id']);
+                        $dep->update($dependente);
+                    }else{
+                        $dependente['funcionario_id'] = $funcionario['id'];
+                        $newDep = Dependente::create($dependente);
+                    }
+                }
+            }else{
+                //return $funcionario->dependente()->get();
+                if(count($funcionario->dependente()->get()) > 0){
+                    $dependentes = Dependente::where('funcionario_id' , '=' , $funcionario->id)->get();
+                    foreach ($dependentes as $key => $dep) {
+                        $dep->delete();
+                    }
+                }
+            }
+
+
 
 			DB::commit();
             return redirect('/funcionario/funcionario')->with('success', 'Funcionário atualizado com successo!');
@@ -418,10 +501,26 @@ class FuncionarioController extends Controller{
 
     }
     
+<<<<<<< HEAD
     //parte de atestado
     public function atestado($id){
+=======
+    
+    public function demissao($id){
         $data = [
+            'funcionario' => Funcionario::findOrFail($id)        
+        ];
+
+        return view('funcionario::funcionario.demissao', compact('data'));
+    }
+//parte de atestado
+    public function CreateAtestado($id){
+>>>>>>> 1a3d221f554ceef6e35ba792027e8118b2b0c4a8
+        $data = [
+            
+            'atestado' => '',
             'title' => 'Cadastro de Atestado',
+<<<<<<< HEAD
             'funcionario'   => Funcionario::findOrFail($id),
             
         ];
@@ -439,6 +538,38 @@ class FuncionarioController extends Controller{
   
         
         return view('funcionario::funcionario.demissao', compact('data'));
+=======
+            'funcionario' => Funcionario::findOrFail($id),
+            'url' => 'funcionario/funcionario/storeAtestado',
+            'method' => 'post'
+        ];
+
+        return view('funcionario::funcionario.atestado',compact('data'));
+    }
+
+    public function storeAtestado(Request $request){
+        DB::beginTransaction();
+        try{
+        $atestado = Atestado::create([
+            'cid_atestado' => $request['atestado']['cid_atestado'],
+            'data_inicio' => $request['atestado']['data_inicio'],
+            'quantidade_dias' => $request['atestado']['quantidade_dias'],
+            'data_fim' => $request['atestado']['data_fim'],
+            
+            'funcionario_id' => $request['atestado']['funcionario_id']
+            
+        ]);
+        DB::commit();
+        return redirect('/funcionario/funcionario')->with('success','Atestado cadastrado com sucesso');
+    }catch(Exception $e){
+
+        DB::rollback();
+        return back()->with('error', 'Error >:(');
+        
+    }
+            
+        
+>>>>>>> 1a3d221f554ceef6e35ba792027e8118b2b0c4a8
     }
 
 }

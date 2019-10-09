@@ -23,7 +23,9 @@ Route::prefix('funcionario')->group(function() {
     Route::get('ferias/controleFerias/{id}','ControleFeriasController@controleFerias');
     Route::get('ferias/listar/{id}','FeriasController@listar');
 
-    Route::get('funcionario/atestado/{id}', 'FuncionarioController@atestado');
+    Route::get('funcionario/atestado/{id}', 'FuncionarioController@CreateAtestado');
+    Route::post('funcionario/storeAtestado', 'FuncionarioController@storeAtestado');
+
     Route::get('funcionario/demissao/{id}', 'FuncionarioController@demissao');
     //Rotas do FeriasController
     Route::get('ferias/editarFerias/{id}','FeriasController@edit');
