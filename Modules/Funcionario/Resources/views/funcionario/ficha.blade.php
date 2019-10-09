@@ -21,9 +21,6 @@
                 <div class="col">
                     <p><span class="font-weight-bold">Sexo: </span>{{$data["funcionario"]->sexo == 1 ? 'Masculino' : 'Feminino'}}</p> 
                     <p><span class="font-weight-bold">Estado Civil: </span>{{$data["funcionario"]->estado_civil->nome}}</p>
-                    @foreach($data["funcionario"]->telefone as $telefone)    
-                        <p><span class="font-weight-bold">Telefone:</span> {{$telefone->numero}}</p>
-                    @endforeach
                 </div>
             </div>              
         </div>
@@ -84,14 +81,30 @@
     <hr>
 
     <h4 class=" text-center mb-4">Contato</h4>
-    <div class="row">   
-
-        <div class="col-6">
+'        <div class="row">   
+            <div class="col-6">
                 <span class="font-weight-bold">E-mail: </span>{{$data["funcionario"]->email->email}}
+                @foreach($data["funcionario"]->telefone as $telefone)    
+                    <p><span class="font-weight-bold">Telefone:</span> {{$telefone->numero}}</p>
+                @endforeach
+            </div>
         </div>
-
-    </div>
     <hr>
+    
+    <h4 class=" text-center mb-4">Dependentes</h4>
+    @foreach($data["dependetes_nome"] as $dependente_nome)
+        <div class="row"> 
+            <div class="col-3"><span class="font-weight-bold">Nome: </span>{{$dependente_nome->nome}}</div>
+        @foreach($data["dependentes"] as $dependente)    
+            <div class="col-3"><span class="font-weight-bold">Mora Junto: </span>{{ $dependente->mora_junto ? 'Sim' : 'Não'}}</div>        
+            <div class="col-3"><span class="font-weight-bold">Certidão de Matricula: </span>{{ $dependente->certidao_matricula ? 'Sim' : 'Não'}}</div>
+            <div class="col-3"><span class="font-weight-bold">Certidão Vacina: </span>{{ $dependente->mora_junto ? 'Sim' : 'Não'}}</div>                
+        
+        @endforeach
+        </div>
+    @endforeach
+    <hr>
+    
 </div>
     @endsection
 

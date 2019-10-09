@@ -345,8 +345,13 @@ class FuncionarioController extends Controller{
             
             'estado' => DB::table('funcionario')->join('endereco', 'funcionario.endereco_id', 'endereco.id')
             ->join('cidade', 'endereco.cidade_id', 'cidade.id')
-            ->join('estado', 'cidade.estado_id','estado.id')->get('estado.nome')->last()
+            ->join('estado', 'cidade.estado_id','estado.id')->get('estado.nome')->last(),
+
+            'dependentes' => DB::table('dependente')->join('parentesco', 'dependente.parentesco_id', 'parentesco.id')->get(),
+
+            'dependetes_nome' => DB::table('dependente')->where('dependente.funcionario_id', $id)->get('nome')        
         ];
+    
     
         return view('funcionario::funcionario.ficha', compact('data'));
     }
