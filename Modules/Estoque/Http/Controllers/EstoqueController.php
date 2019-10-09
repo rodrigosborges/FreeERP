@@ -12,9 +12,10 @@ use Modules\Estoque\Entities\MovimentacaoEstoque;
 use Modules\Estoque\Entities\Produto;
 
 use Modules\Estoque\Entities\TipoUnidade;
-
+use Barryvdh\DomPDF\Facade as PDF;
 class EstoqueController extends Controller
 {
+    
     public $dadosTemplate;
 
     public function __construct()
@@ -144,6 +145,13 @@ class EstoqueController extends Controller
         return view('estoque::estoque.form', compact('data', 'notificacoes'));
     }
 
+    public function pdf() {
+        $teste = Produto::all();
+        $pdf = PDF::loadView('estoque::estoque.relatorios.pdf', compact('teste'));
+        return $pdf->stream();
+    }
+
+    
     /**
      * Update the specified resource in storage.
      * @param Request $request
