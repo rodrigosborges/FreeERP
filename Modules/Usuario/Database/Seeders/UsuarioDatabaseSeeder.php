@@ -16,10 +16,7 @@ class UsuarioDatabaseSeeder extends Seeder{
     public function run(){
         try{
             DB::table('papel')->insert([
-                'nome' => 'admin',
-                'permissoes' => json_encode([
-                    'create-post' => true,
-                ]),
+                'nome' => 'Administrador'
             ]);
         }catch(\Exception $e){}
         
@@ -28,7 +25,6 @@ class UsuarioDatabaseSeeder extends Seeder{
             'avatar' => 'default.png',
             'papel_id' => 1,            
             'email' => 'admin@freeerp.com',
-            'papel_id' => Papel::where('nome', '=', 'admin')->firstOrFail()->id,
             'password' => bcrypt('password'),
         ]);
 

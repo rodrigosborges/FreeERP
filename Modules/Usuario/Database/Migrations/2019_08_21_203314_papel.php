@@ -17,7 +17,6 @@ class Papel extends Migration
             
             $table->increments('id');
             $table->string('nome',50)->unique();
-            $table->text('permissoes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

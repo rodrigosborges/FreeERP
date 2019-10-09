@@ -22,11 +22,4 @@ class Usuario extends Authenticatable{
         return $this->belongsTo('Modules\Usuario\Entities\Papel');
     }
 
-    public function temAcesso(array $permissoes){
-        $papel = Papel::find($this->papel);
-        if($papel->temAcesso($permissoes)){
-            return true;
-        }
-        return false;
-    }
 }
