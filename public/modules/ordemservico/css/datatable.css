@@ -1,0 +1,12 @@
+.dataTables_filter input{
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border:0.08em rgb(220,220,220) solid;
+    position: relative;
+
+}
+.icon-search{
+    position: absolute;
+    margin-top:3px;  
+}

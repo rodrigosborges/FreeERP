@@ -1,152 +1,70 @@
 @extends('ordemservico::layouts.informacoes')
 @section('content')
+<div class="container h-100">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-info mb-3" style="max-width: 50rem;">
+                <div class="card-header bg-info text-white"> {{$data['title']}} </div>
+                <div class="card-body">
+                    <table id="datatable" class="table border table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                @foreach($data['thead'] as $coluna)
+                                <th scope='col' class='text-info bg-light'>{{$coluna}}</th>
+                                @endforeach
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--- Gera Linhas com atributos e dados do banco --->
+                            @foreach($data['model'] as $model)
+                            <tr>
+                                @foreach($data['row_db'] as $atributo)
+                                <td>{{$model->$atributo}}</td>
+                                @endforeach
 
-<!---- Busca ----->
-<form method="GET" action="#">
-    <div class="form-row form-group">
-        {!! Form::label('busca', 'Procurar por', ['class' => 'col-sm-2 col-form-label text-right']) !!}
-        <div class="input-group col-sm-8">
-            {!! Form::text('busca', isset($busca) ? $busca : null, ['class' => 'form-control']) !!}
-            <div class="input-group-append">
-                {!! Form::submit('Buscar', ['class'=>'btn btn-primary']) !!}
+
+                                @endforeach
+                        </tbody>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
-        </div>
-    </div>
-</form>
-
-<nav class="nav nav-tabs">
-    <a href="#ativos" data-toggle="tab" class="nav-item nav-link active show">
-        Ativos
-    </a>
-    <a href="#inativos" data-toggle="tab" class="nav-item nav-link">
-        Inativos
-    </a>
-    
-</nav>
-
-<div class="tab-content">
-    <div id="ativos" class="tab-pane fade in active show">
-        <div class="text-center">
-            <table class="table table-striped table-hover">
-                <thead class="thead-dark">
-                    <tr>
-                        <!--- Gera titulo para a coluna com atributos do modelo -->
-                        @foreach($data['atributos'] as $atributo)
-                        <th>{{($atributo)}}</th>
-                        @endforeach
-
-                        <!--- Se a opção cadastrar tiver habilitada , criar botão de cadastro --->
-                        @if($data['cadastro'] != null)
-                        <th><a class="btn btn-success center-block" href="{{  route($data['route'] . 'create') }}">{{$data['cadastro']}}</a></th>
-                        @else
-                        <th></th>
-                        @endif
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <!--- Gera Linhas com atributos e dados do banco --->
-                    @foreach($data['model'] as $model)
-                    <tr>
-                        @foreach($data['atributos'] as $atributo)
-                        <td>{{$model->$atributo}}</td>
-                        @endforeach
-
-                        <!---- Se existir ações possíveis , habilita-las --->
-                        @if($data['acoes'])
-                        <td>
-                            @foreach($data['acoes'] as $acao)
-                            <a class="{{$acao['class']}}" {{isset($acao['complemento-route']) ? "href=" . route($data['route'] . $acao['complemento-route'],$model->id)  : ''}} >{{$acao['nome']}}</a>
-                            @endforeach
-                            @if($data['deletar'])
-                            <a class="btn btn-outline-danger btn-sm" id='delete' onclick="confirmar('{{route($data['route'] . 'destroy' , $model->id )}}')" data-id={{$model->id}}> Delete </a>
-                            </form>
-                            @endif
-                        @endif
-                        </td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!--- Tabela Inativos -->
-    <div id="inativos" class="tab-pane fade">
-        <div class="text-center">
-            <table class="table table-striped table-hover">
-                <thead class="thead-dark">
-                    <tr>
-                        <!--- Gera titulo para a coluna com atributos do modelo -->
-                        @foreach($data['atributos'] as $atributo)
-                        <th>{{($atributo)}}</th>
-                        @endforeach
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!--- Gera Linhas com atributos e dados do banco --->
-                    @foreach($data['inativos'] as $model)
-                    <tr>
-                        @foreach($data['atributos'] as $atributo)
-                        <td>{{$model->$atributo}}</td>
-                        @endforeach
-                        <td>
-                            <form action="{{route($data['route'] .'destroy' ,$model->id)}}" method="POST">
-                                {{method_field('DELETE')}}
-                                {{ csrf_field() }}
-                                {{Form::submit( 'Restaurar',array('class'=>"btn btn-outline-danger btn-sm") )}}
-                                {{ Form::close() }}
-                        </td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
-
-<!--- Modal Deletar -->
-<div class="modal fade" id="verifica-delete" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5>Tem certeza que deseja excluir?</h5>
-                <p class="text-secondary">Você poderá recuperar na aba de reativação </p>
-                <form id="form-delete" method="POST">
-                    {{method_field('DELETE')}}
-                    {{ csrf_field() }}
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                {{Form::submit( 'Sim',array('class'=>"btn btn-primary") )}}
-            </div>
-            {{ Form::close() }}
-
-
-        </div>
-    </div>
-</div>
-
-@yield('modal')
-
-<!--- Paginaçao --->
-<div class="row justify-content-center">
-    {{ $data['model']->links() }}
-</div>
-@endsection
-
 @section('js')
+<script src='https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js'></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{Module::asset('ordemservico:css/datatable.css')}}">
+
 <script>
-    function confirmar(rota) {
-        $("#form-delete").attr("action", rota);
-        $('#verifica-delete').modal('show');
-    };
+    $(document).ready(function() {
+        $('#datatable').DataTable({
+            "lengthChange": false,
+            'info': false,
+            "language": {
+                "emptyTable": "<center>Nenhum registro cadastrado</center>",
+                "zeroRecords": "<center>Não Encontrado</center>",
+                "loadingRecords": "Carregando...",
+                "search": "",
+
+                "paginate": {
+                    "previous": 'Anterior',
+                    "next": "Proximo",
+                }
+            }
+        });
+        $(".dataTables_filter").children().children().attr("placeholder", "Buscar...");
+        $(".dataTables_filter").children().append('<i  class="icon-search material-icons mr-2">search</i>');
+
+        $(".dataTables_paginate").attr('class', 'pagination');
+        $(".pagination").children().attr('class', 'page-link');
+        
+        $("th").click(function() {
+            $(".pagination").children().attr('class', 'page-link');
+
+        });
+    });
 </script>
+@endsection
 @endsection

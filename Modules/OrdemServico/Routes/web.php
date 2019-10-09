@@ -23,11 +23,9 @@ Route::prefix('ordemservico')->name('modulo.')->group(function() {
 	Route::get('painel/{id}/minhasOs', 'PainelTecnicoController@ordensAtivas')->name('tecnico.painel.minhasOs');
 	Route::get('painel/{id}/{idOs}/pegarResponsabilidade', 'PainelTecnicoController@pegarResponsabilidade')->name('tecnico.painel.pegarResponsabilidade');
 
-	Route::resource('gerente', 'GerenteController');
-	Route::resource('aparelho', 'AparelhoController');
 	Route::resource('os', 'OrdemServicoController');
 	Route::resource('tecnico', 'TecnicoController');
 	Route::resource('solicitante', 'SolicitanteController');
-	Route::resource('problema', 'ProblemaController');
+
 	
 });
