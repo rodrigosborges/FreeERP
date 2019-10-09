@@ -28,18 +28,24 @@ class ProtocolosController extends Controller
 
     public function list(Request $request, $status){
 
-        //$id = Auth::user()->id;
+        $id = Auth::user()->id;
         
         $protocolos = new Protocolo;
         
         //Retorna os protocolos que o usuário foi cadastrado como interessado.
         // $protocolos = DB::table('protocolo')->join('protocolo_has_usuario', 'protocolo_has_usuario.protocolo_id', 'protocolo.id')
         //         ->where('protocolo_has_usuario.usuario_id','=', $id);
-
+        //Retorna os protocolos que o usuário criou.
         //$protocolos = DB::table('protocolo')->where('usuario_id', '=', $id); Retorna os protocolos criados pelo usuário logado.
 
 		if($request['pesquisa']) {
             $protocolos = $protocolos->where('assunto', 'like', '%'.$request['pesquisa'].'%');
+        }
+        if($status == "ativos"){
+            $protocolos = $protocolos->join('protocolo_has_usuario', 'protocolo_has_usuario.protocolo_id', 'protocolo.id')->where('protocolo_has_usuario.usuario_id','=', $id);
+        }
+        if($status == "meus-protocolos"){
+            $protocolos = $protocolos->where('usuario_id', '=', $id);
         }
 		if($status == "inativos"){
             $protocolos = $protocolos->onlyTrashed();
@@ -172,6 +178,13 @@ class ProtocolosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $protocolo = Protocolo::withTrashed()->findOrFail($id);
+        if($protocolo->trashed()) {
+            $protocolo->restore();
+            return back()->with('success', 'Protocolo ativado com sucesso!');
+        } else {
+            $protocolo->delete();
+            return back()->with('success', 'Protocolo desativado com sucesso!');
+        }
     }
 }

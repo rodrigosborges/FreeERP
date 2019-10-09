@@ -16,14 +16,17 @@
         </div>
         <div class="col-md-4">
             <div class="text-right">
-                <a class="btn btn-success" href="{{ url('protocolos/protocolos/create') }}">Novo Funcionário</a>
+                <a class="btn btn-success" href="{{ url('protocolos/protocolos/create') }}">Novo Protocolo</a>
             </div>
         </div>
     </div>
     
     <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="ativos-tab" data-toggle="tab" href="#ativos" role="tab" aria-controls="ativos" aria-selected="true">Ativos</a>
+            <a class="nav-link active" id="ativos-tab" data-toggle="tab" href="#ativos" role="tab" aria-controls="ativos" aria-selected="true">Caixa de entrada</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="meus-protocolos-tab" data-toggle="tab" href="#meus-protocolos" role="tab" aria-controls="meus-protocolos" aria-selected="true">Meus protocolos</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="inativos-tab" data-toggle="tab" href="#inativos" role="tab" aria-controls="inativos" aria-selected="false">Inativos</a>
@@ -31,6 +34,7 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="ativos" role="tabpanel"></div>
+        <div class="tab-pane fade" id="meus-protocolos" role="tabpanel"></div>
         <div class="tab-pane fade" id="inativos" role="tabpanel"></div>
     </div>
     
@@ -55,9 +59,14 @@
     ativosInativos = (url) => {
         search(`${url}/ativos`, $("#ativos"))
         search(`${url}/inativos`, $("#inativos"))
+        search(`${url}/meus-protocolos`, $("#meus-protocolos"))
         $("#ativos").on('click', 'ul.pagination a', function(e){
             e.preventDefault()
             search($(this).attr('href'), $("#ativos"))
+        })
+        $("#meus-protocolos").on('click', 'ul.pagination a', function(e){
+            e.preventDefault()
+            search($(this).attr('href'), $("#meus-protocolos"))
         })
         $("#inativos").on('click', 'ul.pagination a', function(e){
             e.preventDefault()

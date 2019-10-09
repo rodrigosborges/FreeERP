@@ -4,7 +4,7 @@
             <tr>
                 <th>Nome</th>
                 <th class="min" colspan="3">Ações</th>
-                @if($status == "ativos")
+                @if($status == "ativos" || $status == "meus-protocolos")
                     <th class="min"></th>
                 @endif
             </tr>
@@ -13,7 +13,7 @@
             @foreach($protocolos as $protocolo)
                 <tr>
                     <td>{{$protocolo->assunto}}</td>
-                    @if($status == "ativos")
+                    @if($status == "ativos" || $status == "meus-protocolos")
                     <td class="min">         
                         <a class="btn btn-warning" href="">Teste</a>
                     </td>
