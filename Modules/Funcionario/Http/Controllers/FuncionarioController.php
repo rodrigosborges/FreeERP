@@ -5,10 +5,13 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Curso};
+use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Atestado, Curso};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
+
+
+
 use DB;
 use Modules\Funcionario\Entities\Funcionario;
 use DateTime;
@@ -494,7 +497,7 @@ class FuncionarioController extends Controller{
 
     }
     
-    //parte de atestado
+    
     public function demissao($id){
         $data = [
             'funcionario' => Funcionario::findOrFail($id)        
@@ -502,12 +505,42 @@ class FuncionarioController extends Controller{
 
         return view('funcionario::funcionario.demissao', compact('data'));
     }
-    public function atestado($id){
+//parte de atestado
+    public function CreateAtestado($id){
         $data = [
+            
+            'atestado' => '',
             'title' => 'Cadastro de Atestado',
-            'funcionario' => Funcionario::findOrFail($id)
+            'funcionario' => Funcionario::findOrFail($id),
+            'url' => 'funcionario/funcionario/storeAtestado',
+            'method' => 'post'
         ];
+
         return view('funcionario::funcionario.atestado',compact('data'));
+    }
+
+    public function storeAtestado(Request $request){
+        DB::beginTransaction();
+        try{
+        $atestado = Atestado::create([
+            'cid_atestado' => $request['atestado']['cid_atestado'],
+            'data_inicio' => $request['atestado']['data_inicio'],
+            'quantidade_dias' => $request['atestado']['quantidade_dias'],
+            'data_fim' => $request['atestado']['data_fim'],
+            
+            'funcionario_id' => $request['atestado']['funcionario_id']
+            
+        ]);
+        DB::commit();
+        return redirect('/funcionario/funcionario')->with('success','Atestado cadastrado com sucesso');
+    }catch(Exception $e){
+
+        DB::rollback();
+        return back()->with('error', 'Error >:(');
+        
+    }
+            
+        
     }
 
 }
