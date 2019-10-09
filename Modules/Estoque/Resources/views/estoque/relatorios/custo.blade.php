@@ -110,7 +110,7 @@
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Maior preço unitario</label>
-                            <input type="text" class="form-control text-right" name="quantidade" disabled>
+                            <input type="text" class="form-control text-right" name="quantidade" value="R${{isset($data['maior_custo']) ? $data['maior_custo'] : ''}}" disabled>
                         </div>
                     </div>
                     <div class="row">
