@@ -30,7 +30,7 @@ Route::prefix('cliente')->group(function() {
 
     Route::get('{cliente_id}/pedidos/pdf/{start}/{end}', 'PedidoController@pdf'); //Teste pdf
 
-Route::get('/teste','PedidoController@getData');
+    Route::get('/dashboard/totalvendasmes/{ano}','DashBoardController@getVendasMes');
     
 
     Route::get('/','ClienteController@index');
