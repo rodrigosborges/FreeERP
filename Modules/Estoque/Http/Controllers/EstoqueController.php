@@ -12,9 +12,10 @@ use Modules\Estoque\Entities\MovimentacaoEstoque;
 use Modules\Estoque\Entities\Produto;
 
 use Modules\Estoque\Entities\TipoUnidade;
-
+use Barryvdh\DomPDF\Facade as PDF;
 class EstoqueController extends Controller
 {
+    
     public $dadosTemplate;
 
     public function __construct()
@@ -144,6 +145,14 @@ class EstoqueController extends Controller
         return view('estoque::estoque.form', compact('data', 'notificacoes'));
     }
 
+    public function pdf(Request $request) {
+
+        $dados = $request->data;
+        $pdf = PDF::loadView('estoque::estoque.relatorios.pdf', compact('dados'));
+        return $pdf->stream();
+    }
+
+    
     /**
      * Update the specified resource in storage.
      * @param Request $request
@@ -312,6 +321,7 @@ class EstoqueController extends Controller
         //Se for para selecionar o período com todos os estoques
         $query_result = [];
         $movimentacao = [];
+        $maior_preco = 0;
         $quantidade_movimentada = 0;
         $estoque_selecionado = "";
         $custo_total = "";
@@ -327,7 +337,7 @@ class EstoqueController extends Controller
             );
             $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->where('quantidade', '>', 0)->get();
             $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '"');
-
+            $maior_preco = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->max('preco_custo');
             //Se for para selecionar o período com um estoque específico
         } else {
             $query_result = DB::select(
@@ -338,10 +348,10 @@ class EstoqueController extends Controller
                  substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '"
                   order by data asc'
             );
+            $maior_preco = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->where('estoque_id', $req->estoque_id)->where('quantidade', '>', 0)->max('preco_custo');
             $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($req->data_inicial, $req->data_final))->where('quantidade', '>', 0)->where('estoque_id', $req->estoque_id)->get();
             $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $req->data_inicial . '" AND "' . $req->data_final . '" AND estoque_id = ' . $req->estoque_id);
         }
-
         //Transfere as datas e os valores para um array especifico que será utilizado como labels e dados do gráfico
         $labels = [];
         $dados = [];
@@ -356,6 +366,7 @@ class EstoqueController extends Controller
         }
 
         $data = [
+            'maior_custo' => $maior_preco,
             'custo_medio' => round($total / $quantidade_movimentada[0]->qtd, 2),
             'custo_total' => $total,
             'quantidade_movimentada' => $quantidade_movimentada[0]->qtd,
