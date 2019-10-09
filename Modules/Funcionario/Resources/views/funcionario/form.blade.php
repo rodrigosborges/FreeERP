@@ -553,7 +553,7 @@
                                             <i class="material-icons">description</i>
                                         </span>
                                     </div>
-                                    <input required type="text" placeholder="XXX.XXX.XXX-XX" name="dependentes[{{$key}}][cpf]"  class="form-control dependentes cpf" id="cpf_dep_{{$key}}" value="{{ old('dependentes.$key.cpf', isset($dependente->id) ? $dependente->cpf()->numero : '') }}">
+                                    <input required type="text" placeholder="XXX.XXX.XXX-XX" name="dependentes[{{$key}}][cpf]"  class="form-control dependentes cpf" id="cpf_dep_{{$key}}" value="{{ old('dependentes.$key.cpf', isset($dependente->id) ? $dependente->cpf : '') }}">
                                 </div>
                                 <span class="errors"> {{ $errors->first('dependentes.'.$key.'.cpf') }}</span>                                
                             </div>
