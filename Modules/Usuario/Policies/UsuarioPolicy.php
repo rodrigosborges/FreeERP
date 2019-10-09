@@ -17,10 +17,18 @@ class UsuarioPolicy
     public function __construct()
     {
     }
-
-    public function create(Usuario $usuario){
-        return $usuario->papel->nome === "Administrador";
+    public function visitante(Usuario $usuario){
+        return $usuario->papel->nome === "Visitante" ;
     }
+    public function administrador(Usuario $usuario){
+        return $usuario->papel->nome === "Administrador" ;
+    }
+
+    public function operador(Usuario $usuario){
+        return $usuario->papel->nome === "Operador";
+    
+    }
+    
 
     
 }
