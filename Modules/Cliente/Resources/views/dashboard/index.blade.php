@@ -103,23 +103,15 @@
     <script>
 
         $(document).ready(function(){
-            var dataset = [{"month":"Jan", "value": .07},
-                            {"month":"Fev", "value": .13},
-                            {"month":"Mar", "value": .56},
-                            {"month":"Abr", "value": 1.2},
-                            {"month":"Mai", "value": .81},
-                            {"month":"Jun", "value": .56},
-                            {"month":"Jul", "value": 1.2},
-                            {"month":"Ago", "value": .81},
-                            {"month":"Set", "value": .56},
-                            {"month":"Out", "value": 1.2},
-                            {"month":"Dec", "value": 2.0},
-                            {"month":"Nov", "value": .81}];
-        
 
-            // $.get(main_url+"cliente/dashboard/valorTotal/2019")              
-            grafico("#totalCompras", dataset)
-            grafico("#totalProdutos", dataset)
+            //[{"month":"Jan", "value": .07}];
+
+            $.get(main_url+"cliente/dashboard/totalvendasmes/2019", function(dataset){
+                console.log(dataset);
+            });
+
+            // grafico("#totalCompras", dataset)
+            // grafico("#totalProdutos", dataset)
         })
 
         function grafico(id, dataset){
