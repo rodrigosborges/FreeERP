@@ -175,7 +175,7 @@
 
     });
     function getCidades(estado_id,nome_cidade=null){
-        $.get('/api/cidades/' + estado_id, function(cidades) {
+        $.get(main_url+'/api/cidades/' + estado_id, function(cidades) {
                 $('#cidade').empty()
                 $('#cidade').append("<option value=''>Selecione</option>")
                 $.each(cidades, function(key, value) {

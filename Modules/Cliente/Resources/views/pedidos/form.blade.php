@@ -104,7 +104,7 @@
                             <span class="mensagem-erro">{{$errors->first('produtos.'.$key.'.desconto')}}</span>
                         </div>  
                     </div>
-                    <div class="col-lg-1 col-sm-12 form-group d-none">
+                    <div class="col-lg-1 col-sm-12 form-group {{(isset($pedido) ? count($pedidosProdutos) : '') == 1 ? 'd-none' : ''}}">
                         <button type="button" class="btn btn-danger btn-block excluir-produto"><strong>X</strong></button>
                     </div>
                     <hr>
