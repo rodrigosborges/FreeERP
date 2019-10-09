@@ -40,7 +40,7 @@
     </div>
 </form>
 <div class="row">
-    <div class=" col-md-6 col-sm-12">
+    <div class=" col-lg-6 col-md-12 col-sm-12">
         <div class="card" style="min-width:250px;">
             <div class="card-header">Relatório:</div>
             <div class="card-body">
@@ -75,7 +75,7 @@
             </div>
         </div>
     </div>
-    <div class=" col-md-6 col-sm-12">
+    <div class=" col-lg-6 col-md-12 col-sm-12">
         <div class="card">
             <div class="card-header">Header</div>
             <div class="card-body">
@@ -97,7 +97,7 @@
                         <input type="text" id='qtd_movimentada' class="form-control" disabled>
                     </div>
                     <div class="form-group col-lg-4 col-md-12 col-sm-12">
-                        <label for="custo_periodo">Costo no Periíodo </label>
+                        <label for="custo_periodo">custo no Período </label>
                         <input type="text" class="form-control" disabled>
                     </div>
                     <div class="form-group col-lg-4 col-md-12 col-sm-12">
@@ -110,24 +110,24 @@
                         <input type="text" class="form-control" disabled>
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group  col-lg-4 col-md-12 col-sm-12">
                         <label>Dia com menor custo</label>
                         <input type="text" class="form-control" disabled>
                     </div>
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group  col-lg-4 col-md-12 col-sm-12">
                         <label for="">Maior Preço unitário </label>
                         <input type="text" class="form-control" disabled>
                     </div>
                     <!--L3-->
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group  col-lg-4 col-md-12 col-sm-12">
                         <label>Menor preço unitário </label>
                         <input type="text" class="form-control" disabled>
                     </div>
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group  col-lg-4 col-md-12 col-sm-12">
                         <label>Dia com maior movimentação </label>
                         <input type="text" class="form-control" disabled>
                     </div>
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group  col-lg-4 col-md-12 col-sm-12">
                         <label for="">Dia com menor movimentação</label>
                         <input type="text" class="form-control" disabled>
                     </div>
@@ -137,7 +137,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6 col-sm-12">
+    <div class="col-lg-6 col-md-6 col-sm-12">
         <div class="card">
             <div class="card-header">Header</div>
             <div class="card-body">
@@ -166,7 +166,7 @@
         </div>
 
     </div>
-    <div class="col-md-6 col-sm-12">
+    <div class="col-lg-6 col-md-12 col-sm-12">
         <canvas id="chart2" class="chart_custo" width="300"></canvas>
     </div>
 </div>
@@ -180,8 +180,8 @@
 
 <script>
     $(document).ready(function() {
-        mostraGrafico1();
-        mostraGrafico2();
+       // mostraGrafico1();
+       // mostraGrafico2();
         //   $('.chart_custo').hide();
         $('.btn-search').click(function(e) {
             e.preventDefault()
@@ -202,14 +202,29 @@
                 }
             }).done(function(data) {
                 data = $.parseJSON(data);
-                console.log ("data",data);
+                console.log("Caraio", data['estoque'])
+               
+               var datas =[]
+               var precos= []
+               $.each(data['movimentacao'],function(chave,valor){
+                   datas[chave]= valor['created_at'];
+                   precos[chave]= valor['preco_custo']* valor['quantidade'];
+               })
+               console.log("Datas:"+datas);
+               console.log("Valores:"+precos);
+
+               mostraGrafico1(datas, precos)
+               //mostraGrafico2(datas, precos)
+               
+             
                 var qtdTotalMovimentada = 0;
                 var precoCustoMedio = 0;
                 $.each(data['estoque'], function(chave, valor) {
                     //  console.log(valor[chave]);
                     qtdTotalMovimentada += valor['quantidade']
-                    console.log( "quantidade",valor['quantidade']) 
+                  
                 })
+                insertDataInTable(data['estoque'], data['movimentacao'])
                 $.each(data['movimentacao'], function(chave, valor) {
                     //  console.log(valor[chave]);
                     precoCustoMedio += (valor['quantidade'] * valor['preco_custo']) / data['movimentacao'].length;
@@ -229,7 +244,7 @@
                 var item = $('.estoque option:selected').text()
                 item = item.split('-')[0]
 
-               console.log(item);
+            
                if( $('.estoque option:selected').val()!=0)
                 $('#produtoBusca').val(item)
                 else{
@@ -242,8 +257,17 @@
             //   e.preventDefault();
         })
         
+        function insertDataInTable(estoque, movimentacao){
+            
+            var linhas ="";
+            $.each(estoque,function(chave,valor){
+                linhas+=  "<tr><td>"+valor['id']+"</td><td>"+valor['created_at']+"</td><td>"+valor['quantidade']+"</td><td>"+movimentacao[chave]['preco_custo']+"</td><td>"+(+movimentacao[chave]['preco_custo']*valor['quantidade']) +"</td></tr>"
+          
+            })
+           $('#tbody').append(linhas);
 
-        function mostraGrafico1() {
+        }
+        function mostraGrafico1(datas, valores) {
             var ctx = document.getElementById('chart1').getContext('2d');
             var chart = new Chart(ctx, {
                 // The type of chart we want to create
@@ -251,12 +275,12 @@
 
                 // The data for our dataset
                 data: {
-                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                    labels: datas,
                     datasets: [{
                         label: 'Custo',
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
-                        data: [0, 10, 5, 2, 20, 30, 45]
+                        data: valores
                     }]
                 },
 
@@ -266,7 +290,7 @@
 
         }
 
-        function mostraGrafico2() {
+        function mostraGrafico2(estoque, valores) {
             var ctx = document.getElementById('chart2').getContext('2d');
             var chart = new Chart(ctx, {
                 // The type of chart we want to create
