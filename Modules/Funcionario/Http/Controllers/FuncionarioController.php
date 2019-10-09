@@ -5,11 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-<<<<<<< HEAD
-use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Curso, TipoDemissao};
-=======
-use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Atestado, Curso};
->>>>>>> 1a3d221f554ceef6e35ba792027e8118b2b0c4a8
+use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Curso, TipoDemissao, AvisoPrevioIndicadorCumprimento};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
@@ -490,8 +486,6 @@ class FuncionarioController extends Controller{
 		}
     }
 
-
-
     public function downloadComprovante($id){
         $documento = Documento::findOrFail($id);
         if($documento->comprovante){
@@ -506,26 +500,12 @@ class FuncionarioController extends Controller{
 
     }
     
-<<<<<<< HEAD
     //parte de atestado
     public function atestado($id){
-=======
-    
-    public function demissao($id){
-        $data = [
-            'funcionario' => Funcionario::findOrFail($id)        
-        ];
-
-        return view('funcionario::funcionario.demissao', compact('data'));
-    }
-//parte de atestado
-    public function CreateAtestado($id){
->>>>>>> 1a3d221f554ceef6e35ba792027e8118b2b0c4a8
         $data = [
             
             'atestado' => '',
             'title' => 'Cadastro de Atestado',
-<<<<<<< HEAD
             'funcionario'   => Funcionario::findOrFail($id),
             
         ];
@@ -535,46 +515,16 @@ class FuncionarioController extends Controller{
 
     public function demissao($id){
         $data = [
-            'funcionario'    => Funcionario::findOrFail($id),
-            'tipo_demissao'  => DB::table('tipo_demissao')->get()
+            'funcionario'       => Funcionario::findOrFail($id),
+            'tipo_demissao'     => DB::table('tipo_demissao')->get(),
+            'tipo_cumprimento'  => DB::table('aviso_previo_indicador_cumprimento')->get()
         ];
-        
-        
-  
         
         return view('funcionario::funcionario.demissao', compact('data'));
-=======
-            'funcionario' => Funcionario::findOrFail($id),
-            'url' => 'funcionario/funcionario/storeAtestado',
-            'method' => 'post'
-        ];
-
-        return view('funcionario::funcionario.atestado',compact('data'));
     }
 
-    public function storeAtestado(Request $request){
-        DB::beginTransaction();
-        try{
-        $atestado = Atestado::create([
-            'cid_atestado' => $request['atestado']['cid_atestado'],
-            'data_inicio' => $request['atestado']['data_inicio'],
-            'quantidade_dias' => $request['atestado']['quantidade_dias'],
-            'data_fim' => $request['atestado']['data_fim'],
-            
-            'funcionario_id' => $request['atestado']['funcionario_id']
-            
-        ]);
-        DB::commit();
-        return redirect('/funcionario/funcionario')->with('success','Atestado cadastrado com sucesso');
-    }catch(Exception $e){
-
-        DB::rollback();
-        return back()->with('error', 'Error >:(');
+    public function storeDemissao(Request $request){
         
-    }
-            
-        
->>>>>>> 1a3d221f554ceef6e35ba792027e8118b2b0c4a8
     }
 
 }
