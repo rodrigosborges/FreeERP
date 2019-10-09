@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Modules\Cliente\Entities\{Cliente, Pedido, Produto};
 use DB;
 use Carbon\Carbon;
+use DateTime;
 
 class PedidoController extends Controller
 {
@@ -181,17 +182,8 @@ class PedidoController extends Controller
                 ->stream();
     }
 
-    public function getData(){
-        $cliente = Cliente::findOrFail(1);
-        $data = new Carbon("2019");
-        $pedidos = $cliente->pedidos()->whereYear( 'data', '=', $data )->get();
-        dd($pedidos);
-    }
+    
 
-    public function dashboard()
-    {
-        return view('cliente::dashboard.index');
-    }
 
 
 }
