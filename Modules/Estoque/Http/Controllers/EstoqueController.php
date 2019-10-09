@@ -367,8 +367,12 @@ class EstoqueController extends Controller
     public function relatorioMovimentacao()
     {
         $categorias = Categoria::all();
-
-        return view('estoque::estoque.relatorios.movimentacao', compact('categorias'));
+        $data = [
+            'dados' => "", 
+            'labels' => "", 
+            'estoque' => Estoque::all()
+        ];
+        return view('estoque::estoque.relatorios.movimentacao', compact('categorias', 'data'));
     }
 
     public function relatorioMovimentacaoBusca(Request $req){
@@ -395,10 +399,25 @@ class EstoqueController extends Controller
                             order by data asc'
                 
             );
+        
         }
+        $labels =[];
+        $dados =[];
 
+        foreach ($query_result as $q){
+            array_push($dados, $q->qtd);
+            array_push($dados, $q->data);
+        }
+        $data = [
+            'labels' => json_encode($labels),
+            'dados' => json_enconde($dados),
+        ];
+     
+    return view('estoque::estoque.relatorios.movimentacao', compact('data'));
+
+        
     }
-
+    
 
 
     public function getSaidaProdutos(Request $request)
