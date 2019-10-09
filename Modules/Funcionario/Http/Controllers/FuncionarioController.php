@@ -538,18 +538,21 @@ class FuncionarioController extends Controller{
             
             if($request->aviso_previo_indenizado == "on"){
                 $avisoPrevioIndenizado = true;
-                
+                $descontarAvisoPrevio = false;
+
             } else {
                 $avisoPrevioIndenizado = false;
-                
+                $descontarAvisoPrevio = true;
             }
             
-       
+            if($descontarAvisoPrevio){
                 $avisoPrevio = AvisoPrevio::create([
                     'aviso_previo_indenizado' => $avisoPrevioIndenizado,
                     'descontar_aviso_previo'  => $descontarAvisoPrevio,
                     'funcionario_id'          => $request['funcionario_id']  
                 ]);
+            }
+               
             
             return $avisoPrevio;
             DB::commit();
