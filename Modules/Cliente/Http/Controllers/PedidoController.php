@@ -181,6 +181,13 @@ class PedidoController extends Controller
                 ->stream();
     }
 
+    public function getData(){
+        $cliente = Cliente::findOrFail(1);
+        $data = new Carbon("2019");
+        $pedidos = $cliente->pedidos()->whereYear( 'data', '=', $data )->get();
+        dd($pedidos);
+    }
+
     public function dashboard()
     {
         return view('cliente::dashboard.index');

@@ -58,6 +58,7 @@ class Cliente extends Model
         $vl_desc_item = 0;
         $total_itens = 0;
         $vl_bruto_total = 0;
+        
         $pedidos = $this->pedidos()->whereBetween( 'data', [$start, $end] )->get();
         $total_pedido_desconto = 0;
 
@@ -71,8 +72,13 @@ class Cliente extends Model
             }
             $vl_bruto_total += $pedido->vl_bruto_pedido();
         }
+
+        $media_desconto_pedido = 0;
+        if(count($pedidos) > 0){
+            $media_desconto_pedido = $total_pedido_desconto / count($pedidos);
+        }
+            
         
-        $media_desconto_pedido = $total_pedido_desconto / count($pedidos);
 
         $media_desconto_item = 0;
         
