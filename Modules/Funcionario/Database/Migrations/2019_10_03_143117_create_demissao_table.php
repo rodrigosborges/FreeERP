@@ -14,7 +14,7 @@ class CreateDemissaoTable extends Migration
     public function up()
     {
         Schema::create('demissao', function (Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
             $table->date('data_demissao');
             $table->date('data_pagamento');
             $table->integer('funcionario_id')->index('fk_demissao_funcionario');

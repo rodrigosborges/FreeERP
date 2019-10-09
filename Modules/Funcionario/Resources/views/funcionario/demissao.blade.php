@@ -28,6 +28,8 @@
                     </select>
                 </div>  
             </div>
+
+            <input type="hidden" name="funcionario_id" value="{{$data['funcionario']->id}}">
         </section>
 
         <section>

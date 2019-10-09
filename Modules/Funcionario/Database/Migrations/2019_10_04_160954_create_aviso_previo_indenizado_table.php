@@ -14,7 +14,7 @@ class CreateAvisoPrevioIndenizadoTable extends Migration
     public function up()
     {
         Schema::create('aviso_previo_indenizado', function (Blueprint $table) {
-            $table->integer('id', true);
+            $table->increments('id', true);
             $table->date('data_inicio_aviso');
             $table->integer('dias_aviso_indenizado');
             $table->string('tipo_reducao_aviso');

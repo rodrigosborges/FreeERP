@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Curso, TipoDemissao, AvisoPrevioIndicadorCumprimento};
+use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Curso, AvisoPrevio, TipoDemissao, AvisoPrevioIndicadorCumprimento, Demissao};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
@@ -524,7 +524,39 @@ class FuncionarioController extends Controller{
     }
 
     public function storeDemissao(Request $request){
-        
+
+        DB::beginTransaction();
+
+        try {
+
+            $demissao = Demissao::Create([
+                'data_demissao'    => $request->data_demissao,
+                'data_pagamento'   => $request->data_pagamento,
+                'funcionario_id'   => $request['funcionario_id'],
+                'tipo_demissao_id' => $request['tipo_demissao']
+            ]);
+            
+            if($request->aviso_previo_indenizado == "on"){
+                $avisoPrevioIndenizado = true;
+                
+            } else {
+                $avisoPrevioIndenizado = false;
+                
+            }
+            
+       
+                $avisoPrevio = AvisoPrevio::create([
+                    'aviso_previo_indenizado' => $avisoPrevioIndenizado,
+                    'descontar_aviso_previo'  => $descontarAvisoPrevio,
+                    'funcionario_id'          => $request['funcionario_id']  
+                ]);
+            
+            return $avisoPrevio;
+            DB::commit();
+        } catch(Exception $e){
+            DB::rollback();
+            return $e;
+        }
     }
 
 }

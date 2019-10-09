@@ -14,7 +14,7 @@ class CreateAvisoPrevioTable extends Migration
     public function up()
     {
         Schema::create('aviso_previo', function (Blueprint $table) {
-            $table->integer('id', true);
+            $table->increments('id', true);
             $table->boolean('aviso_previo_indenizado');
             $table->boolean('descontar_aviso_previo');
             $table->integer('funcionario_id')->index('fk_aviso_previo_funcionario'); 
