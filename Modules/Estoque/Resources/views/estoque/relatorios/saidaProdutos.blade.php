@@ -201,7 +201,6 @@
 
                 }
             }).done(function(data) {
-               
                 data = $.parseJSON(data);
                 console.log ("data",data);
                 var qtdTotalMovimentada = 0;
@@ -209,14 +208,12 @@
                 $.each(data['estoque'], function(chave, valor) {
                     //  console.log(valor[chave]);
                     qtdTotalMovimentada += valor['quantidade']
-                    
+                    console.log( "quantidade",valor['quantidade']) 
                 })
                 $.each(data['movimentacao'], function(chave, valor) {
                     //  console.log(valor[chave]);
                     precoCustoMedio += (valor['quantidade'] * valor['preco_custo']) / data['movimentacao'].length;
-                    
                 })
-                
               //  console.log(qtdTotalMovimentada)
                 if (dataInicial != "" && dataInicial != null) {
                     $('#periodoInicialBusca').val(dataInicial);
@@ -229,10 +226,19 @@
                 }
                 $('#qtd_movimentada').val(qtdTotalMovimentada)
                 $('#precoCustoBusca').val(precoCustoMedio)
+                var item = $('.estoque option:selected').text()
+                item = item.split('-')[0]
+
+               console.log(item);
+               if( $('.estoque option:selected').val()!=0)
+                $('#produtoBusca').val(item)
+                else{
+                    $('#produtoBusca').val('Todos itens ');
+                }
             }).fail(function() {
                 console.log("fail")
             })
-            $('.chart_custo').show('slow')
+           
             //   e.preventDefault();
         })
         

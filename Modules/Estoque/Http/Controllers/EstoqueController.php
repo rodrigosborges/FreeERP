@@ -216,24 +216,31 @@ class EstoqueController extends Controller
      */
     public function destroy($id)
     {
+        
         $estoque = Estoque::findOrFail($id);
-
+        $teste = MovimentacaoEstoque::where('observacao','Item Excluido')->where('estoque_id', $id)->get();
+        $tamanho =count($teste);
+        if($tamanho<1){
         MovimentacaoEstoque::create(
             [
                 'estoque_id' => $estoque->id,
                 'quantidade' => $estoque->quantidade,
-                'preco_custo' => $estoque->preco_custo,
+                'preco_custo' => $estoque->movimentacaoEstoque->first()->preco_custo,
                 'observacao' => "Item Excluido",
             ]
         );
+    }
         $estoque->delete();
         return back()->with('success', 'Categoria Removida com sucesso');
         //
     }
     public function restore($id)
     {
+        $teste = MovimentacaoEstoque::where('observacao','Item Excluido')->where('estoque_id', $id)->delete();
+      
         $estoque = Estoque::onlyTrashed()->findOrFail($id);
         $estoque->restore();
+       
         return redirect('/estoque')->with('success', 'Item restaurado com sucesso!');
     }
     public function inativos()
@@ -413,7 +420,7 @@ class EstoqueController extends Controller
         ];
 
         $movimentacao = ($dataForm['id'] != 0) ? DB::table('movimentacao_estoque')->where('estoque_id', $dataForm['id'])->where('observacao', '=', 'Item Excluido')->get() : DB::table('movimentacao_estoque')->where('observacao', '=', 'Item Excluido')->get();
-        $data['estoque'] = DB::table('estoque')->where(function ($query) use ($dataForm) {
+        $data['estoque'] = DB::table('estoque')->where('deleted_at','<>',NULL)->where(function ($query) use ($dataForm) {
             if ($dataForm['id'] != 0) {
                
                 $query->where('id', $dataForm['id']);
