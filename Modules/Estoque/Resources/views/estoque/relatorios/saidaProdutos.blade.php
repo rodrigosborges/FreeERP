@@ -90,15 +90,22 @@ $(document).ready(function(){
 
           }
       }).done(function(data){
+          var quantidade = $.parseJSON(data)
+          $.each(quantidade,function(chave,valor){
+              console.log(valor);
+          })
+          var id = $.parseJSON(data)['id']
        mostraGrafico(data)
       }).fail(function(){
         console.log("fail")
+      }).always(function(){
+          //mensagem
       })
       $('.chart_custo').show('slow')
    //   e.preventDefault();
   })
 })
 function mostraGrafico(data){
-    
+
 }
 </script>
