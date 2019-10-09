@@ -13,6 +13,8 @@ use Modules\Estoque\Entities\Produto;
 
 use Modules\Estoque\Entities\TipoUnidade;
 
+use Barryvdh\DomPDF\Facade as PDF;
+
 class EstoqueController extends Controller
 {
     public $dadosTemplate;
@@ -368,8 +370,12 @@ class EstoqueController extends Controller
     public function relatorioMovimentacao()
     {
         $categorias = Categoria::all();
-
-        return view('estoque::estoque.relatorios.movimentacao', compact('categorias'));
+        $data = [
+            'dados' => "", 
+            'labels' => "", 
+            'estoque' => Estoque::all()
+        ];
+        return view('estoque::estoque.relatorios.movimentacao', compact('categorias', 'data'));
     }
 
     public function relatorioMovimentacaoBusca(Request $req)
@@ -397,9 +403,25 @@ class EstoqueController extends Controller
                             order by data asc'
 
             );
+        
         }
-    }
+        $labels =[];
+        $dados =[];
 
+        foreach ($query_result as $q){
+            array_push($dados, $q->qtd);
+            array_push($dados, $q->data);
+        }
+        $data = [
+            'labels' => json_encode($labels),
+            'dados' => json_enconde($dados),
+        ];
+     
+    return view('estoque::estoque.relatorios.movimentacao', compact('data'));
+
+        
+    }
+    
 
 
     public function getSaidaProdutos(Request $request)
@@ -430,5 +452,13 @@ class EstoqueController extends Controller
         })->get();
         $data['movimentacao'] = $movimentacao;
         return json_encode($data);
+    }
+
+    public function pdf(){
+        $data = [
+            'titulo'=> 'PDF'
+        ];
+        $pdf = PDF::loadView('estoque::estoque.relatorios.pdf', compact('data'));
+        return $pdf->stream();
     }
 }

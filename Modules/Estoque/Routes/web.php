@@ -12,7 +12,7 @@
 */
 
 Route::prefix('estoque')->group(function () {
-
+    Route::get('/pdf', 'EstoqueController@pdf');
     route::put('/{id}/restore','EstoqueController@restore');
     route::get('/inativos', 'EstoqueController@inativos');
     route::get('/notificacoes', 'EstoqueController@notificacoes');
@@ -73,3 +73,4 @@ Route::resource('/estoque', 'EstoqueController');
 Route::post('verificaNomeCategoria', 'CategoriaController@verificaNome');
 Route::post('buscaUnidades', 'EstoqueController@buscaUnidades');
 Route::post('estoque/relatorio/saida', 'EstoqueController@getSaidaProdutos');
+
