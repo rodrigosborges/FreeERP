@@ -66,7 +66,7 @@ class ForgotPasswordController extends Controller
     //     $this->sendEmail($user, $reminder->code);
 
     //     return $user;
-
+        return "<a href='http://localhost:8000/recuperarSenha?token=".$token."'>Resetar senha</a>";
         return redirect()->back()->with(['success'=>'Reset code enviado para o seu email. ']);
     } 
 

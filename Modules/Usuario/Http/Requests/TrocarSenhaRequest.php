@@ -4,6 +4,8 @@ namespace Modules\Usuario\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Modules\Usuario\Rules\VerificarSenha;
+
 class TrocarSenhaRequest extends FormRequest
 {
     /**
@@ -14,7 +16,7 @@ class TrocarSenhaRequest extends FormRequest
     public function rules()
     {
         return [
-            'password' => ['required', 'min:8', 'max:16', 'same:repeat_password'],
+            'password' => ['required', 'max:16', 'same:repeat_password', new VerificarSenha],
         ];
     }
 
