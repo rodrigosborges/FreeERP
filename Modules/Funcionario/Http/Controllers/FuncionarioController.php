@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco,Atestado, Curso, AvisoPrevio, TipoDemissao, AvisoPrevioIndicadorCumprimento, Demissao};
+use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco,Atestado, Curso, AvisoPrevio, TipoDemissao, AvisoPrevioIndicadorCumprimento, Demissao, AvisoPrevioIndenizado};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
@@ -453,10 +453,6 @@ class FuncionarioController extends Controller{
         return view('funcionario::funcionario.ficha', compact('data'));
     }
 
-
-
-
-
     public function getCidades($uf) {
 
         $estado = Estado::where('uf', $uf)->first();
@@ -552,17 +548,26 @@ class FuncionarioController extends Controller{
                 $descontarAvisoPrevio = true;
             }
             
-            if($descontarAvisoPrevio){
-                $avisoPrevio = AvisoPrevio::create([
-                    'aviso_previo_indenizado' => $avisoPrevioIndenizado,
-                    'descontar_aviso_previo'  => $descontarAvisoPrevio,
-                    'funcionario_id'          => $request['funcionario_id']  
-                ]);
+          
+            $avisoPrevio = AvisoPrevio::create([
+                'aviso_previo_indenizado' => $avisoPrevioIndenizado,
+                'descontar_aviso_previo'  => $descontarAvisoPrevio,
+                'funcionario_id'          => $request['funcionario_id']  
+            ]);
+
+            if($avisoPrevioIndenizado){
+               $avisoPrevioIndenizadoTabela = AvisoPrevioIndenizado::create([
+                    'data_inicio_aviso'                     => $request->data_inicio_aviso,
+                    'dias_aviso_indenizado'                 => $request->dias_aviso_indenizado,
+                    'tipo_reducao_aviso'                    => $request->tipo_reducao_aviso,
+                    'aviso_previo_id'                       => $avisoPrevio->id,
+                    'aviso_previo_indicador_cumprimento_id' => $request->aviso_previo_indicador_cumprimento_id
+               ]);
             }
-               
             
-            return $avisoPrevio;
+               
             DB::commit();
+            return redirect('/funcionario/funcionario')->with('success','Demissão cadastrada com sucesso');
         } catch(Exception $e){
             DB::rollback();
             return $e;

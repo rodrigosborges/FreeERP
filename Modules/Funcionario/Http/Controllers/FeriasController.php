@@ -87,7 +87,6 @@ class FeriasController extends Controller
                 'dias_ferias'           => $request->dias_ferias,
                 'data_pagamento'        => date('Y-m-d', strtotime($request['data_pagamento'])),
                 'data_aviso'            => date('Y-m-d', strtotime($request['data_aviso'])),
-                'situacao_ferias'       => $request['situacao_ferias'],
                 'pagamento_parcela13'   => $pagamento13,
                 'observacao'            => $request['observacao'],
                 'funcionario_id'        => $request['funcionario_id'],

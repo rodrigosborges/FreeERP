@@ -58,7 +58,7 @@
 
                     <div class="form-group col-4">
                         <label for="tipo_reducao">Tipo de reducao do aviso</label>
-                        <select name="tipo_reducao" class="form-control" id="tipo_reducao" disabled>
+                        <select name="tipo_reducao_aviso" class="form-control" id="tipo_reducao_aviso" disabled>
                             <option>Escolha uma opção</option>
                             <option value="Dias">Dias</option>
                             <option value="Jornada">Jornada</option>
@@ -69,7 +69,7 @@
                 <div class="row">
                     <div class="form-group col-6">
                             <label for="tipo_cumprimento">Indicador de cumprimento de aviso prévio</label>
-                            <select name="tipo_cumprimento" class="form-control" id="tipo_cumprimento" disabled>
+                            <select name="aviso_previo_indicador_cumprimento_id" class="form-control" id="aviso_previo_indicador_cumprimento_id" disabled>
                             <option>Escolha uma opção</option>
                                 @foreach($data['tipo_cumprimento'] as $tipo_cumprimento)
                                     <option value="{{$tipo_cumprimento->id}}">{{$tipo_cumprimento->tipo_cumprimento}}</option>
@@ -91,8 +91,8 @@
                     //Pega todos os inputs com disabled default e tornam disabled novamente, caso a outra opção do checkbox esteja selecionada.
                     document.getElementById('data_inicio_aviso').setAttribute('disabled', true);
                     document.getElementById('dias_aviso_indenizado').setAttribute('disabled', true);
-                    document.getElementById('tipo_reducao').setAttribute('disabled', true);
-                    document.getElementById('tipo_cumprimento').setAttribute('disabled', true);
+                    document.getElementById('tipo_reducao_aviso').setAttribute('disabled', true);
+                    document.getElementById('aviso_previo_indicador_cumprimento_id').setAttribute('disabled', true);
                     
                     if(!(check2.checked))
                         check2.checked = true;
@@ -108,8 +108,8 @@
                     //Pega todos os inputs com disabled e os "destrancam"
                     document.getElementById('data_inicio_aviso').removeAttribute('disabled', false);
                     document.getElementById('dias_aviso_indenizado').removeAttribute('disabled', false);
-                    document.getElementById('tipo_reducao').removeAttribute('disabled', false);
-                    document.getElementById('tipo_cumprimento').removeAttribute('disabled', false);
+                    document.getElementById('tipo_reducao_aviso').removeAttribute('disabled', false);
+                    document.getElementById('aviso_previo_indicador_cumprimento_id').removeAttribute('disabled', false);
 
                     if(!(check1.checked))
                         check1.checked = true;

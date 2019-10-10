@@ -56,29 +56,29 @@
 
             <div class="form-group col-4">
                 <label for="data_inicio">Data Início:</label>
-                <input type="date" name="data_inicio" id="data_inicio" class="form-control" >
+                <input type="date" name="data_inicio" id="data_inicio" class="form-control" value="{{old('data_inicio')}}">
             </div>
             
             <div class="form-group col-4">
                 <label for="data_fim">Data Fim:</label>
-                <input type="date" name="data_fim" id="data_fim" class="form-control">
+                <input type="date" name="data_fim" id="data_fim" class="form-control" value="{{old('data_fim')}}">
             </div>
 
             <div class="form-group col-4">
                 <label for="dias_ferias">Dias de Férias:</label>
-                <input type="text" id="dias_ferias"  name="dias_ferias" class="form-control" placeholder="Ex: 2">
+                <input type="text" id="dias_ferias"  name="dias_ferias" class="form-control" placeholder="Ex: 2" value="{{old('dias_ferias')}}">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-3">
                 <label for="data_pagamento">Data Pagamento:</label>
-                <input type="date" name="data_pagamento" id="data_pagamento" class="form-control">
+                <input type="date" name="data_pagamento" id="data_pagamento" class="form-control" value="{{old('data_pagamento')}}">
             </div>
             
             <div class="form-group col-3">
                 <label for="data_aviso">Data de Início do Aviso:</label>
-                <input type="date" name="data_aviso" id="data_aviso" class="form-control">
+                <input type="date" name="data_aviso" id="data_aviso" class="form-control" value="{{old('data_aviso')}}">
             </div>
 
             <div class="form-group col-3">
@@ -92,14 +92,14 @@
         <div class="row">
             <div class="form-check col-12">
                 <label for="pagamento_parcela13">Pagamento 1ª Parcela 13º:&nbsp</label>
-                <input type="checkbox" name="pagamento_parcela13" id="pagamento_parcela13" class="">
+                <input type="checkbox" name="pagamento_parcela13" id="pagamento_parcela13" value="{{old('pagamento_parcela13')}}">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-12">
                 <label for="observacao">Observação:</label>
-                <textarea rows="5" name="observacao" id="observacao" class="form-control"></textarea>
+                <textarea rows="5" name="observacao" id="observacao" class="form-control">{{old('observacao')}}</textarea>
             </div>
         <div>      
    
