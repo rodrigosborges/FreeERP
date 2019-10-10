@@ -90,20 +90,42 @@
             </div>
         </div>
     <hr>
-    
+
     <h4 class=" text-center mb-4">Dependentes</h4>
-    @foreach($data["dependetes_nome"] as $dependente_nome)
+    
+        @foreach($data["funcionario"]->dependente()->get() as  $dependente)  
         <div class="row"> 
-            <div class="col-3"><span class="font-weight-bold">Nome: </span>{{$dependente_nome->nome}}</div>
-        @foreach($data["dependentes"] as $dependente)    
+            
+            <div class="col-3"><span class="font-weight-bold">Nome: </span>{{$dependente->nome}}</div>
             <div class="col-3"><span class="font-weight-bold">Mora Junto: </span>{{ $dependente->mora_junto ? 'Sim' : 'Não'}}</div>        
             <div class="col-3"><span class="font-weight-bold">Certidão de Matricula: </span>{{ $dependente->certidao_matricula ? 'Sim' : 'Não'}}</div>
             <div class="col-3"><span class="font-weight-bold">Certidão Vacina: </span>{{ $dependente->mora_junto ? 'Sim' : 'Não'}}</div>                
-        
-        @endforeach
         </div>
-    @endforeach
+        @endforeach
+        
+ 
     <hr>
+
+    
+    <h4 class=" text-center mb-4">Curso</h4>
+    
+        @foreach($data["funcionario"]->curso()->get() as  $curso)  
+        <div class="card col-12">
+           <div class="card-header">
+                <span class="font-weight-bold">{{$curso->nome}}</span>
+            </div>
+            <div class="card-body">
+                <span class="font-weight-bold col-2">Area: </span>{{$curso->area_atuacao}}
+                <span class="font-weight-bold col-2">Duração: </span>{{$curso->duracao_horas_curso}}
+                <span class="font-weight-bold col-2">Realizado: </span>{{$curso->data_realizacao}}
+                <span class="font-weight-bold col-2">Valido: </span>{{$curso->validade_curso}}
+            </div>
+        </div>
+        @endforeach
+        
+ 
+    <hr>
+    
     
 </div>
     @endsection
