@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Cliente\Entities\{Cliente, Pedido, Produto};
-<<<<<<< HEAD
-=======
 use DateTime;
->>>>>>> ef8b5fd54ce9414f95600ed3edc36559d3f50d71
 
 class DashboardController extends Controller
 {

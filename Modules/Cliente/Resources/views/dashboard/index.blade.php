@@ -49,7 +49,9 @@
                 <div class="card h-100">
                 <div class="card-body ">
                     <h5 class="card-title">Média de Gasto por Compra</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <div id='mediagasto'>
+                        
+                    </div>
                 </div>
                 </div>
             </div>
@@ -57,7 +59,9 @@
                 <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">Total de Clientes</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <div id='totalclientes'>
+                        
+                    </div>
                     </div>
                 </div>
             </div>
@@ -65,7 +69,9 @@
                 <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">Total de Vendas</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <div id='totalvendas'>
+                        
+                    </div>
                 </div>
                 </div>
             </div>
@@ -104,8 +110,18 @@
 
         $(document).ready(function(){
 
-            //[{"month":"Jan", "value": .07}];
 
+            //[{"month":"Jan", "value": .07}];
+            
+            $.get(main_url+"/cliente/dashboard/totalclientes/2019", function(dataset){
+                $('#totalclientes').append(dataset);
+            });
+            $.get(main_url+"/cliente/dashboard/totalvendas/2019", function(dataset){
+                $('#totalvendas').append(dataset);
+            });
+            $.get(main_url+"/cliente/dashboard/mediagasto/2019", function(dataset){
+                $('#mediagasto').append(dataset);
+            });
             $.get(main_url+"cliente/dashboard/totalvendasmes/2019", function(dataset){
                 console.log(dataset);
             });
