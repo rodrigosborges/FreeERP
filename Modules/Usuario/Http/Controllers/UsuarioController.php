@@ -6,7 +6,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Usuario\Entities\{Usuario,Papel};
+use Modules\Usuario\Entities\{Usuario,Papel,Modulo};
 use Modules\Usuario\Http\Requests\{UsuarioStoreRequest,UsuarioUpdateRequest,TrocarSenhaRequest};
 use Illuminate\Support\Facades\Hash;
 use DB;
@@ -43,7 +43,8 @@ class UsuarioController extends Controller
     {
         if (Gate::allows('administrador',Auth::user())|| Gate::allows('operador',Auth::user())) {
             $papeis = Papel::all();
-                return view('usuario::usuario.form',compact('papeis'));
+            $modulos = Modulo::all();
+            return view('usuario::usuario.form',compact('papeis','modulos'));
         }         
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     

@@ -67,17 +67,6 @@
                         <input required id='email' value="{{old('email', isset($usuario) ? $usuario->email : '')}}" class="form-control" type="email" name="email">
                         {{$errors->first('email')}}
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="papel">Papel</label>
-                        <select class="form-control" name='papel'>
-                            <option disabled selected>Escolha um Papel...</option>
-                            @foreach($papeis as $papel)
-                            <option value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
-                            @endforeach
-                        </select>
-                        {{$errors->first('papel')}}
-                    </div>
 
                     @if(!isset($usuario))
                     <div class="form-group">
@@ -88,6 +77,35 @@
                     <div class="form-group">
                         <label>Confirmar Senha</label>
                         <input required class="form-control" type="password" name="repeat_password">
+                    </div>
+
+                           
+                    <div class="form-group input-modulo-papel">
+                    <div class="form-row">
+                            <div class="col-md-5 mb-1">
+                                <label for='modulo'>Modulo</label>
+                                <select class="form-control" name='papel'>
+                                    <option disabled selected>Escolha um Modulo...</option>
+                                    @foreach($modulos as $modulo)
+                                    <option value="{{ $modulo->id }}" > {{ $modulo->nome }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+                        <div class="col-md-5 mb-1">
+                                <label for="papel">Papel</label>
+                                <select class="form-control" name='papel'>
+                                    <option disabled selected>Escolha um Papel...</option>
+                                    @foreach($papeis as $papel)
+                                    <option value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
+                                    @endforeach
+                                </select>
+                                {{$errors->first('papel')}}
+                            </div>
+                            <div class="col-md-1" style="margin-top:32px;">
+                                <a  class='btn bg-success adicionar text-white'>+</a>
+                                </div>
+                        </div>
                     </div>
                     @endif
                     <div class="d-flex justify-content-between mb-3">
@@ -134,6 +152,27 @@ function readURL(input) {
     });
 
 </script>
+
+<script>
+        $(document).ready(function(){
+            $(".adicionar").click(function(){
+                //div que irá ser clonada
+                var div = $(".input-modulo-papel").first().clone(true)
+                div.append("<div class='col-md-1'><a  class='btn bg-danger remover text-white'>-</a></div>")
+            
+                div.insertAfter($(".form-group").last())
+
+                $(".remover").on("click", function(){
+                    if($(".input-group").length > 1)
+                            $(this).parent().remove();
+                })
+            })
+            $(".remover").on("click", function(){
+                if($(".input-group").length > 1)
+                    $(this).parent().remove();
+            })
+        })
+    </script>
 
 <script src="{{Module::asset('usuario:js/usuario/validacao-form.js')}}"></script>
 @endsection

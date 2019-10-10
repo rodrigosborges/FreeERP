@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 
 use Modules\Usuario\Http\Requests\ModuloRequest;
 
-use Modules\Usuario\Entities\{Modulo};
+use Modules\Usuario\Entities\{Modulo, Papel};
 use DB;
 
 class ModuloController extends Controller
@@ -47,7 +47,9 @@ class ModuloController extends Controller
      */
     public function create()
     {
-        return view('usuario::modulo.form');
+        $papeis = Papel::all();
+
+        return view('usuario::modulo.form', compact('papeis'));
     }
 
     /**
