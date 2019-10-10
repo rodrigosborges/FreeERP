@@ -456,6 +456,15 @@ class EstoqueController extends Controller
                 }
             }
         })->get();
+        $ids = array();
+        foreach($data['estoque'] as $key=>$estoque){
+        $ids[$key] = $data['estoque'][$key]->id;
+        }
+        $produtos = DB::table('produto')
+        ->join('estoque_has_produto', function ($join) use ($ids) {
+            $join->whereIn('estoque_id', $ids)->whereraw('produto.id = estoque_has_produto.produto_id');
+        })->get();
+       $data['produtos'] = $produtos;
         $data['movimentacao'] = $movimentacao;
         return json_encode($data);
     }
