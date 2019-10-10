@@ -38,3 +38,5 @@ Route::put('/calendario/agendas/eventos/{evento}', 'EventoController@atualizar')
 Route::post('/calendario/agendas/eventos', 'EventoController@salvar')->name('eventos.salvar');
 Route::delete('/calendario/agendas/eventos/{evento}', 'EventoController@deletar')->name('eventos.deletar');
 
+Route::get('/calendario/notificar', 'EventoController@notificar')->name('eventos.notificar');
+

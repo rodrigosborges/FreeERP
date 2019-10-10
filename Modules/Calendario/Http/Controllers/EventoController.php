@@ -6,13 +6,13 @@ namespace Modules\Calendario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Notification;
 use Modules\Calendario\Entities\Agenda;
-use Modules\Calendario\Entities\Compartilhamento;
 use Modules\Calendario\Entities\Convite;
 use Modules\Calendario\Entities\Evento;
 use Modules\Calendario\Entities\Funcionario;
 use Modules\Calendario\Entities\Notificacao;
+use Modules\Calendario\Notifications\EventoNotification;
 
 class EventoController extends Controller
 {
@@ -153,6 +153,11 @@ class EventoController extends Controller
     public function aceitar_convite(Convite $convite){
         $convite->status = true;
         $convite->save();
+    }
+
+    public function notificar(){
+        $funcionario = Funcionario::find(1);
+        $funcionario->notify(new EventoNotification());
     }
 
     private function formatar_data($data)

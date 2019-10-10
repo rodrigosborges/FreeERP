@@ -26,10 +26,14 @@ $menu = [
             </ul>
         </div>
     @endif
+    <audio id="notificacao">
+        <source src="{{Module::asset(config('calendario.id').':audio/notificacao.ogg')}}" type="audio/ogg">
+    </audio>
 @endsection
 
 @section('css')
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':css/app.css')}}">
     <style type="text/css">
         h2 {
@@ -63,6 +67,21 @@ $menu = [
     <script src="{{Module::asset(config('calendario.id').':js/app.js')}}"></script>
     <script type="text/javascript">
         $(function () {
+            var notificacao = document.getElementsByTagName("audio")[0];
+
+            $.when(
+            bootbox.alert({
+                title: 'Notificação de evento',
+                message: 'Seu evento <strong>XXX</strong> inicia em XXX',
+                className: 'animated heartBeat'
+            })
+                .removeClass('fade')
+                .find('.modal-dialog')
+                .addClass('modal-dialog-centered')
+            ).done(function () {
+                notificacao.play();
+            });
+
             $.when(
                 $('#sidebar a.nav-link span').each(function () {
                     switch ($(this).text().trim()) {

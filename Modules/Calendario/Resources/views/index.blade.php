@@ -151,7 +151,7 @@
                         $(info.el).find('.fc-title').append('<i style="font-size: inherit; line-height: inherit" class="material-icons float-right">info</i>');
                     }
 
-                    $(info.el).find('.fc-title').append('<a href="' + duplicar +'" class="float-right text-white"><i style="font-size: inherit; line-height: inherit" class="material-icons">file_copy</i></a>');
+                    $(info.el).find('.fc-title').append('<a href="' + duplicar + '" class="float-right text-white"><i style="font-size: inherit; line-height: inherit" class="material-icons">file_copy</i></a>');
                 },
                 dateClick: function (info) {
                     if (Object.keys(agendas).length <= 2) {

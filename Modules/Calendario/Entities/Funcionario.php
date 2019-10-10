@@ -3,10 +3,12 @@
 namespace Modules\Calendario\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Funcionario extends Model
 {
     protected $table = 'funcionario';
+    use Notifiable;
 
     public function setor(){
         return $this->belongsTo('Modules\Calendario\Entities\Setor');
