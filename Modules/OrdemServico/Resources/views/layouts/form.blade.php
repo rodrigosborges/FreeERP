@@ -1,14 +1,14 @@
 @extends('ordemservico::layouts.informacoes')
 @section('content')
 
-<div class="card " style="margin:auto; max-width: 40rem;">
-    <div class="card-header text-white bg-dark">{{$data['title']}}</div>
+<div class="card " style="margin:auto; max-width: 80rem;">
+
+<div class="card-header bg-info text-white"> {{$data['title']}} </div>
     <div class="card-body">
   
     {{ Form::open(array('url' => $data['url'] , 'method'=>'post')) }}
         {{Form::token()}}
-
-
+        
         @yield('formulario')
 
         <div class="form-group">
@@ -18,7 +18,5 @@
         {{ Form::close() }}
     </div>
 </div>
-
-    @yield('modal')
 
 @endsection

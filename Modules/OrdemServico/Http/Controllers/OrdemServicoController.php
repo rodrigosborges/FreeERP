@@ -41,12 +41,13 @@ class OrdemServicoController extends Controller
     public function create()
     {
         $data = [
+            'uf' => OrdemServico::pluck('solicitante_id','id'),
             'url' => url("ordemservico/os"),
             'solicitante' => Solicitante::all(),
-            'title' => 'Cadastro de OS',
+            'title' => 'Abrir de OS',
             'button' => 'Salvar'
         ];
-        return view('ordemservico::ordemservico.form', compact('data'));
+        return view('ordemservico::ordemservico.formulario.form-completo', compact('data'));
     }
     public function store(Request $request)
     {

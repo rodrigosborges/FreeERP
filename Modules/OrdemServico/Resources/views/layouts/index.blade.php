@@ -12,6 +12,7 @@
                                 @foreach($data['thead'] as $coluna)
                                 <th scope='col' class='text-info bg-light'>{{$coluna}}</th>
                                 @endforeach
+                                <th scope='col' class="bg-light "><a href="{{route($data['route'].'create')}}" class="text-white btn btn-primary">Abrir OS</a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -21,9 +22,8 @@
                                 @foreach($data['row_db'] as $atributo)
                                 <td>{{$model->$atributo}}</td>
                                 @endforeach
-
-
-                                @endforeach
+                                <td></td>
+                            @endforeach
                         </tbody>
                         </tfoot>
                     </table>
