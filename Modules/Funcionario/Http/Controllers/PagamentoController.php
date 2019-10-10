@@ -156,7 +156,7 @@ class PagamentoController extends Controller
     {
 
         $data = [
-            'title' => 'Holerite',
+            'title' => 'Folha de Pagamento',
             'pagamento' => Pagamento::findOrFail($id)->get()->last(),
 
         ];
@@ -278,7 +278,7 @@ class PagamentoController extends Controller
         } else if ($salario > 1751.81) {
             $inss = ($salario * 9) / 100;
         } else {
-            $inss = ($salario * 12) / 100;
+            $inss = ($salario * 11) / 100;
         }
         return $inss;
     }

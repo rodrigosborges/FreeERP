@@ -5,9 +5,9 @@
 @section('body')
 <table class="table">
   <thead>
-    <tr>
+    <tr class="text-center">
       <th scope="col">Nome</th>
-      <th scope="col">Férias</th>
+      <th scope="col ">Férias</th>
     </tr>
   </thead>
   <tbody>
@@ -25,7 +25,7 @@
         <?php
           }}else{
         ?>
-          <a disabled class="btn btn-secondary ml-3 ">Editar</a>
+          <a disabled class="btn btn-secondary ml-3 text-white ">Editar</a>
         <?php
           }
         ?>

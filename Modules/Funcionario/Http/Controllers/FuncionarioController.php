@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco, Curso, AvisoPrevio, TipoDemissao, AvisoPrevioIndicadorCumprimento, Demissao};
+use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco,Atestado, Curso, AvisoPrevio, TipoDemissao, AvisoPrevioIndicadorCumprimento, Demissao};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
@@ -69,6 +69,20 @@ class FuncionarioController extends Controller{
 
     public function store(CreateFuncionario $request){
 
+        if($request->hasFile('foto') && $request->file('foto')->isValid() && ($request->foto->extension() == 'jpg' || $request->foto->extension() == 'png')){
+            $nome = md5(date('Y-m-d H:i'));
+            $extensao = $request->foto->extension();
+            $nameFile = "{$nome}.{$extensao}";
+            $foto = $nameFile;
+            $upload = $request->foto->storeAs('fotos', $nameFile);
+            if(!$upload){
+                return redirect()->back()->with('error', 'Falha no upload do arquivo');
+            }
+        }
+        else{
+            return redirect()->back()->with('error', 'Falha, formato de arquivo inválido');
+        }
+
         DB::beginTransaction();
 		try{
 
@@ -85,8 +99,8 @@ class FuncionarioController extends Controller{
                 'estado_civil_id' =>$request->funcionario['estado_civil_id'],
                 'email_id' => $email->id,
                 'endereco_id' => $endereco->id, 
-                'cargo_id' => $request->cargo['cargo_id']
-                
+                'cargo_id' => $request->cargo['cargo_id'],
+                'foto' => $foto,
             ]);
             
             $funcionario->cargos()->attach(
@@ -504,18 +518,7 @@ class FuncionarioController extends Controller{
 
     }
     
-    //parte de atestado
-    public function atestado($id){
-        $data = [
-            
-            'atestado' => '',
-            'title' => 'Cadastro de Atestado',
-            'funcionario'   => Funcionario::findOrFail($id),
-            
-        ];
-       
-        return view('funcionario::funcionario.atestado',compact('data'));
-    }
+
 
     public function demissao($id){
         $data = [
@@ -565,5 +568,44 @@ class FuncionarioController extends Controller{
             return $e;
         }
     }
+
+        //parte de atestado
+        public function CreateAtestado($id){
+            
+            $data = [   
+                'atestado' => '',
+                'title' => 'Cadastro de Atestado',
+                'funcionario'   => Funcionario::findOrFail($id),
+                'url' => 'funcionario/funcionario/storeAtestado',
+                'method' => 'post'
+                
+            ];
+           
+            return view('funcionario::funcionario.atestado',compact('data'));
+        }
+
+    public function storeAtestado(Request $request){
+        DB::beginTransaction();
+        try{
+        $atestado = Atestado::create([
+            'cid_atestado' => $request['atestado']['cid_atestado'],
+            'data_inicio' => $request['atestado']['data_inicio'],
+            'quantidade_dias' => $request['atestado']['quantidade_dias'],
+            'data_fim' => $request['atestado']['data_fim'],
+            
+            'funcionario_id' => $request['atestado']['funcionario_id']
+            
+        ]);
+        DB::commit();
+        return redirect('/funcionario/funcionario')->with('success','Atestado cadastrado com sucesso');
+    }catch(Exception $e){
+        DB::rollback();
+        return back()->with('error', 'Error >:(');
+        
+    }
+            
+        
+    }
+
 
 }

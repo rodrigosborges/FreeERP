@@ -22,7 +22,7 @@
             </div>
             <!--Select Funcionario -->
 
-            <select class="custom-select funcionario" id="funcionario" $data-salario="{{$data['cargo']->salario}}" name="funcionario">
+            <select class="custom-select funcionario" id="funcionario" data-salario="{{$data['cargo']->salario}}" name="funcionario">
                 @foreach($data['funcionarios'] as $funcionario)
                 <option value="{{ $funcionario->id }}" {{($data['pagamento']) && $data['pagamento']->funcionario->id == $funcionario->id?'selected':''}}>{{ $funcionario->nome }}</option>
                 @endforeach
@@ -105,6 +105,7 @@
                     </span>
                 </div>
                 <select class="custom-select tipo-hora-extra" id="tipo-hora-extra" name="tipo_hora_extra">
+                    <option value="-1">Selecione</option>
                     <option selected value="1">100%</option>
                     <option value="2">50%</option>
                 </select>
@@ -121,7 +122,7 @@
     <div class="row">
         <!-- Horas Extras-->
         <div class="form-group col-md-6">
-            <label for="salario" class="control-label"> Horas Extras</label>
+            <label for="salario" class="control-label"> Horas Extras (Inserir o valor em horas)</label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -240,104 +241,42 @@
     var falta
     var temporaria
     var adicional
+    var salario = $('.funcionario').data('salario').replace('.','');
+    salario =  salario.replace(',','.')
     
     //Função desabilitar: inputs 
 
     $(document).ready(function(e) {
-        var dados = $('.salario').dataset.salario.val();
-        alert(dados);
-        if ($('.funcionario').val() != -1) {
-            desabilitar(false)
-            buscaFuncionario()
-        } else {
-            desabilitar(true)
-        }
+        
         ////////////MAIN///////////////
-        //Chamadas de funções:funções
-        // quando tirado o foco do select de funcionario ele dispara a função
-        //a função faz uma requisição ajax para a pagina buscaCargos
-        // select de cargo
         // autor: Denise Lopes
 
-
-        //verificação para habilitar busca funcionario
-        $('.funcionario').change(function() {
-
-            if ($('.funcionario').val() == -1) {
-                desabilitar(true)
-                $('.valor').val('')
-                $('.inss').val('')
-                $('.total').val('')
-            } else
-                buscaFuncionario()
-        })
-
-        //No selecione ele não permanece com os dados do funcionario
-        $('.cargos').change(function() {
-
-            //Se cargo for igual a selecione    
-            if ($('.cargos').val() != -1) {
-                buscaSalario()
-                $('.emissao').val('')
-                desabilitar(true)
-            } else {
-                desabilitar(true)
-                $('.funcionario').attr('disabled', false)
-                $('.cargos').attr('disabled', false)
-                $('.valor').val('')
-                $('.inss').val('')
-                $('.total').val('')
-
-            }
-        })
-
         $('.opcao-pagamento').change(function() {
-
-            opcaoPagamento()
+            //chamar cálculo total
+            calcular()
         })
-
-        $('.emissao').change(function() {
-            $('.opcao-pagamento').attr('disabled', false)
-            desabilitar(false)
+        $('.tipo-hora-extra').change(function() {
+            //chamar cálculo total
+            calcular()
         })
-        // Mantém os inputs em cache:
-        var inputs = $('input');
-
-        // Chama a função de verificação quando as entradas forem modificadas
-        // Usei o 'keyup', mas 'change' ou 'keydown' são também eventos úteis aqui
-        inputs.on('keyup', verificarInputs);
-
-        verificarInputs()
-        ////////////FIM "MAIN"///////////////
-
-        ///////FUNÇÕES/////////
-        function verificarInputs() {
-            var preenchidos = true; // assumir que estão preenchidos
-            inputs.each(function() {
-                // verificar um a um e passar a false se algum falhar
-                // no lugar do if pode-se usar alguma função de validação, regex ou outros
-                // console.log(this)
-                if (!this.value) {
-                    preenchidos = false;
-                    // parar o loop, evitando que mais inputs sejam verificados sem necessidade
-                    //return false;
-                }
-
-            });
-            // Habilite, ou não, o <button>, dependendo da variável:
-            $('button').prop('disabled', !preenchidos); // 
-            if (preenchidos) {
-                calcular()
-            }
-
-        }
+        $('.horas_extras').change(function() {
+            //chamar cálculo total
+            calcular()
+        })
+        $('.adicional1').change(function() {
+            //chamar cálculo total
+            calcular()
+        })
+        $('.faltas').change(function() {
+            //chamar cálculo total
+            calcular()
+        })
 
         //calcula salario, hora_extra, adicional noturno, inss
 
         function calcular() {
+            calculaInss()
 
-            console.log("Valor salario :" + selectedCargo.salario + "hora Extra:" + $('#horas_extras').val() + "Adicional noturno:" + $('.adicional1').val() + " Faltas:" + $('#faltas').val())
-            var salario = parseFloat(selectedCargo.salario)
             if($("#tipo-hora-extra").val() == 1){
                 var horas_extras = parseFloat((salario/220)*2);
                 horas_extras *= $('.horas_extras').val();
@@ -347,10 +286,11 @@
             }
 
             //add noturno
-            var adicional = parseFloat((salario/220)*0.2);
+            // var adicional = (salario/220)*0.2;
+            var adicional = (parseFloat(salario)/220)*0.2;
+            console.log(adicional)
             adicional *= $('.adicional1').val();
             
-
             var faltas = salario/30*($('.faltas').val())
             console.log("V.faltas="+faltas)
 
@@ -358,17 +298,15 @@
             
             var desconto = faltas+inss;
 
-
             console.log("desconto:" + -desconto)
-            var temp = (salario + adicional + horas_extras)-desconto
-            console.log("salaior:"+salario+" adicional not"+adicional+" horas extras"+horas_extras+"  -desconto"+desconto)
+            var temp = parseFloat(salario + adicional + horas_extras)-desconto
             console.log("temp:"+temp)
+            console.log("salaior:"+salario+" adicional not"+adicional+" horas extras"+horas_extras+"  -desconto"+desconto)
+            
             $('.total').val(temp.toFixed(2)) //to fixed é para arrumar as casas decimais
 
         }
-
         //FIM - calcula salario, hora_extra, adicional noturno, inss
-
 
     })
     // autor: Denise Lopes
@@ -377,43 +315,29 @@
             $('.valor').val('')
             $('.inss').val('')
             $('.total').val('')
-        } else {
-            buscaSalario()
         }
     }
 
-    function calculaInss() {
-        //var salario = $('.cargo').("data-id").val();
+    function calculaInss() {              
+        // Aliquota minima 
+        //$('.valor').val(salario.toFixed(2))
 
-        if (data != null && data != "") {
-            salario = data.salario
-            
-            
-            // Aliquota minima 
-            $('.valor').val(salario.toFixed(2))
-            if (salario <= 1693.72) {
-                formula = (parseFloat(salario) * 0.8);
-                inss = formula;
-            }else if(salario > 1693.73 && salario < 2222.90){
-                formula = (parseFloat(salario) * 0.9);
-                inss = formula;
-            }else{
-                formula = (parseFloat(salario) * 0.11);
-                inss = formula;
-            }
-            
-
-            total = parseFloat(salario) - inss;
-            $('.total').val(total.toFixed(2))
-
-            $('.inss').val(inss.toFixed(2));
-        } else {
-
-            $('.valor').val("")
-            $('.inss').val("")
-            $('.total').val("")
-
+        if (salario <= 1751.81) {
+            formula = (parseFloat(salario) * 0.8);
+            inss = formula;
+        }else if(salario > 1751.81 && salario < 2979.72){
+            formula = (parseFloat(salario) * 0.9);
+            inss = formula;
+        }else{
+            formula = (parseFloat(salario) * 0.11);
+            inss = formula;
         }
+        
+
+        total = parseFloat(salario) - inss;
+        $('.total').val(total.toFixed(2))
+        $('.inss').val(inss.toFixed(2));
+     
 
     }
     //select de salario conforme id do cargo

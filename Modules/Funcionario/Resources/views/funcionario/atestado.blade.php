@@ -5,8 +5,8 @@
 @endsection
 
 @section('body')
-<div class="card col-md-12 text-left" >
-  <div class="card-body">
+<div class="algo">
+    
     <form method="post" action="{{url($data['url'])}}">
         @if($data['method'] == 'PUT')
             @method('PUT')
@@ -14,35 +14,61 @@
         @csrf
     <input type="hidden" value="{{$data['funcionario']->id}}" name="atestado[funcionario_id]">
     <h5>Nome do funcionário: {{$data['funcionario']->nome}}</h5>
-    <div class="form-row pt-4">     
-        <div class="form-group col-md-3">
-            <label for="">CID</label>
-            <input type="text" class="form-control" value="{{old('atestado.cid_atestado', $data['atestado'] ? $data['Atestado']->cid_atestado : '')}}" name="atestado[cid_atestado]" >
-        </div>
-
-        <div class="form-group col-md-3">
-            <label for="">Data de Início</label>
-            <input type="date" class="form-control" value="{{old('atestado.data_inicio', $data['atestado'] ? $data['atestado']->data_inicio : '')}}" name="atestado[data_inicio]">
-        </div>     
-
-        <div class="form-group col-md-3">
-            <label for="">Data de Fim</label>
-            <input type="date" class="form-control" value="{{old('atestado.data_fim', $data['atestado'] ? $data['atestado']->data_fim : '')}}" name="atestado[data_fim]">
-        </div>
-
-        <div class="form-group col-md-2">
-            <label for="">Quantidade de Dias</label>
-            <input type="number" class="form-control" value="{{old('atestado.quantidade_dias', $data['atestado'] ? $data['atestado']->quantidade_dias : '')}}" name="atestado[quantidade_dias]">
+    
+    <div class="col-lg-5 pt-5">
+            <div class="form-group">
+                <label for="">Motivo da mudança de situação:</label>
+                <div class="input-group">   
+                    <select class="form-control">
+                    <option>Default select</option>
+                </select>
+            </div>
         </div>
     </div>
-  </div>
-</div>
 
+    <div class="col-lg-5">
+        <div class="form-group">
+            <label for="">CID:</label>
+            <div class="input-group">
+                <input type="text" class="form-control" value="{{old('atestado.cid_atestado', $data['atestado'] ? $data['Atestado']->cid_atestado : '')}}" name="atestado[cid_atestado]" >
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="form-group">
+            <label for="">Data de Início:</label>
+            <div class="input group">
+                <input type="date" class="form-control" value="{{old('atestado.data_inicio', $data['atestado'] ? $data['atestado']->data_inicio : '')}}" name="atestado[data_inicio]">
+            </div>
+        </div>     
+    </div>
+
+    <div class="col-lg-5">
+        <div class="form-group">
+            <label for="">Data de Fim:</label>
+            <div class="input-group">
+                <input type="date" class="form-control" value="{{old('atestado.data_fim', $data['atestado'] ? $data['atestado']->data_fim : '')}}" name="atestado[data_fim]">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="form-group">
+            <label for="">Quantidade de Dias:</label>
+            <div class="input-group">
+                <input type="number" class="form-control" value="{{old('atestado.quantidade_dias', $data['atestado'] ? $data['atestado']->quantidade_dias : '')}}" name="atestado[quantidade_dias]">
+            </div>
+        </div>
+    </div>
+    </div>
 @section('footer')
     <div class="d-flex justify-content-end">
-        <button type="submit"  class="btn btn-success ">Salvar</button>
+        <a class="btn btn-info d-flex justify-content-end text-white "><i class="material-icons">assignment</i>Histórico</a>
+        <button type="submit"  class="btn btn-success ml-2">Salvar</button>
+
     </div>
-    </form>
+    
 @endsection
 
 @endsection
