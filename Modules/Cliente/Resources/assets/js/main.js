@@ -33,7 +33,7 @@ $(document).ready(function() {
 
 function setLoading(target) {
     var loading = $('<h3></h3>').attr({'class': 'text-center'})
-    var img = $('<img />').attr({'src': main_url+"/modules/funcionario/img/load.svg"})
+    var img = $('<img />').attr({'src': main_url+"/modules/cliente/img/load.svg"})
     img.appendTo(loading)
     target.html(loading)
 }

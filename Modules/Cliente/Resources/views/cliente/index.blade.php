@@ -29,100 +29,10 @@
         <div class="card-body">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="ativos" role="tabpanel" aria-labelledby="ativos-tab">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tbody>
-                                <tr scope="row">
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Documento</th>
-                                    <th scope="col">Telefones</th>
-                                    <th colspan=3 scope="col">Ação</th>
-                                </tr>
-                                @foreach ($clientes as $cliente)
-                                <tr scope="row">
-                                    <td>{{$cliente->nome}}</td>
-                                    <td>{{$cliente->getDocumento()}}</td> 
-                                    <td>{{$cliente->telefonesAll()}}</td>
-                                    <td><a href="{{url('cliente/'.$cliente->id.'/pedido')}}" class="btn btn-primary">Pedidos</a></td>
-                                    <td><a href="{{route('cliente.edit', $cliente->id)}}" class="btn btn-warning">Editar</a></td>
-                                    <td>
-                                        <form action="{{url('/cliente/cliente/'.$cliente->id)}}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger">Apagar</button>
-                                        </form>
-                                    </td> 
-                                </tr>  
-                                @endforeach
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="100%" class="text-center">
-                                        <p class="text-center">
-
-                                            {{$clientes->currentPage()}} de {{$clientes->lastPage()}}
-                                            páginas
-
-                                        </p>
-                                    </td>
-                                </tr>
-                                @if($clientes->lastPage() > 1)
-                                <tr>
-                                    <td colspan="100%">
-                                        {{ $clientes->links() }}
-                                    </td>
-                                </tr>
-                                @endif
-                            </tfoot>
-                        </table>
-                    </div>
+                    
                 </div>
                 <div class="tab-pane fade" id="inativos" role="tabpanel" aria-labelledby="inativos-tab">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tbody>
-                                <tr scope="row">
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Documento</th>
-                                    <th scope="col">Telefones</th>
-                                    <th scope="col">Ação</th>
-                                </tr>
-                                @foreach ($clientesDeletados as $cliente)
-                                <tr scope="row">
-                                    <td>{{$cliente->nome}}</td>
-                                    <td>{{$cliente->getDocumento()}}</td> 
-                                    <td>{{$cliente->telefonesAll()}}</td>
-                                    <td><a href="" class="btn btn-primary">Pedidos</a></td>
-                                    <td><a href="" class="btn btn-warning">Editar</a></td>
-                                    <td>
-                                        <form action="{{url('/cliente/cliente/'.$cliente->id)}}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger">Restaurar</button>
-                                        </form>
-                                    </td> 
-                                </tr>  
-                                @endforeach
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="100%" class="text-center">
-                                        <p class="text-center">
-                                                {{$clientesDeletados->currentPage()}} de {{$clientesDeletados->lastPage()}}
-                                            páginas
-                                        </p>
-                                    </td>
-                                </tr>
-                                @if($clientesDeletados->lastPage() > 1)
-                                <tr>
-                                    <td colspan="100%">
-                                        {{ $clientesDeletados->links() }}
-                                    </td>
-                                </tr>
-                                @endif
-                            </tfoot>
-                        </table>
-                    </div>
+                    
                 </div>   
             </div>
              
@@ -135,3 +45,26 @@
 
     
 @stop
+@section('script')
+<script>
+    $(document).ready(function(){
+        tabela('ativos');
+        tabela('inativos');
+
+        
+        $(document).on('click','.page-link', function(e){
+            e.preventDefault();
+            var page = $(this).attr('href').split('page=')[1]
+            var status = $(this).closest('.tab-pane').attr('id')
+            tabela(status, page)
+        })
+    })
+    function tabela(status, page=null){
+        setLoading($('#'+status))
+        $.get(main_url+'/cliente/cliente/table/'+status+'?page='+page, function(table){
+            $('#'+status).html(table);
+        })
+    }
+    
+</script>
+@endsection
