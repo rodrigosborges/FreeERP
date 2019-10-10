@@ -62,7 +62,7 @@
 
                     <div class="form-group ml-2">
                         <label for="fornecedor">Fornecedor</label>
-                        <select name="forcedor_id" class="form-control">
+                        <select name="fornecedor_id" class="form-control">
                             @if(isset($fornecedor))
                                 @foreach($fornecedores as $fornecedor)
                                     @if($fornecedor->id == $produto->fornecedor_id)

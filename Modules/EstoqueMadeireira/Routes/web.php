@@ -18,7 +18,9 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::resource('/produtos', 'ProdutoController');
     Route::get('/produtos/inativos', 'ProdutoController@inativos');
     Route::put('/produtos/inativos/{id}/restore', 'ProdutoController@restaurar');
-   // Route::get('/produtos', 'ProdutoController@index');
+    Route::get('/produtos/ficha/{id}', 'ProdutoController@ficha');
+
+    // Route::get('/produtos', 'ProdutoController@index');
 
 
 

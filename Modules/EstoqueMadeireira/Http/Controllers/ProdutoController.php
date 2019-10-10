@@ -28,7 +28,7 @@ class ProdutoController extends Controller
         ];
 
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastro', 'route' => '/'],
+            ['icon' => 'add_box', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
             ['icon' => 'search', 'tool' => 'Pedidos', 'route' => '#'],
             ['icon' => 'edit', 'tool' => 'Estoque', 'route' => '#'],
         ];
@@ -46,16 +46,17 @@ class ProdutoController extends Controller
         $produtos = Produto::paginate(5);
         $flag = 0;
       
-        return view('estoquemadeireira::Produtos/form', $this->template, compact('categorias', 'fornecedores', 'produtos', 'flag'));
+        return view('estoquemadeireira::Produtos/index', $this->template, compact('categorias', 'fornecedores', 'produtos', 'flag'));
     }
 
     public function inativos()
     {
         $produtos = Produto::onlyTrashed()->paginate(5);
         $categorias = Categoria::all();
+        $fornecedores = Fornecedores::all();
         $flag = 1;
 
-        return view('estoquemadeireira::Produtos/index', $this->template, compact('produtos', 'categorias', 'flag'));
+        return view('estoquemadeireira::Produtos/index', $this->template, compact('produtos', 'categorias', 'flag', 'fornecedores'));
     }
 
     public function restaurar($id){
@@ -87,14 +88,15 @@ class ProdutoController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
+       
         DB::beginTransaction();
         try{
-            Produto::create($request->all());
+            Produto::create($req->all());
             DB::commit();
 
-            return redirect('/estoqueMadeireira/produtos')->with('Success', 'Produto cadastrado com sucesso!');
+            return redirect('/estoquemadeireira/produtos')->with('Success', 'Produto cadastrado com sucesso!');
         } catch(\Exeception $e) {
             return back()->with('Error', 'Erro no cadastro de Produto');
         }
@@ -117,7 +119,16 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-        return view('estoquemadeireira::edit');
+        // $data = [
+        //     'produto' => Produto::findOrFail($id),
+        //     'fornecedores' => Fornecedor::all(),
+        //     'categorias' => Categoria::all()
+        //     ];
+        $produtos = Produto::findOrFail($id);
+        $categorias = Categoria::all();
+        $fornecedores = Fornecedor::all();
+
+        return view('estoquemadeireira::produtos/form', $this->template, compact('produtos', 'categorias', 'fornecedores'));
     }
 
     /**
@@ -127,8 +138,16 @@ class ProdutoController extends Controller
      * @return Response
      */
   
+    
 
 
+
+    public function ficha($id){
+        $produtos = Produto::findOrFail($id);
+
+        return view('estoquemadeireira::produtos/ficha', $this->template, compact('produtos'));
+
+    }
 
 
      public function update(Request $request, $id)

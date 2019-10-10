@@ -13,6 +13,6 @@ class Categoria extends Model
 
 
     public function subcategoria(){
-        return $this->hasMany('Modules\Estoque\Entities\Subcategoria')->withTrashed();
+        return $this->hasMany('Modules\EstoqueMadeireira\Entities\Subcategoria')->withTrashed();
     }
 }
