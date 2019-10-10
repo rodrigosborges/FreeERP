@@ -74,10 +74,9 @@
               </td>              
             </tr>
             <tr>
-                <td colspan="6">
+                <td colspan="6" style="margin-right: 0px">
                     <span class="total d-flex justify-content-between">
                     <b>Valor Liquído:</b>
-                    <i class="material-icons seta">arrow_right_alt</i>
                     <b>R${{ floatVal($vencimentos) - floatVal($desconto) }}</b>
                     </span>
                 </td>
