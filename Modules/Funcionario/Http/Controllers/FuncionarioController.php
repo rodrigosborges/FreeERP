@@ -69,7 +69,7 @@ class FuncionarioController extends Controller{
 
     public function store(CreateFuncionario $request){
 
-        if($request->hasFile('foto') && $request->file('foto')->isValid() && ($request->foto->extension() == 'jpg' || $request->foto->extension() == 'png')){
+        if($request->hasFile('foto') && $request->file('foto')->isValid() && ($request->foto->extension() == 'jpg' || $request->foto->extension() == 'png' || $request->foto->extension() == 'jpeg')){
             $nome = md5(date('Y-m-d H:i'));
             $extensao = $request->foto->extension();
             $nameFile = "{$nome}.{$extensao}";
