@@ -146,10 +146,26 @@ class EstoqueController extends Controller
     }
 
     public function pdf(Request $request) {
-        return $request;
-        $data = $request->data;
+        $data = $this->relatorioCustoResult($request->data_inicial, $request->data_final, $request->estoque_id);
+        //return $data;
         $pdf = PDF::loadView('estoque::estoque.relatorios.pdf', compact('data'));
         return $pdf->stream();
+
+        /*$data = [
+            'estoque_id' => $estoque_id,
+            'maior_custo' => $maior_preco,
+            'custo_medio' => round($total / $quantidade_movimentada[0]->qtd, 2),
+            'custo_total' => $total,
+            'quantidade_movimentada' => $quantidade_movimentada[0]->qtd,
+            'estoque' => Estoque::all(),
+            'estoque_selecionado' => $estoque_selecionado,
+            'labels' => json_encode($labels),
+            'dados' => json_encode($dados),
+            'flag' => "1",
+            'movimentacao' => $movimentacao,
+            'data_inicial' => $data_inicial,
+            'data_final' => $data_final
+        ];*/
     }
 
     
