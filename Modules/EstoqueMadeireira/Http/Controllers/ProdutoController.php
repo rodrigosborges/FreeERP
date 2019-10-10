@@ -14,10 +14,6 @@ use DB;
 
 class ProdutoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
 
 
     public $template;
@@ -53,41 +49,33 @@ class ProdutoController extends Controller
     {
         $produtos = Produto::onlyTrashed()->paginate(5);
         $categorias = Categoria::all();
-        $fornecedores = Fornecedores::all();
+        $fornecedores = Fornecedor::all();
         $flag = 1;
 
         return view('estoquemadeireira::Produtos/index', $this->template, compact('produtos', 'categorias', 'flag', 'fornecedores'));
     }
 
-    public function restaurar($id){
-        $produtos = Produto::onlyTrashed()->findOrFail($id);
-        $produtos->restore();
+    public function restore($id){
+       
+        $produto = Produto::onlyTrashed()->findOrFail($id);
+        $produto->restore();
 
-        return redirect('estoquemadeireira::Produtos/index')->with('success', 'Produto restaurado com sucesso!');
-
-
+        return redirect('estoquemadeireira/produtos')->with('success', 'Produto restaurado com sucesso!');
 
     }
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
+
     public function create()
     {
         $categorias = Categoria::all();
         $fornecedores = Fornecedor::all();
         
         
-        return view('estoquemadeireira::Produtos/form', $this->template, compact('categorias', 'fornecedores'));
+        return view('estoquemadeireira::produtos/form', $this->template, compact('categorias', 'fornecedores'));
 
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
+
     public function store(Request $req)
     {
        
@@ -102,21 +90,6 @@ class ProdutoController extends Controller
         }
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('estoquemadeireira::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
     public function edit($id)
     {
         // $data = [
@@ -143,9 +116,9 @@ class ProdutoController extends Controller
 
 
     public function ficha($id){
-        $produtos = Produto::findOrFail($id);
+        $produto = Produto::findOrFail($id);
 
-        return view('estoquemadeireira::produtos/ficha', $this->template, compact('produtos'));
+        return view('estoquemadeireira::produtos/ficha', $this->template, compact('produto'));
 
     }
 
@@ -162,6 +135,8 @@ class ProdutoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $produto = Produto::findOrFail($id);
+        $produto->delete();
+        return redirect('/estoquemadeireira/produtos')->with('success', 'Produto desativado com sucesso!');
     }
 }

@@ -72,7 +72,7 @@
                                     <a href="{{url('/estoquemadeireira/produtos/' . $produto->id . '/edit')}}"><button class="btn btn-sm btn-warning"><i class="material-icons" style="font-size:18px;">border_color</i></button></a>
                                     </td>
                                     <td>
-                                    <a href="{{url('/estoqueMadeireira/produto/ficha/' . $produto->id)}}"><button class="btn btn-sm" style="font-size: 0px; background-color:blue;">
+                                    <a href="{{url('/estoquemadeireira/produtos/ficha/' . $produto->id)}}"><button class="btn btn-sm" style="font-size: 0px; background-color:blue;">
                                 <i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a>
                                     </td>
                                 @else

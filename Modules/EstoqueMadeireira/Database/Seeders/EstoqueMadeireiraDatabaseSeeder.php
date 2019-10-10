@@ -17,7 +17,7 @@ class EstoqueMadeireiraDatabaseSeeder extends Seeder
         $this->call([
           CategoriaSeedTableSeeder::class,
           FornecedorSeedTableSeeder::class,
-          ProdutoSeedTableSeeder::class,
+          // ProdutoSeedTableSeeder::class,
         ]);
     }
 }

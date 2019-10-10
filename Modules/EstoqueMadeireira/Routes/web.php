@@ -14,21 +14,16 @@
 Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/', 'EstoqueMadeireiraController@index');
 
-    //ROTA DE PROTUDOS
-    Route::resource('/produtos', 'ProdutoController');
+    //ROTA DE PRODUTOS
     Route::get('/produtos/inativos', 'ProdutoController@inativos');
-    Route::put('/produtos/inativos/{id}/restore', 'ProdutoController@restaurar');
     Route::get('/produtos/ficha/{id}', 'ProdutoController@ficha');
+    Route::put('/produtos/{id}/restore', 'ProdutoController@restore');
+    Route::resource('/produtos', 'ProdutoController');  
 
-    // Route::get('/produtos', 'ProdutoController@index');
+    
+    
 
-
-
-    // Route::get('/cadastrooperador', function(){
-        
-    //     return "ae";
-    // });
-
+   
 
 });
 
