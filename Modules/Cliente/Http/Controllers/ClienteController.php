@@ -14,18 +14,30 @@ class ClienteController extends Controller
 {
     
     public function index(Request $request) {
-        if($request->busca){
-            $clientes = Cliente::where('nome', 'LIKE', '%'.$request->busca.'%')->paginate(10);
-            $clientesDeletados = Cliente::onlyTrashed()->where('nome', 'LIKE', '%'.$request->busca.'%')->paginate(10);
-        }else {
-            $clientes = Cliente::paginate(10);
-            $clientesDeletados = Cliente::onlyTrashed()->paginate(10);
-        }
-
-        return view('cliente::cliente.index', compact('clientes','clientesDeletados'));
         
+        return view('cliente::cliente.index');
     }
+    public function table(Request $request, $status) {
+        if ($status != 'ativos' && $status != 'inativos') return ;
 
+        if($request->busca){
+            if($status == 'ativos'){
+                $clientes = Cliente::where('nome', 'LIKE', '%'.$request->busca.'%')->paginate(10);
+                 
+            }else {
+                $clientes = Cliente::onlyTrashed()->where('nome', 'LIKE', '%'.$request->busca.'%')->paginate(10);
+            }
+        }else {
+            if($status == 'ativos'){
+                $clientes = Cliente::paginate(10);
+            }else {
+                $clientes = Cliente::onlyTrashed()->paginate(10);
+            }
+                
+        }
+        return view('cliente::cliente.table', compact('clientes'));
+
+    }
     
     public function create() {
         $tipo_cliente = TipoCliente::all();

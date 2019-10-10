@@ -41,6 +41,10 @@ class Pedido extends Model
         
         )->get();
     }
+    public function produto_qtde($produto_id){
+        return $this->produtos()->select("produto.nome", "pedido_has_produto.quantidade as qtde")
+            ->where("produto.id","=",$produto_id)->first();
+    }
 
     public function vl_bruto_pedido(){
          $vl = $this->produtos()->select(DB::raw("produto.preco*pedido_has_produto.quantidade as total_item"))->get();

@@ -14,12 +14,14 @@
 Route::prefix('cliente')->group(function() {
 
     Route::get('dashboard','DashboardController@index');
+    
         
     Route::resource('/cliente', 'ClienteController'); //função que cria todas rotas de todas função da Classe
-    
+    Route::get('/cliente/table/{status}', 'ClienteController@table');
+
     Route::get('{cliente_id}/pedido', 'PedidoController@index');//Lista pedidos
     Route::get('{cliente_id}/pedido/novo', 'PedidoController@novo');// Novo pedido
-
+    
     Route::delete('pedido/{pedido_id}', 'PedidoController@destroy')->name('delete.pedido');//Deletar pedido
     Route::get('pedido/{pedido_id}','PedidoController@edit');//Abrir view eddição
 
@@ -30,10 +32,16 @@ Route::prefix('cliente')->group(function() {
 
     Route::get('{cliente_id}/pedidos/pdf/{start}/{end}', 'PedidoController@pdf'); //Teste pdf
 
-    Route::get('/dashboard/totalvendasmes/{ano}','DashBoardController@getVendasMes');
-    
+    Route::get('/dashboard/totalvendasmes/{ano}','PedidoController@getVendasMes'); 
+    Route::get('/dashboard/totalVendasMes/{ano}','DashBoardController@getVendasMes');
+    Route::get('/dashboard/vendasProdutoMes/{id_produto}/{ano}', 'DashBoardController@getVendasProdutoMes');
 
     Route::get('/','ClienteController@index');
+
+    
+    Route::get('/dashboard/mediagasto/{ano}','DashboardController@getMediaGasto');
+    Route::get('/dashboard/totalclientes/{ano}','DashboardController@getTotalClientes');
+    Route::get('/dashboard/totalvendas/{ano}','DashboardController@getTotalVendas');
 });
 
 
