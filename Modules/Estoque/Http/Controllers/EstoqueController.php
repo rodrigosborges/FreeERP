@@ -395,36 +395,58 @@ class EstoqueController extends Controller
     public function relatorioMovimentacao()
     {
         $categorias = Categoria::all();
-
-        return view('estoque::estoque.relatorios.movimentacao', compact('categorias'));
+        $data = [
+            'flag' => "0",
+            'dados' => "", 
+            'labels' => "", 
+            'estoque' => Estoque::all()
+        ];
+        return view('estoque::estoque.relatorios.movimentacao', compact('categorias', 'data'));
     }
 
-    public function relatorioMovimentacaoBusca(Request $req)
-    {
-        $estoque = Estoque::all();
+    
+    public function relatorioMovimentacaoBusca(Request $req){
         $ms = [];
 
-        if ($req->estoque_id == -1) {
+        if ($req->estoque_id == -1){
             $ms  =  DB::select(
-                'SELECT distinc substring_index(created_at, " ", 1) as data,
-                    (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtdEntrada
+                    'SELECT distinct substring_index(created_at, " ", 1) as data,
+                    (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtdEntrada,
                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade < 0) as qtdSaida
-                        FROM movimentacao_estoque as me WHERE estoque_id = ' . $req->estoque_id . ' AND
-                        substring_index(created_at, " ", 1) BETWEEN " ' . $req->dataInicial . ' "AND" ' . $req->dataFinal . '"
+                        FROM movimentacao_estoque as me WHERE substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
                             order by data asc'
-            );
-        } else {
+        );   
+        }else{
             $ms  =  DB::select(
-                'SELECT distinc substring_index(created_at," ", 1) as data,
-                     (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = ' . $req->estoque_id . ')) as nome,
-                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = ' . $req->estoque_id . ' AND quantidade > 0) as qtdEntrada
-                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = ' . $req->estoque_id . ' AND quantidade > 0) as qtSaida
-                        FROM movimentacao_estoque as me WHERE estoque_id = ' . $req->estoque_id . ' AND
-                        substring_index(created_at, " ", 1) BETWEEN" ' . $req->dataInicial . ' "AND" ' . $req->dataFinal . '"
+                    'SELECT distinct substring_index(created_at," ", 1) as data,   
+                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade > 0) as qtdEntrada,
+                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade < 0) as qtdSaida
+                        FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id.' AND
+                        substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
                             order by data asc'
-
             );
+        
         }
+        $labels =[];
+        $dadosEntrada =[];
+        $dadosSaida = [];
+        foreach ($ms as $q){
+            array_push($dadosEntrada, $q->qtdEntrada);  
+            array_push($dadosSaida, $q->qtdSaida * -1);         
+            array_push($labels, $q->data);
+
+        }
+        $data = [
+            'flag' => "1",
+            'labels' => json_encode($labels),
+            'dadosEntrada' => json_encode($dadosEntrada),
+            'dadosSaida' => json_encode($dadosSaida),
+            'estoque' => Estoque::all(),
+            'categorias' => Categoria::all(),
+            'dataInicial' => $req->dataInicial,
+            'dataFinal' => $req->dataFinal
+        ];
+    return view('estoque::estoque.relatorios.movimentacao', compact('data'));
     }
 
 
