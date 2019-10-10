@@ -33,6 +33,7 @@ Route::get('/calendario/compartilhamentos/{compartilhamento}/revogar', 'AgendaCo
 
 Route::get('/calendario/agendas/eventos/criar', 'EventoController@criarOuEditar')->name('eventos.criar');
 Route::get('/calendario/agendas/eventos/{evento}', 'EventoController@criarOuEditar')->name('eventos.editar');
+Route::get('/calendario/agendas/eventos/{evento}/duplicar', 'EventoController@criarOuEditar')->name('eventos.duplicar');
 Route::put('/calendario/agendas/eventos/{evento}', 'EventoController@atualizar')->name('eventos.atualizar');
 Route::post('/calendario/agendas/eventos', 'EventoController@salvar')->name('eventos.salvar');
 Route::delete('/calendario/agendas/eventos/{evento}', 'EventoController@deletar')->name('eventos.deletar');

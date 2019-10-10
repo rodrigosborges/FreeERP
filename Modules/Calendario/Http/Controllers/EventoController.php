@@ -6,7 +6,9 @@ namespace Modules\Calendario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Modules\Calendario\Entities\Agenda;
+use Modules\Calendario\Entities\Compartilhamento;
 use Modules\Calendario\Entities\Convite;
 use Modules\Calendario\Entities\Evento;
 use Modules\Calendario\Entities\Funcionario;
@@ -17,19 +19,29 @@ class EventoController extends Controller
     public function eventos()
     {
         $eventos = [];
-        $agendas = Agenda::where('funcionario_id', 1)->get();
+        $funcionario = Funcionario::find(1);
+        $agendas = $funcionario->agendas;
         foreach ($agendas as $agenda) {
             $eventos = array_merge($eventos, $agenda->eventos_json);
         }
+
+        $compartilhamentos = $funcionario->setor->compartilhamentos;
+        foreach ($compartilhamentos as $compartilhamento) {
+            if($compartilhamento->aprovacao && $compartilhamento->agenda->funcionario->id != $funcionario->id){
+                $eventos = array_merge($eventos, $compartilhamento->agenda->eventos_json);
+            }
+        }
+
         return $eventos;
     }
 
     public function criarOuEditar(Evento $evento = null, Request $request)
     {
+        $rota = $request->route()->getName();
         $agendas = Agenda::all();
         $funcionarios = Funcionario::all();
         $agenda_selecionada = $request->agenda;
-        return view('calendario::eventos.criar-editar', ['agendas' => $agendas, 'evento' => $evento, 'funcionarios' => $funcionarios, 'agenda_selecionada' => $agenda_selecionada]);
+        return view('calendario::eventos.criar-editar', ['agendas' => $agendas, 'evento' => $evento, 'funcionarios' => $funcionarios, 'agenda_selecionada' => $agenda_selecionada, 'rota' => $rota]);
     }
 
     public function salvar(Request $request)

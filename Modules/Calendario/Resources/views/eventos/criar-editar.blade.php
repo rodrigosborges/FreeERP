@@ -7,13 +7,18 @@
         <h2>
             @if(isset($evento))
                 <a href="{{route('agendas.eventos.index', $evento->agenda->id)}}">{{$evento->agenda->titulo}}</a> > {{$evento->titulo}}
+                @if($rota == 'eventos.duplicar')
+                    > Duplicar
+                @else
+                    > Editar
+                @endif
             @else
                 Novo Evento
             @endif
         </h2>
-        <form action="{{isset($evento) ? route('eventos.editar', $evento->id) : route('eventos.salvar')}}" id="eventoForm" method="post" autocomplete="off">
+        <form action="{{isset($evento) && $rota != 'eventos.duplicar' ? route('eventos.editar', $evento->id) : route('eventos.salvar')}}" id="eventoForm" method="post" autocomplete="off">
         @csrf
-        {{isset($evento) ? method_field('PUT') : ''}}
+        {{isset($evento) && $rota != 'eventos.duplicar' ? method_field('PUT') : ''}}
 
         <!-- Titulo -->
             <div class="form-group">
@@ -99,13 +104,16 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="eventoAgenda">Agenda</label>
-                    <select id="eventoAgenda" class="form-control" name="eventoAgenda" required @if(isset($evento)) readonly @endif>
+                    <select id="eventoAgenda" class="form-control" name="eventoAgenda" required @if(isset($evento) && $rota != 'eventos.duplicar') disabled @endif>
                         @foreach($agendas as $agenda)
                             <option value="{{$agenda->id}}" @if($evento) @if($agenda->id == $evento->agenda->id) selected
                                     @endif @elseif($agenda_selecionada == $agenda->id) selected @endif>{{$agenda->titulo}}
                             </option>
                         @endforeach
                     </select>
+                    @if(isset($evento) && $rota != 'eventos.duplicar')
+                        <input type="hidden" name="eventoAgenda" value="{{$agenda->id}}">
+                    @endif
                 </div>
             </div>
 
@@ -145,7 +153,7 @@
                 locale: 'pt-br',
                 useCurrent: false,
                 date: localStorage.getItem('cal-data')
-            }, localStorage.setItem('cal-data', moment().format('DD/MM/YYYY')));
+            }, localStorage.setItem('cal-data', moment().format('MM/DD/YYYY')));
 
             $("#eventoDataInicio").on("change.datetimepicker", function (e) {
                 $('#eventoDataFim').datetimepicker('date', e.date);

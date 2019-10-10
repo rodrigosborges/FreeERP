@@ -4,7 +4,7 @@
 
 @section('content')
     @parent
-    @if($agendas->isNotEmpty())
+    @if($agendas->isNotEmpty() || $agendas_setor->isNotEmpty())
         <div id="agendas">
             <div class="card">
                 <div class="card-header">
@@ -19,14 +19,20 @@
                                 <input type="checkbox" id="agenda{{$agenda->id}}" class="custom-control-input"
                                        value="{{$agenda->id}}" name="agenda{{$agenda->id}}" checked>
                                 <label class="custom-control-label" for="agenda{{$agenda->id}}"
-                                       style="padding-bottom: 3px; border-bottom: 3px solid #{{$agenda->cor->codigo}}">{{$agenda->titulo}} ({{$agenda->eventos->count()}})
-                                    @if($agenda->compartilhamentos->count())
-                                        @foreach($agenda->compartilhamentos as $compartilhamento)
-                                            @if($compartilhamento->aprovacao)
-                                                <a href="#" class="badge badge-secondary">{{$compartilhamento->setor->sigla}}</a>
-                                            @endif
-                                        @endforeach
-                                    @endif
+                                       style="padding-bottom: 3px; border-bottom: 3px solid #{{$agenda->cor->codigo}}">{{$agenda->titulo}}
+                                    ({{$agenda->eventos->count()}})
+                                </label>
+                            </div>
+                        @endforeach
+                        @foreach($agendas_setor as $agenda)
+                            <div class="agenda custom-control custom-checkbox">
+                                <input type="checkbox" id="agenda{{$agenda->id}}" class="custom-control-input"
+                                       value="{{$agenda->id}}" name="agenda{{$agenda->id}}" checked>
+                                <label class="custom-control-label" for="agenda{{$agenda->id}}"
+                                       style="padding-bottom: 3px; border-bottom: 3px solid #{{$agenda->cor->codigo}}">
+                                    {{$agenda->titulo}}
+                                    ({{$agenda->eventos->count()}})
+                                    <span class="badge badge-secondary" data-toggle="tooltip" title="Agenda de {{$agenda->funcionario->nome}}">{{$setor}}</span>
                                 </label>
                             </div>
                         @endforeach
@@ -52,7 +58,7 @@
     <link rel="stylesheet" type="text/css"
           href="{{Module::asset(config('calendario.id').':fullcalendar-4.2.0/packages/bootstrap/main.min.css')}}">
     <style type="text/css">
-         .fc-body {
+        .fc-body {
             cursor: cell;
         }
 
@@ -131,6 +137,8 @@
                 eventRender: function (info) {
                     var agenda = info.event.extendedProps.agenda;
                     var descricao = info.event.extendedProps.descricao;
+                    var duplicar = '{{route('eventos.duplicar', 'id')}}';
+                    duplicar = duplicar.replace('id', info.event.id);
 
                     if (!$('#' + agenda).prop('checked')) {
                         $(info.el).hide();
@@ -143,6 +151,7 @@
                         $(info.el).find('.fc-title').append('<i style="font-size: inherit; line-height: inherit" class="material-icons float-right">info</i>');
                     }
 
+                    $(info.el).find('.fc-title').append('<a href="' + duplicar +'" class="float-right text-white"><i style="font-size: inherit; line-height: inherit" class="material-icons">file_copy</i></a>');
                 },
                 dateClick: function (info) {
                     if (Object.keys(agendas).length <= 2) {
@@ -157,7 +166,7 @@
                             }
                         });
                     } else {
-                        localStorage.setItem('cal-data',info.dateStr);
+                        localStorage.setItem('cal-data', info.dateStr);
                         var url = '{{route('eventos.criar')}}';
                         window.location.href = url;
                     }

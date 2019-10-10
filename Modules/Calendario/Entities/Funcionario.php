@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Funcionario extends Model
 {
-    protected $fillable = [];
     protected $table = 'funcionario';
+
+    public function setor(){
+        return $this->belongsTo('Modules\Calendario\Entities\Setor');
+    }
+
+    public function agendas(){
+        return $this->hasMany('Modules\Calendario\Entities\Agenda');
+    }
 }

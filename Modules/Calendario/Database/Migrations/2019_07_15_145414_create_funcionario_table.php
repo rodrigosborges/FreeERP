@@ -16,6 +16,8 @@ class CreateFuncionarioTable extends Migration
         Schema::create('funcionario', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
+            $table->unsignedBigInteger('setor_id');
+            $table->foreign('setor_id')->references('id')->on('setor');
             $table->timestamps();
         });
     }

@@ -31,7 +31,9 @@
                     <th scope="row">{{$evento->id}}</th>
                     <td><a href="{{route('eventos.editar', $evento->id)}}">{{$evento->titulo}}</a></td>
                     @if($evento->dia_todo == true)
-                        <td>{{ \Carbon\Carbon::parse($evento->data_inicio)->format('d/m/Y')}}</td>
+                        <td>{{ \Carbon\Carbon::parse($evento->data_inicio)->format('d/m/Y')}} até
+                            {{ \Carbon\Carbon::parse($evento->data_fim)->format('d/m/Y')}}
+                        </td>
                     @else
                         <td>{{\Carbon\Carbon::parse($evento->data_inicio)->format('d/m/Y H:i')}} até
                             {{\Carbon\Carbon::parse($evento->data_fim)->format('d/m/Y H:i')}}
@@ -39,6 +41,7 @@
                     @endif
                     <td>@if($evento->nota){{$evento->nota}}@else --- @endif</td>
                     <td class="acoes">
+
                         <form method="POST" action="{{route('eventos.deletar', $evento->id)}}" id="formEvDel">
                             @method('DELETE')
                             @csrf
@@ -46,6 +49,9 @@
                                 <i class="material-icons">delete</i>
                             </button>
                         </form>
+                        <a href="{{route('eventos.duplicar', $evento->id)}}" class="btn btn-sm btn-info text-white" data-toggle="tooltip" title="Duplicar evento">
+                            <i class="material-icons">file_copy</i>
+                        </a>
                     </td>
                 </tr>
             @empty

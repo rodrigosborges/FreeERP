@@ -7,7 +7,7 @@
     <div class="container">
         <h2>
         @if(isset($agenda))
-            {{$agenda->titulo}}
+            {{$agenda->titulo}} > Editar
         @else
             Nova Agenda
         @endif

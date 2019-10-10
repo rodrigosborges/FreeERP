@@ -8,7 +8,7 @@ class Setor extends Model
 {
     protected $table = 'setor';
 
-    public function agendas(){
-        return $this->hasMany('Modules\Calendario\Entities\Agenda');
+    public function compartilhamentos(){
+        return $this->hasMany('Modules\Calendario\Entities\Compartilhamento');
     }
 }
