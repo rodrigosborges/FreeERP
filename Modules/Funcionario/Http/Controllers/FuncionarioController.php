@@ -69,6 +69,20 @@ class FuncionarioController extends Controller{
 
     public function store(CreateFuncionario $request){
 
+        if($request->hasFile('foto') && $request->file('foto')->isValid() && ($request->foto->extension() == 'jpg' || $request->foto->extension() == 'png')){
+            $nome = md5(date('Y-m-d H:i'));
+            $extensao = $request->foto->extension();
+            $nameFile = "{$nome}.{$extensao}";
+            $foto = $nameFile;
+            $upload = $request->foto->storeAs('fotos', $nameFile);
+            if(!$upload){
+                return redirect()->back()->with('error', 'Falha no upload do arquivo');
+            }
+        }
+        else{
+            return redirect()->back()->with('error', 'Falha, formato de arquivo inválido');
+        }
+
         DB::beginTransaction();
 		try{
 
@@ -85,8 +99,8 @@ class FuncionarioController extends Controller{
                 'estado_civil_id' =>$request->funcionario['estado_civil_id'],
                 'email_id' => $email->id,
                 'endereco_id' => $endereco->id, 
-                'cargo_id' => $request->cargo['cargo_id']
-                
+                'cargo_id' => $request->cargo['cargo_id'],
+                'foto' => $foto,
             ]);
             
             $funcionario->cargos()->attach(
