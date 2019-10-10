@@ -32,7 +32,6 @@ Route::prefix('cliente')->group(function() {
 
     Route::get('{cliente_id}/pedidos/pdf/{start}/{end}', 'PedidoController@pdf'); //Teste pdf
 
-    Route::get('/dashboard/totalvendasmes/{ano}','PedidoController@getVendasMes'); 
     Route::get('/dashboard/totalVendasMes/{ano}','DashBoardController@getVendasMes');
     Route::get('/dashboard/vendasProdutoMes/{id_produto}/{ano}', 'DashBoardController@getVendasProdutoMes');
 

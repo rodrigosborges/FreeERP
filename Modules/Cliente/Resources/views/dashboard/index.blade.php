@@ -110,7 +110,7 @@
 
         $(document).ready(function(){
 
-            $.get(main_url+"/cliente/dashboard/totalvendasmes/2019", function(dataset){
+            $.get(main_url+"/cliente/dashboard/totalVendasMes/2019", function(dataset){
             
                 newDataset = []
 
@@ -122,8 +122,7 @@
                 })
                 grafico("#totalCompras", newDataset);
                     
-            
-            $.get(main_url+"/cliente/dashboard/totalclientes/2019", function(dataset){
+                $.get(main_url+"/cliente/dashboard/totalclientes/2019", function(dataset){
                 $('#totalclientes').append(dataset);
             });
             $.get(main_url+"/cliente/dashboard/totalvendas/2019", function(dataset){
@@ -131,10 +130,13 @@
             });
             $.get(main_url+"/cliente/dashboard/mediagasto/2019", function(dataset){
                 $('#mediagasto').append(dataset);
-            });
-
+            }); 
+        })
 
         })
+            
+            
+
 
         function grafico(id, dataset){
 
@@ -244,6 +246,7 @@
                         .delay((d, i) => { return i * 150; })
                 .attr("y",  d => { return y(d.value) + .1; })
                 .attr("dy", "-.7em")
-        } 
+        }
+
     </script>
     @endsection
