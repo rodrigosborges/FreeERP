@@ -114,13 +114,15 @@
         
         if ($("[name='cliente[tipo_cliente_id]']").val() == 2) {
             documento.prop("disabled", false);
-            $("[name='cliente[nome]']").parent().find('label').text("Razão Social")
+            //console.log($("[name='cliente[nome]']").parent().parent().find('label'))
+            $("[name='cliente[nome]']").parent().parent().find('label').text('Razão Social')
+         
              $("[name='documento[documento]']").rules('add', {
                 cnpj: true
             }); 
 
-
-            documento.parent().find('label').text("CNPJ")
+            
+            documento.parent().parent().find('label').text("CNPJ")
             documento.attr("placeholder", "Ex: 24.953.166/0001-90")
             documento.mask('99.999.999/9999-99')
 
@@ -132,8 +134,8 @@
             }); 
 
             documento.prop("disabled", false);
-            $("[name='cliente[nome]']").parent().find('label').text("Nome")
-            documento.parent().find('label').text("CPF")
+            $("[name='cliente[nome]']").parent().parent().find('label').text('Nome')
+            documento.parent().parent().find('label').text("CPF")
             documento.attr("placeholder", "Ex: 451.658.200-50")
             documento.mask('999.999.999-99')
 
