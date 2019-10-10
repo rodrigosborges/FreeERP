@@ -1,18 +1,18 @@
 @extends('usuario::layouts.login')
 
 @section('content')
-<div class="row justify-content-center align-items-center" style="height:100%">
-    <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
+<div class="row justify-content-center" style="height:100%">
+    <div class="col-xm-10 col-sm-8 col-md-6 col-lg-6">
         <div class='card'>
-            <div class='card-header'><h2 class="my-2">Recuperar Senha</h1></div>
+            <div class='card-header'><h4 class="my-2">Recuperar Senha</h4></div>
                 <div class="card-body">
-                    <form method="POST" action="{{ url( '/recuperarSenha') }}">
+                    <form id="loginForm"  method="POST" action="{{ url( '/recuperarSenha') }}">
                     @method('PUT')
                     @csrf
                     <input type="hidden" value="{{$token}}" name="token">
                     <div class="form-group">
                         <label for="password">Senha</label>
-                        <input class="form-control" type="password" name="password">
+                        <input class="form-control" type="password" name="password" id="password">
                     </div>
                     <div class="form-group">
                         <label>Confirmar Senha</label>
@@ -25,11 +25,55 @@
             </div>
         </div>
     </div>
+    <div class="col-xm-10 col-sm-8 col-md-4 col-lg-4">
+        <div class='card'>
+            <div class='card-header'><h4 class="my-2">Sua senha deve conter...</h4></div>
+            <div class='card-body'>
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-row" id="password-check">
+                        <i class="material-icons mr-2">check_circle_outline</i>
+                        <p> 8 a 16 digitos</p>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <i class="material-icons mr-2">check_circle_outline</i>
+                        <p> 1 número</p>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <i class="material-icons mr-2">check_circle_outline</i>
+                        <p> 1 letra minúscula</p>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <i class="material-icons mr-2">check_circle_outline</i>
+                        <p> 1 letra maiúscula</p>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <i class="material-icons mr-2">check_circle_outline</i>
+                        <p> 1 caractere especial</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section('js')
 <script type="text/javascript" src="{{asset('js/jquery.validate.min.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-<script src="{{Module::asset('usuario:js/login/validacao-form.js')}}"></script>
+<script src="{{Module::asset('usuario:js/recuperar/validacao-form.js')}}"></script>
+
+<script>
+    $("#password").on('keyup', function() {
+
+        if($(this).val().length >= 8 && $(this).val().length <= 16) {
+            $("#password-check").find('i').css('color', 'SpringGreen')
+            $("#password-check").find('p').css('text-decoration', 'line-through')
+        } else {
+            $("#password-check").find('i').css('color', 'black')
+            $("#password-check").find('p').css('text-decoration', 'none')
+        }
+
+
+    })
+</script>
 @endsection
 @endsection

@@ -16,7 +16,7 @@ class VerificarSenha implements Rule
 
     public function __construct()
     {
-        // $this->error = $error;
+        $this->error = " ";
     }
 
     /**
@@ -29,33 +29,34 @@ class VerificarSenha implements Rule
      */
     public function passes($attribute, $senha)
     {
+        global $error;
         //TESTE
 
         if( strlen($senha) < 8 ) {
-            $error = 'A senha deve ter mais de 8 caracteres';
+            $error = "A senha deve ter mais de 8 caracteres";
             return false;
         }
-        // if( strlen($senha) > 20 ) {
-        //     $error .= "Password too long!
-        // ";
-        // }
+        elseif( strlen($senha) > 16 ) {
+            $error = "A senha deve ter menos de 16 caracteres";
+            return false;
+        }
         
-        // if( !preg_match("#[0-9]+#", $senha) ) {
-        // $error .= "Password must include at least one number!
-        // ";
-        // }
-        // if( !preg_match("#[a-z]+#", $senha) ) {
-        // $error .= "Password must include at least one letter!
-        // ";
-        // }
-        // if( !preg_match("#[A-Z]+#", $senha) ) {
-        // $error .= "Password must include at least one CAPS!
-        // ";
-        // }
-        // if( !preg_match("#\W+#", $senha) ) {
-        // $error .= "Password must include at least one symbol!
-        // ";
-        // }
+        elseif( !preg_match("#[0-9]+#", $senha) ) {
+            $error = "A senha deve conter ao menos um número";
+            return false;
+        }
+        elseif( !preg_match("#[a-z]+#", $senha) ) {
+            $error = "A senha deve conter ao menos uma letra minúscula";
+            return false;
+        }
+        elseif( !preg_match("#[A-Z]+#", $senha) ) {
+            $error = "A senha deve deve conter ao menos uma letra maiúscula";
+            return false;
+        }
+        elseif( !preg_match("#\W+#", $senha) ) {
+            $error = "A senha deve ter conter ao menos um caractere especial";
+            return false;
+        }
 
 
         //
@@ -68,6 +69,7 @@ class VerificarSenha implements Rule
      */
     public function message()
     {
+        global $error;
         return $error;
     }
 }
