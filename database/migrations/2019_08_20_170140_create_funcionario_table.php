@@ -16,6 +16,7 @@ class CreateFuncionarioTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('nome');
+			$table->string('foto');
 			$table->date('data_nascimento');
 			$table->boolean('sexo');
 			$table->date('data_admissao');

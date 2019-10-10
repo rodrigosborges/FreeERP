@@ -32,8 +32,8 @@ $(document).ready(function(){
         escolheMascaraTel($(this))
     })
     
-    //alterar a cidade quando precisar
-    $(".estados").change()
+    // //alterar a cidade quando precisar
+    // $(".estados").change()
 })
 
 $(document).on("change", ".tipo_telefones", function() {
@@ -166,10 +166,10 @@ $(document).on("click", ".del-cur", function() {
 
 //###################
 //ENDEREÇO
-$('.estados').change(function() {
-    atualizarCidades($(".estados option:selected").data("uf"), $(".estados").data('cidade'))
-    $(".estados").data('cidade','')
-})
+// $('.estados').change(function() {
+//     atualizarCidades($(".estados option:selected").data("uf"), $(".estados").data('cidade'))
+//     $(".estados").data('cidade','')
+// })
 
 function atualizarCamposEndereco(dados) {
     selecionarEstado(dados.uf)
@@ -212,6 +212,7 @@ function atualizarCidades(uf, selected_id = null) {
             $(".cidades option").remove();
             $(".cidades").append("<option value=''>Selecione</option>")
             $.each(data, function(i, cidade) {
+                console.log(selected_id+" -- "+cidade.id);
                 $(".cidades").append(`<option ${selected_id == cidade.id ? 'selected' : ''} value=${cidade.id}>${cidade.nome}</option>`)
             })
         }
@@ -264,6 +265,12 @@ $(document).ready(function(){
             console.log('success')
         }
     })
+
+    let uf = $('.estados option:selected').data('uf')
+    let cidadeSelecionada = $('#estado_id').data('cidade')
+    
+    atualizarCidades(uf, cidadeSelecionada)
+
 }) 
 //MÁSCARAS
 $(".data").mask('00/00/0000')

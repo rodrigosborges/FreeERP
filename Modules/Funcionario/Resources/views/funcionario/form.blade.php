@@ -115,6 +115,19 @@
             @endif
         </div>
 
+        @if($data['model'] == '' )
+        <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Foto</span>
+            </div>
+            <div class="custom-file">
+                <input type="file" name="foto" class="custom-file-input" id="foto">
+                <label class="custom-file-label" for="foto">Selecione a foto</label>
+            </div>
+        </div>
+        @endif
+
+
         <strong><h6 class="mt-5 mb-3">Documentos</h6></strong>
         <hr>
         <div id="documentos">
