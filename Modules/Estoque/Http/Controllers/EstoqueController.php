@@ -337,6 +337,7 @@ class EstoqueController extends Controller
             $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('quantidade', '>', 0)->get();
             $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"');
             $maior_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->max('preco_custo');
+            $menor_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->min('preco_custo');
             //Se for para selecionar o período com um estoque específico
         } else {
             $query_result = DB::select(
@@ -348,6 +349,7 @@ class EstoqueController extends Controller
                   order by data asc'
             );
             $maior_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('estoque_id', $estoque_id)->where('quantidade', '>', 0)->max('preco_custo');
+            $menor_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('estoque_id', $estoque_id)->where('quantidade', '>', 0)->min('preco_custo');
             $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('quantidade', '>', 0)->where('estoque_id', $estoque_id)->get();
             $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '" AND estoque_id = ' . $estoque_id);
         }
@@ -365,6 +367,7 @@ class EstoqueController extends Controller
         }
 
         $data = [
+            'menor_custo' => $menor_preco,
             'estoque_id' => $estoque_id,
             'maior_custo' => $maior_preco,
             'custo_medio' => round($total / $quantidade_movimentada[0]->qtd, 2),
