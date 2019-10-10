@@ -4,7 +4,7 @@
 
 
 <div class="container">
-    <form action="POST" action="{{url('/estoque/relatorios/movimentacao')}}" id="form">
+    <form method="POST" action="{{url('/estoque/relatorio/movimentacao')}}" id="form">
         @csrf
         <div class="row">
             <div class="form-group col-lg-4 col-sm-12">
@@ -30,14 +30,15 @@
         </div>
     </form>
 </div>
+@if($data['flag'] == 1)
     <div class="container">
         <div class="row">
             <div class="form-group col-lg-4 col-sm-12">
                 <div class="card">
-                    <div class="cardheader">
-                        Relatório da Movimentação
+                    <div class="card-header">
+                        Relatório 
                     </div>  
-                    <div class="cardbody">
+                    <div class="card-body">
                     Estoque Selecionado
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
@@ -50,14 +51,14 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">date_range</div>
                         </div>
-                        <input type="text" disabled class="form-control" name="datainicial">
-                    </div>
+                        <input type="text" disabled class="form-control" value="{{isset($data['dataInicial']) ? $data['dataInicial'] : ''}}" >
+                    </div>                                                                         
                     Data Final 
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">date_range</div>
                         </div>
-                        <input type="text" disabled class="form-control" name="datafinal">
+                        <input type="text" disabled class="form-control" value="{{isset($data['dataFinal']) ? $data['dataFinal'] : ' '}}" >
                     </div>
                     Total de entradas
                     <div class="input-group mb-2">
@@ -71,115 +72,78 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">trending_down</div>
                         </div>
-                        <input type="text" disabled class="form-control" name="saida    ">  
+                        <input type="text" disabled class="form-control" name="saida">  
+                    </div>
+                    Dia com maior Movimentação
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text material-icons">arrow_upward</div>
+                        </div>
+                        <input type="text" disabled class="form-control" name="saida">  
+                    </div>
+                    Dia com menor Movimentação
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text material-icons">arrow_downward</div>
+                        </div>
+                        <input type="text" disabled class="form-control" name="saida">  
                     </div>
 
+                    
+
                     </div>
+                
+              
                 </div>
+                
             
+            </div>
+            <div class="card col-8">
+                <div class="card-header">Movimentações</div>
+                <canvas id="myChart"></canvas>
+                <canvas id="myChart2"></canvas>
             </div>
     
         </div>
     </div>
+@endif
 
-
-<!-- 
-
-
-
-
-
-
-
-<table class="table">
-    <form action="POST" action="{{url('/estoque/relatorios/movimentacao')}}" id="form">
-        @csrf
-        <div class="row">
-            <div class="form-group col-8">
-                <label for="nome">Nome do Produto</label>
-                <input type="text" name="nome" id="search-input" maxlength="45" class="form-control" placeholder="Insira o nome do produto">
-            </div>
-
-            
-        
-        </div>
-
-        <div class="row">
-            <div class="form-group col-4">
-                <label for="categoria">Categoria</label>
-                <select required class="form-control" name="categoria" id="">
-                <option value="-1" selected>Todas as Categorias</option>
-                @foreach($categorias as $categoria)
-                    <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
-                @endforeach
-                </select>
-                
-
-            </div>
-            
-            <div class="form-group col-4">
-                <label for="dataInicial">Data Inicial</label>
-                <input type="date" name="dataInicial" class="form-control" required>            
-            </div>
-            
-            <div class="form-group col-4">
-                <label for="dataFinal">Data Final</label>
-                <input type="date" name="dataFinal" class="form-control" required>            
-            </div>
-        
-        </div>
-
-        <div class="row">
-            <div class="form-group col-12">
-                <button type="submit" name="btn" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
-            </div>    
-        </div>
-        
-        <thead class="">
-       
-        <tr>
-            <td scope="col">ID</td>
-            <td scope="col">Nome</td>
-            <td scope="col">Data</td>
-            <td scope="col">Entrada</td>
-            <td scope="col">Saída</td>
-        
-        </tr>
-        </thead>
-    </form>
-
-
-    <tbody>
-    </tbody>
-
-    <tfoot>
-    </tfoot>
-
-</table>
-
-     -->
-
-<div class="row mt-5 mb-5">
-        <div class="col-6">
-            <canvas id="myChart"></canvas>
-        </div>
-    </div>
 
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
+var ctx2 = document.getElementById('myChart2').getContext('2d');
+
 var labels = <?php echo $data['labels']; ?>;
 var chart = new Chart(ctx, {
     // The type of chart we want to create
-    type: 'line',
+    type: 'bar',
 
     // The data for our dataset
     data: {
         labels: labels,
         datasets: [{
-            label: 'Movimentação',
+            label: 'Movimentação: Entrada',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: <?php echo $data['dados']; ?>
+            data: <?php echo $data['dadosEntrada']; ?>
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+var chart2 = new Chart(ctx2, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Movimentação: Saída',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: <?php echo $data['dadosSaida']; ?>
         }]
     },
 

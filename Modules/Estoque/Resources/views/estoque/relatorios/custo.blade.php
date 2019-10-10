@@ -2,13 +2,6 @@
 @section('title', 'Relatório de Custos')
 @section('body')
 <div class="container">
-    <form method="POST" action="{{url('/estoque/pdf')}}">
-    @csrf
-        <input type="text" name="data_inicial" hidden value="{{isset($data['data_inicial']) ? $data['data_inicial'] : ''}}">
-        <input type="text" name="data_final" hidden value="{{isset($data['data_final']) ? $data['data_final'] : ''}}">
-        <input type="text" name="estoque_id" hidden value="{{isset($data['estoque_id']) ? $data['estoque_id'] : ''}}">
-        <button type="submit" class="btn btn-primary">Gerar PDF</button>
-    </form>
     <form method="POST" action="{{url('/estoque/relatorio/custos')}}" id="form">
         @csrf
         <div class="row">
@@ -37,6 +30,15 @@
 </div>
 @if($data['flag'] == 1)
 <div class="container">
+    <div class="row text-right">
+        <form method="POST" action="{{url('/estoque/pdf')}}">
+        @csrf
+            <input type="text" name="data_inicial" hidden value="{{isset($data['data_inicial']) ? $data['data_inicial'] : ''}}">
+            <input type="text" name="data_final" hidden value="{{isset($data['data_final']) ? $data['data_final'] : ''}}">
+            <input type="text" name="estoque_id" hidden value="{{isset($data['estoque_id']) ? $data['estoque_id'] : ''}}">
+            <button type="submit" class="btn btn-primary">Gerar PDF</button>
+        </form>
+    </div>
     <div class="row d-flex justify-content-between">
         <div class="form-group col-lg-4 col-sm-12">
             <div class="card">
@@ -123,7 +125,7 @@
                     <div class="row">
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Menor preço unitario</label>
-                            <input type="text" class="form-control text-right" name="quantidade" disabled>
+                            <input type="text" class="form-control text-right" name="quantidade" value="R${{isset($data['menor_custo']) ? $data['menor_custo'] : ''}}" disabled>
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Dia com maior movimentação</label>

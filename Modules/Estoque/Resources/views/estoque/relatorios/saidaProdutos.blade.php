@@ -79,7 +79,7 @@
         <div class="card">
             <div class="card-header">Header</div>
             <div class="card-body">
-                <canvas id="chart1" class="chart_custo" width="300"></canvas>
+                <canvas id="chart1" class="chart_custo" height="245px"></canvas>
             </div>
         </div>
     </div>
@@ -107,12 +107,12 @@
                     <!--L 2-->
                     <div class="form-group col-lg-4 col-md-12 col-sm-12">
                         <label for="qtd_movimentada">Dia com maior custo </label>
-                        <input type="text" class="form-control" disabled>
+                        <input type="text" id= "maior_custo" class="form-control" disabled>
                     </div>
 
                     <div class="form-group  col-lg-4 col-md-12 col-sm-12">
                         <label>Dia com menor custo</label>
-                        <input type="text" class="form-control" disabled>
+                        <input type="text"  id= "menor_custo" class="form-control" disabled>
                     </div>
                     <div class="form-group  col-lg-4 col-md-12 col-sm-12">
                         <label for="">Maior Preço unitário </label>
@@ -167,7 +167,7 @@
 
     </div>
     <div class="col-lg-6 col-md-12 col-sm-12">
-        <canvas id="chart2" class="chart_custo" width="300"></canvas>
+        <canvas id="chart2" class="chart_custo" height="250"></canvas>
     </div>
 </div>
 
@@ -201,19 +201,36 @@
 
                 }
             }).done(function(data) {
+                
                 data = $.parseJSON(data);
-                console.log("Caraio", data['estoque'])
-               
+               console.log(data['movimentacao'])
+               var diaMaiorCusto =data['movimentacao'][0]['preco_custo'] * data['movimentacao'][0]['quantidade']
+              
+               var diaMenorCusto =data['movimentacao'][0]['preco_custo'] * data['movimentacao'][0]['quantidade'] 
                var datas =[]
                var precos= []
+               var produtos=[]
                $.each(data['movimentacao'],function(chave,valor){
                    datas[chave]= valor['created_at'];
                    precos[chave]= valor['preco_custo']* valor['quantidade'];
+                   produtos[chave] =  data['produtos'][chave]['nome']
+                 if((valor['preco_custo']* valor['quantidade']) >=diaMaiorCusto){
+                     diaMaiorCusto = valor['created_at']
+                 }
+                 if((valor['preco_custo']* valor['quantidade'])<=diaMenorCusto){
+                     diaMenorCusto = valor['created_at']
+                 }
                })
-               console.log("Datas:"+datas);
-               console.log("Valores:"+precos);
+               $('#maior_custo').val(diaMaiorCusto)
+               $('#menor_custo').val(diaMenorCusto)
+               console.log('Maior custo', diaMaiorCusto)
+               console.log('menor custo', diaMenorCusto)
+               console.log("dados:"+data);
+            
+               
 
                mostraGrafico1(datas, precos)
+               mostraGrafico2(produtos, precos)
                //mostraGrafico2(datas, precos)
                
              
@@ -290,7 +307,7 @@
 
         }
 
-        function mostraGrafico2(estoque, valores) {
+        function mostraGrafico2(produtos, valores) {
             var ctx = document.getElementById('chart2').getContext('2d');
             var chart = new Chart(ctx, {
                 // The type of chart we want to create
@@ -298,12 +315,12 @@
 
                 // The data for our dataset
                 data: {
-                    labels: ['Estoque 1', 'Estoque 2', 'Estoque 3', 'Estoque 4'],
+                    labels: produtos,
                     datasets: [{
                         label: 'Total de saída',
                         backgroundColor: ["rgba(29, 0, 207, 0.7)", "rgba(255,0,0,0.7)", "rgba(257,33,100,0.7)", "rgba(10,255,128,0.7)"],
                         borderColor: ['rgb(255, 99, 132, 1)', 'rgba(0,200,129,1)', 'rgba(69,69,69,1)', 'rgba(200,100,0,0.7)'],
-                        data: [3, 10, 5, 2]
+                        data: valores
                     }]
                 },
 
