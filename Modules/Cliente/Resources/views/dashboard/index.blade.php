@@ -49,7 +49,9 @@
                 <div class="card h-100">
                 <div class="card-body ">
                     <h5 class="card-title">Média de Gasto por Compra</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <div id='mediagasto'>
+                        
+                    </div>
                 </div>
                 </div>
             </div>
@@ -57,7 +59,9 @@
                 <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">Total de Clientes</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <div id='totalclientes'>
+                        
+                    </div>
                     </div>
                 </div>
             </div>
@@ -65,7 +69,9 @@
                 <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">Total de Vendas</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <div id='totalvendas'>
+                        
+                    </div>
                 </div>
                 </div>
             </div>
@@ -104,14 +110,30 @@
 
         $(document).ready(function(){
 
-            //[{"month":"Jan", "value": .07}];
+            $.get(main_url+"/cliente/dashboard/totalvendasmes/2019", function(dataset){
+            
+                newDataset = []
 
-            $.get(main_url+"cliente/dashboard/totalvendasmes/2019", function(dataset){
-                console.log(dataset);
+                Object.keys(dataset).map((key) => {
+                    newDataset.push({
+                    month: key, 
+                    value: dataset[key]
+                    })
+                })
+                grafico("#totalCompras", newDataset);
+                    
+            
+            $.get(main_url+"/cliente/dashboard/totalclientes/2019", function(dataset){
+                $('#totalclientes').append(dataset);
+            });
+            $.get(main_url+"/cliente/dashboard/totalvendas/2019", function(dataset){
+                $('#totalvendas').append(dataset);
+            });
+            $.get(main_url+"/cliente/dashboard/mediagasto/2019", function(dataset){
+                $('#mediagasto').append(dataset);
             });
 
-            // grafico("#totalCompras", dataset)
-            // grafico("#totalProdutos", dataset)
+
         })
 
         function grafico(id, dataset){
@@ -124,7 +146,7 @@
             var barColor = d3.interpolateInferno(0.4);
             var highlightColor = d3.interpolateInferno(0.3);
 
-            var formatPercent = d3.format(".0%");
+            var formatPercent = d3.format(",.2f");
 
             var svg = d3.select(id).append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -142,9 +164,9 @@
             var xAxis = d3.axisBottom(x).tickSize([]).tickPadding(10);
             var yAxis = d3.axisLeft(y);
 
-            var max = 0
+            var max = 0;
 
-            dataset.map(d => {
+            dataset.map( d => {
                 max = d.value > max ? d.value : max
             })
 
@@ -152,8 +174,13 @@
                 .attr("class", "tooltip")				
                 .style("opacity", 0);
 
-            x.domain(dataset.map( d => { return d.month; }));
-            y.domain([0, max]);
+            
+
+            
+            x.domain(dataset.map( d => { return d.month}));
+            y.domain([0, max]);;
+
+            console.log(x);
 
             svg.append("g")
                 .attr("class", "x axis")
