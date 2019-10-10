@@ -30,10 +30,14 @@ Route::prefix('cliente')->group(function() {
 
     Route::get('{cliente_id}/pedidos/pdf/{start}/{end}', 'PedidoController@pdf'); //Teste pdf
 
-    Route::get('/dashboard/totalvendasmes/{ano}','PedidoController@getVendasMes');
-    
+    Route::get('/dashboard/totalvendasmes/{ano}','PedidoController@getVendasMes'); 
 
     Route::get('/','ClienteController@index');
+
+    //Dashboard thomás
+    Route::get('/dashboard/mediagasto/{ano}','DashboardController@getMediaGasto');
+    Route::get('/dashboard/totalclientes/{ano}','DashboardController@getTotalClientes');
+    Route::get('/dashboard/totalvendas/{ano}','DashboardController@getTotalVendas');
 });
 
 
