@@ -26,8 +26,10 @@ Route::prefix('funcionario')->group(function() {
     Route::get('funcionario/atestado/{id}', 'FuncionarioController@CreateAtestado');
     Route::post('funcionario/storeAtestado', 'FuncionarioController@storeAtestado');
 
+    //Rotas do demissão
     Route::get('funcionario/demissao/{id}', 'FuncionarioController@demissao');
     Route::post('storeDemissao', 'FuncionarioController@storeDemissao');
+    Route::get('funcionario/showDemissao/{id}', 'FuncionarioController@showDemissao');
     
     //Rotas do FeriasController
     Route::get('ferias/editarFerias/{id}','FeriasController@edit');

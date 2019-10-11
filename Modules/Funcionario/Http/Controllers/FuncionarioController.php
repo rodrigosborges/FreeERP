@@ -41,7 +41,9 @@ class FuncionarioController extends Controller{
 
         $funcionarios = $funcionarios->paginate(10);
 
-        return view('funcionario::funcionario.table', compact('funcionarios', 'status'));
+        $demissao = Demissao::count();
+    
+        return view('funcionario::funcionario.table', compact('funcionarios', 'status', 'demissao'));
     }
     
     public function create(){
@@ -573,6 +575,11 @@ class FuncionarioController extends Controller{
             return $e;
         }
     }
+
+        public function showDemissao(){
+
+            return view('funcionario::funcionario.showDemissao');
+        }
 
         //parte de atestado
         public function CreateAtestado($id){

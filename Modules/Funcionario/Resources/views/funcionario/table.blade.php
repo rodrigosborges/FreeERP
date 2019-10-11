@@ -33,7 +33,11 @@
                             {{ csrf_field() }}
                                 <input type="submit" class="btn btn-{{$funcionario->trashed() ? 'success' : 'danger'}}" value="{{$funcionario->trashed() ? 'Restaurar' : 'Deletar'}}"/>
                         </form> -->
-                        <a class="btn btn-danger" href='{{ url("funcionario/funcionario/demissao/$funcionario->id")}}'>Demitir</a>
+                        @if($demissao == 0)
+                            <a class="btn btn-danger" href='{{ url("funcionario/funcionario/demissao/$funcionario->id")}}'>Demitir</a>
+                        @else
+                            <a class="btn btn-danger" href='{{url("funcionario/funcionario/showDemissao/$funcionario->id")}}'>Gerar Aviso</a>
+                        @endif    
                     </td>
                     
                 </tr>
