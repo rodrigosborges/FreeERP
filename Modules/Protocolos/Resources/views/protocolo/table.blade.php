@@ -15,17 +15,22 @@
                     <td>{{$protocolo->assunto}}</td>
                     @if($status == "ativos" || $status == "meus-protocolos")
                     <td class="min">         
-                        <a class="btn btn-warning" href="">Teste</a>
+                        <a class="btn btn-info" href="">Acompanhar</a>
                     </td>
+                    <td class="min">         
+                        <a class="btn btn-dark" href="">Adicionar comentário</a>
+                    </td>
+                    @endif
+                    @if($status == "ativos")
                     <td class="min">                       
-                        <a class="btn btn-info" href="">Teste</a>
+                        <a class="btn btn-warning" href="">Encaminhar</a>
                     </td>
                     @endif
                     <td class="min">
                         <form action="{{url('protocolos/protocolos', [$protocolo->id])}}" class="input-group" method="POST">
                             {{method_field('DELETE')}}
                             {{ csrf_field() }}
-                                <input type="submit" class="btn btn-{{$protocolo->trashed() ? 'success' : 'danger'}}" value="{{$protocolo->trashed() ? 'Restaurar' : 'Deletar'}}"/>
+                                <input type="submit" class="btn btn-{{$protocolo->trashed() ? 'success' : 'danger'}}" value="{{$protocolo->trashed() ? 'Reabrir' : 'Finalizar'}}"/>
                         </form>
                     </td>
                     
