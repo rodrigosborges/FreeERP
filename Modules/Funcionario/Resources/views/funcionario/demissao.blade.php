@@ -31,7 +31,7 @@
 
             <input type="hidden" name="funcionario_id" value="{{$data['funcionario']->id}}">
         </section>
-
+        <hr>
         <section>
             <h2>Aviso prévio</h2>
             

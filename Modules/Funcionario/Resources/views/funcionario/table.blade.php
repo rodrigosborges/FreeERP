@@ -13,6 +13,7 @@
             @foreach($funcionarios as $funcionario)
                 <tr>
                     <td>{{$funcionario->nome}}</td>
+
                     @if($status == "ativos")
                     <td class="min">         
                             <a class="btn btn-warning" href='{{ url("funcionario/funcionario/$funcionario->id/edit") }}'>Editar</a>
@@ -33,13 +34,19 @@
                             {{ csrf_field() }}
                                 <input type="submit" class="btn btn-{{$funcionario->trashed() ? 'success' : 'danger'}}" value="{{$funcionario->trashed() ? 'Restaurar' : 'Deletar'}}"/>
                         </form> -->
-                        @if($demissao == 0)
+                      
+                        <?php
+                        if($funcionario->demissao()->first()){
+                        ?>
+                            <a class="btn btn-danger" href='{{url("funcionario/funcionario/showDemissao/$funcionario->id")}}'>Gerar Aviso</a> 
+                        <?php
+                        } else {
+                        ?>
                             <a class="btn btn-danger" href='{{ url("funcionario/funcionario/demissao/$funcionario->id")}}'>Demitir</a>
-                        @else
-                            <a class="btn btn-danger" href='{{url("funcionario/funcionario/showDemissao/$funcionario->id")}}'>Gerar Aviso</a>
-                        @endif    
-                    </td>
-                    
+                        <?php 
+                        }
+                        ?>
+                    </td>    
                 </tr>
             @endforeach
         </tbody>

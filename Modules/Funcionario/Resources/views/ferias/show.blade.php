@@ -61,7 +61,7 @@
     @section('footer')
     <div class="text-right">
     <a class="btn btn-success" href="{{url('funcionario/ferias')}}">Voltar</a>
-    </div>
+</div>
 @endsection
 @endsection
 @section('js')

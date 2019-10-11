@@ -30,6 +30,7 @@ Route::prefix('funcionario')->group(function() {
     Route::get('funcionario/demissao/{id}', 'FuncionarioController@demissao');
     Route::post('storeDemissao', 'FuncionarioController@storeDemissao');
     Route::get('funcionario/showDemissao/{id}', 'FuncionarioController@showDemissao');
+    Route::delete('destroyDemissao/{id}', 'FuncionarioController@destroyDemissao');
     
     //Rotas do FeriasController
     Route::get('ferias/editarFerias/{id}','FeriasController@edit');

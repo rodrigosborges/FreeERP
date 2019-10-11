@@ -9,6 +9,7 @@ use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco,Atestado, Curso,
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
 use Modules\Funcionario\Http\Requests\CreateFuncionario;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 
 
@@ -39,11 +40,13 @@ class FuncionarioController extends Controller{
             $funcionarios = $funcionarios->onlyTrashed();
         }
 
-        $funcionarios = $funcionarios->paginate(10);
+        
 
-        $demissao = Demissao::count();
+        $funcionarios = $funcionarios->paginate(10);
+     
     
-        return view('funcionario::funcionario.table', compact('funcionarios', 'status', 'demissao'));
+    
+        return view('funcionario::funcionario.table', compact('funcionarios', 'status'));
     }
     
     public function create(){
@@ -576,20 +579,36 @@ class FuncionarioController extends Controller{
         }
     }
 
-        public function showDemissao(){
-
-            return view('funcionario::funcionario.showDemissao');
+        public function showDemissao($id){
+            $demissao = Demissao::where('funcionario_id', '=', $id)->get()->last()->data_demissao;
+            $demissao = DateTime::createFromFormat('Y-m-d', $demissao)->format('d/m/Y');
+            $funcionario = Funcionario::FindOrFail($id);
+        
+            setlocale(LC_TIME, 'ptb'); // LC_TIME é formatação de data e hora com strftime()
+            $now = Carbon::now();
+            
+            $data = [
+                'nome'       => Funcionario::where('id', '=', $id)->get()->last()->nome,
+                'demissao'   => $demissao,
+                'dia_atual'  => $now->formatLocalized('Caraguatatuba, %d de %B de %Y'),
+                   
+            ];
+           
+            return view('funcionario::funcionario.showDemissao', compact('data', 'funcionario'));
         }
 
+        public function destroyDemissao($id){
+            return 'ok';
+        }
         //parte de atestado
         public function CreateAtestado($id){
             
             $data = [   
-                'atestado' => '',
-                'title' => 'Cadastro de Atestado',
+                'atestado'      => '',
+                'title'         => 'Cadastro de Atestado',
                 'funcionario'   => Funcionario::findOrFail($id),
-                'url' => 'funcionario/funcionario/storeAtestado',
-                'method' => 'post'
+                'url'           => 'funcionario/funcionario/storeAtestado',
+                'method'        => 'post'
                 
             ];
            
