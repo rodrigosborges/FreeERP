@@ -1,14 +1,14 @@
 @extends('cliente::template')
-  @section('title')
-    Cadastro de Compras - {{ $cliente->nome }}
-  @endsection
+@section('title')
+Cadastro de Compras - {{ $cliente->nome }}
+@endsection
 @section('content')
 <div class="card">
   <div id="opcoes" class="card-header flex">
     <div class="row col-12">
       <h3>Lista de Pedidos - {{ $cliente->nome }}</h3>
     </div>
-
+    <input type="hidden" id="cliente_id" value="{{$cliente->id}}">
     <div class="row input-group justify-content-between">
 
       <form class="d-flex form-inline justify-content-between" action="">
@@ -40,7 +40,8 @@
       {{-- Botao nova compra e pdf --}}
       <div class="align-self-end text-right">
         <a class="btn btn-secondary" title="{{$cliente->id}}" href="" id="btn_rel">Gerar PDF</a>
-        <a class="btn btn-primary" href="{{url('/cliente/'.$cliente->id.'/pedido/novo')}}" style="color: white;">Adicionar
+        <a class="btn btn-primary" href="{{url('/cliente/'.$cliente->id.'/pedido/novo')}}"
+          style="color: white;">Adicionar
           Compra</a>
       </div>
 
@@ -68,121 +69,7 @@
             Excluir selecionados
           </button>
         </div>
-        <table class="table bordered text-center col-md-12" id="tablePedidos">
-          <thead>
-            <tr>
 
-              <th>Número</th>
-              <th>Data</th>
-              <th>Valor dos Itens</th>
-              <th>Valor do Pedido</th>
-              <th>Desconto do Pedido</th>
-              <th>Opções</th>
-              <th>Ver mais</th>
-              <th>
-                <input type="checkbox" id="selecionaTodos" />
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($cliente->pedidos as $pedido)
-            <!-- Modal -->
-            <div class="modal fade" id="modal{{$pedido->id}}" tabindex="-1" role="dialog"
-              aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Itens do pedido {{ $pedido->numero }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <ul class="list-group p-3">
-                      <li class="list-group-item bg-light">
-                        <div class="row">
-                          <div class="col">Produto</div>
-                          <div class="col">Quantidade</div>
-                          <div class="col">Preço Unitário</div>
-                          <div class="col">Desconto</div>
-                          <div class="col">Valor Total</div>
-                        </div>
-                      </li>
-
-                      @forelse ($pedido->vl_total_itens() as $item)
-
-                      <li class="list-group-item">
-                        <div class="row">
-
-                          <div class="col">{{ $item->nome }}</div>
-                          <div class="col">{{$item->quantidade}}</div>
-                          <div class="col">{{ "R$ ".number_format($item->preco, 2, ',', '.') }}</div>
-                          <div class="col">{{ $item->desconto." %"}}</div>
-                          <div class="col">{{ "R$ ".number_format($item->valor_total, 2, ',', '.')}}</div>
-
-                        </div>
-
-                      </li>
-
-                      @empty
-                      <div class="pt-1 text-center">
-                        <h5>Compra sem item cadastrado</h5>
-                      </div>
-                      @endforelse
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <tr>
-
-              <td>{{$pedido->numero}}</td>
-              <td name="dtPedido">{{ $pedido->data }}</td>
-              <td>{{ "R$ ".number_format($pedido->vl_itens_desconto(), 2, ',', '.') }}</td>
-              <td>{{ "R$ ".number_format($pedido->vl_total_pedido(), 2, ',', '.') }}</td>
-              <td>{{ ($pedido->desconto). "%" }}</td>
-              <td>
-                <div class="flex row justify-content-around">
-                  {{-- Editar pedido --}}
-                  <a href="{{ url( "/cliente/pedido/".$pedido->id )}}" class="btn btn-sm btn-warning"
-                    name="edit">Editar</button>
-                  </a>
-                  {{-- BOTAO PARA EXCLUSAO DO ITEM INDIVIDUALMENTE --}}
-                  {!! Form::open(['method' => 'DELETE','route' => ['delete.pedido', $pedido->id] ]) !!}
-                  <button type="submit" class="btn btn-sm btn-danger" name="delete">Excluir</button>
-                  {!! Form::close() !!}
-                </div>
-              </td>
-
-              <td>
-                <button class="btn btn-sm btn-light" id="ocultar" type="button" data-toggle="modal"
-                  data-target="#modal{{$pedido->id}}" aria-expanded="false" aria-controls="collapse{{$pedido->id}}">
-                  <i class="material-icons">
-                    more_horiz
-                  </i>
-                </button>
-              </td>
-
-              <td> {{-- checkbox individual --}}
-                <input type="checkbox" name="selecionado" value="{{$pedido->id}}">
-              </td>
-            </tr>
-            {{-- Tabela detalhando --}}
-            <tr>
-              <td colspan="100%" style="height: 0px; padding: 0px; margin:0px;">
-                <div class="collapse" id="collapse{{$pedido->id}}">
-                  <div class="row d-flex justify-content-between">
-
-
-                  </div>
-                </div>
-              </td>
-            </tr>
-            @endforeach
-
-          </tbody>
-        </table>
       </div>
       <!--Final tabela e div -->
       {{-- Inicio da tab Inativos --}}
@@ -192,127 +79,35 @@
             Recuperar selecionados
           </button>
         </div>
-        <table class="table bordered text-center col-md-12">
-          <thead>
-            <tr>
-              <th>Número</th>
-              <th>Data</th>
-              <th>Valor Liquido</th>
-              <th>Desconto do Pedido</th>
-              <th>Opções</th>
-              <th>Ver mais</th>
-              <th>
-                {{-- CheckBox  selecionar todos inativos --}}
-                <input type="checkbox" id="todosInativos" />
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {{-- Preenche apagados --}}
-            @foreach ($pedidosApagados as $pedido)
-            <!-- Modal -->
 
-            <div class="modal fade" id="modalInativo{{$pedido->id}}" tabindex="-1" role="dialog"
-              aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Itens do pedido {{$pedido->numero}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <ul class="list-group p-3">
-                      <li class="list-group-item bg-light">
-                        <div class="row">
-                          <div class="col">Produto</div>
-                          <div class="col">Quantidade</div>
-                          <div class="col">Preço Unitário</div>
-                          <div class="col">Desconto</div>
-                          <div class="col">Valor Total</div>
-                        </div>
-                      </li>
-
-                      @forelse ($pedido->vl_total_itens() as $item)
-
-                      <li class="list-group-item">
-                        <div class="row">
-
-                          <div class="col">{{ $item->nome }}</div>
-                          <div class="col">{{$item->quantidade}}</div>
-                          <div class="col">{{ "R$ ".number_format($item->preco, 2, ',', '.') }}</div>
-                          <div class="col">{{ $item->desconto." %"}}</div>
-                          <div class="col">{{ "R$ ".number_format($item->valor_total, 2, ',', '.')}}</div>
-
-                        </div>
-
-                      </li>
-
-                      @empty
-                      <div class="pt-1 text-center">
-                        <h5>Compra sem item cadastrado</h5>
-                      </div>
-                      @endforelse
-
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <tr>
-              <td>{{$pedido->numero}}</td>
-              <td name="dtPedido">{{ $pedido->data }}</td>
-              <td>{{"R$ ".number_format($pedido->vl_total_pedido(), 2, ',', '.') }}</td>
-              <td>{{ ($pedido->desconto). "%" }}</td>
-              <td>
-                <!--BOTOES -->
-                <div class="flex row justify-content-around">
-                  {{-- Restaurar pedido apagado --}}
-                  {!! Form::open(['method' => 'DELETE','route' => ['delete.pedido', $pedido->id] ]) !!}
-                  <button type="submit" class="btn btn-sm btn-success" name="restaurar">Restaurar</button>
-                  {!! Form::close() !!}
-                </div>
-              </td>
-
-              <td>
-                {{-- Exibir mais --}}
-                <button class="btn btn-sm btn-light" id="ocultar" type="button" data-toggle="modal" data-target="#modalInativo{{$pedido->id}}"
-                  aria-expanded="false" aria-controls="modal{{$pedido->id}}">
-                  <i class="material-icons">
-                    more_horiz
-                  </i>
-                </button>
-              </td>
-              <td>
-                {{-- CheckBox individual --}}
-                <input type="checkbox" name="selRec" value="{{$pedido->id}}">
-              </td>
-
-            </tr>
-
-            <tr>
-              <td colspan="100%" style="height: 0px; padding: 0px; margin:0px;">
-                <div class="collapse" id="collapse{{$pedido->id}}">
-                  <div class="row d-flex justify-content-between">
-
-                   
-                  </div>
-                </div>
-              </td>
-            </tr>
-            @endforeach
-
-          </tbody>
-        </table>
       </div>
     </div>
   </div>
 </div>
 @endsection
 @section('script')
+<script>
+    $(document).ready(function(){
+        tabela('ativos');
+        tabela('inativos');
 
+        $(document).on('click','.page-link', function(e){
+            e.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            var status = $(this).closest('.tab-pane').attr('id')
+            tabela(status, page)
+        })
+    })
+    function tabela(status, page=null){
+        setLoading($('#'+status))
+        var id = $('#cliente_id').val();
+        $.get(main_url+'/cliente/'+id+'/pedido/table/'+status+'?page='+page, function(table){
+            $('#'+status).html(table);
+        })
+    }
+    
+    
+</script>
 
 <script>
   // Acao botao excluir todos
@@ -348,7 +143,7 @@
   function deletarSelecionados(selecionados, tipo) {
     console.log(selecionados);
     $.ajax({
-      url: main_url+"/cliente/pedido/",
+      url: main_url + "/cliente/pedido/",
       type: 'POST',
 
       data: { ids: selecionados, _method: "delete", '_token': $('input[name=_token]').val(), tipo: tipo }
@@ -375,15 +170,15 @@
     });
   }
 
-  $("#btn_rel").on("click", function(){
+  $("#btn_rel").on("click", function () {
     let cliente_id = $(this).attr("title");
-    let url = "/cliente/"+cliente_id+"/pedidos/pdf/";
+    let url = "/cliente/" + cliente_id + "/pedidos/pdf/";
 
     let dt_inicio = $("#dtInicio").val();
     if (dt_inicio != '') {
       dt_inicio = dt_inicio.split("-");
       dt_inicio = new Date(dt_inicio[0], dt_inicio[1] - 1, dt_inicio[2]);
-    }else{
+    } else {
       dt_inicio = new Date("01/01/2000");
     }
 
@@ -391,22 +186,22 @@
     if (dt_fim != '') {
       dt_fim = dt_fim.split("-");
       dt_fim = new Date(dt_fim[0], dt_fim[1] - 1, dt_fim[2]);
-    }else{
+    } else {
       dt_fim = new Date("01/01/2100");
     }
 
-    url += dataFormatada(dt_inicio)+"/"+dataFormatada(dt_fim);
-      $(this).attr("href", url);
+    url += dataFormatada(dt_inicio) + "/" + dataFormatada(dt_fim);
+    $(this).attr("href", url);
   });
 
-  function dataFormatada(data){
+  function dataFormatada(data) {
     let dia = data.getDate().toString(),
-    diaF = (dia.length == 1) ? '0'+dia : dia,
-    mes  = (data.getMonth()+1).toString(),
-    mesF = (mes.length == 1) ? '0'+mes : mes,
-    anoF = data.getFullYear();
+      diaF = (dia.length == 1) ? '0' + dia : dia,
+      mes = (data.getMonth() + 1).toString(),
+      mesF = (mes.length == 1) ? '0' + mes : mes,
+      anoF = data.getFullYear();
 
-    return diaF+"-"+mesF+"-"+anoF;
+    return diaF + "-" + mesF + "-" + anoF;
   }
 
   // Filtro de data na tabela

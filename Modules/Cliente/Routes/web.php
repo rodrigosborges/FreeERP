@@ -21,7 +21,8 @@ Route::prefix('cliente')->group(function() {
 
     Route::get('{cliente_id}/pedido', 'PedidoController@index');//Lista pedidos
     Route::get('{cliente_id}/pedido/novo', 'PedidoController@novo');// Novo pedido
-    
+    Route::get('{cliente_id}/pedido/table/{status}', 'PedidoController@table');
+
     Route::delete('pedido/{pedido_id}', 'PedidoController@destroy')->name('delete.pedido');//Deletar pedido
     Route::get('pedido/{pedido_id}','PedidoController@edit');//Abrir view eddição
 

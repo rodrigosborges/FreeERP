@@ -16,8 +16,25 @@ class PedidoController extends Controller
     public function index($cliente_id)
     {
         $cliente = Cliente::findOrFail($cliente_id);
-        $pedidosApagados = $cliente->pedidos()->onlyTrashed()->get();
-        return view('cliente::pedidos.index', compact('cliente','pedidosApagados'));
+
+        return view('cliente::pedidos.index',compact('cliente'));
+    }
+
+    public function table($cliente_id, $status) {
+    
+       
+        if ($status != 'ativos' && $status != 'inativos') return ;
+        
+        if($status == 'ativos'){
+            $pedidos = Cliente::findOrFail($cliente_id)->pedidos()->paginate(5);
+        }else {
+            $pedidos = Cliente::findOrFail($cliente_id)->pedidos()->onlyTrashed()->paginate(5);
+        }
+        
+        
+
+        return view('cliente::pedidos.table', compact('pedidos'));
+
     }
 
     //view novo pedido
