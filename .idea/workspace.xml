@@ -2,13 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b84905e5-ba51-4cac-9254-655e0db8a3b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/assets/audio/notificacao.ogg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_07_15_145414_create_funcionario_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_07_15_145414_create_funcionario_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_08_23_153323_create_compartilhamento_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_08_23_153323_create_compartilhamento_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_09_05_192826_create_aprovacao_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_09_05_192826_create_aprovacao_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_10_04_191318_create_convite_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Migrations/2019_10_04_191318_create_convite_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/CalendarioDatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/CalendarioDatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Aprovacao.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Aprovacao.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Compartilhamento.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Compartilhamento.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Funcionario.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Funcionario.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/VerificationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/VerificationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -250,7 +263,8 @@
       <workItem from="1570130720301" duration="7710000" />
       <workItem from="1570220838187" duration="10315000" />
       <workItem from="1570622862083" duration="8652000" />
-      <workItem from="1570726145627" duration="13633000" />
+      <workItem from="1570726145627" duration="13772000" />
+      <workItem from="1570832539819" duration="6323000" />
     </task>
     <task id="LOCAL-00001" summary="Calendário exibindo todos eventos do usuário e algumas refatorações">
       <created>1562796695507</created>
@@ -413,7 +427,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570731995216</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Iniciando notificações de evento">
+      <created>1570745238011</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1570745238011</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -472,7 +493,8 @@
     <MESSAGE value="Adicionado revogação do compartilhamento" />
     <MESSAGE value="Ajustes na tela de compartilhamento de agenda" />
     <MESSAGE value="Função para duplicar eventos" />
-    <option name="LAST_COMMIT_MESSAGE" value="Função para duplicar eventos" />
+    <MESSAGE value="Iniciando notificações de evento" />
+    <option name="LAST_COMMIT_MESSAGE" value="Iniciando notificações de evento" />
   </component>
   <component name="masterDetails">
     <states>

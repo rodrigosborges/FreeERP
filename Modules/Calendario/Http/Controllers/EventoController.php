@@ -16,6 +16,12 @@ use Modules\Calendario\Notifications\EventoNotification;
 
 class EventoController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function eventos()
     {
         $eventos = [];

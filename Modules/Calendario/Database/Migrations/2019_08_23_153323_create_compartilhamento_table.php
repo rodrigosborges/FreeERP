@@ -20,6 +20,7 @@ class CreateCompartilhamentoTable extends Migration
             $table->unsignedBigInteger('funcionario_id');
             $table->foreign('agenda_id')->references('id')->on('agenda')->onDelete('cascade');
             $table->foreign('setor_id')->references('id')->on('setor')->onDelete('cascade');
+            $table->foreign('funcionario_id')->references('id')->on('funcionario')->onDelete('cascade');
             $table->timestamps();
         });
     }

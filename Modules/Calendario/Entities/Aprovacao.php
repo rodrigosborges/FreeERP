@@ -12,4 +12,8 @@ class Aprovacao extends Model
     public function compartilhamento(){
         return $this->belongsTo('Modules\Calendario\Entities\Compartilhamento');
     }
+
+    public function funcionario(){
+        return $this->belongsTo('Modules\Calendario\Entities\Funcionario');
+    }
 }

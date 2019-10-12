@@ -18,6 +18,7 @@ class CreateAprovacaoTable extends Migration
             $table->unsignedBigInteger('compartilhamento_id')->unique();
             $table->unsignedBigInteger('funcionario_id');
             $table->foreign('compartilhamento_id')->references('id')->on('compartilhamento')->onDelete('cascade');
+            $table->foreign('funcionario_id')->references('id')->on('funcionario')->onDelete('cascade');
             $table->timestamps();
         });
     }

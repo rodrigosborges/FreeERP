@@ -4,16 +4,19 @@ namespace Modules\Calendario\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Collection;
-use Modules\Calendario\Entities\Compartilhamento;
+use Illuminate\Support\Facades\Auth;
 use Modules\Calendario\Entities\Funcionario;
 
 class CalendarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //TODO Get agendas do funcinário logado
-        $funcionario = Funcionario::find(1);
-
+        $funcionario = Funcionario::where('user_id', Auth::id())->first();
         $agendas = $funcionario->agendas;
         $agendas_setor = new Collection();
         $compartilhamentos = $funcionario->setor->compartilhamentos;

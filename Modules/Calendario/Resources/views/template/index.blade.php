@@ -69,7 +69,7 @@ $menu = [
         $(function () {
             var notificacao = document.getElementsByTagName("audio")[0];
 
-            $.when(
+            /*$.when(
             bootbox.alert({
                 title: 'Notificação de evento',
                 message: 'Seu evento <strong>XXX</strong> inicia em XXX',
@@ -80,7 +80,7 @@ $menu = [
                 .addClass('modal-dialog-centered')
             ).done(function () {
                 notificacao.play();
-            });
+            });*/
 
             $.when(
                 $('#sidebar a.nav-link span').each(function () {

@@ -4,6 +4,7 @@ namespace Modules\Calendario\Http\Controllers;
 
 use Illuminate\Database\QueryException;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Modules\Calendario\Entities\Agenda;
 use Modules\Calendario\Entities\Aprovacao;
 use Modules\Calendario\Entities\Compartilhamento;
@@ -14,10 +15,16 @@ use Modules\Calendario\Http\Requests\AgendaSalvarRequest;
 
 class AgendaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function agendas()
     {
-        $agendas = Agenda::withTrashed('funcionario_id', 1)->orderByRaw('deleted_at DESC, created_at DESC')->get();
-        $lixeira = Agenda::onlyTrashed()->where('funcionario_id', 1)->count();
+        $funcionario = Funcionario::where('user_id', Auth::id())->first();
+        $agendas = Agenda::withTrashed('funcionario_id', $funcionario->id)->orderByRaw('deleted_at DESC, created_at DESC')->get();
+        $lixeira = Agenda::onlyTrashed()->where('funcionario_id', $funcionario->id)->count();
         return view('calendario::agendas.index', ['agendas' => $agendas, 'lixeira' => $lixeira]);
     }
 
@@ -42,7 +49,7 @@ class AgendaController extends Controller
                 foreach ($request->agendaCompartilhamento as $setor_id) {
                     $compartilhamento = new Compartilhamento();
                     $compartilhamento->setor()->associate(Setor::find($setor_id));
-                    $compartilhamento->funcionario_id = 1;
+                    $compartilhamento->funcionario()->associate(Funcionario::where('user_id', Auth::id())->first());
                     $agenda->compartilhamentos()->save($compartilhamento);
                 }
             }
@@ -65,7 +72,7 @@ class AgendaController extends Controller
                     $compartilhamentos[] = Compartilhamento::firstOrCreate([
                         'setor_id' => $setor_id,
                         'agenda_id' => $agenda->id,
-                        'funcionario_id' => 1
+                        'funcionario_id' => Funcionario::where('user_id', Auth::id())->first()->id
                     ]);
                 }
             }
@@ -126,7 +133,7 @@ class AgendaController extends Controller
 
     public function aprovar_compartilhamento(Compartilhamento $compartilhamento){
         $aprovacao = new Aprovacao();
-        $aprovacao->funcionario_id = 1;
+        $aprovacao->funcionario()->associate(Funcionario::where('user_id', Auth::id())->first());
         $compartilhamento->aprovacao()->save($aprovacao);
         return redirect()->back();
     }

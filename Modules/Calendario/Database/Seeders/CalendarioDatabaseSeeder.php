@@ -16,5 +16,7 @@ class CalendarioDatabaseSeeder extends Seeder
     {
         $this->call(CorTableSeeder::class);
         $this->call(SetorTableSeeder::class);
+        $this->call(UserTableSeeder::class);
+        $this->call(FuncionarioTableSeeder::class);
     }
 }

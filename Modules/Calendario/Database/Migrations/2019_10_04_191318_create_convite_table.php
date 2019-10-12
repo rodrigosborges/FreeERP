@@ -19,6 +19,7 @@ class CreateConviteTable extends Migration
             $table->unsignedBigInteger('funcionario_id');
             $table->boolean('status')->nullable();
             $table->foreign('evento_id')->references('id')->on('evento')->onDelete('cascade');
+            $table->foreign('funcionario_id')->references('id')->on('funcionario')->onDelete('cascade');
             $table->timestamps();
         });
     }

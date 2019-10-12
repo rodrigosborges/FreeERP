@@ -20,4 +20,8 @@ class Compartilhamento extends Model
     public function aprovacao(){
         return $this->hasOne('Modules\Calendario\Entities\Aprovacao');
     }
+
+    public function funcionario(){
+        return $this->belongsTo('Modules\Calendario\Entities\Funcionario');
+    }
 }
