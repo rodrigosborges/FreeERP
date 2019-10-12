@@ -7,7 +7,7 @@
     ];
     $menu = [
         ['icon' => 'home', 'tool' => 'Início', 'route' => route('eventos.index')],
-        ['icon' => 'event', 'tool' => 'Eventos', 'route' => '#'],
+        ['icon' => 'event', 'tool' => 'Eventos', 'route' => route('eventos.exibir')],
         ['icon' => 'people', 'tool' => 'Pessoas', 'route' => route('eventos.pessoas')],
         ['icon' => 'school', 'tool' => 'Certificados', 'route' => '#'],
     ];
@@ -150,6 +150,9 @@
         <!-- DataTables JS -->
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <!-- JQuery Mask Plugin -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        
         <!-- Toggle Menu Script -->
         <script>
             function toggleMenu() {
@@ -165,6 +168,23 @@
                 workspace.style.marginLeft = marginLeftWorkspace;
                 header.style.width = widthHeader;
             }
+        </script>
+        
+        <!-- Máscaras dos forms -->
+        <script>
+            <!-- Código disponível no site do jQuery Mask Plugin -->
+            var SPMaskBehavior = function (val){
+                return val.replace(/\D/g, '').length === 11 ? '(00)00000-0000' : '(00)0000-00009';
+            },
+            spOptions = {
+                onKeyPress: function (val, e, field, options){
+                    field.mask(SPMaskBehavior.apply({}, arguments), options);
+                }
+            };
+
+            $(function() {
+                $('#telefone').mask(SPMaskBehavior, spOptions);
+            });
         </script>
         @yield('js')
     </body>

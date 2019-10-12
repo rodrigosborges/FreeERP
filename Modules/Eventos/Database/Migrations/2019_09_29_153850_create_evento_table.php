@@ -17,9 +17,10 @@ class CreateEventoTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('local');
-            $table->date('data');
+            $table->date('dataInicio');
+            $table->date('dataFim');
             $table->longText('descricao');
-            $table->string('imagem')->nullable();
+            $table->mediumText('imagem')->nullable();
             $table->string('empresa');
             $table->string('email', 80)->nullable();
             $table->string('telefone', 14)->nullable();

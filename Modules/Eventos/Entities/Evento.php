@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evento extends Model
 {
-    protected $fillable = ['nome','local','data','descricao','imagem','empresa','email','telefone']; //ATRIBUTOS QUE PODEM SER EDITADOS
+    protected $fillable = ['nome','local','dataInicio','dataFim','descricao','imagem','empresa','email','telefone']; //ATRIBUTOS QUE PODEM SER EDITADOS
     protected $guarded = ['id']; //ATRIBUTOS QUE NÃO PODEM SER EDITADOS
     protected $table = 'evento'; //TABELA COM NOME DIVERGENTE DO DEFAULT
     public $timestamps = false; //NÃO VOU UTILIZAR TIMESTAMPS

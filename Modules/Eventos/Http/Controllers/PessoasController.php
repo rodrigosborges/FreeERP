@@ -34,7 +34,28 @@ class PessoasController extends Controller
         $pessoa->save();
         $pessoa->eventos()->attach($request->eventoId);
         
-        return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])->with('success', $request->nome . ' adicionado(a) com sucesso.');
+        return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
+            ->with('success', $request->nome . ' adicionado(a) com sucesso.');
+    }
+    
+    public function editar(Request $request)
+    {
+        $pessoa = Pessoa::find($request->id);
+        $pessoa->update(['nome' => $request-> nome, 'email' => $request->email, 'telefone' => $request->telefone]);
+        return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
+            ->with('success', $request->nome . ' alterado(a) com sucesso.');
+    }
+    
+    /* 
+    * A função excluir não exclui a pessoa de fato, pois ela pode participar de mais de um evento,
+    * e sim o relacionamento na tabela pivot que relaciona a pessoa ao evento
+    */
+    public function excluir(Request $request)
+    {
+        $pessoa = Pessoa::find($request->id);
+        $pessoa->eventos()->detach($request->eventoId);
+        return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
+            ->with('success', $pessoa->nome . ' excluído(a) com sucesso.');
     }
     
     //FUNÇÃO AINDA NÃO UTILIZADA PARA VERIFICAR NO FORM DO MODAL SE O E-MAIL JÁ FOI CADASTRADO
@@ -45,59 +66,5 @@ class PessoasController extends Controller
             ->where('pessoa.email', $email)
             -get();
         return Response::json($resultado);
-    }
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('eventos::create');
-    }
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('eventos::show');
-    }
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('eventos::edit');
-    }
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
