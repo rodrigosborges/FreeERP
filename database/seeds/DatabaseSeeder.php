@@ -14,10 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             EstadoSeeder::class,
             CidadeSeeder::class,
-            EstadoCivilSeeder::class,
-            TipoTelefoneSeeder::class,
-            TipoDocumentoSeeder::class,
-            ParentescoSeeder::class,
         ]);
     }
 }

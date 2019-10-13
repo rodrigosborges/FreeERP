@@ -128,7 +128,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="telefone" class="col-form-label">Telefone:</label>
-                                <input type="text" class="form-control" name="telefone" id="telefone"
+                                <input type="text" class="form-control" name="telefone" id="telefone">
                                 
                             </div>
                         </div>

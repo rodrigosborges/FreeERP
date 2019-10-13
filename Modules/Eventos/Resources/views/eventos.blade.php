@@ -2,13 +2,12 @@
 @section('title', 'Eventos')
 
 @section('css')
-    <!-- NÃO DEIXA QUEBRAR O "TEXTO" DAS COLUNAS DATA E AÇÕES -->
     <style>
         .quebraDeTexto{
             white-space: nowrap;
         }
         
-        #img{  
+        img{  
             max-height:250px;
             max-width: 250px;
             height:auto;
@@ -16,6 +15,10 @@
             display:block;
             margin-left: auto;
             margin-right: auto;
+        }
+        
+        #tituloModal{
+            padding-top: 70px;
         }
     </style>
 @endsection
@@ -50,7 +53,7 @@
                                 data-id="{{$evento->id}}" data-nome="{{$evento->nome}}" data-local="{{$evento->local}}"
                                 data-dataInicio="{{$evento->dataInicio}}" data-dataFim="{{$evento->dataFim}}"
                                 data-descricao="{{$evento->descricao}}"
-                                data-imagem="storage/eventos/{{$evento->imagem}}" data-empresa="{{$evento->empresa}}"
+                                data-imagem="http://127.0.0.1:8000/storage/eventos/{{$evento->imagem}}" data-empresa="{{$evento->empresa}}"
                                 data-email="{{$evento->email}}"
                                 data-telefone="{{$evento->telefone}}">
                                 <i class="material-icons">search</i>
@@ -108,7 +111,7 @@
                         </div>
                         <div class="form-group">
                             <label for="imagem" class="col-form-label">Imagem:</label>
-                            <img id="img" src="http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png" alt="Imagem evento" title='Imagem evento'/></br>
+                            <img src="http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png" id="img" alt="Imagem evento" title='Imagem evento'/></br>
                             <input type='file' id="imgEvento" name="imgEvento" accept="image/*">
                         </div>
                         <div class="form-group">
@@ -141,11 +144,10 @@
     <div class="modal fade" id="modalVisualizarEvento" tabindex="-1" role="dialog" aria-labelledby="modalVisualizarEvento" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tituloModal">Visualizar Evento</h5>
-                    <img src=" " id="imagem"/>
-                </div>
                 <div class="modal-body">
+                    <div class="form-group">
+                        <img src=" " id="imagem"/>
+                    </div>
                     <div class="form-group">
                         <label for="nome" class="col-form-label">Nome:</label>
                         <input type="text" class="form-control" id="nome" readonly>
@@ -251,7 +253,6 @@
             var button = $(event.relatedTarget);
             //RECEBE VALORES DOS ATRIBUTOS DATA
             var imagem = button.data('imagem');
-            alert(imagem);
             var id = button.data('id');
             var nome = button.data('nome');
             var local = button.data('local');
@@ -264,7 +265,12 @@
             //ATUALIZA O CONTEÚDO DO MODAL
             var modal = $(this);
             
-            modal.find('.modal-header #imagem').attr("src", imagem);
+            if(imagem !== 'http://127.0.0.1:8000/storage/eventos/'){
+                modal.find('.modal-body #imagem').attr("src", imagem);
+            } else {
+                modal.find('.modal-body #imagem').attr("src", 'http://127.0.0.1:8000/storage/eventos/default.png');
+            }
+                
             
             modal.find('.modal-body #id').val(id);
             modal.find('.modal-body #nome').val(nome);
