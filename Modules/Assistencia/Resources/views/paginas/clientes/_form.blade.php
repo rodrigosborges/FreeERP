@@ -71,6 +71,7 @@
         <span class="errors"> {{ $errors->first('telefonenumero') }} </span>
     </div>
 </div>
+
 <div class="row">
     <div class="form-group col-sm-3">
         <label for="endereco[cep]">CEP</label>
@@ -99,8 +100,9 @@
             <input type="text" class="form-control" name="endereco[numero]" value="{{ old('endereco.numero', isset($cliente) ? $cliente->endereco->numero : '') }}">
         </div>
     </div>
-    </div>
-    <div class="row">
+</div>
+
+<div class="row">
     <div class="form-group col-sm-3">
         <label for="endereco[bairro]">bairro</label>
         <div class="input-group">
@@ -131,7 +133,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">location_city</i></span>
             </div>
-            <input type="text" class="form-control" name="endereco[cidade]" value="">
+            <input type="text" class="form-control" name="endereco[cidade_id]" value="">
         </div>
     </div>
 </div>

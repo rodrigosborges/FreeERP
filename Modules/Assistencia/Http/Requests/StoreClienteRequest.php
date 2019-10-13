@@ -12,8 +12,8 @@ class StoreClienteRequest extends FormRequest{
           'email' => 'required|email|max:100',
           'data_nascimento' => 'required|max:10',
           'celnumero' => 'required|min:14|max:15',
-          'telefonenumero' => 'required|min:14|max:15',
-          'sexo' => 'required'
+          'telefonenumero' => 'required|min:14|max:15'
+      
 
         ];
     }

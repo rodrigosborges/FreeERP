@@ -159,8 +159,10 @@ $menu = [
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-        <!-- Toggle Menu Script -->
+        <script src="{{Module::asset('assistencia:js/bibliotecas/jquery.validate.min.js')}}"></script>
+        <script src="{{Module::asset('assistencia:js/bibliotecas/localization/messages_pt_BR.min.js')}}"></script>
         <script>var main_url="{{url('')}}"</script>
+
         <script>
             function toggleMenu() {
                 console.log('#sidebar');

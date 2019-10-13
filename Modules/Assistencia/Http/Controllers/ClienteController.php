@@ -40,8 +40,9 @@ class ClienteController extends Controller
     }
 
     public function salvar(StoreClienteRequest $req){
-      // DB::beginTransaction();
-      // try {
+
+      DB::beginTransaction();
+      try {
         
         $dados  = $req->all();
         $endereco = Endereco::create($dados['endereco']);
@@ -61,23 +62,24 @@ class ClienteController extends Controller
             'cpf' => $dados['cpf'],
             'email' => $dados['email'],
             'data_nascimento' => $dados['data_nascimento'],
-            'celnumero' => $dados['celnumero'],
+            'celnumero' => $dados['celnumero'], 
             'telefonenumero' => $dados['telefonenumero'],
-            'endereco_id' => $endereco->id,
+            'endereco_id' => $endereco->id
           ]);
-          // DB::commit();
+          DB::commit();
           return back()->with('success','Cliente cadastrado com sucesso!');
         }
-      // } catch (\Exception $e) {
-      //   DB::rollback();
-      //   return back();
-      // }
+      } catch (\Exception $e) {
+        DB::rollback();
+        return back();
+      }
       
     }
 
     public function editar($id){
       $cliente = ClienteAssistenciaModel::withTrashed()->findOrFail($id);
-      return view('assistencia::paginas.clientes.editarCliente',compact('cliente'))->with('success','Cliente atualizado com sucesso!');
+      $estados = Estado::all();
+      return view('assistencia::paginas.clientes.editarCliente',compact('cliente','estados'))->with('success','Cliente atualizado com sucesso!');
     }
 
     public function atualizar(StoreClienteRequest $req, $id){
@@ -89,7 +91,7 @@ class ClienteController extends Controller
         return redirect()->route('cliente.localizar')->with('success','Cliente alterado com sucesso!');
       } catch (\Exception $e) {
         DB::rollback();
-        return back();
+        return back()->with('error', 'Erro no servidor.');
       }
       
     }

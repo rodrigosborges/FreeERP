@@ -19,7 +19,7 @@ class Cliente extends Migration
         $table->string('cpf');
         $table->string('email');
         $table->string('data_nascimento');
-        $table->string('sexo');
+        $table->integer('endereco_id')->index('fk_cliente_endereco1');
         $table->string('celnumero');
         $table->string('telefonenumero');
         $table->timestamps();
