@@ -35,8 +35,19 @@ class ClienteController extends Controller
     }
 
     public function localizar(){
-      $clientes = ClienteAssistenciaModel::paginate(10);
-      return view('assistencia::paginas.clientes.localizarCliente',compact('clientes'));
+      DB::beginTransaction();
+      try{
+        $clientes = ClienteAssistenciaModel::paginate(10);
+        $clientesDeletados = ClienteAssistenciaModel::onlyTrashed()->paginate(10);
+        
+        DB::commit();
+        return view('assistencia::paginas.clientes.localizarCliente', compact('clientes','clientesDeletados'));
+    
+      } catch (\Exception $e) {
+        
+        DB::rollback();
+        return view('assistencia::index')->with('error','Erro no servidor');
+      }
     }
 
     public function salvar(StoreClienteRequest $req){
@@ -83,10 +94,14 @@ class ClienteController extends Controller
     }
 
     public function atualizar(StoreClienteRequest $req, $id){
+      
       DB::beginTransaction();
       try {
         $dados  = $req->all();
-        ClienteAssistenciaModel::findOrFail($id)->update($dados);
+        $cliente = ClienteAssistenciaModel::findOrFail($id);
+        $cliente->endereco->update($dados['endereco']);
+        $cliente->update($dados);
+        
         DB::commit();
         return redirect()->route('cliente.localizar')->with('success','Cliente alterado com sucesso!');
       } catch (\Exception $e) {
