@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Assistencia\Entities\ClienteAssistenciaModel;
+use App\Entities\{ Endereco, Estado};
 use Modules\Assistencia\Http\Requests\StoreClienteRequest;
 use DB;
 
@@ -29,7 +30,8 @@ class ClienteController extends Controller
     }
 
     public function cadastrar(){
-      return view('assistencia::paginas.clientes.cadastroCliente');
+      $estados = Estado::all();
+      return view('assistencia::paginas.clientes.cadastroCliente', compact('estados'));
     }
 
     public function localizar(){
@@ -38,8 +40,8 @@ class ClienteController extends Controller
     }
 
     public function salvar(StoreClienteRequest $req){
-      DB::beginTransaction();
-      try {
+      // DB::beginTransaction();
+      // try {
         
         $dados  = $req->all();
         $endereco = Endereco::create($dados['endereco']);
@@ -63,13 +65,13 @@ class ClienteController extends Controller
             'telefonenumero' => $dados['telefonenumero'],
             'endereco_id' => $endereco->id,
           ]);
-          DB::commit();
+          // DB::commit();
           return back()->with('success','Cliente cadastrado com sucesso!');
         }
-      } catch (\Exception $e) {
-        DB::rollback();
-        return back();
-      }
+      // } catch (\Exception $e) {
+      //   DB::rollback();
+      //   return back();
+      // }
       
     }
 

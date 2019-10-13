@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Entities\Estado;
 /*
 |--------------------------------------------------------------------------
 | API Routes

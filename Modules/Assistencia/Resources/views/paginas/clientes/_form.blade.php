@@ -43,19 +43,7 @@
         </div>
         <span class="errors"> {{ $errors->first('data_nascimento') }} </span>
     </div>
-    <div class="form-group col-md-6 col-sm-12">
-        <label required="" class="radio-inline" for="radios-0">
-            <input name="sexo" id="sexo" value="feminino" type="radio"
-                {{isset($cliente->sexo) && $cliente->sexo == 'feminino' ? 'checked' : ''}}>
-            Feminino
-        </label>
-        <label class="radio-inline" for="radios-1">
-            <input name="sexo" id="sexo" value="masculino" type="radio"
-                {{isset($cliente->sexo) && $cliente->sexo == 'masculino' ? 'checked' : ''}}>
-            Masculino
-        </label>
-        <span class="errors"> {{ $errors->first('sexo') }} </span>
-    </div>
+    
 
 </div>
 
@@ -81,5 +69,69 @@
                 value="{{isset($cliente->telefonenumero) ? $cliente->telefonenumero : old('telefonenumero', '')}}">
         </div>
         <span class="errors"> {{ $errors->first('telefonenumero') }} </span>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-sm-3">
+        <label for="endereco[cep]">CEP</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="material-icons">map</i></span>
+            </div>
+            <input type="text" class="form-control cep" name="endereco[cep]" value="{{ old('endereco.cep', isset($cliente) ? $cliente->endereco->cep : '') }}">
+        </div>
+    </div>
+    <div class="form-group col-sm-6">
+        <label for="endereco[logradouro]">Logradouro</label>
+        <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="material-icons">house</i></span>
+                </div>
+                <input type="text" class="form-control" name="endereco[logradouro]" value="{{ old('endereco.logradouro', isset($cliente) ? $cliente->endereco->logradouro : '') }}">
+            </div>
+        </div>
+    <div class="form-group col-sm-2">
+        <label for="endereco[numero]">Numero</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="material-icons">house</i></span>
+            </div>
+            <input type="text" class="form-control" name="endereco[numero]" value="{{ old('endereco.numero', isset($cliente) ? $cliente->endereco->numero : '') }}">
+        </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="form-group col-sm-3">
+        <label for="endereco[bairro]">bairro</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="material-icons">location_city</i></span>
+            </div>
+            <input type="text" class="form-control" name="endereco[bairro]" value="{{ old('endereco.bairro', isset($cliente) ? $cliente->endereco->bairro : '') }}">
+        </div>
+    </div>
+    <div class="form-group col-sm-3">
+        <label for="endereco[estado_id]">Estado</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="material-icons">location_city</i></span>
+            </div>
+            <select name="endereco[estado_id]" class="form-control" id="">
+                <option value="" disabled selected>Selecione</option>
+                @foreach($estados as $estado){
+                    <option value="{{$estado->id}}" uf="{{$estado->uf}}" {{ old('endereco.estado_id', isset($cliente) ? $cliente->endereco->cidade->estado_id : "") == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
+                }
+                @endforeach
+            </select>
+        </div>  
+    </div>
+    <div class="form-group col-sm-3">
+        <label for="endereco[cidade_id]">Cidade</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="material-icons">location_city</i></span>
+            </div>
+            <input type="text" class="form-control" name="endereco[cidade]" value="">
+        </div>
     </div>
 </div>

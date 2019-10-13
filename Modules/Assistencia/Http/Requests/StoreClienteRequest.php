@@ -11,7 +11,6 @@ class StoreClienteRequest extends FormRequest{
           'cpf' => 'required|cpf|unique:cliente_assistencia,cpf,'.$this->route('id'),
           'email' => 'required|email|max:100',
           'data_nascimento' => 'required|max:10',
-          'sexo' => 'required',
           'celnumero' => 'required|min:14|max:15',
           'telefonenumero' => 'required|min:14|max:15',
           'sexo' => 'required'
@@ -32,7 +31,6 @@ class StoreClienteRequest extends FormRequest{
           'telefonenumero.max' => 'O campo de telefone deve possuir apenas o DDD e o numero',
           'celnumero.required' => 'Digine um numero de celular valido.',
           'telefonenumero.max' => 'Digite um numero de telefone valido.',
-          'sexo.required' => 'Selecione o sexo do cliente.'
 
         ];
     }
