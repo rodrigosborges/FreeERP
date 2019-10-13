@@ -424,7 +424,7 @@ class EstoqueController extends Controller
             $total += $d;
         }
         $custo_medio = 0;
-        if(count($quantidade_movimentada) > 1){
+        if(count($quantidade_movimentada) > 0){
             $custo_medio = round($total/$quantidade_movimentada[0]->qtd, 2);
         }
 
