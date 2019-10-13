@@ -11,13 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return back()->with('success', 'Cadastrado com sucesso!');
-});
-
-
 //Exemplo de como configurar a view
-Route::get('/exemplo', function () {
+Route::get('/', function () {
     /* 
     | Defina os parâmetros do módulo que serão exibidos na View:
     | icon (icone "Material Icons")
