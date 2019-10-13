@@ -49,7 +49,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">store</div>
                         </div>
-                            <input type="text" disabled class="form-control text-right" name="produto">
+                            <input type="text" disabled class="form-control text-right" value="{{isset($data['estoque_selecionado']) ? $data['estoque_selecionado'] : ''}}" name="produto">
                     </div>
                     Período inícial
                     <div class="input-group mb-2">
@@ -104,38 +104,25 @@
                             <input type="text" class="form-control text-right" name="diaMaiorCusto" value="R${{isset($data['custo_total']) ? $data['custo_total'] : ' '}}" disabled>
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
-                            <label for="diaMenorCusto">Quantidade movimentada</label>
-                            <input type="text" class="form-control text-right" name="diaMenorCusto" disabled>
+                            <label for="quantidade">Dia com maior custo</label>
+                            <input type="text" class="form-control text-right" name="quantidade" value="{{isset($data['dia_maior_custo']) ? $data['dia_maior_custo'] : ''}}" disabled>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-4 col-sm-12">
-                            <label for="quantidade">Dia com maior custo</label>
-                            <input type="text" class="form-control text-right" name="quantidade" disabled>
-                        </div>
-                        <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Dia com menor custo</label>
-                            <input type="text" class="form-control text-right" name="quantidade" disabled>
+                            <input type="text" class="form-control text-right" name="quantidade" value="{{isset($data['dia_menor_custo']) ? $data['dia_menor_custo'] : ''}}" disabled>
                         </div>
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Maior preço unitario</label>
                             <input type="text" class="form-control text-right" name="quantidade" value="R${{isset($data['maior_custo']) ? $data['maior_custo'] : ''}}" disabled>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col-lg-4 col-sm-12">
                             <label for="quantidade">Menor preço unitario</label>
                             <input type="text" class="form-control text-right" name="quantidade" value="R${{isset($data['menor_custo']) ? $data['menor_custo'] : ''}}" disabled>
                         </div>
-                        <div class="form-group col-lg-4 col-sm-12">
-                            <label for="quantidade">Dia com maior movimentação</label>
-                            <input type="text" class="form-control text-right" name="quantidade" disabled>
-                        </div>
-                        <div class="form-group col-lg-4 col-sm-12">
-                            <label for="quantidade">Dia com menor movimentação</label>
-                            <input type="text" class="form-control text-right" name="quantidade" disabled>
-                        </div>
                     </div>
+                    
                     <table class="table text-center table-striped">
                             <tr>
                                 <th scope="col">#</th>

@@ -338,10 +338,18 @@ class EstoqueController extends Controller
         $movimentacao = [];
         $maior_preco = 0;
         $quantidade_movimentada = 0;
-        $estoque_selecionado = "";
+        $estoque_selecionado = "EAE";
         $custo_total = "";
-        if ($estoque_id != -1)
-            $estoque_selecionado = Estoque::findOrFail($estoque_id);
+        $dia_maior_custo = 0;
+        $dia_menor_custo = 0;
+
+        if($estoque_id == -1){
+            $estoque_selecionado = "Todo estoque";
+        }else{
+            $estoque = Estoque::findOrFail($estoque_id);
+            $estoque_selecionado = $estoque->produtos->last()->nome . ' - ' . $estoque->tipoUnidade->nome . '(' . $estoque->tipoUnidade->quantidade_itens . ' itens)'; 
+        }
+
         if ($estoque_id == -1) {
             $query_result = DB::select(
                 'SELECT distinct substring_index(created_at, " ", 1) as data,
@@ -354,6 +362,23 @@ class EstoqueController extends Controller
             $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"');
             $maior_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->max('preco_custo');
             $menor_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->min('preco_custo');
+
+            $dia_maior_custo = DB::select(
+                'SELECT distinct substring_index(created_at, " ", 1) as data,
+                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as valor
+                FROM movimentacao_estoque as me WHERE
+                 substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
+                order by valor desc limit 1
+                '
+            );
+            $dia_menor_custo = DB::select(
+                'SELECT distinct substring_index(created_at, " ", 1) as data,
+                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as valor
+                FROM movimentacao_estoque as me WHERE
+                 substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
+                order by valor asc limit 1
+                '
+            );
             //Se for para selecionar o período com um estoque específico
         } else {
             $query_result = DB::select(
@@ -368,6 +393,23 @@ class EstoqueController extends Controller
             $menor_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('estoque_id', $estoque_id)->where('quantidade', '>', 0)->min('preco_custo');
             $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('quantidade', '>', 0)->where('estoque_id', $estoque_id)->get();
             $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '" AND estoque_id = ' . $estoque_id);
+            
+            $dia_maior_custo = DB::select(
+                'SELECT distinct substring_index(created_at, " ", 1) as data,
+                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE estoque_id = ' . $estoque_id . ' AND substring_index(created_at, " ", 1) = data AND quantidade > 0) as valor
+                FROM movimentacao_estoque as me WHERE estoque_id = ' . $estoque_id . ' AND
+                 substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
+                order by valor desc limit 1
+                '
+            );
+            $dia_menor_custo = DB::select(
+                'SELECT distinct substring_index(created_at, " ", 1) as data,
+                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = ' . $estoque_id . ' AND quantidade > 0) as valor
+                FROM movimentacao_estoque as me WHERE estoque_id = ' . $estoque_id . ' AND
+                 substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
+                order by valor asc limit 1
+                '
+            );
         }
         //Transfere as datas e os valores para um array especifico que será utilizado como labels e dados do gráfico
         $labels = [];
@@ -381,12 +423,29 @@ class EstoqueController extends Controller
         foreach ($dados as $d) {
             $total += $d;
         }
+        $custo_medio = 0;
+        if(count($quantidade_movimentada) > 1){
+            $custo_medio = round($total/$quantidade_movimentada[0]->qtd, 2);
+        }
+
+        if(count($dia_maior_custo) > 0){
+            $dia_maior_custo = $dia_maior_custo[0]->data . ' - R$' . $dia_maior_custo[0]->valor;            
+        }else{
+            $dia_maior_custo = "";
+        }
+
+        if(count($dia_menor_custo) > 0){
+            $dia_menor_custo = $dia_menor_custo[0]->data . ' - R$' . $dia_menor_custo[0]->valor;            
+        }else{
+            $dia_menor_custo = "";
+        }
+        
 
         $data = [
             'menor_custo' => $menor_preco,
             'estoque_id' => $estoque_id,
             'maior_custo' => $maior_preco,
-            'custo_medio' => round($total / $quantidade_movimentada[0]->qtd, 2),
+            'custo_medio' => $custo_medio,
             'custo_total' => $total,
             'quantidade_movimentada' => $quantidade_movimentada[0]->qtd,
             'estoque' => Estoque::all(),
@@ -396,7 +455,9 @@ class EstoqueController extends Controller
             'flag' => "1",
             'movimentacao' => $movimentacao,
             'data_inicial' => $data_inicial,
-            'data_final' => $data_final
+            'data_final' => $data_final,
+            'dia_maior_custo' => $dia_maior_custo,
+            'dia_menor_custo' => $dia_menor_custo
         ];
 
         return $data;
@@ -405,6 +466,7 @@ class EstoqueController extends Controller
     public function relatorioCustoBusca(Request $req)
     {
         $data = $this->relatorioCustoResult($req->data_inicial, $req->data_final, $req->estoque_id);
+        
         return view('estoque::estoque.relatorios.custo', compact('data'));
     }
 
