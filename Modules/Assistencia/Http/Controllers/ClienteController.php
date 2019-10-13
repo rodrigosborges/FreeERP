@@ -42,6 +42,7 @@ class ClienteController extends Controller
       try {
         
         $dados  = $req->all();
+        $endereco = Endereco::create($dados['endereco']);
         $possivelCliente = ClienteAssistenciaModel::buscaCPF($dados['cpf']);
 
         
@@ -53,7 +54,15 @@ class ClienteController extends Controller
           DB::commit();
           return back()->with('warning','Verifique a quantidade de clientes com esse CPF!');
         }else{
-          ClienteAssistenciaModel::create($dados);
+          ClienteAssistenciaModel::create([
+            'nome' => $dados['nome'],
+            'cpf' => $dados['cpf'],
+            'email' => $dados['email'],
+            'data_nascimento' => $dados['data_nascimento'],
+            'celnumero' => $dados['celnumero'],
+            'telefonenumero' => $dados['telefonenumero'],
+            'endereco_id' => $endereco->id,
+          ]);
           DB::commit();
           return back()->with('success','Cliente cadastrado com sucesso!');
         }
