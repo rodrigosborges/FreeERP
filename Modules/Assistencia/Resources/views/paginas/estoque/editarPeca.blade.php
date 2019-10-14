@@ -30,11 +30,30 @@
 @section('js')
 <script>
 $(document).ready(function() {
-    $('#money1').mask("###0,00", {
-        reverse: true
+    $('#money1').inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': false,
+                'allowMinus': false,
+                'prefix': 'R$ ',
+                'placeholder': '',
+                'rightAlign':false,
     });
-    $('#money2').mask("###0,00", {
-        reverse: true
+    $('#money2').inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': false,
+                'allowMinus': false,
+                'prefix': 'R$ ',
+                'placeholder': '',
+                'rightAlign':false,
+                // 'removeMaskOnSubmit':true
     });
 })
 </script>

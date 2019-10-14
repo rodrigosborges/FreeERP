@@ -26,6 +26,7 @@ class ServicosController extends Controller
     try {
       $dados  = $req->all();
       $dados['valor'] = str_replace(",",".",$dados['valor']);
+      $dados['valor'] = str_replace("R$","",$dados['valor']);
       ServicoAssistenciaModel::create($dados);
       DB::commit();
       return redirect()->route('servicos.localizar');

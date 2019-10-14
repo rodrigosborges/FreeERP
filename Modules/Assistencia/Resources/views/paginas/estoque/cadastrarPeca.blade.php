@@ -31,13 +31,36 @@
 
 @stop
 @section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/bindings/inputmask.binding.min.js    "></script>
 <script>
 $(document).ready(function() {
-    $('#money1').mask("###0,00", {
-        reverse: true
+  
+    $('#money1').inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': false,
+                'allowMinus': false,
+                'prefix': 'R$ ',
+                'placeholder': '',
+                'rightAlign':false,
+                // 'removeMaskOnSubmit':true
+                
     });
-    $('#money2').mask("###0,00", {
-        reverse: true
+    $('#money2').inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': false,
+                'allowMinus': false,
+                'prefix': 'R$ ',
+                'placeholder': '',
+                'rightAlign':false,
+                // 'removeMaskOnSubmit':true
     });
     $('#qnt').mask('0#');
 })

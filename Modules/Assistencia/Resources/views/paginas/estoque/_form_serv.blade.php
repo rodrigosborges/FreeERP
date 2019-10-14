@@ -3,7 +3,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id="cliente"><i class="material-icons">person</i></span>
         </div>
-        <input class="form-control" name="nome" type="text" id="moeny2" placeholder="Nome do serviço"
+        <input class="form-control" name="nome" type="text"" id="moeny2" placeholder="Nome do serviço"
             value="{{isset($servico->nome) ? $servico->nome : old('nome', '')}}">
         <div class="col-12">
             <span class="errors"> {{ $errors->first('nome') }} </span>

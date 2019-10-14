@@ -17,7 +17,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id="cliente"><i class="material-icons">money_off</i></span>
         </div>
-        <input class="form-control" name="valor_compra" type="text" id="money1" placeholder="Valor da compra"
+        <input class="form-control" name="valor_compra" type="text"  id="money1" placeholder="Valor da compra"
             value="{{isset($peca->valor_compra) ? $peca->valor_compra : old('valor_compra', '')}}">
         <div class="col-12">
             <span class="errors"> {{ $errors->first('valor_compra') }} </span>

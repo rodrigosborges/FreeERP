@@ -20,7 +20,7 @@
                 <input type="text" class="form-control" name="busca" placeholder="Nome da peça" aria-label="Buscar"
                     aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="Localizar"></input>
+                    <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="Localizar"/>
                 </div>
             </form>
             <div class="col-6">

@@ -28,8 +28,12 @@ class PecasController extends Controller
     DB::beginTransaction();
       try {
         $dados = $req->all();
+        $dados['valor_venda'] = str_replace(".","",$dados['valor_venda']);
         $dados['valor_venda'] = str_replace(",",".",$dados['valor_venda']);
+        $dados['valor_venda'] = str_replace("R$","",$dados['valor_venda']);
+        $dados['valor_compra'] = str_replace(".","",$dados['valor_compra']);
         $dados['valor_compra'] = str_replace(",",".",$dados['valor_compra']);
+        $dados['valor_compra'] = str_replace("R$","",$dados['valor_compra']);
         $quantidade = intval($dados['quantidade']);
         PecaAssistenciaModel::create($dados);
         $peca = PecaAssistenciaModel::latest()->first();

@@ -161,6 +161,7 @@ $menu = [
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
         <script src="{{Module::asset('assistencia:js/bibliotecas/jquery.validate.min.js')}}"></script>
         <script src="{{Module::asset('assistencia:js/bibliotecas/localization/messages_pt_BR.min.js')}}"></script>
+        <script src="{{Module::asset('assistencia:js/bibliotecas/inputmask.js')}}"></script>
         <script>var main_url="{{url('')}}"</script>
 
         <script>
