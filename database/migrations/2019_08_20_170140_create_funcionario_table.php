@@ -20,6 +20,7 @@ class CreateFuncionarioTable extends Migration {
 			$table->date('data_nascimento');
 			$table->boolean('sexo');
 			$table->date('data_admissao');
+			$table->string('situacao');
 			$table->integer('estado_civil_id')->index('fk_funcionario_estado_civil1');
 			$table->integer('email_id')->index('fk_funcionario_email1');
 			$table->integer('endereco_id')->index('fk_funcionario_endereco1');

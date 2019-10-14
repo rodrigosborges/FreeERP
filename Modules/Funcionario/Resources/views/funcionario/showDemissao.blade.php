@@ -41,19 +41,12 @@
             </div>
 
         </div>
-        
     </div>
+
     @section('footer')
     <div class="text-right">
     <a class="btn btn-success" href="{{url('funcionario/funcionario')}}">Voltar</a>
-    
-    
-
-    <form method="POST" action="{{url('funcionario/destroyDemissao/$funcionario->id')}}">
-        @method('delete')
-        @csrf
-        <button type="submit">Deletar</button>
-    </form>
+    <a class="btn btn-danger" href='{{url("funcionario/destroyDemissao/$data[id]")}}'>Excluir Demissão</a>
     <button class="imprimir-button btn btn-primary"><i class="material-icons">print </i></button>
 </div>
 @endsection

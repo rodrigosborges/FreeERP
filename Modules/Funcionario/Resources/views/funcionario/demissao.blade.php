@@ -3,6 +3,11 @@
 @section('title', 'Aviso prévio e demissão')
 
 @section('body')
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            <div class="alert alert-danger">{{$error}}</div>
+        @endforeach
+    @endif
     <form method="post" action="{{url('funcionario/storeDemissao')}}">
     @csrf
         <section>
@@ -10,12 +15,12 @@
             <div class="row">
                 <div class="form-group col-6">
                     <label for="data_demissao">Data Demissão:</label>
-                    <input type="date" name="data_demissao" id="data_demissao" class="form-control">    
+                    <input type="date" name="data_demissao" id="data_demissao" class="form-control" value="{{old('data_demissao')}}">    
                 </div>
 
                 <div class="form-group col-6">
                     <label for="data_pagamento">Data pagamento: </label>
-                    <input type="date" name="data_pagamento" id="data_pagamento" class="form-control">
+                    <input type="date" name="data_pagamento" id="data_pagamento" class="form-control" value="{{old('data_pagamento')}}">
                 </div>
 
                 <div class="form-group col-6">
@@ -23,7 +28,7 @@
                     <select name="tipo_demissao" id="tipo_demissao" class="form-control">
                         <option>Escolha uma opção</option>
                         @foreach($data['tipo_demissao'] as $tipo_demissao)
-                            <option value="{{$tipo_demissao->id}}">{{$tipo_demissao->tipo}}</option>
+                            <option value="{{old('$tipo_demissao->id')}}">{{$tipo_demissao->tipo}}</option>
                         @endforeach
                     </select>
                 </div>  
@@ -48,17 +53,17 @@
                 <div class="row">
                     <div class="form-group col-4">
                         <label for="data_inicio_aviso">Data de início do aviso indenizado </label>
-                        <input type="date" name="data_inicio_aviso" id="data_inicio_aviso" class="form-control" disabled>
+                        <input type="date" name="data_inicio_aviso" id="data_inicio_aviso" class="form-control" value="{{old('data_inicio_aviso')}}"disabled>
                     </div>
 
                     <div class="form-group col-4">
                         <label for="dias_aviso_indenizado">Dias de aviso indenizado </label>
-                        <input type="number" name="dias_aviso_indenizado" id="dias_aviso_indenizado" class="form-control" min="0" placeholder="Ex: 10" disabled>
+                        <input type="number" name="dias_aviso_indenizado" id="dias_aviso_indenizado" class="form-control" min="0" placeholder="Ex: 10" value="{{old('dias_aviso_indenizado')}}" disabled>
                     </div>
 
                     <div class="form-group col-4">
                         <label for="tipo_reducao">Tipo de reducao do aviso</label>
-                        <select name="tipo_reducao_aviso" class="form-control" id="tipo_reducao_aviso" disabled>
+                        <select name="tipo_reducao_aviso" class="form-control" id="tipo_reducao_aviso" value="{{old('tipo_reducao_aviso')}}" disabled>
                             <option>Escolha uma opção</option>
                             <option value="Dias">Dias</option>
                             <option value="Jornada">Jornada</option>
@@ -69,7 +74,7 @@
                 <div class="row">
                     <div class="form-group col-6">
                             <label for="tipo_cumprimento">Indicador de cumprimento de aviso prévio</label>
-                            <select name="aviso_previo_indicador_cumprimento_id" class="form-control" id="aviso_previo_indicador_cumprimento_id" disabled>
+                            <select name="aviso_previo_indicador_cumprimento_id" class="form-control" id="aviso_previo_indicador_cumprimento_id" value="{{old('aviso_previo_indicador_cumprimento_id')}}" disabled>
                             <option>Escolha uma opção</option>
                                 @foreach($data['tipo_cumprimento'] as $tipo_cumprimento)
                                     <option value="{{$tipo_cumprimento->id}}">{{$tipo_cumprimento->tipo_cumprimento}}</option>

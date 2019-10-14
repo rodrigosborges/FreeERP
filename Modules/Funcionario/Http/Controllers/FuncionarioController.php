@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\{Cargo, Dependente, Parentesco,Atestado, Curso, AvisoPrevio, TipoDemissao, AvisoPrevioIndicadorCumprimento, Demissao, AvisoPrevioIndenizado};
 use App\Entities\{EstadoCivil, Documento, Telefone, TipoDocumento, Cidade, Estado, TipoTelefone, Endereco, Email};
-use Modules\Funcionario\Http\Requests\CreateFuncionario;
+use Modules\Funcionario\Http\Requests\{CreateFuncionario, CreateDemissao};
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
@@ -38,14 +38,10 @@ class FuncionarioController extends Controller{
 
         if($status == 'inativos'){
             $funcionarios = $funcionarios->onlyTrashed();
-        }
-
-        
+        }        
 
         $funcionarios = $funcionarios->paginate(10);
      
-    
-    
         return view('funcionario::funcionario.table', compact('funcionarios', 'status'));
     }
     
@@ -101,6 +97,7 @@ class FuncionarioController extends Controller{
                 'data_nascimento' =>date('Y-m-d', strtotime($request->funcionario['data_nascimento'])),
                 'sexo' =>$request->funcionario['sexo'],
                 'data_admissao' => $data_admissao->format('Y-m-d'),
+                'situacao'      => 'Ativo',    
                 'estado_civil_id' =>$request->funcionario['estado_civil_id'],
                 'email_id' => $email->id,
                 'endereco_id' => $endereco->id, 
@@ -519,8 +516,6 @@ class FuncionarioController extends Controller{
 
     }
     
-
-
     public function demissao($id){
         $data = [
             'funcionario'       => Funcionario::findOrFail($id),
@@ -531,8 +526,8 @@ class FuncionarioController extends Controller{
         return view('funcionario::funcionario.demissao', compact('data'));
     }
 
-    public function storeDemissao(Request $request){
-
+    public function storeDemissao(CreateDemissao $request){
+        
         DB::beginTransaction();
 
         try {
@@ -569,9 +564,13 @@ class FuncionarioController extends Controller{
                     'aviso_previo_indicador_cumprimento_id' => $request->aviso_previo_indicador_cumprimento_id
                ]);
             }
+            $id = $request['funcionario_id'];
+
+            $funcionario = Funcionario::findOrFail($id);
+            $funcionario->update(['situacao' => 'Demitido']);
             
-               
             DB::commit();
+           // return redirect()->action('FuncionarioController@showDemissao', ['id' => $id]);
             return redirect('/funcionario/funcionario')->with('success','Demissão cadastrada com sucesso');
         } catch(Exception $e){
             DB::rollback();
@@ -582,8 +581,8 @@ class FuncionarioController extends Controller{
         public function showDemissao($id){
             $demissao = Demissao::where('funcionario_id', '=', $id)->get()->last()->data_demissao;
             $demissao = DateTime::createFromFormat('Y-m-d', $demissao)->format('d/m/Y');
-            $funcionario = Funcionario::FindOrFail($id);
-        
+            
+           
             setlocale(LC_TIME, 'ptb'); // LC_TIME é formatação de data e hora com strftime()
             $now = Carbon::now();
             
@@ -591,14 +590,45 @@ class FuncionarioController extends Controller{
                 'nome'       => Funcionario::where('id', '=', $id)->get()->last()->nome,
                 'demissao'   => $demissao,
                 'dia_atual'  => $now->formatLocalized('Caraguatatuba, %d de %B de %Y'),
-                   
+                'id'         => $id   
             ];
            
             return view('funcionario::funcionario.showDemissao', compact('data', 'funcionario'));
         }
 
         public function destroyDemissao($id){
-            return 'ok';
+          
+            try {
+                $demissaoId = Demissao::where('funcionario_id', '=', $id)->get()->last()->id;
+                $avisoPrevioId = AvisoPrevio::where('funcionario_id', '=', $id)->get()->last()->id;
+                
+                $demissao = Demissao::findOrFail($demissaoId);
+                $avisoPrevio = AvisoPrevio::findOrFail($avisoPrevioId);
+               
+                $avisoPrevioIndenizadoRegistro = AvisoPrevio::where('funcionario_id', '=', $id)->get()->last()->aviso_previo_indenizado;
+                
+                if($avisoPrevioIndenizadoRegistro == 1){
+                   
+                    $avisoPrevioId = AvisoPrevio::where('funcionario_id', '=', $id)->get()->last()->id;
+                    $avisoPrevioIndenizadoId = AvisoPrevioIndenizado::where('aviso_previo_id', '=', $avisoPrevioId)->get()->last()->id;
+                  
+                    $avisoPrevioIndenizado = AvisoPrevioIndenizado::FindOrFail($avisoPrevioIndenizadoId);
+                    $avisoPrevioIndenizado->delete();
+                }
+
+                $demissao->delete();
+                $avisoPrevio->delete();
+
+                $funcionario = Funcionario::findOrFail($id);
+                $funcionario->update(['situacao' => 'Ativo']);
+                
+                DB::commit();
+                return redirect('/funcionario/funcionario')->with('success','Demissão cancelada com sucesso.');
+
+            } catch(Exception $e){
+                DB::rollback();
+                return $e;
+            }
         }
         //parte de atestado
         public function CreateAtestado($id){
