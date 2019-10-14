@@ -38,6 +38,7 @@ $(document).ready(function() {
                 'prefix': 'R$ ',
                 'placeholder': '',
                 'rightAlign':false,
+                'max': 9999,
                 // 'removeMaskOnSubmit':true
     });
 })

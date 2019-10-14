@@ -41,6 +41,7 @@ $(document).ready(function() {
                 'prefix': 'R$ ',
                 'placeholder': '',
                 'rightAlign':false,
+                'max': 9999,
     });
     $('#money2').inputmask('decimal', {
                 'alias': 'numeric',
@@ -53,6 +54,7 @@ $(document).ready(function() {
                 'prefix': 'R$ ',
                 'placeholder': '',
                 'rightAlign':false,
+                'max': 9999,
                 // 'removeMaskOnSubmit':true
     });
 })
