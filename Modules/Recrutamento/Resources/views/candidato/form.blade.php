@@ -29,15 +29,28 @@
                     <p><b>Categoria:</b> {{$data['vaga']->cargo->first()->categoria()->first()->nome}}.</p>
                 </div>
 
-                <div class="col-sm">
-                    <label for="curriculum">Currículo(Obs: Somente Arquivos PDF)</label>
-                    <input type="file" name="curriculum" class="form-control-file" id="curriculum">
+                <div class="col">
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="curriculum" id="curriculum" aria-describedby="inputcurriculum">
+                            <label class="custom-file-label"  for="curriculum">Escolha o currículo</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="foto" id="foto" aria-describedby="inputfoto">
+                            <label class="custom-file-label"  for="foto">Escolha a foto</label>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-sm">
+                <!-- <div class="col-sm custom-file"">
                     <label for="foto">Foto</label>
-                    <input type="file" name="foto" class="form-control-file" id="foto">
-                </div>
+                    <input type="file" name="foto" class="custom-file-input" id="foto">
+                </div> -->
 
             </div>
 

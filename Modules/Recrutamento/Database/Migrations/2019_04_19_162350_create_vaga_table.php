@@ -17,11 +17,11 @@ class CreateVagaTable extends Migration
             $table->integer('id', true);
             $table->integer('cargo_id')->index('fk_vaga_cargo1');
             $table->string('salario');
-            $table->longText('descricao');
+            $table->longText('descricao')->nullable($value = true);
             $table->string('regime');
             $table->string('beneficios');
             $table->string('escolaridade');
-            $table->string('especificacoes');
+            $table->string('especificacoes')->nullable($value = true);
             $table->boolean('status');
             $table->timestamps();
             $table->softDeletes();

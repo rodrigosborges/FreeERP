@@ -15,7 +15,7 @@
             <div class="form-row">
                 <div class="col-md-12">    
                     <label for="nome" class="control-label">Nome</label>
-                    <input type="text" name="nome" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', "") }}">
+                    <input type="text" required name="nome" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', "") }}">
                     <label class="errors"> {{ $errors->first('nome') }} </label>
                 </div>
             </div>

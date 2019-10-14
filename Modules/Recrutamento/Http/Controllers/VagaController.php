@@ -38,8 +38,12 @@ class VagaController extends Controller
     {
         if($request->pesquisa != ""){
             $pesquisaCargo = Cargo::where('categoria_id', '=', $request->pesquisa)->first();
-            $pesquisaVaga = Vaga::where('cargo_id', '=' , $pesquisaCargo->id)->get();
-            $pesquisaVagaInativa = Vaga::onlyTrashed()->where('cargo_id', '=' , $pesquisaCargo->id)->get();
+            if(!$pesquisaCargo){
+                return back()->with('error', 'Nenhuma vaga atrelada a este cargo');
+            }else{
+                $pesquisaVaga = Vaga::where('cargo_id', '=' , $pesquisaCargo->id)->get();
+                $pesquisaVagaInativa = Vaga::onlyTrashed()->where('cargo_id', '=' , $pesquisaCargo->id)->get();
+            }
         }else{
             $pesquisaVaga = Vaga::all();
             $pesquisaVagaInativa = Vaga::onlyTrashed()->get();

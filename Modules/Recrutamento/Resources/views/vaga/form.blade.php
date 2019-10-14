@@ -27,7 +27,7 @@
             <div class="col-sm">
                 <div class="form-group">
                     <label for="salario" class="control-label">Salário</label>
-                    <input type="text" name="salario" id="salario" class="form-control" value="{{ $data['model'] ? $data['model']->salario : old('salario', "A Combinar") }}">
+                    <input type="text" required name="salario" id="salario" class="form-control" value="{{ $data['model'] ? $data['model']->salario : old('salario', "A Combinar") }}">
                     <label class="errors"> {{ $errors->first('salario') }} </label>
                 </div>
             </div>
@@ -74,8 +74,8 @@
         
             <div class="col-sm">
                 <div class="form-group">
-                    <label for="beneficios" class="control-label">Benefícios</label>
-                    <input type="text" name="beneficios" id="beneficios" class="form-control" value="{{ $data['model'] ? $data['model']->beneficios : old('beneficios', "") }}">
+                    <label for="beneficios" class="control-label">Benefícios <small>(separar por vírgula)</small> </label>
+                    <input type="text" required name="beneficios" id="beneficios" placeholder="Exemplo: VA,VR" class="form-control" value="{{ $data['model'] ? $data['model']->beneficios : old('beneficios', "") }}">
                     <label class="errors"> {{ $errors->first('beneficios') }} </label>
                 </div>
             </div>
@@ -85,7 +85,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="descricao" class="control-label">Descrição da Vaga</label>
-                    <textarea  name="descricao" id="descricao" class="form-control"  rows="3">{{ $data['model'] ? $data['model']->descricao : old('descricao', "") }}</textarea>
+                    <textarea  name="descricao" required id="descricao" class="form-control"  rows="3">{{ $data['model'] ? $data['model']->descricao : old('descricao', "") }}</textarea>
                     <label class="errors"> {{ $errors->first('descricao') }} </label>
                 </div>
             </div>
@@ -93,7 +93,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="especificacoes" class="control-label">Especificações da Vaga</label>
-                    <textarea class="form-control" name="especificacoes"  id="especificacoes" rows="3">{{ $data['model'] ? $data['model']->especificacoes : old('especificacoes', "") }}</textarea>
+                    <textarea class="form-control" required name="especificacoes"  id="especificacoes" rows="3">{{ $data['model'] ? $data['model']->especificacoes : old('especificacoes', "") }}</textarea>
                     <label class="errors"> {{ $errors->first('especificacoes') }} </label>
                 </div>
             </div>

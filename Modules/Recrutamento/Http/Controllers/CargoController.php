@@ -92,6 +92,12 @@ class CargoController extends Controller
      */
     public function store(Request $request)
     {
+        $cargos = Cargo::all();
+        foreach($cargos as $cargo){
+            if(strtoupper($request->nome) == strtoupper($cargo->nome)){
+                return back()->with('error', 'Nome de cargo já existe');
+            }
+        }
         DB::beginTransaction();
 		try{    
             $cargo = Cargo::Create($request->all());          
@@ -144,6 +150,14 @@ class CargoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $cargos = Cargo::all();
+        foreach($cargos as $cargo){
+            if($cargo->id != $id){
+                if(strtoupper($request->nome) == strtoupper($cargo->nome)){
+                    return back()->with('error', 'Nome de cargo já existe');
+                }
+            }
+        }
         DB::beginTransaction();
 		try{    
             $cargo = Cargo::FindOrFail($id);

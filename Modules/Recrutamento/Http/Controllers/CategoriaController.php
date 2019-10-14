@@ -81,6 +81,12 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
+        $categorias = Categoria::all();
+        foreach($categorias as $categoria){
+            if(strtoupper($request->nome) == strtoupper($categoria->nome)){
+                return back()->with('error', 'Nome de categoria já existe');
+            }
+        }
 
         DB::beginTransaction();
 		try{    
@@ -134,6 +140,16 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $categorias = Categoria::all();
+        foreach($categorias as $categoria){
+            if($categoria->id != $id){
+                if(strtoupper($request->nome) == strtoupper($categoria->nome)){
+                    return back()->with('error', 'Nome de categoria já existe');
+                }
+            }
+        }
+
         DB::beginTransaction();
 		try{    
             $categoria = Categoria::FindOrFail($id);
