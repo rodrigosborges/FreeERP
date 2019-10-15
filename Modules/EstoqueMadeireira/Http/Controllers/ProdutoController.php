@@ -25,8 +25,10 @@ class ProdutoController extends Controller
 
         $menu = [
             ['icon' => 'add_box', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
-            ['icon' => 'search', 'tool' => 'Pedidos', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Estoque', 'route' => '#'],
+            ['icon' => 'add_box', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
+            ['icon' => 'add_box', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
+            ['icon' => 'edit', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
+
         ];
         $this->template = [
             'moduleInfo' => $moduleInfo,

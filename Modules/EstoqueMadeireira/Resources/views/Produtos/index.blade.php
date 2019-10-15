@@ -49,7 +49,7 @@
                         <th scope="col">Nome</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">Preço</th>
-                        <th scope="col">Fornecedores</th>
+                        <th scope="col">Fornecedor</th>
                         @if($flag == 0)
                         <th scope="col">Editar</th>
                         <th scope="col">Visualizar</th>
