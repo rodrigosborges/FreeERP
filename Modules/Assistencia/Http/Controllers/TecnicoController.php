@@ -31,7 +31,7 @@ class TecnicoController extends Controller
         $dados  = $req->all();
         TecnicoAssistenciaModel::create($dados);
         DB::commit();
-        return back()->with('success','Técnico cadastrado com sucesso!');
+        return redirect(route('tecnico.localizar'))->with('success','Técnico cadastrado com sucesso!');
         
       } catch (\Exception $e) {
         DB::rollback();

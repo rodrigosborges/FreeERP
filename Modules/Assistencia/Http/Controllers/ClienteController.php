@@ -19,6 +19,8 @@ class ClienteController extends Controller
         $clientes = ClienteAssistenciaModel::paginate(10);
         $clientesDeletados = ClienteAssistenciaModel::onlyTrashed()->paginate(10);
         
+
+
         DB::commit();
         return view('assistencia::paginas.clientes.localizarCliente', compact('clientes','clientesDeletados'));
     
@@ -78,7 +80,7 @@ class ClienteController extends Controller
             'endereco_id' => $endereco->id
           ]);
           DB::commit();
-          return back()->with('success','Cliente cadastrado com sucesso!');
+          return redirect(route('cliente.localizar'))->with('success','Cliente cadastrado com sucesso!');
         }
       } catch (\Exception $e) {
         DB::rollback();

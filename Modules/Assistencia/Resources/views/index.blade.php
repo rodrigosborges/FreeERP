@@ -14,6 +14,7 @@
 @section('content')
 <input type="hidden" name="pago" value="{{$pago}}">
 <input type="hidden" name="pendente" value="{{$pendente}}">
+<input type="hdden" name="" value="{{}}"">
 <div class="card">
 
     <div class="card-header caixa">
