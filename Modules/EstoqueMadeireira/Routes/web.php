@@ -13,14 +13,19 @@
 
 Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/', 'EstoqueMadeireiraController@index');
-
+    Route::get('/produtos/categorias/inativos', 'CategoriaController@inativos');
+    Route::resource('/produtos/categorias', 'CategoriaController'); 
+  
+    
     //ROTA DE PRODUTOS
-    Route::get('/produtos/inativos', 'ProdutoController@inativos');
+    Route::get('/produtos/inativos', 'ProdutoController@inativos'); 
     Route::get('/produtos/ficha/{id}', 'ProdutoController@ficha');
     Route::put('/produtos/{id}/restore', 'ProdutoController@restore');
     Route::resource('/produtos', 'ProdutoController');  
 
     
+    //ROTA DE CATEGORIA
+    Route::put('/produtos/categorias/{id}/restore', 'CategoriaController@restore');
     
 
    

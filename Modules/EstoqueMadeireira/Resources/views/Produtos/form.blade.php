@@ -35,7 +35,7 @@
             <div class="row ml-2 mt-2">
                     <div class="form-group col-3">
                         <label for="codigo">Código de Barras</label>
-                        <input required type="number" class="form-control" placeholder="Insira o código do Produto" name="codigo" value="{{isset($produto) ? $produto->codigo : ''}}">
+                        <input required type="number" maxlength="13" class="form-control"  placeholder="Insira o código do Produto" name="codigo" value="{{isset($produto) ? $produto->codigo : ''}}">
                         {{$errors->first('codigo')}}
                     </div>
     
