@@ -548,7 +548,7 @@ class FuncionarioController extends Controller{
                 $descontarAvisoPrevio = true;
             }
             
-          
+            
             $avisoPrevio = AvisoPrevio::create([
                 'aviso_previo_indenizado' => $avisoPrevioIndenizado,
                 'descontar_aviso_previo'  => $descontarAvisoPrevio,
@@ -597,7 +597,7 @@ class FuncionarioController extends Controller{
         }
 
         public function destroyDemissao($id){
-          
+            DB::beginTransaction();
             try {
                 $demissaoId = Demissao::where('funcionario_id', '=', $id)->get()->last()->id;
                 $avisoPrevioId = AvisoPrevio::where('funcionario_id', '=', $id)->get()->last()->id;

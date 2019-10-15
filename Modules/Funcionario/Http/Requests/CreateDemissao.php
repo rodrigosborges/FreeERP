@@ -3,6 +3,7 @@
 namespace Modules\Funcionario\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class CreateDemissao extends FormRequest
 {
@@ -11,14 +12,28 @@ class CreateDemissao extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
-        return [
-            'data_demissao'         => 'required|date',
-            'data_pagamento'        => 'required|date|after:data_demissao',
-            'data_inicio_aviso'     => 'date|before:data_demissao',
-            'dias_aviso_indenizado' => 'numeric|integer'
-        ];
+        if($request::input('aviso_previo_indenizado') == 'on'){
+            return [
+                'data_demissao'         => 'required|date',
+                'data_pagamento'        => 'required|date|after:data_demissao',
+                'data_inicio_aviso'     => 'required|date|before:data_demissao',
+                'dias_aviso_indenizado' => 'required|integer',
+            ];
+
+        } else {
+            return [
+                'data_demissao'         => 'required|date',
+                'data_pagamento'        => 'required|date|after:data_demissao',
+                'tipo_demissao'         => 'required',
+                'data_inicio_aviso'     => 'nullable',
+                'dias_aviso_indenizado' => 'nullable',
+                'tipo_reducao_aviso'    => 'nullable',
+                'aviso_previo_indicador_cumprimento_id' => 'nullable'
+            ];
+        }    
+       
     }
 
     /**
@@ -32,4 +47,4 @@ class CreateDemissao extends FormRequest
     }
 }
 
-//'cpf'               => ($request['tipo']=='F' ? 'required|cpf' : 'nullable')
+//'cpf' => ($request['tipo']=='F' ? 'required|cpf' : 'nullable')
