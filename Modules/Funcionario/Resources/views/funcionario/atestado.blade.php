@@ -6,7 +6,7 @@
 
 @section('body')
 <div class="algo">
-    
+
     <form method="post" action="{{url($data['url'])}}">
         @if($data['method'] == 'PUT')
             @method('PUT')
@@ -14,11 +14,11 @@
         @csrf
     <input type="hidden" value="{{$data['funcionario']->id}}" name="atestado[funcionario_id]">
     <h5>Nome do funcionário: {{$data['funcionario']->nome}}</h5>
-    
+
     <div class="col-lg-5 pt-5">
             <div class="form-group">
                 <label for="">Motivo da mudança de situação:</label>
-                <div class="input-group">   
+                <div class="input-group">
                     <select class="form-control">
                     <option>Default select</option>
                 </select>
@@ -39,16 +39,16 @@
         <div class="form-group">
             <label for="">Data de Início:</label>
             <div class="input group">
-                <input type="date" class="form-control" value="{{old('atestado.data_inicio', $data['atestado'] ? $data['atestado']->data_inicio : '')}}" name="atestado[data_inicio]">
+                <input type="date" class="form-control" id="data_inicio" value="{{old('atestado.data_inicio', $data['atestado'] ? $data['atestado']->data_inicio : '')}}" name="atestado[data_inicio]">
             </div>
-        </div>     
+        </div>
     </div>
 
     <div class="col-lg-5">
         <div class="form-group">
             <label for="">Data de Fim:</label>
             <div class="input-group">
-                <input type="date" class="form-control" value="{{old('atestado.data_fim', $data['atestado'] ? $data['atestado']->data_fim : '')}}" name="atestado[data_fim]">
+                <input type="date" class="form-control" id="data_fim" value="{{old('atestado.data_fim', $data['atestado'] ? $data['atestado']->data_fim : '')}}" name="atestado[data_fim]">
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@
         <div class="form-group">
             <label for="">Quantidade de Dias:</label>
             <div class="input-group">
-                <input type="number" class="form-control" value="{{old('atestado.quantidade_dias', $data['atestado'] ? $data['atestado']->quantidade_dias : '')}}" name="atestado[quantidade_dias]">
+                <input type="text" disabled id="resultado" class="form-control" >
             </div>
         </div>
     </div>
@@ -68,7 +68,26 @@
         <button type="submit"  class="btn btn-success ml-2">Salvar</button>
 
     </div>
-    
+
 @endsection
 
 @endsection
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+<script>
+  $(document).ready(function () {
+
+    $('#data_fim').on("focusout", function () {
+
+      var data_inicio = new Date(document.getElementById('data_inicio').value);
+      var data_fim = new Date(document.getElementById('data_fim').value);
+
+      var diferenca = data_fim - data_inicio;
+      var diferenca_dias = diferenca / (1000 * 60 * 60 * 24);
+
+      console.log(data_inicio)
+      document.getElementById('resultado').value = diferenca_dias;
+    })
+  });
+</script>
