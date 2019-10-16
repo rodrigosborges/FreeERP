@@ -5,7 +5,7 @@ namespace Modules\Protocolos\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Protocolo, Usuario};
+use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Protocolo, Usuario, Tramite};
 use Modules\Protocolos\Http\Requests\{CreateProtocolo};
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -119,18 +119,9 @@ class ProtocolosController extends Controller
                 'usuario_id'            => Auth::user()->id,
             ]);
             
-            // foreach($request->interessados as $interessado){
 
-            //     $interessado = Interessado::create($interessado);
-
-                // $protocolo->interessado()->attach([
-
-                //     'interessado_id' => $interessado->id
-
-                // ]);
-
-                $protocolo->interessado()->attach($interessadosArray);
-           // }
+            $protocolo->interessado()->attach($interessadosArray);
+           
 
             DB::commit();
             
@@ -143,6 +134,82 @@ class ProtocolosController extends Controller
         
     }
 
+    public function encaminhar(Request $request, $id){
+
+        $idLogado = Auth::user()->id;
+        
+        $data = [
+           'url'        => url("protocolos/protocolos/$id"),
+           'model'      => '',
+           'usuario'    => Usuario::where('id','<>',$idLogado)->whereNotIn('id',function($query) use($id){
+                                        $query->select('usuario_id')->from('protocolo_has_usuario')->where('protocolo_id','=', $id);
+                                    })->get(),
+           'button'     => 'Encaminhar'
+        ];
+
+        // dd($data);
+        
+        return view('protocolos::protocolo.encaminhar', compact('data'));
+    }
+
+    public function salvarEncaminhamento(Request $request, $id){
+
+
+        $protocolo = Protocolo::where('id', '=',$id)->first();
+       
+
+        DB::beginTransaction();
+
+		try{
+
+			$tramite = Tramite::Create([
+                'observacao'            => $request['observacao'],
+                'status'                => 'Pendente',
+                'origem'                => Auth::user()->id,
+                'destino'               => $request->tramite['destino'],
+                'protocolo_id'          => $id
+            ]);
+
+            $protocolo->interessado()->attach(['protocolo_id' => $id]);
+
+            DB::commit();
+            
+            return redirect('protocolos/protocolos')->with('success', 'Encaminhamento feito com sucesso!');
+            
+		}catch(Exception $e){
+			DB::rollback();
+			return back();
+		}
+    }
+
+    public function acompanhar($id){
+        
+        
+
+        $data = ([
+            'model'         => '',
+            'url'           => url("protocolos/acompanhar/$id"),
+            'protocolo'     => Protocolo::findOrFail($id),
+            'tramite'       => Tramite::where('protocolo_id', '=', $id)->get(),
+            'title'         => 'Acompanhamento de Protocolo',
+            'button'        => 'Adicionar',
+        ]);
+        
+        return view('protocolos::protocolo.acompanhar', compact('data'));
+    }
+
+    public function protocolos(Request $request){
+        $query = $request->get('query'); 
+        $data = DB::table('protocolo')->where('id', 'LIKE', '%'.$query.'%')->get();
+        $content = [];
+        foreach($data as $dados){
+            $content[] = [
+                'label' => $dados->nome,
+                'value' => $dados->id
+            ];  
+        }
+        return $content;
+    }
     /**
      * Show the specified resource.
      * @param int $id

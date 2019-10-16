@@ -16,15 +16,15 @@ class Protocolo extends Model
 
     //Relação com a tabela tipo_protocolo
     public function tipo_protocolo(){
-        return $this->belongsTo('Modules\Protocolos\Entities\Tipo_protocolo');
+        return $this->belongsTo('Modules\Protocolos\Entities\TipoProtocolo');
     }
 
     //Relação com a tabela tipo_acesso
     public function tipo_acesso(){
-        return $this->belongsTo('Modules\Protocolos\Entities\Tipo_acesso');
+        return $this->belongsTo('Modules\Protocolos\Entities\TipoAcesso');
     }
 
-    //Relação com a tabela usuario 
+    //Relação com a tabela protocolo_has_usuario 
     public function interessado(){
         return $this->belongsToMany('Modules\Protocolos\Entities\Usuario', 'protocolo_has_usuario', 'protocolo_id', 'usuario_id');
     }
@@ -33,4 +33,9 @@ class Protocolo extends Model
     public function usuario(){
         return $this->belongsTo('Modules\Protocolos\Entities\Usuario');
     }  
+
+    public function tramite(){
+        return $this->belongsTo('Modules\Protocolos\Entities\Tramite');
+    } 
+
 }

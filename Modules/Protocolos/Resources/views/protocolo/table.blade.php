@@ -15,22 +15,22 @@
                     <td>{{$protocolo->assunto}}</td>
                     @if($status == "ativos" || $status == "meus-protocolos")
                     <td class="min">         
-                        <a class="btn btn-info" href="">Acompanhar</a>
+                        <a class="btn btn-info" href='{{ url("protocolos/protocolos/acompanhar/$protocolo->id") }}'>
+                            <i class="material-icons send" style="vertical-align:middle; font-size:25px; margin-right:5px;">find_in_page</i>Acompanhar
+                        </a>
                     </td>
-                    <td class="min">         
-                        <a class="btn btn-dark" href="">Adicionar comentário</a>
-                    </td>
-                    @endif
-                    @if($status == "ativos")
                     <td class="min">                       
-                        <a class="btn btn-warning" href="">Encaminhar</a>
+                        <a class="btn btn-warning" href='{{ url("protocolos/protocolos/encaminhar/$protocolo->id") }}'>
+                            <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">forward</i>Encaminhar
+                        </a>
                     </td>
                     @endif
                     <td class="min">
                         <form action="{{url('protocolos/protocolos', [$protocolo->id])}}" class="input-group" method="POST">
                             {{method_field('DELETE')}}
                             {{ csrf_field() }}
-                                <input type="submit" class="btn btn-{{$protocolo->trashed() ? 'success' : 'danger'}}" value="{{$protocolo->trashed() ? 'Reabrir' : 'Finalizar'}}"/>
+                            
+                            <input type="submit" class="btn btn-{{$protocolo->trashed() ? 'success' : 'danger'}}" value="{{$protocolo->trashed() ? 'Reabrir' : 'Finalizar'}}"/>
                         </form>
                     </td>
                     

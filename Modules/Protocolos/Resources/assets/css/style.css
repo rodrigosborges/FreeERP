@@ -65,3 +65,9 @@ div.error, .errors {
     font-size:20px;
     padding:5px;
 }
+
+.icon{
+    vertical-align: middle;
+    font-size: 25px;
+    margin-right: 5px;
+}

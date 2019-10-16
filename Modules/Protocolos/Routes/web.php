@@ -15,6 +15,7 @@
 //Módulo de Protocolos
 Route::prefix('protocolos')->group(function() {
 
+    
     Route::get('/cadastrar', 'UsuarioController@create');
     Route::post('/envia', 'UsuarioController@store');
     
@@ -22,9 +23,13 @@ Route::prefix('protocolos')->group(function() {
     Route::post('protocolos/logar', 'LoginController@authenticate');
     Route::get('protocolos/logout', 'LoginController@logoutUsuario');
 
+    Route::get('protocolos/encaminhar/{id}', 'ProtocolosController@encaminhar');
+    Route::post('protocolos/{id}', 'ProtocolosController@salvarEncaminhamento');
     Route::get('protocolos/list/{status}', 'ProtocolosController@list');
     Route::post('busca', 'ProtocolosController@fetch');
-
+    Route::post('buscaProtocolos', 'ProtocolosController@protocolos');
+    Route::get('protocolos/acompanhar/{id}', 'ProtocolosController@acompanhar');
+    Route::post('protocolos/acompanhar/{id}', 'ProtocolosController@salvarDocumento');
     Route::resource('protocolos', 'ProtocolosController')->middleware('auth');
  
 });

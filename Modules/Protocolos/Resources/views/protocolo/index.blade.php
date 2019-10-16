@@ -1,6 +1,6 @@
 @extends('protocolos::template')
 
-@section('title','Lista de protocolos')
+@section('title','Lista de Protocolos')
 
 @section('body')
     <div class="row">
@@ -16,7 +16,9 @@
         </div>
         <div class="col-md-4">
             <div class="text-right">
-                <a class="btn btn-success" href="{{ url('protocolos/protocolos/create') }}">Novo Protocolo</a>
+                <a class="btn btn-success" href="{{ url('protocolos/protocolos/create') }}">
+                    <i class="material-icons add_circle_outline" style="vertical-align:middle; font-size:25px; margin-right:5px;">add_circle_outline</i>Novo Protocolo
+                </a>
             </div>
         </div>
     </div>

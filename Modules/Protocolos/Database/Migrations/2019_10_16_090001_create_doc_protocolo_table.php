@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTramiteTable extends Migration
+class CreateDocProtocoloTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateTramiteTable extends Migration
      */
     public function up()
     {
-        Schema::create('tramite', function (Blueprint $table) {
+        Schema::create('doc_protocolo', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->text('observacao');
-            $table->text('status');
-            $table->text('origem');
-            $table->text('destino');
-            $table->integer('protocolo_id')->index('fk_tramite_protocolo1');
-            $table->timestamps();
+            $table->string('documento', 100);
+            $table->integer('protocolo_id')->index('fk_doc_protocolo_protocolo1');
         });
     }
 
@@ -31,6 +27,6 @@ class CreateTramiteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tramite');
+        Schema::dropIfExists('doc_protocolo');
     }
 }
