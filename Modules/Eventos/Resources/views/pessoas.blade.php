@@ -151,11 +151,9 @@
                             <h5 class="modal-title" id="tituloModal">Excluir Pessoa</h5>
                         </div>
                         <div class="modal-body">
-                            
                             <!-- Passa o id do evento e o id da pessoa para excluir-->
                             <input type="hidden" name="eventoId" value="{{$evento->id}}">
                             <input type="hidden" name="id" id="id">
-                            
                             <p></p>
                         </div>
                         <div class="modal-footer">

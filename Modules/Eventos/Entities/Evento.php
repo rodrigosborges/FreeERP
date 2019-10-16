@@ -18,7 +18,7 @@ class Evento extends Model
     
     public function programacao()
     {
-        return $this->hasMany('Programacao');
+        return $this->hasMany(Programacao::class);
     }
 }
 

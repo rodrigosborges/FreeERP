@@ -16,10 +16,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
-        #tituloModal{
-            padding-top: 70px;
-        }
     </style>
 @endsection
 
@@ -49,7 +45,12 @@
                         </td>
                         <td class="text-center align-middle">{{$evento->local}}</td>
                         <td class="text-center align-middle quebraDeTexto">
-                            <button class="btn btn-xs" data-toggle="modal" data-target="#modalVisualizarEvento"
+                            <button class="btn btn-xs" title="Programação">
+                                <a href="{{URL::route('programacao.exibir', $evento->id)}}">
+                                    <i class="material-icons">schedule</i> 
+                                </a>
+                            </button>
+                            <button class="btn btn-xs" title="Visualizar" data-toggle="modal" data-target="#modalVisualizarEvento"
                                 data-id="{{$evento->id}}" data-nome="{{$evento->nome}}" data-local="{{$evento->local}}"
                                 data-dataInicio="{{$evento->dataInicio}}" data-dataFim="{{$evento->dataFim}}"
                                 data-descricao="{{$evento->descricao}}"
@@ -58,13 +59,7 @@
                                 data-telefone="{{$evento->telefone}}">
                                 <i class="material-icons">search</i>
                             </button>
-                            <button class="btn btn-xs" data-toggle="modal" data-target="#modalEditarEvento" 
-                                data-id="{{$evento->id}}" data-nome="{{$evento->nome}}"
-                                data-descricao="{{$evento->descricao}}" data-imagem="{{$evento->imagem}}"
-                                data-email="{{$evento->email}}" data-telefone="{{$evento->telefone}}">
-                                <i class="material-icons">edit</i>
-                            </button>
-                            <button class="btn btn-xs" data-toggle="modal" data-target="#modalExcluirEvento"
+                            <button class="btn btn-xs" title="Excluir" data-toggle="modal" data-target="#modalExcluirEvento"
                                 data-id="{{$evento->id}}" data-nome="{{$evento->nome}}">
                                 <i class="material-icons">delete</i>
                             </button>
@@ -82,7 +77,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="tituloModal">Cadastrar Evento</h5>
+                        <h5 class="modal-title">Cadastrar Evento</h5>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
@@ -111,8 +106,8 @@
                         </div>
                         <div class="form-group">
                             <label for="imagem" class="col-form-label">Imagem:</label>
-                            <img src="http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png" id="img" alt="Imagem evento" title='Imagem evento'/></br>
-                            <input type='file' id="imgEvento" name="imgEvento" accept="image/*">
+                            <img src="http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png" class="img" alt="Imagem evento" title='Imagem evento'/></br>
+                            <input type='file' class="imgEvento" name="imgEvento" accept="image/*">
                         </div>
                         <div class="form-group">
                             <label for="empresa" class="col-form-label">Empresa/Instituição:</label>
@@ -140,75 +135,84 @@
         </div>
     </form>
     
-    <!-- Modal para visualizar evento -->
-    <div class="modal fade" id="modalVisualizarEvento" tabindex="-1" role="dialog" aria-labelledby="modalVisualizarEvento" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <img src=" " id="imagem"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="nome" class="col-form-label">Nome:</label>
-                        <input type="text" class="form-control" id="nome" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="local" class="col-form-label">Local:</label>
-                        <input type="text" class="form-control" id="local" readonly>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                <label for="data_inicio" class="col-form-label">Data Início:</label>
-                                <input type="date" class="form-control" id="dataInicio" readonly>
+    <!-- Modal para visualizar e/ou editar evento -->
+    <form method="post" action="{{route('eventos.editar')}}" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        <div class="modal fade" id="modalVisualizarEvento" tabindex="-1" role="dialog" aria-labelledby="modalVisualizarEvento" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Passa o id do evento -->
+                        <div class="form-group">
+                            <input type="hidden" name="id" id="id">
+                        </div>
+                        <div class="form-group">
+                            <img src=" " class="img" alt="Imagem evento" title='Imagem evento'/></br>
+                            <input type='file' class="imgEvento" name="imgEvento" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label for="nome" class="col-form-label">Nome:</label>
+                            <input type="text" class="form-control edit" id="nome" name="nome" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="local" class="col-form-label">Local:</label>
+                            <input type="text" class="form-control edit" id="local" name="local" disabled>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <label for="data_inicio" class="col-form-label">Data Início:</label>
+                                    <input type="date" class="form-control edit" id="dataInicio" name="dataInicio" disabled>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <label for="data_fim" class="col-form-label">Data Fim:</label>
+                                    <input type="date" class="form-control edit" id="dataFim" name="dataFim" disabled>
+                                </div>
                             </div>
-                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                <label for="data_fim" class="col-form-label">Data Fim:</label>
-                                <input type="date" class="form-control" id="dataFim" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao" class="col-form-label">Descrição:</label>
+                            <textarea class="form-control edit" id="descricao" name="descricao" rows="15" disabled></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="empresa" class="col-form-label">Empresa/Instituição:</label>
+                            <input type="text" class="form-control edit" id="empresa" name="empresa" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-form-label">E-mail:</label>
+                            <input type="text" class="form-control edit" id="email" name="email" disabled>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                                    <label for="telefone" class="col-form-label">Telefone:</label>
+                                    <input type="text" class="form-control edit" id="telefone" name="telefone" disabled>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="descricao" class="col-form-label">Descrição:</label>
-                        <textarea class="form-control" id="descricao" rows="15" readonly></textarea>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btnEditar" onclick="editar()">Editar</button>
+                        <button type="button" class="btn btn-secondary" id="btnFechar" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary"id="btnSalvar">Salvar</button>
                     </div>
-                    <div class="form-group">
-                        <label for="empresa" class="col-form-label">Empresa/Instituição:</label>
-                        <input type="text" class="form-control" id="empresa" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="col-form-label">E-mail:</label>
-                        <input type="text" class="form-control" id="email" readonly>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                <label for="telefone" class="col-form-label">Telefone:</label>
-                                <input type="text" class="form-control" id="telefone" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     
     <!-- Modal de confirmação de exclusão -->
-    <form method="POST" action="">
+    <form method="POST" action="{{route('eventos.excluir')}}">
         @method('DELETE')
         {{ csrf_field() }}
         <div class="modal fade" id="modalExcluirEvento" tabindex="-1" role="dialog" aria-labelledby="modalExcluirEvento" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="tituloModal">Excluir Evento</h5>
+                        <h5 class="modal-title">Excluir Evento</h5>
                     </div>
                     <div class="modal-body">
-
-                        
+                        <input type="hidden" name="id" id="id"/>
                         <p></p>
                     </div>
                     <div class="modal-footer">
@@ -251,52 +255,57 @@
         
         $('#modalVisualizarEvento').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
+            
             //RECEBE VALORES DOS ATRIBUTOS DATA
             var imagem = button.data('imagem');
             var id = button.data('id');
             var nome = button.data('nome');
             var local = button.data('local');
-            var dataInicio = button.data('dataInicio');
-            var dataFim = button.data('dataFim');
+            var datainicio = button.data('datainicio');
+            var datafim = button.data('datafim');
             var descricao = button.data('descricao');
             var empresa = button.data('empresa');
             var email = button.data('email');
             var telefone = button.data('telefone'); 
+            
             //ATUALIZA O CONTEÚDO DO MODAL
             var modal = $(this);
             
-            if(imagem !== 'http://127.0.0.1:8000/storage/eventos/'){
-                modal.find('.modal-body #imagem').attr("src", imagem);
-            } else {
-                modal.find('.modal-body #imagem').attr("src", 'http://127.0.0.1:8000/storage/eventos/default.png');
-            }
-                
+            $('.modal-body .imgEvento').hide(); //ESCONDE O INPUT DA IMAGEM
+            $('.modal-footer #btnSalvar').hide(); //ESCONDE O BOTÃO SALVAR
             
+            if(imagem !== 'http://127.0.0.1:8000/storage/eventos/'){
+                modal.find('.modal-body .img').attr("src", imagem);
+            } else {
+                modal.find('.modal-body .img').attr("src", 'http://127.0.0.1:8000/storage/eventos/default.png');
+            }
+          
             modal.find('.modal-body #id').val(id);
             modal.find('.modal-body #nome').val(nome);
             modal.find('.modal-body #local').val(local);
-            modal.find('.modal-body #dataInicio').val(dataInicio);
-            modal.find('.modal-body #dataFim').val(dataFim);
+            modal.find('.modal-body #dataInicio').val(datainicio);
+            modal.find('.modal-body #dataFim').val(datafim);
             modal.find('.modal-body #descricao').val(descricao);
             modal.find('.modal-body #empresa').val(empresa);
             modal.find('.modal-body #email').val(email);
             modal.find('.modal-body #telefone').val(telefone);
         });
         
-        $('#modalEditarEvento').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            //RECEBE VALORES DOS ATRIBUTOS DATA
-            var id = button.data('id');
-            var nome = button.data('nome');
-            var email = button.data('email');
-            var telefone = button.data('telefone'); 
-            //ATUALIZA O CONTEÚDO DO MODAL
-            var modal = $(this);
-            modal.find('.modal-body #id').val(id);
-            modal.find('.modal-body #nome').val(nome);
-            modal.find('.modal-body #email').val(email);
-            modal.find('.modal-body #telefone').val(telefone);
-        });
+        //LIBERA OS CAMPOS PARA EDIÇÃO
+        function editar() {
+            var input = document.getElementsByClassName('edit');
+            
+            for (var i=0; i<(input.length); i++) {
+                input[i].disabled = false;
+            }
+            
+            $('.modal-body .imgEvento').show(); //EXIBE O INPUT DA IMAGEM
+            
+            //EDITA OS BOTÕES
+            $('.modal-footer #btnEditar').hide();
+            $('.modal-footer #btnFechar').html('Cancelar');
+            $('.modal-footer #btnSalvar').show();
+        }
         
         $('#modalExcluirEvento').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
@@ -304,26 +313,25 @@
             var nome = button.data('nome');
             var modal = $(this);
             modal.find('.modal-body #id').val(id);
-            modal.find('.modal-body p').text('Tem certeza que deseja excluir ' + nome + ' ?');
+            modal.find('.modal-body p').text('Tem certeza que deseja excluir ' + nome + ' ?'); 
         });
     </script>
     
     <!-- Preview da imagem -->
     <script>
-        $("#imgEvento").change(function(event) {  
+        $(".imgEvento").change(function(event) {  
             readURL(this);    
         });    
     
         function readURL(input) {    
             if (input.files && input.files[0]) {   
                 var reader = new FileReader();
-                var filename = $("#imgEvento").val();
+                var filename = $(".imgEvento").val();
                 filename = filename.substring(filename.lastIndexOf('\\')+1);
                 reader.onload = function(e) {
-                    $('#img').attr('src', e.target.result);
-                    $('#img').hide();
-                    $('#img').fadeIn(500);      
-                    $('.custom-file-label').text(filename);             
+                    $('.img').attr('src', e.target.result);
+                    $('.img').hide();
+                    $('.img').fadeIn(500);         
                 };
                 reader.readAsDataURL(input.files[0]);    
             } 

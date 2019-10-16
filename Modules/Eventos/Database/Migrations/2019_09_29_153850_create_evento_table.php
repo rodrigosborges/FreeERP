@@ -20,7 +20,7 @@ class CreateEventoTable extends Migration
             $table->date('dataInicio');
             $table->date('dataFim');
             $table->longText('descricao');
-            $table->mediumText('imagem')->nullable();
+            $table->string('imagem')->nullable();
             $table->string('empresa');
             $table->string('email', 80)->nullable();
             $table->string('telefone', 14)->nullable();

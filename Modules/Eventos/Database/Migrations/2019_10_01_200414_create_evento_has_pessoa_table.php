@@ -16,6 +16,7 @@ class CreateEventoHasPessoaTable extends Migration
         Schema::create('evento_has_pessoa', function (Blueprint $table) {
             $table->integer('evento_id')->unsigned();
             $table->integer('pessoa_id')->unsigned();
+            $table->integer('nivel_id')->unsigned();
         });
     }
 
