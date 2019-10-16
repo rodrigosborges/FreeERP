@@ -33,7 +33,7 @@
 @if($data['flag'] == 1)
 <div class="container">
     <div class="row">
-        <div class="col-lg-12 col-sm-12 text-center">
+        <div class="col-lg-12 col-sm-12 text-right">
             <form method="POST" action="{{url('/estoque/pdf')}}">
             @csrf
                 <input type="text" name="data_inicial" hidden value="{{isset($data['data_inicial']) ? $data['data_inicial'] : ''}}">
