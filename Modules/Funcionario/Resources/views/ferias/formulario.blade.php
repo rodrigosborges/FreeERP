@@ -45,7 +45,7 @@
 
     <section>
     <form action="{{url('funcionario/ferias')}}" method="POST" id="form">
-    <h4>Período Gozo</h4>
+    <h4 style="text-align: center;">Período Gozo</h4>
     {{csrf_field()}}
         <div class="row">
 
@@ -66,7 +66,7 @@
 
             <div class="form-group col-4">
                 <label for="dias_ferias">Dias de Férias:</label>
-                <input type="text" id="dias_ferias"  name="dias_ferias" class="form-control" placeholder="Ex: 2" value="{{old('dias_ferias')}}">
+                <input type="text" id="dias_ferias"  name="dias_ferias" class="form-control" placeholder="Ex: 2" value="{{old('dias_ferias')}}" readonly>
             </div>
         </div>
 

@@ -29,7 +29,7 @@ class CreateFerias extends FormRequest
             'data_pagamento'  => 'required|date',
             'data_aviso'      => 'required|date',
             'observacao'      => 'nullable',
-            'data_pagamento'  => 'required|date|before:data_inicio',
+            'data_pagamento'  => 'required|date|before_or_equal:data_inicio',
             'data_aviso'      => 'required|date|before:data_inicio'
         ];
     }
