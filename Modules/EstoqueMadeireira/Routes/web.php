@@ -14,6 +14,8 @@
 Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/', 'EstoqueMadeireiraController@index');
     Route::get('/produtos/categorias/inativos', 'CategoriaController@inativos');
+    Route::get('/produtos/fornecedores/invativos', 'FornecedorController@inativos');
+    Route::resource('/produtos/fornecedores', 'FornecedorController');
     Route::resource('/produtos/categorias', 'CategoriaController'); 
   
     
