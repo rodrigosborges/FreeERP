@@ -32,32 +32,6 @@ class SolicitanteController extends Controller
         return view('ordemservico::layouts.index', compact('data'));
     }
 
-    public function create()
-    {
-        $data = [
-            'url' => url("ordemservico/solicitante"),
-            'title' => 'Cadastro de Solicitante',
-            'button' => 'Salvar'
-        ];
-
-        return view('ordemservico::solicitante.form', compact('data'));
-    }
-    public function store(Request $request)
-    {
-        DB::beginTransaction();
-        try {
-            $solicitante = Solicitante::create($request->all());
-            DB::commit();
-            return redirect($request->url)->with('success', 'Solicitante cadastrado com successo');
-        } catch (Exception $e) {
-            DB::rollback();
-            return back()->with('error', 'Erro no servidor');
-        }
-    }
-
-    public function show($id)
-    { }
-
     public function edit($id)
     {
         $data = [
@@ -84,15 +58,4 @@ class SolicitanteController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
-        $solicitante = Solicitante::withTrashed()->findOrFail($id);
-        if ($solicitante->trashed()) {
-            $solicitante->restore();
-            return back()->with('success', 'Solicitante ativado com sucesso!');
-        } else {
-            $solicitante->delete();
-            return back()->with('success', 'Solicitante desativado com sucesso!');
-        }
-    }
 }

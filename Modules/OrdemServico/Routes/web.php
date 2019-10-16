@@ -13,10 +13,12 @@
 
 //Módulo de Ordem de servico
 Route::prefix('ordemservico')->name('modulo.')->group(function() {
-	Route::get('pdf', 'OrdemServicoController@pdf')->name('os.pdf');
-	Route::get('aparelho/showAjax','AparelhoController@showAjax');	
-	Route::get('problema/showAjax','ProblemaController@showAjax');
-	
+	Route::get('pdf/{id}', 'OrdemServicoController@pdf')->name('os.pdf');
+	Route::get('cidades/showJson/{idEstado}','CidadeController@showJson');	
+	Route::get('status/create','StatusController@create');
+	Route::post('status/store','StatusController@store');
+	Route::get('os/{id}/editStatus','OrdemServicoController@editStatus')->name('os.edit.status');
+	Route::post('os/{id}/updateStatus','OrdemServicoController@updateStatus')->name('os.update.status');
 	
 	Route::get('painel/{id}/ordensDisponiveis','PainelTecnicoController@ordensDisponiveis')->name('tecnico.painel.ordens_disponiveis');
 	Route::get('painel/{id}', 'PainelTecnicoController@index')->name('tecnico.painel.index');

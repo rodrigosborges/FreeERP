@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\OrdemServico\Database\Seeders;
+namespace Modules\Ordemservico\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
+use Modules\Ordemservico\Database\Seeders\{StatusTableSeeder,EstadoTableSeeder,CidadeTableSeeder};
 
 class OrdemServicoDatabaseSeeder extends Seeder
 {
@@ -14,8 +14,8 @@ class OrdemServicoDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
-
-        // $this->call("OthersTableSeeder");
+        $this->call(StatusTableSeeder::class);
+        $this->call(EstadoTableSeeder::class);
+        $this->call(CidadeTableSeeder::class);
     }
 }

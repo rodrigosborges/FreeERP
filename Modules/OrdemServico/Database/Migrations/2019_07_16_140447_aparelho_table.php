@@ -10,9 +10,11 @@ class AparelhoTable extends Migration
     {
         Schema::create('aparelho', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->string('tipo_aparelho');
             $table->string('marca');
+            $table->string('modelo');
+            $table->string('acessorios');
 			$table->timestamps();
 			$table->softDeletes();
 		});

@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('.adicionar-telefone').click(function(){
         if($('.telefones').children().length < 3){
-        var div = $('.telefones').find('.form-inline').first().clone(true);
+        var div = $('.telefones').find('.form-inline').first().clone(true).prop("name",'teste');
         div.find('input').val('');
         $('.telefones').append(div);
         }

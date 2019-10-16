@@ -3,18 +3,23 @@
 namespace Modules\OrdemServico\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Solicitante extends Model
 {
-    Use SoftDeletes;
+    public $timestamps = false;
     protected $table = 'solicitante';
-    public $timestamps = true;
-    protected $fillable = array('nome');
+    protected $fillable = array('nome','email','endereco_id');
 
     //relaçoes
-    public function ordem_servico(){
+    public function ordens_servico(){
         return $this->hasMany('Modules\OrdemServico\Entities\OrdemServico');
     }
-    
+
+    public function endereco(){
+        return $this->hasOne('Modules\OrdemServico\Entities\Endereco');
+    }
+
+    public function telefones(){
+        return $this->hasMany('Modules\OrdemServico\Entities\Telefone');
+    }   
 }

@@ -15,6 +15,7 @@
 @include('ordemservico::ordemservico.formulario.aparelho')
 <hr>
 @include('ordemservico::ordemservico.formulario.problema')
+        
 
 @endsection
 
@@ -24,4 +25,5 @@
 <script src="{{Module::asset('ordemservico:js/ordemservico/contato.js')}}"></script>
 <script src="{{Module::asset('ordemservico:js/ordemservico/problema.js')}}"></script>
 <script src="{{Module::asset('ordemservico:js/ordemservico/acessorios.js')}}"></script>
+<script src="{{Module::asset('ordemservico:js/ordemservico/endereco.js')}}"></script>
 @endsection

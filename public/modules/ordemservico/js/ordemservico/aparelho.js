@@ -7,11 +7,11 @@ $(document).ready(function () {
         }, function () {
             console.log("success");
         }).done(function (data) {
-            $('#tipo_aparelho').val(data.tipo_aparelho).prop('disabled', true);
-            $('#marca').val(data.marca).prop('disabled', true);
+            $('#tipo_aparelho').val(data.tipo_aparelho).prop('readonly', true);
+            $('#marca').val(data.marca).prop('readonly', true);
         }).fail(function () {
-            $('#tipo_aparelho').val("").prop('disabled', false);
-            $('#marca').val("").prop('disabled', false);
+            $('#tipo_aparelho').val("").prop('readonly', false);
+            $('#marca').val("").prop('readonly', false);
         })
 
     });

@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Problema extends Model
 {
-    Use SoftDeletes;
+    public $timestamps = false;
     protected $table = 'problema';
-    public $timestamps = true;
     protected $fillable = array('titulo','prioridade');
 }

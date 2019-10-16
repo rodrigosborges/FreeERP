@@ -5,6 +5,10 @@
   <div class="card-body">
     <p class="card-text text-info">Solicitante </p>
     <p class="card-text text-secondary"> Nome: {{ $data['model']->solicitante->nome}}</p>
+    <p class="card-text text-secondary"> Identificacao: {{ $data['model']->solicitante->id}}</p>
+    @foreach($data['model']->solicitante->telefones as $telefone)
+    <p class="card-text text-secondary"> Telefone: {{$telefone->numero}}</p>
+    @endforeach
     <hr>
     
     <p class="card-text text-info">Aparelho</p>

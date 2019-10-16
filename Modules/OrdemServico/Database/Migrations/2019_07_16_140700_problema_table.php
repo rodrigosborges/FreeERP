@@ -14,7 +14,7 @@ class ProblemaTable extends Migration
     {
         Schema::create('problema', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
             $table->string('titulo');
             $table->string('prioridade')->default(0);
 			$table->timestamps();
