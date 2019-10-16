@@ -429,13 +429,15 @@ class EstoqueController extends Controller
         }
 
         if(count($dia_maior_custo) > 0){
-            $dia_maior_custo = $dia_maior_custo[0]->data . ' - R$' . $dia_maior_custo[0]->valor;            
+            $aux = date_create($dia_maior_custo[0]->data);
+            $dia_maior_custo = date_format($aux, 'd/m/Y') . ' (R$' . $dia_maior_custo[0]->valor . ')';            
         }else{
             $dia_maior_custo = "";
         }
 
         if(count($dia_menor_custo) > 0){
-            $dia_menor_custo = $dia_menor_custo[0]->data . ' - R$' . $dia_menor_custo[0]->valor;            
+            $aux = date_create($dia_menor_custo[0]->data);
+            $dia_menor_custo = date_format($aux, 'd/m/Y') . ' (R$' . $dia_menor_custo[0]->valor . ')';            
         }else{
             $dia_menor_custo = "";
         }
