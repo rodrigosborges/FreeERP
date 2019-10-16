@@ -58,17 +58,17 @@
                     </div>
 
                     <div class="form-group col-4">
-                        <label for="dias_aviso_indenizado">Dias de aviso indenizado </label>
-                        <input type="number" name="dias_aviso_indenizado" id="dias_aviso_indenizado" class="form-control" min="0" placeholder="Ex: 10" value="{{old('dias_aviso_indenizado')}}" disabled>
-                    </div>
-
-                    <div class="form-group col-4">
                         <label for="tipo_reducao">Tipo de reducao do aviso</label>
                         <select name="tipo_reducao_aviso" class="form-control" id="tipo_reducao_aviso" value="{{old('tipo_reducao_aviso')}}" disabled>
                             <option>Escolha uma opção</option>
                             <option value="Dias" {{old('tipo_reducao_aviso') == 'Dias' ? 'selected': ''}}>Dias</option>
                             <option value="Jornada" {{old('tipo_reducao_aviso') == 'Jornada' ? 'selected' : ''}}>Jornada</option>
                         </select>
+                    </div>
+
+                    <div class="form-group col-4">
+                        <label for="dias_aviso_indenizado">Dias de aviso indenizado </label>
+                        <input type="number" name="dias_aviso_indenizado" id="dias_aviso_indenizado" class="form-control" min="0" placeholder="Ex: 10" value="{{old('dias_aviso_indenizado')}}" disabled>
                     </div>
                 </div>
 
@@ -97,6 +97,11 @@
 @section('script')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
+        var tipoReducaoAviso = document.getElementById('tipo_reducao_aviso');
+        tipoReducaoAviso.addEventListener('click', function(){
+            if(tipoReducaoAviso.value == 'Jornada')
+                document.getElementById('dias_aviso_indenizado').value = 23;
+        })
 
         /**Esse código é usado quando  a página apresenta algum erro de inserção nos dados, e o checkbox que desmarca o disabled
         os campos disabled está marcado anteriormente. Nesse caso, os disabled são removidos novamente, pois o default dos campos é com "disabled"*/
