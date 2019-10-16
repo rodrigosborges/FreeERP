@@ -124,4 +124,8 @@ class FornecedorController extends Controller
         $categoria->delete();
         return redirect('/estoquemadeireira/produtos/categorias')->with('success', 'Produto desativado com sucesso!');
     }
+
+    public function gitmanodoceu(){
+        return 1;
+    }
 }
