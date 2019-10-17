@@ -16,4 +16,8 @@ class Produto extends Model
     {
         return $this->belongsTo('Modules\Estoque\Entities\Categoria')->withTrashed();
     }  
+
+    public function pedidos(){
+        return $this->belongsToMany('Modules\Cliente\Entities\Pedido', 'pedido_has_produto');
+    }
 }

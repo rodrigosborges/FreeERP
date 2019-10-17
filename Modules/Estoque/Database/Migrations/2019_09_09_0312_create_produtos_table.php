@@ -17,7 +17,7 @@ class CreateProdutosTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome', 45);
             $table->string('descricao', 500);
-            $table->integer('categoria_id')->unsigned()->index('fk_produtos_categoria');
+            $table->integer('categoria_id')->index('fk_produtos_categoria');
             $table->decimal('preco', 12, 2);
             $table->string('codigo', 13);
             $table->timestamps();

@@ -50,6 +50,7 @@ class DashboardController extends Controller
     }
     public function getVendasMes($ano)
     {
+        dd("teste");
         $pedidos = Pedido::whereYear('data', '=', $ano)->get();
         
         $dados = [

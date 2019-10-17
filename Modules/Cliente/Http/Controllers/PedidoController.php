@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Cliente\Http\Requests\CreatePedidoRequest;
 use Illuminate\Routing\Controller;
-use Modules\Cliente\Entities\{Cliente, Pedido, Produto};
+use Modules\Cliente\Entities\{Cliente, Pedido};
+use Modules\Estoque\Entities\{Produto};
 use DB;
 use Carbon\Carbon;
 
