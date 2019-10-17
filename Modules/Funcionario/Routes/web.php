@@ -22,9 +22,12 @@ Route::prefix('funcionario')->group(function() {
     Route::get('funcionario/downloadComprovante/{id}','FuncionarioController@downloadComprovante');
     Route::get('ferias/controleFerias/{id}','ControleFeriasController@controleFerias');
     Route::get('ferias/listar/{id}','FeriasController@listar');
-
+    
+    
     Route::get('funcionario/atestado/{id}', 'FuncionarioController@CreateAtestado');
     Route::post('funcionario/storeAtestado', 'FuncionarioController@storeAtestado');
+    
+    Route::get('funcionario/listaHistorico/{id}', 'FuncionarioController@listaHistorico');
 
     //Rotas do demissão
     Route::get('funcionario/demissao/{id}', 'FuncionarioController@demissao');
