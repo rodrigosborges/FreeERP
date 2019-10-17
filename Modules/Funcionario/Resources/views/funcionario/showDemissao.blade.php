@@ -3,25 +3,24 @@
 @section('title', 'Aviso prévio do empregador para dispensa do empregado')
 @section('body')
 
-    <div id="ficha">
-        <div class="row d-flex justify-content-center" >
-            <h2 class="font-weight-bold" style="text-align: center; text-transform: uppercase">Aviso prévio do empregador para dispensa do empregado</h2>
-        </div>
+    <div id="ficha d-flex justify-content-center">
+        
+      
 
-        <div class="row">
-            <div class="col d-flex justify-content-end">
-                <p>{{$data['dia_atual']}}.</p>
+        <div class="row d-flex justify-content-center">
+            <div class="">
+                <h4 class="font-weight-bold">Aviso prévio do empregador para dispensa do empregado</h4>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-end">
+            <div class="d-flex">
+                <p>{{$data['dia_atual']}}.</p>    
             </div>
         </div>
 
-        <div class="row">
-            <div class="col d-flex justify-content-start">
-                <p class="font-weight-bold">A <br>Sr(a) {{$data['nome']}}</p>       
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col d-flex justify-content-justfy">
+        <div class="row d-flex justify-content-center">
+            <div class="col-10 justify-content-justify ">
+                <p class="font-weight-bold">A <br>Sr(a) {{$data['nome']}}</p>  
                 <p>Pelo presente o(a) notificamos que a partir de <span class="font-weight-bold">{{$data['demissao']}}</span>, não serão utilizados os seus 
                 serviços por nossa empresa, e por isso, vimos avisá-lo nos termos e para os efeitos do disposto no Art. 487 II da CLT que a partir desta 
                 data estamos rescindindo seu contrato de trabalho. Pedimos a devolução do presente com o seu "CIENTE".<br><br>Atenciosamente, </p>
@@ -34,8 +33,8 @@
             </div>
         </div>
 
-        <div class="row d-flex justify-content-start">
-            <div class="col">
+        <div class="row d-flex justify-content-center">
+            <div class="col-10 justify-content-justify">
                 <p>Ciente:</p>
                 <p class="font-weight-bold" style="border-top: solid 1px">{{$data['nome']}}</p>
             </div>

@@ -11,7 +11,7 @@
     <form method="post" action="{{url('funcionario/storeDemissao')}}">
     @csrf
         <section>
-            <h2 style="text-align: center;">Demissão</h2>
+            <h4 style="text-align: center;">Demissão</h4>
             <div class="row">
                 <div class="form-group col-6">
                     <label for="data_demissao">Data Demissão:</label>
@@ -39,7 +39,7 @@
         </section>
         <hr>
         <section>
-            <h2 style="text-align: center;">Aviso prévio</h2>
+            <h4 style="text-align: center;">Aviso prévio</h4>
             
                 <div class='form-group col-3'>
                     <input type="checkbox" name="aviso_previo_indenizado" id="aviso_previo_indenizado"  {{old('aviso_previo_indenizado') ? 'checked' : null }} disabled>

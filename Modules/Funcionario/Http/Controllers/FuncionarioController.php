@@ -593,7 +593,7 @@ class FuncionarioController extends Controller{
                 'id'         => $id   
             ];
            
-            return view('funcionario::funcionario.showDemissao', compact('data', 'funcionario'));
+            return view('funcionario::funcionario.showDemissao', compact('data'));
         }
 
         public function destroyDemissao($id){
