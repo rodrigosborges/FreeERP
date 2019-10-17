@@ -50,9 +50,9 @@ class ForgotPasswordController extends Controller
             return redirect()->back()->with(['error'=> 'Email not exists']);
         }
 
-        $token = uniqid();
+        $token = sha1($user->password);
 
-        $user->remember_token=$token;
+        $user->reset_password_token=$token;
         $user->save();
 
         // Mail::to($request->email)->locale('pt-br')->send(
@@ -81,7 +81,8 @@ class ForgotPasswordController extends Controller
 
     public function trocarSenhaUpdate(TrocarSenhaRequest $request){
 
-        $usuario = Usuario::where('remember_token',$request->token); 
+
+        $usuario = Usuario::where('reset_password_token',$request->token); 
         $null = null;
 
         if(!$usuario->first()){
@@ -96,7 +97,7 @@ class ForgotPasswordController extends Controller
 
             $usuario = Usuario::findOrFail($usuario->first()->id);
 
-            $usuario->remember_token = null;
+            $usuario->reset_password_token = null;
             $usuario->save();
 
             DB::commit();

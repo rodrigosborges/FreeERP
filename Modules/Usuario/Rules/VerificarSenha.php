@@ -58,8 +58,8 @@ class VerificarSenha implements Rule
             return false;
         }
 
+        return true;
 
-        //
     }
 
     /**
