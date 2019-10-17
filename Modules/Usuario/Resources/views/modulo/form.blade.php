@@ -32,7 +32,7 @@
                     <div class="form-group border"  style="height:8em; overflow:auto">
                     @foreach($papeis as $papel)
                         <div class="form-check ml-2">
-                            <input class="form-check-input" type="checkbox" value="{{ old('papel', isset($papel) ? $papel->id : '') }}" id="defaultCheck1">
+                            <input class="form-check-input" name="papel_id[]" type="checkbox" value="{{ old('papel', isset($papel) ? $papel->id : '') }}" id="defaultCheck1">
                             <label class="form-check-label" for="defaultCheck1">
                             {{$papel->nome}}
                                 </label>

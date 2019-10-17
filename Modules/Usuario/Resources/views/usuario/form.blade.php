@@ -87,7 +87,7 @@
                                 <select class="form-control" name='modulo[][modulo_id]'>
                                     <option disabled selected>Escolha um Modulo...</option>
                                     @foreach($modulos as $modulo)
-                                    <option value="{{ $modulo->id }}" > {{ $modulo->nome }} </option>
+                                    <option class='modulo' name = "modulo[]['modulo_id']" value="{{ $modulo->id }}" > {{ $modulo->nome }} </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -97,7 +97,7 @@
                                 <select class="form-control" name='papel[][papel_id]'>
                                     <option disabled selected>Escolha um Papel...</option>
                                     @foreach($papeis as $papel)
-                                    <option value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
+                                    <option name= "papel[]['papel_id'] value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
                                     @endforeach
                                 </select>
                                 {{$errors->first('papel')}}
@@ -155,6 +155,7 @@ function readURL(input) {
 
 <script>
         $(document).ready(function(){
+
             $(".adicionar").click(function(){
                 //div que irá ser clonada
                 var div = $(".input-modulo-papel").first().clone(true)
@@ -166,6 +167,8 @@ function readURL(input) {
             $(document).on("click", '.remover', function(){
                     $(this).parent().parent().remove();
             })
+
+    
         })
     </script>
 

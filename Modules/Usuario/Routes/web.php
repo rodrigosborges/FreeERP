@@ -40,6 +40,8 @@ Route::prefix('usuario')->group(function() {
 
 // Módulo
 Route::prefix('modulo')->group(function() {
+    //Listar papeis
+    Route::get('/list-papeis/{idModulo}', 'ModuloController@listPapeis');
     // Cadastrar
     Route::get('/cadastrar', 'ModuloController@create');
     Route::post('/', 'ModuloController@store');
