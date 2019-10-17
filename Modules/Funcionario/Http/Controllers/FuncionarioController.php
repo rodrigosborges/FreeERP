@@ -440,7 +440,7 @@ class FuncionarioController extends Controller{
             
             'estado' => DB::table('funcionario')->join('endereco', 'funcionario.endereco_id', 'endereco.id')
             ->join('cidade', 'endereco.cidade_id', 'cidade.id')
-            ->join('estado', 'cidade.estado_id','estado.id')->get('estado.nome')->last(),
+            ->join('estado', 'cidade.estado_id','estado.id')->get('estado.uf')->last(),
 
             'dependentes' => DB::table('dependente')->join('parentesco', 'dependente.parentesco_id', 'parentesco.id')->get()
 
@@ -635,28 +635,32 @@ class FuncionarioController extends Controller{
             
             $data = [   
                 'atestado'      => '',
-                'title'         => 'Cadastro de Atestado',
+                'title'         => 'Cadastro de Licença',
                 'funcionario'   => Funcionario::findOrFail($id),
                 'url'           => 'funcionario/funcionario/storeAtestado',
                 'method'        => 'post'
+
                 
             ];
+
            
             return view('funcionario::funcionario.atestado',compact('data'));
         }
 
     public function storeAtestado(Request $request){
         DB::beginTransaction();
+
         try{
+
         $atestado = Atestado::create([
             'cid_atestado' => $request['atestado']['cid_atestado'],
             'data_inicio' => $request['atestado']['data_inicio'],
-            'quantidade_dias' => $request['atestado']['quantidade_dias'],
             'data_fim' => $request['atestado']['data_fim'],
-            
+            'situacao' => $request['situacao'],
             'funcionario_id' => $request['atestado']['funcionario_id']
             
         ]);
+
         DB::commit();
         return redirect('/funcionario/funcionario')->with('success','Atestado cadastrado com sucesso');
     }catch(Exception $e){
@@ -668,5 +672,12 @@ class FuncionarioController extends Controller{
         
     }
 
+    public function listaHistorico($id){
+        $data = [
+        $atestado = Atestado::where('funcionario_id',$id)->get(),
+        'title' => 'Histórico'
+        ];
+        return view('funcionario::funcionario.historico',compact('data'));
+    }
 
 }
