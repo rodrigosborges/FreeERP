@@ -1,4 +1,6 @@
-<table class="table bordered text-center col-md-12" id="tablePedidos">
+<div class="table-responsive">
+
+<table class="table table-striped" id="tablePedidos">
     <thead>
         <tr>
             <th>Número</th>
@@ -8,16 +10,12 @@
             <th>Desconto do Pedido</th>
             <th>Opções</th>
             <th>Ver mais</th>
-            <th>
-                <input type="checkbox" id="selecionaTodos" />
-            </th>
+            
         </tr>
     </thead>
     <tbody>
         @foreach ($pedidos as $pedido)
         <!-- Modal -->
-        
-        
         <div class="modal fade" id="modal{{$pedido->id}}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -85,7 +83,7 @@
                 @else
                 
                     {{-- Editar pedido --}}
-                    <a href="{{ url( "/cliente/pedido/".$pedido->id )}}" class="btn btn-sm btn-warning"
+                    <a href="{{ url( "/cliente/pedido/".$pedido->id )}}" class="btn btn-sm btn-outline-info"
                         name="edit">Editar</button>
                     </a>
                     {{-- BOTAO PARA EXCLUSAO DO ITEM INDIVIDUALMENTE --}}
@@ -106,9 +104,7 @@
                 </button>
             </td>
 
-            <td> {{-- checkbox individual --}}
-                <input type="checkbox" name="{{$pedido->trashed() ? 'selRec' : 'selecionado'}}" value="{{$pedido->id}}">
-            </td>
+            
         </tr>
         {{-- Tabela detalhando --}}
         <tr>
@@ -142,3 +138,4 @@
             @endif
         </tfoot>
 </table>
+</div>
