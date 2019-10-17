@@ -176,16 +176,19 @@ class PagamentoController extends Controller
      */
     public function edit($id)
     {
+        $funcionario = Funcionario::findOrFail($id);
+        
         $data = [
-            "button" => 'Atualizar',
+            "button"        => 'Atualizar',
             'title'         => "Editar pagamentos",
-            'url' => url('funcionario/pagamento/' . $id),
-            'pagamento' => Pagamento::findOrFail($id),
-            'funcionarios' => Funcionario::all(),
+            'url'           => url('funcionario/pagamento/' . $id),
+            'pagamento'     => null,
+            'funcionarios'  => Funcionario::findOrFail($id)->get(),
+            'cargo'         => $funcionario->cargos->last()
+            
         ];
 
-
-        return view('funcionario::pagamentos.form', compact('data'));
+        return view('funcionario::pagamentos.form', compact('data', 'funcionario'));
     }
 
     /**
