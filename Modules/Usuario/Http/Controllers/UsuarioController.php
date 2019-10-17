@@ -41,18 +41,18 @@ class UsuarioController extends Controller
 
     public function create()
     {
-        if (Gate::allows('administrador',Auth::user())|| Gate::allows('operador',Auth::user())) {
+        // if (Gate::allows('administrador',Auth::user())|| Gate::allows('operador',Auth::user())) {
             $papeis = Papel::all();
             $modulos = Modulo::all();
             return view('usuario::usuario.form',compact('papeis','modulos'));
-        }         
+        // }         
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     
     }
 
     public function store(Request $request)
-    {
-        if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
+    {   return $request;
+        // if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
             DB::beginTransaction();
             try{
                 $avatar = $request->file('avatar');
@@ -79,14 +79,16 @@ class UsuarioController extends Controller
                     'password' => Hash::make($request->password)
                 ]);
         
+                $usuario->modulos()->attach($request['modulos']);
                 DB::commit();
         
                 return back()->with('success', 'Usuário cadastrado com sucesso');
             }catch(\Exception $e){
                 DB::rollback();
+                dd($e);
                 return back()->with('error', 'Erro no servidor');
         }
-    }
+    // }
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
 
     }

@@ -84,7 +84,7 @@
                     <div class="form-row input-modulo-papel-interior">
                             <div class="col-md-5 mb-1">
                                 <label for='modulo'>Modulo</label>
-                                <select class="form-control" name='modulo[][modulo_id]'>
+                                <select class="form-control" name='modulos[0][modulo_id]'>
                                     <option disabled selected>Escolha um Modulo...</option>
                                     @foreach($modulos as $modulo)
                                     <option value="{{ $modulo->id }}" > {{ $modulo->nome }} </option>
@@ -94,7 +94,7 @@
                             
                         <div class="col-md-5 mb-1">
                                 <label for="papel">Papel</label>
-                                <select class="form-control" name='papel[][papel_id]'>
+                                <select class="form-control" name='modulos[0][papel_id]'>
                                     <option disabled selected>Escolha um Papel...</option>
                                     @foreach($papeis as $papel)
                                     <option value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
