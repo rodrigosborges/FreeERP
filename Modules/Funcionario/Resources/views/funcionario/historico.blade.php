@@ -5,7 +5,7 @@
 @endsection
 
 @section('body')
-    <table class="table">
+    <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -19,7 +19,7 @@
   <tbody>
     @foreach($data['atestado'] as $atestado)
     <tr>
-      <td> {{ $atestado->id}} </td>
+      <th scope="row"> {{ $atestado->id}} </th>
       <td> {{$atestado->cid_atestado}} </td>
       <td> {{ $atestado->data_inicio }} </td>
       <td> {{ $atestado->data_fim }} </td>
