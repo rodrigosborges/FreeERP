@@ -1,6 +1,6 @@
 <div class="table-responsive">
 
-<table class="table table-striped" id="tablePedidos">
+<table class="table" id="tablePedidos">
     <thead>
         <tr>
             <th>Número</th>
@@ -95,7 +95,7 @@
                 </div>
             </td>
 
-            <td>
+            <td class="text-center">
                 <button class="btn btn-sm btn-light" id="ocultar" type="button" data-toggle="modal"
                     data-target="#modal{{$pedido->id}}" aria-expanded="false" aria-controls="collapse{{$pedido->id}}">
                     <i class="material-icons">
