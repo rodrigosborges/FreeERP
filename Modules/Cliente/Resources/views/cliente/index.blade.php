@@ -12,7 +12,7 @@
                 </div>
             </form>
             <div class="col text-right">
-                <a href="{{url('/cliente/cliente/create')}}"><button class="btn btn-success">Adicionar cliente</button></a> 
+                <a href="{{url('/cliente/cliente/create')}}"><button class="btn btn-primary">Adicionar cliente</button></a> 
             </div>
             
         </div>
