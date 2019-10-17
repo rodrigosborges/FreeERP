@@ -112,7 +112,7 @@ Cadastro de Compras - {{ $cliente->nome }}
 
   $("#btn_rel").on("click", function () {
     let cliente_id = $(this).attr("title");
-    let url = "/cliente/" + cliente_id + "/pedidos/pdf/";
+    let url = main_url+"/cliente/" + cliente_id + "/pedidos/pdf/";
 
     let dt_inicio = $("#dtInicio").val();
     if (dt_inicio != '') {

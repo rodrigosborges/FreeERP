@@ -37,7 +37,7 @@ class PedidoController extends Controller
             $pedidos = $pedidos->where('data', '<=', $request->data_fim);
         }
 
-        $pedidos = $pedidos->paginate(1);
+        $pedidos = $pedidos->paginate(5);
       
         return view('cliente::pedidos.table', compact('pedidos'));
 
