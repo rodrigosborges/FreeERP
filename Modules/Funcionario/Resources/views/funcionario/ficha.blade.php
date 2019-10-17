@@ -6,39 +6,31 @@
 <div id="ficha">
     <div class="container">
     <div class="row">
-        <div class="col-lg-2 text-center change-class-2">
-            <img class="img-fluid" src="{{ URL::to('/') }}/img/user-img.jpg" style="height:170px; width:200px;">
+        <div class="col-lg-2 change-class-2">
+            <img class="img-fluid" src="{{ URL::to('/') }}/img/user-img.jpg" style="height:150px; width:250px;">
         </div>
         <div class="col-lg-10 change-class-10">
-            <div class="row d-flex justify-content-center"><span class="h2">{{$data["funcionario"]->nome}}</span></div>
+            <span class="h2">{{$data["funcionario"]->nome}}</span>
             <hr>
-           <div class="row">
-                <div class="col">
-                    <p><span class="font-weight-bold">Cargo: {{$data["funcionario"]->cargos()->get()->first()->nome}}</p>
-                    <p><span class="font-weight-bold">Data Admissão: </span>{{$data["funcionario"]->data_admissao}}</p>
-                    <p><span class="font-weight-bold">Data de Nascimento: </span>{{$data["funcionario"]->data_nascimento}}</p>
-                </div>
-                <div class="col">
-                    <p><span class="font-weight-bold">Sexo: </span>{{$data["funcionario"]->sexo == 1 ? 'Masculino' : 'Feminino'}}</p> 
-                    <p><span class="font-weight-bold">Estado Civil: </span>{{$data["funcionario"]->estado_civil->nome}}</p>
-                </div>
-            </div>              
+            <div class="row col-12">
+                <p class="col-6"><span class="font-weight-bold">Cargo: </span> {{$data["funcionario"]->cargos()->get()->first()->nome}}</p>
+                <p class="col-3"><span class="font-weight-bold">Sexo: </span>{{$data["funcionario"]->sexo == 1 ? 'Masculino' : 'Feminino'}}</p> 
+                <p class="col-3"><span class="font-weight-bold">Estado Civil: </span>{{$data["funcionario"]->estado_civil->nome}}</p>
+            </div>
+            <div class="row col-12">
+                <p class="col-4"><span class="font-weight-bold">Data Admissão: </span>{{$data["funcionario"]->data_admissao}}</p>
+                <p class="col-5"><span class="font-weight-bold">Data de Nascimento: </span>{{$data["funcionario"]->data_nascimento}}</p>
+                <span class="col-3"></span>
+            </div>
         </div>
     </div>
     <hr>
-    <h4 class=" text-center mb-4"><!--<i class="material-icons mr-2">contact_phone </i> -->Documento</h4>
-    <div class="row">
-        <div class="col-sm">
-            <div class="row">
-               
-            </div>      
-        </div>
-    </div>
-    <div class="row">
+    <h4 class=" mt-4 mb-3">Documento</h4>
+    <div class="row mb-4">
         <div class="col-sm">
             <div class="row">
             @foreach ($data["docs"] as $doc)
-                <div class="col-6">
+                <div class="col-4 mb-1">
                         <span class="font-weight-bold">{{$doc->nome}}:</span>{{$doc->numero}} 
                 </div>
             @endforeach
@@ -47,84 +39,109 @@
     </div>
     <hr>
 
-    <h4 class=" text-center mb-4">Endereço</h4>    
+    <h4 class=" mt-4 mb-3">Endereço</h4>    
     
-    <div class="row">        
-        <div class="col-6">   
-                <span class="font-weight-bold">CEP: </span>{{$data["funcionario"]->endereco->cep}}
+    <div class="row mb-4">    
+        <div class="col-2">   
+            <span class="font-weight-bold">CEP:</span>{{$data["funcionario"]->endereco->cep}} 
+            
         </div>
 
-        <div class="col-6">
-                <span class="font-weight-bold">Bairro: </span>{{$data["funcionario"]->endereco->bairro}}
+        <div class="col-2">
+                <span class="font-weight-bold">Estado: </span>{{$data["estado"]->uf}}
+        </div>
+    
+        <div class="col-3">
+            <span class="font-weight-bold">Cidade: </span>{{$data["cidade"]->nome}}   
+            
         </div>
 
-        <div class="col-6">
-                <span class="font-weight-bold">N°: </span>{{$data["funcionario"]->endereco->numero}}
+        <div class="col-5">
+            <span class="font-weight-bold">Bairro: </span>{{$data["funcionario"]->endereco->bairro}}
+            
         </div>
 
-        <div class="col-6">
-                <span class="font-weight-bold">complemento: </span>{{$data["funcionario"]->endereco->complemento}}
+        <div class="col-4">
+            <span class="font-weight-bold">Lougradouro: </span>{{$data["funcionario"]->endereco->lougradouro}}
+            
+                
         </div>
 
-        <div class="col-6">
-                <span class="font-weight-bold">Cidade: </span>{{$data["cidade"]->nome}}
+        <div class="col-1">
+                <span class="font-weight-bold">N°:</span>{{$data["funcionario"]->endereco->numero}}   
+                
         </div>
 
-        <div class="col-6">
-                <span class="font-weight-bold">Estado: </span>{{$data["estado"]->nome}}
+        <div class="col-5">
+                <span class="font-weight-bold">Comple: </span>{{$data["funcionario"]->endereco->complemento}}
         </div>
 
-        <div class="col-6">
-                <span class="font-weight-bold">lougradouro: </span>{{$data["funcionario"]->endereco->lougradouro}}
-        </div>
     </div>
     <hr>
-
-    <h4 class=" text-center mb-4">Contato</h4>
-'        <div class="row">   
-            <div class="col-6">
+    
+    <h4 class="mt-4">Contato</h4>
+        <div class="row mb-4">   
+            <div class="col-4">
                 <span class="font-weight-bold">E-mail: </span>{{$data["funcionario"]->email->email}}
+            </div>
+            <div class="col-4">
                 @foreach($data["funcionario"]->telefone as $telefone)    
-                    <p><span class="font-weight-bold">Telefone:</span> {{$telefone->numero}}</p>
+                <span class="font-weight-bold">Telefone:</span> {{$telefone->numero}}
                 @endforeach
             </div>
         </div>
     <hr>
 
-    <h4 class=" text-center mb-4">Dependentes</h4>
+    <h4 class="mt-4 mb-3">Dependentes</h4>
     
-        @foreach($data["funcionario"]->dependente()->get() as  $dependente)  
-        <div class="row"> 
-            
-            <div class="col-3"><span class="font-weight-bold">Nome: </span>{{$dependente->nome}}</div>
-            <div class="col-3"><span class="font-weight-bold">Mora Junto: </span>{{ $dependente->mora_junto ? 'Sim' : 'Não'}}</div>        
-            <div class="col-3"><span class="font-weight-bold">Certidão de Matricula: </span>{{ $dependente->certidao_matricula ? 'Sim' : 'Não'}}</div>
-            <div class="col-3"><span class="font-weight-bold">Certidão Vacina: </span>{{ $dependente->mora_junto ? 'Sim' : 'Não'}}</div>                
-        </div>
-        @endforeach
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th col="4">Nome</th>
+                <th scope="col">Mora Junto</th>
+                <th scope="col">C. Matricula</th>
+                <th scope="col">C. Vacina</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($data["funcionario"]->dependente()->get() as  $dependente)  
+            <tr>
+                <td>{{$dependente->nome}}</td>
+                <td>{{ $dependente->mora_junto ? 'Sim' : 'Não'}}</td>
+                <td>{{ $dependente->certidao_matricula ? 'Sim' : 'Não'}}</td>
+                <td>{{ $dependente->mora_junto ? 'Sim' : 'Não'}}</td>
+            </tr>
+            @endforeach    
+        </tbody>
+    </table>
         
- 
     <hr>
 
     
-    <h4 class=" text-center mb-4">Curso</h4>
+    <h4 class="mt-4 mb-3">Curso</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Area</th>
+                <th scope="col">Duração</th>
+                <th scope="col">Realizado</th>
+                <th scope="col">Valido</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($data["funcionario"]->curso()->get() as  $curso)  
+            <tr>
+                <td>{{$curso->nome}}</td>
+                <td>{{$curso->area_atuacao}}</td>
+                <td>{{$curso->duracao_horas_curso}}</td>
+                <td>{{$curso->data_realizacao}}</td>
+                <td>{{$curso->validade_curso}}</td>
+            </tr>
+            @endforeach    
+        </tbody>
+    </table>
     
-        @foreach($data["funcionario"]->curso()->get() as  $curso)  
-        <div class="card col-12">
-           <div class="card-header">
-                <span class="font-weight-bold">{{$curso->nome}}</span>
-            </div>
-            <div class="card-body">
-                <span class="font-weight-bold col-2">Area: </span>{{$curso->area_atuacao}}
-                <span class="font-weight-bold col-2">Duração: </span>{{$curso->duracao_horas_curso}}
-                <span class="font-weight-bold col-2">Realizado: </span>{{$curso->data_realizacao}}
-                <span class="font-weight-bold col-2">Valido: </span>{{$curso->validade_curso}}
-            </div>
-        </div>
-        @endforeach
-        
- 
-    <hr>
     
     
 </div>
