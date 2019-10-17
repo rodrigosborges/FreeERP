@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Cliente\Http\Requests\CreatePedidoRequest;
 use Illuminate\Routing\Controller;
-use Modules\Cliente\Entities\{Cliente, Pedido, Produto};
+use Modules\Cliente\Entities\{Cliente, Pedido};
+use Modules\Estoque\Entities\{Produto};
 use DB;
 use Carbon\Carbon;
 
@@ -20,19 +21,25 @@ class PedidoController extends Controller
         return view('cliente::pedidos.index',compact('cliente'));
     }
 
-    public function table($cliente_id, $status) {
+    public function table(Request $request, $cliente_id, $status) {
     
-       
+        
         if ($status != 'ativos' && $status != 'inativos') return ;
         
-        if($status == 'ativos'){
-            $pedidos = Cliente::findOrFail($cliente_id)->pedidos()->paginate(5);
-        }else {
-            $pedidos = Cliente::findOrFail($cliente_id)->pedidos()->onlyTrashed()->paginate(5);
-        }
-        
-        
+        $pedidos = Cliente::findOrFail($cliente_id)->pedidos();
+       
+        if($status == 'inativos')
+            $pedidos = Cliente::findOrFail($cliente_id)->pedidos()->onlyTrashed();
 
+        if($request->data_inicio){
+            $pedidos = $pedidos->where('data', '>=', $request->data_inicio);
+        }
+        if($request->data_fim){
+            $pedidos = $pedidos->where('data', '<=', $request->data_fim);
+        }
+
+        $pedidos = $pedidos->paginate(5);
+      
         return view('cliente::pedidos.table', compact('pedidos'));
 
     }

@@ -1,0 +1,28 @@
+{
+    "name": "nwidart/estoque",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Estoque\\Providers\\EstoqueServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Estoque\\": ""
+        }
+    },
+    "require": {
+        "barryvdh/laravel-dompdf": "^0.8.5"
+    }
+}

@@ -24,8 +24,9 @@ class Pedido extends Model
     }
 
     public function produtos(){
-        return $this->belongsToMany('Modules\Cliente\Entities\Produto', 'pedido_has_produto')->withPivot('quantidade','desconto');
+        return $this->belongsToMany('Modules\Estoque\Entities\Produto', 'pedido_has_produto')->withPivot('quantidade','desconto');
     }
+    
     public function cliente(){
         return $this->belongsTo('Modules\Cliente\Entities\Cliente');
     }

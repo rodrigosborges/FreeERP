@@ -15,16 +15,14 @@
 </style>
 @endsection
 @section('body')
-
-
     
     <form id="form" method="POST" action="{{isset($cliente) ? url('/cliente/cliente/'.$cliente->id) : url('/cliente/cliente')}}">
             @if(isset($cliente)) 
                 @method('put')
             @endif
             
-            <div class="row my-3 d-flex justify-content-center">
-                <h5 class="mx-3">Dados Cadastrais</h5>
+            <div class="row my-5 d-flex justify-content-center">
+                <h4>Dados Cadastrais</h4>
             </div>
             <div class="row">
                 <div class="form-group col-md-3">
@@ -59,7 +57,7 @@
                             <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="material-icons">business</i></span>
                             </div>
-                    <input type="text" class="form-control" name="cliente[nome_fantasia]" id="nome_fantasia" value="{{ old('cliente.nome_fantasia', isset($cliente->nome_fantasia) ? $cliente->nome_fantasia : '') }}">
+                    <input type="text" class="form-control required" name="cliente[nome_fantasia]" id="nome_fantasia" value="{{ old('cliente.nome_fantasia', isset($cliente->nome_fantasia) ? $cliente->nome_fantasia : '') }}">
                     <span class="mensagem-erro">{{$errors->first('cliente.nome_fantasia')}}</span>
                     </div>
                 </div>
@@ -81,11 +79,11 @@
             </div>
             <div class="row my-5 d-flex justify-content-center">
                 
-                    <h5 class="mx-3">Contato</h5>
+               <h5>Contato</h5>
                 
             </div>
 
-            <div class="row my-5">
+            <div class="row">
                 <div class="form-group col-12">
                     <label for="email">E-mail</label>
                     <div class="input-group">
@@ -137,11 +135,11 @@
                     </div>
                 @endforeach
             </div>
-            <button type="button" class="btn btn-primary adicionar_telefone">Adicionar</button>
+            <button type="button" class="btn btn-primary adicionar_telefone">Adicionar Número</button>
             
             <div class="row my-5 d-flex justify-content-center">
                 
-                    <h5 class="mx-3">Endereço</h5>
+                <h5>Endereço</h5>
                 
             </div>
             <div class="row">
@@ -169,7 +167,7 @@
                     <label for="numero" class=" text-left">Número</label>
                     <div class="input-group">
                             <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="material-icons">house</i></span>
+                                    <span class="input-group-text"><i class="material-icons">looks_one</i></span>
                             </div>
                     <input type="text" class="form-control required" name="endereco[numero]" value="{{ old('endereco.numero', isset($cliente) ? $cliente->endereco->numero : '') }}">
                     <span class="mensagem-erro">{{$errors->first('endereco.numero')}}</span>
@@ -203,7 +201,7 @@
                     <label for="estado" class="">Estado</label>
                     <div class="input-group">
                             <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="material-icons">location_city</i></span>
+                                    <span class="input-group-text"><i class="material-icons">map</i></span>
                             </div>
                     <select class="custom-select required" cidade="{{ old('endereco.cidade_id', isset($cliente) ? $cliente->endereco->cidade_id : "")}}" name="endereco[estado_id]" id="estado">
                         <option value="" disabled selected>Selecione</option>
@@ -229,12 +227,12 @@
                 </div>
             </div>
             </h1> <button type="submit" class="btn btn-success sendForm">Enviar</button>
-        
     </form>
 
+@endsection 
 
+@section('script')
 
-@endsection @section('script')
 <script src="{{Module::asset('cliente:js/views/cliente/validations.js')}}"></script>
 <script src="{{Module::asset('cliente:js/views/cliente/cliente.js')}}"></script>
 

@@ -6,7 +6,6 @@
     $menu = [
         ['icon' => 'people', 'tool' => 'Clientes', 'route' => url('cliente/cliente')],
         ['icon' => 'dashboard', 'tool' => 'Dashboard', 'route' => url('cliente/dashboard')],
-        ['icon' => 'assessment', 'tool' => 'Relatórios', 'route' => url('cliente/relatorios')],
     ];
 ?>
 
