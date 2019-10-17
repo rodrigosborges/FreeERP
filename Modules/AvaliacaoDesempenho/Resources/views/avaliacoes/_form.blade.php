@@ -202,7 +202,44 @@
 
                 <hr>
 
-                
+                <h4>QUESTÕES</h4>
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-12">
+                        
+                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+
+                        <select id="selectQuestoes" class="form-control selectpicker select-questoes" data-live-search="true">
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div id='questaoCard' class="form-row hidden">
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                        </div>
+
+                        <div class="card-body">
+        
+                            <b>Enunciado:</b>
+                    
+                            <hr>
+                    
+                            <b>Alternativas:</b>
+                            <ul>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 

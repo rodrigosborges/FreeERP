@@ -14,7 +14,6 @@ use Modules\AvaliacaoDesempenho\Entities\Questao;
 use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
 use Modules\AvaliacaoDesempenho\Entities\Avaliado;
 
-
 class AvaliacaoController extends Controller
 {
     

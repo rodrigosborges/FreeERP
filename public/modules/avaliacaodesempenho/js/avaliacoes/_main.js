@@ -13,6 +13,7 @@ $(document).ready(function () {
             $('#AvaliacaoTable').append(data.html)
         }
     })
+
 })
 
 $(document).on('click', '#submit-btn', function (e) {
