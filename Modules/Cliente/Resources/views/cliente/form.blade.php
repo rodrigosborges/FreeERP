@@ -15,8 +15,6 @@
 </style>
 @endsection
 @section('body')
-
-
     
     <form id="form" method="POST" action="{{isset($cliente) ? url('/cliente/cliente/'.$cliente->id) : url('/cliente/cliente')}}">
             @if(isset($cliente)) 
@@ -137,7 +135,7 @@
                     </div>
                 @endforeach
             </div>
-            <button type="button" class="btn btn-success adicionar_telefone">Adicionar Número</button>
+            <button type="button" class="btn btn-primary adicionar_telefone">Adicionar Número</button>
             
             <div class="row my-5 d-flex justify-content-center">
                 
@@ -228,13 +226,13 @@
                     </div>
                 </div>
             </div>
-            </h1> <button type="submit" class="btn btn-primary sendForm">Enviar</button>
-        
+            </h1> <button type="submit" class="btn btn-success sendForm">Enviar</button>
     </form>
 
+@endsection 
 
+@section('script')
 
-@endsection @section('script')
 <script src="{{Module::asset('cliente:js/views/cliente/validations.js')}}"></script>
 <script src="{{Module::asset('cliente:js/views/cliente/cliente.js')}}"></script>
 
