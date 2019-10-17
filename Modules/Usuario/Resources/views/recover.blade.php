@@ -27,26 +27,26 @@
     </div>
     <div class="col-xm-10 col-sm-8 col-md-4 col-lg-4">
         <div class='card'>
-            <div class='card-header'><h4 class="my-2">Sua senha deve conter...</h4></div>
+            <div class='card-header'><h4 class="my-2">Sua senha deve conter pelo menos...</h4></div>
             <div class='card-body'>
                 <div class="d-flex flex-column">
-                    <div class="d-flex flex-row" id="password-check">
+                    <div class="d-flex flex-row" id="length-check">
                         <i class="material-icons mr-2">check_circle_outline</i>
                         <p> 8 a 16 digitos</p>
                     </div>
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row" id="num-check">
                         <i class="material-icons mr-2">check_circle_outline</i>
                         <p> 1 número</p>
                     </div>
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row" id="lower-check">
                         <i class="material-icons mr-2">check_circle_outline</i>
                         <p> 1 letra minúscula</p>
                     </div>
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row" id="upper-check">
                         <i class="material-icons mr-2">check_circle_outline</i>
                         <p> 1 letra maiúscula</p>
                     </div>
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row" id="special-check">
                         <i class="material-icons mr-2">check_circle_outline</i>
                         <p> 1 caractere especial</p>
                     </div>
@@ -60,20 +60,8 @@
 <script type="text/javascript" src="{{asset('js/jquery.validate.min.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script src="{{Module::asset('usuario:js/recuperar/validacao-form.js')}}"></script>
-
-<script>
-    $("#password").on('keyup', function() {
-
-        if($(this).val().length >= 8 && $(this).val().length <= 16) {
-            $("#password-check").find('i').css('color', 'SpringGreen')
-            $("#password-check").find('p').css('text-decoration', 'line-through')
-        } else {
-            $("#password-check").find('i').css('color', 'black')
-            $("#password-check").find('p').css('text-decoration', 'none')
-        }
+<script src="{{Module::asset('usuario:js/usuario/validacao-senha.js')}}"></script>
 
 
-    })
-</script>
 @endsection
 @endsection
