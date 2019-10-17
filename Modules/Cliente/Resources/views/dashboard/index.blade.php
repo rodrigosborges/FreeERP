@@ -43,8 +43,17 @@
 
     <div class="container">
 
-        
-        <div class="row">
+        <div class="row col-4">
+
+                <select name="ano" id="" class="form-control">
+                    @foreach($anos as $ano)   
+                        <option value="{{$ano->ano}}"> {{$ano->ano}} </option>
+                    @endforeach        
+                </select> 
+
+        </div>
+
+        <div class="row mt-3">
             <div class="col-sm-4">
                 <div class="card h-100">
                 <div class="card-body ">
@@ -90,10 +99,18 @@
             </div>
 
             <div class="col-sm-6">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Produtos Vendidos</h5>
-                        <div id="totalProdutos"></div>
+                <div class="card h-100">                     
+
+                    <div class="card-body text-center">
+                            <h5 class="card-title">Produtos Vendidos</h5>
+                            <div id="totalProdutos"></div>
+                            <select name="produto" id="" class="form-control">
+                                <option value="">Selecione um produto</option>
+                                @foreach($produtos as $produto)   
+                                    <option value="{{$produto->id}}"> {{$produto->nome}} </option>
+                                @endforeach        
+                            </select>
+                             
                     </div>
                 </div>
             </div>
@@ -112,33 +129,56 @@
 
             $.get(main_url+"/cliente/dashboard/totalVendasMes/2019", function(dataset){
             
-                newDataset = []
+                datasetVendas = []
 
                 Object.keys(dataset).map((key) => {
-                    newDataset.push({
+                    datasetVendas.push({
                     month: key, 
                     value: dataset[key]
                     })
                 })
-                grafico("#totalCompras", newDataset);
+                grafico("#totalCompras", datasetVendas);
                     
-                $.get(main_url+"/cliente/dashboard/totalclientes/2019", function(dataset){
+                           
+
+            });
+
+            $.get(main_url+"/cliente/dashboard/totalclientes/2019", function(dataset){
                 $('#totalclientes').append(dataset);
             });
+
             $.get(main_url+"/cliente/dashboard/totalvendas/2019", function(dataset){
                 $('#totalvendas').append(dataset);
             });
+
             $.get(main_url+"/cliente/dashboard/mediagasto/2019", function(dataset){
                 $('#mediagasto').append(dataset);
             }); 
-        })
 
-        })
+
+            $.get(main_url+"/cliente/dashboard/vendasProdutoMes/2/2019", function(dataset){
+        
+                datasetProdutos = []
+
+                Object.keys(dataset).map((key) =>{
+                    datasetProdutos.push({
+                        month: key, 
+                        value: dataset[key]
+                    })                    
+                })                
+                grafico("#totalProdutos", datasetProdutos);
+            });            
+           
             
-            
+           
+
+        });
+                       
 
 
         function grafico(id, dataset){
+
+            console.log(id);
 
             var margin = {top: 40, right: 30, bottom: 30, left: 50},
             width = 460 - margin.left - margin.right,
@@ -182,7 +222,7 @@
             x.domain(dataset.map( d => { return d.month}));
             y.domain([0, max]);;
 
-            console.log(x);
+            
 
             svg.append("g")
                 .attr("class", "x axis")

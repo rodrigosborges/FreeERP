@@ -7,13 +7,17 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Cliente\Entities\{Cliente, Pedido, Produto};
 use DateTime;
+use DB;
 
 class DashboardController extends Controller
 {
     
     public function index()
     {
-        return view('cliente::dashboard.index');
+
+        $produtos = Produto::all();
+        $anos = Pedido::select(DB::raw('YEAR(data) as ano'))->orderBy('ano', 'desc')->groupBy('ano')->get();
+        return view('cliente::dashboard.index', compact('produtos', 'anos'));
     }
 
     public function getTotalVendas($ano){
@@ -104,4 +108,9 @@ class DashboardController extends Controller
         return $qtde_mes;
 
     }
+
+
+    
+
+
 }
