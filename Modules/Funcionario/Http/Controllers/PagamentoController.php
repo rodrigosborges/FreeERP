@@ -148,21 +148,59 @@ class PagamentoController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
+
+        if( (isset($request->tipo) && $request->tipo != "")   || ( isset($request->data) && $request->data != "") ){
+
+            if(isset($request->tipo) && $request->tipo != "demissao"){
+                if(isset($request->data) && $request->data != ""){
+                    $pagamentos = Pagamento::findOrFail($id)->get();
+                    foreach ($pagamentos as $key => $fpagamento) {
+                        if( substr($fpagamento->emissao , 0, 7) == $request->data){
+                            $pagamento = $fpagamento;
+                        }
+                    }
+                }
+                
+                if(!isset($pagamento)){
+                    $error = true;
+                    $pagamento = Pagamento::findOrFail($id)->get()->last();
+                }
+
+            }else{
+                return "demissao";
+            }
+            
+
+            $valorFalta = (floatVal(str_replace('.','',$pagamento->funcionario->cargos->last()->salario)) / 30) * $pagamento->faltas;
+            $desconto = $pagamento->inss + $valorFalta;
+            $desconto = number_format($desconto, 2, ',', '');
+            $valorFalta = number_format($valorFalta, 2, ',', '');
+            $vencimentos = floatVal(str_replace('.','',$pagamento->funcionario->cargos->last()->salario)) + $pagamento->horas_extras + $pagamento->adicional_noturno;
+            $vencimentos= number_format($vencimentos, 2, ',', '');
+
+        }else{
+            
+            $pagamento = Pagamento::latest('emissao')->first();
+
+            $valorFalta = (floatVal(str_replace('.','',$pagamento->funcionario->cargos->last()->salario)) / 30) * $pagamento->faltas;
+            $desconto = $pagamento->inss + $valorFalta;
+            $desconto = number_format($desconto, 2, ',', '');
+            $valorFalta = number_format($valorFalta, 2, ',', '');
+            $vencimentos = floatVal(str_replace('.','',$pagamento->funcionario->cargos->last()->salario)) + $pagamento->horas_extras + $pagamento->adicional_noturno;
+            $vencimentos= number_format($vencimentos, 2, ',', '');
+        }
 
         $data = [
             'title' => 'Folha de Pagamento',
-            'pagamento' => Pagamento::findOrFail($id)->get()->last(),
+            'pagamento' => $pagamento,
 
         ];
-        $valorFalta = (floatVal(str_replace('.','',$data['pagamento']->funcionario->cargos->last()->salario)) / 30) * $data['pagamento']->faltas;
-        $desconto = $data['pagamento']->inss + $valorFalta;
-        $desconto = number_format($desconto, 2, ',', '');
-        $valorFalta = number_format($valorFalta, 2, ',', '');
-        $vencimentos = floatVal(str_replace('.','',$data['pagamento']->funcionario->cargos->last()->salario)) + $data['pagamento']->horas_extras + $data['pagamento']->adicional_noturno;
-        $vencimentos= number_format($vencimentos, 2, ',', '');
+
         return view('funcionario::pagamentos.show', compact('data', 'desconto','vencimentos','valorFalta'));
+        
+        
     }
 
     /**
