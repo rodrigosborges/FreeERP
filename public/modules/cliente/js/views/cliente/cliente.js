@@ -40,12 +40,13 @@
                             
                             
                             getCidades(estado.val(),dados.localidade);
+                            $("[name='endereco[numero]']").focus();
                             
                         } //end if.
                         else {
                             //CEP pesquisado não foi encontrado.
                            
-                            $("[name='endereco[cep]']").addClass('alert alert-danger')
+                            
                         }
                     });
                 } //end if.
@@ -114,8 +115,8 @@
         
         if ($("[name='cliente[tipo_cliente_id]']").val() == 2) {
             documento.prop("disabled", false);
-            //console.log($("[name='cliente[nome]']").parent().parent().find('label'))
             $("[name='cliente[nome]']").parent().parent().find('label').text('Razão Social')
+            
          
              $("[name='documento[documento]']").rules('add', {
                 cnpj: true
@@ -127,6 +128,7 @@
             documento.mask('99.999.999/9999-99')
 
             $("#div_nome_fantasia").removeClass("d-none");
+            
         } else if ($('#tipo_pessoa').val() == 1){
             
             $("[name='documento[documento]']").rules('add', {

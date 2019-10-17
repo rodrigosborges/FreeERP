@@ -114,10 +114,10 @@
 
         </div>
         <div class="text-center">
-            <button type="button" id="adicionar-produto" class="btn btn-success"><strong>+</strong></button>
+            <button type="button" id="adicionar-produto" class="btn btn-primary"><strong>+</strong></button>
         </div>
         
-        <button class="btn btn-primary" >{{isset($pedido) ? 'Atualizar compra' : 'Cadastrar compra'}}</button>
+        <button class="btn btn-success" >{{isset($pedido) ? 'Atualizar compra' : 'Cadastrar compra'}}</button>
 
     </form>
 

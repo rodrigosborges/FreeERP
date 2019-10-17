@@ -20,21 +20,16 @@ class ClienteController extends Controller
     public function table(Request $request, $status) {
         if ($status != 'ativos' && $status != 'inativos') return ;
 
-        if($request->busca){
-            if($status == 'ativos'){
-                $clientes = Cliente::where('nome', 'LIKE', '%'.$request->busca.'%')->paginate(10);
-                 
-            }else {
-                $clientes = Cliente::onlyTrashed()->where('nome', 'LIKE', '%'.$request->busca.'%')->paginate(10);
-            }
-        }else {
-            if($status == 'ativos'){
-                $clientes = Cliente::paginate(10);
-            }else {
-                $clientes = Cliente::onlyTrashed()->paginate(10);
-            }
-                
-        }
+        $clientes = new Cliente;
+       
+        if($status == 'inativos')
+            $clientes = Cliente::onlyTrashed();
+
+        if($request->busca)
+            $clientes = $clientes->where('nome', 'LIKE', '%'.$request->busca.'%');
+
+        $clientes = $clientes->paginate(10);
+        
         return view('cliente::cliente.table', compact('clientes'));
 
     }

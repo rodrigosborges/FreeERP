@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table">
         <tbody>
             <tr scope="row">
                 <th scope="col">Nome</th>
@@ -15,7 +15,7 @@
 
                 @if(!($cliente->trashed()))
                     <td><a href="{{url('cliente/'.$cliente->id.'/pedido')}}" class="btn btn-primary">Pedidos</a></td>
-                    <td><a href="{{route('cliente.edit', $cliente->id)}}" class="btn btn-warning">Editar</a></td>
+                    <td><a href="{{route('cliente.edit', $cliente->id)}}" class="btn btn-outline-info">Editar</a></td>
                     <td>
                         <form action="{{url('/cliente/cliente/'.$cliente->id)}}" method="POST">
                             @method('DELETE')
