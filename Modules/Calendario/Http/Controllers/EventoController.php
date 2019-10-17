@@ -12,7 +12,7 @@ use Modules\Calendario\Entities\Convite;
 use Modules\Calendario\Entities\Evento;
 use Modules\Calendario\Entities\Funcionario;
 use Modules\Calendario\Entities\Notificacao;
-use Modules\Calendario\Notifications\EventoNotification;
+use Modules\Calendario\Notifications\EventoConvite;
 
 class EventoController extends Controller
 {
@@ -163,7 +163,10 @@ class EventoController extends Controller
 
     public function notificar(){
         $funcionario = Funcionario::find(1);
-        $funcionario->notify(new EventoNotification());
+        $users[] = $funcionario->user;
+        $invoice = 'Teste.';
+        Notification::send($users, new EventoConvite(Evento::find(1)));
+        return 'Notificado';
     }
 
     private function formatar_data($data)

@@ -4,21 +4,22 @@ namespace Modules\Calendario\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Modules\Calendario\Entities\Evento;
 
-class EventoNotification extends Notification
+class EventoConvite extends Notification
 {
     use Queueable;
+    private $evento;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Evento $evento)
     {
-        //
+        $this->evento = $evento;
     }
 
     /**
@@ -41,9 +42,12 @@ class EventoNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', 'https://laravel.com')
-                    ->line('Thank you for using our application!');
+                    ->greeting('Olá!')
+                    ->subject('Convite para evento')
+                    ->line('Você foi convidado para um evento.')
+                    ->line('Evento: ' .  $this->evento->titulo)
+                    ->line('Criado por:' . $this->evento->agenda->funcionario->nome)
+                    ->action('Confirme sua presença', 'https://127.0.0.1:8000/calendario');
     }
 
     /**
