@@ -56,4 +56,9 @@ class Funcionario extends Model {
     public function avisoPrevio(){
         return $this->hasOne('Modules\Funcionario\Entities\AvisoPrevio');
     }
+
+    public function pagamento(){
+        return $this->hasMany('Modules\Funcionario\Entities\Pagamento');
+    }
+
 }

@@ -40,13 +40,12 @@ class PagamentoController extends Controller
     public function create(Request $request)
     {
         $data = [
-            "url"   => url('funcionario/pagamento'),
+            "url"   => url('funcionario/pagamento/'),
             "button" => 'Salvar',
-            "model" => null,
+            "model" => '',
             "title" => "Cadastrar Pagamento",
-            'pagamento' => null,
+            'pagamento' => '',
             'funcionarios' => Funcionario::all(),
-
 
         ];
 
@@ -57,16 +56,16 @@ class PagamentoController extends Controller
     public function novoPagamento($id)
     {
         $funcionario = Funcionario::findOrFail($id);
+        
         $data = [
-            "url"   => url('funcionario/pagamento'),
-            "button" => 'Salvar',
-            "model" => null,
-            "title" => "Cadastrar Pagamento",
-            'pagamento' => null,
-            'funcionarios' => Funcionario::findOrFail($id)->get(),
+            "url"        => url('funcionario/pagamento'),
+            "button"     => 'Salvar',
+            "title"      => "Cadastrar Pagamento",
+            'model'      => null,
+            'pagamento'  => null,
+            'funcionario' => $funcionario,
             'cargo' => $funcionario->cargos->last()
         ];
-
 
         return view('funcionario::pagamentos.form', compact('data', 'funcionario'));
     }
@@ -105,12 +104,12 @@ class PagamentoController extends Controller
      */
     public function store(Request $request)
     {
-
+       
         DB::beginTransaction();
 
         try {
             $pagamento = new Pagamento;
-            $funcionario = Funcionario::findOrFail($request->funcionario);
+            $funcionario = Funcionario::findOrFail($request->funcionario_id);
             $salario = ($funcionario->cargos->last()->salario);
             $salario = str_replace('.', '', $salario);
             $salario = floatval($salario);
@@ -119,7 +118,6 @@ class PagamentoController extends Controller
             $pagamento->horas_extras = $request->horas_extras;
             $pagamento->adicional_noturno = $request->adicional;
             $pagamento->tipo_hora_extra = $request->tipo_hora_extra;
-            
             $inss = $this->calcularInss($salario);
         
             if ($request->opcao_pagamento == "2") {
@@ -128,14 +126,12 @@ class PagamentoController extends Controller
                 $pagamento->valor *= 0.4;
             } else
                 $pagamento->inss = floatVal(number_format($inss, 2,',',''));
-             //dd($inss);
+
             $pagamento->emissao = brToEnDate($request->emissao);
             $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
             $pagamento->funcionario_id = $funcionario->id;
             $pagamento = $this->OpcaoPagamentoNome($pagamento);
             $pagamento = $this->calcularTotal($pagamento, $salario);
-
-            // dd($pagamento);
             $pagamento->save();
 
 
@@ -177,16 +173,18 @@ class PagamentoController extends Controller
     public function edit($id)
     {
         $funcionario = Funcionario::findOrFail($id);
-        
+            //return $funcionario->pagamento->last()->emissao;
         $data = [
             "button"        => 'Atualizar',
             'title'         => "Editar pagamentos",
-            'url'           => url('funcionario/pagamento/' . $id),
-            'pagamento'     => null,
+            'url'           => url('funcionario/pagamento/'.$id),
+            'model'         =>$funcionario->pagamento()->get()->last(),
+            'pagamento'     => $funcionario->pagamento,
+            'funcionario'   => $funcionario,
             'funcionarios'  => Funcionario::findOrFail($id)->get(),
             'cargo'         => $funcionario->cargos->last()
-            
         ];
+        
 
         return view('funcionario::pagamentos.form', compact('data', 'funcionario'));
     }
@@ -205,7 +203,7 @@ class PagamentoController extends Controller
         try {
             $pagamento = Pagamento::findOrFail($id);
             $funcionario = Funcionario::findOrFail($request->funcionario);
-
+            
             $salario = floatval($funcionario->cargos->find($request->cargos)->salario);
             $salario = str_replace(',', '.', $salario);
             $salario= number_format($salario, 2, ',', '');
@@ -290,16 +288,16 @@ class PagamentoController extends Controller
     {
         switch ($p->tipo_pagamento) {
             case 1:
-                $p->tipo_pagamento = "Salário";
+                $p->tipo_pagamento = "salario";
                 break;
             case 2:
-                $p->tipo_pagamento = "Adiantamento";
+                $p->tipo_pagamento = "adiantamento";
                 break;
             case 3:
-                $p->tipo_pagamento = "Ferias";
+                $p->tipo_pagamento = "ferias";
                 break;
             default:
-                $p->tipo_pagamento = "Outro";
+                $p->tipo_pagamento = "outro";
                 break;
         }
         return $p;

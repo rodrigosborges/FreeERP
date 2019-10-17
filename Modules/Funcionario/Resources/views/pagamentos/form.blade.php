@@ -5,12 +5,11 @@
 @endsection
 
 @section('body')
-<form action="{{url('funcionario/pagamento')}}" id="form" method="POST" enctype="multipart/form-data">
-@if($data['pagamento'])
-    @method('put')
+<form action="{{ $data['url'] }}" id="form" method="POST" enctype="multipart/form-data">
+{{ csrf_field() }}
+@if($data['model'])
+    @method('PUT')
 @endif
-
-    {{ csrf_field() }}
 
     <!--Funcionario -->
     <div class="row">
@@ -22,12 +21,12 @@
             </div>
             <!--Select Funcionario -->
 
-            <select class="custom-select funcionario" id="funcionario" data-salario="{{$data['cargo']->salario}}" name="funcionario">
-                @foreach($data['funcionarios'] as $funcionario)
-                <option value="{{ $funcionario->id }}" {{($data['pagamento']) && $data['pagamento']->funcionario->id == $funcionario->id?'selected':''}}>{{ $funcionario->nome }}</option>
-                @endforeach
-
+            <select disabled class="custom-select funcionario" id="funcionario" data-salario="{{$data['cargo']->salario}}" name="funcionario">
+                
+               <option value="{{ $funcionario->id }}" selected>{{ $data['funcionario']->nome }}</option>
+               
             </select>
+            <input type="hidden" name="funcionario_id" value="{{$data['funcionario']->id}}">
 
             <!--FIM Select Funcionario -->
             <span class="errors"> </span>
@@ -67,7 +66,7 @@
                         <i class="material-icons" for="emissao">calendar_today</i>
                     </span>
                 </div>
-                <input type="date" class="form-control required emissao" name="emissao" id="emissao" value="{{!is_null($data['pagamento'] ? $data['pagamento']->emissao :'')}}">
+                <input type="date" class="form-control required emissao" name="emissao" id="emissao" value="{{($data['model'] ? $data['model']->emissao :'')}}">
             </div>
         </div>
         <!--FIM Emissao -->
@@ -87,9 +86,9 @@
                 </div>
                 <select class="custom-select opcao-pagamento" id="opcao-pagamento" name="opcao-pagamento">
                     <option value="-1">Selecione</option>
-                    <option selected value="1">Salário</option>
-                    <option value="2">Adiantamento</option>
-                    <option value="3">Férias</option>
+                    <option selected value="1">salario</option>
+                    <option value="2">adiantamento</option>
+                    <option value="3">ferias</option>
                 </select>
             </div>
         </div>
@@ -129,7 +128,7 @@
                         <i class="material-icons">access_time</i>
                     </span>
                 </div>
-                <input value='0' type="text" name="horas_extras" id="horas_extras" class="horas_extras form-control required " value="{{$data['pagamento'] ? $data['pagamento']->horas_extras : ''}}">
+                <input  type="text" name="horas_extras" id="horas_extras" class="horas_extras form-control required " value="{{$data['model'] ? $data['model']->horas_extras : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
@@ -144,7 +143,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="valor_pagamento" disabled name="valor" id="valor" class=" valor form-control valor required  valor_pagamento" value="">
+                <input type="text" name="valor_pagamento" disabled name="valor" id="valor" class=" valor form-control valor required  valor_pagamento" value="{{$data['model'] ? $data['model']->valor : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
@@ -164,7 +163,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input value='0' type="text" name="adicional" id="adicional" class=" adicional1 form-control " value="{{$data['pagamento'] ? $data['pagamento']->adicional_noturno : ''}}">
+                <input type="text" name="adicional" id="adicional" class=" adicional1 form-control " value="{{$data['model'] ? $data['model']->adicional_noturno : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
@@ -179,7 +178,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" readonly name="INSS" id="inss" class="form-control inss" value="8"  value="{{$data['pagamento'] ? $data['pagamento']->inss : ''}}">
+                <input type="text" readonly name="INSS" id="inss" class="form-control inss"  value="{{$data['model'] ? $data['model']->inss : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
@@ -196,7 +195,7 @@
                         <i class="material-icons">remove</i>
                     </span>
                 </div>
-                <input value='0' type="text" name="faltas" id="faltas" class=" faltas form-control required   " value="{{$data['pagamento'] ? $data['pagamento']->faltas : ''}}">
+                <input type="text" name="faltas" id="faltas" class=" faltas form-control required" value="{{$data['model'] ? $data['model']->faltas : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
@@ -211,7 +210,7 @@
                         <i class="material-icons">attach_money</i>
                     </span>
                 </div>
-                <input type="text" name="total" id="total" placeholder="Total:"  readonly class="total form-control">
+                <input type="text" name="total" id="total" placeholder="Total:"  readonly class="total form-control" value="{{$data['model'] ? $data['model']->total : ''}}">
             </div>
             <span class="errors"> </span>
         </div>
