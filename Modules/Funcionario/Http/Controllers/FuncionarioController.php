@@ -440,7 +440,7 @@ class FuncionarioController extends Controller{
             
             'estado' => DB::table('funcionario')->join('endereco', 'funcionario.endereco_id', 'endereco.id')
             ->join('cidade', 'endereco.cidade_id', 'cidade.id')
-            ->join('estado', 'cidade.estado_id','estado.id')->get('estado.nome')->last(),
+            ->join('estado', 'cidade.estado_id','estado.id')->get('estado.uf')->last(),
 
             'dependentes' => DB::table('dependente')->join('parentesco', 'dependente.parentesco_id', 'parentesco.id')->get()
 
@@ -635,7 +635,7 @@ class FuncionarioController extends Controller{
             
             $data = [   
                 'atestado'      => '',
-                'title'         => 'Cadastro de Atestado',
+                'title'         => 'Cadastro de Licença',
                 'funcionario'   => Funcionario::findOrFail($id),
                 'url'           => 'funcionario/funcionario/storeAtestado',
                 'method'        => 'post'
@@ -673,9 +673,11 @@ class FuncionarioController extends Controller{
     }
 
     public function listaHistorico($id){
-
-        $atestado = Atestado::where('funcionario_id',$id)->get();
-        dd($atestado);
+        $data = [
+        $atestado = Atestado::where('funcionario_id',$id)->get(),
+        'title' => 'Histórico'
+        ];
+        return view('funcionario::funcionario.historico',compact('data'));
     }
 
 }
