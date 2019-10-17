@@ -17,4 +17,7 @@ class Modulo extends Model
         return $this->belongsToMany('Modules\Usuario\Entities\Usuario', 'usuario_has_modulo')
                     ->withPivot('papel_id');
     }
+    public function papeis(){
+        return $this->belongsToMany('Modules\Usuario\Entities\Papel','papel_has_modulo');
+    }
 }
