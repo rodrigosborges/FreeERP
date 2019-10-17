@@ -50,7 +50,7 @@ class UsuarioController extends Controller
     
     }
 
-    public function store(UsuarioStoreRequest $request)
+    public function store(Request $request)
     {
         if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
             DB::beginTransaction();

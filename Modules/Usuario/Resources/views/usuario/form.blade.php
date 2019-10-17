@@ -81,10 +81,10 @@
 
                            
                     <div class="form-group input-modulo-papel">
-                    <div class="form-row">
+                    <div class="form-row input-modulo-papel-interior">
                             <div class="col-md-5 mb-1">
                                 <label for='modulo'>Modulo</label>
-                                <select class="form-control" name='papel'>
+                                <select class="form-control" name='modulo[][modulo_id]'>
                                     <option disabled selected>Escolha um Modulo...</option>
                                     @foreach($modulos as $modulo)
                                     <option value="{{ $modulo->id }}" > {{ $modulo->nome }} </option>
@@ -94,7 +94,7 @@
                             
                         <div class="col-md-5 mb-1">
                                 <label for="papel">Papel</label>
-                                <select class="form-control" name='papel'>
+                                <select class="form-control" name='papel[][papel_id]'>
                                     <option disabled selected>Escolha um Papel...</option>
                                     @foreach($papeis as $papel)
                                     <option value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
@@ -158,18 +158,13 @@ function readURL(input) {
             $(".adicionar").click(function(){
                 //div que irá ser clonada
                 var div = $(".input-modulo-papel").first().clone(true)
-                div.append("<div class='col-md-1'><a  class='btn bg-danger remover text-white'>-</a></div>")
             
                 div.insertAfter($(".form-group").last())
-
-                $(".remover").on("click", function(){
-                    if($(".input-group").length > 1)
-                            $(this).parent().remove();
-                })
-            })
-            $(".remover").on("click", function(){
-                if($(".input-group").length > 1)
-                    $(this).parent().remove();
+                var div2 = $(".input-modulo-papel-interior").last()
+                div2.append("<div class='col-md-1' style='margin-top:32px';><a  class='btn bg-danger text-white remover'>-</a></div>");
+            });
+            $(document).on("click", '.remover', function(){
+                    $(this).parent().parent().remove();
             })
         })
     </script>
