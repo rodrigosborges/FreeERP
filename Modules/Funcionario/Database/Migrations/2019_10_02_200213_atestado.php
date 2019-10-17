@@ -18,7 +18,7 @@ class Atestado extends Migration
             $table->string('cid_atestado');
             $table->date('data_inicio');
             $table->date('data_fim');
-            $table->integer('quantidade_dias');
+            $table->string('situacao');
             $table->integer('funcionario_id')->index('fk_funcionario');
             $table->timestamps();
         });

@@ -19,8 +19,11 @@
             <div class="form-group">
                 <label for="">Motivo da mudança de situação:</label>
                 <div class="input-group">
-                    <select class="form-control">
-                    <option>Default select</option>
+                    
+                    <select name="situacao" class="form-control">
+                    
+                    <option value="previdencia">Afastado Previdência</option>
+                    <option value="acidente">Afastado Acidente de Trabalho</option>
                 </select>
             </div>
         </div>
@@ -64,7 +67,7 @@
     </div>
 @section('footer')
     <div class="d-flex justify-content-end">
-        <a class="btn btn-info d-flex justify-content-end text-white "><i class="material-icons">assignment</i>Histórico</a>
+        <a  href='{{ url("/funcionario/funcionario/listaHistorico/".$data["funcionario"]->id) }}' class="btn btn-info d-flex justify-content-end text-white "><i class="material-icons">assignment</i>Histórico</a>
         <button type="submit"  class="btn btn-success ml-2">Salvar</button>
 
     </div>

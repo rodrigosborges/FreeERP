@@ -34,7 +34,8 @@
         <!--<a href='{{url("funcionario/ferias/$funcionario->id/show")}}' class="btn btn-secondary">Gerar Aviso</a>-->
         <a href='{{url("funcionario/pagamento/listar/$funcionario->id")}}' class="btn btn-primary">Listar Pagamento</a>
         <a href='{{ url("funcionario/pagamento/$funcionario->id/show") }}' class="btn btn-secondary">Visualizar Pagamento</a>
-        
+        <a href='{{ url("funcionario/pagamento/$funcionario->id/edit")}}'class="btn btn-warning">Editar Pagamento</a>
+     
       </td>
     </tr>
     @endforeach
