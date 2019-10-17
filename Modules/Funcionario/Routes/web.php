@@ -38,6 +38,8 @@ Route::prefix('funcionario')->group(function() {
     //Rotas do FeriasController
     Route::get('ferias/editarFerias/{id}','FeriasController@edit');
     Route::get('ferias/{id}/show', 'FeriasController@show');
+    Route::get('ferias/indexRelatorio', 'FeriasController@indexRelatorio');
+    Route::post('ferias/listRelatorio', 'FeriasController@listRelatorio');
 
     Route::get('pagamento/listar/{id}','PagamentoController@listar');
     Route::get('pagamento/novoPagamento/{id}','PagamentoController@novoPagamento');

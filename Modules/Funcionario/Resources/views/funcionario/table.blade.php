@@ -16,7 +16,7 @@
 
                     @if($status == "ativos")
                     <td class="min">         
-                            <a class="btn btn-warning" href='{{ url("funcionario/funcionario/$funcionario->id/edit") }}'>Editar</a>
+                        <a class="btn btn-warning" href='{{ url("funcionario/funcionario/$funcionario->id/edit") }}'>Editar</a>
                     </td>
                     <td class="min">
                         <a class="btn btn-secondary" href='{{ url("funcionario/funcionario/editCargo/$funcionario->id") }}'>Cargo</a>              

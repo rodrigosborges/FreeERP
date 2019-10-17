@@ -225,6 +225,33 @@ class FeriasController extends Controller
      * @param int $id
      * @return Response
      */
+   
+
+    public function indexRelatorio(){
+        
+        return view('funcionario::ferias.indexRelatorio');
+    }
+
+    public function listRelatorio(Request $request){
+       $dataInicio = $request->data_inicio;
+       $dataFim = $request->data_fim;
+       
+        $dadosRelatorio = DB::table('funcionario')->join('ferias', 'funcionario.id', '=', 'ferias.funcionario_id')
+                                         ->join('pagamento', 'funcionario.id', '=', 'pagamento.funcionario_id')
+                                         ->where([
+                                             ['data_inicio', '>=', $dataInicio],
+                                             ['data_fim', '<=', $dataFim],
+                                             ['tipo_pagamento', '=', 'ferias']
+                                         ])->select('funcionario.nome', 'ferias.data_inicio', 'ferias.data_fim', 'pagamento.total')->get();       
+                                        
+        if($dadosRelatorio->count() > 0){
+            return view('funcionario::ferias.listRelatorio', compact('dadosRelatorio'));
+        } else {
+            return redirect()->back()->with('error', 'Não há férias para o período selecionado.');
+        }                                
+        
+    }
+
     public function destroy($id)
     {
         //

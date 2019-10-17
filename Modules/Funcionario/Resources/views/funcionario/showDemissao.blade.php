@@ -5,8 +5,6 @@
 
     <div id="ficha d-flex justify-content-center">
         
-      
-
         <div class="row d-flex justify-content-center">
             <div class="">
                 <h4 class="font-weight-bold">Aviso prévio do empregador para dispensa do empregado</h4>
@@ -50,7 +48,7 @@
 </div>
 @endsection
 @endsection
-@section('js')
+@section('script')
 <script src="{{Module::asset('funcionario:js/bibliotecas/printThis.js')}}"></script>
 
 <script>
@@ -65,7 +63,7 @@
         var localdate = day + '/' + month + '/' + dNow.getFullYear() + ' ' + hours + ':' + minutes;
 
         $("#ficha").printThis({
-            header: "<h1 class='text-center'>Aviso de Férias<h1><hr><br>",
+            header: "<h1 class='text-center'>Aviso prévio do empregador para dispensa do empregado<h1><hr><br>",
             // footer: `<span class='text-center bottom-center-absolute titulo_cargo'>${localdate}<span><hr><br>`,
             afterPrint: function(){
                 $(".change-class-2").toggleClass("col-lg-2").toggleClass("col-2");
