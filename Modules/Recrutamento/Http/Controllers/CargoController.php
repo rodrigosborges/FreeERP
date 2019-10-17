@@ -36,7 +36,7 @@ class CargoController extends Controller
     {
         if($request->pesquisa != "" || $request->pesquisa != null){
             $pesquisa = Cargo::where('nome', 'like', '%'.$request->pesquisa.'%')->get();
-        $pesquisa_inativos = Cargo::onlyTrashed()->where('nome', 'like', '%'.$request->pesquisa.'%')->get();
+            $pesquisa_inativos = Cargo::onlyTrashed()->where('nome', 'like', '%'.$request->pesquisa.'%')->get();
 
             if(count($pesquisa) == 0 && count($pesquisa) == 0){
                 

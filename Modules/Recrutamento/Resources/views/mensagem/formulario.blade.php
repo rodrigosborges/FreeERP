@@ -20,7 +20,7 @@
 
             <div class="form-group">
             <button type="submit" class="btn btn-success"> {{ $data['button'] }} </button> 
-            <a class="btn btn-light" href="{{ url('recrutamento/vaga/candidatos/')}}{{'/'.$data['candidato']->id}}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+            <a class="btn btn-light" href="{{ url('recrutamento/vaga/candidatos/')}}{{'/'.$data['candidato']->vaga()->first()->id}}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
             </div>
 
             <input type="text" name="candidato_id" value="{{$data['candidato']->id}}" style="display:none">

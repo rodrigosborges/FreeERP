@@ -8,19 +8,19 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="ativos" role="tabpanel" aria-labelledby="ativos-tab">
             <div class="row mb-3">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <h4>Salário:</h4>
                     <p>{{$data['vaga']->salario}}</p>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <h5>Ecolaridade:</h5>
                     <p>Ensino {{$data['vaga']->escolaridade == 'medio' ? 'médio' : $data['vaga']->escolaridade}}</p>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <h5>Regime de Contratação:</h5>
                     <p>{{$data['vaga']->regime}}</p>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <h5>Benefícios:</h5>
                     <p>{{$data['vaga']->beneficios}}</p>
                 </div>

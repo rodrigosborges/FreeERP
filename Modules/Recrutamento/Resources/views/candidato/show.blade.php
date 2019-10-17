@@ -41,15 +41,15 @@
             <hr>
 
             <div class="row mb-3">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h5>Estado:</h5>
                     <p>{{$data['candidato']->endereco->cidade->estado()->first()->nome}}</p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <h5>Cidade:</h5>
                     <p>{{$data['candidato']->endereco->cidade->nome}}</p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <h5>Bairro:</h5>
                     <p>{{$data['candidato']->endereco->bairro}}</p>
                 </div>
@@ -60,10 +60,12 @@
                     <h5>Logradouro:</h5>
                     <p>{{$data['candidato']->endereco->logradouro}}</p>
                 </div>
+                @if($data['candidato']->endereco->complemento != "")
                 <div class="col-md-6">
                     <h5>Complemento:</h5>
                     <p>{{$data['candidato']->endereco->complemento}}</p>
                 </div>
+                @endif
                 <div class="col-md-3">
                     <h5>CEP:</h5>
                     <p>{{$data['candidato']->endereco->cep}}</p>
@@ -76,7 +78,7 @@
 
             <div class="mb-3">
                 <div class="float-right">
-                    <a class="btn btn-success" href="{{url('recrutamento/entrevista/marcarEntrevista/'.$data['candidato']->id)}}">{{$data['button']}}</a>
+                    <a class="btn btn-success" href="{{url('recrutamento/mensagem/enviarMensagem/'.$data['candidato']->id)}}">{{$data['button']}}</a>
                 </div>
             </div>
             

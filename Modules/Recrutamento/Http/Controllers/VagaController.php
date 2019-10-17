@@ -187,11 +187,17 @@ class VagaController extends Controller
     public function vagasDisponiveis(Request $request)
     {
         if($request->pesquisa != "" || $request->pesquisa != null){
+
             $pesquisaCargo = Cargo::where('categoria_id', '=', $request->pesquisa)->first();
-            $pesquisa = Vaga::where([
-                ['cargo_id', $pesquisaCargo->id],
-                ['status', 1]
-            ])->get();
+            if(!$pesquisaCargo){
+                return back()->with('error', 'Nenhuma vaga atrelada a este cargo');
+            }else{
+                $pesquisa = Vaga::where([
+                    ['cargo_id', $pesquisaCargo->id],
+                    ['status', 1]
+                ])->get();
+            }
+            
         }else{
             $pesquisa = Vaga::where('status', '1')->get();
         }
