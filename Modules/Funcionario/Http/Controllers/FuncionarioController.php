@@ -674,7 +674,7 @@ class FuncionarioController extends Controller{
 
     public function listaHistorico($id){
         $data = [
-        $atestado = Atestado::where('funcionario_id',$id)->get(),
+        'atestado' => Atestado::where('funcionario_id',$id)->get(),
         'title' => 'Histórico'
         ];
         return view('funcionario::funcionario.historico',compact('data'));
