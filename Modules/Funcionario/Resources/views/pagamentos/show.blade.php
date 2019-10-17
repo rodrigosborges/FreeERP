@@ -3,6 +3,27 @@
 
 @section('body')
 <button class="imprimir-button btn btn-primary"><i class="material-icons">print </i></button>
+    <form action="" method="get">
+        <div class="row ml-1">
+            <div class="col-sm-12 col-md-4 ">
+                <label for="tipo">Tipo de Pagamento:</label>
+                <select class="form-control" name="tipo" id="tipo">
+                    <option value="pagamento">Pagamento</option>
+                    <option value="adiantamento">Adiantamento</option>
+                    <option value="demissao">Demissão</option>
+                </select>
+            </div>
+
+            <div class="col-sm-12 col-md-4">
+                <label for="data">Data de Pagamento:</label>
+                <input class="form-control" type="month" name="data" id="data">
+            </div>
+            
+            <div class="col-sm-12 col-md-4">
+                <button class="btn btn-info" style="margin-top:32" type="submit"><i class="material-icons">search</i></button>
+            </div>
+        </div>
+    </form>
 <div id="show">
     <div class="card-body">
         <table class="table table-bordered border border-primary text-left">
