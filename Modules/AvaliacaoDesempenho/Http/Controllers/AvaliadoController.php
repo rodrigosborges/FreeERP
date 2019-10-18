@@ -29,11 +29,12 @@ class AvaliadoController extends Controller
         }
 
         $avaliado = Avaliado::where('token', $input['token'])->first();
-        $funcionario = $avaliado->avaliado;
-
+        
         if (empty($avaliado)) {
             return back()->with('error', 'Funcionario não encontrado.');
         }
+        
+        $funcionario = $avaliado->avaliado;
 
         $avaliacao = Avaliacao::findOrFail($avaliado->avaliacao->id);
 
