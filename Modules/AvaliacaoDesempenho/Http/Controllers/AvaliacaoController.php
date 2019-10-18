@@ -86,15 +86,20 @@ class AvaliacaoController extends Controller
 
             if ($input['gestor'] == 0) {
                 $funcionarios = Funcionario::where('setor_id', $input['setor_id'])->get();
+
+                foreach ($funcionarios as $key => $funcionario) {
+    
+                    if ($funcionario->id != $setor->gestor->id) {
+                        $token =  bin2hex(random_bytes(16));
+                        $avaliado = Avaliado::create(['funcionario_id' => $funcionario->id, 'avaliacao_id' => $avaliacao->id, 'token' => $token]);
+                    } 
+                }
+            } else if ($input['gestor'] == 1) {
+
+                $token =  bin2hex(random_bytes(16));
+                $avaliado = Avaliado::create(['funcionario_id' => $setor->gestor->id, 'avaliacao_id' => $avaliacao->id, 'token' => $token]);
             }
             
-            foreach ($funcionarios as $key => $funcionario) {
-
-                if ($funcionario->id != $setor->gestor->id) {
-                    $token =  bin2hex(random_bytes(16));
-                    $avaliado = Avaliado::create(['funcionario_id' => $funcionario->id, 'avaliacao_id' => $avaliacao->id, 'token' => $token]);
-                } 
-            }
             
             DB::commit();
 

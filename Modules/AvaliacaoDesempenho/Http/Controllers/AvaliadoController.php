@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller;
 use Modules\AvaliacaoDesempenho\Entities\Funcionario;
 use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
 use Modules\AvaliacaoDesempenho\Entities\Avaliado;
+use Modules\AvaliacaoDesempenho\Entities\Setor;
 
 class AvaliadoController extends Controller
 {
@@ -42,6 +43,18 @@ class AvaliadoController extends Controller
 
         $questoes = $avaliacao->questoes;
 
-        return view('avaliacaodesempenho::avaliados/avaliacao', compact('avaliacao', 'questoes', 'funcionario'));
+        // SE A PROVA EH PARA NAO GESTORES
+        if ($avaliacao->gestor == 0) {
+
+            return view('avaliacaodesempenho::avaliados/avaliacao-nao-gestores', compact('avaliacao', 'questoes', 'funcionario'));
+        
+        //SE A PROVA EH PARA GESTORES
+        } else if ($avaliacao->gestor == 1) {
+            $setor = Setor::where('gestor_id', $funcionario->id)->first();
+            $funcionarios = Funcionario::where('setor_id', $setor->id)->where('id', '<>', $funcionario->id)->get();
+
+            return view('avaliacaodesempenho::avaliados/avaliacao-gestores', compact('avaliacao', 'questoes', 'funcionario', 'setor', 'funcionarios'));
+        }
+
     }
 }

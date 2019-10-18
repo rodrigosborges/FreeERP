@@ -192,9 +192,9 @@
                         <label>Tipo de Avaliação</label>
                         
                         <br>
-                        <input type="radio" name='avaliacao[gestor]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 1 ? 'checked' : '' }}> Para Gestores
+                        <input type="radio" name='avaliacao[gestor]' value='0' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 0 ? 'checked' : '' }}> Avaliar Gestores
                         <br>
-                        <input type="radio" name='avaliacao[gestor]' value='0' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 0 ? 'checked' : '' }}> Para não Gestores
+                        <input type="radio" name='avaliacao[gestor]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 1 ? 'checked' : '' }}> Avaliar não Gestores
 
                     </div>
 

@@ -25,7 +25,7 @@ $(document).on('keydown keyup paste', '.select-questoes', function (e) {
 
                 $('.selectpicker').selectpicker('refresh')
 
-                if (data.length === 1) {
+                if (select.val()) {
 
                     $('#questaoCard').removeClass('hidden')
 
