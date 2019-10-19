@@ -16,7 +16,7 @@ class Solicitante extends Model
     }
 
     public function endereco(){
-        return $this->hasOne('Modules\OrdemServico\Entities\Endereco');
+        return $this->belongsTo('Modules\OrdemServico\Entities\Endereco');
     }
 
     public function telefones(){

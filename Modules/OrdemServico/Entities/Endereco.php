@@ -13,10 +13,10 @@ class Endereco extends Model
 
     
     public function cidade(){
-        return $this->hasOne('Modules\OrdemServico\Entities\Cidade');
+        return $this->belongsTo('Modules\OrdemServico\Entities\Cidade');
     }
     
     public function estado(){
-        return $this->hasOne('Modules\OrdemServico\Entities\Estado');
+        return $this->belongsTo('Modules\OrdemServico\Entities\Estado');
     }
 }
