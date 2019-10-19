@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b84905e5-ba51-4cac-9254-655e0db8a3b8" name="Default Changelist" comment="Implementado autenticação">
+    <list default="true" id="b84905e5-ba51-4cac-9254-655e0db8a3b8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/freeerp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/freeerp.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Funcionario.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Funcionario.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/EventoNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/EventoConvite.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/EventoConvite.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarConviteParaEvento.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/assets/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/broadcasting.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/broadcasting.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/modules/calendario/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/modules/calendario/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/template.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/template.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/channels.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/channels.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -144,6 +153,8 @@
       <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
       <path value="$PROJECT_DIR$/vendor/phar-io/version" />
       <path value="$PROJECT_DIR$/vendor/xethron/migrations-generator" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/sodium_compat" />
+      <path value="$PROJECT_DIR$/vendor/pusher/pusher-php-server" />
     </include_path>
   </component>
   <component name="ProjectId" id="1OYej8uerDxwsvEUxrjr6kySgef" />
@@ -165,12 +176,13 @@
     <key name="OPEN_URL_DIALOG">
       <recent name="https://HugoCuba@bitbucket.org/ifspcaraguatatuba/painel-cti.git" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Modules/Calendario/Database/Migrations" />
+      <recent name="$PROJECT_DIR$/Modules/Calendario/Resources/assets/audio" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Modules/Calendario/Resources/assets" />
       <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Modules/Calendario/Resources/assets/audio" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -259,7 +271,9 @@
       <workItem from="1570622862083" duration="8652000" />
       <workItem from="1570726145627" duration="13772000" />
       <workItem from="1570832539819" duration="6466000" />
-      <workItem from="1571258472726" duration="9576000" />
+      <workItem from="1571258472726" duration="9788000" />
+      <workItem from="1571332639105" duration="1745000" />
+      <workItem from="1571353084238" duration="19585000" />
     </task>
     <task id="LOCAL-00001" summary="Calendário exibindo todos eventos do usuário e algumas refatorações">
       <created>1562796695507</created>
@@ -436,7 +450,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570838952405</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Iniciando notificação para convite de evento">
+      <created>1571272944072</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1571272944072</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -472,7 +493,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Calendário exibindo todos eventos do usuário e algumas refatorações" />
     <MESSAGE value="Bootbox adicionado para informar que não há agendas" />
     <MESSAGE value="Calculando data da notificação do evento, removido mutators do model e tratado no controller" />
     <MESSAGE value="Corrigido a criação das datas com o Carbon" />
@@ -497,7 +517,8 @@
     <MESSAGE value="Função para duplicar eventos" />
     <MESSAGE value="Iniciando notificações de evento" />
     <MESSAGE value="Implementado autenticação" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementado autenticação" />
+    <MESSAGE value="Iniciando notificação para convite de evento" />
+    <option name="LAST_COMMIT_MESSAGE" value="Iniciando notificação para convite de evento" />
   </component>
   <component name="masterDetails">
     <states>

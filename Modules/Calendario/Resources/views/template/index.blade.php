@@ -34,7 +34,7 @@ $menu = [
 @section('css')
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':css/app.css')}}">
+    <link rel="stylesheet" href="{{ mix('css/calendario.css') }}">
     <style type="text/css">
         h2 {
             margin-bottom: 20px;
@@ -64,10 +64,16 @@ $menu = [
 
 @section('js')
     <script type="text/javascript" src="{{Module::asset(config('calendario.id').':bootbox.all.min.js')}}"></script>
-    <script src="{{Module::asset(config('calendario.id').':js/app.js')}}"></script>
+    <script src="{{ mix('js/calendario.js') }}"></script>
     <script type="text/javascript">
+        var userID = '{{auth()->id()}}';
+        Echo.private('Modules.Calendario.Entities.User.' + userID)
+            .notification((notification) => {
+                alert(JSON.stringify(notification));
+                console.log(notification.type);
+            });
         $(function () {
-            var notificacao = document.getElementsByTagName("audio")[0];
+            //var notificacao = document.getElementsByTagName("audio")[0];
 
             /*$.when(
             bootbox.alert({

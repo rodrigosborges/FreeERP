@@ -12,7 +12,8 @@ use Modules\Calendario\Entities\Convite;
 use Modules\Calendario\Entities\Evento;
 use Modules\Calendario\Entities\Funcionario;
 use Modules\Calendario\Entities\Notificacao;
-use Modules\Calendario\Notifications\EventoConvite;
+use Modules\Calendario\Events\EventoCriado;
+use Modules\Calendario\Notifications\NotificarConviteParaEvento;
 
 class EventoController extends Controller
 {
@@ -164,8 +165,8 @@ class EventoController extends Controller
     public function notificar(){
         $funcionario = Funcionario::find(1);
         $users[] = $funcionario->user;
-        $invoice = 'Teste.';
-        Notification::send($users, new EventoConvite(Evento::find(1)));
+        $convite = new NotificarConviteParaEvento(Evento::find(1));
+        Notification::send($users, $convite);
         return 'Notificado';
     }
 
