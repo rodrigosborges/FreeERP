@@ -21,6 +21,11 @@ class PecasController extends Controller
   public function localizar(){
      $pecas = PecaAssistenciaModel::paginate(10);
      $pecasDeletadas = PecaAssistenciaModel::onlyTrashed()->paginate(10);
+
+   
+
+     
+     
      return view('assistencia::paginas.estoque.localizarPeca',compact('pecas','pecasDeletadas'));
   }
 
@@ -54,7 +59,9 @@ class PecasController extends Controller
    public function editar($id){
       $peca = PecaAssistenciaModel::find($id);
       $itens = ItemPeca::where('idPeca', $id)->paginate(10);
-      
+      $peca ['valor_compra'] = str_replace(".",",",$peca ['valor_compra']);
+      $peca ['valor_venda'] = str_replace(".",",",$peca ['valor_venda']);
+
      return view('assistencia::paginas.estoque.editarPeca',compact('peca','itens'));
    }
 

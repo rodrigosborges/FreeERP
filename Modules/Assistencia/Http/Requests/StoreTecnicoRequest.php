@@ -11,7 +11,7 @@ class StoreTecnicoRequest extends FormRequest
     {
         return [
             'nome' => 'required|min:3|max:100',
-            'cpf' => 'required|cpf'
+            'cpf' => 'required|cpf|unique:tecnico_assistencia,cpf,'.$this->route('id')
           ];
       }
   

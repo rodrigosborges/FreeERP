@@ -39,6 +39,7 @@ class ServicosController extends Controller
 
    public function editar($id){
      $servico = ServicoAssistenciaModel::find($id);
+     $servico ['valor'] = str_replace(".",",",$servico ['valor']);
      
      return view('assistencia::paginas.estoque.editarServico',compact('servico'));
    }

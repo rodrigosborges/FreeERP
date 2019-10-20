@@ -20,7 +20,8 @@ class TecnicoController extends Controller
   }
   public function localizar(){
     $tecnicos = TecnicoAssistenciaModel::paginate(10);
-    return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos'));
+    $tecnicosDeletados = TecnicoAssistenciaModel::onlyTrashed()->paginate(10);
+    return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos','tecnicosDeletados'));
   }
   public function cadastrar(){
     return view('assistencia::paginas.tecnicos.cadastrotecnico');
@@ -31,7 +32,7 @@ class TecnicoController extends Controller
         $dados  = $req->all();
         TecnicoAssistenciaModel::create($dados);
         DB::commit();
-        return redirect(route('tecnico.localizar'))->with('success','Técnico cadastrado com sucesso!');
+        return redirect()->route('tecnico.localizar')->with('success','Técnico cadastrado com sucesso!');
         
       } catch (\Exception $e) {
         DB::rollback();
