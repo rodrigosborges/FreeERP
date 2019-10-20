@@ -5,7 +5,7 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\{ConsertoAssistenciaModel,ItemPeca, PagamentoAssistenciaModel, PecaAssistenciaModel, ServicoAssistenciaModel, ClienteAssistenciaModel, TecnicoAssistenciaModel, PecaOs, ItemServico};
+use Modules\Assistencia\Entities\{ConsertoAssistenciaModel,SituacaoOsModel,ItemPeca, PagamentoAssistenciaModel, PecaAssistenciaModel, ServicoAssistenciaModel, ClienteAssistenciaModel, TecnicoAssistenciaModel, PecaOs, ItemServico};
 use DB;
 use Modules\Assistencia\Http\Requests\StoreConsertosRequest;
 
@@ -94,7 +94,12 @@ class ConsertoController extends Controller
         $pagamento = PagamentoAssistenciaModel::find($id);
         $pagamento->valor = $conserto->valor;
         $pagamento->save();
-       
+        SituacaoOsModel::create([
+          'situacao' => $dados['situacao'],
+          'obs' => $dados['obsInfo'],
+          'idConserto' => $conserto->id
+        ]);
+
         $pecaOS = PecaOs::where('idConserto', $id)->get();
         $itemServico = ItemServico::where('idConserto', $id)->get();
         
@@ -132,7 +137,11 @@ class ConsertoController extends Controller
       
       
     }
+    public function verMais($id){
+      $infos = SituacaoOsModel::where('idConserto', $ido)->get();
 
+      return view('assistencia::paginas.consertos.verMais', compact('infos'));
+    }
     public function salvar(StoreConsertosRequest $req){
       
       $dados  = $req->all();
@@ -148,6 +157,12 @@ class ConsertoController extends Controller
       $pagamento->status = 'Pendente';
       $pagamento->forma = 'Não pago';
       $pagamento->save();
+      SituacaoOsModel::create([
+        'situacao' => $dados['situacao'],
+        'idConserto' => $conserto->id
+      ]);
+
+      
 
       if($dados['pecas']){
         for ($i=0; $i < count($dados['pecas']); $i++) {

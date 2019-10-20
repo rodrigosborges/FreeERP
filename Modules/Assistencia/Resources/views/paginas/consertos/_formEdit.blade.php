@@ -32,6 +32,9 @@
     </div>
 
 </div>
+<div class="form-group">
+    <input type="textarea" class="form-control" name="obsInfo">
+</div>
 <div>
     @include('assistencia::paginas.consertos._navOSedit')
 </div>

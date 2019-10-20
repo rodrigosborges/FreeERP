@@ -13,12 +13,15 @@ class SituacaOs extends Migration
      */
     public function up()
     {
-        $table->increments('id');
-        $table->string('situacao');
-        $table->string('obs')->nullable();
-        $table->integer('idConserto')->unsigned();
-        $table->foreign('idConserto')->references('id')->on('conserto_assistencia')->onDelete('cascade');
-        $table->timestamps();
+        Schema::create('situacao_os_assistencia', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('situacao');
+            $table->string('obs')->nullable();
+            $table->integer('idConserto')->unsigned();
+            $table->foreign('idConserto')->references('id')->on('conserto_assistencia')->onDelete('cascade');
+            $table->timestamps();
+            
+        });
     }
 
     /**

@@ -7,6 +7,7 @@
                     <th scope="col">Cliente</th>
                     <th scope="col">Aparelho</th>
                     <th scope="col">Valor</th>
+                    <th>Ações</th>
                 </tr>
 
             </thead>
@@ -20,6 +21,8 @@
                     <td>{{$conserto->modelo_aparelho }}</td>
                     <td>{{ $conserto->valor }}</td>
                     <td>
+                        <a href=""><button type="button"
+                                class="btn btn-primary">Ver mais</button></a>
                         <a href="{{route('consertos.visualizar', $conserto->id)}}"><button type="button"
                                 class="btn btn-outline-primary">Vizualizar</button></a>
                         <a href="{{route('consertos.editar', $conserto->id)}}"><button type="button"
