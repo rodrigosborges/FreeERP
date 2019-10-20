@@ -138,7 +138,7 @@ class ConsertoController extends Controller
       
     }
     public function verMais($id){
-      $infos = SituacaoOsModel::where('idConserto', $ido)->get();
+      $infos = SituacaoOsModel::where('idConserto', $id)->get();
 
       return view('assistencia::paginas.consertos.verMais', compact('infos'));
     }
@@ -159,6 +159,7 @@ class ConsertoController extends Controller
       $pagamento->save();
       SituacaoOsModel::create([
         'situacao' => $dados['situacao'],
+        'obs' => 'Criação da ordem deserviço.',
         'idConserto' => $conserto->id
       ]);
 

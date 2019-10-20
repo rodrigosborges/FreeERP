@@ -21,7 +21,7 @@
                     <td>{{$conserto->modelo_aparelho }}</td>
                     <td>{{ $conserto->valor }}</td>
                     <td>
-                        <a href=""><button type="button"
+                        <a href="{{route('consertos.verMais', $conserto->id)}}"><button type="button"
                                 class="btn btn-primary">Ver mais</button></a>
                         <a href="{{route('consertos.visualizar', $conserto->id)}}"><button type="button"
                                 class="btn btn-outline-primary">Vizualizar</button></a>
