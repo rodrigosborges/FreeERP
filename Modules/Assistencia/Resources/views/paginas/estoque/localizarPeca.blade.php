@@ -53,7 +53,7 @@
                                 <td scope="row">{{$peca->quantidade }}</td>
                                 <td>
                                     <a href="{{route('pecas.editar',$peca->id)}}"><button type="button"
-                                            class="btn btn-secondary">Editar</button></a>
+                                            class="btn btn-dark">Editar</button></a>
                                     <a href="{{route('pecas.deletar',$peca->id)}}"><button type="button"
                                             class="btn btn-danger">Deletar</button></a>
                                 </td>

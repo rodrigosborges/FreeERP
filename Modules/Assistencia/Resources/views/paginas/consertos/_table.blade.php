@@ -21,11 +21,11 @@
                     <td>{{ $conserto->valor }}</td>
                     <td>
                         <a href="{{route('consertos.visualizar', $conserto->id)}}"><button type="button"
-                                class="btn btn-secondary">Vizualizar</button></a>
+                                class="btn btn-outline-primary">Vizualizar</button></a>
                         <a href="{{route('consertos.editar', $conserto->id)}}"><button type="button"
-                                class="btn btn-danger">Editar</button></a>
+                                class="btn btn-dark">Editar</button></a>
                         <a href="{{route('consertos.finalizar', $conserto->id)}}"><button type="button"
-                                class="btn btn-warning">Finalizar</button></a>
+                                class="btn btn-outline-success">Finalizar</button></a>
                     </td>
                 </tr>
                 @endforeach

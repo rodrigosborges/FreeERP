@@ -53,7 +53,7 @@
                                 <td>R$ {{str_replace(".",",",$servico->valor) }}</td>
                                 <td>
                                     <a href="{{route('servicos.editar',$servico->id)}}"><button type="button"
-                                            class="btn btn-secondary">Editar</button></a>
+                                            class="btn btn-dark">Editar</button></a>
                                     <a href="{{route('servicos.deletar',$servico->id)}}"><button type="button"
                                             class="btn btn-danger">Deletar</button></a>
                                 </td>

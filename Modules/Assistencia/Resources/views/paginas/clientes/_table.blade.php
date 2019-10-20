@@ -37,7 +37,7 @@
                             <td>{{$cliente->telefonenumero }}</td>
                             <td>
                                 <a href="{{route('cliente.editar',$cliente->id)}}"><button type="button"
-                                        class="btn btn-secondary">Editar</button></a>
+                                        class="btn btn-dark">Editar</button></a>
                                 <a href="{{route('cliente.deletar',$cliente->id)}}"><button type="button"
                                         class="btn btn-danger">Deletar</button></a>
                             </td>

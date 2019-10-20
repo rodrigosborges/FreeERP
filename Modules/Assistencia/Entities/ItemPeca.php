@@ -11,4 +11,5 @@ class ItemPeca extends Model {
     public function peca(){
         return $this->belongsTo('Modules\Assistencia\Entities\PecaAssistenciaModel', 'idPeca')->withTrashed();
     }
+    
 }
