@@ -18,8 +18,8 @@
                 <p class="col-3"><span class="font-weight-bold">Estado Civil: </span>{{$data["funcionario"]->estado_civil->nome}}</p>
             </div>
             <div class="row col-12">
-                <p class="col-4"><span class="font-weight-bold">Data Admissão: </span>{{$data["funcionario"]->data_admissao}}</p>
-                <p class="col-5"><span class="font-weight-bold">Data de Nascimento: </span>{{$data["funcionario"]->data_nascimento}}</p>
+                <p class="col-4"><span class="font-weight-bold">Data Admissão: </span>{{\Carbon\Carbon::parse($data["funcionario"]->data_admissao)->format('d/m/Y')}}</p>
+                <p class="col-5"><span class="font-weight-bold">Data de Nascimento: </span>{{\Carbon\Carbon::parse($data["funcionario"]->data_nascimento)->format('d/m/Y')}}</p>
                 <span class="col-3"></span>
             </div>
         </div>

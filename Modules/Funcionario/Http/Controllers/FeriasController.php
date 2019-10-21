@@ -107,18 +107,28 @@ class FeriasController extends Controller
      * @return Response
      */
     public function show($id) {         
-        
-        $ferias = Ferias::findOrFail($id); 
-        $funcionario = Funcionario::where('id','=', $ferias->funcionario_id)->get()->last()->nome;
+        //Esse id é o do funcionário
+        /*$ferias = Ferias::findOrFail($id); 
         $funcionario2 = Funcionario::find($ferias->funcionario_id);
-        $documentos  = $funcionario2->documento->where('tipo_documento_id', 4);
-        $cargo = Cargo::where('id' , '=',$ferias->funcionario_id)->get()->last()->nome;
-        $inicio_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->controle_ferias_id)->get()->last()->inicio_periodo_aquisitivo;
-        $fim_periodo_aquisitivo = ControleFerias::where('id', '=', $ferias->controle_ferias_id)->get()->last()->fim_periodo_aquisitivo;    
+        $documentos  = $funcionario2->documento->where('tipo_documento_id', 4);*/
+        
+        //$funcionario = Funcionario::where('id', '=', $id)->get()->last()->nome;
+        $funcionario = Funcionario::findOrFail($id);
+        $cargo = $funcionario->cargos()->get()->last()->nome;
+        $inicio_periodo_aquisitivo = $funcionario->controle_ferias()->get()->last()->inicio_periodo_aquisitivo;    
+        $fim_periodo_aquisitivo = $funcionario->controle_ferias()->get()->last()->fim_periodo_aquisitivo;
+        $data_inicio = $funcionario->ferias()->get()->last()->data_inicio;
+        $data_fim = $funcionario->ferias()->get()->last()->data_fim;
+                           
+       
+        
+        
         
         $carteiraTrabalho = DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', '=', 'funcionario.id')
                                 ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
                                 ->where('documento.tipo_documento_id', '=', '4')->get()->last()->numero;
+        
+        return $carteiraTrabalho;
                                     
         $serieCarteiraTrabalho =  DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', '=', 'funcionario.id')
                                  ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')

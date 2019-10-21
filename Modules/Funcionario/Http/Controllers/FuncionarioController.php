@@ -91,10 +91,10 @@ class FuncionarioController extends Controller{
             $email = Email::create(['email' => $request->input('email')]);
             $endereco = Endereco::create($request->input('endereco'));
             $data_admissao = DateTime::createFromFormat('d/m/Y', $request->funcionario['data_admissao']);
-
+        
             $funcionario = Funcionario::create([
                 'nome' =>$request->funcionario['nome'],
-                'data_nascimento' =>date('Y-m-d', strtotime($request->funcionario['data_nascimento'])),
+                'data_nascimento' => DateTime::createFromFormat('d/m/Y', $request->funcionario['data_nascimento'])->format('Y-m-d'),
                 'sexo' =>$request->funcionario['sexo'],
                 'data_admissao' => $data_admissao->format('Y-m-d'),
                 'situacao'      => 'Ativo',    
