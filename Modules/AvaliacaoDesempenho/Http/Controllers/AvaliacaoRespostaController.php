@@ -35,7 +35,7 @@ class AvaliacaoRespostaController extends Controller
 
         $avaliador = Avaliador::where('token', $input['token'])->first();
         
-        if (empty($avaliador)) {
+        if (empty($avaliador) || $avaliador->funcionario->email->email != $input['email']) {
             return back()->with('error', 'Funcionario não encontrado.');
         }
 
@@ -110,7 +110,7 @@ class AvaliacaoRespostaController extends Controller
                     'avaliado_id' => $avaliado->id,
                     'respostas' => json_encode($input['questoes'])
                 ]);
-                
+
                 if ($resultado->id) {
                     
                     $avaliacao = $avaliado->avaliacao;
@@ -158,6 +158,8 @@ class AvaliacaoRespostaController extends Controller
             } else {
 
                 $avaliado = Avaliado::where('avaliacao_id', $input['avaliacao_id'])->first();
+                $avaliacao = $avaliado->avaliacao;
+                $avaliador = Avaliador::where('avaliacao_id', $avaliacao->id)->where('funcionario_id', $input['funcionario_id'])->first();
 
                 $resultado = ResultadoGestor::create([
                     'avaliado_id' => $avaliado->id, 

@@ -44,6 +44,7 @@
 
                     <input type="hidden" name="avaliacao[avaliacao_id]" value="{{$avaliacao->id}}">
                     <input type="hidden" name="avaliacao[avaliador_id]" value="{{$avaliador->id}}">
+                    <input type="hidden" name="avaliacao[funcionario_id]" value="{{$avaliador->funcionario->id}}">
                     <input type="hidden" name="avaliacao[tipo_avaliacao_id]" value="{{$avaliacao->tipo->id}}">
 
                     @foreach($questoes as $key => $questao)
