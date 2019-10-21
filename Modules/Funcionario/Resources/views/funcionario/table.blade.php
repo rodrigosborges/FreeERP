@@ -1,9 +1,9 @@
 <div class="table-responsive">
-    <table id="funcionario-table" class="table table-stripped">
+    <table id="funcionario-table" class="table table-stripped text-center">
         <thead>
             <tr>
                 <th>Nome</th>
-                <th class="min" colspan="3">Ações</th>
+                <th class="min text-right" colspan="3">Ações</th>
                 @if($status == "ativos")
                     <th class="min"></th>
                 @endif

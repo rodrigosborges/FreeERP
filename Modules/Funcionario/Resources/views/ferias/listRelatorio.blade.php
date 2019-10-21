@@ -4,7 +4,7 @@
 
 @section('body')
 <div id="ficha">
-    <table class="table table-hover">
+    <table class="table table-hover text-center">
     <thead  class="thead-dark">
         <tr>
         <th scope="col">Nome</th>
@@ -19,7 +19,7 @@
         <td> {{ $dados->nome }} </td>
         <td> {{ \Carbon\Carbon::parse($dados->data_inicio)->format('d/m/Y') }} </td>
         <td> {{ \Carbon\Carbon::parse($dados->data_fim)->format('d/m/Y') }} </td>  
-        <td> {{  number_format($dados->total, 2, ',', '.')}}</td> 
+        <td> R$ {{  number_format($dados->total, 2, ',', '.')}}</td> 
         </tr>
         @endforeach
     </tbody>

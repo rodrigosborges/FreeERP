@@ -25,27 +25,27 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-6">
+            <div class="form-group col-6 font-weight-bold">
                 <span>Inicio Período de Aquisição:</span>
                 <span>{{$data['inicio_periodo_aquisitivo']}}</span>    
             </div>
 
-            <div class="form-group col-6">
+            <div class="form-group col-6 font-weight-bold">
                 <span>Fim Período de Aquisição:</span>
                 <span>{{$data['fim_periodo_aquisitivo']}}</span>
             </div>
 
-            <div class="form-group col-6">
+            <div class="form-group col-6 font-weight-bold">
                 <span>Limite Período de gozo:</span>
                 <span>{{$data['limite_periodo_aquisitivo']}}</span>
             </div>
         </div>
         
     </section>
-
+    <hr>
     <section>
     <form action="{{url('funcionario/ferias')}}" method="POST" id="form">
-    <h4 style="text-align: center;">Período Gozo</h4>
+    <h4 style="text-align: center;">Período de Gozo</h4>
     {{csrf_field()}}
         <div class="row">
 

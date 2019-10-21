@@ -278,7 +278,7 @@ class ControleFeriasController extends Controller
         /*O formato da variavel limite_periodo_aquisito é passado dentro do array pois ele é considerado um objeto, para que ele seja uma string,
         o formato que será apresentado na view deve ser passado dentro do array*/
         $data = [
-            'title'                     => 'Ferias',
+            'title'                     => 'Férias',
             'funcionario'               => $funcionario,
             'cargo'                     => Cargo::where('id','=',$cargoAtual)->first(),
             'admissao'                  => $admissao,

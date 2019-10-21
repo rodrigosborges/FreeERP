@@ -3,8 +3,8 @@
 @section('title','Férias')
 
 @section('body')
-<table class="table">
-  <thead>
+<table class="table table-hover text-center">
+  <thead class="thead-dark">
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Periodo Inicio</th>
@@ -23,7 +23,6 @@
         <a class="btn btn-warning" href='{{ url("funcionario/ferias/$ferias->id/edit") }}'>Editar</a> -->
     </tr>
     @endforeach
-    
   </tbody>
 </table>
 @section('footer')
