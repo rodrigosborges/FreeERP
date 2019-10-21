@@ -44,7 +44,7 @@
             
             <td class="text-center align-middle">{{ $avaliacao->tipo->nome }}</td>
             
-            <td class="text-center align-middle">{{ is_null($avaliacao->deleted_at) ? 'Ativado' : 'Desativado' }}</td>
+            <td class="text-center align-middle">{{ $avaliacao->status->nome }}</td>
     
             <td class="text-center align-middle acoes">
     

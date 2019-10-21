@@ -27,6 +27,10 @@ class Avaliacao extends Model
         return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\TipoAvaliacao', 'tipo_id');
     }
 
+    public function status() {
+        return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Status', 'status_id');
+    }
+
     public function questoes() {
         return $this->belongsToMany('Modules\AvaliacaoDesempenho\Entities\Questao', 'avaliacao_has_questao', 'avaliacao_id', 'questao_id');
     }

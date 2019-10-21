@@ -12,7 +12,7 @@
 
     <p>Portanto, seriedade e atenção as respostas.</p>
 
-    <p>Sua senha foi enviada por email.</p>
+    <p>Sua senha de acesso foi enviada por email.</p>
 
     <div class="form">
 

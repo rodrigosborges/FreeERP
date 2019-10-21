@@ -3,9 +3,11 @@
 namespace Modules\AvaliacaoDesempenho\Http\Controllers;
 
 use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Database\Eloquent\Builder;
 
 use Modules\AvaliacaoDesempenho\Entities\Funcionario;
 use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
@@ -25,24 +27,36 @@ class AvaliacaoRespostaController extends Controller
     public function responder(Request $request) {
 
         $input = $request->input('avaliado');
-
+        
         foreach ($input as $key => $value) {
-
+            
             if (empty($value)) {
-                return back()->with('error', 'Todos os campos são obrigatorios.');
+                return back()->with('error', 'Todos os campos são obrigatorios');
             }
         }
-
-        $avaliador = Avaliador::where('token', $input['token'])->first();
         
-        if (empty($avaliador) || $avaliador->funcionario->email->email != $input['email']) {
-            return back()->with('error', 'Funcionario não encontrado.');
+        $avaliador = Avaliador::whereHas('funcionario', function(Builder $query) use($input) {
+            $query->whereHas('email', function(Builder $query) use($input) {
+                $query->where('email', $input['email']);
+            });
+        })->first();
+
+        if (Carbon::today()->greaterThan($avaliador->validade)) {
+            return back()->with('error', 'Seu acesso a esta Avaliação expirou');                             
+        }
+
+        if ($avaliador->token == null) {
+            return back()->with('success', 'Esta Avaliação foi encerrada');                             
+        }
+        
+        if (empty($avaliador) || $avaliador->token != $input['token']) {
+            return back()->with('error', 'Funcionario não encontrado');
         }
 
         $avaliacao = Avaliacao::findOrFail($avaliador->avaliacao->id);
 
         if (empty($avaliacao)) {
-            return back()->with('error', 'Avaliação não encontrada.');
+            return back()->with('error', 'Avaliação não encontrada');
         }
 
         $questoes = $avaliacao->questoes;
@@ -63,13 +77,13 @@ class AvaliacaoRespostaController extends Controller
                 $avaliados[] = $avaliado->id;
             }
 
-            $concluidos = ResultadoGestor::whereIn('avaliado_id', $avaliados)->get();
+            $concluidos = ResultadoFuncionario::whereIn('avaliado_id', $avaliados)->get();
             
             if (count($concluidos)) {
 
                 $data = [];
                 foreach ($concluidos as $key => $concluido) {
-                    $data[] = $concluido->funcionario->id;
+                    $data[] = $concluido->avaliado->funcionario->id;
                 }
                 
                 $funcionarios = Funcionario::where('setor_id', $setor->id)
@@ -85,7 +99,7 @@ class AvaliacaoRespostaController extends Controller
             $funcionarios = $funcionarios->get();
 
             if (count($funcionarios) == 0) {
-                return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Esta Avaliação já foi encerrada');                 
+                return back()->with('success', 'Esta Avaliação foi encerrada');                 
             }
 
             return view('avaliacaodesempenho::avaliados/avaliar-funcionario', compact('avaliacao', 'questoes', 'avaliador', 'setor', 'funcionarios', 'concluidos'));
@@ -104,9 +118,12 @@ class AvaliacaoRespostaController extends Controller
                 
                 $funcionario = Funcionario::findOrFail($input['funcionario_id']);
                 
+                $avaliador = Avaliador::findOrFail($input['avaliador_id']);
+
                 $avaliado = Avaliado::where('avaliacao_id', $input['avaliacao_id'])->where('funcionario_id', $input['funcionario_id'])->first();
                 
                 $resultado = ResultadoFuncionario::create([
+                    'avaliador_id' => $avaliador->id,
                     'avaliado_id' => $avaliado->id,
                     'respostas' => json_encode($input['questoes'])
                 ]);
@@ -117,8 +134,8 @@ class AvaliacaoRespostaController extends Controller
                     $questoes = $avaliacao->questoes;
                     $avaliador = Avaliador::where('avaliacao_id', $avaliacao->id)->first();
                     $setor = $avaliacao->setor;
-                    $concluidos = ResultadoFuncionario::where('avaliado_id', $avaliado->id)->get();
-                    
+                    $concluidos = ResultadoFuncionario::where('avaliador_id', $avaliador->id)->get();
+
                     if (count($concluidos)) {
                         
                         $data = [];
@@ -130,7 +147,7 @@ class AvaliacaoRespostaController extends Controller
                             ->where('id', '<>', $avaliador->funcionario->id)
                             ->where('id', '<>', $input['funcionario_id'])
                             ->whereNotIn('id', $data);
-
+                        
                     } else {
 
                         $funcionarios = Funcionario::where('setor_id', $setor->id)
@@ -139,19 +156,22 @@ class AvaliacaoRespostaController extends Controller
                     }
 
                     $funcionarios = $funcionarios->get();
-
                     
                     if (count($funcionarios) == 0) {
                         $avaliador->update(['token' => null, 'concluido' => 1]);
                         
                         DB::commit();
-
+                        return back()->with('success', 'Avaliação Respondida com Sucesso');                 
                         return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação Respondida com Sucesso');                 
                     }
                     
                     DB::commit();
-
+                    
                     return view('avaliacaodesempenho::avaliados/avaliar-funcionario', compact('avaliacao', 'questoes', 'avaliador', 'setor', 'funcionarios', 'concluidos'))->with('success', 'Avaliação Respondida com Sucesso');
+                
+                } else {
+                
+                    return back()->with('error', 'Algo deu errado');
                 }
             
             // PROVA PARA AVALIAR FUNCIONARIOS
@@ -159,9 +179,10 @@ class AvaliacaoRespostaController extends Controller
 
                 $avaliado = Avaliado::where('avaliacao_id', $input['avaliacao_id'])->first();
                 $avaliacao = $avaliado->avaliacao;
-                $avaliador = Avaliador::where('avaliacao_id', $avaliacao->id)->where('funcionario_id', $input['funcionario_id'])->first();
+                $avaliador = Avaliador::findOrFail($input['avaliador_id']);
 
                 $resultado = ResultadoGestor::create([
+                    'avaliador_id' => $avaliador->id,
                     'avaliado_id' => $avaliado->id, 
                     'respostas' => json_encode($input['questoes'])
                 ]);
@@ -170,6 +191,8 @@ class AvaliacaoRespostaController extends Controller
                     $avaliador->update(['token' => null, 'concluido' => 1]);
                     
                     DB::commit();
+
+                    return back()->with('success', 'Avaliação Respondida com Sucesso');                 
 
                     return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação Respondida com Sucesso');                    
                 }

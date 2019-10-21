@@ -6196,6 +6196,7 @@ INSERT INTO `questao` (`id`, `enunciado`, `opt1`, `opt2`, `opt3`, `opt4`, `opt5`
 
 CREATE TABLE `resultado_funcionario` (
 	`id` int(11) NOT NULL,
+	`avaliador_id` int(11) NOT NULL,
 	`avaliado_id` int(11) NOT NULL,
 	`respostas` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
 	`created_at` TIMESTAMP NOT NULL DEFAULT current_timestamp() , 
@@ -6209,6 +6210,7 @@ CREATE TABLE `resultado_funcionario` (
 
 CREATE TABLE `resultado_gestor` ( 
 	`id` INT(11) NOT NULL , 
+	`avaliador_id` INT NOT NULL , 
 	`avaliado_id` INT NOT NULL , 
 	`respostas` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
 	`created_at` TIMESTAMP NOT NULL DEFAULT current_timestamp() , 
@@ -6520,12 +6522,14 @@ ALTER TABLE `questao`
 -- Índices para tabela `resultado_gestor`
 --
 ALTER TABLE `resultado_gestor`
+  ADD KEY `resultado_gestor_avaliador_id_foreign` (`avaliador_id`),
   ADD KEY `resultado_gestor_avaliado_id_foreign` (`avaliado_id`);
 
 --
 -- Índices para tabela `resultado_funcionario`
 --
 ALTER TABLE `resultado_funcionario`
+  ADD KEY `resultado_funcionario_avaliador_id_foreign` (`avaliador_id`),
   ADD KEY `resultado_funcionario_avaliado_id_foreign` (`avaliado_id`);
 
 --
@@ -6708,7 +6712,6 @@ ALTER TABLE `resultado_gestor`
 ALTER TABLE `resultado_funcionario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
-
 --
 -- AUTO_INCREMENT de tabela `setor`
 --
@@ -6843,12 +6846,14 @@ ALTER TABLE `questao`
 -- Limitadores para a tabela `resultado_gestor`
 --
 ALTER TABLE `resultado_gestor`
+  ADD CONSTRAINT `resultado_gestor_avaliador_id_foreign` FOREIGN KEY (`avaliador_id`) REFERENCES `avaliador` (`id`),
   ADD CONSTRAINT `resultado_gestor_avaliado_id_foreign` FOREIGN KEY (`avaliado_id`) REFERENCES `avaliado` (`id`);
  
 --
 -- Limitadores para a tabela `resultado_funcionario`
 --
 ALTER TABLE `resultado_funcionario`
+  ADD CONSTRAINT `resultado_funcionario_avaliador_id_foreign` FOREIGN KEY (`avaliador_id`) REFERENCES `avaliador` (`id`),
   ADD CONSTRAINT `resultado_funcionario_avaliado_id_foreign` FOREIGN KEY (`avaliado_id`) REFERENCES `avaliado` (`id`);
  
 --
