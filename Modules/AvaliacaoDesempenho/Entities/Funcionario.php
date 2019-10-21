@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Funcionario extends Model {
     
     protected $table = 'funcionario';
-    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao', 'cargo_id', 'estado_civil_id', 'email_id', 'endereco_id', 'setor_id'];
+    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao', 'estado_civil_id', 'email_id', 'endereco_id', 'cargo_id', 'setor_id'];
     use SoftDeletes;
     
     public function estado_civil() {
@@ -31,6 +31,10 @@ class Funcionario extends Model {
         return $this->belongsToMany('App\Entities\Documento', 'funcionario_has_documento', 'funcionario_id', 'documento_id');
     }
 
+    public function cargo() {
+        return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Cargo', 'cargo_id');
+    }
+
     public function setor() {
         return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Setor', 'setor_id');
     }
@@ -41,6 +45,10 @@ class Funcionario extends Model {
 
     public function avaliacoesResponsavel() {
         return $this->hasMany('Modules\AvaliacaoDesempenho\Entities\Avaliacao', 'funcionario_id', 'id');
+    }
+
+    public function avaliacoesAvaliador() {
+        return $this->hasMany('Modules\AvaliacaoDesempenho\Entities\Avaliador', 'funcionario_id', 'id');
     }
 
     public function avaliacoesAvaliado() {

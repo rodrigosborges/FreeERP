@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16-Out-2019 às 01:09
+-- Tempo de geração: 20-Out-2019 às 18:24
 -- Versão do servidor: 10.4.6-MariaDB
 -- versão do PHP: 7.3.9
 
@@ -19,15 +19,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `tcc`
+-- Banco de dados: `tcc2`
 --
 
+DROP DATABASE IF EXISTS `tcc2`;
+CREATE DATABASE IF NOT EXISTS `tcc2`;
+USE `tcc2`;
+
 -- --------------------------------------------------------
-DROP DATABASE IF EXISTS `tcc`;
 
-CREATE DATABASE IF NOT EXISTS `tcc`;
-
-USE `tcc`;
 --
 -- Estrutura da tabela `adiantamento`
 --
@@ -37,8 +37,8 @@ CREATE TABLE `adiantamento` (
   `valor_adiantamento` double DEFAULT NULL,
   `emissao` date NOT NULL,
   `folha_pagamento_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -54,11 +54,12 @@ CREATE TABLE `avaliacao` (
   `processo_id` int(11) NOT NULL,
   `funcionario_id` int(11) NOT NULL,
   `setor_id` int(11) NOT NULL,
-  `gestor` tinyint(1) NOT NULL,
+  `tipo_id` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -66,9 +67,10 @@ CREATE TABLE `avaliacao` (
 -- Extraindo dados da tabela `avaliacao`
 --
 
-INSERT INTO `avaliacao` (`id`, `nome`, `processo_id`, `funcionario_id`, `setor_id`, `gestor`, `data_inicio`, `data_fim`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(3, 'Avaliação 01', 11, 5, 1, 0, '2019-10-06', '2019-10-13', '2019-10-05 03:16:58', '2019-10-05 15:03:46', NULL),
-(14, 'Teste 2', 12, 7, 2, 0, '2019-10-05', '2019-10-12', '2019-10-05 04:10:55', '2019-10-05 15:01:25', NULL);
+INSERT INTO `avaliacao` (`id`, `nome`, `processo_id`, `funcionario_id`, `setor_id`, `tipo_id`, `status_id`, `data_inicio`, `data_fim`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(3, 'Avaliação 01', 11, 5, 1, 2, 1, '2019-10-06', '2019-10-13', '2019-10-05 03:16:58', '2019-10-05 15:03:46', NULL),
+(14, 'Teste 2', 12, 7, 2, 2, 1, '2019-10-05', '2019-10-12', '2019-10-05 04:10:55', '2019-10-05 15:01:25', NULL),
+(15, 'para gestores', 12, 7, 1, 1, 1, '2019-10-17', '2019-10-18', '2019-10-17 23:20:52', '2019-10-17 23:20:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -80,8 +82,8 @@ CREATE TABLE `avaliacao_has_questao` (
   `id` int(11) NOT NULL,
   `avaliacao_id` int(11) NOT NULL,
   `questao_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -91,7 +93,10 @@ CREATE TABLE `avaliacao_has_questao` (
 INSERT INTO `avaliacao_has_questao` (`id`, `avaliacao_id`, `questao_id`, `created_at`, `updated_at`) VALUES
 (1, 14, 5, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
 (2, 14, 4, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
-(3, 14, 2, '2019-10-06 03:00:00', '2019-10-06 03:00:00');
+(3, 14, 2, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
+(4, 15, 5, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
+(5, 15, 4, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
+(6, 15, 2, '2019-10-06 03:00:00', '2019-10-06 03:00:00');
 
 -- --------------------------------------------------------
 
@@ -103,17 +108,40 @@ CREATE TABLE `avaliado` (
   `id` int(11) NOT NULL,
   `funcionario_id` int(11) NOT NULL,
   `avaliacao_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `avaliador`
+--
+
+CREATE TABLE `avaliador` (
+  `id` int(11) NOT NULL,
+  `funcionario_id` int(11) NOT NULL,
+  `avaliacao_id` int(11) NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `concluido` tinyint(1) NOT NULL DEFAULT 0,
+  `validade` date NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Extraindo dados da tabela `avaliado`
+-- Estrutura da tabela `avaliador_has_avaliado`
 --
 
-INSERT INTO `avaliado` (`id`, `funcionario_id`, `avaliacao_id`, `token`, `created_at`, `updated_at`) VALUES
-(5, 8, 14, 'aaaa', '2019-10-05 04:10:55', '2019-10-05 04:10:55');
+CREATE TABLE `avaliador_has_avaliado` (
+  `id` int(11) NOT NULL,
+  `avaliador_id` int(11) NOT NULL,
+  `avaliado_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -134,8 +162,9 @@ CREATE TABLE `cargo` (
 --
 
 INSERT INTO `cargo` (`id`, `nome`, `horas_semanais`, `salario`, `deleted_at`) VALUES
-(1, 'chefe', 30, 10000, NULL),
-(2, 'empregado', 45, 3000, NULL);
+(1, 'Gestor', 30, 10000, NULL),
+(2, 'Estagiario', 30, 3000, NULL),
+(3, 'Faxina', 40, 3000, NULL);
 
 -- --------------------------------------------------------
 
@@ -146,8 +175,8 @@ INSERT INTO `cargo` (`id`, `nome`, `horas_semanais`, `salario`, `deleted_at`) VA
 CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -161,6 +190,26 @@ INSERT INTO `categoria` (`id`, `nome`, `created_at`, `updated_at`, `deleted_at`)
 (3, 'Capacidade de Trabalho em Equipe', '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
 (4, 'Compromissos com Resultados', '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
 (5, 'Visão Institucional', '2019-09-22 03:00:00', '2019-10-05 13:36:41', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `status`
+--
+
+CREATE TABLE `status` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `status`
+--
+
+INSERT INTO `status` (`id`, `nome`) VALUES
+(1, 'Definida'),
+(2, 'Em Andamento'),
+(3, 'Encerrada');
 
 -- --------------------------------------------------------
 
@@ -186,7 +235,7 @@ INSERT INTO `cidade` (`id`, `nome`, `estado_id`) VALUES
 (5, 'Alfredo Chaves', 8),
 (6, 'Alto Rio Novo', 8),
 (7, 'Anchieta', 8),
-(8, 'Apiacá', 8),
+(8, 'Apiacá', 8),	
 (9, 'Aracruz', 8),
 (10, 'Atilio Vivacqua', 8),
 (11, 'Baixo Guandu', 8),
@@ -5802,7 +5851,8 @@ INSERT INTO `email` (`id`, `email`) VALUES
 (1, 'nikolasagl@hotmail.com'),
 (2, 'deborahgostosa@gmail.com'),
 (3, 'raulnenemdahora@hotmail.com'),
-(7, 'manuelaporenquanto@gmail.com');
+(7, 'manuelaporenquanto@gmail.com'),
+(8, 'marcella@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -5912,8 +5962,8 @@ CREATE TABLE `folha_pagamento` (
   `faltas` int(11) NOT NULL,
   `emissao` date NOT NULL,
   `funcionario_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -5934,8 +5984,8 @@ CREATE TABLE `funcionario` (
   `endereco_id` int(11) NOT NULL,
   `cargo_id` int(11) NOT NULL,
   `setor_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -5943,11 +5993,11 @@ CREATE TABLE `funcionario` (
 -- Extraindo dados da tabela `funcionario`
 --
 
-INSERT INTO `funcionario` (`id`, `nome`, `data_nascimento`, `sexo`, `data_admissao`, `estado_civil_id`, `email_id`, `endereco_id`, `created_at`, `updated_at`, `deleted_at`, `setor_id`) VALUES
-(5, 'Nikolas Lencioni', '1995-08-09', 1, '2019-09-21', 2, 1, 1, '2019-09-21 03:00:00', '2019-09-21 03:00:00', NULL, 1),
-(6, 'Deborah Donofrio', '1999-06-19', 2, '2019-09-04', 2, 2, 2, '2019-09-21 03:00:00', '2019-09-21 03:00:00', NULL, 2),
-(7, 'Raul Barbosa Lencioni', '2019-04-09', 1, '2019-09-01', 1, 3, 3, '2019-09-21 03:00:00', '2019-09-21 03:00:00', NULL, 3),
-(8, 'Manuella Barbosa Lencioni', '2019-08-09', 2, '2019-09-04', 1, 7, 7, '2019-09-21 03:00:00', '2019-09-21 03:00:00', NULL, 1);
+INSERT INTO `funcionario` (`id`, `nome`, `data_nascimento`, `sexo`, `data_admissao`, `estado_civil_id`, `email_id`, `endereco_id`, `cargo_id`, `setor_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(5, 'Nikolas Lencioni', '1995-08-09', 1, '2019-09-21', 2, 1, 1, 1, 1, '2019-09-21 03:00:00', '2019-09-21 03:00:00', NULL),
+(6, 'Deborah Donofrio', '1999-06-19', 2, '2019-09-04', 2, 2, 2, 1, 2, '2019-09-21 03:00:00', '2019-09-21 03:00:00', NULL),
+(7, 'Raul Barbosa Lencioni', '2019-04-09', 1, '2019-09-01', 1, 3, 3, 1, 3, '2019-09-21 03:00:00', '2019-09-21 03:00:00', NULL),
+(8, 'Manuella Barbosa Lencioni', '2019-08-09', 2, '2019-09-04', 1, 7, 7, 1, 1, '2019-09-21 03:00:00', '2019-09-21 03:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -6067,7 +6117,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (33, '2019_09_21_006_create_questao_table', 1),
 (34, '2019_09_21_007_create_avaliado_table', 1),
 (35, '2019_09_21_008_create_resultado_gestor_table', 1),
-(36, '2019_09_21_009_create_resultado_nao_gestor_table', 1),
+(36, '2019_09_21_009_create_resultado_funcionario_table', 1),
 (37, '2019_09_21_010_create_avaliacao_has_questao_table', 1);
 
 -- --------------------------------------------------------
@@ -6106,8 +6156,8 @@ CREATE TABLE `processo` (
   `funcionario_id` int(11) NOT NULL,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -6134,8 +6184,8 @@ CREATE TABLE `questao` (
   `opt4` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `opt5` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `categoria_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -6155,28 +6205,30 @@ INSERT INTO `questao` (`id`, `enunciado`, `opt1`, `opt2`, `opt3`, `opt4`, `opt5`
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `resultado_funcionario`
+--
+
+CREATE TABLE `resultado_funcionario` (
+	`id` int(11) NOT NULL,
+	`avaliado_id` int(11) NOT NULL,
+	`respostas` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+	`created_at` TIMESTAMP NOT NULL DEFAULT current_timestamp() , 
+	`updated_at` TIMESTAMP NOT NULL DEFAULT current_timestamp() ,
+	CONSTRAINT pk_resultado_funcionario PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+--
 -- Estrutura da tabela `resultado_gestor`
 --
 
-CREATE TABLE `resultado_gestor` (
-  `id` int(11) NOT NULL,
-  `avaliado_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `resultado_nao_gestor`
---
-
-CREATE TABLE `resultado_nao_gestor` (
-  `id` int(11) NOT NULL,
-  `avaliado_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `resultado_gestor` ( 
+	`id` INT(11) NOT NULL , 
+	`avaliado_id` INT NOT NULL , 
+	`respostas` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+	`created_at` TIMESTAMP NOT NULL DEFAULT current_timestamp() , 
+	`updated_at` TIMESTAMP NOT NULL DEFAULT current_timestamp() ,
+	CONSTRAINT pk_resultado_gestor PRIMARY KEY (id)
+) ENGINE = InnoDB;
 
 -- --------------------------------------------------------
 
@@ -6188,8 +6240,8 @@ CREATE TABLE `setor` (
   `id` int(11) NOT NULL,
   `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `gestor_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -6201,6 +6253,21 @@ INSERT INTO `setor` (`id`, `nome`, `gestor_id`, `created_at`, `updated_at`, `del
 (1, 'Financeiro', 5, '2019-10-02 03:00:00', '2019-10-05 14:11:05', NULL),
 (2, 'Juridico', 6, '2019-10-02 03:00:00', '2019-10-02 03:00:00', NULL),
 (3, 'Operacional', 7, '2019-10-02 03:00:00', '2019-10-02 03:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `setor_has_cargo`
+--
+
+CREATE TABLE `setor_has_cargo` (
+  `id` int(11) NOT NULL,
+  `setor_id` int(11) NOT NULL,
+  `cargo_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -6223,6 +6290,25 @@ INSERT INTO `telefone` (`id`, `tipo_telefone_id`, `numero`) VALUES
 (2, 2, '12981259918'),
 (3, 2, '12981267222'),
 (4, 2, '12981944343');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tipo_avaliacao`
+--
+
+CREATE TABLE `tipo_avaliacao` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tipo_avaliacao`
+--
+
+INSERT INTO `tipo_avaliacao` (`id`, `nome`) VALUES
+(1, 'Avaliar Funcionarios'),
+(2, 'Avaliar Gestores');
 
 -- --------------------------------------------------------
 
@@ -6285,7 +6371,9 @@ ALTER TABLE `avaliacao`
   ADD PRIMARY KEY (`id`),
   ADD KEY `avaliacao_processo_id_foreign` (`processo_id`),
   ADD KEY `avaliacao_funcionario_id_foreign` (`funcionario_id`),
-  ADD KEY `avaliacao_setor_id_foreign` (`setor_id`);
+  ADD KEY `avaliacao_setor_id_foreign` (`setor_id`),
+  ADD KEY `avaliacao_tipo_id_foreign` (`tipo_id`),
+  ADD KEY `avaliacao_status_id_foreign` (`status_id`);
 
 --
 -- Índices para tabela `avaliacao_has_questao`
@@ -6304,6 +6392,22 @@ ALTER TABLE `avaliado`
   ADD KEY `avaliado_avaliacao_id_foreign` (`avaliacao_id`);
 
 --
+-- Índices para tabela `avaliador`
+--
+ALTER TABLE `avaliador`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `avaliador_funcionario_id_foreign` (`funcionario_id`),
+  ADD KEY `avaliador_avaliacao_id_foreign` (`avaliacao_id`);
+
+--
+-- Índices para tabela `avaliador_has_avaliado`
+--
+ALTER TABLE `avaliador_has_avaliado`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `avaliador_has_avaliado_avaliador_id_foreign` (`avaliador_id`),
+  ADD KEY `avaliador_has_avaliado_avaliado_id_foreign` (`avaliado_id`);
+
+--
 -- Índices para tabela `cargo`
 --
 ALTER TABLE `cargo`
@@ -6313,6 +6417,12 @@ ALTER TABLE `cargo`
 -- Índices para tabela `categoria`
 --
 ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `status`
+--
+ALTER TABLE `status`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -6377,6 +6487,7 @@ ALTER TABLE `funcionario`
   ADD KEY `fk_funcionario_estado_civil1` (`estado_civil_id`),
   ADD KEY `fk_funcionario_email1` (`email_id`),
   ADD KEY `fk_funcionario_endereco1` (`endereco_id`),
+  ADD KEY `funcionario_cargo_id_foreign` (`cargo_id`),
   ADD KEY `funcionario_setor_id_foreign` (`setor_id`);
 
 --
@@ -6431,15 +6542,13 @@ ALTER TABLE `questao`
 -- Índices para tabela `resultado_gestor`
 --
 ALTER TABLE `resultado_gestor`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `resultado_gestor_avaliado_id_foreign` (`avaliado_id`);
 
 --
--- Índices para tabela `resultado_nao_gestor`
+-- Índices para tabela `resultado_funcionario`
 --
-ALTER TABLE `resultado_nao_gestor`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `resultado_nao_gestor_avaliado_id_foreign` (`avaliado_id`);
+ALTER TABLE `resultado_funcionario`
+  ADD KEY `resultado_funcionario_avaliado_id_foreign` (`avaliado_id`);
 
 --
 -- Índices para tabela `setor`
@@ -6449,11 +6558,23 @@ ALTER TABLE `setor`
   ADD KEY `fk_setor_funcionario1` (`gestor_id`);
 
 --
+-- Índices para tabela `setor_has_cargo`
+--
+ALTER TABLE `setor_has_cargo`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `telefone`
 --
 ALTER TABLE `telefone`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_telefone_tipo_telefone1` (`tipo_telefone_id`);
+
+--
+-- Índices para tabela `tipo_avaliacao`
+--
+ALTER TABLE `tipo_avaliacao`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices para tabela `tipo_documento`
@@ -6481,31 +6602,49 @@ ALTER TABLE `adiantamento`
 -- AUTO_INCREMENT de tabela `avaliacao`
 --
 ALTER TABLE `avaliacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `avaliacao_has_questao`
 --
 ALTER TABLE `avaliacao_has_questao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `avaliado`
 --
 ALTER TABLE `avaliado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `avaliador`
+--
+ALTER TABLE `avaliador`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de tabela `avaliador_has_avaliado`
+--
+ALTER TABLE `avaliador_has_avaliado`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `cargo`
 --
 ALTER TABLE `cargo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `categoria`
 --
 ALTER TABLE `categoria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de tabela `status`
+--
+ALTER TABLE `status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `cidade`
@@ -6529,7 +6668,7 @@ ALTER TABLE `documento`
 -- AUTO_INCREMENT de tabela `email`
 --
 ALTER TABLE `email`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `endereco`
@@ -6554,12 +6693,6 @@ ALTER TABLE `estado_civil`
 --
 ALTER TABLE `folha_pagamento`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `funcionario`
---
-ALTER TABLE `funcionario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `historico_cargo`
@@ -6598,9 +6731,9 @@ ALTER TABLE `resultado_gestor`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `resultado_nao_gestor`
+-- AUTO_INCREMENT de tabela `resultado_funcionario`
 --
-ALTER TABLE `resultado_nao_gestor`
+ALTER TABLE `resultado_funcionario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -6610,10 +6743,22 @@ ALTER TABLE `setor`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de tabela `setor_has_cargo`
+--
+ALTER TABLE `setor_has_cargo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `telefone`
 --
 ALTER TABLE `telefone`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de tabela `tipo_avaliacao`
+--
+ALTER TABLE `tipo_avaliacao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `tipo_documento`
@@ -6637,7 +6782,9 @@ ALTER TABLE `tipo_telefone`
 ALTER TABLE `avaliacao`
   ADD CONSTRAINT `avaliacao_funcionario_id_foreign` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`),
   ADD CONSTRAINT `avaliacao_processo_id_foreign` FOREIGN KEY (`processo_id`) REFERENCES `processo` (`id`),
-  ADD CONSTRAINT `avaliacao_setor_id_foreign` FOREIGN KEY (`setor_id`) REFERENCES `setor` (`id`);
+  ADD CONSTRAINT `avaliacao_setor_id_foreign` FOREIGN KEY (`setor_id`) REFERENCES `setor` (`id`),
+  ADD CONSTRAINT `avaliacao_tipo_id_foreign` FOREIGN KEY (`tipo_id`) REFERENCES `tipo_avaliacao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `avaliacao_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `avaliacao_has_questao`
@@ -6646,12 +6793,27 @@ ALTER TABLE `avaliacao_has_questao`
   ADD CONSTRAINT `avaliacao_has_questao_avaliacao_id_foreign` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`),
   ADD CONSTRAINT `avaliacao_has_questao_questao_id_foreign` FOREIGN KEY (`questao_id`) REFERENCES `questao` (`id`);
 
+
 --
 -- Limitadores para a tabela `avaliado`
 --
 ALTER TABLE `avaliado`
-  ADD CONSTRAINT `avaliado_avaliacao_id_foreign` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`),
-  ADD CONSTRAINT `avaliado_funcionario_id_foreign` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`);
+  ADD CONSTRAINT `avaliado_funcionario_id_foreign` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`),
+  ADD CONSTRAINT `avaliado_avaliacao_id_foreign` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`);
+
+--
+-- Limitadores para a tabela `avaliador`
+--
+ALTER TABLE `avaliador`
+  ADD CONSTRAINT `avaliador_avaliacao_id_foreign` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`),
+  ADD CONSTRAINT `avaliador_funcionario_id_foreign` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`);
+
+--
+-- Limitadores para a tabela `avaliador_has_avaliado`
+--
+ALTER TABLE `avaliador_has_avaliado`
+  ADD CONSTRAINT `avaliador_has_avaliado_avaliador_id_foreign` FOREIGN KEY (`avaliador_id`) REFERENCES `avaliador` (`id`),
+  ADD CONSTRAINT `avaliador_has_avaliado_avaliado_id_foreign` FOREIGN KEY (`avaliado_id`) REFERENCES `avaliado` (`id`);
 
 --
 -- Limitadores para a tabela `cidade`
@@ -6677,15 +6839,6 @@ ALTER TABLE `documento`
 --
 ALTER TABLE `endereco`
   ADD CONSTRAINT `fk_endereco_cidade1` FOREIGN KEY (`cidade_id`) REFERENCES `cidade` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Limitadores para a tabela `funcionario`
---
-ALTER TABLE `funcionario`
-  ADD CONSTRAINT `fk_funcionario_email1` FOREIGN KEY (`email_id`) REFERENCES `email` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_funcionario_endereco1` FOREIGN KEY (`endereco_id`) REFERENCES `endereco` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_funcionario_estado_civil1` FOREIGN KEY (`estado_civil_id`) REFERENCES `estado_civil` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `funcionario_setor_id_foreign` FOREIGN KEY (`setor_id`) REFERENCES `setor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `funcionario_has_documento`
@@ -6725,13 +6878,13 @@ ALTER TABLE `questao`
 --
 ALTER TABLE `resultado_gestor`
   ADD CONSTRAINT `resultado_gestor_avaliado_id_foreign` FOREIGN KEY (`avaliado_id`) REFERENCES `avaliado` (`id`);
-
+ 
 --
--- Limitadores para a tabela `resultado_nao_gestor`
+-- Limitadores para a tabela `resultado_funcionario`
 --
-ALTER TABLE `resultado_nao_gestor`
-  ADD CONSTRAINT `resultado_nao_gestor_avaliado_id_foreign` FOREIGN KEY (`avaliado_id`) REFERENCES `avaliado` (`id`);
-
+ALTER TABLE `resultado_funcionario`
+  ADD CONSTRAINT `resultado_funcionario_avaliado_id_foreign` FOREIGN KEY (`avaliado_id`) REFERENCES `avaliado` (`id`);
+ 
 --
 -- Limitadores para a tabela `setor`
 --

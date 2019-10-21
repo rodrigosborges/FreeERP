@@ -17,9 +17,10 @@
             <div class="informacoes">
 
                 <div class="funcionario">
-                    <p><b>Nome: </b>{{ $funcionario->nome }}</p>
-                    <p><b>E-mail: </b>{{ $funcionario->email->email }}</p>
-                    <p><b>Setor: </b>{{ $funcionario->setor->nome }}</p>
+                    <p><b>Nome: </b>{{ $avaliador->funcionario->nome }}</p>
+                    <p><b>E-mail: </b>{{ $avaliador->funcionario->email->email }}</p>
+                    <p><b>Setor: </b>{{ $avaliador->funcionario->setor->nome }}</p>
+                    <p><b>Avaliacao: </b>{{ $avaliacao->nome }}</p>
                 </div>
 
                 <div class="gerais">
@@ -28,19 +29,29 @@
                 </div>
 
                 <div class="gestor">
-                    <p><b>Gestor Avaliado: </b>{{ $funcionario->setor->gestor->nome }}</p>
+                    <p><b>Setor Avaliado: </b>{{ $setor->nome }}</p>
+                    <p><b>Funcionarios já Avaliados: </b>{{ count($concluidos) }}</p>
+                    <p><b>Funcionários a Avaliar: </b>{{ count($funcionarios) }}</p>
                     <p><b>Processo: </b>{{ $avaliacao->processo->nome }}</p>
-                    <p><b>Avaliacao: </b>{{ $avaliacao->nome }}</p>
                 </div>
 
             </div>
 
             <hr>
 
-            <div class="questoes">
+            @include('avaliacaodesempenho::avaliados._table', ['funcionarios' => $funcionarios])
+            
+            <hr>
+
+            <div class="questoes invisible">
 
                 <form action="{{ url('avaliacaodesempenho/avaliacao/respostas') }}" method="POST">
                     {{ csrf_field() }}
+
+                    <input type="hidden" name="avaliacao[avaliacao_id]" value="{{$avaliacao->id}}">
+                    <input type="hidden" name="avaliacao[avaliador_id]" value="{{$avaliador->id}}">
+                    <input type="hidden" name='avaliacao[funcionario_id]' id="funcionarioId" value="">
+                    <input type="hidden" name="avaliacao[tipo_avaliacao_id]" value="{{$avaliacao->tipo->id}}">
 
                     @foreach($questoes as $key => $questao)
 
@@ -60,15 +71,15 @@
                                 <b>Alternativas:</b>
                                 <ul>
                                     <br>
-                                    a) <input type="radio" name='avaliacao[gestor_'.$key.']' value='1'> {{ $questao->opt1 }}
+                                    a) <input required type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='1'> {{ $questao->opt1 }}
                                     <br>
-                                    b) <input type="radio" name='avaliacao[gestor_'.$key.']' value='2'> {{ $questao->opt2 }}
+                                    b) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='2'> {{ $questao->opt2 }}
                                     <br>
-                                    c) <input type="radio" name='avaliacao[gestor_'.$key.']' value='3'> {{ $questao->opt3 }}
+                                    c) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='3'> {{ $questao->opt3 }}
                                     <br>
-                                    d) <input type="radio" name='avaliacao[gestor_'.$key.']' value='4'> {{ $questao->opt4 }}
+                                    d) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='4'> {{ $questao->opt4 }}
                                     <br>
-                                    e) <input type="radio" name='avaliacao[gestor_'.$key.']' value='5'> {{ $questao->opt5 }}
+                                    e) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='5'> {{ $questao->opt5 }}
                                 </ul>
 
                             </div>
@@ -91,6 +102,6 @@
 
 @endsection
 
-@section('script')
-    <!-- <script src="{{Module::asset('avaliacaodesempenho:js/avaliados/index.js')}}"></script> -->
+@section('scripts')
+    <script src="{{Module::asset('avaliacaodesempenho:js/avaliados/index.js')}}"></script>
 @endsection

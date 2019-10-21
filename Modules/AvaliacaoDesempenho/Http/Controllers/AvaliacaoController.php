@@ -3,6 +3,7 @@
 namespace Modules\AvaliacaoDesempenho\Http\Controllers;
 
 use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -12,6 +13,7 @@ use Modules\AvaliacaoDesempenho\Entities\Funcionario;
 use Modules\AvaliacaoDesempenho\Entities\Setor;
 use Modules\AvaliacaoDesempenho\Entities\Questao;
 use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
+use Modules\AvaliacaoDesempenho\Entities\Avaliador;
 use Modules\AvaliacaoDesempenho\Entities\Avaliado;
 
 class AvaliacaoController extends Controller
@@ -77,29 +79,68 @@ class AvaliacaoController extends Controller
             $setor = Setor::findOrFail($input['setor_id']);
 
             foreach ($input as $key => $value) {
-                if ($key != 'gestor' && empty($value)) {
+                if ($key != 'tipo_id' && empty($value)) {
                     return back()->with('error', 'Todos os campos são obrigatórios. '.$key);
                 }
             }
 
+            $input['status_id'] = 1;
             $avaliacao = Avaliacao::create($input);
+            $funcionarios = Funcionario::where('setor_id', $input['setor_id'])->get();
 
-            if ($input['gestor'] == 0) {
-                $funcionarios = Funcionario::where('setor_id', $input['setor_id'])->get();
+            // PROVA PARA AVALIAR GESTORES
+            if ($input['tipo_id'] == 2) {
 
                 foreach ($funcionarios as $key => $funcionario) {
     
                     if ($funcionario->id != $setor->gestor->id) {
-                        $token =  bin2hex(random_bytes(16));
-                        $avaliado = Avaliado::create(['funcionario_id' => $funcionario->id, 'avaliacao_id' => $avaliacao->id, 'token' => $token]);
-                    } 
-                }
-            } else if ($input['gestor'] == 1) {
 
-                $token =  bin2hex(random_bytes(16));
-                $avaliado = Avaliado::create(['funcionario_id' => $setor->gestor->id, 'avaliacao_id' => $avaliacao->id, 'token' => $token]);
+                        $token =  bin2hex(random_bytes(16));
+
+                        $validade = Carbon::today()->add(10, 'days');
+
+                        $avaliador = Avaliador::create([
+                            'funcionario_id' => $funcionario->id, 
+                            'avaliacao_id' => $avaliacao->id, 
+                            'token' => $token,
+                            'validade' => $validade
+                        ]);
+
+                    } else if ($funcionario->id == $setor->gestor->id) {
+
+                        $avaliado = Avaliado::create([
+                            'funcionario_id' => $funcionario->id,
+                            'avaliacao_id' => $avaliacao->id
+                        ]);
+                    }
+                }
+
+            // PROVA PARA AVALIAR FUNCIONARIOS
+            } else if ($input['tipo_id'] == 1) {
+
+                foreach ($funcionarios as $key => $funcionario) {
+    
+                    if ($funcionario->id != $setor->gestor->id) {
+                        
+                        $avaliado = Avaliado::create([
+                            'funcionario_id' => $funcionario->id, 
+                            'avaliacao_id' => $avaliacao->id, 
+                        ]);
+                            
+                    } else if ($funcionario->id == $setor->gestor->id) {
+                        $token =  bin2hex(random_bytes(16));
+
+                        $validade = Carbon::today()->add(10, 'days');
+
+                        $avaliador = Avaliador::create([
+                            'funcionario_id' => $funcionario->id,
+                            'avaliacao_id' => $avaliacao->id,
+                            'token' => $token,
+                            'validade' => $validade
+                        ]);
+                    }
+                }
             }
-            
             
             DB::commit();
 

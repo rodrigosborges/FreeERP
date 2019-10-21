@@ -44,3 +44,7 @@
 .row {
     margin: 20px;
 }
+
+.invisible {
+    display: none;
+}
