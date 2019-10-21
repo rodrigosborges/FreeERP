@@ -107,34 +107,41 @@ class FeriasController extends Controller
      * @return Response
      */
     public function show($id) {         
-        //Esse id é o do funcionário
-        /*$ferias = Ferias::findOrFail($id); 
-        $funcionario2 = Funcionario::find($ferias->funcionario_id);
-        $documentos  = $funcionario2->documento->where('tipo_documento_id', 4);*/
-        
-        //$funcionario = Funcionario::where('id', '=', $id)->get()->last()->nome;
         $funcionario = Funcionario::findOrFail($id);
+
+        $nome = $funcionario->nome;
         $cargo = $funcionario->cargos()->get()->last()->nome;
         $inicio_periodo_aquisitivo = $funcionario->controle_ferias()->get()->last()->inicio_periodo_aquisitivo;    
         $fim_periodo_aquisitivo = $funcionario->controle_ferias()->get()->last()->fim_periodo_aquisitivo;
         $data_inicio = $funcionario->ferias()->get()->last()->data_inicio;
         $data_fim = $funcionario->ferias()->get()->last()->data_fim;
                            
-       
-        
-        
-        
         $carteiraTrabalho = DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', '=', 'funcionario.id')
-                                ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
-                                ->where('documento.tipo_documento_id', '=', '4')->get()->last()->numero;
-        
-        return $carteiraTrabalho;
-                                    
+                            ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
+                            ->where([
+                                ['funcionario_has_documento.funcionario_id', '=', $funcionario->id],
+                                ['documento.tipo_documento_id', '=', '4']
+                            ])->get()->last()->numero;
+
         $serieCarteiraTrabalho =  DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', '=', 'funcionario.id')
-                                 ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
-                                 ->where('documento.tipo_documento_id', '=', '8')->get()->last()->numero;
-                
-        return view('funcionario::ferias.show', compact('ferias', 'funcionario','cargo', 'inicio_periodo_aquisitivo', 'fim_periodo_aquisitivo', 'carteiraTrabalho', 'serieCarteiraTrabalho'));
+                                  ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
+                                  ->where([
+                                        ['funcionario_has_documento.funcionario_id', '=', $funcionario->id],
+                                        ['documento.tipo_documento_id', '=', '8']
+                                  ])->get()->last()->numero;
+                                 
+        $data = [
+            'nome'                      => $nome,
+            'cargo'                     => $cargo,
+            'inicio_periodo_aquisitivo' => DateTime::createFromFormat('Y-m-d',$inicio_periodo_aquisitivo)->format('d/m/Y'),
+            'fim_periodo_aquisitivo'    => DateTime::createFromFormat('Y-m-d', $fim_periodo_aquisitivo)->format('d/m/Y'),
+            'data_inicio'               => DateTime::createFromFormat('Y-m-d', $data_inicio)->format('d/m/Y'),
+            'data_fim'                  => DateTime::createFromformat('Y-m-d', $data_fim)->format('d/m/Y'),
+            'carteiraTrabalho'          => $carteiraTrabalho,
+            'serieCarteiraTrabalho'     => $serieCarteiraTrabalho
+        ];
+        
+        return view('funcionario::ferias.show', compact('data'));
     }
     
     public function listar($id)

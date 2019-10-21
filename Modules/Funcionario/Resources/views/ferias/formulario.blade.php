@@ -25,17 +25,17 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-6 font-weight-bold">
+            <div class="form-group col-4 font-weight-bold">
                 <span>Inicio Período de Aquisição:</span>
                 <span>{{$data['inicio_periodo_aquisitivo']}}</span>    
             </div>
 
-            <div class="form-group col-6 font-weight-bold">
+            <div class="form-group col-4 font-weight-bold">
                 <span>Fim Período de Aquisição:</span>
                 <span>{{$data['fim_periodo_aquisitivo']}}</span>
             </div>
 
-            <div class="form-group col-6 font-weight-bold">
+            <div class="form-group col-4 font-weight-bold">
                 <span>Limite Período de gozo:</span>
                 <span>{{$data['limite_periodo_aquisitivo']}}</span>
             </div>
@@ -45,7 +45,7 @@
     <hr>
     <section>
     <form action="{{url('funcionario/ferias')}}" method="POST" id="form">
-    <h4 style="text-align: center;">Período de Gozo</h4>
+    <h5 class="text-center">Período de Gozo</h5>
     {{csrf_field()}}
         <div class="row">
 
@@ -71,17 +71,17 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-3">
+            <div class="form-group col-4">
                 <label for="data_pagamento">Data Pagamento:</label>
                 <input type="date" name="data_pagamento" id="data_pagamento" class="form-control" value="{{old('data_pagamento')}}">
             </div>
             
-            <div class="form-group col-3">
+            <div class="form-group col-4">
                 <label for="data_aviso">Data de Início do Aviso:</label>
                 <input type="date" name="data_aviso" id="data_aviso" class="form-control" value="{{old('data_aviso')}}">
             </div>
 
-            <div class="form-group col-3">
+            <div class="form-group col-4">
                 <label for="saldo_total">Saldo total</label>
                 <input type="text"  id="saldo_periodo" class="form-control" value="{{$data['saldo_periodo']}}" disabled>
                 <input type="text" hidden name="saldo_periodo" value="{{$data['saldo_periodo']}}" >

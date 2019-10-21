@@ -9,7 +9,7 @@
     
            <div class="col">
            
-             <h4 class="font-weight-bold">Dados do Funcionário</h4>
+             <h4 class="font-weight-bold text-center">Dados do Funcionário</h4>
              <hr>
            </div>           
     </div>
@@ -17,32 +17,32 @@
     <div class="row">
         <div class="col-4  d-flex justify-content-start" >
             
-              <p class="font-weight-bold">Nome:&nbsp</p>  {{$funcionario}}
+              <p class="font-weight-bold">Nome:&nbsp</p>  {{$data['nome']}}
             
          </div>
 
          <div class="col d-flex justify-content-end">
          
-         <p class="font-weight-bold">Cargo:&nbsp</p>{{$cargo}}
+         <p class="font-weight-bold">Cargo:&nbsp</p>{{$data['cargo']}}
                  
          </div>
     </div>
 
     <div class="row mt-2 d-flex justify-content-start">
             <div class="col-5 d-flex justify-content-start" >
-                <p class="font-weight-bold">Carteira de Trabalho:&nbsp</p>{{$carteiraTrabalho}}
+                <p class="font-weight-bold">Carteira de Trabalho:&nbsp</p>{{$data['carteiraTrabalho']}}
             </div>
         <div class="col-3 d-flex " >
-            <p class="font-weight-bold">Série:&nbsp</p>{{$serieCarteiraTrabalho}}
+            <p class="font-weight-bold">Série:&nbsp</p>{{$data['serieCarteiraTrabalho']}}
         </div>
     </div>
 
     <div class="row">
         <div class="col">
-            <h4 class="font-weight-bold mt-2">Aviso</h4>
+            <h4 class="font-weight-bold mt-2 text-center">Aviso</h4>
         <hr>
-            <p class="mt-4 ">Comunicamos-lhe na forma do artigo 135/CLT, que suas férias relativas ao período de {{date('d/m/Y', strtotime($inicio_periodo_aquisitivo))}}  a {{date('d/m/Y', strtotime($fim_periodo_aquisitivo))}} 
-             se iniciarão no dia  <strong>{{date('d/m/Y', strtotime($ferias->data_inicio))}}</strong> e terminarão no dia <strong>{{{date('d/m/Y', strtotime($ferias->data_fim))}}}</strong>.</p>
+            <p class="mt-4 ">Comunicamos-lhe na forma do artigo 135/CLT, que suas férias relativas ao período de {{$data['inicio_periodo_aquisitivo']}}  a {{$data['fim_periodo_aquisitivo']}}
+             se iniciarão no dia  <strong>{{$data['data_inicio']}}</strong> e terminarão no dia <strong>{{$data['data_fim']}}</strong>.</p>
         </div>
     </div>
 
