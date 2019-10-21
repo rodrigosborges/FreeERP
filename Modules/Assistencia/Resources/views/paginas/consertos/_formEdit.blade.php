@@ -33,7 +33,7 @@
 
 </div>
 <div class="form-group">
-    <input type="textarea" class="form-control" name="obsInfo">
+    <input type="textarea" class="form-control" placeholder="Informações adicionais - Ex.: Cliente foi informado por ligação (Opcional)" name="obsInfo">
 </div>
 <div>
     @include('assistencia::paginas.consertos._navOSedit')

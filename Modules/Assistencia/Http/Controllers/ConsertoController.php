@@ -91,12 +91,13 @@ class ConsertoController extends Controller
         ConsertoAssistenciaModel::find($id)->update($dados);
 
         $conserto = ConsertoAssistenciaModel::find($id)->latest()->first();
+
         $pagamento = PagamentoAssistenciaModel::find($id);
         $pagamento->valor = $conserto->valor;
         $pagamento->save();
         SituacaoOsModel::create([
           'situacao' => $dados['situacao'],
-          'obs' => $dados['obsInfo'],
+          'obs' =>  $dados['obsInfo'] !=  '' ? $dados['obsInfo'] : 'Alteração de dados' ,
           'idConserto' => $conserto->id
         ]);
 
@@ -138,9 +139,13 @@ class ConsertoController extends Controller
       
     }
     public function verMais($id){
-      $infos = SituacaoOsModel::where('idConserto', $id)->get();
+      $infos = SituacaoOsModel::where('idConserto', $id)->paginate(10);
 
       return view('assistencia::paginas.consertos.verMais', compact('infos'));
+    }
+    public function excluirVerMais ($id){
+      SituacaoOsModel::where('id', $id)->delete();
+      return back()->with('success', 'Informação deletada com sucesso.');
     }
     public function salvar(StoreConsertosRequest $req){
       

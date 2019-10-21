@@ -19,6 +19,7 @@ class SituacaOs extends Migration
             $table->string('obs')->nullable();
             $table->integer('idConserto')->unsigned();
             $table->foreign('idConserto')->references('id')->on('conserto_assistencia')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
             
         });

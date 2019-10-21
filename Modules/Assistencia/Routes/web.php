@@ -71,6 +71,7 @@ Route::prefix('assistencia')->group(function() {
     Route::post('conserto/editar/{id}/salvar',[ 'as' =>'consertos.atualizar','uses' => 'ConsertoController@atualizar']);
     Route::get('conserto/imprimir/{id}',[ 'as' =>'consertos.imprimir','uses' => 'ConsertoController@imprimir']);
     Route::get('conserto/info/{id}',[ 'as' =>'consertos.verMais','uses' => 'ConsertoController@verMais']);
+    Route::get('conserto/del/{id}',[ 'as' =>'consertos.excluirInfo','uses' => 'ConsertoController@excluirVerMais']);
     /*Pagamentos*/
     Route::get('pagamento', ['as'=>'pagamento.index','uses'=>'PagamentoController@index']);
     Route::post('pagamento/{id}/salvar', ['as'=>'pagamento.salvar','uses'=>'PagamentoController@salvar']);
