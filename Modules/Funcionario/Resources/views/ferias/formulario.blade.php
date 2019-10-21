@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row text-center">
             <div class="form-group col-4 font-weight-bold">
                 <span>Inicio Período de Aquisição:</span>
                 <span>{{$data['inicio_periodo_aquisitivo']}}</span>    
