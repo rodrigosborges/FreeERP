@@ -120,7 +120,6 @@
     <script src="{{Module::asset('funcionario:js/views/funcionario/form.js')}}"></script>
     <script src="{{Module::asset('funcionario:js/views/funcionario/validations.js')}}"></script>
     
-
     <script>
         $(document).ready(function(){
             $('#data_fim').on("focusout", function(){

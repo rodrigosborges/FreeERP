@@ -2,19 +2,19 @@
 
 @section('title', 'Aviso prévio do empregador para dispensa do empregado')
 @section('body')
-
-    <div id="ficha d-flex justify-content-center">
+<button class="imprimir-button btn btn-primary"><i class="material-icons">print </i></button>
+    <div id="ficha">
         
         <div class="row d-flex justify-content-center">
             <div class="">
                 <h4 class="font-weight-bold">Aviso prévio do empregador para dispensa do empregado</h4>
+                <div class="row d-flex justify-content-end mr-1">
+                    <p>{{$data['dia_atual']}}.</p>    
+                </div>
             </div>
         </div>
-        <div class="row d-flex justify-content-end">
-            <div class="d-flex">
-                <p>{{$data['dia_atual']}}.</p>    
-            </div>
-        </div>
+
+     
 
         <div class="row d-flex justify-content-center">
             <div class="col-10 justify-content-justify ">
@@ -38,17 +38,16 @@
             </div>
 
         </div>
-    </div>
-
+   
     @section('footer')
     <div class="text-right">
-    <a class="btn btn-success" href="{{url('funcionario/funcionario')}}">Voltar</a>
-    <a class="btn btn-danger" href='{{url("funcionario/destroyDemissao/$data[id]")}}'>Excluir Demissão</a>
-    <button class="imprimir-button btn btn-primary"><i class="material-icons">print </i></button>
+        <a class="btn btn-success" href="{{url('funcionario/funcionario')}}">Voltar</a>
+        <a class="btn btn-danger" href='{{url("funcionario/destroyDemissao/$data[id]")}}'>Excluir Demissão</a>
+    </div>
 </div>
 @endsection
 @endsection
-@section('script')
+@section('js')
 <script src="{{Module::asset('funcionario:js/bibliotecas/printThis.js')}}"></script>
 
 <script>
