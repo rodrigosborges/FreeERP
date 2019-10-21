@@ -14,11 +14,11 @@
 @section('content')
 <input type="hidden" name="pago" value="{{$pago}}">
 <input type="hidden" name="pendente" value="{{$pendente}}">
-<input type="hidden" name="" value="{{$finalizados}}">
+
 <div class="card">
 
     <div class="card-header caixa">
-        <ul class="nav nav-tabs flex-column flex-sm-row">
+        <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
                 <a class="nav-link" href="{{route('consertos.index')}}">
                     <h3>Consertos</h3>
@@ -54,12 +54,30 @@
 
     <div class="row">
         <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body text-center">
-                    <div id="curve_chart" style="width: 300px; height: 200px"></div>
+            
+            <div class="text-center">
+                <h4>Clientes para informar</h4>
+            
+            
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>Ordem</th>
+                            <th>Cliente</th>
+                            <th>Contato</th>
+                        </tr>
+                        @foreach($finalizados as $fin)
+                            <tr>
+                                <td>{{$fin->numeroOrdem}}</td>
+                                <td>{{$fin->cliente->nome}}</td>
+                                <td>{{$fin->cliente->celnumero}}</td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </div>
             </div>
         </div>
+
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body text-center">
@@ -88,7 +106,7 @@ function drawChart() {
     var data = google.visualization.arrayToDataTable([
         ['Pagamentos', 'pedente ou pago'],
         ['Pendente', pendente],
-        ['pago', pago],
+        ['Pago', pago],
 
 
     ]);
@@ -102,32 +120,5 @@ function drawChart() {
     chart.draw(data, options);
 }
 </script>
-<script type="text/javascript">
-google.charts.load('current', {
-    'packages': ['corechart']
-});
-google.charts.setOnLoadCallback(drawChart);
 
-function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-        ['Ano', 'Vendas', 'Despesas'],
-        ['2004', 1000, 400],
-        ['2005', 1170, 460],
-        ['2006', 660, 1120],
-        ['2007', 1030, 540]
-    ]);
-
-    var options = {
-        title: 'Performance da empresa',
-        curveType: 'function',
-        legend: {
-            position: 'bottom'
-        }
-    };
-
-    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-    chart.draw(data, options);
-}
-</script>
 @stop

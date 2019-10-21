@@ -147,21 +147,22 @@ class ConsertoController extends Controller
       SituacaoOsModel::where('id', $id)->delete();
       return back()->with('success', 'Informação deletada com sucesso.');
     }
+
     public function salvar(StoreConsertosRequest $req){
       
       $dados  = $req->all();
       //REALIZAR VERIFICAÇÃO DE PEÇA E MAO DE OBRA VAZIOS, E GERAR UM VALOR PADRAO
-
       ConsertoAssistenciaModel::create($dados);
       $conserto = ConsertoAssistenciaModel::latest()->first();
       $idConserto = $conserto->id;
-      $pagamento = new PagamentoAssistenciaModel;
-      $pagamento->idConserto = $conserto->id;
-      $pagamento->idCliente = $conserto->idCliente;
-      $pagamento->valor = $conserto->valor;
-      $pagamento->status = 'Pendente';
-      $pagamento->forma = 'Não pago';
-      $pagamento->save();
+      
+      PagamentoAssistenciaModel::create([
+        'idConserto' => $conserto->id,
+        'idCliente' => $conserto->idCliente,
+        'valor' => $conserto->valor,
+        'status' => 'Pendente',
+        'forma' => 'Não pago'
+      ]);
       SituacaoOsModel::create([
         'situacao' => $dados['situacao'],
         'obs' => 'Criação da ordem deserviço.',

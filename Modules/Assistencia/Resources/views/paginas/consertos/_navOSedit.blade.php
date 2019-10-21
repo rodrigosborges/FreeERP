@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">
+<ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
     <li class="nav-item">
         <a class="nav-link active" id="cliente-tab" data-toggle="tab" href="#cliente" role="tab" aria-controls="cliente"
             aria-selected="true">Cliente</a>
