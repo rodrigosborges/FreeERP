@@ -85,13 +85,11 @@
                             <div class="form-group">
                                 <label for="email" class="col-form-label">E-mail:</label>
                                 <input type="text" class="form-control" name="email" required>
-                                <div id="resultado"></div>
                             </div>
                             <div class="form-group">
                                 <label for="telefone" class="col-form-label">Telefone:</label>
                                 <input type="text" class="form-control" name="telefone" id="telefone">
                             </div>
-                            <!-- IMPLEMENTAR INSERÇÃO DE FOTO -->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -124,12 +122,10 @@
                             <div class="form-group">
                                 <label for="email" class="col-form-label">E-mail:</label>
                                 <input type="text" class="form-control" name="email" id="email" required>
-                                <div id="resultado"></div>
                             </div>
                             <div class="form-group">
                                 <label for="telefone" class="col-form-label">Telefone:</label>
                                 <input type="text" class="form-control" name="telefone" id="telefone">
-                                
                             </div>
                         </div>
                         <div class="modal-footer">

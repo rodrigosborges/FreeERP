@@ -50,7 +50,7 @@
                                     <i class="material-icons">schedule</i> 
                                 </a>
                             </button>
-                            <button class="btn btn-xs" title="Visualizar" data-toggle="modal" data-target="#modalVisualizarEvento"
+                            <button class="btn btn-xs" title="Visualizar / Editar" data-toggle="modal" data-target="#modalVisualizarEvento"
                                 data-id="{{$evento->id}}" data-nome="{{$evento->nome}}" data-local="{{$evento->local}}"
                                 data-dataInicio="{{$evento->dataInicio}}" data-dataFim="{{$evento->dataFim}}"
                                 data-descricao="{{$evento->descricao}}"
@@ -91,11 +91,11 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-xs-6 col-sm-5 col-md-5 col-lg-3">
-                                    <label for="data_inicio" class="col-form-label">Data Início:</label>
+                                    <label for="dataInicio" class="col-form-label">Data Início:</label>
                                     <input type="date" class="form-control" name="dataInicio" required>
                                 </div>
                                 <div class="col-xs-6 col-sm-5 col-md-5 col-lg-3">
-                                    <label for="data_fim" class="col-form-label">Data Fim:</label>
+                                    <label for="dataFim" class="col-form-label">Data Fim:</label>
                                     <input type="date" class="form-control" name="dataFim" required>
                                 </div>
                             </div>

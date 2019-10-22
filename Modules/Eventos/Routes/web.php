@@ -16,6 +16,7 @@ Route::post('/eventos/editar', 'EventosController@editar')->name('eventos.editar
 Route::delete('/eventos/excluir', 'EventosController@excluir')->name('eventos.excluir');
 
 Route::get('eventos/programacao/{id}', 'ProgramacaoController@exibir')->name('programacao.exibir');
+Route::post('/eventos/programacao/{id}/cadastrar', 'ProgramacaoController@cadastrar')->name('programacao.cadastrar');
 
 Route::get('/eventos/pessoas', 'PessoasController@index')->name('eventos.pessoas');
 Route::any('/eventos/pessoas/exibir', 'PessoasController@exibir')->name('pessoas.exibir');

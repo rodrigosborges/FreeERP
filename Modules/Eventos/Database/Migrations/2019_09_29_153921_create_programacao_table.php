@@ -17,12 +17,16 @@ class CreateProgramacaoTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('tipo');
-            $table->string('descricao');
+            $table->string('descricao')->nullable();
             $table->date('data');
             $table->time('horario');
             $table->time('duracao');
             $table->string('local');
             $table->integer('vagas');
+            $table->integer('evento_id')->unsigned();
+            $table->foreign('evento_id')->references('id')->on('evento')->onDelete('CASCADE');
+            $table->integer('palestrante_id')->unsigned();
+            $table->foreign('palestrante_id')->references('id')->on('palestrante')->onDelete('NO ACTION');
         });
     }
 
