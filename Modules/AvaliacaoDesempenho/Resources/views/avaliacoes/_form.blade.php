@@ -210,9 +210,7 @@
                         
                         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
-                        <select id="selectQuestoes" class="form-control selectpicker select-questoes" data-live-search="true">
-
-                        </select>
+                        <select id="selectQuestoes" class="form-control selectpicker select-questoes" data-live-search="true"></select>
 
                     </div>
 
@@ -222,20 +220,9 @@
 
                     <div class="card">
 
-                        <div class="card-header">
+                        <div class="card-header"></div>
 
-                        </div>
-
-                        <div class="card-body">
-        
-                            <b>Enunciado:</b>
-                    
-                            <hr>
-                    
-                            <b>Alternativas:</b>
-                            <ul>
-                            </ul>
-                        </div>
+                        <div class="card-body"></div>
 
                     </div>
 

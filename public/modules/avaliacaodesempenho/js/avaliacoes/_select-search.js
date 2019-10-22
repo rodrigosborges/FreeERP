@@ -29,7 +29,10 @@ $(document).on('keydown keyup paste', '.select-questoes', function (e) {
 
                     $('#questaoCard').removeClass('hidden')
 
-                    $('.card-header').html('<p>Categoria: </p>')
+                    $('.card-header').html(`<p>Categoria: ${val.categoria.nome} </p>`)
+                    $('.card-body').append(`<p>Enunciado: ${val.enunciado} </p><hr>`)
+                    $('.card-body').append(`<p>Alternativas: </p>`)
+                    $('.card-body').append(`<ul> <li> a) - ${val.opt1} </li> <li> b) - ${val.opt2}</li> <li> c) - ${val.opt3} </li> <li> d) - ${val.opt4} </li> <li> e) - ${val.opt5} </li> </ul>`)
                 }
             }
         })

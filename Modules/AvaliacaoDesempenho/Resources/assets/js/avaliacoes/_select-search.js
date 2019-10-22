@@ -25,12 +25,7 @@ $(document).on('keydown keyup paste', '.select-questoes', function (e) {
 
                 $('.selectpicker').selectpicker('refresh')
 
-                if (select.val()) {
-
-                    $('#questaoCard').removeClass('hidden')
-
-                    $('.card-header').html('<p>Categoria: </p>')
-                }
+                if (select.val()) {}
             }
         })
     } else {
