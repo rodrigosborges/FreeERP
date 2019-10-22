@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Database\Eloquent\Builder;
 
 use Modules\AvaliacaoDesempenho\Entities\Processo;
 use Modules\AvaliacaoDesempenho\Entities\Funcionario;
@@ -49,6 +50,32 @@ class AvaliacaoController extends Controller
             'funcionarios' => Funcionario::all(),
             'setores' => Setor::all()
         ];
+
+        DB::beginTransaction();
+        try {
+            $avaliacoesEmAndamento = Avaliacao::has('avaliados')->whereHas('avaliadores', function(Builder $query) {
+                $query->where('concluido', 0);
+            })->get();
+    
+            $avaliacoesConcluidas = Avaliacao::has('avaliados')->whereHas('avaliadores', function(Builder $query) {
+                $query->where('concluido', 1);
+            })->get();            
+            
+            foreach ($avaliacoesEmAndamento as $key => $avaliacao) {
+                $avaliacao->update(['status_id' => 2]);
+            }
+    
+            foreach ($avaliacoesConcluidas as $key => $avaliacao) {
+                $avaliacao->update(['status_id' => 3]);
+            }
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            echo '<pre>';print_r($th->getMessage());exit;
+        }
 
         return view('avaliacaodesempenho::avaliacoes/index', compact('moduleInfo', 'menu', 'data'));
     }

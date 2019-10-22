@@ -21,6 +21,7 @@ class AvaliacaoRespostaController extends Controller
 {
  
     public function index() {
+
         return view('avaliacaodesempenho::avaliados/index');
     }
 
@@ -41,6 +42,10 @@ class AvaliacaoRespostaController extends Controller
             });
         })->first();
 
+        if (empty($avaliador)) {
+            return back()->with('error', 'Funcionario não encontrado');
+        }
+
         if (Carbon::today()->greaterThan($avaliador->validade)) {
             return back()->with('error', 'Seu acesso a esta Avaliação expirou');                             
         }
@@ -49,7 +54,7 @@ class AvaliacaoRespostaController extends Controller
             return back()->with('success', 'Esta Avaliação foi encerrada');                             
         }
         
-        if (empty($avaliador) || $avaliador->token != $input['token']) {
+        if ($avaliador->token != $input['token']) {
             return back()->with('error', 'Funcionario não encontrado');
         }
 
