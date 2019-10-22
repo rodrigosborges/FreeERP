@@ -29,10 +29,13 @@
                 <div class="row">
                     <tbody>
                         @foreach ($clientes as $cliente)
+                        <?php 
+                            $data = new DateTime($cliente->data_nascimento);
+                        ?>
                         <tr>
                             <td scope="row">{{$cliente->nome }}</td>
                             <td>{{$cliente->cpf }}</td>
-                            <td>{{$cliente->data_nascimento }}</td>
+                            <td>{{ $data->format('d/m/Y') }}</td>
                             <td>{{$cliente->celnumero }}</td>
                             <td>{{$cliente->telefonenumero }}</td>
                             <td>
