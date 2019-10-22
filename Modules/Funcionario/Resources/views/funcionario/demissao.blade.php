@@ -41,7 +41,7 @@
         <section>
             <h4 style="text-align: center;">Aviso prévio</h4>
             
-                <div class='form-group col-3'>
+                <div class='form-group col-6'>
                     <input type="checkbox" name="aviso_previo_indenizado" id="aviso_previo_indenizado"  {{old('aviso_previo_indenizado') ? 'checked' : null }} disabled>
                     <label for="aviso_previo_indenizado">Aviso previo indenizado</label>
                 </div>
