@@ -22,6 +22,10 @@ class BaseController extends Controller
         $table = $request->input('table');
         $param = $request->input('parameter');
 
+        if (!empty($request->input('id'))) {
+            $id = $request->input('id');
+        }
+
         switch ($table) {
             case 'avaliacao':
                 $result = Avaliacao::where('nome', 'LIKE', '%' . $param . '%')
@@ -49,7 +53,11 @@ class BaseController extends Controller
                 break;
 
             case 'questao':
-                $result = Questao::where('enunciado', 'LIKE', '%' . $param . '%')->with('categoria');
+                if (isset($id)) {
+                    $result = Questao::where('id', $id)->with('categoria');
+                } else {
+                    $result = Questao::where('enunciado', 'LIKE', '%' . $param . '%')->with('categoria');
+                }
                 break;
 
             case 'setor':

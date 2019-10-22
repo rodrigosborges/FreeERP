@@ -222,7 +222,18 @@
 
                         <div class="card-header"></div>
 
-                        <div class="card-body"></div>
+                        <div class="card-body">
+                        
+                            <div class="enunciado"></div>
+                            <div class="options">
+                                <ul></ul>
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer">
+                            <button type='button' class="btn btn-primary btn-sm float-right save-card">Salvar</button>
+                        </div>
 
                     </div>
 
