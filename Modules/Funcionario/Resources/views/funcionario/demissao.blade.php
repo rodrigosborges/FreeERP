@@ -26,7 +26,7 @@
                 <div class="form-group col-6">
                 <label for="tipo_demissao">Tipo de demissão: </label>
                     <select name="tipo_demissao" id="tipo_demissao" class="form-control">
-                        <option>Escolha uma opção</option>
+                        <option value="10">Escolha uma opção</option>
                         @foreach($data['tipo_demissao'] as $tipo_demissao)
                             <option value="{{$tipo_demissao->id}}" {{old('tipo_demissao') == $tipo_demissao->id ? 'selected' : ''}}>{{$tipo_demissao->tipo}}</option>
                         @endforeach
@@ -122,7 +122,7 @@
                 var check1 = document.getElementById('aviso_previo_indenizado');
                 var check2 = document.getElementById('descontar_aviso_previo');
 
-                if(this.value == 1 || this.value == 6){
+                if(this.value == 1 || this.value == 6 || this.value == 10){
                     check2.removeAttribute('disabled', false);
                     
                     //Pega todos os inputs com disabled default e tornam disabled novamente, caso a outra opção do checkbox esteja selecionada.

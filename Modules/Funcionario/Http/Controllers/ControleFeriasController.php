@@ -168,16 +168,16 @@ class ControleFeriasController extends Controller
         $cargoAtual = $funcionario->cargos->last()->id;
         $funcionario_cargo =  $funcionario->cargos()->first();
         $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
-
+            
          /**Se a query abaixo retornar maior que 0, é pq há registros na tabela já cadastrados previamente */
         $verifica_registro_tabela = DB::table('controle_ferias')->where('funcionario_id', '=', $id)->count(); 
 
         if($verifica_registro_tabela == 0){//Verifica se há algum registro de férias já adicionado.
             
-            $data_atual =  Carbon::today(); //'2021-09-19'; Data que o sistema está sendo acessado. 
+            $data_atual = Carbon::today();// Data que o sistema está sendo acessado. 
             
             $inicio_periodo_aquisitivo = date('Y-m-d', strtotime($admissao));
-            $anos_trampo = 364;
+            $anos_trampo = 366;
             $fim_periodo_aquisitivo = date('Y-m-d', strtotime( "+ $anos_trampo days", strtotime($admissao)));
 
                 /*Verifica se está dentro do 1° período possível do funcionário, ou seja, 
@@ -196,7 +196,7 @@ class ControleFeriasController extends Controller
 
                     $ano_atual = date('Y', time()); //'2021'; Essa data é simulada para teste; 
                     $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
-                    $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
+                    $admissao = date('Y-m-d', strtotime($funcionario_cargo->pivot->data_entrada));
 
                     $anos_trampo = (($ano_atual-$ano))*364;
                     $anos_trampo_inicio = ($anos_trampo - 364) +1;
@@ -204,10 +204,9 @@ class ControleFeriasController extends Controller
                     $fim_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
                     $inicio_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo_inicio days", strtotime($admissao)));
                     
-                    $teste = $fim_periodo_aquisitivo;
-                    $teste = DateTime::createFromFormat('d/m/Y', $fim_periodo_aquisitivo);
-                    $teste->sub(new DateInterval('P364D'));
-             
+                    $teste = DateTime::createFromFormat('Y-m-d', $admissao);
+                    $teste->add(new DateInterval('P365D'));
+                    
                     $diferenca = strtotime($data_atual) - strtotime($teste->format('Y-m-d'));
 
                     $dias = floor($diferenca / (60 * 60 * 24));
@@ -228,7 +227,7 @@ class ControleFeriasController extends Controller
              
         } else {
             
-            $data_atual = '2022-09-18'; // Carbon::today(); Data que o sistema está sendo acessado
+            $data_atual = '2021-11-22'; // Carbon::today(); Data que o sistema está sendo acessado
             $data_atual = Carbon::parse($data_atual)->format('Y-m-d');
             $ultimo_periodo_aquisitivo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->fim_periodo_aquisitivo;
             
@@ -245,12 +244,12 @@ class ControleFeriasController extends Controller
                     $saldo_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
                    
                 } else {
-                    $ano_atual = 2022; //date('Y', time()); 
+                    $ano_atual = '2021'; //date('Y', time()); 
                     $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
                     $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
 
-                    $anos_trampo = (($ano_atual-$ano))*364;
-                    $anos_trampo_inicio = ($anos_trampo - 364) +1;
+                    $anos_trampo = (($ano_atual-$ano))*365;
+                    $anos_trampo_inicio = ($anos_trampo - 365) +1;
 
                     $fim_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
                     $inicio_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo_inicio days", strtotime($admissao)));

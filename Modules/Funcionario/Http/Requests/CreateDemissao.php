@@ -20,6 +20,7 @@ class CreateDemissao extends FormRequest
                 'data_pagamento'        => 'required|date|after:data_demissao',
                 'data_inicio_aviso'     => 'required|date|before:data_demissao',
                 'dias_aviso_indenizado' => 'required|integer',
+                'tipo_demissao'         => 'required|numeric|max:9'
             ];
 
         } else {
@@ -30,10 +31,17 @@ class CreateDemissao extends FormRequest
                 'data_inicio_aviso'     => 'nullable',
                 'dias_aviso_indenizado' => 'nullable',
                 'tipo_reducao_aviso'    => 'nullable',
-                'aviso_previo_indicador_cumprimento_id' => 'nullable'
+                'aviso_previo_indicador_cumprimento_id' => 'nullable',
+                'tipo_demissao'         => 'required|numeric|max:9'
             ];
-        }    
-       
+        } 
+        
+    }
+
+    public function messages() {
+        return [
+            'max' => 'O campo :attribute  não está com tipo selecionado.'
+        ];
     }
 
     /**
