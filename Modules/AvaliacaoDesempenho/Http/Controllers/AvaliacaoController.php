@@ -103,6 +103,8 @@ class AvaliacaoController extends Controller
 
             $input = $request->input('avaliacao');
 
+            echo '<pre>';print_r($input);exit;
+
             $setor = Setor::findOrFail($input['setor_id']);
 
             foreach ($input as $key => $value) {

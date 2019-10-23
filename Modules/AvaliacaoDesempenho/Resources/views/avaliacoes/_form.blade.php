@@ -1,9 +1,9 @@
 @if(isset($data['avaliacao']->id))
-    <form action="{{ url('avaliacaodesempenho/avaliacao', [$data['avaliacao']->id]) }}" method="POST">
+    <form id='avaliacaoForm' action="{{ url('avaliacaodesempenho/avaliacao', [$data['avaliacao']->id]) }}" method="POST">
     @method('PUT')
     {{ csrf_field() }}      
 @else
-    <form action='{{ url("avaliacaodesempenho/avaliacao/store") }}' method="POST">
+    <form id='avaliacaoForm' action='{{ url("avaliacaodesempenho/avaliacao/store") }}' method="POST">
     {{ csrf_field() }} 
 @endif
 

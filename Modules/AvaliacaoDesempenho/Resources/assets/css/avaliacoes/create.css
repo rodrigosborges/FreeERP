@@ -13,3 +13,7 @@
 .hidden {
     display: none;
 }
+
+.alternativas {
+    list-style-type: none;
+}

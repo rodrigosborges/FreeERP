@@ -54,20 +54,45 @@ function populateCard(id, _token) {
         },
         dataType: 'JSON',
         success: function (data) {
-            $(".save-card").attr("onclick","salvarQuestao("+ data[0].id +", '"+ data[0].enunciado +"')");
-            $('#questaoCard .card-header').html(`<b>Categoria: ${data[0].categoria.nome}</b>`)
-            $('#questaoCard .card-body .enunciado').html(`<b>Enunciado: <p> ${data[0].enunciado} </p></b>`)
-            $('#questaoCard .card-body .options').prepend(`<b>Alternativas: </b>`)
-            $('#questaoCard .card-body .options ul').append(`<li> a) - ${data[0].opt1} </li>`)
-            $('#questaoCard .card-body .options ul').append(`<li> b) - ${data[0].opt2} </li>`)
-            $('#questaoCard .card-body .options ul').append(`<li> c) - ${data[0].opt3} </li>`)
-            $('#questaoCard .card-body .options ul').append(`<li> d) - ${data[0].opt4} </li>`)
-            $('#questaoCard .card-body .options ul').append(`<li> e) - ${data[0].opt5} </li>`)
+
+            $('#questaoCard').html(`
+                
+                <div class='card'>
+                
+                    <div class='card-header'>
+                        <b>Categoria: ${data[0].categoria.nome}</b>
+                    </div>
+
+                    <div class='card-body'>
+                        <b>Enunciado: ${data[0].enunciado}</b>
+                        <br>
+                        <b>Alternativas:</b>
+                        <ul class='alternativas'>
+                            <li>a) - ${data[0].opt1}</li>
+                            <li>b) - ${data[0].opt2}</li>
+                            <li>c) - ${data[0].opt3}</li>
+                            <li>d) - ${data[0].opt4}</li>
+                            <li>e) - ${data[0].opt5}</li>
+                        </ul>
+                    </div>
+
+                    <div class='card-footer'>
+                        <button type='button' class='btn btn-primary btn-sm float-right save-card' onclick='salvarQuestao(${data[0].id},"${data[0].enunciado}")'>Salvar</button>
+                    </div>
+
+                </div>
+            `)
         }
     })
 }
 
 function salvarQuestao(id,enunciado) {
-    console.log(id);
-    console.log(enunciado);
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'avaliacao[questoes][]',
+        value: id
+    }).appendTo('#avaliacaoForm')
+    
+    $('#questaoCard').html('')
+    $('select').val('').selectpicker('refresh')
 }
