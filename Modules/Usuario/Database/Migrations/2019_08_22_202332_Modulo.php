@@ -16,7 +16,7 @@ class Modulo extends Migration
         Schema::create('modulo', function(Blueprint $table) {
             $table->increments('id');
             $table->string('icone');
-            $table->string('nome');
+            $table->string('nome')->unique();
             $table->timestamps();
             $table->softDeletes();
         });

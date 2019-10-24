@@ -15,9 +15,10 @@ class PapelHasModulo extends Migration
     {
         
         Schema::create('papel_has_modulo', function (Blueprint $table) {
-            $table->increments('id');
+            //$table->increments('id'); //why not use a composite key?
             $table->integer('papel_id')->unsigned();
             $table->integer('modulo_id')->unsigned();
+            $table->primary(['papel_id', 'modulo_id']);
             
             $table->foreign('modulo_id')->references('id')->on('modulo');
             $table->foreign('papel_id')->references('id')->on('papel');
