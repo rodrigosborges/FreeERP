@@ -6,7 +6,7 @@
         <input required class="form-control" name="nome" type="text" placeholder="Nome completo"
             value="{{ isset($cliente->nome) ? $cliente->nome : old('nome', '') }}">
     </div>
-    <span class="errors"> {{ $errors->first('nome') }} </span>
+    <span class="error"> {{ $errors->first('nome') }} </span>
 </div>
 
 <div class="row">
@@ -28,7 +28,7 @@
             <input required class="form-control" type="email" name="email" placeholder="E-mail"
                 value="{{ isset($cliente->email) ? $cliente->email : old('email', '') }}">
         </div>
-        <span class="errors"> {{ $errors->first('email') }} </span>
+        <span class="error"> {{ $errors->first('email') }} </span>
     </div>
 </div>
 
@@ -41,7 +41,7 @@
             <input required class="form-control" name="data_nascimento" type="date" id="example-date-input"
                 value="{{ isset($cliente->data_nascimento) ? $cliente->data_nascimento : old('data_nascimento', '10-10-2000') }}">
         </div>
-        <span class="errors"> {{ $errors->first('data_nascimento') }} </span>
+        <span class="error"> {{ $errors->first('data_nascimento') }} </span>
     </div>
     
 
@@ -57,7 +57,7 @@
                 placeholder="(XX) X XXXX-XXXX" type="text"
                 value="{{isset($cliente->celnumero) ? $cliente->celnumero : old('celnumero', '')}}">
         </div>
-        <span class="errors"> {{ $errors->first('celnumero') }} </span>
+        <span class="error"> {{ $errors->first('celnumero') }} </span>
     </div>
     <div class="form-group col-xl-6 col-sm-12">
         <div class="input-group">
@@ -68,7 +68,7 @@
                 placeholder="(XX) X XXXX-XXXX" type="text"
                 value="{{isset($cliente->telefonenumero) ? $cliente->telefonenumero : old('telefonenumero', '')}}">
         </div>
-        <span class="errors"> {{ $errors->first('telefonenumero') }} </span>
+        <span class="error"> {{ $errors->first('telefonenumero') }} </span>
     </div>
 </div>
 
@@ -80,17 +80,20 @@
                 <span class="input-group-text"><i class="material-icons">map</i></span>
             </div>
             <input type="text" class="form-control cep" name="endereco[cep]" value="{{ old('endereco.cep', isset($cliente) ? $cliente->endereco->cep : '') }}">
+            
         </div>
+        <span class="error"> {{ $errors->first('endereco.cep') }} </span>
     </div>
     <div class="form-group col-sm-6">
         <label for="endereco[logradouro]">Logradouro</label>
         <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="material-icons">house</i></span>
-                </div>
-                <input type="text" class="form-control" name="endereco[logradouro]" value="{{ old('endereco.logradouro', isset($cliente) ? $cliente->endereco->logradouro : '') }}">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="material-icons">house</i></span>
             </div>
+            <input type="text" class="form-control" name="endereco[logradouro]" value="{{ old('endereco.logradouro', isset($cliente) ? $cliente->endereco->logradouro : '') }}">
         </div>
+        <span class="error"> {{ $errors->first('endereco.logradouro') }} </span>
+    </div>
     <div class="form-group col-sm-2">
         <label for="endereco[numero]">Numero</label>
         <div class="input-group">
@@ -99,6 +102,7 @@
             </div>
             <input type="text" class="form-control" name="endereco[numero]" value="{{ old('endereco.numero', isset($cliente) ? $cliente->endereco->numero : '') }}">
         </div>
+        <span class="error"> {{ $errors->first('endereco.numero') }} </span>
     </div>
 </div>
 
@@ -111,6 +115,7 @@
             </div>
             <input type="text" class="form-control" name="endereco[bairro]" value="{{ old('endereco.bairro', isset($cliente) ? $cliente->endereco->bairro : '') }}">
         </div>
+        <span class="error"> {{ $errors->first('endereco.bairro') }} </span>
     </div>
     <div class="form-group col-sm-3">
         <label for="endereco[estado_id]">Estado</label>
@@ -126,6 +131,7 @@
                 @endforeach
             </select>
         </div>  
+        <span class="error"> {{ $errors->first('endereco.estado_id') }} </span>
     </div>
     <div class="form-group col-sm-3">
         <label for="endereco[cidade_id]">Cidade</label>
@@ -136,5 +142,6 @@
             <select name="endereco[cidade_id]" class="form-control" id="cidade"></select>
             
         </div>
+        <span class="error"> {{ $errors->first('endereco.cidade_id') }} </span>
     </div>
 </div>
