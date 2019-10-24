@@ -21,7 +21,7 @@ class Cliente extends Migration
         $table->string('data_nascimento');
         $table->integer('endereco_id')->index('fk_cliente_endereco1');
         $table->string('celnumero');
-        $table->string('telefonenumero');
+        $table->string('telefonenumero')->nullable();
         $table->timestamps();
         $table->softDeletes();
       });

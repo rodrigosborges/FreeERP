@@ -16,3 +16,11 @@ use App\Entities\Estado;
 Route::middleware('auth:api')->get('/assistencia', function (Request $request) {
     return $request->user();
 });
+Route::get('assistencia/cidades/{id}', function($id){
+        
+    $estado = Estado::findorFail($id);
+    
+    $cidades = $estado->cidades()->getQuery()->get(['id', 'nome']);
+    
+    return Response::json($cidades);
+});

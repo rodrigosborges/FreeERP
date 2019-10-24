@@ -1,5 +1,5 @@
 <div class="form-group row">
-    <div class="input-group col-12">
+    <div class="input-group col-sm-12">
         <div class="input-group-prepend">
             <span class="input-group-text" id="cliente"><i class="material-icons">person</i></span>
         </div>
@@ -15,7 +15,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="cliente"><i class="material-icons">picture_in_picture</i></span>
             </div>
-            <input required type="text" class="form-control cpf-mask" minlength=11 name="cpf"
+            <input required type="text" class="form-control cpf-mask"  name="cpf"
                 placeholder="000.000.000-00 (CPF)" value="{{ isset($cliente->cpf) ? $cliente->cpf : old('cpf', '') }}">
         </div>
         <span class="errors"> {{ $errors->first('cpf') }} </span>
@@ -54,7 +54,7 @@
                 <span class="input-group-text" id="celnumber"><i class="material-icons">smartphone</i></span>
             </div>
             <input required id="celnumber" name="celnumero" class="form-control input-md cel_sp"
-                placeholder="(XX) X XXXX-XXXX" type="text" maxlength="11"
+                placeholder="(XX) X XXXX-XXXX" type="text"
                 value="{{isset($cliente->celnumero) ? $cliente->celnumero : old('celnumero', '')}}">
         </div>
         <span class="errors"> {{ $errors->first('celnumero') }} </span>
@@ -65,7 +65,7 @@
                 <span class="input-group-text" id="telefone"><i class="material-icons">phone</i></span>
             </div>
             <input id="celnumber" name="telefonenumero" class="form-control input-md cel_sp"
-                placeholder="(XX) X XXXX-XXXX" type="text" maxlength="11"
+                placeholder="(XX) X XXXX-XXXX" type="text"
                 value="{{isset($cliente->telefonenumero) ? $cliente->telefonenumero : old('telefonenumero', '')}}">
         </div>
         <span class="errors"> {{ $errors->first('telefonenumero') }} </span>
@@ -118,7 +118,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">location_city</i></span>
             </div>
-            <select name="endereco[estado_id]" class="form-control" id="">
+            <select name="endereco[estado_id]" class="form-control" id="estado">
                 <option value="" disabled selected>Selecione</option>
                 @foreach($estados as $estado){
                     <option value="{{$estado->id}}" uf="{{$estado->uf}}" {{ old('endereco.estado_id', isset($cliente) ? $cliente->endereco->cidade->estado_id : "") == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
@@ -133,7 +133,8 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">location_city</i></span>
             </div>
-            <input type="text" class="form-control" name="endereco[cidade_id]" value="">
+            <select name="endereco[cidade_id]" class="form-control" id="cidade"></select>
+            
         </div>
     </div>
 </div>
