@@ -104,8 +104,9 @@ class UsuarioController extends Controller
         //if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
             $usuario = Usuario::findOrFail($id);
             $papeis = Papel::all();
+            $modulos = Modulo::all();
 
-            return view('usuario::usuario.form', compact('usuario','papeis'));
+            return view('usuario::usuario.form', compact('usuario','papeis','modulos'));
         //}
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     }

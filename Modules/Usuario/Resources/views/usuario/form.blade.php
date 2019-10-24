@@ -79,7 +79,8 @@
                         <input required class="form-control" type="password" name="repeat_password">
                     </div>
 
-                           
+                    @endif
+
                     <div class="form-group input-modulo-papel">
                     <div class="form-row input-modulo-papel-interior">
                             <div class="col-md-5 mb-1">
@@ -96,7 +97,7 @@
                                 <label for="papel">Papel</label>
                                 <select class="form-control papelGet" name='modulo[0][papel_id]'>
                                     <option disabled selected>Escolha um Papel...</option>
-                                    @foreach($papeis as $papel)
+                                    @foreach($modulo->papeis as $papel)
                                     <option value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
                                     @endforeach
                                 </select>
@@ -107,7 +108,7 @@
                                 </div>
                         </div>
                     </div>
-                    @endif
+
                     <div class="d-flex justify-content-between mb-3">
                         <button type="submit" class="btn btn-success d-flex align-items-center">
                             <i class="material-icons mr-2">save</i>Salvar
