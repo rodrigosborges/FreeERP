@@ -1,46 +1,54 @@
-$(document).ready(function () {
+$(document).on('keyup keydown paste', '.select-questoes', function () {
 
-    $('.select-questoes').on('keyup keydown', function () {
-        var search = $(this).find("input").val()
+    var search = $(this).find("input").val()
 
-        var select = $("#selectQuestoes")
+    var select = $("#selectQuestoes")
 
-        const _token = $('#token').val()
+    const _token = $('#token').val()
 
-        if (search.length > 3) {
-            $.ajax({
-                method: 'POST',
-                url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/field',
-                data: {
-                    _token: _token,
-                    table: 'questao',
-                    parameter: search
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    select.empty()
+    if (search.length > 2) {
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/field',
+            data: {
+                _token: _token,
+                table: 'questao',
+                parameter: search
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                select.empty()
 
-                    $.each(data, function (i, val) {
+                var incluidas = []
+
+                $('.inputQuestao').each(function (e) {
+                    incluidas.push(parseInt($(this).val()))
+                })
+
+                $.each(data, function (i, val) {
+                    if (!incluidas.includes(val.id)) {
                         select.append($('<option></option>').val(val.id).html(`Enunciado: ${val.enunciado} | Categoria: ${val.categoria.nome}`))
-                    })
+                    }
+                })
+                
+                $('.selectpicker').selectpicker('refresh')
+                
+                $('.dropdown-item').on('click', function (e) {
 
-                    $('.selectpicker').selectpicker('refresh')
+                    var id = $('#selectQuestoes option:selected').val()
+                    console.log($(this))
+                    console.log(id)
 
-                    $('.dropdown-item').on('click', function(e) {
-                        
-                        var id = $('#selectQuestoes').val()
-                        
-                        $('#questaoCard').removeClass('hidden')   
-                        
-                        populateCard(id, _token)
-                    })
-                }
-            })
-        } else {
-            select.empty()
-            $('.selectpicker').selectpicker('refresh')
-        }
-    })
+                    $('#questaoCard').removeClass('hidden')
+
+                    populateCard(id, _token)
+                })
+            }
+        })
+    } else {
+        select.empty()
+        $('.selectpicker').selectpicker('refresh')
+    }
 })
 
 function populateCard(id, _token) {
@@ -86,13 +94,18 @@ function populateCard(id, _token) {
     })
 }
 
-function salvarQuestao(id,enunciado) {
+function salvarQuestao(id, enunciado) {
     $('<input>').attr({
         type: 'hidden',
+        class: 'inputQuestao',
         name: 'avaliacao[questoes][]',
         value: id
     }).appendTo('#avaliacaoForm')
-    
+
+    $('.selectpicker').empty()
+
+    $('.selectpicker').selectpicker('refresh')
+
     $('#questaoCard').html('')
     $('select').val('').selectpicker('refresh')
 }
