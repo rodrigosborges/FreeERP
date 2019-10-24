@@ -79,7 +79,7 @@ class UsuarioController extends Controller
                     'password' => Hash::make($request->password)
                 ]);
         
-                $usuario->modulos()->attach($request['modulos']);
+                $usuario->modulos()->attach($request['modulo']);
                 DB::commit();
         
                 return back()->with('success', 'Usuário cadastrado com sucesso');
