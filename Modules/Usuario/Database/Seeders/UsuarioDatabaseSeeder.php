@@ -20,12 +20,28 @@ class UsuarioDatabaseSeeder extends Seeder{
             ]);
         }catch(\Exception $e){}
         
+        DB::table('modulo')->insert([
+            'nome' => 'Usuario',
+            'icone' => 'person'
+        ]);
+
         DB::table('usuario')->insert([
             'apelido' => 'admin',
             'avatar' => 'default.png',
             // 'papel_id' => 1,            
             'email' => 'admin@freeerp.com',
             'password' => bcrypt('password'),
+        ]);
+
+        DB::table('papel_has_modulo')->insert([
+            'papel_id' => 1,
+            'modulo_id' => 1,
+        ]);
+
+        DB::table('usuario_has_modulo')->insert([
+            'papel_id' => 1,
+            'modulo_id' => 1,
+            'usuario_id' => 1,
         ]);
 
         Model::unguard();
