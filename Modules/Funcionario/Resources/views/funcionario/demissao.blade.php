@@ -34,14 +34,13 @@
                 </div>  
             </div>
            
-           
             <input type="hidden" name="funcionario_id" value="{{$data['funcionario']->id}}">
         </section>
         <hr>
         <section>
             <h4 class="text-center">Aviso prévio</h4>
-            
-                <div class='form-group col-6'>
+           
+                <div class='form-group col-3'>
                     <input type="checkbox" name="aviso_previo_indenizado" id="aviso_previo_indenizado"  {{old('aviso_previo_indenizado') ? 'checked' : null }} disabled>
                     <label for="aviso_previo_indenizado">Aviso previo indenizado</label>
                 </div>
@@ -51,6 +50,11 @@
                     <label for="descontar_aviso_previo">Desconta aviso previo</label>
                 </div>
 
+                <div class="form-group col-3">
+                    <input type="checkbox" name="cumprir_aviso" id="cumprir_aviso" {{old('cumprir_aviso') ? 'checked' : null}} disabled>
+                    <label for="cumprir_aviso">Cumprir aviso</label>
+                </div>
+               
                 <div class="row">
                     <div class="form-group col-6">
                             <label for="tipo_cumprimento">Indicador de cumprimento de aviso prévio</label>
@@ -84,7 +88,6 @@
                     </div>
                 </div>
 
-                
         </section>
 
 @section('footer')

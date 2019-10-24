@@ -25,14 +25,14 @@ class CreateDemissao extends FormRequest
 
         } else if($request::input('aviso_previo_indenizado') == 'off'){
             return [
-                'data_demissao'         => 'required|date',
-                'data_pagamento'        => 'required|date|after:data_demissao',
-                'tipo_demissao'         => 'required',
-                'data_inicio_aviso'     => 'nullable',
-                'dias_aviso_indenizado' => 'nullable',
-                'tipo_reducao_aviso'    => 'nullable',
+                'data_demissao'                         => 'required|date',
+                'data_pagamento'                        => 'required|date|after:data_demissao',
+                'tipo_demissao'                         => 'required',
+                'data_inicio_aviso'                     => 'nullable',
+                'dias_aviso_indenizado'                 => 'nullable',
+                'tipo_reducao_aviso'                    => 'nullable',
                 'aviso_previo_indicador_cumprimento_id' => 'nullable',
-                'tipo_demissao'         => 'required|numeric|max:9'
+                'tipo_demissao'                         => 'required|numeric|max:9'
             ];
         } else {
             return [

@@ -17,6 +17,7 @@ class CreateAvisoPrevioTable extends Migration
             $table->increments('id', true);
             $table->boolean('aviso_previo_indenizado');
             $table->boolean('descontar_aviso_previo');
+            $table->boolean('cumprir_aviso');
             $table->integer('funcionario_id')->index('fk_aviso_previo_funcionario'); 
         });
     }

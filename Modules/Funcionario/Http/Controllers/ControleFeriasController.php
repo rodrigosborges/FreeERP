@@ -102,7 +102,7 @@ class ControleFeriasController extends Controller
 
         if($verifica_registro_tabela == 0){//Verifica se há algum registro de férias já adicionado.
             
-            $data_atual = '2021-09-20'; //Carbon::today();Data que o sistema está sendo acessado. 
+            $data_atual = Carbon::today(); //'2021-10-21';Data que o sistema está sendo acessado. 
             
             //$inicio_periodo_aquisitivo = date('Y-m-d', strtotime($admissao));
             //$anos_trampo = 366;
@@ -140,14 +140,14 @@ class ControleFeriasController extends Controller
                     $teste = DateTime::createFromFormat('Y-m-d', $admissao);
                     $teste->add(new DateInterval('P365D'));*/
 
-                    $ano_atual = '2021'; //date('Y', time()); 
+                    $ano_atual = date('Y', time()); // '2021'; 
                     $admissao = date('Y-m-d', strtotime($funcionario_cargo->pivot->data_entrada));
                     
                     $diaAdmissao = date('d', strtotime($admissao));
                     $mesAdmissao = date('m', strtotime($admissao));
 
-                    $diaAtual = '20';//date('d', time());
-                    $mesAtual = '09';//date('m', time());
+                    $diaAtual = date('d', time()); //'21';
+                    $mesAtual = date('m', time()); //'10';
                    
                         if($diaAtual <= $diaAdmissao && $mesAtual <= $mesAdmissao){
                             $inicio_periodo_aquisitivo = new Carbon($admissao);
@@ -184,7 +184,7 @@ class ControleFeriasController extends Controller
              
         } else {
             
-            $data_atual = '2022-10-21'; // Carbon::today(); Data que o sistema está sendo acessado
+            $data_atual = Carbon::today(); //'2022-10-21';Data que o sistema está sendo acessado
             $data_atual = Carbon::parse($data_atual)->format('Y-m-d');
             $ultimo_periodo_aquisitivo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->fim_periodo_aquisitivo;
             
@@ -206,15 +206,15 @@ class ControleFeriasController extends Controller
                     $saldo_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
                    
                 } else {
-                    $ano_atual = '2022'; //date('Y', time()); 
+                    $ano_atual = date('Y', time()); //'2022'; 
                     //$ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
                     $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
                     
                     $diaAdmissao = date('d', strtotime($admissao));
                     $mesAdmissao = date('m', strtotime($admissao));
 
-                    $diaAtual = '21';//date('d', time());
-                    $mesAtual = '10';//date('m', time());
+                    $diaAtual = date('d', time()); //'21';
+                    $mesAtual = date('m', time()); //'10';
                    
                         if($diaAtual <= $diaAdmissao && $mesAtual <= $mesAdmissao){
                             $inicio_periodo_aquisitivo = new Carbon($admissao);

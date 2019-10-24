@@ -8,7 +8,7 @@ class AvisoPrevio extends Model {
     
     protected $table = 'aviso_previo';
 
-    protected $fillable = ['aviso_previo_indenizado', 'descontar_aviso_previo', 'funcionario_id'];
+    protected $fillable = ['aviso_previo_indenizado', 'descontar_aviso_previo', 'cumprir_aviso', 'funcionario_id'];
 
     public $timestamps = false;
 
