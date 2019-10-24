@@ -20,9 +20,9 @@ class Usuario extends Migration
             $table->string('avatar')->default("default.png");
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
-            $table->integer('papel_id')->unsigned();
+            // $table->integer('papel_id')->unsigned();
             $table->string('password');
-            $table->foreign('papel_id')->references('id')->on('papel');
+            // $table->foreign('papel_id')->references('id')->on('papel');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -84,20 +84,20 @@
                     <div class="form-row input-modulo-papel-interior">
                             <div class="col-md-5 mb-1">
                                 <label for='modulo'>Modulo</label>
-                                <select class="form-control" name='modulos[0][modulo_id]'>
+                                <select class="form-control moduloGet" name='modulo[0][modulo_id]'>
                                     <option disabled selected>Escolha um Modulo...</option>
                                     @foreach($modulos as $modulo)
-                                    <option class='modulo' name = "modulo[]['modulo_id']" value="{{ $modulo->id }}" > {{ $modulo->nome }} </option>
+                                    <option class='modulo' value="{{ $modulo->id }}" > {{ $modulo->nome }} </option>
                                     @endforeach
                                 </select>
                             </div>
                             
                         <div class="col-md-5 mb-1">
                                 <label for="papel">Papel</label>
-                                <select class="form-control" name='modulos[0][papel_id]'>
+                                <select class="form-control papelGet" name='modulo[0][papel_id]'>
                                     <option disabled selected>Escolha um Papel...</option>
                                     @foreach($papeis as $papel)
-                                    <option name= "papel[]['papel_id'] value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
+                                    <option value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
                                     @endforeach
                                 </select>
                                 {{$errors->first('papel')}}
@@ -163,12 +163,33 @@ function readURL(input) {
                 div.insertAfter($(".form-group").last())
                 var div2 = $(".input-modulo-papel-interior").last()
                 div2.append("<div class='col-md-1' style='margin-top:32px';><a  class='btn bg-danger text-white remover'>-</a></div>");
+
+                let modulos = document.querySelectorAll('.moduloGet');
+                let papeis = document.querySelectorAll('.papelGet');
+
+                modulos.forEach(function(item, index){
+                    item.name = 'modulo['+index+'][modulo_id]';
+                });
+
+                papeis.forEach(function(item, index){
+                    item.name = 'modulo['+index+'][papel_id]';
+                });
             });
             $(document).on("click", '.remover', function(){
                     $(this).parent().parent().remove();
+
+                let modulos = document.querySelectorAll('.moduloGet');
+                let papeis = document.querySelectorAll('.papelGet');
+
+                modulos.forEach(function(item, index){
+                    item.name = 'modulo['+index+'][modulo_id]';
+                });
+
+                papeis.forEach(function(item, index){
+                    item.name = 'modulo['+index+'][papel_id]';
+                });
             })
 
-    
         })
     </script>
 
