@@ -17,6 +17,7 @@ Route::get('/esqueciSenha', 'auth\ForgotPasswordController@esqueceu');
 Route::post('/esqueciSenha', 'auth\ForgotPasswordController@recuperarSenha');
 Route::get('/recuperarSenha', 'auth\ForgotPasswordController@resetarSenha');
 Route::put('/recuperarSenha', 'auth\ForgotPasswordController@trocarSenhaUpdate');
+Route::get('/inicio', 'InicioController@listarModulos')->middleware('auth');;
 
 Route::prefix('usuario')->group(function() {
     //Trocar Senha
