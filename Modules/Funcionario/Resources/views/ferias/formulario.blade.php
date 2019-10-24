@@ -102,7 +102,11 @@
                 <textarea rows="5" name="observacao" id="observacao" class="form-control">{{old('observacao')}}</textarea>
             </div>
         <div>      
-   
+        <div class="alert alert-danger" role="alert">
+            @if($data['saldo_periodo'] >= 60)
+                Férias será paga em dobro.
+            @endif
+        </div>
     </section>
     @section('footer')
     <div class="text-right">

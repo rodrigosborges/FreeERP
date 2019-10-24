@@ -90,80 +90,8 @@ class ControleFeriasController extends Controller
         //
     }
 
-    public function controleFerias($id)
-    {
-        /*$ano_atual =  date('Y', time()); // Essa data é simulada para teste;  '2020';
-            $anoEntradaMaisUm = DateTime::createFromFormat('Y-m-d', $funcionario_cargo->pivot->data_entrada);
-            $anoEntradaMaisUm->add(new DateInterval('P1Y'));
-                
-            if($ano_atual <= $anoEntradaMaisUm){ //Se o ano que o usuário do sistema é igual ou maior que 1 do ano de entrada do funcionario.
-
-                $inicio_periodo_aquisitivo = date('d/m/Y', strtotime($admissao));
-                $anos_trampo = 364;
-                $fim_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
-
-                $limite_periodo_aquisitivo = $fim_periodo_aquisitivo;
-                $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
-                $limite_periodo_aquisitivo->add(new DateInterval('P330D')); // Essa linha adiciona 330 dias(11 meses)
-
-                $saldo_periodo = 30;
-                $saldo_total = 0;
-
-            }*/
-
-              /* $ultimo_periodo_aquisitivo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->fim_periodo_aquisitivo;
-                $today = '2020-09-25'; //Dia que o usuário está usando o software. Essa data é simulada para testes. O formato tem de ser YYYY/mm/dd
-                
-                    if($today < $ultimo_periodo_aquisitivo){ //Se está no mesmo perído que o registrado anteriormente.
-                        $inicio_periodo_aquisitivo = date('d/m/Y', strtotime($admissao));
-                        $anos_trampo = 364;
-                        $fim_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
+    public function controleFerias($id){
         
-                        $limite_periodo_aquisitivo = $fim_periodo_aquisitivo;
-                        $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
-                        $limite_periodo_aquisitivo->add(new DateInterval('P330D')); // Essa linha adiciona 330 dias(11 meses)
-        
-                        $saldo_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
-                        $saldo_total = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_total;
-
-                    } else { //novo período aquisitivo
-                        
-                        $ano_atual = '2020'; // Essa data é simulada para teste; date('Y', time());
-                        $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
-                        $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
-
-                        $anos_trampo = (($ano_atual-$ano))*728;
-                        $anos_trampo_inicio = ($anos_trampo - 364) +1;
-
-                        $fim_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
-                        $inicio_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo_inicio days", strtotime($admissao)));
-                        
-                        $limite_periodo_aquisitivo = $fim_periodo_aquisitivo;
-                        $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
-                        $limite_periodo_aquisitivo->add(new DateInterval('P330D')); // Essa linha adiciona 330 dias(11 meses)
-
-                        $saldo_periodo = 30;
-                        $saldo_total = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
-                        $saldo_total += ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_total;
-
-                        */
-                            /*if($today > DateTime::createFromFormat('d/m/Y', $fim_periodo_aquisitivo)->format('Y-m-d')){
-                                
-                                $data_inicial = DateTime::createFromFormat('d/m/Y', $fim_periodo_aquisitivo)->format('Y-m-d'); // armazena o fim do periodo em questão 
-                                $data_final = $today; //Dia que o usuário está usando o software. Essa data é simulada para testes.
-                                $diferenca = strtotime($data_final) - strtotime($data_inicial);
-                                
-                                //Calcula a diferença em dias
-                                $dias = floor($diferenca / (60 * 60 * 24));
-                                $meses = floor($dias/30);
-                                
-                                $saldo_total += $meses * 2.5; //dias excedentes para se adicionar no saldo_total
-                                $saldo_periodo = 30;
-                            } */
-
-
-        //----------------------------------------------- || ------------------------------------------
-
         $funcionario = Funcionario::findOrFail($id);
         $cargoAtual = $funcionario->cargos->last()->id;
         $funcionario_cargo =  $funcionario->cargos()->first();
@@ -174,27 +102,32 @@ class ControleFeriasController extends Controller
 
         if($verifica_registro_tabela == 0){//Verifica se há algum registro de férias já adicionado.
             
-            $data_atual = Carbon::today();// Data que o sistema está sendo acessado. 
+            $data_atual = '2021-09-20'; //Carbon::today();Data que o sistema está sendo acessado. 
             
-            $inicio_periodo_aquisitivo = date('Y-m-d', strtotime($admissao));
-            $anos_trampo = 366;
-            $fim_periodo_aquisitivo = date('Y-m-d', strtotime( "+ $anos_trampo days", strtotime($admissao)));
-
+            //$inicio_periodo_aquisitivo = date('Y-m-d', strtotime($admissao));
+            //$anos_trampo = 366;
+            //$fim_periodo_aquisitivo = date('Y-m-d', strtotime( "+ $anos_trampo days", strtotime($admissao)));
+            $inicio_periodo_aquisitivo = new Carbon($admissao);
+            $fim_periodo_aquisitivo = new Carbon($inicio_periodo_aquisitivo);
+            $fim_periodo_aquisitivo->addYear();
+            
                 /*Verifica se está dentro do 1° período possível do funcionário, ou seja, 
                 aquele com o inicio_periodo_aquisito sendo a data de admissão.*/ 
                 if($data_atual <= $fim_periodo_aquisitivo){ 
-                    $inicio_periodo_aquisitivo = date('d/m/Y', strtotime($inicio_periodo_aquisitivo));
+
+                    /*$inicio_periodo_aquisitivo = date('d/m/Y', strtotime($inicio_periodo_aquisitivo));
                     $fim_periodo_aquisitivo = date('d/m/Y', strtotime($fim_periodo_aquisitivo));
-                    
                     $limite_periodo_aquisitivo = $fim_periodo_aquisitivo;
                     $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
-                    $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 11 meses
+                    $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 11 meses*/
+                    $limite_periodo_aquisitivo = new Carbon($fim_periodo_aquisitivo);
+                    $limite_periodo_aquisitivo->addMonths(11);
 
                     $saldo_periodo = 30;
                     
                 } else { 
-
-                    $ano_atual = date('Y', time()); //'2021'; Essa data é simulada para teste; 
+                    
+                    /*$ano_atual = date('Y', time()); //'2021'; Essa data é simulada para teste; 
                     $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
                     $admissao = date('Y-m-d', strtotime($funcionario_cargo->pivot->data_entrada));
 
@@ -205,13 +138,41 @@ class ControleFeriasController extends Controller
                     $inicio_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo_inicio days", strtotime($admissao)));
                     
                     $teste = DateTime::createFromFormat('Y-m-d', $admissao);
-                    $teste->add(new DateInterval('P365D'));
+                    $teste->add(new DateInterval('P365D'));*/
+
+                    $ano_atual = '2021'; //date('Y', time()); 
+                    $admissao = date('Y-m-d', strtotime($funcionario_cargo->pivot->data_entrada));
                     
+                    $diaAdmissao = date('d', strtotime($admissao));
+                    $mesAdmissao = date('m', strtotime($admissao));
+
+                    $diaAtual = '20';//date('d', time());
+                    $mesAtual = '09';//date('m', time());
+                   
+                        if($diaAtual <= $diaAdmissao && $mesAtual <= $mesAdmissao){
+                            $inicio_periodo_aquisitivo = new Carbon($admissao);
+                            $inicio_periodo_aquisitivo->year($ano_atual)->subYear();
+                            
+                            $fim_periodo_aquisitivo = new Carbon($admissao);
+                            $fim_periodo_aquisitivo->year($ano_atual);
+
+                        } else {
+                            $inicio_periodo_aquisitivo = new Carbon($admissao);
+                            $inicio_periodo_aquisitivo->year($ano_atual);
+                            
+                            $fim_periodo_aquisitivo = new Carbon($inicio_periodo_aquisitivo);
+                            $fim_periodo_aquisitivo->addYear();
+                        }
+                    
+                    $limite_periodo_aquisitivo = new Carbon($fim_periodo_aquisitivo);
+                    $limite_periodo_aquisitivo->addMonths(11);
+
+                    $teste = new Carbon($admissao);
+                    $teste->addYear(); 
+
                     $diferenca = strtotime($data_atual) - strtotime($teste->format('Y-m-d'));
 
                     $dias = floor($diferenca / (60 * 60 * 24));
-                    //$meses = floor($dias/30);
-                   
                     $saldo_periodo = 30;
 
                         while($dias > 0){
@@ -219,36 +180,57 @@ class ControleFeriasController extends Controller
                             $dias -= 30;
                         }    
                     
-                    $limite_periodo_aquisitivo = $fim_periodo_aquisitivo;
-                    $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
-                    $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 11 meses*/
-
                 }
              
         } else {
             
-            $data_atual = '2021-11-22'; // Carbon::today(); Data que o sistema está sendo acessado
+            $data_atual = '2022-10-21'; // Carbon::today(); Data que o sistema está sendo acessado
             $data_atual = Carbon::parse($data_atual)->format('Y-m-d');
             $ultimo_periodo_aquisitivo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->fim_periodo_aquisitivo;
             
                 if($data_atual <= $ultimo_periodo_aquisitivo){ //Se está no mesmo perído que o registrado anteriormente.
                 
-                    $inicio_periodo_aquisitivo = DateTime::createFromFormat('Y-m-d', ControleFerias::where('funcionario_id', '=', $id)
-                                                 ->get()->last()->inicio_periodo_aquisitivo)->format('d/m/Y');
-                    $fim_periodo_aquisitivo = DateTime::createFromFormat('Y-m-d', $ultimo_periodo_aquisitivo)->format('d/m/Y');
+                    /*$inicio_periodo_aquisitivo = DateTime::createFromFormat('Y-m-d', ControleFerias::where('funcionario_id', '=', $id)
+                                                 ->get()->last()->inicio_periodo_aquisitivo);
+                    $fim_periodo_aquisitivo = DateTime::createFromFormat('Y-m-d', $ultimo_periodo_aquisitivo);
 
                     $limite_periodo_aquisitivo = $fim_periodo_aquisitivo;
                     $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
-                    $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 330 dias(11 meses)
-
+                    $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 330 dias(11 meses)*/
+                    $inicio_periodo_query = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->inicio_periodo_aquisitivo;
+                    
+                    $inicio_periodo_aquisitivo = new Carbon($inicio_periodo_query);
+                    $fim_periodo_aquisitivo = new Carbon($ultimo_periodo_aquisitivo);
+                    $limite_periodo_aquisitivo = new Carbon($fim_periodo_aquisitivo);
+                    $limite_periodo_aquisitivo->addMonths(11);
                     $saldo_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
                    
                 } else {
-                    $ano_atual = '2021'; //date('Y', time()); 
-                    $ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
+                    $ano_atual = '2022'; //date('Y', time()); 
+                    //$ano = date('Y', strtotime($funcionario_cargo->pivot->data_entrada));
                     $admissao = date('d-m-Y', strtotime($funcionario_cargo->pivot->data_entrada));
+                    
+                    $diaAdmissao = date('d', strtotime($admissao));
+                    $mesAdmissao = date('m', strtotime($admissao));
 
-                    $anos_trampo = (($ano_atual-$ano))*365;
+                    $diaAtual = '21';//date('d', time());
+                    $mesAtual = '10';//date('m', time());
+                   
+                        if($diaAtual <= $diaAdmissao && $mesAtual <= $mesAdmissao){
+                            $inicio_periodo_aquisitivo = new Carbon($admissao);
+                            $inicio_periodo_aquisitivo->year($ano_atual)->subYear();
+                            
+                            $fim_periodo_aquisitivo = new Carbon($admissao);
+                            $fim_periodo_aquisitivo->year($ano_atual);
+
+                        } else {
+                            $inicio_periodo_aquisitivo = new Carbon($admissao);
+                            $inicio_periodo_aquisitivo->year($ano_atual);
+                            
+                            $fim_periodo_aquisitivo = new Carbon($inicio_periodo_aquisitivo);
+                            $fim_periodo_aquisitivo->addYear();
+                        }
+                    /*$anos_trampo = (($ano_atual-$ano))*365;
                     $anos_trampo_inicio = ($anos_trampo - 365) +1;
 
                     $fim_periodo_aquisitivo = date('d/m/Y', strtotime( "+ $anos_trampo days", strtotime($admissao)));
@@ -256,19 +238,23 @@ class ControleFeriasController extends Controller
                     
                     $limite_periodo_aquisitivo = $fim_periodo_aquisitivo;
                     $limite_periodo_aquisitivo = DateTime::createFromFormat('d/m/Y', $limite_periodo_aquisitivo);
-                    $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 330 dias(11 meses)
+                    $limite_periodo_aquisitivo->add(new DateInterval('P11M')); // Essa linha adiciona 330 dias(11 meses)*/
+                    $limite_periodo_aquisitivo = new Carbon($fim_periodo_aquisitivo);
+                    $limite_periodo_aquisitivo->addMonths(11);
 
                     $saldo_periodo = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->saldo_periodo;
-
-                    $data_inicial = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->fim_periodo_aquisitivo; // armazena o fim do periodo em questão 
+                    $data_inicial = ControleFerias::where('funcionario_id', '=', $id)->get()->last()->fim_periodo_aquisitivo; // armazena o fim do periodo em questão
+                    
                     $data_final = $data_atual; //Dia que o usuário está usando o software. Essa data é simulada para testes.
+                    
                     $diferenca = strtotime($data_final) - strtotime($data_inicial);
                     
                     //Calcula a diferença em dias
                     $dias = floor($diferenca / (60 * 60 * 24));
+                    
                     //$meses = floor($dias/30);
                 
-                    $saldo_periodo = 0;
+                    //$saldo_periodo = 0;
 
                     while($dias > 0){
                         $saldo_periodo += 2.5;
@@ -285,8 +271,8 @@ class ControleFeriasController extends Controller
             'funcionario'               => $funcionario,
             'cargo'                     => Cargo::where('id','=',$cargoAtual)->first(),
             'admissao'                  => $admissao,
-            'inicio_periodo_aquisitivo' => $inicio_periodo_aquisitivo,
-            'fim_periodo_aquisitivo'    => $fim_periodo_aquisitivo,
+            'inicio_periodo_aquisitivo' => $inicio_periodo_aquisitivo->format('d/m/Y'),
+            'fim_periodo_aquisitivo'    => $fim_periodo_aquisitivo->format('d/m/Y'),
             'limite_periodo_aquisitivo' => $limite_periodo_aquisitivo->format('d/m/Y'),
             'saldo_periodo'             => $saldo_periodo,
         ];

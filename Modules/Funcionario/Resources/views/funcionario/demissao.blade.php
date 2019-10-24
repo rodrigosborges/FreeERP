@@ -39,7 +39,7 @@
         </section>
         <hr>
         <section>
-            <h4 style="text-align: center;">Aviso prévio</h4>
+            <h4 class="text-center">Aviso prévio</h4>
             
                 <div class='form-group col-6'>
                     <input type="checkbox" name="aviso_previo_indenizado" id="aviso_previo_indenizado"  {{old('aviso_previo_indenizado') ? 'checked' : null }} disabled>
@@ -49,6 +49,18 @@
                 <div class="form-group col-3">
                     <input type="checkbox" name="descontar_aviso_previo" id="descontar_aviso_previo" {{old('descontar_aviso_previo') ? 'checked' : null}} disabled>
                     <label for="descontar_aviso_previo">Desconta aviso previo</label>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                            <label for="tipo_cumprimento">Indicador de cumprimento de aviso prévio</label>
+                            <select name="aviso_previo_indicador_cumprimento_id" class="form-control" id="aviso_previo_indicador_cumprimento_id" value="{{old('aviso_previo_indicador_cumprimento_id')}}" disabled>
+                            <option>Escolha uma opção</option>
+                                @foreach($data['tipo_cumprimento'] as $tipo_cumprimento)
+                                    <option value="{{$tipo_cumprimento->id}}" {{old('aviso_previo_indicador_cumprimento_id') == $tipo_cumprimento->id ? 'selected' : ''}}>{{$tipo_cumprimento->tipo_cumprimento}}</option>
+                                @endforeach
+                            </select>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -72,17 +84,7 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="form-group col-6">
-                            <label for="tipo_cumprimento">Indicador de cumprimento de aviso prévio</label>
-                            <select name="aviso_previo_indicador_cumprimento_id" class="form-control" id="aviso_previo_indicador_cumprimento_id" value="{{old('aviso_previo_indicador_cumprimento_id')}}" disabled>
-                            <option>Escolha uma opção</option>
-                                @foreach($data['tipo_cumprimento'] as $tipo_cumprimento)
-                                    <option value="{{$tipo_cumprimento->id}}" {{old('aviso_previo_indicador_cumprimento_id') == $tipo_cumprimento->id ? 'selected' : ''}}>{{$tipo_cumprimento->tipo_cumprimento}}</option>
-                                @endforeach
-                            </select>
-                    </div>
-                </div>
+                
         </section>
 
 @section('footer')
