@@ -35,7 +35,7 @@
                 <table class="table table-striped">
                     <div class="row">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th scope="col">Nome</th>
                                 <th scope="col">Valor</th>
                                 <th scope="col">Quantidade</th>
@@ -47,10 +47,10 @@
                     <div class="row">
                         <tbody>
                             @foreach ($pecas as $peca)
-                            <tr>
+                            <tr class="text-center">
                                 <td scope="row">{{$peca->nome }}</td>
                                 <td>R$ {{str_replace(".",",",$peca->valor_venda) }}</td>
-                                <td scope="row">{{$peca->quantidade }}</td>
+                                <td scope="row">{{number_format($peca->quantidade) }}</td>
                                 <td>
                                     <a href="{{route('pecas.editar',$peca->id)}}"><button type="button"
                                             class="btn btn-dark">Editar</button></a>

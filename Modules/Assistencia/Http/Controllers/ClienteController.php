@@ -76,7 +76,7 @@ class ClienteController extends Controller
             'email' => $dados['email'],
             'data_nascimento' => $dados['data_nascimento'],
             'celnumero' => $dados['celnumero'], 
-            'telefonenumero' => $dados['telefonenumero'],
+            'telefonenumero' => isset($dados['telefonenumero']) ? $dados['telefonenumero'] : '',
             'endereco_id' => $endereco->id
           ]);
           DB::commit();
@@ -137,8 +137,9 @@ class ClienteController extends Controller
 
     public function buscar(Request $req){
       $clientes = ClienteAssistenciaModel::busca($req->busca);
-      
-      return view('assistencia::paginas.clientes.localizarCliente', compact('clientes'));
+      $clientesDeletados = ClienteAssistenciaModel::buscaTrash($req->busca);
+
+      return view('assistencia::paginas.clientes.localizarCliente', compact('clientes','clientesDeletados'));
     }
 
 

@@ -22,6 +22,15 @@ class ClienteAssistenciaModel extends Model
 
     //return static::where('nome', 'LIKE', '%'.$busca.'%')->paginate(10);
   }
+
+  public static function buscaTrash($busca){ //buca para localização de cliente por nome, cpf ou telefone
+    return static::onlyTrashed()->where('nome', 'LIKE', '%'.$busca.'%')
+                  ->orWhere('cpf', 'LIKE', '%'.$busca.'%')
+                  ->orWhere('telefonenumero', 'LIKE', '%'.$busca.'%')->paginate(10);
+
+
+    //return static::where('nome', 'LIKE', '%'.$busca.'%')->paginate(10);
+  }
   
   public static function buscaCPF($busca){ //essa busca serve para a validação do cadastro
 

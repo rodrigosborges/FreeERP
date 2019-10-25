@@ -108,7 +108,6 @@ function drawChart() {
         ['Pendente', pendente],
         ['Pago', pago],
 
-
     ]);
 
     var options = {
