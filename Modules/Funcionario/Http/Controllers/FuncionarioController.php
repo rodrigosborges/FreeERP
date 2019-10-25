@@ -527,35 +527,56 @@ class FuncionarioController extends Controller{
     }
 
     public function storeDemissao(CreateDemissao $request){
-        
-        DB::beginTransaction();
-
-        try {
-
-            $demissao = Demissao::Create([
-                'data_demissao'    => $request->data_demissao,
-                'data_pagamento'   => $request->data_pagamento,
-                'funcionario_id'   => $request['funcionario_id'],
-                'tipo_demissao_id' => $request['tipo_demissao']
-            ]);
-            
-            if($request->aviso_previo_indenizado == "on"){
+        /*if($request->aviso_previo_indenizado == "on"){
                 $avisoPrevioIndenizado = true;
                 $descontarAvisoPrevio = false;
 
             } else {
                 $avisoPrevioIndenizado = false;
                 $descontarAvisoPrevio = true;
-            }
+            }*/
             
+        DB::beginTransaction();
+
+        try {
+            $terminoContratoExperiencia = $request->termino_contrato_experiencia;
+            if($terminoContratoExperiencia == null){
+                $terminoContratoExperiencia = date('Y-m-d', strtotime('00-00-0000'));
+            }
+
+            $demissao = Demissao::Create([
+                'data_demissao'                 => $request->data_demissao,
+                'data_pagamento'                => $request->data_pagamento,
+                'funcionario_id'                => $request['funcionario_id'],
+                'termino_contrato_experiencia'  => $terminoContratoExperiencia,
+                'tipo_demissao_id'              => $request['tipo_demissao']
+            ]);
+            
+            if($request->aviso_previo_indenizado == "on"){
+                $avisoPrevioIndenizado = true;
+                $descontarAvisoPrevio = false;
+                $cumprirAviso = false;
+
+            } else if($request->descontar_aviso_previo == "on"){
+                $avisoPrevioIndenizado = false;
+                $descontarAvisoPrevio = true;
+                $cumprirAviso = false;
+
+            } else {
+                $avisoPrevioIndenizado = false;
+                $descontarAvisoPrevio = false;
+                $cumprirAviso = true;
+                
+            }
             
             $avisoPrevio = AvisoPrevio::create([
                 'aviso_previo_indenizado' => $avisoPrevioIndenizado,
                 'descontar_aviso_previo'  => $descontarAvisoPrevio,
+                'cumprir_aviso'           => $cumprirAviso,  
                 'funcionario_id'          => $request['funcionario_id']  
             ]);
 
-            if($avisoPrevioIndenizado){
+            if($avisoPrevioIndenizado == true || $cumprirAviso == true){
                $avisoPrevioIndenizadoTabela = AvisoPrevioIndenizado::create([
                     'data_inicio_aviso'                     => $request->data_inicio_aviso,
                     'dias_aviso_indenizado'                 => $request->dias_aviso_indenizado,
@@ -597,6 +618,24 @@ class FuncionarioController extends Controller{
         }
 
         public function destroyDemissao($id){
+
+            /*if($avisoPrevioIndenizadoRegistro == 1){
+                    
+                        $avisoPrevioId = AvisoPrevio::where('funcionario_id', '=', $id)->get()->last()->id;
+                        $avisoPrevioIndenizadoId = AvisoPrevioIndenizado::where('aviso_previo_id', '=', $avisoPrevioId)->get()->last()->id;
+                    
+                        $avisoPrevioIndenizado = AvisoPrevioIndenizado::FindOrFail($avisoPrevioIndenizadoId);
+                        $avisoPrevioIndenizado->delete();
+                    }
+
+                    if($cumprirAvisoRegistro == 1){
+
+                        $avisoPrevioId = AvisoPrevio::where('funcionario_id', '=', $id)->get()->last()->id;
+                        $cumprirAvisoId = AvisoPrevioIndenizado::where('aviso_previo_id', '=', $avisoPrevioId)->get()->last()->id;
+
+                        $avisoPrevioIndenizado = AvisoPrevioIndenizado::FindOrFail($cumprirAvisoId);
+                        $avisoPrevioIndenizado->delete();
+                    }*/
             DB::beginTransaction();
             try {
                 $demissaoId = Demissao::where('funcionario_id', '=', $id)->get()->last()->id;
@@ -606,12 +645,11 @@ class FuncionarioController extends Controller{
                 $avisoPrevio = AvisoPrevio::findOrFail($avisoPrevioId);
                
                 $avisoPrevioIndenizadoRegistro = AvisoPrevio::where('funcionario_id', '=', $id)->get()->last()->aviso_previo_indenizado;
+                $cumprirAvisoRegistro = AvisoPrevio::where('funcionario_id', '=', $id)->get()->last()->cumprir_aviso;
+                $avisoPrevioId = AvisoPrevio::where('funcionario_id', '=', $id)->get()->last()->id;
                 
-                if($avisoPrevioIndenizadoRegistro == 1){
-                   
-                    $avisoPrevioId = AvisoPrevio::where('funcionario_id', '=', $id)->get()->last()->id;
+                if($avisoPrevioIndenizadoRegistro == 1 || $cumprirAvisoRegistro == 1){
                     $avisoPrevioIndenizadoId = AvisoPrevioIndenizado::where('aviso_previo_id', '=', $avisoPrevioId)->get()->last()->id;
-                  
                     $avisoPrevioIndenizado = AvisoPrevioIndenizado::FindOrFail($avisoPrevioIndenizadoId);
                     $avisoPrevioIndenizado->delete();
                 }
