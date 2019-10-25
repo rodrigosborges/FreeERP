@@ -10,12 +10,11 @@
             </div>
         </div>
         <div class="form-group row">
-            <form class="input-group col-lg-9 col-sm-12" action="{{route('cliente.buscar')}}" method="post">
+            <form class="input-group col-lg-9 col-sm-12" >
                 {{ csrf_field() }}
-                <input type="text" class="form-control" name="busca" placeholder="Pesquise por nome, cpf ou telefone"
-                    aria-label="Buscar cliente" aria-describedby="button-addon2">
+                <input type="text" class="form-control" name="busca" placeholder="Pesquise por nome, cpf ou telefone">
                 <div class="input-group-append">
-                    <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2">
+                    <input class="btn btn-outline-secondary" id="buscar" value="Localizar" id="button-addon2">
                 </div>
             </form>
             <div class="col-lg-3 col-sm-12 text-center">
@@ -34,6 +33,16 @@
 <script>
 $(document).ready(function(){
     tabela(main_url+'/assistencia/cliente/table')
+    var busca = '';
+    $(document).on('click','.page-link', function(e){
+        e.preventDefault();
+        tabela($(this).attr('href')+"&busca="+busca)
+    })
+    $(document).on('click', '#buscar', function(e){
+        e.preventDefault();
+        busca = $("[name='busca']").val();
+        tabela(main_url+'/assistencia/cliente/table?busca='+busca)
+    })
 })
 
 function tabela(url){

@@ -144,10 +144,10 @@ class ClienteController extends Controller
     public function table(Request $request){
       $clientes = new ClienteAssistenciaModel;
       $clientesDeletados = ClienteAssistenciaModel::onlyTrashed();
-
-      if($request->busca)
-          $clientes = $clientes->where('nome', 'LIKE', '%'.$request->busca.'%');
-
+      if($request->busca){
+        $clientes = $clientes->where('nome', 'LIKE', '%'.$request->busca.'%');
+        $clientesDeletados = $clientesDeletados->where('nome', 'LIKE', '%'.$request->busca.'%');
+      }
       $clientes = $clientes->paginate(10);
       $clientesDeletados = $clientesDeletados->paginate(10);
       
