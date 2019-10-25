@@ -141,6 +141,18 @@ class ClienteController extends Controller
 
       return view('assistencia::paginas.clientes.localizarCliente', compact('clientes','clientesDeletados'));
     }
+    public function table(Request $request){
+      $clientes = new ClienteAssistenciaModel;
+      $clientesDeletados = ClienteAssistenciaModel::onlyTrashed();
+
+      if($request->busca)
+          $clientes = $clientes->where('nome', 'LIKE', '%'.$request->busca.'%');
+
+      $clientes = $clientes->paginate(10);
+      $clientesDeletados = $clientesDeletados->paginate(10);
+      
+      return view('assistencia::paginas.clientes._table', compact('clientes','clientesDeletados'));
+    }
 
 
 }

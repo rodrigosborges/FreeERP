@@ -23,14 +23,24 @@
                         Cliente</button></a>
             </div>
         </div>
-        <div class="row-center">
-            @include('assistencia::paginas.clientes._table')
+        <div class="row-center table">
+            
         </div>
 
     </div>
 </div>
-
-
-
-
 @stop
+@section('js')
+<script>
+$(document).ready(function(){
+    tabela(main_url+'/assistencia/cliente/table')
+})
+
+function tabela(url){
+    console.log(url)
+    $.get(url, function(table){
+        $('.table').html(table);
+    })
+}
+</script>
+@endsection
