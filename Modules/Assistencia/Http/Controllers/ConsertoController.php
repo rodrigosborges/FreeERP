@@ -21,6 +21,8 @@ class ConsertoController extends Controller
       $servicos = ServicoAssistenciaModel::all();
       $clientes = ClienteAssistenciaModel::all();
       $tecnicos = TecnicoAssistenciaModel::all();
+      $pecaOS = [];
+      $itemServico = [];
 
       if(count($clientes) != 0 && count($tecnicos) != 0) {
         $ultimo = ConsertoAssistenciaModel::withTrashed()->latest()->first();
@@ -31,7 +33,7 @@ class ConsertoController extends Controller
         } else {
           $id = 1 + $ultimo->id;
         }
-        return view('assistencia::paginas.consertos.cadastrarconserto', compact('id','clientes','tecnicos','pecas','servicos'));
+        return view('assistencia::paginas.consertos.cadastrarconserto', compact('id','pecaOS','itemServico','clientes','tecnicos','pecas','servicos'));
       
       } else if (count($clientes) == 0){
         $consertos = ConsertoAssistenciaModel::paginate(10);
@@ -56,14 +58,14 @@ class ConsertoController extends Controller
     }
 
     public function visualizarConserto($id) {
-       $conserto = ConsertoAssistenciaModel::find($id);
+       $conserto = ConsertoAssistenciaModel::findOrFail($id);
        $pecaOS = PecaOs::where('idConserto', $id)->get();
        $itemServico = itemServico::where('idConserto', $id)->get();
 
        return view('assistencia::paginas.consertos.visualizarConserto', compact('conserto', 'pecaOS','itemServico'));
     }
     public function imprimir($id) {
-      $conserto = ConsertoAssistenciaModel::find($id);
+      $conserto = ConsertoAssistenciaModel::findOrFail($id);
        $pecaOS = PecaOs::where('idConserto', $id)->get();
        $itemServico = itemServico::where('idConserto', $id)->get();
       //  $html = view('assistencia::paginas.consertos.checklist', compact('conserto', 'pecaOS','itemServico'));
@@ -75,7 +77,7 @@ class ConsertoController extends Controller
                 
     }
     public function editar($id) {
-      $conserto = ConsertoAssistenciaModel::find($id);
+      $conserto = ConsertoAssistenciaModel::findOrFail($id);
       $pecas = ItemPeca::all();
       $servicos = ServicoAssistenciaModel::all();
       $tecnicos = TecnicoAssistenciaModel::all();
@@ -85,59 +87,7 @@ class ConsertoController extends Controller
 
       return view('assistencia::paginas.consertos.editarConserto', compact('conserto', 'clientes', 'id', 'pecas', 'servicos','pecaOS','itemServico','tecnicos'));
     }
-    public function atualizar(Request $req, $id){
-     
-        $dados  = $req->all();
-        ConsertoAssistenciaModel::find($id)->update($dados);
-
-        $conserto = ConsertoAssistenciaModel::find($id)->latest()->first();
-
-        $pagamento = PagamentoAssistenciaModel::find($id);
-        $pagamento->valor = $conserto->valor;
-        $pagamento->save();
-        SituacaoOsModel::create([
-          'situacao' => $dados['situacao'],
-          'obs' =>  $dados['obsInfo'] !=  '' ? $dados['obsInfo'] : 'Alteração de dados' ,
-          'idConserto' => $conserto->id
-        ]);
-
-        $pecaOS = PecaOs::where('idConserto', $id)->get();
-        $itemServico = ItemServico::where('idConserto', $id)->get();
-        
-        
-        foreach($pecaOS as $item){
-          $item->forceDelete();
-        }
-        if($dados['pecas']){
-          
-          for ($i=0; $i < count($dados['pecas']); $i++) {
-            $pecas = new PecaOs;
-            $pecas->idConserto = $id;
-            $pecas->idItemPeca = $dados['pecas'][$i];
-            $pecas->save();
-          }
-        }
-        foreach($itemServico as $item){
-          $item->forceDelete();
-        }
-        if($dados['servicos']){
-          
-          for ($i=0; $i < count($dados['servicos']); $i++) {
-            $servicos = new ItemServico;
-            $servicos->idConserto = $id;
-            $servicos->idMaoObra = $dados['servicos'][$i];
-            $servicos->save();
-          }
-        }
-        
-        
-
-       
-        return redirect()->route('consertos.localizar')->with('success','Ordem de serviço alterada com sucesso');
-      
-      
-      
-    }
+    
     public function verMais($id){
       $infos = SituacaoOsModel::where('idConserto', $id)->paginate(10);
 
@@ -151,11 +101,8 @@ class ConsertoController extends Controller
     public function salvar(StoreConsertosRequest $req){
       
       $dados  = $req->all();
-      //REALIZAR VERIFICAÇÃO DE PEÇA E MAO DE OBRA VAZIOS, E GERAR UM VALOR PADRAO
-      ConsertoAssistenciaModel::create($dados);
-      $conserto = ConsertoAssistenciaModel::latest()->first();
+      $conserto = ConsertoAssistenciaModel::create($dados);
       $idConserto = $conserto->id;
-      
       PagamentoAssistenciaModel::create([
         'idConserto' => $conserto->id,
         'idCliente' => $conserto->idCliente,
@@ -169,9 +116,7 @@ class ConsertoController extends Controller
         'idConserto' => $conserto->id
       ]);
 
-      
-
-      if($dados['pecas']){
+      if(isset($dados['pecas']) ? true : false){
         for ($i=0; $i < count($dados['pecas']); $i++) {
           $pecas = new PecaOs;
           $pecas->idConserto = $idConserto;
@@ -179,7 +124,7 @@ class ConsertoController extends Controller
           $pecas->save();
         }
       }
-      if($dados['servicos']){
+      if(isset($dados['servicos']) ? true : false){
         for ($i=0; $i < count($dados['servicos']); $i++) {
           $servicos = new ItemServico;
           $servicos->idConserto = $idConserto;
@@ -190,6 +135,47 @@ class ConsertoController extends Controller
 
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço iniciada!');
     }
+    public function atualizar(Request $req, $id){
+     
+      $dados  = $req->all();
+      ConsertoAssistenciaModel::findOrFail($id)->update($dados);
+      $conserto = ConsertoAssistenciaModel::find($id)->latest()->first();
+ 
+      $pagamento = PagamentoAssistenciaModel::findOrFail($id);
+      $pagamento->update(['valor' => $conserto['valor']]);
+  
+      SituacaoOsModel::create([
+        'situacao' => $dados['situacao'],
+        'obs' =>  $dados['obsInfo'] !=  '' ? $dados['obsInfo'] : 'Alteração de dados' ,
+        'idConserto' => $conserto->id
+      ]);
+      $pecaOS = PecaOs::where('idConserto', $id)->get();
+      $itemServico = ItemServico::where('idConserto', $id)->get();
+      foreach($pecaOS as $item){
+        $item->forceDelete();
+      }
+      if(isset($dados['pecas']) ? true : false){
+        
+        for ($i=0; $i < count($dados['pecas']); $i++) {
+          $pecas = new PecaOs;
+          $pecas->idConserto = $id;
+          $pecas->idItemPeca = $dados['pecas'][$i];
+          $pecas->save();
+        }
+      }
+      foreach($itemServico as $item){
+        $item->forceDelete();
+      }
+      if(isset($dados['servicos']) ? true : false){
+        for ($i=0; $i < count($dados['servicos']); $i++) {
+          $servicos = new ItemServico;
+          $servicos->idConserto = $id;
+          $servicos->idMaoObra = $dados['servicos'][$i];
+          $servicos->save();
+        }
+      }
+      return redirect()->route('consertos.localizar')->with('success','Ordem de serviço alterada com sucesso');
+  }
 
     public function nomeClientes(Request $req){
 

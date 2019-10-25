@@ -127,14 +127,14 @@ jQuery.validator.addMethod("cpf", function(value, element) {
  }, "Informe um CPF válido");	
  $(document).ready(function() {
 
+    if($('[name="endereco[estado_id]"]').val()){
+        console.log($('[name="endereco[estado_id]"]').val())
+        getCidades($('[name="endereco[estado_id]"]').val(), $('[name="endereco[estado_id]"]').attr('cidade'))
+    }
+
     $('.cpf-mask').mask("000.000.000-00")
     $('.cep').mask("00000-000")
-    var phone = document.querySelector(".telefone");
-    if (phone.length > 10) {
-        $('.telefone').mask("(00) 0 0000-0000")
-    } else {
-        $('.telefone').mask("(00) 0000-0000")
-    }
+
         
 });
 

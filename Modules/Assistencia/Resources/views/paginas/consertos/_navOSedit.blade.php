@@ -31,11 +31,11 @@
     </div>
 
     <div class="tab-pane fade" id="pecas" role="tabpanel" aria-labelledby="pecas-tab">
-        @include('assistencia::paginas.consertos._pecasEdit')
+        @include('assistencia::paginas.consertos._pecas')
     </div>
 
     <div class="tab-pane fade" id="maoObra" role="tabpanel" aria-labelledby="maoObra-tab">
-        @include('assistencia::paginas.consertos._maoObraEdit')
+        @include('assistencia::paginas.consertos._maoObra')
     </div>
 
     <div class="tab-pane fade show" id="tecnico" role="tabpanel" aria-labelledby="tecnico-tab">

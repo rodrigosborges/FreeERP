@@ -47,9 +47,8 @@ class PagamentoController extends Controller
             $pagamento->delete();
             $pagamento->save();
             
-            $conserto = ConsertoAssistenciaModel::find($id);
-            $conserto->delete();
-            $conserto->save();
+            $conserto = ConsertoAssistenciaModel::findOrFail($id)->delete();
+            
 
             DB::commit();
             if ($dados['recibo']=='N') {

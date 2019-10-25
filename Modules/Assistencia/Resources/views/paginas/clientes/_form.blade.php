@@ -123,7 +123,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">location_city</i></span>
             </div>
-            <select name="endereco[estado_id]" class="form-control" id="estado">
+            <select cidade="{{ old('endereco.cidade_id', isset($cliente) ? $cliente->endereco->cidade_id : "")}}" name="endereco[estado_id]" class="form-control" id="estado">
                 <option value="" disabled selected>Selecione</option>
                 @foreach($estados as $estado){
                     <option value="{{$estado->id}}" uf="{{$estado->uf}}" {{ old('endereco.estado_id', isset($cliente) ? $cliente->endereco->cidade->estado_id : "") == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>

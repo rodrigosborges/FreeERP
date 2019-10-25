@@ -5,19 +5,19 @@
             multiple="true">
             @foreach($servicos as $servico)
 
-            @foreach($itemServico as $item)
-            <?php 
-	        	$servicoId = $item->idMaoObra;
-	        ?>
-            @if ($servicoId == $servico->id)
-            <option data-valor="{{ $servico->valor }}" selected value="{{$servico->id}}">{{ $servico->nome }} |
-                {{ $servico->valor }}</option>
-            @else
-            <option data-valor="{{ $servico->valor }}" value="{{$servico->id}}">{{ $servico->nome }} |
-                {{ $servico->valor }}</option>
-            @endif
+                @foreach($itemServico as $item)
+                    <?php 
+                        $servicoId = $item->idMaoObra;
+                    ?>
+                    @if ($servicoId == $servico->id)
+                    <option data-valor="{{ $servico->valor }}" selected value="{{$servico->id}}">{{ $servico->nome }} |
+                        {{ $servico->valor }}</option>
+                    @else
+                    <option data-valor="{{ $servico->valor }}" value="{{$servico->id}}">{{ $servico->nome }} |
+                        {{ $servico->valor }}</option>
+                    @endif
 
-            @endforeach
+                @endforeach
 
             @endforeach
 
