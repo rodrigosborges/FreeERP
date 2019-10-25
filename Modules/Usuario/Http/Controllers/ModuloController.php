@@ -61,8 +61,11 @@ class ModuloController extends Controller
     {
         DB::beginTransaction();
         try {
-            $modulo = Modulo::create($request->all());
-            $modulo->papeis()->attach($request->papel_id);
+            $modulo = Modulo::create([
+                'nome' => $request->nome,
+                'icone' => $request->icone
+            ]);
+            $modulo->papeis()->attach($request['papel_id']);
             DB::commit();
             return back()->with('success', 'Módulo '.$request->nome.' cadastrado com sucesso!');
         }
@@ -90,7 +93,8 @@ class ModuloController extends Controller
     public function edit($id)
     {
         $modulo = Modulo::findOrFail($id);
-        return view('usuario::modulo.form', compact('modulo'));
+        $papeis = Papel::all();
+        return view('usuario::modulo.form', compact('modulo', 'papeis'));
     }
 
     /**

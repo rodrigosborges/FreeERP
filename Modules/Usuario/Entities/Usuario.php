@@ -23,4 +23,9 @@ class Usuario extends Authenticatable{
                     ->withPivot('papel');
     }
 
+    public function deletePapeis()
+    {
+        $this->modulos()->delete();
+        
+    }
 }

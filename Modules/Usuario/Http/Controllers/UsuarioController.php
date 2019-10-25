@@ -115,16 +115,24 @@ class UsuarioController extends Controller
     {
         
         //if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
+
             DB::beginTransaction();
             try{
                 //atualizando dados básicos
                 $usuario = Usuario::findOrFail($id);
+
+                // $usuario->modulos()->delete();
+                // DB::commit();
+
                 $usuario->update([
                     'apelido' => $request->apelido,
                     'email' => $request->email,
-                    'papel_id' => $request->papel
                 ]);
+
+                $usuario->modulos()->detach();
                 
+                $usuario->modulos()->attach($request['modulo']);
+
                 //pegando a imagem 
                 $avatar = $request->file('avatar');
 
@@ -151,6 +159,7 @@ class UsuarioController extends Controller
                 DB::commit();
             }catch(\Exception $e){
                 DB::rollback();
+                dd($e);
                 return back()->with('error', 'Erro no servidor');
             }
 

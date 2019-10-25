@@ -97,7 +97,7 @@
                                 <label for="papel">Papel</label>
                                 <select class="form-control papelGet" name='modulo[0][papel_id]'>
                                     <option disabled selected>Escolha um Papel...</option>
-                                    @foreach($modulo->papeis as $papel)
+                                    @foreach($papeis as $papel)
                                     <option value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
                                     @endforeach
                                 </select>
