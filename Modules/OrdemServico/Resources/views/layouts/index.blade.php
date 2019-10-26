@@ -61,6 +61,7 @@
 <script>
     $(document).ready(function() {
         $('#datatable').DataTable({
+            "pageLength": 5,
             "lengthChange": false,
             'info': false,
             "language": {
@@ -80,9 +81,12 @@
 
         $(".dataTables_paginate").addClass('pagination ml-2');
         $(".pagination").children().addClass('page-link');
-
+        $(".pagination > span").attr('class', 'd-flex');
+        $(".pagination > span").children().addClass('page-link');
         $('.dataTables_paginate').bind('DOMNodeInserted DOMNodeRemoved', function() {
-            $(".pagination").children().attr('class', 'page-link');
+            $(".pagination").children().addClass('page-link');
+            $(".pagination > span").attr('class', 'd-flex');
+            $(".pagination > span").children().addClass('page-link');
 
         });
     });

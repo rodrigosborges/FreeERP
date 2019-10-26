@@ -18,7 +18,8 @@ use Modules\OrdemServico\Entities\{
     Telefone
 };
 use DB;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Mail;
+use Modules\OrdemServico\Emails\EnviarProtocoloMail;
 
 class OrdemServicoController extends Controller
 {
@@ -26,8 +27,7 @@ class OrdemServicoController extends Controller
     {
         $data = [
             'title' => 'Administração de Ordem de Servico',
-            'model' => OrdemServico::paginate(5),
-            'inativos' => OrdemServico::onlyTrashed()->get(),
+            'model' => OrdemServico::all(),
             'thead' => ['Protocolo', 'Solicitante', 'Status'],
             'row_db' => ['protocolo', 'solicitante_id', 'status_id'],
             'create' => true,
@@ -87,6 +87,7 @@ class OrdemServicoController extends Controller
             );
 
             DB::commit();
+            Mail::to($solicitante->email)->send(new EnviarProtocoloMail($ordem_servico));
             return redirect('/ordemservico/os')->with('success', 'Ordem aberta com sucesso!');
         } catch (Exception $e) {
             DB::rollback();
