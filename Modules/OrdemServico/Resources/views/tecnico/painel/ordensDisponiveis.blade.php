@@ -1,6 +1,6 @@
 @extends('ordemservico::layouts.index')
 @section('acoes')
-<button type="button" class="btn btn-outline-info btn-sm" id = "responsabilidade-button">
+<button type="button" class="btn btn-outline-info btn-sm responsabilidade-button">
     Pegar Responsabilidade
 </button>
 
@@ -33,7 +33,7 @@
 @section('js-add')
 <script>
     $(document).ready(function() {
-        $("#responsabilidade-button").click(function() {
+        $(".responsabilidade-button").click(function() {
             var linha = $(this).parent().parent();
 
             var idOS = linha.find("td:eq(0)").text().trim();

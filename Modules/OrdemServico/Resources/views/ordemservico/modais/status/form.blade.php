@@ -1,6 +1,6 @@
 @extends('ordemservico::layouts.index')
 @section('acoes')
-<button type="button" class="btn btn-outline-info btn-sm" id="status-button">
+<button type="button" class="btn btn-outline-info btn-sm status-button">
     Atualizar Status
 </button>
 
@@ -39,7 +39,7 @@
 @section('js-add')
 <script>
     $(document).ready(function() {
-        $("#status-button").click(function() {
+        $(".status-button").click(function() {
      
             var linha = $(this).parent().parent();
 

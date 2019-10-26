@@ -26,7 +26,7 @@ class PainelTecnicoController extends Controller
      
             $data = [
                 'title' => 'Ordens Disponíveis',
-                'model' => OrdemServico::where('tecnico_id',null)->paginate(5),
+                'model' => OrdemServico::where('tecnico_id',null)->get(),
                 'thead' => ['Protocolo', 'Solicitante', 'Status'],
                 'row_db' => ['protocolo', 'solicitante_id', 'status_id'],
                 'create' => false,
@@ -39,7 +39,7 @@ class PainelTecnicoController extends Controller
     {
         $data = [
             'title' => 'Minhas Ordens de Serviços',
-            'model' => OrdemServico::where('tecnico_id',Auth::user()->id)->paginate(5),
+            'model' => OrdemServico::where('tecnico_id',Auth::user()->id)->get(),
             'thead' => ['Protocolo', 'Solicitante', 'Status'],
             'row_db' => ['protocolo', 'solicitante_id', 'status_id'],
             'create' => false,
@@ -49,7 +49,7 @@ class PainelTecnicoController extends Controller
                 ['nome' => 'Marcar Aparelho como Inutilizado' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'minhasOs']
             ]
             ];
-        return view('ordemservico::ordemservico.solucao.form', compact('data'));
+        return view('ordemservico::tecnico.painel.minhasOS', compact('data'));
     }
 
     public function pegarResponsabilidade($id){

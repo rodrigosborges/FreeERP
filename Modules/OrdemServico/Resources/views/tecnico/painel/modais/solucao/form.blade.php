@@ -1,6 +1,6 @@
 @extends('ordemservico::layouts.index')
 @section('acoes')
-<button type="button" class="btn btn-outline-info btn-sm" id="solucao-button">
+<button type="button" class="btn btn-outline-info btn-sm solucao-button">
     Relatar Solucao
 </button>
 
@@ -35,7 +35,7 @@
 @section('js-add')
 <script>
     $(document).ready(function() {
-        $("#solucao-button").click(function() {
+        $(".solucao-button").click(function() {
             var linha = $(this).parent().parent();
 
             var idOS = linha.find("td:eq(0)").text().trim();

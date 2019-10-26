@@ -44,6 +44,7 @@
             <div class="card-body h-100">
                 <h4>Ultimas Atualizações</h4>
                 <ul class="timeline">
+          
                     @foreach($data['model']->historico as $historico)
                     <li>
                         <a href="#">{{ $historico->titulo}}</a>
@@ -51,6 +52,11 @@
                        
                     </li>
                     @endforeach
+                    <li>
+                        <a href="#">Iniciada</a>
+                        <a href="#" class="float-right">{{$data['model']->created_at->format('d/m/Y H:i:s')}}</a>
+                       
+                </li>
                 </ul>
             </div>
         </div>
