@@ -260,11 +260,11 @@ class FeriasController extends Controller
                                              ['data_fim', '<=', $dataFim],
                                              ['tipo_pagamento', '=', 'ferias']
                                          ])->select('funcionario.nome', 'ferias.data_inicio', 'ferias.data_fim', 'pagamento.total')->get();       
-                                        
+                                            
         if($dadosRelatorio->count() > 0){
             return view('funcionario::ferias.listRelatorio', compact('dadosRelatorio'));
         } else {
-            return redirect()->back()->with('error', 'Não há férias para o período selecionado.');
+            return redirect()->back()->with('error', 'Não há férias ou pagamentos para o período selecionado.');
         }                                
         
     }

@@ -104,7 +104,7 @@
         <div>      
         
         @if($data['saldo_periodo'] >= 60)
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-info" role="alert">
                 Férias será paga em dobro.
             </div>    
         @endif
