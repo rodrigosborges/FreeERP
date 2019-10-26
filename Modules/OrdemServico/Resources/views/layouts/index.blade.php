@@ -13,7 +13,11 @@
                                     @foreach($data['thead'] as $coluna)
                                     <th scope='col' class='text-info bg-light'>{{$coluna}}</th>
                                     @endforeach
+                                    @if($data['create'])
                                     <th scope='col' class="bg-light text-center "><a href="{{route($data['route'].'create')}}" class="text-white btn btn-primary">Abrir OS</a></th>
+                                    @else
+                                    <th scope='col' class="bg-light text-info text-center ">Ações</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,6 +39,7 @@
                                         @foreach($data['acoes'] as $acao)
                                         <a href="{{route($data['route'] . $acao['complemento-route'],$model)}}" class="{{$acao['class']}}">{{$acao['nome']}}</a>
                                         @endforeach
+                                        @yield('acoes')
                                     </td>
                                     @endforeach
                             </tbody>
@@ -46,6 +51,8 @@
         </div>
     </div>
 </div>
+@yield('modal')
+
 @section('js')
 <script src='https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js'></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -80,5 +87,7 @@
         });
     });
 </script>
+
+@yield('js-add')
 @endsection
 @endsection

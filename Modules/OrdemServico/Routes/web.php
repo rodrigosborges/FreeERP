@@ -13,21 +13,24 @@
 
 //Módulo de Ordem de servico
 Route::prefix('ordemservico')->name('modulo.')->group(function() {
-	Route::get('pdf/{id}', 'OrdemServicoController@pdf')->name('os.pdf');
-	Route::get('cidades/showJson/{idEstado}','CidadeController@showJson');	
-	Route::get('status/create','StatusController@create');
-	Route::post('status/store','StatusController@store');
-	Route::get('os/{id}/editStatus','OrdemServicoController@editStatus')->name('os.edit.status');
-	Route::post('os/{id}/updateStatus','OrdemServicoController@updateStatus')->name('os.update.status');
-	
-	Route::get('painel/{id}/ordensDisponiveis','PainelTecnicoController@ordensDisponiveis')->name('tecnico.painel.ordens_disponiveis');
-	Route::get('painel/{id}', 'PainelTecnicoController@index')->name('tecnico.painel.index');
-	Route::get('painel/{id}/minhasOs', 'PainelTecnicoController@ordensAtivas')->name('tecnico.painel.minhasOs');
-	Route::get('painel/{id}/{idOs}/pegarResponsabilidade', 'PainelTecnicoController@pegarResponsabilidade')->name('tecnico.painel.pegarResponsabilidade');
+	Route::get('/','AcompanhamentoController@acompanharOS');
+	Route::post('/acompanhamento','AcompanhamentoController@linhaTempo')->name('os.linhaTempo');
+	Route::get('pdf/{id}', 'OrdemServicoController@pdf')->middleware('auth')->name('os.pdf');
+	Route::get('cidades/showJson/{idEstado}','CidadeController@showJson')->middleware('auth');;	
+	Route::get('status/create','StatusController@create')->middleware('auth');
+	Route::post('status/store','StatusController@store')->middleware('auth');
+	Route::post('os/status/{id}/updateStatus','StatusController@updateStatus')->middleware('auth')->name('os.update.status');
+	Route::get('os/status/{id}/showStatusOS','StatusController@showStatusOS')->middleware('auth');
 
-	Route::resource('os', 'OrdemServicoController');
-	Route::resource('tecnico', 'TecnicoController');
-	Route::resource('solicitante', 'SolicitanteController');
+	Route::get('painel/ordensDisponiveis','PainelTecnicoController@ordensDisponiveis')->middleware('auth')->name('tecnico.painel.ordens_disponiveis');
+	Route::get('painel/', 'PainelTecnicoController@index')->middleware('auth')->name('tecnico.painel.index');
+	Route::get('painel/minhasOs', 'PainelTecnicoController@ordensAtivas')->middleware('auth')->name('tecnico.painel.minhasOs');
+	Route::get('painel/{idOS}/pegarResponsabilidade', 'PainelTecnicoController@pegarResponsabilidade')->middleware('auth')->name('tecnico.painel.pegarResponsabilidade');
+	
+	Route::post('solucao/{idOS}/store','SolucaoController@store')->middleware('auth')->name('solucao.store');
+
+	Route::resource('os', 'OrdemServicoController')->middleware('auth');
+	Route::resource('solicitante', 'SolicitanteController')->middleware('auth');
 
 	
 });

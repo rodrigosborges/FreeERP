@@ -29,18 +29,17 @@ class OrdemServicoController extends Controller
             'model' => OrdemServico::paginate(5),
             'inativos' => OrdemServico::onlyTrashed()->get(),
             'thead' => ['Protocolo', 'Solicitante', 'Status'],
-            'row_db' => ['id', 'solicitante_id', 'status_id'],
-            'cadastro' => 'Cadastrar OS',
-            'deletar' => true,
+            'row_db' => ['protocolo', 'solicitante_id', 'status_id'],
+            'create' => true,
+            'status' => Status::pluck('titulo','id'),
             'route' => 'modulo.os.',
             'acoes' => [
                 ['nome' => 'Editar', 'class' => 'btn btn-outline-info btn-sm', 'complemento-route' => 'edit'],
-                ['nome' => 'Atualizar status', 'class' => 'btn btn-outline-info btn-sm', 'complemento-route' => 'edit.status'],
                 ['nome' => 'Detalhes', 'class' => 'btn btn-outline-warning btn-sm', 'complemento-route' => 'show'],
                 ['nome' => 'PDF', 'class' => 'btn btn-outline-dark btn-sm', 'complemento-route' => 'pdf']
             ]
         ];
-        return view('ordemservico::layouts.index', compact('data'));
+        return view('ordemservico::ordemservico.index', compact('data'));
     }
 
     public function create()
@@ -65,7 +64,6 @@ class OrdemServicoController extends Controller
     {
         DB::beginTransaction();
         try {
-            
             $aparelho = Aparelho::firstOrCreate($request->aparelho)->id;
             $problema = Problema::firstOrCreate($request->problema)->id;
             $endereco = Endereco::create($request->endereco)->id;
@@ -84,6 +82,7 @@ class OrdemServicoController extends Controller
                     'problema_id' => $problema,
                     'descricao' => $request->descricao,
                     'gerente_id' => Auth::user()->id,
+                    'protocolo' => uniqid(),
                 ]
             );
 
@@ -167,29 +166,4 @@ class OrdemServicoController extends Controller
         return $pdf->stream();
     }
 
-    public function editStatus($id)
-    {
-        $data = [
-            'url' => url("ordemservico/os/$id/updateStatus"),
-            'title' => 'Atualização de Status',
-            'button' => 'Atualizar',
-            'model' => OrdemServico::findOrFail($id),
-            'status' => Status::pluck('titulo','id'),
-        ];
-        return view('ordemservico::ordemservico.status.form',compact('data'));
-    }
-
-    public function updateStatus(Request $request, $id)
-    {
-
-        DB::beginTransaction();
-        try {
-            OrdemServico::findOrFail($id)->update( $request->all());
-            DB::commit();
-            return redirect('/ordemservico/os')->with('success', 'Status atualizado com successo');
-        } catch (Exception $e) {
-            DB::rollback();
-            return back()->with('error', 'Erro no servidor');
-        }
-    }
 }

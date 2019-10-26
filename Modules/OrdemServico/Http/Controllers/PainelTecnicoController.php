@@ -4,9 +4,10 @@ namespace Modules\OrdemServico\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
 use Modules\OrdemServico\Entities \ {
-    Tecnico,
     OrdemServico
 };
 use DB;
@@ -14,54 +15,48 @@ use DB;
 class PainelTecnicoController extends Controller
 {
 
-    public function index($id){
+    public function index(){
         $data = [
-            'model' => Tecnico::findOrFail($id)
+            'model' => Auth::user()
         ];
         return view('ordemservico::tecnico.painel.index',compact('data'));
     }
 
-    public function ordensDisponiveis($id){
-        $data = [
-            'title' => 'Ordens Disponíveis',
-            'tecnico' => Tecnico::findOrFail($id),
-            'model' => OrdemServico::where('tecnico_id',null)->paginate(5),
-            'inativos' => [],
-            'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('ordem_servico'),0,4),
-            'cadastro' => '',
-            'deletar' => false,
-            'route' => 'modulo.tecnico.',
-            'acoes' => [
-                ['nome' => 'Pegar Responsabilidade' , 'class' => 'pegar-responsabilidade btn btn-outline-info btn-sm'],
-            ]
+    public function ordensDisponiveis(){
+     
+            $data = [
+                'title' => 'Ordens Disponíveis',
+                'model' => OrdemServico::where('tecnico_id',null)->paginate(5),
+                'thead' => ['Protocolo', 'Solicitante', 'Status'],
+                'row_db' => ['protocolo', 'solicitante_id', 'status_id'],
+                'create' => false,
+                'acoes' => []
             ];
-        return view('ordemservico::tecnico.painel.ordensDisponiveis', compact('data'));
+            return view('ordemservico::tecnico.painel.ordensDisponiveis', compact('data'));
     }
 
-    public function ordensAtivas($id)
+    public function ordensAtivas()
     {
         $data = [
             'title' => 'Minhas Ordens de Serviços',
-            'model' => Tecnico::findOrFail($id)->ordem_servico()->paginate(5),
-            'inativos' => [],
-            'atributos' => array_slice(DB::getSchemaBuilder()->getColumnListing('ordem_servico'),0,4),
-            'cadastro' => '',
-            'deletar' => false,
-            'route' => 'modulo.tecnico.',
+            'model' => OrdemServico::where('tecnico_id',Auth::user()->id)->paginate(5),
+            'thead' => ['Protocolo', 'Solicitante', 'Status'],
+            'row_db' => ['protocolo', 'solicitante_id', 'status_id'],
+            'create' => false,
+            'route' => 'modulo.tecnico.painel.',
             'acoes' => [
-                ['nome' => 'Relatar Solução' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'index'],
-                ['nome' => 'Enviar Para a Manutenção' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'index'],
-                ['nome' => 'Marcar Aparelho como Inutilizado' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'index']
+                ['nome' => 'Enviar Para a Manutenção' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'minhasOs'],
+                ['nome' => 'Marcar Aparelho como Inutilizado' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'minhasOs']
             ]
             ];
-        return view('ordemservico::layouts.index', compact('data'));
+        return view('ordemservico::ordemservico.solucao.form', compact('data'));
     }
 
-    public function pegarResponsabilidade($idTecnico,$idOs){
-        $os = OrdemServico::findOrFail($idOs);
-        $os->tecnico_id = $idTecnico;
+    public function pegarResponsabilidade($id){
+        $os = OrdemServico::all()->where('protocolo',$id)->first();
+        $os->tecnico_id = Auth::user()->id;
         $os->save();
-        return redirect('/ordemservico/painel/'. $idTecnico)->with('success', 'Ordem Ativada com successo');
-    }
+        return redirect()->back()->with('success', 'Ordem Ativada com successo');
+    } 
 
 }

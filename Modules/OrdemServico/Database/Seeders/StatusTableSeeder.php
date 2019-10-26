@@ -18,6 +18,7 @@ class StatusTableSeeder extends Seeder
         DB::table('status')->delete();
 
         DB::table('status')->insert([
+            ['titulo' => 'Iniciada'],
             ['titulo' => 'Encaminhada para o técnico'],
             ['titulo' => 'Aguandando peças'],
             ['titulo' => 'Pronta / Aguardando retirada'],

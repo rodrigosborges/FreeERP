@@ -10,7 +10,7 @@ class OrdemServico extends Model
     Use SoftDeletes;
     protected $table = 'ordem_servico';
     public $timestamps = true;
-    protected $fillable = array('status_id','descricao','solicitante_id','aparelho_id','problema_id','tecnico_id','gerente_id');
+    protected $fillable = array('status_id','descricao','protocolo','solicitante_id','aparelho_id','problema_id','tecnico_id','gerente_id');
 
     //relaçoes
     public function solicitante(){
@@ -27,6 +27,9 @@ class OrdemServico extends Model
     
     public function problema(){
         return $this->belongsTo('Modules\OrdemServico\Entities\Problema');
+    }
+    public function historico(){
+        return $this->belongsToMany('Modules\OrdemServico\Entities\Status','historico_os')->withTimestamps()->orderByDesc('updated_at');
     }
 
 

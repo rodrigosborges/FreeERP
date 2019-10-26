@@ -91,8 +91,12 @@
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="material-icons mr-2 btn-circle">apps</i>
-                        <!-- <i class="material-icons btn-circle">person</i> -->
-                        <img src="{{url('storage/img/avatars/'.Auth::user()->avatar)}}" width='35px' height="35px" class='rounded-circle' style="overflow: hidden;" alt="">                        
+                        @if(Auth::user())
+                            <img src="{{url('storage/img/avatars/'.Auth::user()->avatar)}}" width='35px' height="35px" class='rounded-circle' style="overflow: hidden;" alt="">
+                        @else
+                            <i class="material-icons btn-circle">person</i>
+                        @endif
+                       
                     </div>
                 </div>
                 <div id="content">

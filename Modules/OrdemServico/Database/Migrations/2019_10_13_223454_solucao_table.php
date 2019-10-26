@@ -1,10 +1,9 @@
-
 <?php
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ProblemaTable extends Migration
+class SolucaoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +12,14 @@ class ProblemaTable extends Migration
      */
     public function up()
     {
-        Schema::create('problema', function(Blueprint $table)
+        Schema::create('solucao', function(Blueprint $table)
 		{
 			$table->increments('id');
-            $table->string('titulo');
-            $table->string('prioridade')->default(0);
-			$table->timestamps();
-			$table->softDeletes();
+			$table->string('descricao');
+
+            $table->integer('problema_id')->unsigned();
+            $table->foreign('problema_id')->references('id')->on('problema');
+			
 		});
 	}
 	/**
@@ -29,6 +29,6 @@ class ProblemaTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('problema');
+		Schema::drop('solucao');
 	}
 }

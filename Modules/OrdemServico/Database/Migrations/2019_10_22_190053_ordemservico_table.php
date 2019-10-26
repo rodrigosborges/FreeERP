@@ -1,3 +1,4 @@
+
 <?php
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,10 +16,14 @@ class OrdemServicoTable extends Migration
         Schema::create('ordem_servico', function(Blueprint $table)
 		{
             $table->increments('id');
+            $table->string('protocolo')->unique();
             $table->string('descricao');
 
             $table->integer('gerente_id')->unsigned();
             $table->foreign('gerente_id')->references('id')->on('usuario');
+
+            $table->integer('tecnico_id')->unsigned()->nullable();
+            $table->foreign('tecnico_id')->references('id')->on('usuario');
     
             $table->integer('aparelho_id')->unsigned();
             $table->foreign('aparelho_id')->references('id')->on('aparelho');
