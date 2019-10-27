@@ -8,7 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
 use Modules\OrdemServico\Entities \ {
-    OrdemServico
+    OrdemServico,
+    Status
 };
 use DB;
 
@@ -43,11 +44,9 @@ class PainelTecnicoController extends Controller
             'thead' => ['Protocolo', 'Solicitante', 'Status'],
             'row_db' => ['protocolo', 'solicitante_id', 'status_id'],
             'create' => false,
+            'status' => Status::pluck('titulo', 'id'),
             'route' => 'modulo.tecnico.painel.',
-            'acoes' => [
-                ['nome' => 'Enviar Para a Manutenção' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'minhasOs'],
-                ['nome' => 'Marcar Aparelho como Inutilizado' , 'class' => 'btn btn-outline-info btn-sm','complemento-route' => 'minhasOs']
-            ]
+            'acoes' => []
             ];
         return view('ordemservico::tecnico.painel.minhasOS', compact('data'));
     }

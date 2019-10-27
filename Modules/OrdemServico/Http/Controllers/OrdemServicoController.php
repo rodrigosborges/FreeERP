@@ -25,13 +25,18 @@ class OrdemServicoController extends Controller
 {
     public function index(Request $request)
     {
+        $idStatusConcluida = Status::all()->where('titulo','Concluída')->first()->id;
+        $ordensConcluidas = DB::table('ordem_servico')->where('status_id',$idStatusConcluida);
         $data = [
             'title' => 'Administração de Ordem de Servico',
-            'model' => OrdemServico::all(),
-            'thead' => ['Protocolo', 'Solicitante', 'Status'],
-            'row_db' => ['protocolo', 'solicitante_id', 'status_id'],
+            'model' => OrdemServico::all()->where('status_id','<>',$idStatusConcluida),
+            'thead' => ['Protocolo', 'Solicitante', 'Status','Prioridade'],
+            'row_db' => ['protocolo', 'solicitante_id', 'status_id','prioridade'],
             'create' => true,
-            'status' => Status::pluck('titulo','id'),
+            'inutilizados' => Aparelho::all()->where('inutilizacao',true),
+            'tempoMedio' =>  (DB::select("select avg(timediff(updated_at,created_at)) as media from ordem_servico where status_id =" . $idStatusConcluida)),
+            'ordensConcluidas' => $ordensConcluidas->whereMonth('updated_at',date('m'))->count(),
+            'status' => Status::pluck('titulo', 'id'),
             'route' => 'modulo.os.',
             'acoes' => [
                 ['nome' => 'Editar', 'class' => 'btn btn-outline-info btn-sm', 'complemento-route' => 'edit'],
@@ -74,7 +79,7 @@ class OrdemServicoController extends Controller
                 'endereco_id' => $endereco
             ]);
             $solicitante->telefones()->createMany($request->telefone);
-           
+
             $ordem_servico = OrdemServico::create(
                 [
                     'solicitante_id' => $solicitante->id,
@@ -167,4 +172,17 @@ class OrdemServicoController extends Controller
         return $pdf->stream();
     }
 
+    public function updatePrioridade(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $os = OrdemServico::all()->where('protocolo',$id)->first();
+            $os->update( $request->all());
+            DB::commit();
+            return redirect('/ordemservico/os')->with('success', 'Prioridade atualizada com successo');
+        } catch (Exception $e) {
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor');
+        }
+    }
 }

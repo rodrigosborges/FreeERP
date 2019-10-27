@@ -15,6 +15,7 @@ class AparelhoTable extends Migration
             $table->string('marca');
             $table->string('modelo');
             $table->string('acessorios');
+            $table->boolean('inutilizacao')->default(false);
 			$table->timestamps();
 			$table->softDeletes();
 		});

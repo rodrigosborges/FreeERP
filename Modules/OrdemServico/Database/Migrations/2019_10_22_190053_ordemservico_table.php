@@ -18,6 +18,8 @@ class OrdemServicoTable extends Migration
             $table->increments('id');
             $table->string('protocolo')->unique();
             $table->string('descricao');
+            $table->integer('prioridade')->default(3);
+
 
             $table->integer('gerente_id')->unsigned();
             $table->foreign('gerente_id')->references('id')->on('usuario');

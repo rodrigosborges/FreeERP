@@ -1,6 +1,9 @@
 @extends('ordemservico::layouts.informacoes')
 @section('content')
 <div class="container h-100">
+
+    @yield('cards')
+
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card border-info ">

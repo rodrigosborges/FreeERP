@@ -1,12 +1,3 @@
-@extends('ordemservico::layouts.index')
-@section('acoes')
-<button type="button" class="btn btn-outline-info btn-sm status-button">
-    Atualizar Status
-</button>
-
-@endsection
-@section('modal')
-
 <!-- Modal -->
 <div class="modal fade" id="atualizar-status" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -34,26 +25,3 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('js-add')
-<script>
-    $(document).ready(function() {
-        $(".status-button").click(function() {
-     
-            var linha = $(this).parent().parent();
-
-            var idOS = linha.find("td:eq(0)").text().trim();
-
-            $.get("/ordemservico/os/status/" + idOS + "/showStatusOS", function(data) {
-                $('select').val(data);
-            });
-
-            $("#form").attr("action", '/ordemservico/os/status/' + idOS + '/updateStatus');
-
-            $('#atualizar-status').modal('show');
-
-        });
-    });
-</script>
-@endsection

@@ -8,7 +8,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\OrdemServico\Entities\{
     Status,
-    OrdemServico
+    OrdemServico,
+    Aparelho
 };
 use DB;
 
@@ -43,7 +44,6 @@ class StatusController extends Controller
     
     public function updateStatus(Request $request, $id)
     {
-
         DB::beginTransaction();
         try {
            $os = OrdemServico::all()->where('protocolo',$id)->first();
@@ -51,6 +51,9 @@ class StatusController extends Controller
            $os->historico()->attach([
                'status_id' => $request->status_id
            ]);
+            if($request->status_id == Status::all()->where('titulo','Marcado como Inutilizável')->first()->id){
+                Aparelho::findOrFail($os->aparelho->id)->update(['inutilizacao' => true]);
+            }
             DB::commit();
             return redirect('/ordemservico/os')->with('success', 'Status atualizado com successo');
         } catch (Exception $e) {

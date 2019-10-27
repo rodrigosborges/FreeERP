@@ -21,10 +21,11 @@ class StatusTableSeeder extends Seeder
             ['titulo' => 'Iniciada'],
             ['titulo' => 'Encaminhada para o técnico'],
             ['titulo' => 'Aguandando peças'],
+            ['titulo' => 'Marcado como Inutilizável'],
             ['titulo' => 'Pronta / Aguardando retirada'],
             ['titulo' => 'Pronta / Entrega a Domicilio'],
             ['titulo' => 'Cancelada'],
-            ['titulo' => 'Retirada'],
+            ['titulo' => 'Concluída'],
         ]);
         Model::unguard();
     }

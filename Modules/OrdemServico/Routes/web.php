@@ -21,6 +21,7 @@ Route::prefix('ordemservico')->name('modulo.')->group(function() {
 	Route::post('status/store','StatusController@store')->middleware('auth');
 	Route::post('os/status/{id}/updateStatus','StatusController@updateStatus')->middleware('auth')->name('os.update.status');
 	Route::get('os/status/{id}/showStatusOS','StatusController@showStatusOS')->middleware('auth');
+	Route::post('prioridade/{id}/update', 'OrdemServicoController@updatePrioridade');
 
 	Route::get('painel/ordensDisponiveis','PainelTecnicoController@ordensDisponiveis')->middleware('auth')->name('tecnico.painel.ordens_disponiveis');
 	Route::get('painel/', 'PainelTecnicoController@index')->middleware('auth')->name('tecnico.painel.index');

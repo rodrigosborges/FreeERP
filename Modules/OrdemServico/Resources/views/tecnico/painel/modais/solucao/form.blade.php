@@ -1,12 +1,3 @@
-@extends('ordemservico::layouts.index')
-@section('acoes')
-<button type="button" class="btn btn-outline-info btn-sm solucao-button">
-    Relatar Solucao
-</button>
-
-@endsection
-@section('modal')
-
 <!-- Modal -->
 <div class="modal fade" id="solucao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -30,21 +21,3 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('js-add')
-<script>
-    $(document).ready(function() {
-        $(".solucao-button").click(function() {
-            var linha = $(this).parent().parent();
-
-            var idOS = linha.find("td:eq(0)").text().trim();
-
-            $("#form").attr("action", '/ordemservico/solucao/' + idOS + '/store');
-
-            $('#solucao').modal('show');
-
-        });
-    });
-</script>
-@endsection
