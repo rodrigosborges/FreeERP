@@ -38,4 +38,7 @@ class Protocolo extends Model
         return $this->belongsTo('Modules\Protocolos\Entities\Tramite');
     } 
 
+    public function apensados(){
+        return $this->belongsToMany('Modules\Protocolos\Entities\Protocolo', 'protocolo_has_apensado', 'protocolo_id', 'apensado_id');
+    }
 }

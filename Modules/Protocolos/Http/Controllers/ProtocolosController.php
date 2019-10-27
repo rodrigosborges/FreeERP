@@ -5,7 +5,7 @@ namespace Modules\Protocolos\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Protocolo, Usuario, Tramite};
+use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Protocolo, Usuario, Tramite, Documento};
 use Modules\Protocolos\Http\Requests\{CreateProtocolo};
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -89,11 +89,46 @@ class ProtocolosController extends Controller
         return $content;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
+    public function fetchApensado(Request $request){
+       
+        $query = $request->get('query'); 
+        $data = DB::table('protocolo')->where('assunto', 'LIKE', '%'.$query.'%')->get();
+        $content = [];
+        foreach($data as $dados){
+            $content[] = [
+                'label' => $dados->assunto,
+                'value' => $dados->id
+            ];  
+        }
+        return $content;
+
+    }
+
+    public function salvarApensado(Request $request){
+
+        try{
+
+            DB::beginTransaction();
+
+            $protocolo = Protocolo::findOrFail($request->id);
+    
+            $protocolo->apensados()->attach($request->apensado);
+
+            DB::commit();
+            
+            return response()->json(['protocolo' => $protocolo, 'status' => 'success'], 200);
+
+        }
+
+        catch(Exception $e){
+
+            DB::rollback();
+            
+            return $e;
+            
+		}
+    }
+
     public function store(Request $request){
 
 
@@ -191,6 +226,7 @@ class ProtocolosController extends Controller
             'url'           => url("protocolos/acompanhar/$id"),
             'protocolo'     => Protocolo::findOrFail($id),
             'tramite'       => Tramite::where('protocolo_id', '=', $id)->get(),
+            'documento'     => Documento::where('protocolo_id', '=', $id)->get(),
             'title'         => 'Acompanhamento de Protocolo',
             'button'        => 'Adicionar',
         ]);
@@ -198,30 +234,55 @@ class ProtocolosController extends Controller
         return view('protocolos::protocolo.acompanhar', compact('data'));
     }
 
-    public function protocolos(Request $request){
-        $query = $request->get('query'); 
-        $data = DB::table('protocolo')->where('id', 'LIKE', '%'.$query.'%')->get();
-        $content = [];
-        foreach($data as $dados){
-            $content[] = [
-                'label' => $dados->nome,
-                'value' => $dados->id
-            ];  
-        }
-        return $content;
-    }
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-   
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
+    public function teste(Request $request){
+        return response()->json('Alo', 200);
+    }
+
+    public function salvarDocumento(Request $request){
+
+        if($request->hasFile('documento') && $request->file('documento')->isValid() && $request->documento->extension() == 'pdf'){
+            $nome = md5(date('Y-m-d H:i:s'));
+            $extensao = $request->documento->extension();
+            $nameFile = "{$nome}.{$extensao}";
+            $documento = $nameFile;
+            $upload = $request->documento->storeAs('documentos', $nameFile);
+            if(!$upload){
+                return redirect()
+                            ->back()
+                            ->with('error', 'Falha no upload do arquivo');
+            }
+        }
+
+        DB::beginTransaction();
+
+        try{
+
+            $documento = Documento::Create([
+                'nome_documento'    => $request->file('documento')->getClientOriginalName(),
+                'documento'         => $documento,
+                'protocolo_id'      => $request['id-protocolo']
+            ]);
+ 
+            
+            DB::commit();
+
+            return response()->json($documento);
+
+        }catch(Exception $e){
+
+			DB::rollback();
+            return back();
+            
+		}
+    }
+
+   public function download(Request $request){
+
+        return 'lalala';
+
+   }
+    
     public function edit($id)
     {
         return view('protocolos::edit');

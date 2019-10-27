@@ -1,12 +1,13 @@
-var id;
+var ids = []
+var idprotocolo = document.getElementById('id-protocolo').value;
 
-$('#pesquisaProtocolos').keyup(function(){
+$('#pesquisa').keyup(function(){
     var query = $(this).val();
-
+    console.log(query);
     if(query != ''){
 
         $.ajax({
-            url: main_url+'/protocolos/buscaProtocolos',
+            url: main_url+'/protocolos/buscaApensado',
             method: "POST",
             data: {query:query},
             dataType: 'json',
@@ -14,6 +15,36 @@ $('#pesquisaProtocolos').keyup(function(){
                 
                 $('#pesquisa').autocomplete({
                     source: data,
+                  
+                    select: function (e, i) {
+                        console.log(i.item.value);
+
+                        var idapensado = i.item.value;
+
+                        $.ajax({
+                           url: main_url+'/protocolos/salvarApensado/'+idprotocolo,
+                           method: "POST",
+                           data: {id:idprotocolo, apensado:idapensado},
+                           dataType: 'json',
+                           sucess:function(data){
+                                var obj = JSON.parse(data); 
+                                console.log(obj);
+                             
+                                if(obj.status == 'success'){
+                                    console.log('sucesso');
+                                }
+                                else{
+                                    console.log('Deu ruim');
+                                }
+                           },
+                           error: function(e) {
+                                console.log(e);
+                           }
+                        });
+                        
+
+   
+                    }
                     
                 })
                 
@@ -40,6 +71,7 @@ $(document).on("click", ".trash", function() {
 
     console.log(ids);
 })
+
 
 
 

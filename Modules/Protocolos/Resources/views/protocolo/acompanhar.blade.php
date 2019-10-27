@@ -35,7 +35,7 @@
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
-                    <i class="material-icons" style="vertical-align:middle; font-size:25px; margin-right:5px;">insert_drive_file</i>Documentos
+                    <i class="material-icons" style="vertical-align:middle; font-size:25px; margin-right:5px;">insert_drive_file</i>Documentos ({{$data["documento"]->count()}})
                 </a>
             </li>
             <li class="nav-item">
@@ -52,27 +52,53 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="documentos-tab">
             <br>
-            <label for="" class="control-label">Adicionar um documento ao protocolo: <span class="required-symbol">* FAZER</span></label>
-                <form id="form" action="{{ $data['url'] }}" method="POST" enctype="multipart/form-data">
+                <label for="" class="control-label">Adicionar um documento ao protocolo: <span class="required-symbol">*</span></label>
+                <form id="doc-protocolo"> 
                     {{ csrf_field() }}
-                    @if($data['model'])
-                        @method('PUT')
-                    @endif
-                    <div class="input-group col-6 mb-3 mt-3">
-                        <span class="input-group-text">
-                            <i class="material-icons">camera_alt</i>
-                        </span>
-                        <div class="custom-file">
-                            <input type="file" name="foto" class="custom-file-input" id="foto">
-                            <label class="custom-file-label" for="foto">Selecionar</label>
+                    <div class="row">
+                        <input id="id-protocolo" name="id-protocolo" type="hidden" value="{{$data['protocolo']->id}}">
+                        <div class="input-group col-6 mb-3 mt-3">
+                            <span class="input-group-text">
+                                <i class="material-icons">camera_alt</i>
+                            </span>
+                            <div class="custom-file">
+                                <input type="file" name="documento" class="custom-file-input" id="documento">
+                                <label class="custom-file-label" for="documento">Selecionar</label>
+                            </div>
+                        </div>
+                    
+                        <div class="col-2 justify-content-center mt-3">
+                            <button class="btn btn-success" type="submit">Adicionar</button>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <button class="btn btn-success sendForm" type="button">
-                                <i class="material-icons lock-locked" style="vertical-align:middle; font-size:25px; margin-right:5px;">save</i>{{$data['button']}}
-                        </button>
-                    </div>
                 </form>
+                <br>
+                    <table class="table table-bordered table-hover" id="table-documento">
+                        <thead>
+                            <tr class="table-primary">
+                                <th scope="col" class="col-md-2">Documento</th>
+                                <th scope="col">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teste">
+                        @foreach($data["documento"] as $documento)
+                            <tr>
+                                <td>{{$documento->nome_documento}}</td>
+                                <td class="text-center">
+                                   <form data-id="{{$documento->id}}" class="doc-download">
+                                   {{ csrf_field() }}
+                                        <button  class="btn btn-success btn-sm download-doc" type="submit" style="border-radius:50px;">
+                                            <i class="material-icons lock-locked" style="font-size:25px;">file_download</i>
+                                        </button>
+                                   </form>
+                                </td>
+                                <td>
+                                <a href="{{url('vstorage/app/documentos/'.$documento->documento)}}" class="btn btn-info btn-small ">Documento</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="tramites-tab">
             <br>
@@ -103,28 +129,103 @@
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="apensadps-tab">
                 <br>
-                <form>
-                <div class="form-group">
-                    <label for="" class="control-label">Selecione o protocolo a ser apensado: <span class="required-symbol">* FAZER</span></label>
-                    <div class="input-group">
-                        <input id="arrayInteressados" type="hidden" value="" name="interessados">    
-                        <div id="interessados" class="interessados"></div>
+                <form id="form-apensados">
+                {{ csrf_field() }}
+                @if($data['model'])
+                    @method('PUT')
+                @endif
+                    <input id="id-protocolo" name="id-protocolo" type="hidden" value="{{$data['protocolo']->id}}">
+                    <div class="form-group">
+                        <label for="nome" class="control-label">Escolha o protocolo que gostaria de apensar: <span class="required-symbol">*</span></label>
+                            <div class="input-group">
+                                <input id="arrayApensados" type="hidden" value="" name="apensados">    
+                                <div id="interessados" class="interessados"></div>
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">search</i>
+                                    </span>
+                                    <input id="pesquisa" placeholder="Pesquise aqui" class="form-control" type="text" name="pesquisa"/>
+                                </div>
+                            </div>
                     </div>
-                    <br>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="material-icons">search</i>
-                            </span>
-                        </div>
-                        <input id="pesquisaProtocolos" placeholder="Pesquise aqui" class="form-control" type="text" name="pesquisa"/>
-                    </div>
-                </div>
                 </form>
+                <br>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="table-primary">
+                            <th scope="col">Número</th>
+                            <th scope="col">Setor de Origem</th>
+                            <th scope="col">Data de cadastro</th>
+                            <th scope="col">Última modificação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    
+                    </tbody>
+                </table>
             </div>
         </div>
 
 @endsection
 @section('script')
+    <script type="text/javascript">
+
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN':"{{ csrf_token() }}"
+                }
+        });
+
+        $("#doc-protocolo").submit(function (e){
+            e.preventDefault();
+            var idprotocolo = document.getElementById('id-protocolo').value;
+            var form = $('#doc-protocolo')[0] 
+            var dados = new FormData(form)
+            console.log(form);
+            $.ajax({
+                url: main_url+'/protocolos/protocolos/acompanhar/'+idprotocolo,
+                method:"POST",
+                dataType:"html",
+                data:dados,
+                processData: false, 
+                contentType: false,
+                success:function(response){
+                
+                    var obj = JSON.parse(response); 
+                    
+                    $('#table-documento > tbody:last-child').append("<tr><td>"+obj.nome_documento+"</td><td>Teste</td></tr>");
+                },
+                error:function(err){
+                console.log(err);
+                }
+            });
+        })
+
+        $(".doc-download").submit(function (e){
+            e.preventDefault();
+
+            var dados = $(this).serialize();
+            console.log(dados);
+            $.ajax({
+                url: main_url+'/protocolos/protocolos/download',
+                method:"POST",
+                dataType:"html",
+                data:dados,
+                processData: false, 
+                contentType: false,
+                success:function(response){
+                    console.log(response);
+                    
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            });
+        })
+        
+    </script>
     <script src="{{Module::asset('Protocolos:js/views/protocolo/acompanhar.js')}}"></script>
 @endsection

@@ -27,9 +27,11 @@ Route::prefix('protocolos')->group(function() {
     Route::post('protocolos/{id}', 'ProtocolosController@salvarEncaminhamento');
     Route::get('protocolos/list/{status}', 'ProtocolosController@list');
     Route::post('busca', 'ProtocolosController@fetch');
-    Route::post('buscaProtocolos', 'ProtocolosController@protocolos');
+    Route::post('buscaApensado', 'ProtocolosController@fetchApensado');
     Route::get('protocolos/acompanhar/{id}', 'ProtocolosController@acompanhar');
     Route::post('protocolos/acompanhar/{id}', 'ProtocolosController@salvarDocumento');
+    Route::post('protocolos/download', 'ProtocolosController@download');
+    Route::post('salvarApensado/{id}', 'ProtocolosController@salvarApensado');
     Route::resource('protocolos', 'ProtocolosController')->middleware('auth');
- 
+
 });

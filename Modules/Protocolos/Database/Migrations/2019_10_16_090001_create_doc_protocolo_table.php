@@ -15,6 +15,7 @@ class CreateDocProtocoloTable extends Migration
     {
         Schema::create('doc_protocolo', function (Blueprint $table) {
             $table->integer('id', true);
+            $table->string('nome_documento', 100);
             $table->string('documento', 100);
             $table->integer('protocolo_id')->index('fk_doc_protocolo_protocolo1');
         });

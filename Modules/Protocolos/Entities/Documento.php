@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Documento extends Model
 {
-    protected $table = 'setor';
+    protected $table = 'doc_protocolo';
 
-    protected $fillable = ['documento','protocolo_id'];
+    protected $fillable = ['nome_documento', 'documento', 'protocolo_id'];
 
     public $timestamps = false;
 
