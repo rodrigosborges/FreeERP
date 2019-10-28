@@ -27,14 +27,23 @@ class OrdemServicoController extends Controller
     public function index(Request $request)
     {
         $idStatusConcluida = Status::all()->where('titulo','Concluída')->first()->id;
+        $idStatusInutilizado = Status::all()->where('titulo','Marcado como Inutilizável')->first()->id;
         $ordensConcluidas = DB::table('ordem_servico')->where('status_id',$idStatusConcluida);
         $data = [
-            'title' => 'Administração de Ordem de Servico',
-            'model' => OrdemServico::all()->where('status_id','<>',$idStatusConcluida),
+            'title' => 'Administração de Ordem de Servico em Andamento',
+            'model' => OrdemServico::all()->where('status_id','<>',$idStatusConcluida)->where('status_id','<>',$idStatusInutilizado),
             'thead' => ['Protocolo', 'Solicitante', 'Status','Prioridade'],
             'row_db' => ['protocolo', 'solicitante_id', 'status_id','prioridade'],
             'create' => true,
-            'inutilizados' => Aparelho::all()->where('inutilizacao',true),
+            'principaisFalhas' => DB::table('ordem_servico')
+            ->join('problema', 'problema.id', '=', 'ordem_servico.problema_id')
+            ->select(DB::raw('count(*) as total, problema.titulo'))
+            ->limit(3)
+            ->orderBy('total','desc')
+            ->groupBy('problema.titulo')
+            ->get(),
+            'inutilizadosAno' => DB::table('aparelho')->where('inutilizacao',true)->whereYear('updated_at',date('Y')),
+            'inutilizadosMes' => DB::table('aparelho')->where('inutilizacao',true)->whereMonth('updated_at',date('m')),
             'tempoMedio' =>  (DB::select("select avg(timediff(updated_at,created_at)) as media from ordem_servico where status_id =" . $idStatusConcluida)),
             'ordensConcluidas' => $ordensConcluidas->whereMonth('updated_at',date('m'))->count(),
             'status' => Status::pluck('titulo', 'id'),

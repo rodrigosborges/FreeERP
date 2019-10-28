@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Aparelho extends Model
 {
-    public $timestamps = false;
+    public $timestamps = true;
     protected $table = 'aparelho';
     protected $fillable = array('marca','numero_serie','tipo_aparelho','modelo','acessorios','inutilizacao');
 }

@@ -24,7 +24,7 @@ class PainelTecnicoController extends Controller
     }
 
     public function ordensDisponiveis(){
-     
+  
             $data = [
                 'title' => 'Ordens Disponíveis',
                 'model' => OrdemServico::where('tecnico_id',null)->get(),
@@ -38,9 +38,11 @@ class PainelTecnicoController extends Controller
 
     public function ordensAtivas()
     {
+        $idStatusConcluida = Status::all()->where('titulo','Concluída')->first()->id;
+        $idStatusInutilizado = Status::all()->where('titulo','Marcado como Inutilizável')->first()->id;   
         $data = [
             'title' => 'Minhas Ordens de Serviços',
-            'model' => OrdemServico::where('tecnico_id',Auth::user()->id)->get(),
+            'model' => OrdemServico::where('tecnico_id',Auth::user()->id)->where('status_id','<>',$idStatusConcluida)->where('status_id','<>',$idStatusInutilizado)->get(),
             'thead' => ['Protocolo', 'Solicitante', 'Status'],
             'row_db' => ['protocolo', 'solicitante_id', 'status_id'],
             'create' => false,

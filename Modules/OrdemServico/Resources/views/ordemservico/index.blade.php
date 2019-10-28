@@ -23,7 +23,7 @@
     }
 
     .cards-dashboard .card {
-        height: 22vh;
+        height: 24vh;
     }
 
     .card-dashboard-icon {
@@ -69,7 +69,22 @@
                     <i class="card-dashboard-icon material-icons">devices</i>
                 </div>
                 <h5>Equipamentos Inutilizados</h5>
-                <p>{{$data['inutilizados']->count()}}</p>
+                <div class="btn-group">
+                    <button class="btn btn-info  btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Mês
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">{{$data['inutilizadosMes']->count()}}</a>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ano
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">{{$data['inutilizadosAno']->count()}}</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -82,9 +97,10 @@
                     <i class="card-dashboard-icon material-icons">list_alt</i>
                 </div>
                 <h5>Principais Problemas</h5>
-                <span>Mês</span>
-                <br>
-                <span>Ano</span>
+                @foreach($data['principaisFalhas'] as $falhas)
+                    {{$falhas->titulo}}
+                    <br>
+                @endforeach
             </div>
         </div>
     </div>
