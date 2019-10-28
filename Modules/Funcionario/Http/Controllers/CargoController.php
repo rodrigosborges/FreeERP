@@ -60,7 +60,7 @@ class CargoController extends Controller{
 			try {
 				$cargo = Cargo::Create($request->all());
 				DB::commit();
-				return redirect('funcionario/cargo')->with('sucess', 'Cargo cadastrado com sucesso!');
+				return redirect('funcionario/cargo')->with('success', 'Cargo cadastrado com sucesso!');
 			} catch(Exception $e){
 				DB::rollback();
 				return back();
