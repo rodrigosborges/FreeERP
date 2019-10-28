@@ -1,6 +1,28 @@
 @extends('eventos::layouts.template')
 @section('title', 'Programação')
 
+@section('css')
+    <style>
+        .palestrante {
+            padding: 20px 20px 0px 20px;
+            border-radius: 1%;
+            border: 1px solid #ced4da;
+        }
+        
+        img{  
+            max-height:150px;
+            max-width: 150px;
+            height:auto;
+            width:auto;
+            display:block;
+            margin-left: auto;
+            margin-right: auto;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12">
         <h1 style="text-align: center;">{{$evento->nome}}</h1>
@@ -109,6 +131,21 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group palestrante">
+                                <label for="palestrante" class="col-form-label">Palestrante / Facilitador(a)</label>    
+                                <div class="form-group">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStl-KWsV0KVxQug2HoR6e3lx6UUSD4KAqyDbevILtDVDvs0YK1xA&s" id="fotoPalestrante" alt="Foto" title='Foto'/></br>
+                                    <input type='file' id="inputImg" accept="image/*" hidden>
+                                </div>
+                                <div class="form-group" style="margin-top: -50px;">
+                                    <label for="nomePalestrante" class="col-form-label">Nome:</label>
+                                    <input type="text" class="form-control" name="nomePalestrante" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bio" class="col-form-label">Bio / Descrição:</label>
+                                    <textarea class="form-control" name="bio" rows="4"></textarea>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -152,4 +189,29 @@
         
         $('#modalCadastrarAtividade').on('show.bs.modal');
     </script>
+    
+    <!-- Preview da imagem -->
+    <script>
+        $('#fotoPalestrante').click(function() {
+                $('#inputImg').click();
+            });
+
+            $("#inputImg").change(function(event) {  
+                readURL(this);    
+            });    
+    
+            function readURL(input) {    
+                if (input.files && input.files[0]) {   
+                    var reader = new FileReader();
+                    var filename = $("#fotoPalestrante").val();
+                    filename = filename.substring(filename.lastIndexOf('\\')+1);
+                    reader.onload = function(e) {
+                        $('img').attr('src', e.target.result);
+                        $('img').hide();
+                        $('img').fadeIn(500);       
+                    };
+                    reader.readAsDataURL(input.files[0]);    
+                } 
+            }
+        </script>
 @endsection

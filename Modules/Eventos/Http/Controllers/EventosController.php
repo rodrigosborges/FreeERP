@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Eventos\Entities\Evento;
+use App\Entities\Estado;
 
 class EventosController extends Controller
 {
@@ -17,12 +18,14 @@ class EventosController extends Controller
     //EXIBE AS VIEWS
     public function index(){
         $eventos = Evento::all();
-        return view('eventos::index', ['eventos' => $eventos]);
+        $estados = Estado::all();
+        return view('eventos::index', ['eventos' => $eventos,'estados' => $estados]);
     }
     
     public function exibir(){
         $eventos = Evento::all();
-        return view('eventos::eventos', ['eventos' => $eventos]);
+        $estados = Estado::all();
+        return view('eventos::eventos', ['eventos' => $eventos,'estados' => $estados]);
     }
     
     public function cadastrar(Request $request)

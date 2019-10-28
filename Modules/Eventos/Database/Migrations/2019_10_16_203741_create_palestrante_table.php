@@ -16,7 +16,7 @@ class CreatePalestranteTable extends Migration
         Schema::create('palestrante', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome', 80);
-            $table->text('bio');
+            $table->text('bio')->nullable();
             $table->string('foto')->nullable();
         });
     }

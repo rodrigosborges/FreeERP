@@ -90,11 +90,30 @@
                         </div>
                         <div class="form-group">
                             <div class="form-row">
-                                <div class="col-xs-6 col-sm-5 col-md-5 col-lg-3">
+                                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                                    <label for="estado" class="col-form-label">Estado:</label>
+                                    <select class="form-control" name="estado" id="estado">
+                                        <option value="" disabled selected>Selecione</option>
+                                        @foreach ($estados as $estado)
+                                            <option value="{{$estado->id}}">{{$estado->uf}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
+                                    <label for="cidade" class="col-form-label">Cidade:</label>
+                                    <select class="form-control" name="cidade" id="cidade">
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-xs-6 col-sm-6 col-md-5 col-lg-3">
                                     <label for="dataInicio" class="col-form-label">Data Início:</label>
                                     <input type="date" class="form-control" name="dataInicio" required>
                                 </div>
-                                <div class="col-xs-6 col-sm-5 col-md-5 col-lg-3">
+                                <div class="col-xs-6 col-sm-6 col-md-5 col-lg-3">
                                     <label for="dataFim" class="col-form-label">Data Fim:</label>
                                     <input type="date" class="form-control" name="dataFim" required>
                                 </div>
@@ -336,5 +355,19 @@
                 reader.readAsDataURL(input.files[0]);    
             } 
         }
+    </script>
+    
+    <script type="text/javascript">
+        $('select[name=estado]').change(function () {
+            var idEstado = $(this).val();
+            $.get('/eventos/get-cidades/' + idEstado, function (cidades) {
+                console.log(cidades);
+            $('select[name=cidade]').empty();
+                $.each(cidades, function (id, nome) {
+                    console.log(Object.values(this));
+                    $('select[name=cidade]').append('<option value=' + Object.values(0) + '>' + Object.values(value["1"]) + '</option>');
+                });
+            });
+        });
     </script>
 @endsection
