@@ -8,7 +8,7 @@ class Cargo extends Model{
     
     protected $table = 'cargo';
 
-    protected $fillable = ['nome', 'horas_semanais', 'salario'];
+    protected $fillable = ['nome', 'horas_semanais', 'salario', 'deleted_at'];
 
     public $timestamps = false;
 
