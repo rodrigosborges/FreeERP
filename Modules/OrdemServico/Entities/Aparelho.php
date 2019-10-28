@@ -10,5 +10,5 @@ class Aparelho extends Model
 {
     public $timestamps = false;
     protected $table = 'aparelho';
-    protected $fillable = array('marca','tipo_aparelho','modelo','acessorios','inutilizacao');
+    protected $fillable = array('marca','numero_serie','tipo_aparelho','modelo','acessorios','inutilizacao');
 }

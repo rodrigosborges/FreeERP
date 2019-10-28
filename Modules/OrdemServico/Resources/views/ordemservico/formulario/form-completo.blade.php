@@ -1,4 +1,5 @@
 @extends('ordemservico::layouts.form')
+
 @section('formulario')
 
 @if(isset($data['model']))
@@ -6,6 +7,26 @@
 @endif
 
 @if(!isset($data['model']))
+@if($errors->count() > 0 )
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <p>{{$errors->first('solicitante.id')}}</p>
+    <p>{{$errors->first('solicitante.nome')}}</p>
+    <p>{{$errors->first('solicitante.email')}}</p>
+    <p>{{$errors->first('telefone')}}</p>
+    <p>{{$errors->first('endereco.cep')}}</p>
+    <p>{{$errors->first('endereco.rua')}}</p>
+    <p>{{$errors->first('endereco.numero')}}</p>
+    <p>{{$errors->first('endereco.bairro')}}</p>
+    <p>{{$errors->first('aparelho.numero_serie')}}</p>
+    <p>{{$errors->first('aparelho.marca')}}</p>
+    <p>{{$errors->first('aparelho.modelo')}}</p>
+    <p>{{$errors->first('problema.titulo')}}</p>
+    <p>{{$errors->first('descricao')}}</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
 
 @include('ordemservico::ordemservico.formulario.solicitante')
 @include('ordemservico::ordemservico.formulario.endereco')
@@ -15,7 +36,6 @@
 @include('ordemservico::ordemservico.formulario.aparelho')
 <hr>
 @include('ordemservico::ordemservico.formulario.problema')
-        
 
 @endsection
 

@@ -10,7 +10,8 @@ class AparelhoTable extends Migration
     {
         Schema::create('aparelho', function(Blueprint $table)
 		{
-			$table->increments('id');
+            $table->increments('id');
+            $table->string('numero_serie')->unique();
 			$table->string('tipo_aparelho');
             $table->string('marca');
             $table->string('modelo');

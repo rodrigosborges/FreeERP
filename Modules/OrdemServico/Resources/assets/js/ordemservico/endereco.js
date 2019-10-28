@@ -21,7 +21,7 @@ $(document).ready(function () {
             if (data.erro) {
                 alert("CEP não encontrado");
 
-                $("#bairro").val("").prop('readonly', false);;
+                $("#bairro").val("").prop('readonly', false);
 
                 $("#logradouro").val("").prop('readonly', false);
 
@@ -35,7 +35,7 @@ $(document).ready(function () {
                 $("#localidade").css("pointer-events","auto");
             }
             else {
-                $("#bairro").val(data.bairro).prop('readonly', true);;
+                $("#bairro").val(data.bairro).prop('readonly', true);
 
                 $("#logradouro").val(data.logradouro).prop('readonly', true);
 

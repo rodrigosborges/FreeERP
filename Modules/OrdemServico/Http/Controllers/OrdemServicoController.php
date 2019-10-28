@@ -20,6 +20,7 @@ use Modules\OrdemServico\Entities\{
 use DB;
 use Illuminate\Support\Facades\Mail;
 use Modules\OrdemServico\Emails\EnviarProtocoloMail;
+use Modules\OrdemServico\Http\Requests\OrdemServicoStoreRequest;
 
 class OrdemServicoController extends Controller
 {
@@ -65,7 +66,7 @@ class OrdemServicoController extends Controller
 
         return redirect()->back()->with('error', 'Você não possui permissão para acessar a pagina!');
     }
-    public function store(Request $request)
+    public function store(OrdemServicoStoreRequest $request)
     {
         DB::beginTransaction();
         try {

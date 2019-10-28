@@ -4,16 +4,15 @@
 <hr>
         <div class="form-row">
             <div class="col-md-3 mb-3">
-                {{Form::label('solicitante[identificacao]','Identificação * ')}}
+                {{Form::label('solicitante[id]','Identificação * ')}}
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">
                             <i class="material-icons">person</i>
                         </span>
                     </div>
-                    {{Form::text("solicitante[id]",$value=null,array('class' => 'form-control','placeholder'=>'CPF / CNPJ'))}}
+                    {{Form::text("solicitante[id]",$value=null,array('id'=>'solicitante.id' , 'class' => 'form-control','placeholder'=>'CPF / CNPJ'))}}
                 </div>
-                <span class="errors"> {{ $errors->first('solicitante.id') }} </span>
             </div>
             <div class="col-md-5 mb-3">
                 {{Form::label('solicitante[nome]','Nome * ')}}
@@ -23,9 +22,8 @@
                             <i class="material-icons">person</i>
                         </span>
                     </div>
-                    {{Form::text("solicitante[nome]",$value=null,array('class' => 'form-control','placeholder'=>'Nome Completo'))}}
+                    {{Form::text("solicitante[nome]",$value=null,array('id'=>'solicitante.nome','class' => 'form-control','placeholder'=>'Nome Completo'))}}
                 </div>
-                <span class="errors"> {{ $errors->first('solicitante.nome') }} </span>
             </div>
     
         <div class="col-md-4 mb-3">
@@ -36,9 +34,8 @@
                         <i class="material-icons">person</i>
                     </span>
                 </div>
-                {{Form::text("solicitante[email]",$value=null,array('class' => 'form-control','placeholder'=>'Email'))}}
+                {{Form::text("solicitante[email]",$value=null,array('id'=>'solicitante.email','class' => 'form-control','placeholder'=>'Email'))}}
             </div>
-            <span class="errors"> {{ $errors->first('solicitante.email') }} </span>
         </div>
     </div>
   

@@ -7,7 +7,7 @@
                     <i class="material-icons">device_unknown</i>
                 </span>
             </div>
-            {{Form::text("aparelho[id]", $value=null,array('id' => 'aparelho_id','class' => 'form-control','placeholder'=>'Numero Série'))}}
+            {{Form::text("aparelho[numero_serie]", $value=null,array('id' => 'aparelho.numero_serie','class' => 'form-control','placeholder'=>'Numero Série'))}}
 
         </div>
     </div>
@@ -19,7 +19,7 @@
                     <i class="material-icons">device_unknown</i>
                 </span>
             </div>
-            {{Form::text("aparelho[tipo_aparelho]", $value=null ,array('class' => 'form-control','id' =>'tipo_aparelho','placeholder'=>'Tipo de Aparelho'))}}
+            {{Form::text("aparelho[tipo_aparelho]", $value=null ,array('class' => 'form-control','id' =>'aparelho.tipo_aparelho','placeholder'=>'Tipo de Aparelho'))}}
         </div>
     </div>
 
@@ -30,7 +30,7 @@
                     <i class="material-icons">device_unknown</i>
                 </span>
             </div>
-            {{Form::text("aparelho[modelo]", $value=null ,array('class' => 'form-control','id' =>'modelo','placeholder'=>'Modelo'))}}
+            {{Form::text("aparelho[modelo]", $value=null ,array('class' => 'form-control','id' =>'aparelho.modelo','placeholder'=>'Modelo'))}}
         </div>
     </div>
     <div class="col-md-4 mb-3">
@@ -40,7 +40,7 @@
                     <i class="material-icons">device_unknown</i>
                 </span>
             </div>
-            {{Form::text("aparelho[marca]", $value=null ,array('class' => 'form-control','id' =>'marca','placeholder'=>'Marca'))}}
+            {{Form::text("aparelho[marca]", $value=null ,array('class' => 'form-control','id' =>'aparelho.marca','placeholder'=>'Marca'))}}
         </div>
     </div>
 
