@@ -102,7 +102,7 @@ class ControleFeriasController extends Controller
 
         if($verifica_registro_tabela == 0){//Verifica se há algum registro de férias já adicionado.
             
-            $data_atual =  '2021-09-26'; //Carbon::today();Data que o sistema está sendo acessado. 
+            $data_atual =  Carbon::today(); //'2021-09-26';Data que o sistema está sendo acessado. 
             
             //$inicio_periodo_aquisitivo = date('Y-m-d', strtotime($admissao));
             //$anos_trampo = 366;
@@ -146,8 +146,8 @@ class ControleFeriasController extends Controller
                     $diaAdmissao = date('d', strtotime($admissao));
                     $mesAdmissao = date('m', strtotime($admissao));
 
-                    $diaAtual = '26'; //date('d', time()); //'21';
-                    $mesAtual = '09'; //date('m', time()); //'10';
+                    $diaAtual =  date('d', time()); //'21';
+                    $mesAtual =  date('m', time()); //'10';
                    
                         if($diaAtual <= $diaAdmissao && $mesAtual <= $mesAdmissao){
                             $inicio_periodo_aquisitivo = new Carbon($admissao);

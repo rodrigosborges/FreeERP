@@ -108,93 +108,46 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         
-        /**Esse código é usado quando  a página apresenta algum erro de inserção nos dados, e o checkbox que desmarca o disabled
-        os campos disabled está marcado anteriormente. Nesse caso, os disabled são removidos novamente, pois o default dos campos é com "disabled"*/
-        /*$(document).ready(function(){
-            var check = document.getElementById('aviso_previo_indenizado');
-            if(check.checked){
-                check.removeAttribute('disabled', false);
+            function desabilitarAvisoPrevio(){
+                document.getElementById('data_inicio_aviso').setAttribute('disabled', true);
+                document.getElementById('dias_aviso_indenizado').setAttribute('disabled', true);
+                document.getElementById('tipo_reducao_aviso').setAttribute('disabled', true);
+                document.getElementById('aviso_previo_indicador_cumprimento_id').setAttribute('disabled', true);
+            }
+
+            function habilitarAvisoPrevio(){
                 document.getElementById('data_inicio_aviso').removeAttribute('disabled', false);
                 document.getElementById('dias_aviso_indenizado').removeAttribute('disabled', false);
                 document.getElementById('tipo_reducao_aviso').removeAttribute('disabled', false);
                 document.getElementById('aviso_previo_indicador_cumprimento_id').removeAttribute('disabled', false);
-                document.getElementById('termino_contrato_experiencia').removeAttribute('disabled', false);
             }
-        })*/
-        
-        //Código de ativar/desativar disableds.
-        /*var tipoDemissao = document.getElementById('tipo_demissao');
-            tipoDemissao.addEventListener('change', function(){
-                var check1 = document.getElementById('aviso_previo_indenizado');
-                var check2 = document.getElementById('descontar_aviso_previo');
-                var check3 = document.getElementById('cumprir_aviso');
-
-                if(this.value == 1 || this.value == 2 || this.value == 3){
-                    document.getElementById('termino_contrato_experiencia').removeAttribute('hidden', false);
-                } else {
-                    document.getElementById('termino_contrato_experiencia').setAttribute('hidden', true);
-                }
-
-                if(this.value == 1 || this.value == 6 || this.value == 10){
-                    check2.removeAttribute('disabled', false);
-                    
-                    //Pega todos os inputs com disabled default e tornam disabled novamente, caso a outra opção do checkbox esteja selecionada.
-                    document.getElementById('data_inicio_aviso').setAttribute('disabled', true);
-                    document.getElementById('dias_aviso_indenizado').setAttribute('disabled', true);
-                    document.getElementById('tipo_reducao_aviso').setAttribute('disabled', true);
-                    document.getElementById('aviso_previo_indicador_cumprimento_id').setAttribute('disabled', true);
-                    
-                    if(!(check2.checked))
-                        check2.checked = true;
-                    
-                    check1.checked = false;
-                    check3.checked = false;
-                    check1.setAttribute('disabled', true);
-                    check3.setAttribute('disabled', true);
-                    
-
-                } else {
-                    check1.removeAttribute('disabled', false);
-                    check3.removeAttribute('disabled', false);
-                    //Pega todos os inputs com disabled e os "destrancam"
-                    document.getElementById('data_inicio_aviso').removeAttribute('disabled', false);
-                    document.getElementById('dias_aviso_indenizado').removeAttribute('disabled', false);
-                    document.getElementById('tipo_reducao_aviso').removeAttribute('disabled', false);
-                    document.getElementById('aviso_previo_indicador_cumprimento_id').removeAttribute('disabled', false);
-
-                    if(!(check1.checked))
-                        check1.checked = true;
-
-                    if(check2.checked){
-                        check2.checked = false;
-                        check2.setAttribute('disabled', true);
-                    }    
-
-
-                }  
-            })*/
-
+            //Esse código serve para caso de erro de input digitado pelo usuário, faz com que toda a parte dos checkbos e inputs do aviso apareçam da forma como estava anteriormente.
             $(document).ready(function(){
                 var check1 = document.getElementById('aviso_previo_indenizado');
+                var check2 = document.getElementById('descontar_aviso_previo');
                 var check3 = document.getElementById('cumprir_aviso');
                 
                 if(check1.checked){
                     check1.removeAttribute('disabled', false);
-                    document.getElementById('data_inicio_aviso').removeAttribute('disabled', false);
-                    document.getElementById('dias_aviso_indenizado').removeAttribute('disabled', false);
-                    document.getElementById('tipo_reducao_aviso').removeAttribute('disabled', false);
-                    document.getElementById('aviso_previo_indicador_cumprimento_id').removeAttribute('disabled', false);
-                    document.getElementById('termino_contrato_experiencia').removeAttribute('hidden', false);
+                    habilitarAvisoPrevio();
+                }
+
+                if(check2.checked){
+                    check2.removeAttribute('disabled', false);
+                    desabilitarAvisoPrevio();
                 }
 
                 if(check3.checked){
                     check3.removeAttribute('disabled', false);
-                    document.getElementById('data_inicio_aviso').removeAttribute('disabled', false);
-                    document.getElementById('dias_aviso_indenizado').removeAttribute('disabled', false);
-                    document.getElementById('tipo_reducao_aviso').removeAttribute('disabled', false);
-                    document.getElementById('aviso_previo_indicador_cumprimento_id').removeAttribute('disabled', false);
+                    habilitarAvisoPrevio();
+                    
+                }
+
+                var tipoDemissao = document.getElementById('tipo_demissao').value;
+                if(tipoDemissao == 1 || tipoDemissao == 2 || tipoDemissao == 3){
                     document.getElementById('termino_contrato_experiencia').removeAttribute('hidden', false);
                 }
+                
 
             })
             
@@ -215,7 +168,33 @@
                 else 
                     document.getElementById('termino_contrato_experiencia').setAttribute('hidden', true);
 
-                if(this.value == 1 || this.value == 6){
+
+                if(this.value == 7){
+                    check1.removeAttribute('disabled', false);
+                    check1.checked = true;
+
+                    check2.checked = false;
+                    check2.setAttribute('disabled', true);
+
+                    check3.checked = false;
+                    check3.setAttribute('disabled', true);
+
+                    desabilitarAvisoPrevio();
+
+                } else if(this.value == 8 || this.value == 9){
+                    
+                    check1.checked = false;
+                    check2.checked = false;
+                    check3.checked = false;
+
+                    check1.setAttribute('disabled', true);
+                    check2.setAttribute('disabled', true);
+                    check3.setAttribute('disabled', true);
+
+                    desabilitarAvisoPrevio()
+
+                } else if(this.value == 1 || this.value == 6){
+                    
                     if(check1.checked)
                         check1.checked = false;
                     
@@ -238,10 +217,7 @@
                 var check2 = document.getElementById('descontar_aviso_previo');
                 var check3 = document.getElementById('cumprir_aviso');
 
-                document.getElementById('data_inicio_aviso').removeAttribute('disabled', false);
-                document.getElementById('dias_aviso_indenizado').removeAttribute('disabled', false);
-                document.getElementById('tipo_reducao_aviso').removeAttribute('disabled', false);
-                document.getElementById('aviso_previo_indicador_cumprimento_id').removeAttribute('disabled', false);
+                habilitarAvisoPrevio();
 
                 if(check2.checked)
                     check2.checked = false;
@@ -253,10 +229,7 @@
             document.getElementById('descontar_aviso_previo').addEventListener('click', function(){
                 var check3 = document.getElementById('cumprir_aviso');
 
-                document.getElementById('data_inicio_aviso').setAttribute('disabled', true);
-                document.getElementById('dias_aviso_indenizado').setAttribute('disabled', true);
-                document.getElementById('tipo_reducao_aviso').setAttribute('disabled', true);
-                document.getElementById('aviso_previo_indicador_cumprimento_id').setAttribute('disabled', true);
+                desabilitarAvisoPrevio();
 
                 if(check3.checked)
                     check3.checked = false;
@@ -266,11 +239,7 @@
                 var check1 = document.getElementById('aviso_previo_indenizado');
                 var check2 = document.getElementById('descontar_aviso_previo');
 
-                document.getElementById('data_inicio_aviso').removeAttribute('disabled', false);
-                document.getElementById('dias_aviso_indenizado').removeAttribute('disabled', false);
-                document.getElementById('tipo_reducao_aviso').removeAttribute('disabled', false);
-                document.getElementById('aviso_previo_indicador_cumprimento_id').removeAttribute('disabled', false);
-
+               habilitarAvisoPrevio();
 
                 if(check1.checked)
                     check1.checked = false;

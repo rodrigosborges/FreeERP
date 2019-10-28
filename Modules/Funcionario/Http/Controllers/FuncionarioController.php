@@ -527,28 +527,16 @@ class FuncionarioController extends Controller{
     }
 
     public function storeDemissao(CreateDemissao $request){
-        /*if($request->aviso_previo_indenizado == "on"){
-                $avisoPrevioIndenizado = true;
-                $descontarAvisoPrevio = false;
-
-            } else {
-                $avisoPrevioIndenizado = false;
-                $descontarAvisoPrevio = true;
-            }*/
             
         DB::beginTransaction();
 
         try {
-            $terminoContratoExperiencia = $request->termino_contrato_experiencia;
-            if($terminoContratoExperiencia == null){
-                $terminoContratoExperiencia = date('Y-m-d', strtotime('00-00-0000'));
-            }
-
+           
             $demissao = Demissao::Create([
                 'data_demissao'                 => $request->data_demissao,
                 'data_pagamento'                => $request->data_pagamento,
                 'funcionario_id'                => $request['funcionario_id'],
-                'termino_contrato_experiencia'  => $terminoContratoExperiencia,
+                'termino_contrato_experiencia'  => $request->termino_contrato_experiencia,
                 'tipo_demissao_id'              => $request['tipo_demissao']
             ]);
             
@@ -562,11 +550,15 @@ class FuncionarioController extends Controller{
                 $descontarAvisoPrevio = true;
                 $cumprirAviso = false;
 
-            } else {
+            } else if($request->cumprir_aviso == "on"){
                 $avisoPrevioIndenizado = false;
                 $descontarAvisoPrevio = false;
                 $cumprirAviso = true;
-                
+
+            } else {
+                $avisoPrevioIndenizado = false;
+                $descontarAvisoPrevio = false;
+                $cumprirAviso = false;
             }
             
             $avisoPrevio = AvisoPrevio::create([
