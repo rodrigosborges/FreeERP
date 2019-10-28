@@ -1,5 +1,5 @@
 <?php
-namespace app\Entities;
+namespace Modules\Eventos\Entities;
 use Illuminate\Database\Eloquent\Model;
 
 class Estado extends Model{
@@ -11,7 +11,7 @@ class Estado extends Model{
     public $timestamps = false;
 
     public function cidades(){
-        return $this->hasMany('App\Entities\Cidade');
+        return $this->hasMany('Cidade');
     }
     
 }   

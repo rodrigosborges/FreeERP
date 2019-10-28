@@ -12,9 +12,9 @@ class CreateCidadeTable extends Migration {
 	{
 		Schema::create('cidade', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->string('nome', 100);
-			$table->integer('estado_id')->index('fk_cidade_estado');
+                    $table->increments('id');
+                    $table->string('nomeCidade', 100);
+                    $table->integer('estado_id')->index('fk_cidade_estado');
 		});
 	}
 	/**

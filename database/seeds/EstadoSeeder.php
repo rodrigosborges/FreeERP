@@ -8,137 +8,137 @@ class EstadoSeeder extends Seeder
         DB::table('estado')->insert([
             [
                 "id"    => "1",
-                "nome"  => "Acre",
+                "nomeEstado"  => "Acre",
                 "uf"    => "AC"
             ],
             [
                 "id"    => "2",
-                "nome"  => "Alagoas",
+                "nomeEstado"  => "Alagoas",
                 "uf"    => "AL"
             ],
             [
                 "id"    => "3",
-                "nome"  => "Amazonas",
+                "nomeEstado"  => "Amazonas",
                 "uf"    => "AM"
             ],
             [
                 "id"    => "4",
-                "nome"  => "Amapá",
+                "nomeEstado"  => "Amapá",
                 "uf"    => "AP"
             ],
             [
                 "id"    => "5",
-                "nome"  => "Bahia",
+                "nomeEstado"  => "Bahia",
                 "uf"    => "BA"
             ],
             [
                 "id"    => "6",
-                "nome"  => "Ceará",
+                "nomeEstado"  => "Ceará",
                 "uf"    => "CE"
             ],
             [
                 "id"    => "7",
-                "nome"  => "Distrito Federal",
+                "nomeEstado"  => "Distrito Federal",
                 "uf"    => "DF"
             ],
             [
                 "id"    => "8",
-                "nome"  => "Espírito Santo",
+                "nomeEstado"  => "Espírito Santo",
                 "uf"    => "ES"
             ],
             [
                 "id"    => "9",
-                "nome"  => "Goiás",
+                "nomeEstado"  => "Goiás",
                 "uf"    => "GO"
             ],
             [
                 "id"    => "10",
-                "nome"  => "Maranhão",
+                "nomeEstado"  => "Maranhão",
                 "uf"    => "MA"
             ],
             [
                 "id"    => "11",
-                "nome"  => "Minas Gerais",
+                "nomeEstado"  => "Minas Gerais",
                 "uf"    => "MG"
             ],
             [
                 "id"    => "12",
-                "nome"  => "Mato Grosso do Sul",
+                "nomeEstado"  => "Mato Grosso do Sul",
                 "uf"    => "MS"
             ],
             [
                 "id"    => "13",
-                "nome"  => "Mato Grosso",
+                "nomeEstado"  => "Mato Grosso",
                 "uf"    => "MT"
             ],
             [
                 "id"    => "14",
-                "nome"  => "Pará",
+                "nomeEstado"  => "Pará",
                 "uf"    => "PA"
             ],
             [
                 "id"    => "15",
-                "nome"  => "Paraíba",
+                "nomeEstado"  => "Paraíba",
                 "uf"    => "PB"
             ],
             [
                 "id"    => "16",
-                "nome"  => "Pernambuco",
+                "nomeEstado"  => "Pernambuco",
                 "uf"    => "PE"
             ],
             [
                 "id"    => "17",
-                "nome"  => "Piauí",
+                "nomeEstado"  => "Piauí",
                 "uf"    => "PI"
             ],
             [
                 "id"    => "18",
-                "nome"  => "Paraná",
+                "nomeEstado"  => "Paraná",
                 "uf"    => "PR"
             ],
             [
                 "id"    => "19",
-                "nome"  => "Rio de Janeiro",
+                "nomeEstado"  => "Rio de Janeiro",
                 "uf"    => "RJ"
             ],
             [
                 "id"    => "20",
-                "nome"  => "Rio Grande do Norte",
+                "nomeEstado"  => "Rio Grande do Norte",
                 "uf"    => "RN"
             ],
             [
                 "id"    => "21",
-                "nome"  => "Rondônia",
+                "nomeEstado"  => "Rondônia",
                 "uf"    => "RO"
             ],
             [
                 "id"    => "22",
-                "nome"  => "Roraima",
+                "nomeEstado"  => "Roraima",
                 "uf"    => "RR"
             ],
             [
                 "id"    => "23",
-                "nome"  => "Rio Grande do Sul",
+                "nomeEstado"  => "Rio Grande do Sul",
                 "uf"    => "RS"
             ],
             [
                 "id"    => "24",
-                "nome"  => "Santa Catarina",
+                "nomeEstado"  => "Santa Catarina",
                 "uf"    => "SC"
             ],
             [
                 "id"    => "25",
-                "nome"  => "Sergipe",
+                "nomeEstado"  => "Sergipe",
                 "uf"    => "SE"
             ],
             [
                 "id"    => "26",
-                "nome"  => "São Paulo",
+                "nomeEstado"  => "São Paulo",
                 "uf"    => "SP"
             ],
             [
                 "id"    => "27",
-                "nome"  => "Tocantins",
+                "nomeEstado"  => "Tocantins",
                 "uf"    => "TO"
             ]
         ]);

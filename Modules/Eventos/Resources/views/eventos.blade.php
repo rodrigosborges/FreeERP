@@ -52,7 +52,8 @@
                             </button>
                             <button class="btn btn-xs" title="Visualizar / Editar" data-toggle="modal" data-target="#modalVisualizarEvento"
                                 data-id="{{$evento->id}}" data-nome="{{$evento->nome}}" data-local="{{$evento->local}}"
-                                data-dataInicio="{{$evento->dataInicio}}" data-dataFim="{{$evento->dataFim}}"
+                                data-estado="{{$evento->estado_id}}" data-idcidade="{{$evento->cidade_id}}"
+                                data-datainicio="{{$evento->dataInicio}}" data-datafim="{{$evento->dataFim}}"
                                 data-descricao="{{$evento->descricao}}"
                                 data-imagem="http://127.0.0.1:8000/storage/eventos/{{$evento->imagem}}" data-empresa="{{$evento->empresa}}"
                                 data-email="{{$evento->email}}"
@@ -92,7 +93,7 @@
                             <div class="form-row">
                                 <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
                                     <label for="estado" class="col-form-label">Estado:</label>
-                                    <select class="form-control" name="estado" id="estado">
+                                    <select class="form-control" name="estado" id="estado" required>
                                         <option value="" disabled selected>Selecione</option>
                                         @foreach ($estados as $estado)
                                             <option value="{{$estado->id}}">{{$estado->uf}}</option>
@@ -101,7 +102,7 @@
                                 </div>
                                 <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
                                     <label for="cidade" class="col-form-label">Cidade:</label>
-                                    <select class="form-control" name="cidade" id="cidade">
+                                    <select class="form-control" name="cidade" id="cidade" required>
                                         
                                     </select>
                                 </div>
@@ -176,6 +177,23 @@
                         <div class="form-group">
                             <label for="local" class="col-form-label">Local:</label>
                             <input type="text" class="form-control edit" id="local" name="local" disabled>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                                    <label for="estado" class="col-form-label">Estado:</label>
+                                    <select class="form-control edit" name="estado" id="estado" disabled>
+                                        @foreach ($estados as $estado)
+                                            <option value="{{$estado->id}}">{{$estado->uf}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
+                                    <label for="cidade" class="col-form-label">Cidade:</label>
+                                    <select class="form-control edit" name="cidade" id="cidade" disabled>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="form-row">
@@ -270,7 +288,10 @@
     
     <!-- Modal -->
     <script>
-        $('#modalCadastrarEvento').on('show.bs.modal');
+        $('#modalCadastrarEvento').on('show.bs.modal', function() {
+            $("#estado").prop('selectedIndex',0);
+            $("#cidade").html('<option value="" disabled selected>Selecione o estado</option>');
+        });
         
         $('#modalVisualizarEvento').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
@@ -280,6 +301,8 @@
             var id = button.data('id');
             var nome = button.data('nome');
             var local = button.data('local');
+            var estado = button.data('estado');
+            var idcidade = button.data('idcidade');
             var datainicio = button.data('datainicio');
             var datafim = button.data('datafim');
             var descricao = button.data('descricao');
@@ -302,6 +325,11 @@
             modal.find('.modal-body #id').val(id);
             modal.find('.modal-body #nome').val(nome);
             modal.find('.modal-body #local').val(local);
+            modal.find('.modal-body #estado').val(estado);
+            
+            //POPULA O SELECT DE CIDADES
+            buscarCidades(estado, idcidade);
+            
             modal.find('.modal-body #dataInicio').val(datainicio);
             modal.find('.modal-body #dataFim').val(datafim);
             modal.find('.modal-body #descricao').val(descricao);
@@ -357,17 +385,27 @@
         }
     </script>
     
+    <!-- Selects de estados e cidades -->
     <script type="text/javascript">
         $('select[name=estado]').change(function () {
-            var idEstado = $(this).val();
-            $.get('/eventos/get-cidades/' + idEstado, function (cidades) {
-                console.log(cidades);
-            $('select[name=cidade]').empty();
-                $.each(cidades, function (id, nome) {
-                    console.log(Object.values(this));
-                    $('select[name=cidade]').append('<option value=' + Object.values(0) + '>' + Object.values(value["1"]) + '</option>');
+            var idestado = $(this).val();
+            buscarCidades(idestado);
+        });
+        
+        function buscarCidades (idestado, idcidade){
+            $.get('/eventos/get-cidades/' + idestado, function (cidades) {
+                $('select[name=cidade]').empty();
+                $.each(cidades, function (index, value) {
+                    if(idcidade !== null){
+                        if(idcidade === value.id)
+                            $('select[name=cidade]').append('<option value=' + value.id + ' selected>' + value.nomeCidade + '</option>');
+                        else
+                            $('select[name=cidade]').append('<option value=' + value.id + '>' + value.nomeCidade + '</option>');
+                    }else{
+                        $('select[name=cidade]').append('<option value=' + value.id + '>' + value.nomeCidade + '</option>');
+                    }
                 });
             });
-        });
+        }
     </script>
 @endsection
