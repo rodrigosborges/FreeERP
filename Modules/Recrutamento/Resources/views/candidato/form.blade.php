@@ -2,7 +2,7 @@
 @section('content')
     
     <div class="card">
-    <div class="card-header"><h3>{{$data['title']}}</h3></div>
+    <div class="card-header d-flex justify-content-center"><h3>{{$data['title']}}</h3></div>
     <div class="card-body">
               
         <form action="{{ $data['url'] }}" method="POST" enctype="multipart/form-data">
@@ -16,7 +16,7 @@
             
             <div class="form-row">
                 <div class="col-md-12">    
-                    <label for="nome" class="control-label">Nome</label>
+                    <label for="nome" class="control-label font-weight-bold">Nome</label>
                     <input type="text" name="candidato[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', "") }}">
                     <label class="errors"> {{ $errors->first('nome') }} </label>
                 </div>
@@ -214,8 +214,8 @@
 
             <input type="hidden" name="candidato[vaga_id]" value="{{$data['vaga']->id}}">
             <div class="form-group">
-                <button type="submit" class="btn btn-success"> {{ $data['button'] }} </button> 
                 <a class="btn btn-light" href="{{ url('recrutamento/vagasDisponiveis') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+                <button type="submit" class="btn btn-success"><i class="material-icons" style=" vertical-align: middle;">save</i>  {{ $data['button'] }} </button> 
             </div>
 
         </form>

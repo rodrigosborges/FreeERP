@@ -13,7 +13,7 @@
             <hr>
 
             <div class="float-right">
-                    <a href="{{url('storage/curriculos/'.$data['candidato']->curriculo)}}" class="btn btn-info btn-small ">Currículo</a>
+                <a target="_blank" rel="noopener noreferrer" href="{{url('storage/curriculos/'.$data['candidato']->curriculo)}}" class="btn btn-info btn-small "> <i class="material-icons" style="vertical-align: middle;">import_contacts</i> Currículo</a>
             </div>
 
             <div class="row mb-3">
@@ -78,7 +78,7 @@
 
             <div class="mb-3">
                 <div class="float-right">
-                    <a class="btn btn-success" href="{{url('recrutamento/mensagem/enviarMensagem/'.$data['candidato']->id)}}">{{$data['button']}}</a>
+                    <a class="btn btn-success" href="{{url('recrutamento/mensagem/enviarMensagem/'.$data['candidato']->id)}}"><i class="material-icons" style="vertical-align: middle;">message</i> {{$data['button']}}</a>
                 </div>
             </div>
             

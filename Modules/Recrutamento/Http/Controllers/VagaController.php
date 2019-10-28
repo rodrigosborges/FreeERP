@@ -54,7 +54,7 @@ class VagaController extends Controller
 			'vagas'	=> $pesquisaVaga,
             'vagas_inativas'	=> $pesquisaVagaInativa,
             'title'		=> "Lista de Vagas",
-            'categorias'    => Categoria::all(),
+            'categorias'    => Categoria::withTrashed()->get(),
 		]; 
         return view('recrutamento::vaga.index', compact('data','moduleInfo','menu'));
     }
@@ -206,7 +206,7 @@ class VagaController extends Controller
         $data = [
 			'vagas'		=> $pesquisa,
             'title'		=> "Lista de Vagas Disponíveis",
-            'categorias'    => Categoria::all(),
+            'categorias'    => Categoria::withTrashed()->get(),
 		]; 
         return view('recrutamento::vaga.vagasDisponiveis', compact('data','moduleInfo','menu'));
     }

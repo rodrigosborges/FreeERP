@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="card">
-    <div class="card-header"><h3>{{$data['title']}}</h3></div>
+    <div class="card-header"><h3 class="d-flex justify-content-center">{{$data['title']}}</h3></div>
     <div class="card-body col-md-10 offset-md-1">
     <div class="row">
         <div class="col-sm-12 col-md-12">
@@ -14,11 +14,11 @@
                     <option value="{{$item->id}}">{{$item->nome}}</option>
                     @endforeach
                 </select>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+                <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="material-icons" style=" vertical-align: middle;">search</i> Pesquisar</button>
             </form>
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-ativos-tab" data-toggle="tab" href="#nav-ativos" role="tab" aria-controls="nav-ativos" aria-selected="true">Disponíveis</a>
+                    <a class="nav-item nav-link active" id="nav-ativos-tab" data-toggle="tab" href="#nav-ativos" role="tab" aria-controls="nav-ativos" aria-selected="true">Disponíveis ({{$data['vagas']->count()}})</a>
                 </div>
             </nav>
         </div>
@@ -39,8 +39,8 @@
                         <td>{{$item->cargo()->first()->nome}}</td>
                         <td>{{$item->cargo()->first()->categoria()->first()->nome}}</td>
                         <td>
-                            <a class="btn btn-info" href='{{ url("recrutamento/vaga/$item->id") }}'>Visualizar Vaga</a>     
-                            <a class="btn btn-success" href='{{ url("recrutamento/candidato/novo/$item->id") }}'>Candidatar-se</a>     
+                            <a class="btn btn-info" href='{{ url("recrutamento/vaga/$item->id") }}'><i class="material-icons" style=" vertical-align: middle;">visibility</i> Visualizar Vaga</a>     
+                            <a class="btn btn-success" href='{{ url("recrutamento/candidato/novo/$item->id") }}'><i class="material-icons" style=" vertical-align: middle;">send</i> Candidatar-se</a>     
                         </td>
                     </tr>
                 @endforeach

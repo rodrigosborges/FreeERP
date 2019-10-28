@@ -2,25 +2,25 @@
 @section('content')
 
     <div class="card">
-    <div class="card-header"><h3>{{$data['title']}}</h3></div>
+    <div class="card-header d-flex justify-content-center"><h3>{{$data['title']}}</h3></div>
     <div class="card-body col-md-10 offset-md-1">
     <div class="row">
         <div class="col-sm-12 col-md-6">
         <form action="{{url('recrutamento/categoria/')}}" method="GET" class="form-inline mb-2">
             <input class="form-control mr-sm-2" type="search" placeholder="Nome da categoria" name="pesquisa" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+            <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="material-icons" style=" vertical-align: middle;">search</i><span>Pesquisar</span></button>
         </form>
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-ativos-tab" data-toggle="tab" href="#nav-ativos" role="tab" aria-controls="nav-ativos" aria-selected="true">Ativos</a>
-                    <a class="nav-item nav-link" id="nav-inativos-tab" data-toggle="tab" href="#nav-inativos" role="tab" aria-controls="nav-inativos" aria-selected="false">Inativos</a>
+                    <a class="nav-item nav-link active" id="nav-ativos-tab" data-toggle="tab" href="#nav-ativos" role="tab" aria-controls="nav-ativos" aria-selected="true">Ativas ({{$data['categorias']->count()}})</a>
+                    <a class="nav-item nav-link" id="nav-inativos-tab" data-toggle="tab" href="#nav-inativos" role="tab" aria-controls="nav-inativos" aria-selected="false">Inativas ({{$data['categorias_inativas']->count()}})</a>
                 </div>
 
                 
             </nav>
         </div>
         <div class="col-sm-12 col-md-2 offset-md-4">
-            <a class="btn btn-success " style="margin-bottom:10px;" href="{{ url('recrutamento/categoria/create') }}">Nova Categoria</a>
+            <a class="btn btn-success " style="margin-bottom:10px;" href="{{ url('recrutamento/categoria/create') }}"><i class="material-icons" style=" vertical-align: middle;">add_circle_outline</i><span> Categoria</span></a>
         </div>
     </div>
     <div class="tab-content" id="nav-tabContent">
@@ -40,8 +40,8 @@
                             <form action="{{url('recrutamento/categoria', [$item->id])}}" method="POST">
                                 {{method_field('DELETE')}}
                                 {{ csrf_field() }}
-                                <a class="btn btn-warning" href='{{ url("recrutamento/categoria/$item->id/edit") }}'>Editar</a> 
-                                <input type="submit" class="btn btn-danger" value="Delete"/>
+                                <a class="btn btn-warning" href='{{ url("recrutamento/categoria/$item->id/edit") }}'><i class="material-icons" style=" vertical-align: middle;">edit</i> Editar</a> 
+                                <button type="submit" class="btn btn-danger"><i class="material-icons" style=" vertical-align: middle;">delete</i> <span>Delete</span></button>
                             </form>
                         </td>
                     </tr>
@@ -62,7 +62,7 @@
                     <tr>
                         <td>{{$item->nome}}</td>
                         <td>
-                            <a class="btn btn-info" href='{{ url("recrutamento/categoria/$item->id/restore") }}'>Restaurar</a> 
+                            <a class="btn btn-info" href='{{ url("recrutamento/categoria/$item->id/restore") }}'><i class="material-icons" style=" vertical-align: middle;">restore_from_trash</i> <span>Restaurar</span></a> 
                         </td>
                     </tr>
                 @endforeach

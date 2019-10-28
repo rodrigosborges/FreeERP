@@ -2,7 +2,7 @@
 @section('content')
     
     <div class="card ">
-    <div class="card-header"><h3>Vaga</h3></div>
+    <div class="card-header d-flex justify-content-center"><h3>Vaga</h3></div>
     <div class="card-body">
               
     <form action="{{ $data['url'] }}" method="POST">
@@ -14,7 +14,7 @@
         <div class="form-row">
             <div class="col-sm">
                 <div class="form-group">
-                    <label for="cargo" class="control-label">Cargo</label>
+                    <label for="cargo" class="control-label font-weight-bold">Cargo</label>
                     <select class="form-control" id="cargo" name='cargo_id'>
                         @foreach($data['cargos'] as $item)
                         <option {{ $data['model'] && $data['model']->cargo_id == $item->id ? 'selected' : '' }} value='{{$item->id}}'>{{$item->nome}}</option>
@@ -26,7 +26,7 @@
             
             <div class="col-sm">
                 <div class="form-group">
-                    <label for="salario" class="control-label">Salário</label>
+                    <label for="salario" class="control-label font-weight-bold">Salário</label>
                     <input type="text" required name="salario" id="salario" class="form-control" value="{{ $data['model'] ? $data['model']->salario : old('salario', "A Combinar") }}">
                     <label class="errors"> {{ $errors->first('salario') }} </label>
                 </div>
@@ -36,7 +36,7 @@
         <div class="form-row">
             <div class="col-sm">
                 <div class="form-group">
-                    <label for="escolaridade">Escolaridade</label>
+                    <label class="font-weight-bold" for="escolaridade">Escolaridade</label>
                     <select class="form-control" id="escolaridade" name='escolaridade'>
                         <option value=''>Escolha uma opção</option>
                         <option {{ $data['model'] && $data['model']->escolaridade == 'fundamental' ? 'selected' : '' }} value='fundamental'>Ensino Fundamental</option>
@@ -50,7 +50,7 @@
         
             <div class="col-sm">
                 <div class="form-group">
-                    <label for="status">Status</label>
+                    <label class="font-weight-bold" for="status">Status</label>
                     <select class="form-control" id="status" name='status'>
                         <option value=''>Escolha uma opção</option>
                         <option {{ $data['model'] && $data['model']->status == '1' ? 'selected' : '' }} value='1' >Disponível</option>
@@ -63,7 +63,7 @@
         <div class="form-row">
             <div class="col-sm">
                 <div class="form-group">
-                    <label for="regime">Regime de Contratação</label>
+                    <label class="font-weight-bold" for="regime">Regime de Contratação</label>
                     <select class="form-control" id="regime" name='regime'>
                         <option value=''>Escolha uma opção</option>
                         <option {{ $data['model'] && $data['model']->regime == 'clt' ? 'selected' : '' }} value='clt'>CLT Efetivo</option>
@@ -74,7 +74,7 @@
         
             <div class="col-sm">
                 <div class="form-group">
-                    <label for="beneficios" class="control-label">Benefícios <small>(separar por vírgula)</small> </label>
+                    <label for="beneficios" class="control-label font-weight-bold">Benefícios <small>(separar por vírgula)</small> </label>
                     <input type="text" required name="beneficios" id="beneficios" placeholder="Exemplo: VA,VR" class="form-control" value="{{ $data['model'] ? $data['model']->beneficios : old('beneficios', "") }}">
                     <label class="errors"> {{ $errors->first('beneficios') }} </label>
                 </div>
@@ -84,7 +84,7 @@
         <div class="form-row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label for="descricao" class="control-label">Descrição da Vaga</label>
+                    <label for="descricao" class="control-label font-weight-bold">Descrição da Vaga</label>
                     <textarea  name="descricao" required id="descricao" class="form-control"  rows="3">{{ $data['model'] ? $data['model']->descricao : old('descricao', "") }}</textarea>
                     <label class="errors"> {{ $errors->first('descricao') }} </label>
                 </div>
@@ -92,7 +92,7 @@
         
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label for="especificacoes" class="control-label">Especificações da Vaga</label>
+                    <label for="especificacoes" class="control-label font-weight-bold">Especificações da Vaga</label>
                     <textarea class="form-control" required name="especificacoes"  id="especificacoes" rows="3">{{ $data['model'] ? $data['model']->especificacoes : old('especificacoes', "") }}</textarea>
                     <label class="errors"> {{ $errors->first('especificacoes') }} </label>
                 </div>
@@ -103,7 +103,7 @@
 
         <div class="form-group">
             <a class="btn btn-light mr-sm-3" href="{{ url('recrutamento/vaga') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
-            <button type="submit" class="btn btn-success "> {{ $data['button'] }} </button> 
+            <button type="submit" class="btn btn-success "><i class="material-icons" style=" vertical-align: middle;">save</i> {{ $data['button'] }} </button> 
         </div>
     </form>
     </div>

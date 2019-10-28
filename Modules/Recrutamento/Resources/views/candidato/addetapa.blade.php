@@ -2,8 +2,8 @@
 @section('content')
     
 <div class="row justify-content-center">                     
-        <div class="card col-7"> 
-        <h2 class="card-header">Adicionar Etapas</h2>
+        <div class="card col-10"> 
+        <h2 class="card-header  d-flex justify-content-center">Adicionar Etapas</h2>
             <div class="card-body">
                 <form action="{{ $data['url'] }}" method="POST" class="col-12">
                     {{ csrf_field() }}
@@ -28,18 +28,18 @@
                                     <input class="form-control" id="nota" required value="{{ $data['pedido'] ? $itemPedido->pivot->nota: old('nota', "") }}" type="number" placeholder="Nota" name="itens[{{$key}}][nota]" onKeyPress="PermiteNumeros();">
                                 </div>
                                 
-                                    <button type="button" class="btn btn-danger btn-small remover mt-4" >Remover</button>              
+                                    <button type="button" class="btn btn-danger btn-small remover mt-4" > <i class="material-icons" style=" vertical-align: middle;">delete</i> Remover</button>              
                                 
                             </div>
                         @endforeach
                     </div>
                     <div class="col-md-12 text-center">
-                        <button type="button" class="btn btn-success" id="adicionar">Adicionar</button>
+                        <button type="button" class="btn btn-primary" id="adicionar"><i class="material-icons" style=" vertical-align: middle;">add</i> Adicionar</button>
                     </div>
                     
                     <input type="hidden" name="candidato_id" value="{{$data['candidato']->id}}" >
                     <a href="{{$data['voltar']}}"  class="btn btn-secondary mt-3 float-left">Cancelar</a>
-                    <button type="submit" class="btn btn-primary mt-3 float-right">Salvar</button>
+                    <button type="submit" class="btn btn-success mt-3 float-right"><i class="material-icons" style=" vertical-align: middle;">save</i> Salvar</button>
 
                 </form>
             </div>     
