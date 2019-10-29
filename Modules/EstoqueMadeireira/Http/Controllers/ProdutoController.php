@@ -1,15 +1,16 @@
 <?php
 
 namespace Modules\EstoqueMadeireira\Http\Controllers;
-
-
-use Modules\EstoqueMadeireira\Entities\Produto;
-use Modules\EstoqueMadeireira\Entities\Categoria;
-use Modules\EstoqueMadeireira\Entities\Fornecedor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use DB;
+use Modules\EstoqueMadeireira\Http\Requests\ProdutoRequest;
+use Modules\EstoqueMadeireira\Entities\Produto;
+use Modules\EstoqueMadeireira\Entities\Categoria;
+use Modules\EstoqueMadeireira\Entities\Fornecedor;
+
+
 
 
 class ProdutoController extends Controller
@@ -78,7 +79,7 @@ class ProdutoController extends Controller
     }
 
 
-    public function store(Request $req)
+    public function store(ProdutoRequest $req)
     {
        
         DB::beginTransaction();
@@ -94,24 +95,26 @@ class ProdutoController extends Controller
 
     public function edit($id)
     {
-        // $data = [
-        //     'produto' => Produto::findOrFail($id),
-        //     'fornecedores' => Fornecedor::all(),
-        //     'categorias' => Categoria::all()
-        //     ];
-        $produtos = Produto::findOrFail($id);
+        $produto = Produto::findOrFail($id);
         $categorias = Categoria::all();
         $fornecedores = Fornecedor::all();
-
-        return view('estoquemadeireira::produtos/form', $this->template, compact('produtos', 'categorias', 'fornecedores'));
+     
+        return view('estoquemadeireira::produtos.form', $this->template, compact('produto', 'categorias', 'fornecedores'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
+    
+    public function update(ProdutoRequest $req, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $produto = Produto::findOrFail($id);
+            $produto->update($req->all());
+            DB::commit();
+            return redirect('/estoquemadeireira/produtos')->with('success', 'Produto atualizado com sucesso');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor');
+        }
+    }
   
     
 
@@ -125,16 +128,6 @@ class ProdutoController extends Controller
     }
 
 
-     public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
     public function destroy($id)
     {
         $produto = Produto::findOrFail($id);

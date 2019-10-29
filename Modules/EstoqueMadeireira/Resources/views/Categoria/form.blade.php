@@ -11,7 +11,7 @@
                 <div class="card-header" style="">
                    <h1>Cadastro de Categoria</h1> 
                 </div>
-                <form action="{{isset($categoria) ?  url('/estoquemadeireira/produtos/categorias' . $categoria->id) : url('/estoquemadeireira/produtos/categorias')}}" method="POST">
+                <form action="{{isset($categoria) ?  url('/estoquemadeireira/produtos/categorias/' . $categoria->id) : url('/estoquemadeireira/produtos/categorias')}}" method="POST">
             @csrf
             @if(isset($categoria))
                 @method('put')
@@ -27,7 +27,7 @@
                     
                 </div>
                
-                <div class="row col-8" style="justify-content: flex-end;">
+                <div class="row col-12 mb-2" style="justify-content: flex-end;">
                      <button type="submit" class="btn btn-primary">{{isset($categoria) ? 'Salvar' : 'Cadastrar' }}</button>
                 </div>
                 

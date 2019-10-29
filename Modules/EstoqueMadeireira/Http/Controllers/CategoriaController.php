@@ -2,6 +2,7 @@
 
 namespace Modules\EstoqueMadeireira\Http\Controllers;
 use Modules\EstoqueMadeireira\Entities\Categoria;
+use Modules\EstoqueMadeireira\Http\Requests\CategoriaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -71,7 +72,7 @@ class CategoriaController extends Controller
     }
 
 
-    public function store(Request $req)
+    public function store(CategoriaRequest $req)
     {
        
         DB::beginTransaction();
@@ -93,35 +94,36 @@ class CategoriaController extends Controller
         //     'categorias' => Categoria::all()
         //     ];
        
-        $categorias = Categoria::all();
-    
-
-        return view('estoquemadeireira::produtos/categorias/form', $this->template, compact('categorias'));
+        $categoria = Categoria::findOrFail($id);      
+        return view('estoquemadeireira::categoria.form', $this->template, compact('categoria'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-  
-    
 
-     public function update(Request $request, $id)
+     public function update(CategoriaRequest $request, $id)
     {
-        //
+
+        DB::beginTransaction();
+        try{
+            $categoria = Categoria::findOrFail($id);
+            $categoria->update($request->all());
+            DB::commit();
+            return redirect('/estoquemadeireira/produtos/categorias')->with('success', 'Categoria atualizada com sucesso!');
+      
+        }catch (\Exception $e) {
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
+  
+
+
+
+
     public function destroy($id)
     {
         $categoria = Categoria::findOrFail($id);
         $categoria->delete();
-        return redirect('/estoquemadeireira/produtos/categorias')->with('success', 'Produto desativado com sucesso!');
+        return redirect('/estoquemadeireira/produtos/categorias')->with('success', 'Categoria desativada com sucesso!');
     }
 }

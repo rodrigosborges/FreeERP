@@ -2,6 +2,7 @@
 
 namespace Modules\EstoqueMadeireira\Http\Controllers;
 use Modules\EstoqueMadeireira\Entities\Fornecedor;
+use Modules\EstoqueMadeireira\Http\Requests\FornecedorRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -48,15 +49,15 @@ class FornecedorController extends Controller
         $fornecedores = Fornecedor::onlyTrashed()->paginate(5);
         $flag = 1;
 
-        return view('estoquemadeireira::Categoria/index', $this->template, compact('fornecedores', 'flag',));
+        return view('estoquemadeireira::Fornecedores/index', $this->template, compact('fornecedores', 'flag',));
     }
 
     public function restore($id){
        
-        $categoria = Categoria::onlyTrashed()->findOrFail($id);
-        $categoria->restore();
+        $fornecedores-> Fornecedor::onlyTrashed()->findOrFail($id);
+        $fornecedores->restore();
 
-        return redirect('estoquemadeireira/produtos/categorias')->with('success', 'Categoria restaurada com sucesso!');
+        return redirect('estoquemadeireira/produtos/fornecedores')->with('success', 'Fornecedor restaurado com sucesso!');
 
     }
 
@@ -69,7 +70,7 @@ class FornecedorController extends Controller
     }
 
 
-    public function store(Request $req)
+    public function store(FornecedorRequest $req)
     {
        
         DB::beginTransaction();
@@ -91,24 +92,25 @@ class FornecedorController extends Controller
         //     'categorias' => Categoria::all()
         //     ];
        
-        $categorias = Categoria::all();
+        $fornecedor = Fornecedor::findOrFail($id);
     
 
-        return view('estoquemadeireira::produtos/categorias/form', $this->template, compact('categorias'));
+        return view('estoquemadeireira::fornecedores/form', $this->template, compact('fornecedor'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-  
-    
 
-     public function update(Request $request, $id)
+     public function update(FornecedorRequest $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $fornecedor = Fornecedor::findOrFail($id);
+            $fornecedor->update($request->all());
+            DB::commit();
+            return redirect('/estoquemadeireira/produtos/fornecedores')->with('success', 'Fornecedor atualizado com sucesso!');
+        }catch (\Exception $e) {
+            DB::rollback();
+            return back()->with('error', 'Erro no servidor');
+        }
     }
 
     /**
@@ -118,12 +120,10 @@ class FornecedorController extends Controller
      */
     public function destroy($id)
     {
-        $categoria = Categoria::findOrFail($id);
-        $categoria->delete();
-        return redirect('/estoquemadeireira/produtos/categorias')->with('success', 'Produto desativado com sucesso!');
+        $fornecedor = Fornecedor::findOrFail($id);
+        $fornecedor->delete();
+        return redirect('/estoquemadeireira/produtos/fornecedores')->with('success', 'Fornecedor desativado com sucesso!');
     }
 
-    public function gitmanodoceu(){
-        return 1;
-    }
+
 }

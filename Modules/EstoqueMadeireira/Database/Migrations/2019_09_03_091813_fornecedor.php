@@ -16,6 +16,7 @@ class Fornecedor extends Migration
         Schema::create('fornecedor', function(Blueprint $table){
             $table->increments('id');
             $table->string('nome');
+            $table->string('telefone');
             $table->string('endereco');          
             $table->string('cnpj');
             $table->timestamps();

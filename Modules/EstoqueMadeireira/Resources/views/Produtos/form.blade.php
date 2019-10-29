@@ -21,7 +21,7 @@
                 <div class="row ml-2 mt-2">
                     <div class="form-group col-4">
                         <label for="nome">Nome</label>
-                        <input required type="text" class="form-control" placeholder="Insira o nome do Produto" name="nome" value="{{isset($produto) ? $produto->nome : ''}}">
+                        <input required type="text" class="form-control" placeholder="Insira o nome do Produto" name="nome" maxlength="40" value="{{isset($produto) ? $produto->nome : ''}}">
                         <span style="color:red">{{$errors->first('nome')}}</span>
                     </div>
 
@@ -32,34 +32,34 @@
                     </div>
                 </div>
             
-            <div class="row ml-2 mt-2">
-                    <div class="form-group col-3">
-                        <label for="codigo">Código de Barras</label>
-                        <input required type="number" maxlength="13" class="form-control"  placeholder="Insira o código do Produto" name="codigo" value="{{isset($produto) ? $produto->codigo : ''}}">
-                        {{$errors->first('codigo')}}
-                    </div>
-    
-                    <div class="form-group ml-2">
-                        <label for="categoria">Categoria</label>
-                        <select class="form-control" name="categoria_id">
-                            @if(isset($produto))
-                                @foreach($categorias as $categoria)
-                                    @if($categoria->id == $produto->categoria_id)
-                                        <option value="{{$categoria->id}}" selected>{{$categoria->nome}}</option>
-                                    @else
-                                        <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
-                                    @endif
-                                @endforeach
-                            @else
-                                <option disabled value="" selected>Selecione uma Categoria</option>
+                <div class="row ml-2 mt-2">
+                        <div class="form-group col-3">
+                            <label for="codigo">Código de Barras</label>
+                            <input required type="number"  class="form-control"  placeholder="Insira o código do Produto" name="codigo" value="{{isset($produto) ? $produto->codigo : ''}}">
+                            {{$errors->first('codigo')}}
+                        </div>
+        
+                        <div class="form-group ml-2">
+                            <label for="categoria">Categoria</label>
+                            <select class="form-control" name="categoria_id">
+                                @if(isset($produto))
                                     @foreach($categorias as $categoria)
-                                        <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                                        @if($categoria->id == $produto->categoria_id)
+                                            <option value="{{$categoria->id}}" selected>{{$categoria->nome}}</option>
+                                        @else
+                                            <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                                        @endif
                                     @endforeach
-                            @endif
-                        </select>
-                        {{$errors->first('categoria_id')}}            
-                    </div>
-
+                                @else
+                                    <option disabled value="" selected>Selecione uma Categoria</option>
+                                        @foreach($categorias as $categoria)
+                                            <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                                        @endforeach
+                                @endif
+                            </select>
+                            {{$errors->first('categoria_id')}}            
+                        </div>
+                
                     <div class="form-group ml-2">
                         <label for="fornecedor">Fornecedor</label>
                         <select name="fornecedor_id" class="form-control">
@@ -83,15 +83,14 @@
 
 
             </div>
-                <div class="form-group ml-2">            
-                    <div class="row col-12" style="align-items:flex-start;">
-                        <div class="form-group col-12">
-                            <label for="descricao">Descrição </label> <br>
-                            <textarea class="forma-control" name="descricao" placeholder="Insira a descrição do Produto" rows="4">{{isset($produto) ? $produto->descricao : ''}}</textarea> 
-                            {{$errors->first('descricao')}}
-                        </div>                                
-                    </div>
+                
+            <div class="row" style="align-items: flex-start;">
+                <div class="form-group col-8 ml-4">
+                    <label for="descricao">Descrição</label>
+                    <textarea class="form-control" placeholder="Insira a descrição do produto" name="descricao" rows="3" required>{{isset($produto) ? $produto->descricao : ''}}</textarea>
+                    {{$errors->first('descricao')}}
                 </div>
+            </div>
                 <div class="row col-8" style="justify-content: flex-end;">
                      <button type="submit" class="btn btn-primary">{{isset($produto) ? 'Salvar' : 'Cadastrar' }}</button>
                 </div>
