@@ -476,6 +476,8 @@ class EstoqueController extends Controller
     {
         $categorias = Categoria::all();
         $data = [
+            'dadosEntrada' => "",
+            'dadosSaida' => "",
             'flag' => "0",
             'dados' => "", 
             'labels' => "", 
@@ -486,37 +488,71 @@ class EstoqueController extends Controller
 
     
     public function relatorioMovimentacaoBusca(Request $req){
+        $estoque_id = $req->estoque_id;
         $ms = [];
 
         if ($req->estoque_id == -1){
             $ms  =  DB::select(
                     'SELECT distinct substring_index(created_at, " ", 1) as data,
                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtdEntrada,
-                    (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade < 0) as qtdSaida
+                    (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade < 0) as qtdSaida,
+                    (SELECT MAX(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data)  as maiorMovimentacao,
+                    (SELECT MIN(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data) as menorMovimentacao
+                     
                         FROM movimentacao_estoque as me WHERE substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
                             order by data asc'
         );   
+       
         }else{
             $ms  =  DB::select(
                     'SELECT distinct substring_index(created_at," ", 1) as data,   
                      (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade > 0) as qtdEntrada,
-                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade < 0) as qtdSaida
+                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade < 0) as qtdSaida,
+                     (SELECT MAX(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.') as maiorMovimentacao,
+                     (SELECT MIN(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.') as menorMovimentacao
+                     
                         FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id.' AND
                         substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
                             order by data asc'
-            );
+               
+                        );
         
         }
         $labels =[];
         $dadosEntrada =[];
         $dadosSaida = [];
+        $maiorMovimentacao = [];
+        $menorMovimentacao = [];
+        $totalEntrada = [];
+        $totalSaida = [];
+        $test = "";
         foreach ($ms as $q){
             array_push($dadosEntrada, $q->qtdEntrada);  
-            array_push($dadosSaida, $q->qtdSaida * -1);         
+            array_push($dadosSaida, $q->qtdSaida * -1);   
+            array_push($totalEntrada, $q->qtdEntrada);  
+            array_push($totalSaida, $q->qtdSaida * -1);       
             array_push($labels, $q->data);
+            array_push($maiorMovimentacao, $q->data, $q->maiorMovimentacao);
+            array_push($menorMovimentacao, $q->data, $q->menorMovimentacao);
 
         }
+       
+        //Maior movimentacao
+
+        //nome do estoque
+        if($estoque_id == -1){
+            $estoqueSelecionado = "Todo o estoque";
+        }else{
+            $estoque = Estoque::findOrFail($estoque_id);
+            $estoqueSelecionado = $estoque->produtos->last()->nome . ' - ' . $estoque->tipoUnidade->nome . '(' . $estoque->tipoUnidade->quantidade_itens . ' itens)'; 
+        }
+       
         $data = [
+            'estoqueSelecionado' => $estoqueSelecionado,
+            'maiorMovimentacao' => json_encode($maiorMovimentacao),
+            'menorMovimentacao' => json_encode($menorMovimentacao),
+            'totalEntrada' => json_encode($totalEntrada),
+            'totalSaida' => json_encode($totalSaida),
             'flag' => "1",
             'labels' => json_encode($labels),
             'dadosEntrada' => json_encode($dadosEntrada),
@@ -528,6 +564,7 @@ class EstoqueController extends Controller
         ];
     return view('estoque::estoque.relatorios.movimentacao', compact('data'));
     }
+
 
 
 

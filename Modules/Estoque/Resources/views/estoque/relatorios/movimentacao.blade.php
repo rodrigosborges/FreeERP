@@ -44,7 +44,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text material-icons">store</div>
                         </div>
-                         <input type="text" disabled class="form-control" name="produto">               
+                         <input type="text" disabled class="form-control" name="produto" value="{{isset($data['estoqueSelecionado']) ?  $data['estoqueSelecionado'] : ''}}">               
                     </div>
                     Data Inicial
                     <div class="input-group mb-2">
@@ -63,30 +63,30 @@
                     Total de entradas
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text material-icons">trending_up</div>
+                            <div class="input-group-text material-icons">arrow_upward</div>
                         </div>
-                        <input type="text" disabled class="form-control" name="entrada">
+                        <input type="text" disabled class="form-control" name="entrada" value="{{isset($data['totalEntrada']) ? $data['totalEntrada'] : ''}}">
                     </div>
                     Total de Saídas
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text material-icons">trending_down</div>
+                            <div class="input-group-text material-icons">arrow_downward</div>
                         </div>
-                        <input type="text" disabled class="form-control" name="saida">  
+                        <input type="text" disabled class="form-control" name="saida" value="{{isset($data['totalSaida']) ? $data['totalSaida'] : ''}}">  
                     </div>
                     Dia com maior Movimentação
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text material-icons">arrow_upward</div>
+                            <div class="input-group-text material-icons">trending_up</div>
                         </div>
-                        <input type="text" disabled class="form-control" name="saida">  
+                        <input type="text" disabled class="form-control" name="saida" value="{{isset($data['maiorMovimentacao']) ? $data['maiorMovimentacao'] : ' '}}">  
                     </div>
                     Dia com menor Movimentação
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
-                            <div class="input-group-text material-icons">arrow_downward</div>
+                            <div class="input-group-text material-icons">trending_down</div>
                         </div>
-                        <input type="text" disabled class="form-control" name="saida">  
+                        <input type="text" disabled class="form-control" name="saida" value="{{isset($data['menorMovimentacao']) ? $data['menorMovimentacao'] : ' '}}">  
                     </div>
 
                     
