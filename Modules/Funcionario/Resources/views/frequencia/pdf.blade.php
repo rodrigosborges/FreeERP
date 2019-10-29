@@ -39,7 +39,7 @@
     <header>
         <h1 class="text-center"><b>Folha de ponto</b></h1>
         <h5 class="mt-3"><b>Funcionário:</b> {{$data['funcionario']->nome}}</h5>
-        <h5 class="mt-3"><b>Mês de referência:</b> {{ ucfirst(strftime('%B de %Y', strtotime($data['pontos'][0]->created_at))) }}</h5>
+        <h5 class="mt-3"><b>Mês de referência:</b> {{ ucfirst(strftime('%B de %Y', strtotime($data['pontos'][0]->entrada))) }}</h5>
         <h5 class="mt-3"><b>Tempo trabalhado:</b> {{ $data['total'] }}</h5>
 
         <div class="mt-4 pt-1 bordered">
@@ -65,23 +65,23 @@
     </footer>
 
     <div class="bordered2">
-        @for($i=0; $i < count($data['pontos']); $i+=2)
+        @foreach($data['pontos'] as $ponto)
             <div class="mt-2">
                 <div class="inline text-center">
-                    <span>{{ $data['pontos'][$i]->get_day() }}</span>
+                    <span>{{ $ponto->get_day() }}</span>
                 </div>
                 <div class="inline text-center">
-                    <span>{{ $data['pontos'][$i]->get_time() }}</span>
+                    <span>{{ $ponto->get_time_entrada() }}</span>
                 </div>
                 <div class="inline text-center">
-                    <span>{{ $data['pontos'][$i+1]->get_time() }}</span>
+                    <span>{{ $ponto->get_time_saida() }}</span>
                 </div>
                 <div class="inline text-center">
-                    <span>{{ $data['pontos'][$i]->timeTo($data['pontos'][$i+1]) }}</span>
+                    <span>{{ $ponto->time_worked() }}</span>
                 </div>
             </div>
             <hr class="mt-0 mb-0">
-        @endfor
+        @endforeach
     </div>
 
 </body>

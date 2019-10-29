@@ -15,15 +15,15 @@ class FrequenciaController extends Controller{
     public function __construct(){
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
+        DB::statement("SET lc_time_names = 'pt_BR'");
     }
 
     public function index($id){
         $funcionario = Funcionario::findOrFail($id);
         $pontos = $funcionario
             ->pontos()
-            ->where('entrada', 1)
             ->select(
-                DB::raw('YEAR(created_at) ano, MONTH(created_at) mes, MONTHNAME(created_at) nome_mes, funcionario_id as funcionario_id'),
+                DB::raw('YEAR(entrada) ano, MONTH(entrada) mes, MONTHNAME(entrada) nome_mes, funcionario_id as funcionario_id'),
             )
             ->groupby('ano','mes', 'nome_mes', 'funcionario_id')
             ->orderby('ano', 'desc')
@@ -31,8 +31,13 @@ class FrequenciaController extends Controller{
             ->get();
 
         foreach($pontos as $key => $ponto){
-            $data = $this->get_data($id, $ponto->ano, $ponto->mes);
-            $pontos[$key]['hasAutomatico'] = $data === null ? 1 : 0;
+            $hasAutomatico = $funcionario
+                                ->pontos()
+                                ->where('entrada', '>=', $ponto->ano."-".$ponto->mes."-01 00:00:00")
+                                ->where('entrada', '<', $ponto->ano."-".($ponto->mes+1)."-01 00:00:00")
+                                ->where('automatico', 1)
+                                ->count(); 
+            $pontos[$key]['hasAutomatico'] = $hasAutomatico > 0;
         }
 
         $data = [
@@ -73,7 +78,7 @@ class FrequenciaController extends Controller{
         
         $data = $this->get_data($id, $ano, $mes, true);
 
-        $data['title'] = "Edição de ponto - ".$data['funcionario']->nome." - ".ucfirst(strftime('%B de %Y', strtotime($data['pontos'][0]->created_at)));
+        $data['title'] = "Edição de ponto - ".$data['funcionario']->nome." - ".ucfirst(strftime('%B de %Y', strtotime($data['pontos'][0]->entrada)));
         $data['id'] = $id;
         $data['ano'] = $ano;
         $data['mes'] = $mes;
@@ -85,11 +90,14 @@ class FrequenciaController extends Controller{
         try{
 
             foreach($request->stored as $key => $stored){
-                $date = \DateTime::createFromFormat('d/m/Y H:i:s', $stored);
-                $date = $date->format('Y-m-d H:i:s');
+                $entrada = \DateTime::createFromFormat('d/m/Y H:i:s', $stored['entrada']);
+                $entrada = $entrada->format('Y-m-d H:i:s');
+                $saida = \DateTime::createFromFormat('d/m/Y H:i:s', $stored['saida']);
+                $saida = $saida->format('Y-m-d H:i:s');
                 $ponto = Ponto::findOrFail($key);
-                if($ponto->created_at != $date){
-                    $ponto->created_at = $date;
+                if($ponto->entrada != $entrada || $ponto->saida != $saida){
+                    $ponto->entrada = $entrada;
+                    $ponto->entrada = $saida;
                     $ponto->updated_at = date('Y-m-d H:i:s');
                     $ponto->automatico = 0;
                     $ponto->update();
@@ -98,29 +106,18 @@ class FrequenciaController extends Controller{
 
             $funcionario = Funcionario::findOrFail($id);
 
-            if($request->entrada && $request->saida){
-                foreach($request->entrada as $entrada){
-                    
-                    $date = \DateTime::createFromFormat('d/m/Y H:i:s', $entrada);
-                    $date = $date->format('Y-m-d H:i:s');
+            if($request->new){
+                foreach($request->new as $new){
+                    $entrada = \DateTime::createFromFormat('d/m/Y H:i:s', $new['entrada']);
+                    $entrada = $entrada->format('Y-m-d H:i:s');
+
+                    $saida = \DateTime::createFromFormat('d/m/Y H:i:s', $new['saida']);
+                    $saida = $saida->format('Y-m-d H:i:s');
 
                     $funcionario->pontos()->create([
-                        'entrada'       => 1,
+                        'entrada'       => $entrada,
+                        'saida'         => $saida,
                         'automatico'    => 0,
-                        'created_at'    => $date,
-                        'updated_at'    => date('Y-m-d H:i:s')
-                    ]);
-                }
-
-                foreach($request->saida as $saida){
-                    
-                    $date = \DateTime::createFromFormat('d/m/Y H:i:s', $saida);
-                    $date = $date->format('Y-m-d H:i:s');
-
-                    $funcionario->pontos()->create([
-                        'entrada'       => 0,
-                        'automatico'    => 0,
-                        'created_at'    => $date,
                         'updated_at'    => date('Y-m-d H:i:s')
                     ]);
                 }
@@ -160,40 +157,49 @@ class FrequenciaController extends Controller{
     public function ponto($id){
         try{
 
+            DB::beginTransaction();
+
             $dateEn = date('Y-m-d H:i:s');
 
             $dateBr = date('d/m/Y H:i:s');
 
             $funcionario = Funcionario::findOrFail($id);
-
-            $entrada = 1;
             
             $mensagem = "Entrada registrada";
 
-            $ultimo = $funcionario->pontos()->orderby('created_at')->last();
+            $ultimo = $funcionario->pontos()->whereNull('saida')->orderBy('entrada', 'desc')->first();
 
-            if($ultimo && $ultimo->entrada == 1){
-                $diferenca = round((strtotime($dateEn) - strtotime($ultimo->created_at)) / (60*60));
+            if($ultimo){
+                $diferenca = round((strtotime($dateEn) - strtotime($ultimo->entrada)) / (60*60));
+
+                $ultimo->saida = $dateEn;
+                $ultimo->update();
 
                 if($diferenca > 10){
+                    $ultimo->automatico = 1;
+                    $ultimo->update();
+
                     $funcionario->pontos()->create([
-                        'created_at' => $dateEn,
-                        'entrada'    => 0,
-                        'automatico' => 1,
+                        'entrada'    => $dateEn,
                     ]);
+
                     $mensagem = "Entrada registrada (Saída anterior registrada automaticamente)";
-                }else{
-                    $entrada = 0;
-                    $hour = intval((strtotime($dateEn) - strtotime($ultimo->created_at)) / (60*60));
-                    $tempo = date('i:s',(strtotime($dateEn) - strtotime($ultimo->created_at)));
+
+                }else{                 
+                    $hour = intval((strtotime($ultimo->saida) - strtotime($ultimo->entrada)) / (60*60));
+                    $tempo = date('i:s',(strtotime($ultimo->saida) - strtotime($ultimo->entrada)));
                     $mensagem = "Saída registrada (Tempo: $hour:$tempo)";
                 }
+
+            }else{
+                $funcionario->pontos()->create([
+                    'entrada'   => $dateEn
+                ]);
             }
             
-            $funcionario->pontos()->create([
-                'created_at' => $dateEn,
-                'entrada'    => $entrada,
-            ]);
+            
+
+            DB::commit();
 
             return json_encode([
                 'horario'   => $dateBr,
@@ -208,11 +214,12 @@ class FrequenciaController extends Controller{
     public static function get_data($id, $ano, $mes, $edit = false){
 
         $funcionario = Funcionario::findOrFail($id);
+
         $pontos = $funcionario
             ->pontos()
-            ->where('created_at', '>=', $ano."-".$mes."-01 00:00:00")
-            ->where('created_at', '<', $ano."-".($mes+1)."-01 00:00:00")
-            ->orderby('created_at');
+            ->where('entrada', '>=', $ano."-".$mes."-01 00:00:00")
+            ->where('entrada', '<', $ano."-".($mes+1)."-01 00:00:00")
+            ->orderby('entrada');
 
         $pontosCheck = clone $pontos;
 
@@ -221,33 +228,13 @@ class FrequenciaController extends Controller{
         }
 
         $pontos = $pontos->get();
-        
-        if($pontos[0]->entrada == 0){
-            unset($pontos[0]);
-        }
-
-        if($pontos[count($pontos)-1]->entrada == 1){
-            $ponto = $funcionario
-                ->pontos()
-                ->where('entrada', 0)
-                ->where('created_at', '>=', $ano."-".($mes+1)."-01 00:00:00")
-                ->where('created_at', '<', $ano."-".($mes+2)."-01 00:00:00")
-                ->orderby('created_at')
-                ->first();
-
-            if($ponto->automatico == 1 && !$edit){
-                return null;
-            }else{
-                $pontos[] = $ponto;
-            }
-        }
 
         $hours = 0;
         $minutes = 0;
         $seconds = 0;
 
         for($i=0; $i < count($pontos); $i+=2){
-            $timeWorked = $pontos[$i]->timeTo($pontos[$i+1]);
+            $timeWorked = $pontos[$i]->time_worked();
 
             $secondsNew = explode(':',$timeWorked);
             $secondsNew = intVal(($secondsNew)[2]);
@@ -258,8 +245,8 @@ class FrequenciaController extends Controller{
             $hoursNew = explode(':',$timeWorked);
             $hoursNew = intVal(($hoursNew)[0]);
 
-            $hours = ( ($seconds + $secondsNew)/60 + $minutes + $minutesNew)/60 + $hoursNew + $hours;
-            $minutes = (($seconds + $secondsNew)/60 + ($minutes + $minutesNew))%60;
+            $hours = intVal(( ($seconds + $secondsNew)/60 + $minutes + $minutesNew)/60 + $hoursNew + $hours);
+            $minutes = intVal((($seconds + $secondsNew)/60 + ($minutes + $minutesNew))%60);
             $seconds = ($seconds + $secondsNew)%60;
         }
 

@@ -14,7 +14,7 @@
                     <b>Período de referência:</b>
                 </th>
                 <th colspan="3">
-                    {{ ucfirst(strftime('%B de %Y', strtotime($data['pontos'][0]->created_at))) }}
+                    {{ ucfirst(strftime('%B de %Y', strtotime($data['pontos'][0]->entrada))) }}
                 </th>
             </tr>
             <tr>
@@ -34,14 +34,14 @@
             </tr>
         </thead>
         <tbody>
-            @for($i=0; $i < count($data['pontos']); $i+=2)
+            @foreach($data['pontos'] as $ponto)
                 <tr>
-                    <td align="center" style="border: 1px solid black;">{{ $data['pontos'][$i]->get_day() }}</td>
-                    <td align="center" style="border: 1px solid black;">{{ $data['pontos'][$i]->get_time() }}</td>
-                    <td align="center" style="border: 1px solid black;">{{ $data['pontos'][$i+1]->get_time() }}</td>
-                    <td align="center" style="border: 1px solid black;">{{ $data['pontos'][$i]->timeTo($data['pontos'][$i+1]) }}</td>
+                    <td align="center" style="border: 1px solid black;">{{ $ponto->get_day() }}</td>
+                    <td align="center" style="border: 1px solid black;">{{ $ponto->get_time_entrada() }}</td>
+                    <td align="center" style="border: 1px solid black;">{{ $ponto->get_time_saida() }}</td>
+                    <td align="center" style="border: 1px solid black;">{{ $ponto->time_worked() }}</td>
                 </tr>
-            @endfor
+            @endforeach
         </tbody>
     </table>
 </html>

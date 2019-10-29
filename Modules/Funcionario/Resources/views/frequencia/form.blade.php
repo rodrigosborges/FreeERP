@@ -14,27 +14,39 @@
         <strong><h5 class="mb-3 text-center">Pontos registrados</h5></strong><hr>
 
         <?php 
-            $novosPontos = old('entrada', [[]]);
+            $novosPontos = old('new', [[]]);
         ?>
 
-        <div class="row">
-            @foreach($data['pontos'] as $key => $ponto)
+        @foreach($data['pontos'] as $key => $ponto)
+            <div class="row">
                 <div class="form-group col-md-6">
-                    <label class="control-label">{{$ponto->entrada == 0 ? "Saída" : "Entrada"}} {{$ponto->automatico == 1 ? "- Automático" : ""}}</label>
+                    <label class="control-label">Entrada</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i class="material-icons">update</i>
                             </span>
                         </div>
-                        <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="stored[{{$ponto->id}}]" class="form-control date-valid date-mask" value="{{old('stored.'.$ponto->id, $ponto->formated_date())}}">
+                        <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="stored[{{$ponto->id}}][entrada]" class="form-control date-valid date-mask" value="{{old('stored.'.$ponto->id.'.entrada', $ponto->formated_entrada())}}">
                     </div>
-                    <span class="errors"> {{ $errors->first('stored.'.$ponto->id) }} </span>
+                    <span class="errors"> {{ $errors->first('stored.'.$ponto->id.'.entrada') }} </span>
                 </div>
-            @endforeach
+                <div class="form-group col-md-6">
+                    <label class="control-label">Saída {{$ponto->automatico == 1 ? "- Automático" : ""}}</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">update</i>
+                            </span>
+                        </div>
+                        <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="stored[{{$ponto->id}}][saida]" class="form-control date-valid date-mask" value="{{old('stored.'.$ponto->id.'.saida', $ponto->formated_saida())}}">
+                    </div>
+                    <span class="errors"> {{ $errors->first('stored.'.$ponto->id.'.saida') }} </span>
+                </div>
+            </div>
+        @endforeach
 
 
-        </div>
 
         <strong><h5 class="mt-3 text-center">Novos pontos</h5></strong><hr>
 
@@ -49,9 +61,9 @@
                                     <i class="material-icons">update</i>
                                 </span>
                             </div>
-                            <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="entrada[{{$key}}]" class="form-control date-valid date-mask" value="{{old('entrada.'.$key, '')}}">
+                            <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="new[{{$key}}][entrada]" class="form-control date-valid date-mask" value="{{old('new.'.$key.'.entrada')}}">
                         </div>
-                        <span class="errors"> {{ $errors->first('entrada.'.$key) }} </span>
+                        <span class="errors"> {{ $errors->first('new.'.$key.'.entrada') }} </span>
                     </div>
                     <div class="form-group col-md">
                         <label class="control-label">Saída</label>
@@ -61,9 +73,9 @@
                                     <i class="material-icons">update</i>
                                 </span>
                             </div>
-                            <input type="text" placeholder="Ex: 01/01/2019 18:00:00" name="saida[{{$key}}]" class="form-control date-valid date-mask" value="{{old('saida.'.$key, '')}}">
+                            <input type="text" placeholder="Ex: 01/01/2019 18:00:00" name="new[{{$key}}][saida]" class="form-control date-valid date-mask" value="{{old('new.'.$key.'.saida')}}">
                         </div>
-                        <span class="errors"> {{ $errors->first('saida.'.$key) }} </span>
+                        <span class="errors"> {{ $errors->first('new.'.$key.'.saida') }} </span>
                     </div>
                     <div class="col-md-1 pt-4 text-center">
                         <button type="button" class="btn btn-danger btn-sm removePonto"><i class="pt-1 material-icons">delete</i></button>

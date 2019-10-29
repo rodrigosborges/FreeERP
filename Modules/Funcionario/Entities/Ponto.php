@@ -6,7 +6,7 @@ class Ponto extends Model{
     
     protected $table = 'ponto';
 
-    protected $fillable = ['created_at', 'automatico', 'entrada'];
+    protected $fillable = ['entrada', 'saida', 'automatico'];
 
     public $timestamps = false;
 
@@ -15,29 +15,37 @@ class Ponto extends Model{
     }
 
     public function get_day(){
-        return date('d', strtotime($this->attributes['created_at']));
+        return date('d', strtotime($this->attributes['entrada']));
     }
     
-    public function get_time(){
-        return date('H:i:s', strtotime($this->attributes['created_at']));
+    public function get_time_entrada(){
+        return date('H:i:s', strtotime($this->attributes['entrada']));
     }
 
-    public function timeTo($next){
-        $date1 = strtotime($this->attributes['created_at']);
-        $date2 = strtotime($next->created_at);
+    public function get_time_saida(){
+        return date('H:i:s', strtotime($this->attributes['saida']));
+    }
+
+    public function time_worked(){
+        $date1 = strtotime($this->attributes['entrada']);
+        $date2 = strtotime($this->attributes['saida']);
         $diff = $date2 - $date1;
-        $hours = $diff / ( 60 * 60 );
+        $hours = intVal($diff / ( 60 * 60 ));
         $hours = $hours < 10 ? "0$hours" : $hours;
         $diff = $diff % (60*60);
-        $minutes = $diff / ( 60 );
+        $minutes = intVal($diff / ( 60 ));
         $minutes = $minutes < 10 ? "0$minutes" : $minutes;
         $seconds = $diff % (60);
         $seconds = $seconds < 10 ? "0$seconds" : $seconds;
         return "$hours:$minutes:$seconds";
     }
 
-    public function formated_date(){
-        return date("d/m/Y H:i:s", strtotime($this->attributes["created_at"]));
+    public function formated_entrada(){
+        return date("d/m/Y H:i:s", strtotime($this->attributes["entrada"]));
+    }
+
+    public function formated_saida(){
+        return date("d/m/Y H:i:s", strtotime($this->attributes["saida"]));
     }
     
 }

@@ -31,7 +31,7 @@
                         <tr>
                             <th>Mês</th>
                             <th>Ano</th>
-                            <th style="width: 230px;">Ações</th>
+                            <th style="width: 240px;">Ações</th>
                             <th width="1px">Situação</th>
                         </tr>
                     </thead>
