@@ -59,11 +59,10 @@
                                 <i class="material-icons lock-locked">lock</i>
                             </span>
                         </div>
-                        <select required name="protocolo[tipo_acesso_id]" class="form-control">
+                        <select required name="protocolo[tipo_acesso]" class="form-control">
                             <option value="">Selecione</option>
-                            @foreach($data['tipo_acesso'] as $item)
-                                <option value="{{ $item->id }}" {{ old('tipo_acesso.tipo_acesso_id', $data['model']? $data['model']->tipo_acesso()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->tipo }} </option>
-                            @endforeach
+                            <option {{ old('protocolo.tipo_acesso', $data['model'] ? $data['model']->tipo_acesso : '') == '0' ? 'selected' : ''}} value='0'>Público</option>
+                            <option {{ old('protocolo.tipo_acesso', $data['model'] ? $data['model']->tipo_acesso : '') == '1' ? 'selected' : ''}} value='1'>Privado</option>
                         </select>
                     </div>
                 </div>

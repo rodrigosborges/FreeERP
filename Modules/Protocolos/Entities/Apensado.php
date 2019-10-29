@@ -6,13 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Apensado extends Model
 {
-    protected $table = 'protocolo_apensado';
+    protected $table = 'protocolo_has_apensado';
 
-    protected $fillable = ['protocolo_id'];
+    protected $fillable = ['protocolo_id', 'apensado_id'];
     
-    //Relação com a tabela protocolo
-    public function protocolo(){
-        return $this->belongsTo('Modules\Protocolos\Entities\Protocolo', '');
-    }   
+    
  
 }

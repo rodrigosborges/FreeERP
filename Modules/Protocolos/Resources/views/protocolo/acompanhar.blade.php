@@ -17,7 +17,13 @@
         <tbody>
             <tr>
                 <td><b>Setor de Origem: </b>{{$data["protocolo"]->usuario->setor->nome}}</td>
-                <td><b>Nível de acesso: </b>{{$data["protocolo"]->tipo_acesso->tipo}} FAZER COR</td>
+                <td><b>Nível de acesso: </b>
+                <?php if($data["protocolo"]->tipo_acesso == 1){ ?>
+	                    <button type="button" class="btn btn-danger btn-sm">Privado</button> 
+                <?php } else{ ?>
+                        <button type="button" class="btn btn-success btn-sm">Público</button> 
+                <?php } ?> 
+                </td>
             </tr>
             <tr>
                 <td colspan=2><b>Tipo: </b>{{$data["protocolo"]->tipo_protocolo->tipo}}</td>
@@ -45,7 +51,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
-                    <i class="material-icons" style="vertical-align:middle; font-size:25px; margin-right:5px;">attach_file</i>Protocolos apensados
+                    <i class="material-icons" style="vertical-align:middle; font-size:25px; margin-right:5px;">attach_file</i>Protocolos apensados ({{$data["protocolo"]->apensados()->count()}})
                 </a>
             </li>
         </ul>
@@ -57,19 +63,21 @@
                     {{ csrf_field() }}
                     <div class="row">
                         <input id="id-protocolo" name="id-protocolo" type="hidden" value="{{$data['protocolo']->id}}">
-                        <div class="input-group col-6 mb-3 mt-3">
-                            <span class="input-group-text">
-                                <i class="material-icons">camera_alt</i>
-                            </span>
-                            <div class="custom-file">
-                                <input type="file" name="documento" class="custom-file-input" id="documento">
-                                <label class="custom-file-label" for="documento">Selecionar</label>
+                        @if($data['model'] == '' )
+                            <div class="input-group col-6 mb-3 mt-3">
+                                <span class="input-group-text">
+                                    <i class="material-icons">camera_alt</i>
+                                </span>
+                                <div class="custom-file">
+                                    <input type="file" name="documento" class="custom-file-input" id="documento">
+                                    <label class="custom-file-label" for="validatedCustomFile">Selecione o arquivo</label>
+                                </div>
                             </div>
-                        </div>
-                    
-                        <div class="col-2 justify-content-center mt-3">
-                            <button class="btn btn-success" type="submit">Adicionar</button>
-                        </div>
+                        
+                            <div class="col-2 justify-content-center mt-3">
+                                <button class="btn btn-success" type="submit">Adicionar</button>
+                            </div>
+                        @endif
                     </div>
                 </form>
                 <br>
@@ -85,15 +93,11 @@
                             <tr>
                                 <td>{{$documento->nome_documento}}</td>
                                 <td class="text-center">
-                                   <form data-id="{{$documento->id}}" class="doc-download">
-                                   {{ csrf_field() }}
-                                        <button  class="btn btn-success btn-sm download-doc" type="submit" style="border-radius:50px;">
-                                            <i class="material-icons lock-locked" style="font-size:25px;">file_download</i>
-                                        </button>
-                                   </form>
-                                </td>
-                                <td>
-                                <a href="{{url('vstorage/app/documentos/'.$documento->documento)}}" class="btn btn-info btn-small ">Documento</a>
+                                    <a href='{{url("protocolos/protocolos/download/$documento->id")}}'>
+                                    <button  class="btn btn-outline-success btn-sm download-doc" type="submit" style="border-radius:50px;">
+                                        <i class="material-icons lock-locked" style="font-size:25px;">file_download</i>
+                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -117,8 +121,8 @@
                 @foreach($data["tramite"] as $tramite)
                     <tr>
                         <td>{{$tramite->created_at}}</td>
-                        <td>{{$tramite->origem_usuario->nome}}</td>
-                        <td>{{$tramite->destino_usuario->nome}}</td>
+                        <td>{{$tramite->origem_usuario->nome}}<br>({{$tramite->origem_usuario->setor->nome}})</td>
+                        <td>{{$tramite->destino_usuario->nome}}<br>({{$tramite->destino_usuario->setor->nome}})</td>
                         <td>{{$tramite->observacao}}</td>
                         <td>{{$tramite->status}}</td>
                         <td>FAZER</td>
@@ -153,7 +157,7 @@
                     </div>
                 </form>
                 <br>
-                <table class="table table-bordered table-hover">
+                <table id="table-apensado" class="table table-bordered table-hover">
                     <thead>
                         <tr class="table-primary">
                             <th scope="col">Número</th>
@@ -163,7 +167,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                    
+                        @foreach($data["protocolo"]->apensados()->get() as $apensado)
+                            <tr>
+                                <td>
+                                <?php if($apensado->tipo_acesso == 1){ ?>
+	                                <a href='{{url("protocolos/protocolos/acompanhar/$apensado->id")}}'>{{$apensado->id}}</a>  
+                                <?php } else{ ?>
+                                    <a href='{{url("protocolos/protocolos/acompanhar/$apensado->id")}}'>{{$apensado->id}}</a> 
+                                <?php } ?> 
+                                </td>
+                                <td>{{$apensado->usuario->setor->nome}}</td>
+                                <td>{{date('d/m/Y h:i:s', strtotime($apensado->created_at))}}</td>
+                                <td>{{date('d/m/Y h:i:s', strtotime($apensado->updated_at))}}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -193,10 +210,8 @@
                 processData: false, 
                 contentType: false,
                 success:function(response){
-                
-                    var obj = JSON.parse(response); 
                     
-                    $('#table-documento > tbody:last-child').append("<tr><td>"+obj.nome_documento+"</td><td>Teste</td></tr>");
+                    window.location.reload()
                 },
                 error:function(err){
                 console.log(err);

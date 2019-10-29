@@ -49,7 +49,7 @@ class UsuarioController extends Controller
     
             DB::commit();
     
-            return back()->with('success', 'Usuário cadastrado com sucesso');
+            return redirect('protocolos/protocolos/login')->with('success', 'Usuário cadastrado com sucesso');
 
         }catch(\Exception $e){
 

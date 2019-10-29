@@ -17,7 +17,6 @@ $('#pesquisa').keyup(function(){
                     source: data,
                   
                     select: function (e, i) {
-                        console.log(i.item.value);
 
                         var idapensado = i.item.value;
 
@@ -27,15 +26,9 @@ $('#pesquisa').keyup(function(){
                            data: {id:idprotocolo, apensado:idapensado},
                            dataType: 'json',
                            sucess:function(data){
-                                var obj = JSON.parse(data); 
-                                console.log(obj);
-                             
-                                if(obj.status == 'success'){
-                                    console.log('sucesso');
-                                }
-                                else{
-                                    console.log('Deu ruim');
-                                }
+                                
+                                window.location.reload()
+                                
                            },
                            error: function(e) {
                                 console.log(e);

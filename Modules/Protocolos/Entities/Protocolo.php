@@ -12,7 +12,7 @@ class Protocolo extends Model
 
     protected $table = 'protocolo';
 
-    protected $fillable = ['assunto', 'tipo_protocolo_id', 'tipo_acesso_id', 'usuario_id'];
+    protected $fillable = ['assunto', 'tipo_protocolo_id', 'tipo_acesso', 'usuario_id'];
 
     //Relação com a tabela tipo_protocolo
     public function tipo_protocolo(){
@@ -41,4 +41,8 @@ class Protocolo extends Model
     public function apensados(){
         return $this->belongsToMany('Modules\Protocolos\Entities\Protocolo', 'protocolo_has_apensado', 'protocolo_id', 'apensado_id');
     }
-}
+
+    public function getApensados() {
+        return Protocolo::find($this->apensado_id);
+    }
+}   

@@ -1,6 +1,6 @@
 @extends('protocolos::template')
 
-@section('title', 'Usuário')
+@section('title', 'Cadastrar usuário')
 
 @section('body')        
     <form id="form-usuario" action="{{ $data['url'] }}" method="POST" enctype="form-data">
@@ -61,7 +61,9 @@
 
 @section('footer')
     <div class="text-right">
-        <button class="btn btn-success sendForm" type="button">{{$data['button']}}</button>
+        <button class="btn btn-success sendForm" type="button">
+            <i class="material-icons lock-locked" style="vertical-align:middle; font-size:25px; margin-right:5px;">save</i>{{$data['button']}}
+        </button>
     </div>
 @endsection
 

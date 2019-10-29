@@ -5,6 +5,7 @@ namespace Modules\Protocolos\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Protocolo, Usuario, Tramite, Documento};
 use Modules\Protocolos\Http\Requests\{CreateProtocolo};
 use Illuminate\Support\Facades\Auth;
@@ -67,7 +68,6 @@ class ProtocolosController extends Controller
             'model'             => '',
             'interessados'      => [new Usuario],
             'tipo_protocolo'    => TipoProtocolo::all(),
-            'tipo_acesso'       => TipoAcesso::all(),
             'usuario'           => Usuario::all(),
             'title'             => 'Cadastro de Protocolo',
             'button'            => 'Salvar',
@@ -150,14 +150,13 @@ class ProtocolosController extends Controller
 			$protocolo = Protocolo::Create([
                 'assunto'               => $request['assunto'],
                 'tipo_protocolo_id'     => $request->protocolo['tipo_protocolo_id'],
-                'tipo_acesso_id'        => $request->protocolo['tipo_acesso_id'],
+                'tipo_acesso'           => $request->protocolo['tipo_acesso'],
                 'usuario_id'            => Auth::user()->id,
             ]);
             
 
             $protocolo->interessado()->attach($interessadosArray);
            
-
             DB::commit();
             
             return redirect('protocolos/protocolos')->with('success', 'Protocolo cadastrado com sucesso!');
@@ -205,7 +204,7 @@ class ProtocolosController extends Controller
                 'protocolo_id'          => $id
             ]);
 
-            $protocolo->interessado()->attach(['protocolo_id' => $id]);
+            $protocolo->interessado()->attach(['usuario_id' => $request->tramite['destino']]);
 
             DB::commit();
             
@@ -230,13 +229,23 @@ class ProtocolosController extends Controller
             'title'         => 'Acompanhamento de Protocolo',
             'button'        => 'Adicionar',
         ]);
-        
-        return view('protocolos::protocolo.acompanhar', compact('data'));
-    }
+      
 
-
-    public function teste(Request $request){
-        return response()->json('Alo', 200);
+        if($data["protocolo"]->tipo_acesso == 1) {
+            foreach($data["protocolo"]->interessado() as $interessados){
+                dd($interessados);
+                if(Auth::user()->id <> $interessados->usuario_id){
+                    return back()->with('error', 'Esse protocolo é privado!');
+                }
+                else{
+                    return view('protocolos::protocolo.acompanhar', compact('data'));
+                }
+            }
+        }
+        else{
+            return view('protocolos::protocolo.acompanhar', compact('data'));
+        }
+            
     }
 
     public function salvarDocumento(Request $request){
@@ -277,9 +286,11 @@ class ProtocolosController extends Controller
 		}
     }
 
-   public function download(Request $request){
+   public function download($id){
 
-        return 'lalala';
+        $documento = Documento::findOrFail($id);
+
+        return response()->download(storage_path('app/documentos/' . $documento->documento));
 
    }
     

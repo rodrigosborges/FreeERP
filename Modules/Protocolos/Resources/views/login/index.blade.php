@@ -1,42 +1,40 @@
 @extends('protocolos::template')
 
-@section('title','Login de Usuário')
+@section('title','FreeERP')
 
 @section('body')
-<div class="d-flex justify-content-center" style="margin-top:8%">
+<div class="d-flex justify-content-center">
     <div class="card" style="width:40%">
         <div class="card-body">
-            <h1 style="text-align:center">FreeERP</h1>
-            <br>
-            <br>
-
-            <!-- <p>
-                This view is loaded from module: {!! config('usuario.name') !!}
-            </p> -->
-
-            <form id="loginForm" method="POST" action="logar">
-                        
-                    @csrf
-
-                    <div class="form-group">
-                        <label for="apelido">Apelido</label>
-                        <input required id="apelido" class="form-control" type="text" name="apelido">
-                        {{$errors->first('apelido')}}
-                        <br>
-                        <label for="password">Senha</label>
-                        <input required id="password" class="form-control" type="password" name="password">
-                        {{$errors->first('password')}}
-                    </div>
+            <form id="loginForm" method="POST" action="logar">   
+                @csrf
+                <div class="form-group">
+                    <label for="apelido">Apelido</label>
+                    <input required id="apelido" class="form-control" type="text" name="apelido">
+                    {{$errors->first('apelido')}}
                     <br>
-                    <button type="submit" class="btn btn-success">Entrar</button>
-                    <br>
-                    <br>
+                    <label for="password">Senha</label>
+                    <input required id="password" class="form-control" type="password" name="password">
+                    {{$errors->first('password')}}
+                </div>
             </form>
-            <a href="{{url('protocolos/cadastrar')}}">Cadastrar usuário</a>
         </div>
     </div>
 </div>
 
+@endsection
+
+@section('footer')
+    <div class="text-right">
+        <button class="btn btn-info sendFormLogin" type="button">
+                <i class="material-icons" style="vertical-align:middle; font-size:25px; margin-right:5px;">exit_to_app</i>Logar
+        </button>
+        <a href="{{url('protocolos/cadastrar')}}">
+        <button class="btn btn-success sendForm" type="button">
+                <i class="material-icons" style="vertical-align:middle; font-size:25px; margin-right:5px;">add_circle_outline</i>Cadastrar usuário
+        </button>
+        </a>
+    </div>
 @endsection
 
 @section('script')
@@ -59,5 +57,13 @@
                 }
             }
         });
+
+        $(document).ready(function(){
+                $(".sendFormLogin").on('click',function(){
+                    $(".sendFormLogin").prop("disabled",true) 
+                    $("#loginForm").submit()  
+                    console.log('success')
+                })
+            });
     </script>
 @endsection

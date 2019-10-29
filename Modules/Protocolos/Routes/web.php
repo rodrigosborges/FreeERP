@@ -30,7 +30,7 @@ Route::prefix('protocolos')->group(function() {
     Route::post('buscaApensado', 'ProtocolosController@fetchApensado');
     Route::get('protocolos/acompanhar/{id}', 'ProtocolosController@acompanhar');
     Route::post('protocolos/acompanhar/{id}', 'ProtocolosController@salvarDocumento');
-    Route::post('protocolos/download', 'ProtocolosController@download');
+    Route::get('protocolos/download/{id}', 'ProtocolosController@download');
     Route::post('salvarApensado/{id}', 'ProtocolosController@salvarApensado');
     Route::resource('protocolos', 'ProtocolosController')->middleware('auth');
 
