@@ -78,7 +78,7 @@ class FornecedorController extends Controller
             Fornecedor::create($req->all());
             DB::commit();
 
-            return redirect('/estoquemadeireira/produtos/categorias')->with('Success', 'Fornecedor cadastrado com sucesso!');
+            return redirect('/estoquemadeireira/produtos/fornecedores')->with('Success', 'Fornecedor cadastrado com sucesso!');
         } catch(\Exeception $e) {
             return back()->with('Error', 'Erro no cadastro de Fornecedor');
         }

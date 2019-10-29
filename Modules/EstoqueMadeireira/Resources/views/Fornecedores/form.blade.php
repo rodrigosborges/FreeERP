@@ -39,13 +39,13 @@
                         <div class="row mt-2 ml-2">
                             <div class="form-group col-4">
                                 <label for="cnpj">CNPJ</label>
-                                <input type="text" class="form-control" placeholder="Insira o CNPJ" name="cnpj" value="{{isset($fornecedor) ? $fornecedor->cnpj : ''}}">
+                                <input type="text" class="form-control" placeholder="Insira o CNPJ" id="cnpj" name="cnpj" value="{{isset($fornecedor) ? $fornecedor->cnpj : ''}}">
                                 <span style="color:red">{{$errors->first('cnpj')}}</span>
                             </div>
 
                             <div class="form-group col-4">
                                 <label for="telefone">Telefone</label>
-                                <input type="text" class="form-control" placeholder="Insira o telefone" name="telefone" value="{{isset($fornecedor) ? $fornecedor->telefone : ''}}">
+                                <input type="text" class="form-control" placeholder="Insira o telefone" id="telefone" name="telefone" value="{{isset($fornecedor) ? $fornecedor->telefone : ''}}">
                                 <span style="color:rede">{{$errors->first('telefone')}}</span>
                             </div>
 
@@ -70,7 +70,22 @@
      
     </div>       
 
+  
 
 
+@endsection
+@section('js')
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){	
+        $("#cnpj").mask("99.999.999/9999-99");
+        $("#telefone").mask("(99)99999-9999");
+	});
+</script>
 
 @endsection

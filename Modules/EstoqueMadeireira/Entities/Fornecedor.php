@@ -10,7 +10,7 @@ class Fornecedor extends Model
     use softDeletes;
 
     protected $table = 'fornecedor';
-    protected $fillable = ['nome', 'endereco', 'nome', 'cnpj'];
+    protected $fillable = ['nome', 'endereco','telefone', 'nome', 'cnpj'];
 
 
     public function produto(){
