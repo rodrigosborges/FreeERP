@@ -15,7 +15,7 @@
     <input type="hidden" value="{{$data['funcionario']->id}}" name="atestado[funcionario_id]">
     <h5>Nome do funcionário: {{$data['funcionario']->nome}}</h5>
 
-    <div class="col-lg-5 pt-5">
+    <div class="col-lg-12 pt-5">
             <div class="form-group">
                 <label for="">Motivo da mudança de situação:</label>
                 <div class="input-group">
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div class="col-lg-5">
+    <div class="col-lg-12">
         <div class="form-group">
             <label for="">CID:</label>
             <div class="input-group">
@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <div class="col-lg-5">
+    <div class="col-lg-12">
         <div class="form-group">
             <label for="">Data de Início:</label>
             <div class="input group">
@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div class="col-lg-5">
+    <div class="col-lg-12">
         <div class="form-group">
             <label for="">Data de Fim:</label>
             <div class="input-group">
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div class="col-lg-5">
+    <div class="col-lg-12">
         <div class="form-group">
             <label for="">Quantidade de Dias:</label>
             <div class="input-group">

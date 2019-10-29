@@ -25,7 +25,7 @@
                         <a class="btn btn-info" href='{{ url("funcionario/funcionario/ficha/$funcionario->id") }}'>Ficha</a>
                     </td>
                     <td class="min">
-                        <a class="btn btn-dark" href='{{ url("funcionario/funcionario/atestado/$funcionario->id") }}'>Atestado</a>
+                        <a class="btn btn-dark" href='{{ url("funcionario/funcionario/atestado/$funcionario->id") }}'>Licenças</a>
                     </td>
                     @endif
                     <td class="min">
