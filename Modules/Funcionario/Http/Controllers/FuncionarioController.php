@@ -426,14 +426,15 @@ class FuncionarioController extends Controller{
 
     public function ficha($id){
         $funcionario = Funcionario::findOrFail($id);
-
+                                        
         $data = [
             'funcionario' => Funcionario::findOrFail($id),
             
             'docs' => DB::table('funcionario')->join('funcionario_has_documento', 'funcionario_has_documento.funcionario_id', 'funcionario.id')
-                ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
-                ->join('tipo_documento', 'tipo_documento.id', '=', 'documento.tipo_documento_id')
-                ->select('tipo_documento.nome', 'documento.numero')->get(),
+                                              ->join('documento', 'documento.id', '=', 'funcionario_has_documento.documento_id')
+                                              ->join('tipo_documento', 'tipo_documento.id', '=', 'documento.tipo_documento_id')
+                                              ->where('funcionario_has_documento.funcionario_id', '=', $funcionario->id)
+                                              ->select('tipo_documento.nome', 'documento.numero')->get(),
             
             'cidade' => DB::table('funcionario')->join('endereco', 'funcionario.endereco_id', 'endereco.id')
                 ->join('cidade', 'endereco.cidade_id', 'cidade.id')->get('cidade.nome')->last(),
@@ -473,7 +474,7 @@ class FuncionarioController extends Controller{
             'title'             => 'Edição de cargos',
             'button'            => 'Salvar',
         ];
-
+       
         return view('funcionario::funcionario.cargo', compact('data'));
     }
         

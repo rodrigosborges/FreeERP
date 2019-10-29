@@ -30,7 +30,7 @@ class Funcionario extends Model {
         return $this->belongsToMany('App\Entities\Documento', 'funcionario_has_documento','funcionario_id','documento_id');
     }
     public function cargos(){
-        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada');
+        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada','data_saida');
     }
 
     public function curso(){

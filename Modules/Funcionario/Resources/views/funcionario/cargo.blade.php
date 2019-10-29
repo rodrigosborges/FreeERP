@@ -7,7 +7,7 @@
 @section('body')
     <form id="form" action="{{ $data['url'] }}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
-
+        
         <strong><h6 class="mt-5 mb-3">Cargos</h6></strong>
         <hr>
         @if($data['model'])
@@ -22,17 +22,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                        
                         @foreach($data['model']->cargos as $cargo)
                         <tr>   
                             <td>{{ $cargo->nome }}</td>
                             <td>{{ date("d/m/Y", strtotime($cargo->pivot->data_entrada)) }}</td>
-                            <td>{{ $cargo->pivot->data_saida ? enToBrDate($cargo->pivot->data_saida) : 'X' }}</td>
+                             <td>{{isset($cargo->pivot->data_saida) ? \Carbon\Carbon::parse($cargo->pivot->data_saida)->format('d/m/Y') : 'X'}}</td> 
                         </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            
         @endif
         <div class="row">
             <div class="col-md-3">
@@ -90,15 +93,16 @@
                 //data 1
                 var startDt = $('#data_admissao').val().split('/');
                 var startDt = startDt[2] + '-' + startDt[1] + '-' + startDt[0]
+                console.log(startDt);
                 //data 2
                 var month = d.getMonth()+1;
                 var year = d.getFullYear();
-                var day = d.getDay()-1;
-
+                var day = d.getDate();
+               
                 var endDt =  year + '-' +
                     (month<10 ? '0' : '') + month + '-' +
                     (day<10 ? '0' : '')+day;
-
+                
                 //comparação
               
                 if( startDt == endDt ){
