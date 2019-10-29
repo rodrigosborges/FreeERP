@@ -37,18 +37,18 @@ class FornecedorController extends Controller
 
     public function index()
     {
-        $categorias = Categoria::paginate(5);
+        $fornecedores = Fornecedor::paginate(5);
         $flag = 0;
       
-        return view('estoquemadeireira::Categoria/index', $this->template, compact('categorias', 'flag'));
+        return view('estoquemadeireira::Fornecedores/index', $this->template, compact('fornecedores', 'flag'));
     }
 
     public function inativos()
     {
-        $categorias = Categoria::onlyTrashed()->paginate(5);
+        $fornecedores = Fornecedor::onlyTrashed()->paginate(5);
         $flag = 1;
 
-        return view('estoquemadeireira::Categoria/index', $this->template, compact('categorias', 'flag',));
+        return view('estoquemadeireira::Categoria/index', $this->template, compact('fornecedores', 'flag',));
     }
 
     public function restore($id){
@@ -62,10 +62,8 @@ class FornecedorController extends Controller
 
     public function create()
     {
-        $categorias = Categoria::all();
-      
-        
-        return view('estoquemadeireira::categoria/form', $this->template, compact('categorias'));
+        $fornecedores = Fornecedor::all();     
+        return view('estoquemadeireira::Fornecedores/form', $this->template, compact('fornecedores'));
 
         
     }
@@ -76,12 +74,12 @@ class FornecedorController extends Controller
        
         DB::beginTransaction();
         try{
-            Categoria::create($req->all());
+            Fornecedor::create($req->all());
             DB::commit();
 
-            return redirect('/estoquemadeireira/produtos/categorias')->with('Success', 'Categoria cadastrada com sucesso!');
+            return redirect('/estoquemadeireira/produtos/categorias')->with('Success', 'Fornecedor cadastrado com sucesso!');
         } catch(\Exeception $e) {
-            return back()->with('Error', 'Erro no cadastro de Categoria');
+            return back()->with('Error', 'Erro no cadastro de Fornecedor');
         }
     }
 
