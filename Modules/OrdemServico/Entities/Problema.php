@@ -10,5 +10,5 @@ class Problema extends Model
 {
     public $timestamps = false;
     protected $table = 'problema';
-    protected $fillable = array('titulo','prioridade');
+    protected $fillable = array('titulo');
 }

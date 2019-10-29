@@ -7,7 +7,6 @@
 <button type="button" class="btn btn-outline-info btn-sm status-button">
     Atualizar Status
 </button>
-
 @endsection
 
 @section('modal')
@@ -38,7 +37,7 @@
 
             var idOS = linha.find("td:eq(0)").text().trim();
 
-            $("#form").attr("action", '/ordemservico/solucao/' + idOS + '/store');
+            $("#form-solucao").attr("action", '/ordemservico/solucao/' + idOS + '/store');
 
             $('#solucao').modal('show');
 

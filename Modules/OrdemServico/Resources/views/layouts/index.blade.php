@@ -33,6 +33,8 @@
                                         {{$model->solicitante->nome}}
                                         @elseif($atributo == 'status_id')
                                         {{$model->status->titulo}}
+                                        @elseif($atributo == 'problema_id')
+                                        {{$model->problema->titulo}}
                                         @else
                                         {{ $model->$atributo}}
                                         @endif

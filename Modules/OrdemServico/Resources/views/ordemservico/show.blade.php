@@ -38,7 +38,7 @@
     <hr>
     <p class="card-text text-secondary"> Prioridade: {{ $data['model']->prioridade}}</p>
     
-    <a href="{{ url('ordemservico/os') }}" class="btn btn-primary">Voltar</a>
+    <a href="{{ url()->previous() }}" class="btn btn-primary">Voltar</a>
   </div>
 </div>
 @endsection

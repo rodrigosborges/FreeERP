@@ -26,35 +26,40 @@ class OrdemServicoController extends Controller
 {
     public function index(Request $request)
     {
-        $idStatusConcluida = Status::all()->where('titulo','Concluída')->first()->id;
-        $idStatusInutilizado = Status::all()->where('titulo','Marcado como Inutilizável')->first()->id;
-        $ordensConcluidas = DB::table('ordem_servico')->where('status_id',$idStatusConcluida);
-        $data = [
-            'title' => 'Administração de Ordem de Servico em Andamento',
-            'model' => OrdemServico::all()->where('status_id','<>',$idStatusConcluida)->where('status_id','<>',$idStatusInutilizado),
-            'thead' => ['Protocolo', 'Solicitante', 'Status','Prioridade'],
-            'row_db' => ['protocolo', 'solicitante_id', 'status_id','prioridade'],
-            'create' => true,
-            'principaisFalhas' => DB::table('ordem_servico')
-            ->join('problema', 'problema.id', '=', 'ordem_servico.problema_id')
-            ->select(DB::raw('count(*) as total, problema.titulo'))
-            ->limit(3)
-            ->orderBy('total','desc')
-            ->groupBy('problema.titulo')
-            ->get(),
-            'inutilizadosAno' => DB::table('aparelho')->where('inutilizacao',true)->whereYear('updated_at',date('Y')),
-            'inutilizadosMes' => DB::table('aparelho')->where('inutilizacao',true)->whereMonth('updated_at',date('m')),
-            'tempoMedio' =>  (DB::select("select avg(timediff(updated_at,created_at)) as media from ordem_servico where status_id =" . $idStatusConcluida)),
-            'ordensConcluidas' => $ordensConcluidas->whereMonth('updated_at',date('m'))->count(),
-            'status' => Status::pluck('titulo', 'id'),
-            'route' => 'modulo.os.',
-            'acoes' => [
-                ['nome' => 'Editar', 'class' => 'btn btn-outline-info btn-sm', 'complemento-route' => 'edit'],
-                ['nome' => 'Detalhes', 'class' => 'btn btn-outline-warning btn-sm', 'complemento-route' => 'show'],
-                ['nome' => 'PDF', 'class' => 'btn btn-outline-dark btn-sm', 'complemento-route' => 'pdf']
-            ]
-        ];
-        return view('ordemservico::ordemservico.index', compact('data'));
+
+        if (Gate::allows('administrador', Auth::user())) {
+            $idStatusConcluida = Status::all()->where('titulo', 'Concluída')->first()->id;
+            $idStatusInutilizado = Status::all()->where('titulo', 'Marcado como Inutilizável')->first()->id;
+
+            $ordensConcluidas = DB::table('ordem_servico')->where('status_id', $idStatusConcluida);
+            $data = [
+                'title' => 'Administração de Ordem de Servico em Andamento',
+                'model' => OrdemServico::all()->where('status_id', '<>', $idStatusConcluida)->where('status_id', '<>', $idStatusInutilizado),
+                'thead' => ['Protocolo', 'Solicitante', 'Status', 'Prioridade'],
+                'row_db' => ['protocolo', 'solicitante_id', 'status_id', 'prioridade'],
+                'create' => true,
+                'principaisFalhas' => DB::table('ordem_servico')
+                    ->join('problema', 'problema.id', '=', 'ordem_servico.problema_id')
+                    ->select(DB::raw('count(*) as total, problema.titulo'))
+                    ->limit(3)
+                    ->orderBy('total', 'desc')
+                    ->groupBy('problema.titulo')
+                    ->get(),
+                'inutilizadosAno' => DB::table('aparelho')->where('inutilizacao', true)->whereYear('updated_at', date('Y')),
+                'inutilizadosMes' => DB::table('aparelho')->where('inutilizacao', true)->whereMonth('updated_at', date('m'))->whereYear('updated_at', date('Y')),
+                'tempoMedio' => (DB::select("select avg(timediff(updated_at,created_at)) as media from ordem_servico where status_id =" . $idStatusConcluida)),
+                'ordensConcluidas' => $ordensConcluidas->whereMonth('updated_at', date('m'))->count(),
+                'status' => Status::pluck('titulo', 'id'),
+                'route' => 'modulo.os.',
+                'acoes' => [
+                    ['nome' => 'Editar', 'class' => 'btn btn-outline-info btn-sm', 'complemento-route' => 'edit'],
+                    ['nome' => 'Detalhes', 'class' => 'btn btn-outline-warning btn-sm', 'complemento-route' => 'show'],
+                    ['nome' => 'PDF', 'class' => 'btn btn-outline-dark btn-sm', 'complemento-route' => 'pdf']
+                ]
+            ];
+            return view('ordemservico::ordemservico.index', compact('data'));
+        }
+        return redirect()->back()->with('error', 'Você não possui permissão para acessar a pagina!');
     }
 
     public function create()
@@ -186,8 +191,8 @@ class OrdemServicoController extends Controller
     {
         DB::beginTransaction();
         try {
-            $os = OrdemServico::all()->where('protocolo',$id)->first();
-            $os->update( $request->all());
+            $os = OrdemServico::all()->where('protocolo', $id)->first();
+            $os->update($request->all());
             DB::commit();
             return redirect('/ordemservico/os')->with('success', 'Prioridade atualizada com successo');
         } catch (Exception $e) {
@@ -195,4 +200,29 @@ class OrdemServicoController extends Controller
             return back()->with('error', 'Erro no servidor');
         }
     }
+
+    public function ordensFinalizadas(Request $request)
+    {
+
+        if (Gate::allows('administrador', Auth::user())) {
+            $idStatusConcluida = Status::all()->where('titulo', 'Concluída')->first()->id;
+            $idStatusInutilizado = Status::all()->where('titulo', 'Marcado como Inutilizável')->first()->id;
+            $data = [
+                'title' => 'Ordens Finalizadas',
+                'model' => OrdemServico::where('status_id', '=', $idStatusConcluida)
+                ->orWhere('status_id', '=', $idStatusInutilizado)
+                ->get(),
+                'thead' => ['Protocolo', 'Solicitante', 'Status', 'Prioridade'],
+                'row_db' => ['protocolo', 'solicitante_id', 'status_id', 'prioridade'],
+                'create' => false,
+                'route' => 'modulo.os.',
+                'acoes' => [
+                    ['nome' => 'Detalhes', 'class' => 'btn btn-outline-warning btn-sm', 'complemento-route' => 'show'],
+                ]
+            ];
+            return view('ordemservico::layouts.index', compact('data'));
+        }
+        return redirect()->back()->with('error', 'Você não possui permissão para acessar a pagina!');
+    }
+
 }

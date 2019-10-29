@@ -8,7 +8,7 @@
 
             </div>
             <div class='modal-body'>
-                {{ Form::open(array('id' => 'form' , 'method'=>'post')) }}
+                {{ Form::open(array('id' => 'form-solucao' , 'method'=>'post')) }}
                 {{Form::token()}}
                 {{Form::textarea("solucao[descricao]", $value=null ,array('class' => 'form-control','id' =>'descricao','placeholder'=>'Descrição'))}}
             </div>

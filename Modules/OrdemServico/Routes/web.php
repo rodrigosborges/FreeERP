@@ -15,14 +15,17 @@
 Route::prefix('ordemservico')->name('modulo.')->group(function() {
 	Route::get('/','AcompanhamentoController@acompanharOS');
 	Route::post('/acompanhamento','AcompanhamentoController@linhaTempo')->name('os.linhaTempo');
+	Route::get('os/ordensconcluidas', 'OrdemServicoController@ordensFinalizadas')->middleware('auth')->name('os.finalizadas');
 	Route::get('pdf/{id}', 'OrdemServicoController@pdf')->middleware('auth')->name('os.pdf');
 	Route::get('cidades/showJson/{idEstado}','CidadeController@showJson')->middleware('auth');;	
-	Route::get('status/create','StatusController@create')->middleware('auth');
-	Route::post('status/store','StatusController@store')->middleware('auth');
+	Route::get('status/create','StatusController@create')->middleware('auth')->name('status.create');
+	Route::post('status/store','StatusController@store')->middleware('auth')->name('status.store');
 	Route::post('os/status/{id}/updateStatus','StatusController@updateStatus')->middleware('auth')->name('os.update.status');
 	Route::get('os/status/{id}/showStatusOS','StatusController@showStatusOS')->middleware('auth');
-	Route::post('prioridade/{id}/update', 'OrdemServicoController@updatePrioridade');
-
+	Route::post('prioridade/{id}/update', 'OrdemServicoController@updatePrioridade')->middleware('auth');
+	
+	Route::get('painel/problema', 'PainelTecnicoController@listarProblemas')->middleware('auth')->name('tecnico.painel.problemas');
+	Route::get('painel/problema/{id}/solucoes', 'PainelTecnicoController@listarSolucoes')->middleware('auth')->name('tecnico.painel.problemas.solucoes');
 	Route::get('painel/ordensDisponiveis','PainelTecnicoController@ordensDisponiveis')->middleware('auth')->name('tecnico.painel.ordens_disponiveis');
 	Route::get('painel/', 'PainelTecnicoController@index')->middleware('auth')->name('tecnico.painel.index');
 	Route::get('painel/minhasOs', 'PainelTecnicoController@ordensAtivas')->middleware('auth')->name('tecnico.painel.minhasOs');
