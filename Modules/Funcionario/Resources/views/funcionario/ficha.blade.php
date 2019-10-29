@@ -7,7 +7,7 @@
     <div class="container">
     <div class="row">
         <div class="col-lg-2 change-class-2">
-            <img class="img-fluid" src="{{ URL::to('/') }}/img/user-img.jpg" style="height:150px; width:250px;">
+            <img class="img-fluid" src="{{url('storage/fotos/'.$data['funcionario']->foto)}}" style="height:150px; width:250px;">
         </div>
         <div class="col-lg-10 change-class-10">
             <span class="h2">{{$data["funcionario"]->nome}}</span>
@@ -31,7 +31,7 @@
             <div class="row">
             @foreach ($data["docs"] as $doc)
                 <div class="col-4 mb-1">
-                        <span class="font-weight-bold">{{$doc->nome}}:</span>{{$doc->numero}} 
+                        <span class="font-weight-bold">{{$doc->nome}}:</span> {{$doc->numero}} 
                 </div>
             @endforeach
             </div>      
@@ -48,32 +48,32 @@
         </div>
 
         <div class="col-2">
-                <span class="font-weight-bold">Estado: </span>{{$data["estado"]->uf}}
+                <span class="font-weight-bold">Estado: </span> {{$data["estado"]->uf}}
         </div>
     
         <div class="col-3">
-            <span class="font-weight-bold">Cidade: </span>{{$data["cidade"]->nome}}   
+            <span class="font-weight-bold">Cidade: </span> {{$data["cidade"]->nome}}   
             
         </div>
 
         <div class="col-5">
-            <span class="font-weight-bold">Bairro: </span>{{$data["funcionario"]->endereco->bairro}}
+            <span class="font-weight-bold">Bairro: </span> {{$data["funcionario"]->endereco->bairro}}
             
         </div>
 
         <div class="col-4">
-            <span class="font-weight-bold">Lougradouro: </span>{{$data["funcionario"]->endereco->lougradouro}}
+            <span class="font-weight-bold">Logradouro: </span> {{$data["funcionario"]->endereco->logradouro}}
             
                 
         </div>
 
         <div class="col-1">
-                <span class="font-weight-bold">N°:</span>{{$data["funcionario"]->endereco->numero}}   
+                <span class="font-weight-bold">N°:</span> {{$data["funcionario"]->endereco->numero}}   
                 
         </div>
 
         <div class="col-5">
-                <span class="font-weight-bold">Comple: </span>{{$data["funcionario"]->endereco->complemento}}
+                <span class="font-weight-bold">Complemento: </span> {{$data["funcionario"]->endereco->complemento}}
         </div>
 
     </div>
@@ -82,7 +82,7 @@
     <h4 class="mt-4">Contato</h4>
         <div class="row mb-4">   
             <div class="col-4">
-                <span class="font-weight-bold">E-mail: </span>{{$data["funcionario"]->email->email}}
+                <span class="font-weight-bold">E-mail: </span> {{$data["funcionario"]->email->email}}
             </div>
             <div class="col-4">
                 @foreach($data["funcionario"]->telefone as $telefone)    
@@ -135,8 +135,8 @@
                 <td>{{$curso->nome}}</td>
                 <td>{{$curso->area_atuacao}}</td>
                 <td>{{$curso->duracao_horas_curso}}</td>
-                <td>{{$curso->data_realizacao}}</td>
-                <td>{{$curso->validade_curso}}</td>
+                <td>{{\Carbon\Carbon::parse($curso->data_realizacao)->format('d/m/Y')}}</td>
+                <td>{{\Carbon\Carbon::parse($curso->validade_curso)->format('d/m/Y')}}</td>
             </tr>
             @endforeach    
         </tbody>

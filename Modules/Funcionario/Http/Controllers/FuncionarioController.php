@@ -444,10 +444,10 @@ class FuncionarioController extends Controller{
             ->join('estado', 'cidade.estado_id','estado.id')->get('estado.uf')->last(),
 
             'dependentes' => DB::table('dependente')->join('parentesco', 'dependente.parentesco_id', 'parentesco.id')->get()
-
+            
             /*'dependentes_nome' => DB::table('dependente')->where('dependente.funcionario_id', $id)->get('nome')        */
         ];
-    
+       
      /* $parentesco = DB::table('funcionario')->join('dependente', 'dependente.funcionario_id', 'funcionario.id')->get();
 
         return $parentesco;*/
