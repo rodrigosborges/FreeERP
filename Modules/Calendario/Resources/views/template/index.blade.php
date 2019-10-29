@@ -26,9 +26,6 @@ $menu = [
             </ul>
         </div>
     @endif
-    <audio id="notificacao">
-        <source src="{{Module::asset(config('calendario.id').':audio/notificacao.ogg')}}" type="audio/ogg">
-    </audio>
 @endsection
 
 @section('css')
@@ -67,26 +64,29 @@ $menu = [
     <script src="{{ mix('js/calendario.js') }}"></script>
     <script type="text/javascript">
         var userID = '{{auth()->id()}}';
-        Echo.private('Modules.Calendario.Entities.User.' + userID)
-            .notification((notification) => {
-                alert(JSON.stringify(notification));
-                console.log(notification.type);
-            });
         $(function () {
-            //var notificacao = document.getElementsByTagName("audio")[0];
+            var notificacao = new Audio('{{Module::asset(config('calendario.id').':audio/notificacao.ogg')}}');
 
-            /*$.when(
-            bootbox.alert({
-                title: 'Notificação de evento',
-                message: 'Seu evento <strong>XXX</strong> inicia em XXX',
-                className: 'animated heartBeat'
-            })
-                .removeClass('fade')
-                .find('.modal-dialog')
-                .addClass('modal-dialog-centered')
-            ).done(function () {
-                notificacao.play();
-            });*/
+            function notificar(notification) {
+                $.when(
+                    bootbox.alert({
+                        title: notification.title,
+                        message: notification.message,
+                        className: 'animated heartBeat'
+                    })
+                        .removeClass('fade')
+                        .find('.modal-dialog')
+                        .addClass('modal-dialog-centered')
+                ).done(function () {
+                    notificacao.play();
+                });
+            }
+
+            Echo.private('Modules.Calendario.Entities.User.' + userID).notification((notification) => {
+                if (notification.type == 'Modules\\Calendario\\Notifications\\NotificarEventoProximo') {
+                    notificar(notification);
+                }
+            });
 
             $.when(
                 $('#sidebar a.nav-link span').each(function () {

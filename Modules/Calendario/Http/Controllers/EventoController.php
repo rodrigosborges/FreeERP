@@ -14,6 +14,7 @@ use Modules\Calendario\Entities\Funcionario;
 use Modules\Calendario\Entities\Notificacao;
 use Modules\Calendario\Events\EventoCriado;
 use Modules\Calendario\Notifications\NotificarConviteParaEvento;
+use Modules\Calendario\Notifications\NotificarEventoProximo;
 
 class EventoController extends Controller
 {
@@ -79,6 +80,7 @@ class EventoController extends Controller
                     $convite->funcionario()->associate(Funcionario::find($funcionario_id));
                     $convite->evento()->associate($evento);
                     $convite->save();
+                    $convite->funcionario->user->notify(new NotificarConviteParaEvento($convite));
                 }
             }
         } catch (\Exception $e) {
@@ -165,7 +167,7 @@ class EventoController extends Controller
     public function notificar(){
         $funcionario = Funcionario::find(1);
         $users[] = $funcionario->user;
-        $convite = new NotificarConviteParaEvento(Evento::find(1));
+        $convite = new NotificarConviteParaEvento(Convite::find(1));
         Notification::send($users, $convite);
         return 'Notificado';
     }

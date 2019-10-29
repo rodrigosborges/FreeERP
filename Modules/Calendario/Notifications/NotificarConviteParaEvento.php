@@ -2,12 +2,12 @@
 
 namespace Modules\Calendario\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Modules\Calendario\Entities\Convite;
 use Modules\Calendario\Entities\Evento;
 
 class NotificarConviteParaEvento extends Notification
@@ -20,9 +20,9 @@ class NotificarConviteParaEvento extends Notification
      *
      * @return void
      */
-    public function __construct(Evento $evento)
+    public function __construct(Convite $convite)
     {
-        $this->evento = $evento;
+        $this->convite = $convite;
     }
 
     /**
@@ -33,7 +33,7 @@ class NotificarConviteParaEvento extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database', 'broadcast'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -44,14 +44,23 @@ class NotificarConviteParaEvento extends Notification
      */
     public function toMail($notifiable)
     {
+        $url = route('convites.aceitar', $this->convite->id);
+        if($this->convite->evento->dia_todo){
+            $data = Carbon::parse($this->convite->evento->data_inicio)->format('d/m/Y')
+                . ' até ' . Carbon::parse($this->convite->evento->data_fim)->format('d/m/Y');
+        }
+        else{
+            $data = Carbon::parse($this->convite->evento->data_inicio)->format('d/m/Y H:i')
+                . ' até ' . Carbon::parse($this->convite->evento->data_fim)->format('d/m/Y H:i');
+        }
         return (new MailMessage)
                     ->greeting('Olá!')
                     ->subject('Convite para evento')
                     ->line('Você foi convidado para um evento.')
-                    ->line('Evento: ' .  $this->evento->titulo)
-                    ->line('Responsável: ' . $this->evento->agenda->funcionario->nome)
-                    ->line('Data: ' . $this->evento->data_inicio . ' até ' . $this->evento->data_fim)
-                    ->action('Confirme sua presença', 'https://127.0.0.1:8000/calendario');
+                    ->line('Evento: ' .  $this->convite->evento->titulo)
+                    ->line('Responsável: ' . $this->convite->evento->agenda->funcionario->nome)
+                    ->line('Data: ' . $data)
+                    ->action('Confirme sua presença', $url);
     }
 
     /**
@@ -63,19 +72,13 @@ class NotificarConviteParaEvento extends Notification
     public function toArray($notifiable)
     {
         return [
-            'evento_id' => $this->evento->id
+            //
         ];
     }
 
     public function toDatabase($notifiable){
         return [
-            'evento_id' => $this->evento->id
+            'convite_id' => $this->convite->id
         ];
-    }
-
-    public function toBroadcast($notifiable){
-        return new BroadcastMessage([
-            'message' => 'Você foi convidado para um evento'
-        ]);
     }
 }
