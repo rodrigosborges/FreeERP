@@ -38,7 +38,14 @@
     </div>
 
 </div>
-<div class="form-group col-12">
-    <input class="form-control" id="qnt" name="quantidade" type="text" maxlength="2" placeholder="Quantidade"
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="cliente"><i class="material-icons">filter_9_plus</i></span>
+        </div>
+        <input class="form-control" id="qnt" name="quantidade" type="text" maxlength="2" placeholder="Quantidade"
         value="{{isset($peca->quantidade) ? $peca->quantidade : old('quantidade', '')}}">
-</div>
+        <div class="col-12">
+            <span class="errors"> {{ $errors->first('quantidade') }} </span>
+        </div>
+    </div>

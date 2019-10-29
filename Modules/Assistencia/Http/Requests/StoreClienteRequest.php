@@ -25,17 +25,12 @@ class StoreClienteRequest extends FormRequest{
 
     public function messages(){
         return [
-          'nome.required' => 'Por favor, digite o nome do cliente.',
-          'cpf.required' => 'Por favor, digite o CPF do cliente.',
-          'data_nascimento' => 'Data de nascimento invalida.',
-          'cpf.cpf' => 'Por favor, difite um CPF valido.',
-          'data_nascimento.max' => 'Data de nascimento invalida',
-          'celnumero.min' => 'O campo de telefone deve possuir apenas o DDD e o numero',
-          
-          'celnumero.max' => 'O campo de telefone deve possuir apenas o DDD e o numero',
-          
-          'celnumero.required' => 'Digine um numero de celular valido.',
-      
+            'required'      => 'Este campo é obrigatório.',
+            'min'           => 'Valor inserido abaixo do valor mínimo.',
+            'max'           => 'Valor inserido maior do que o valor máximo.',
+            'email'         => 'E-mail incorreto.',
+            'cpf'           => 'C.P.F inválido.',
+            'unique'        => 'Valor já inserido na base de dados.',
 
         ];
     }
