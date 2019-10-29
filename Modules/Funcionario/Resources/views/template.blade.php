@@ -7,6 +7,10 @@
     $menu = [
         ['icon' => 'people', 'tool' => 'Funcionario', 'route' => url('funcionario/funcionario')],
         ['icon' => 'work', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
+        ['icon' => 'monetization_on', 'tool' => 'Pagamentos', 'route' => url('funcionario/pagamento')],
+        ['icon' => 'work_off', 'tool' => 'Férias', 'route' => url('funcionario/ferias')],
+        ['icon' => 'book', 'tool' => 'Relatório Férias', 'route' => url('funcionario/ferias/indexRelatorio')]
+
     ];
 ?>
 
@@ -19,8 +23,8 @@
 
 @section('content')
     <div class="container">
-        <div class="card">
-            <div class="card-header">
+        <div class="card ">
+            <div class="card-header text-center">
                 <h5>@yield('title')</h5>
             </div>
             <div class="card-body">
@@ -43,3 +47,4 @@
     <script>var main_url="{{url('')}}"</script>
     @yield('script')
 @endsection
+    

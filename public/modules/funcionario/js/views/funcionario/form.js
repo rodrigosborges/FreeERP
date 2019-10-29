@@ -32,8 +32,8 @@ $(document).ready(function(){
         escolheMascaraTel($(this))
     })
     
-    //alterar a cidade quando precisar
-    $(".estados").change()
+    // //alterar a cidade quando precisar
+    // $(".estados").change()
 })
 
 $(document).on("change", ".tipo_telefones", function() {
@@ -98,18 +98,17 @@ $(document).on('change', '.custom-file-input',function(e){
 $(document).on("click", ".add-dep", function() {
     if($(".dep").hasClass("d-none")) {
         $(".dep").removeClass("d-none")
-        $(".dependentes").hide().removeAttr('disabled').fadeIn()
+        $(".dependentes").hide().removeAttr('disabled').fadeIn("slow")
     }
     else if($(".dep").length < 4) {
         clonar(".dep", "#dependentes", true)
         $(".dep").last().find(".dependentes").val("")
-        $(".dep").last().find(".cpf").mask('000.000.000-00')
     } else {
 
         Swal.fire({
             type: 'warning',
             title: 'Atenção!',
-            text: 'Podem ser adicionados no máximo '+$(".dep").length+' dependentes',
+            text: 'Podem ser adicionados no máximo '+$(".cur").length+' cursos',
         })
  
     }
@@ -124,13 +123,53 @@ $(document).on("click", ".del-dep", function() {
         remover(".dep", $(this))
     }
 })
+
+
+
+
 //############################
 
-//ENDEREÇO
-$('.estados').change(function() {
-    atualizarCidades($(".estados option:selected").data("uf"), $(".estados").data('cidade'))
-    $(".estados").data('cidade','')
+//#############
+//Cursos Funcionarios
+//ADICIONA E REMOVE DOCUMENTOS
+$(document).on("click", ".add-curso", function() {
+    if($(".cur").hasClass("d-none")) {
+        $(".cur").removeClass("d-none")
+        $(".cursos").hide().removeAttr('disabled').fadeIn("slow")
+    }
+    else if($(".cur").length < 4) {
+        clonar(".cur", "#cursos", true)
+        $(".cur").last().find(".cursos").val("")
+    } else {
+
+        Swal.fire({
+            type: 'warning',
+            title: 'Atenção!',
+            text: 'Podem ser adicionados no máximo '+$(".cur").length+' cursos',
+        })
+ 
+    }
 })
+
+$(document).on("click", ".del-cur", function() {
+    if($(".cur").length == 1) {
+        $(".cur").last().find(".cursos").val("")
+        $('.cur').addClass('d-none')
+        $(".cursos").attr('disabled', 'disabled')
+    } else {
+        remover(".cur", $(this))
+    }
+})
+
+
+
+
+//###################
+//ENDEREÇO
+// $('.estados').change(function() {
+//     atualizarCidades($(".estados option:selected").data("uf"), $(".estados").data('cidade'))
+//     $(".estados").data('cidade','')
+// })
 
 function atualizarCamposEndereco(dados) {
     selecionarEstado(dados.uf)
@@ -173,6 +212,7 @@ function atualizarCidades(uf, selected_id = null) {
             $(".cidades option").remove();
             $(".cidades").append("<option value=''>Selecione</option>")
             $.each(data, function(i, cidade) {
+                console.log(selected_id+" -- "+cidade.id);
                 $(".cidades").append(`<option ${selected_id == cidade.id ? 'selected' : ''} value=${cidade.id}>${cidade.nome}</option>`)
             })
         }
@@ -217,9 +257,28 @@ $('#cep').blur(function(){
         }
     }
 });
+$(document).ready(function(){
+    $(".sendForm").on('click',function(){
+        if($("#form").valid()){
+            $(".sendForm").prop("disabled",true) 
+            $("#form").submit()  
+            console.log('success')
+        }
+    })
 
+    let uf = $('.estados option:selected').data('uf')
+    let cidadeSelecionada = $('#estado_id').data('cidade')
+
+    console.log(uf);
+    console.log(cidadeSelecionada);
+    atualizarCidades(uf, cidadeSelecionada)
+
+}) 
 //MÁSCARAS
 $(".data").mask('00/00/0000')
 $("#cep").mask('00000-000')
 $("#numero").mask('99999')
 $(".cpf").mask('000.000.000-00')
+$(".pis").mask('000.00000.00-0')
+$(".ctps").mask('90000000')
+$(".serie-ctps").mask('00000')

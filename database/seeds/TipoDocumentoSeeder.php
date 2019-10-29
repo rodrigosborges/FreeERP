@@ -6,6 +6,7 @@ class TipoDocumentoSeeder extends Seeder
 {
     public function run()
     {
+        
         DB::table('tipo_documento')->insert([
             [
                 'nome'          => 'CPF',
@@ -22,6 +23,19 @@ class TipoDocumentoSeeder extends Seeder
             [
                 'nome'          => 'Título de eleitor',
             ],
+            [
+                'nome'          => 'CNPJ',
+            ],
+            [
+                'nome'          => 'Numero de Pis',
+            ],
+            [
+                'nome'          => 'Serie Carteira de Trabalho'
+            ],
+            [
+                'nome'          => 'UF Carteira de Trabalho'
+            ]     
+                
         ]);
     }
 }

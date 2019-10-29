@@ -2,121 +2,67 @@
 namespace Modules\Funcionario\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Entities\{Documento};
+use Modules\Funcionario\Entities\Cargo;
 
-class Funcionario extends Model{
-    use SoftDeletes;
 
+class Funcionario extends Model {
+    
     protected $table = 'funcionario';
+    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao', 'cargo_id', 'situacao', 'estado_civil_id', 'email_id', 'endereco_id','foto'];
+    use SoftDeletes;
+    
+    public function estado_civil(){
+        return $this->belongsTo('App\Entities\EstadoCivil');
+    }
+    public function email(){
+        return $this->belongsTo('App\Entities\Email');
+    }
+    public function endereco(){
+        return $this->belongsTo('App\Entities\Endereco');
+    }
+    public function dependente(){
+        return $this->hasMany('Modules\Funcionario\Entities\Dependente');
+    }
+    public function telefone(){
+        return $this->belongsToMany('App\Entities\Telefone','funcionario_has_telefone','funcionario_id','telefone_id');
+    }
+    public function documento(){//NxN
+        return $this->belongsToMany('App\Entities\Documento', 'funcionario_has_documento','funcionario_id','documento_id');
+    }
+    public function cargos(){
+        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada','data_saida');
+    }
 
-    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao'];
+    public function curso(){
+        return $this->hasMany('Modules\Funcionario\Entities\Curso');
+    }
+
+    public function ferias(){
+        return $this->hasMany('Modules\Funcionario\Entities\Ferias');
+    }
+
+    public function controle_ferias(){
+        return $this->hasMany('Modules\Funcionario\Entities\ControleFerias');
+    }
+
+    public function Atestado(){
+        return $this->hasMany('Modules\Funcionario\Entities\Atestado');
+    }
+
+    public function demissao(){
+        return $this->hasOne('Modules\Funcionario\Entities\Demissao');
+    }
+
+    public function avisoPrevio(){
+        return $this->hasOne('Modules\Funcionario\Entities\AvisoPrevio');
+    }
+
+    public function pagamento(){
+        return $this->hasMany('Modules\Funcionario\Entities\Pagamento');
+    }
 
     public function pontos(){
         return $this->hasMany('Modules\Funcionario\Entities\Ponto');
     }
 
-    public function cargos(){
-        return $this->belongsToMany('Modules\Funcionario\Entities\Cargo', 'historico_cargo')->withPivot('data_entrada','data_saida')->withTrashed();
-    }
-
-    public function dependentes(){
-        return $this->hasMany('Modules\Funcionario\Entities\Dependente');
-    }
-
-    // public function dependentesRelacao(){
-    //     return $this->hasMany('App\Entities\Relacao', 'origem_id')
-    //         ->where('tabela_origem','funcionario')
-    //         ->where('tabela_destino','dependente');
-    // }
-
-    // public function dependentes(){
-    //     $dados = [];
-    //     foreach($this->dependentesRelacao as $relacao){
-    //         $dados[] = $relacao->dados;
-    //     }
-    //     return $dados;
-    // }
-
-    public function estadoCivilRelacao(){
-        return $this->hasOne('App\Entities\Relacao', 'origem_id')
-            ->where('tabela_origem','funcionario')
-            ->where('tabela_destino','estado_civil');
-    }
-
-    public function estado_civil(){
-        return $this->estadoCivilRelacao->dados;
-    }
-
-    public function documentosRelacao(){
-        return $this->hasMany('App\Entities\Relacao', 'origem_id')
-            ->where('tabela_origem','funcionario')
-            ->where('tabela_destino','documento');
-    }
-
-    public function documentos(){
-        $dados = [];
-        foreach($this->documentosRelacao as $relacao){
-            $dados[] = $relacao->dados;
-        }
-        return $dados;
-    }
-
-    public function enderecoRelacao(){
-        return $this->hasOne('App\Entities\Relacao', 'origem_id')
-            ->where('tabela_origem','funcionario')
-            ->where('tabela_destino','endereco');
-    }
-
-    public function endereco(){
-        return $this->enderecoRelacao->dados;
-    }
-
-    public function emailRelacao(){
-        return $this->hasOne('App\Entities\Relacao', 'origem_id')
-            ->where('tabela_origem','funcionario')
-            ->where('tabela_destino','email');
-    }
-
-    public function email(){
-        return $this->emailRelacao->dados;
-    }
-
-    public function telefoneRelacao(){
-        return $this->hasMany('App\Entities\Relacao', 'origem_id')
-            ->where('tabela_origem','funcionario')
-            ->where('tabela_destino','telefone');
-    }
-
-    public function telefones(){
-        $dados = [];
-        foreach($this->telefoneRelacao as $relacao){
-            $dados[] = $relacao->dados;
-        }
-        return $dados;
-    }
-
-    public function setDataNascimentoAttribute($val){
-        $this->attributes['data_nascimento'] = implode('-', array_reverse(explode('/', $val))) ? : '';
-    }
-
-    public function getDataNascimentoAttribute($val){
-        return implode('/', array_reverse(explode('-', $val))) ? : '';
-    }
-
-    public function setDataAdmissaoAttribute($val){
-        $this->attributes['data_admissao'] = implode('-', array_reverse(explode('/', $val))) ? : '';
-    }
-
-    public function getDataAdmissaoAttribute($val){
-        return implode('/', array_reverse(explode('-', $val))) ? : '';
-    }
-
-    public function cpf() {
-        return Documento::where('tipo_documento_id', 1)->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$this->id)->where('relacao.tabela_origem','funcionario')->select('documento.*')->first();
-    }
-
-    public function rg() {
-        return Documento::where('tipo_documento_id', 2)->join('relacao','documento.id','=','relacao.destino_id')->where('relacao.origem_id',$this->id)->where('relacao.tabela_origem','funcionario')->select('documento.*')->first();
-    }
-    
-}   
+}

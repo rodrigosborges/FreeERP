@@ -1,9 +1,9 @@
 <div class="table-responsive">
-    <table id="funcionario-table" class="table table-stripped">
+    <table id="funcionario-table" class="table table-stripped text-center">
         <thead>
             <tr>
                 <th>Nome</th>
-                <th class="min" colspan="3">Ações</th>
+                <th class="min text-right" colspan="5">Ações</th>
                 @if($status == "ativos")
                     <th class="min"></th>
                 @endif
@@ -13,6 +13,7 @@
             @foreach($funcionarios as $funcionario)
                 <tr>
                     <td>{{$funcionario->nome}}</td>
+
                     @if($status == "ativos")
                     <td class="min">         
                         <a class="btn btn-warning" href='{{ url("funcionario/funcionario/$funcionario->id/edit") }}'>Editar</a>
@@ -25,15 +26,29 @@
                     </td>
                     <td class="min">         
                         <a class="btn btn-light" href='{{ url("funcionario/frequencia/$funcionario->id") }}'>Ponto</a>
+                    <td class="min">
+                        <a class="btn btn-dark" href='{{ url("funcionario/funcionario/atestado/$funcionario->id") }}'>Licenças</a>
                     </td>
                     @endif
                     <td class="min">
-                        <form action="{{url('funcionario/funcionario', [$funcionario->id])}}" class="input-group" method="POST">
+                        <!-- <form action="{{url('funcionario/funcionario', [$funcionario->id])}}" class="input-group" method="POST">
                             {{method_field('DELETE')}}
                             {{ csrf_field() }}
                                 <input type="submit" class="btn btn-{{$funcionario->trashed() ? 'success' : 'danger'}}" value="{{$funcionario->trashed() ? 'Restaurar' : 'Deletar'}}"/>
-                        </form>
-                    </td>
+                        </form> -->
+                      
+                        <?php
+                        if($funcionario->demissao()->first()){
+                        ?>
+                            <a class="btn btn-danger" href='{{url("funcionario/funcionario/showDemissao/$funcionario->id")}}'>Gerar Aviso</a> 
+                        <?php
+                        } else {
+                        ?>
+                            <a class="btn btn-danger" href='{{ url("funcionario/funcionario/demissao/$funcionario->id")}}'>Demitir</a>
+                        <?php 
+                        }
+                        ?>
+                    </td>    
                 </tr>
             @endforeach
         </tbody>

@@ -46,14 +46,27 @@ class CargoController extends Controller{
 
 	public function store(Request $request){
 		DB::beginTransaction();
-		try{
-			$cargo = Cargo::Create($request->all());
-			DB::commit();
-			return redirect('funcionario/cargo')->with('success', 'Cargo cadastrado com sucesso!');
-		}catch(Exception $e){
-			DB::rollback();
-			return back();
+		$input = $request->nome;
+	
+		$verificarRegistro = DB::table('cargo')->where('nome', $input)->orWhere(function ($query){
+			$query->where('deleted_at', '!=', null)->where('deleted_at', '=', null);
+		})->get();
+	
+		if($verificarRegistro->isNotEmpty()){
+			return redirect('funcionario/cargo')->with('error', 'Cargo já existente');
+
+		} else {
+			
+			try {
+				$cargo = Cargo::Create($request->all());
+				DB::commit();
+				return redirect('funcionario/cargo')->with('success', 'Cargo cadastrado com sucesso!');
+			} catch(Exception $e){
+				DB::rollback();
+				return back();
+			}
 		}
+		
     }
     
 	public function edit(Request $request, $id){
