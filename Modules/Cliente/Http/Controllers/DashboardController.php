@@ -5,7 +5,8 @@ namespace Modules\Cliente\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Cliente\Entities\{Cliente, Pedido, Produto};
+use Modules\Cliente\Entities\{Cliente, Pedido};
+use Modules\Estoque\Entities\Produto;
 use DateTime;
 use DB;
 
