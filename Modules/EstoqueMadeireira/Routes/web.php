@@ -18,7 +18,8 @@ Route::prefix('estoquemadeireira')->group(function() {
 
     Route::resource('/produtos/fornecedores', 'FornecedorController');
     Route::resource('/produtos/categorias', 'CategoriaController'); 
-  
+    Route::get('produtos/fornecedores/ficha/{id}', 'FornecedorController@ficha');
+
     
     //ROTA DE PRODUTOS
     Route::get('/produtos/inativos', 'ProdutoController@inativos'); 

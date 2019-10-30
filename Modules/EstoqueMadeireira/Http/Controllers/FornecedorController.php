@@ -98,7 +98,6 @@ class FornecedorController extends Controller
         return view('estoquemadeireira::fornecedores/form', $this->template, compact('fornecedor'));
     }
 
-
      public function update(FornecedorRequest $request, $id)
     {
         DB::beginTransaction();
@@ -125,5 +124,10 @@ class FornecedorController extends Controller
         return redirect('/estoquemadeireira/produtos/fornecedores')->with('success', 'Fornecedor desativado com sucesso!');
     }
 
+    public function ficha($id){
+        $fornecedor = Fornecedor::findOrFail($id);
+
+        return view('estoquemadeireira::fornecedores/ficha',$this->template , compact('fornecedor'));
+    }
 
 }
