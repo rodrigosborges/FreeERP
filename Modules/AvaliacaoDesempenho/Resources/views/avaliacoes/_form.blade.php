@@ -16,12 +16,6 @@
                 <div class="card-title">
                     <h3>Adicionar</h3>
                 </div>
-                
-                @if ($errors)
-                    @foreach ($errors as $error)
-                        <div class="text-danger">{{$error}}</div>
-                    @endforeach
-                @endif
             </div>
 
             <div class='card-body'>
@@ -43,13 +37,9 @@
                             <input class="form-control" name='avaliacao[nome]' type="text" value="{{ old('avaliacao.nome', isset($data['avaliacao']) ? $data['avaliacao']->nome : '') }}"
                                 placeholder="Digite o nome da avaliacao">
 
-                            <div class="invalid-feedback">
-                                @error('avaliacao.nome')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('avaliacao.nome') }} </span>
 
                     </div>
 
@@ -72,13 +62,9 @@
                             <input class="form-control" name='avaliacao[data_inicio]' type="date" value="{{ old('avaliacao.data_inicio', isset($data['avaliacao']) ? $data['avaliacao']->data_inicio : '') }}"
                                 placeholder="Selecione a data de inicio">
 
-                            <div class="invalid-feedback">
-                                @error('avaliacao.data_inicio')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('avaliacao.data_inicio') }} </span>
 
                     </div>
 
@@ -97,9 +83,9 @@
                             <input class="form-control" name='avaliacao[data_fim]' type="date" value="{{ old('avaliacao.data_fim', isset($data['avaliacao']) ? $data['avaliacao']->data_fim : '') }}"
                                 placeholder="Selecione a data final">
 
-                            <div class="invalid-feedback"></div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('avaliacao.data_fim') }} </span>
 
                     </div>
 
@@ -129,6 +115,8 @@
 
                         </div>
 
+                        <span class="errors"> {{ $errors->first('avaliacao.processo_id') }} </span>
+
                     </div>
 
                 </div>
@@ -156,6 +144,8 @@
                             </select>
 
                         </div>
+                        
+                        <span class="errors"> {{ $errors->first('avaliacao.funcionario_id') }} </span>
 
                     </div>
 
@@ -181,6 +171,8 @@
 
                         </div>
 
+                        <span class="errors"> {{ $errors->first('avaliacao.setor_id') }} </span>
+
                     </div>
 
                 </div>
@@ -197,6 +189,8 @@
                         <input type="radio" name='avaliacao[tipo_id]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 1 ? 'checked' : '' }}> Avaliar não Gestores
 
                     </div>
+
+                    <span class="errors"> {{ $errors->first('avaliacao.tipo_id') }} </span>
 
                 </div>
 

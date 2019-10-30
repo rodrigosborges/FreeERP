@@ -1,16 +1,14 @@
 <?php
 
-namespace Modules\AvaliacaoDesempenho\Http\Requests;
+namespace Modules\AvaliacaoDesempenho\Http\Requests\Setor;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProcesso extends FormRequest {
+class UpdateSetor extends FormRequest {
 
     public function rules() {
         
         return [
-            'processo.funcionario_id' => 'required',
-            'processo.data_inicio' => 'required',
-            'processo.data_fim' => 'required'
+            'setor.nome' => 'required'
         ];
     }
 

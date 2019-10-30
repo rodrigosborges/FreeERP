@@ -56,12 +56,6 @@ class SetorController extends Controller
 
             $input = $request->input('setor');
 
-            foreach ($input as $key => $value) {
-                if (empty($value)) {
-                    return back()->with('error', 'Todos os campos são obrigatórios.');
-                }
-            }
-
             $setor = Setor::create($input);
 
             DB::commit();
@@ -101,12 +95,6 @@ class SetorController extends Controller
             $setor = Categoria::findOrFail($id);
 
             $input = $request->input('setor');
-
-            foreach ($input as $key => $value) {
-                if (empty($value)) {
-                    return back()->with('error', 'Todos os campos são obrigatórios.');
-                }
-            }
 
             $categoria->update($input);
 

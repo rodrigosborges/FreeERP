@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\AvaliacaoDesempenho\Entities\Funcionario;
 use Modules\AvaliacaoDesempenho\Entities\Processo;
+use Modules\AvaliacaoDesempenho\Http\Requests\Processo\StoreProcesso;
+use Modules\AvaliacaoDesempenho\Http\Requests\Processo\UpdateProcesso;
 
 class ProcessoController extends Controller
 {
@@ -55,19 +57,13 @@ class ProcessoController extends Controller
         return view('avaliacaodesempenho::processos/create', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function store(Request $request)
+    public function store(StoreProcesso $request)
     {
         DB::beginTransaction();
 
         try {
 
-            $input = $request->input('processo');
-
-            foreach ($input as $key => $value) {
-                if (empty($value)) {
-                    return back()->with('error', 'Todos os campos são obrigatórios.');
-                }
-            }
+            $input = $request->input('processo');   
 
             $processo = Processo::create($input);
 
@@ -101,7 +97,7 @@ class ProcessoController extends Controller
         return view('avaliacaodesempenho::processos/edit', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateProcesso $request, $id)
     {
         DB::beginTransaction();
 
@@ -109,12 +105,6 @@ class ProcessoController extends Controller
             $processo = Processo::findOrFail($id);
 
             $input = $request->input('processo');
-
-            foreach ($input as $key => $value) {
-                if (empty($value)) {
-                    return back()->with('error', 'Todos os campos são obrigatórios.');
-                }
-            }
 
             $processo->update($input);
 

@@ -17,11 +17,6 @@
                     <h3>Adicionar</h3>
                 </div>
                 
-                @if ($errors)
-                    @foreach ($errors as $error)
-                        <div class="text-danger">{{$error}}</div>
-                    @endforeach
-                @endif
             </div>
 
             <div class='card-body'>
@@ -43,13 +38,9 @@
                             <input class="form-control" name='setor[nome]' type="text" value="{{ old('setor.nome', isset($data['setor']) ? $data['setor']->nome : '') }}"
                                 placeholder="Digite o nome da setor">
 
-                            <div class="invalid-feedback">
-                                @error('setor.nome')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('setor.nome') }} </span>
 
                     </div>
 

@@ -17,11 +17,6 @@
                     <h3>Adicionar</h3>
                 </div>
 
-                @if ($errors)
-                @foreach ($errors as $error)
-                <div class="text-danger">{{$error}}</div>
-                @endforeach
-                @endif
             </div>
 
             <div class='card-body'>
@@ -43,13 +38,9 @@
                             <input class="form-control" name='questao[enunciado]' type='text' value="{{ old('questao.enunciado', isset($data['questao']) ? $data['questao']->enunciado : '') }}"
                                 placeholder="Digite o Enunciado da Questão">
 
-                            <div class="invalid-feedback">
-                                @error('processo.enunciado')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                         </div>
+
+                    <span class="errors"> {{ $errors->first('questao.enunciado') }} </span>
 
                     </div>
 
@@ -78,6 +69,8 @@
 
                         </div>
 
+                        <span class="errors"> {{ $errors->first('questao.categoria_id') }} </span>
+
                     </div>
 
                 </div>
@@ -99,9 +92,9 @@
                             <input class="form-control" name='questao[opt1]' type='text' value="{{ old('questao.opt1', isset($data['questao']) ? $data['questao']->opt1 : '') }}"
                                 placeholder="Digite a opção">
 
-                            <div class="invalid-feedback"></div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('questao.opt1') }} </span>
 
                     </div>
 
@@ -124,9 +117,9 @@
                             <input class="form-control" name='questao[opt2]' type='text' value="{{ old('questao.opt2', isset($data['questao']) ? $data['questao']->opt2 : '') }}"
                                 placeholder="Digite a opção">
 
-                            <div class="invalid-feedback"></div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('questao.opt2') }} </span>
 
                     </div>
 
@@ -149,9 +142,9 @@
                             <input class="form-control" name='questao[opt3]' type='text' value="{{ old('questao.opt3', isset($data['questao']) ? $data['questao']->opt3 : '') }}"
                                 placeholder="Digite a opção">
 
-                            <div class="invalid-feedback"></div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('questao.opt3') }} </span>
 
                     </div>
 
@@ -174,9 +167,9 @@
                             <input class="form-control" name='questao[opt4]' type='text' value="{{ old('questao.opt4', isset($data['questao']) ? $data['questao']->opt4 : '') }}"
                                 placeholder="Digite a opção">
 
-                            <div class="invalid-feedback"></div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('questao.opt4') }} </span>
 
                     </div>
 
@@ -199,9 +192,9 @@
                             <input class="form-control" name='questao[opt5]' type='text' value="{{ old('questao.opt5', isset($data['questao']) ? $data['questao']->opt5 : '') }}"
                                 placeholder="Digite a opção">
 
-                            <div class="invalid-feedback"></div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('questao.opt5') }} </span>
 
                     </div>
 

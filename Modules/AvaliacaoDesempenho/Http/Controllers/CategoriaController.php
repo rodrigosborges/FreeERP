@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\AvaliacaoDesempenho\Entities\Categoria;
+use Modules\AvaliacaoDesempenho\Http\Requests\Categoria\StoreCategoria;
+use Modules\AvaliacaoDesempenho\Http\Requests\Categoria\UpdateCategoria;
 
 class CategoriaController extends Controller
 {
@@ -48,19 +50,13 @@ class CategoriaController extends Controller
         return view('avaliacaodesempenho::categorias/create', compact('moduleInfo', 'menu'));
     }
 
-    public function store(Request $request)
+    public function store(StoreCategoria $request)
     {
         DB::beginTransaction();
 
         try {
 
             $input = $request->input('categoria');
-
-            foreach ($input as $key => $value) {
-                if (empty($value)) {
-                    return back()->with('error', 'Todos os campos são obrigatórios.');
-                }
-            }
 
             $categoria = Categoria::create($input);
 
@@ -94,7 +90,7 @@ class CategoriaController extends Controller
         return view('avaliacaodesempenho::categorias/edit', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCategoria $request, $id)
     {
         DB::beginTransaction();
 
@@ -102,12 +98,6 @@ class CategoriaController extends Controller
             $categoria = Categoria::findOrFail($id);
 
             $input = $request->input('categoria');
-
-            foreach ($input as $key => $value) {
-                if (empty($value)) {
-                    return back()->with('error', 'Todos os campos são obrigatórios.');
-                }
-            }
 
             $categoria->update($input);
 

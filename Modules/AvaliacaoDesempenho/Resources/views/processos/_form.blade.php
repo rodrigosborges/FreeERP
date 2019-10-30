@@ -16,12 +16,7 @@
                 <div class="card-title">
                     <h3>Adicionar</h3>
                 </div>
-                
-                @if ($errors)
-                    @foreach ($errors as $error)
-                        <div class="text-danger">{{$error}}</div>
-                    @endforeach
-                @endif
+
             </div>
 
             <div class='card-body'>
@@ -42,14 +37,10 @@
         
                                     <input class="form-control" name='processo[nome]' type="text" value="{{ old('processo.nome', isset($data['processo']) ? $data['processo']->nome : '') }}"
                                         placeholder="Digite o nome do processo">
-        
-                                    <div class="invalid-feedback">
-                                        @error('processo.nome')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-        
+
                                 </div>
+
+                                <span class="errors"> {{ $errors->first('processo.nome') }} </span>
         
                             </div>
         
@@ -69,16 +60,12 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='processo[data_inicio]' type="date" value="{{ old('processo.data_inicio', isset($data['processo']) ? $data['processo']->data_inicio : '') }}"
+                            <input class="form-control" name='processo[data_inicio]' type="text" value="{{ old('processo.data_inicio', isset($data['processo']) ? $data['processo']->data_inicio : '') }}"
                                 placeholder="Selecione a data de inicio">
 
-                            <div class="invalid-feedback">
-                                @error('processo.data_inicio')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('processo.data_inicio') }} </span>
 
                     </div>
 
@@ -97,9 +84,9 @@
                             <input class="form-control" name='processo[data_fim]' type="date" value="{{ old('processo.data_fim', isset($data['processo']) ? $data['processo']->data_fim : '') }}"
                                 placeholder="Selecione a data final">
 
-                            <div class="invalid-feedback"></div>
-
                         </div>
+
+                        <span class="errors"> {{ $errors->first('processo.data_fim') }} </span>
 
                     </div>
 
@@ -128,6 +115,8 @@
                             </select>
 
                         </div>
+                        
+                        <span class="errors"> {{ $errors->first('processo.funcionario_id') }} </span>
 
                     </div>
 

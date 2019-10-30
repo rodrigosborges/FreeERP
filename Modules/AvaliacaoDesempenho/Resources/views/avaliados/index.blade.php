@@ -39,6 +39,8 @@
 
                     </div>
 
+                    <span class="errors"> {{ $errors->first('avaliado.email') }} </span>
+
                 </div>
 
                 <div class="form-group col-md-6">
@@ -56,6 +58,8 @@
                         <input class='form-control' type="text" name='avaliado[token]'>
 
                     </div>
+
+                    <span class="errors"> {{ $errors->first('avaliado.token') }} </span>
 
                 </div>
 

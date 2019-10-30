@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\AvaliacaoDesempenho\Entities\Questao;
 use Modules\AvaliacaoDesempenho\Entities\Categoria;
+use Modules\AvaliacaoDesempenho\Http\Requests\Questao\StoreQuestao;
+use Modules\AvaliacaoDesempenho\Http\Requests\Questao\UpdateQuestao;
 
 class QuestaoController extends Controller
 {
@@ -58,21 +60,13 @@ class QuestaoController extends Controller
         return view('avaliacaodesempenho::questoes/create', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function store(Request $request)
+    public function store(StoreQuestao $request)
     {
         DB::beginTransaction();
 
         try {
 
             $input = $request->input('questao');
-
-            foreach ($input as $key => $value) {
-
-                if (empty($value)) {
-
-                    return back()->with('error', 'Todos os campos são obrigatórios.');
-                }
-            }
 
             $questao = Questao::create($input);
 
@@ -107,7 +101,7 @@ class QuestaoController extends Controller
         return view('avaliacaodesempenho::questoes/edit', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateQuestao $request, $id)
     {
         DB::beginTransaction();
 
@@ -115,12 +109,6 @@ class QuestaoController extends Controller
             $questao = Questao::findOrFail($id);
 
             $input = $request->input('questao');
-
-            foreach ($input as $key => $value) {
-                if (empty($value)) {
-                    return back()->with('error', 'Todos os campos são obrigatórios.');
-                }
-            }
 
             $questao->update($input);
 

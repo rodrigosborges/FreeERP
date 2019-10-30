@@ -16,6 +16,7 @@ use Modules\AvaliacaoDesempenho\Entities\Avaliado;
 use Modules\AvaliacaoDesempenho\Entities\Setor;
 use Modules\AvaliacaoDesempenho\Entities\ResultadoGestor;
 use Modules\AvaliacaoDesempenho\Entities\ResultadoFuncionario;
+use Modules\AvaliacaoDesempenho\Http\Requests\Avaliacao\ResponderAvaliacao;
 
 class AvaliacaoRespostaController extends Controller
 {
@@ -25,16 +26,9 @@ class AvaliacaoRespostaController extends Controller
         return view('avaliacaodesempenho::avaliados/index');
     }
 
-    public function responder(Request $request) {
+    public function responder(ResponderAvaliacao $request) {
 
         $input = $request->input('avaliado');
-        
-        foreach ($input as $key => $value) {
-            
-            if (empty($value)) {
-                return back()->with('error', 'Todos os campos são obrigatorios');
-            }
-        }
         
         $avaliador = Avaliador::whereHas('funcionario', function(Builder $query) use($input) {
             $query->whereHas('email', function(Builder $query) use($input) {

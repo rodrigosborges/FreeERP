@@ -16,6 +16,8 @@ use Modules\AvaliacaoDesempenho\Entities\Questao;
 use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
 use Modules\AvaliacaoDesempenho\Entities\Avaliador;
 use Modules\AvaliacaoDesempenho\Entities\Avaliado;
+use Modules\AvaliacaoDesempenho\Http\Requests\Avaliacao\StoreAvaliacao;
+use Modules\AvaliacaoDesempenho\Http\Requests\Avaliacao\UpdateAvaliacao;
 
 class AvaliacaoController extends Controller
 {
@@ -95,7 +97,7 @@ class AvaliacaoController extends Controller
         return view('avaliacaodesempenho::avaliacoes/create', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function store(Request $request)
+    public function store(StoreAvaliacao $request)
     {
         DB::beginTransaction();
 
@@ -106,12 +108,6 @@ class AvaliacaoController extends Controller
             echo '<pre>';print_r($input);exit;
 
             $setor = Setor::findOrFail($input['setor_id']);
-
-            foreach ($input as $key => $value) {
-                if ($key != 'tipo_id' && empty($value)) {
-                    return back()->with('error', 'Todos os campos são obrigatórios. '.$key);
-                }
-            }
 
             $input['status_id'] = 1;
             $avaliacao = Avaliacao::create($input);
@@ -205,7 +201,7 @@ class AvaliacaoController extends Controller
         return view('avaliacaodesempenho::avaliacoes/edit', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateAvaliacao $request, $id)
     {
         DB::beginTransaction();
 
@@ -214,12 +210,6 @@ class AvaliacaoController extends Controller
             $avaliacao = Avaliacao::findOrFail($id);
 
             $input = $request->input('avaliacao');
-
-            foreach ($input as $key => $value) {
-                if ($key != 'gestor' && empty($value)) {
-                    return back()->with('error', 'Todos os campos são obrigatórios. '.$key);
-                }
-            }
 
             $avaliacao->update($input);
             
