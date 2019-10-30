@@ -15,6 +15,10 @@
 //Módulo de Protocolos
 Route::prefix('protocolos')->group(function() {
 
+    Route::get('/protocolos_interessados', function() {
+        return Modules\Protocolos\Entities\Protocolo::findOrFail(1)->interessado;
+    });
+
     
     Route::get('/cadastrar', 'UsuarioController@create');
     Route::post('/envia', 'UsuarioController@store');

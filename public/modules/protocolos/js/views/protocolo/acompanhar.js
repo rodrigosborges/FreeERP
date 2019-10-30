@@ -17,7 +17,6 @@ $('#pesquisa').keyup(function(){
                     source: data,
                   
                     select: function (e, i) {
-                        console.log(i.item.value);
 
                         var idapensado = i.item.value;
 
@@ -25,17 +24,21 @@ $('#pesquisa').keyup(function(){
                            url: main_url+'/protocolos/salvarApensado/'+idprotocolo,
                            method: "POST",
                            data: {id:idprotocolo, apensado:idapensado},
-                           dataType: 'json',
-                           sucess:function(data){
-                                var obj = JSON.parse(data); 
-                                console.log(obj);
-                             
-                                if(obj.status == 'success'){
-                                    console.log('sucesso');
-                                }
-                                else{
-                                    console.log('Deu ruim');
-                                }
+                           dataType: 'html',
+                           success:function(response){
+
+                            
+
+                            var obj = JSON.parse(response);
+                            console.log(obj)
+                            let string = '<tr><td>'+ obj.protocolo.id +'</td><td>'+ obj.protocolo.assunto +'</td><td>'+ obj.protocolo.created_at +'</td><td>'+'<?php echo date("d/m/Y h:i:s", strtotime(?>'+ obj.protocolo.updated_at +'<?php )); ?>'+'</td></tr>';
+
+                            $("#table-apensado tbody").append(string); 
+
+                            $("#pesquisa").val('')
+                            return false
+                            
+
                            },
                            error: function(e) {
                                 console.log(e);

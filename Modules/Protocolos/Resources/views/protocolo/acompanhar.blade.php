@@ -40,7 +40,7 @@
     <hr>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                <a class="nav-link {{!isset($_GET['active']) ? 'active' : ''}}" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
                     <i class="material-icons" style="vertical-align:middle; font-size:25px; margin-right:5px;">insert_drive_file</i>Documentos ({{$data["documento"]->count()}})
                 </a>
             </li>
@@ -50,13 +50,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
+                <a class="nav-link {{isset($_GET['active']) && $_GET['active'] == 'apensados' ? 'active' : ''}}" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
                     <i class="material-icons" style="vertical-align:middle; font-size:25px; margin-right:5px;">attach_file</i>Protocolos apensados ({{$data["protocolo"]->apensados()->count()}})
                 </a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="documentos-tab">
+            <div class="tab-pane fade {{!isset($_GET['active']) ? 'show active' : ''}}" id="home" role="tabpanel" aria-labelledby="documentos-tab">
             <br>
                 <label for="" class="control-label">Adicionar um documento ao protocolo: <span class="required-symbol">*</span></label>
                 <form id="doc-protocolo"> 
@@ -210,8 +210,8 @@
                 processData: false, 
                 contentType: false,
                 success:function(response){
-                    
                     window.location.reload()
+
                 },
                 error:function(err){
                 console.log(err);

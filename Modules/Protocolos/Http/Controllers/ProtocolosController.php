@@ -92,7 +92,7 @@ class ProtocolosController extends Controller
     public function fetchApensado(Request $request){
        
         $query = $request->get('query'); 
-        $data = DB::table('protocolo')->where('assunto', 'LIKE', '%'.$query.'%')->get();
+        $data = Protocolo::where('assunto', 'LIKE', '%'.$query.'%')->get();
         $content = [];
         foreach($data as $dados){
             $content[] = [
@@ -117,7 +117,6 @@ class ProtocolosController extends Controller
             DB::commit();
             
             return response()->json(['protocolo' => $protocolo, 'status' => 'success'], 200);
-
         }
 
         catch(Exception $e){
@@ -230,22 +229,23 @@ class ProtocolosController extends Controller
             'button'        => 'Adicionar',
         ]);
       
-
+        
         if($data["protocolo"]->tipo_acesso == 1) {
-            foreach($data["protocolo"]->interessado() as $interessados){
-                dd($interessados);
-                if(Auth::user()->id <> $interessados->usuario_id){
-                    return back()->with('error', 'Esse protocolo é privado!');
-                }
-                else{
-                    return view('protocolos::protocolo.acompanhar', compact('data'));
-                }
+
+            $interessadosIds = $data['protocolo']->interessado()->pluck('usuario_id')->toArray();
+
+            if(in_array(Auth::user()->id, $interessadosIds) || Auth::user()->id == $data['protocolo']->usuario_id) {
+                return view('protocolos::protocolo.acompanhar', compact('data'));
+            } else{
+                return back()->with('error', 'Esse protocolo é privado!');
             }
+
+            
         }
         else{
             return view('protocolos::protocolo.acompanhar', compact('data'));
         }
-            
+        return view('protocolos::protocolo.acompanhar', compact('data'));
     }
 
     public function salvarDocumento(Request $request){
