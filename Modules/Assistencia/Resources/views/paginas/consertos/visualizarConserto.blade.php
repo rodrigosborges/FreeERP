@@ -30,7 +30,9 @@
                 <div class="col-11">
                     <h4>Vizualização da ordem de serviço</h4>
                 </div>
-                <div class="col-1"><a target="_blank" href="{{route('consertos.imprimir', $conserto->id)}}"><button>Imprimir</button></a></div>
+                <div class="col-1"><a target="_blank" href="{{route('consertos.imprimir', $conserto->id)}}"><button class="btn btn-primary"><i class="material-icons">
+print
+</i></button></a></div>
             </div>
 
         </div>

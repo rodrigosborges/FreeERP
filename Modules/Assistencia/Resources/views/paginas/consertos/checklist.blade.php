@@ -62,7 +62,7 @@
         <hr>
         <div class="row">
             <div>
-                Funcionamento - Os componentes do dispositivo estão funcionando corretamente? S ou N (  ) <br>
+                Funcionamento - Os componentes do dispositivo estão funcionando corretamente? S ou N <br>
                 (  ) Touch | (  ) Lanterna/Flash | (  ) Leitor de cartão de memória | (  ) Leitor do SIM <br>
                 (  ) Antena de rede | (  ) Antena Wifi/Bluetooth | (  ) Sensor de proximidade | (  ) Microfone <br>
                 (  ) Auto-falante | (  ) Auricular | (  ) Conector de carga | (  ) Conector P2 | (  ) Botões <br>

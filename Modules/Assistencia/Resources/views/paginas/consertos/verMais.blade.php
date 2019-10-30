@@ -30,7 +30,12 @@
                         <td>{{$info->situacao}}</td>
                         <td>{{$info->obs}}</td>
                         <td>
-                            <a href="{{route('consertos.excluirInfo', $info->id)}}"><button class="btn btn-outline-danger">Excluir</button></a>
+                            @if($info->id > 1)
+                      
+                                <a href="{{route('consertos.excluirInfo', $info->id)}}"><button class="btn btn-outline-danger">Excluir</button></a>
+                    
+                            @endif
+                            
                         </td>
                     </tr>
                     @endforeach

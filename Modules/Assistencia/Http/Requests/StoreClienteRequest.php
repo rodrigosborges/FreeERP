@@ -12,7 +12,7 @@ class StoreClienteRequest extends FormRequest{
           'email'                   => 'required|email|max:100',
           'data_nascimento'         => 'required|max:10',
           'celnumero'               => 'required|min:14|max:15',
-
+          
           'endereco.logradouro'     => 'required',
           'endereco.bairro'         => 'required',
           'endereco.estado_id'      => 'required',

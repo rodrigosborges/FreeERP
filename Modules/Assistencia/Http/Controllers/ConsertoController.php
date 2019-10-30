@@ -94,12 +94,17 @@ class ConsertoController extends Controller
       return view('assistencia::paginas.consertos.verMais', compact('infos'));
     }
     public function excluirVerMais ($id){
-      SituacaoOsModel::where('id', $id)->delete();
-      return back()->with('success', 'Informação deletada com sucesso.');
+      if($id != 1){
+        SituacaoOsModel::where('id', $id)->delete();
+        return back()->with('success', 'Informação deletada com sucesso.');
+      }else {
+        return back()->with('danger', 'Não é possivel apagar a primeira observação');
+      }
+
     }
 
     public function salvar(StoreConsertosRequest $req){
-      
+
       $dados  = $req->all();
       $conserto = ConsertoAssistenciaModel::create($dados);
       $idConserto = $conserto->id;
@@ -134,6 +139,7 @@ class ConsertoController extends Controller
       }
 
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço iniciada!');
+      
     }
     public function atualizar(Request $req, $id){
      
@@ -174,6 +180,7 @@ class ConsertoController extends Controller
           $servicos->save();
         }
       }
+
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço alterada com sucesso');
   }
 

@@ -24,10 +24,10 @@
 <div class="form-group row">
     <div class="input-group col">
         <select class="custom-select " id="situacao" name="situacao">
-            <option selected value="Aguardando autorização do orçamento">Aguardando autorização do orçamento</option>
-            <option value="Autorizado">Autorizado</option>
-            <option value="Em reparo">Em reparo</option>
-            <option value="Aguardando retirada do cliente">Aguardando retirada do cliente</option>
+        <option {{isset($conserto) ? (($conserto->situacao == "Aguardando autorização do orçamento") ? 'selected': '') : ''}} value="Aguardando autorização do orçamento">Aguardando autorização do orçamento</option>
+            <option value="Autorizado" {{isset($conserto) ? (($conserto->situacao == "Autorizado") ? 'selected': '') : ''}}>Autorizado</option>
+            <option value="Em reparo" {{isset($conserto) ? (($conserto->situacao == "Em reparo") ? 'selected': '') : ''}}>Em reparo</option>
+            <option value="Aguardando retirada do cliente" {{isset($conserto) ? (($conserto->situacao == "Aguardando retirada do cliente") ? 'selected': '') : ''}}>Aguardando retirada do cliente</option>
         </select>
     </div>
 

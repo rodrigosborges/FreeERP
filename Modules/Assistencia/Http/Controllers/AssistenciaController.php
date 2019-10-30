@@ -12,7 +12,8 @@ class AssistenciaController extends Controller
      public function index(){
         $pago = PagamentoAssistenciaModel::where('status','pago')->count();
         $pendente = PagamentoAssistenciaModel::where('status','pendente')->count();
-        $finalizados = ConsertoAssistenciaModel::where('situacao','Aguardando retirada do cliente')->get();
+        $finalizados = ConsertoAssistenciaModel::where('situacao','Aguardando retirada do cliente')->paginate(4);
+
 
         return view('assistencia::index',compact('pago', 'pendente','finalizados'));
         

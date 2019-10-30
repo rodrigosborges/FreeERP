@@ -61,18 +61,40 @@
             
                 <div class="table-responsive">
                     <table class="table">
-                        <tr>
-                            <th>Ordem</th>
-                            <th>Cliente</th>
-                            <th>Contato</th>
-                        </tr>
-                        @foreach($finalizados as $fin)
+                        <tbody>
                             <tr>
-                                <td>{{$fin->numeroOrdem}}</td>
-                                <td>{{$fin->cliente->nome}}</td>
-                                <td>{{$fin->cliente->celnumero}}</td>
+                                <th>Ordem</th>
+                                <th>Cliente</th>
+                                <th>Contato</th>
                             </tr>
-                        @endforeach
+                            @foreach($finalizados as $fin)
+                                <tr>
+                                    <td>{{$fin->numeroOrdem}}</td>
+                                    <td>{{$fin->cliente->nome}}</td>
+                                    <td>{{$fin->cliente->celnumero}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                        
+                        </tfoot>
+                        <tfoot>
+                            <tr>
+                                <td colspan="100%" class="text-center">
+                                    <p class="text-center">
+                                        Página {{$finalizados->currentPage()}} de {{$finalizados->lastPage()}} páginas
+
+                                    </p>
+                                </td>
+                            </tr>
+                            @if($finalizados->lastPage() > 1)
+                            <tr>
+                                <td colspan="100%">
+                                    {{ $finalizados->links() }}
+                                </td>
+                            </tr>
+                            @endif
+                        </tfoot>
                     </table>
                 </div>
             </div>
