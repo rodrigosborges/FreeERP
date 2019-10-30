@@ -167,7 +167,7 @@ class EventoController extends Controller
     public function notificar(){
         $funcionario = Funcionario::find(1);
         $users[] = $funcionario->user;
-        $convite = new NotificarConviteParaEvento(Convite::find(1));
+        $convite = new NotificarEventoProximo(Evento::find(1));
         Notification::send($users, $convite);
         return 'Notificado';
     }

@@ -4,16 +4,14 @@ namespace Modules\Calendario\Notifications;
 
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Modules\Calendario\Entities\Convite;
-use Modules\Calendario\Entities\Evento;
 
 class NotificarConviteParaEvento extends Notification
 {
     use Queueable;
-    private $evento;
+    private $convite;
 
     /**
      * Create a new notification instance.
@@ -54,26 +52,13 @@ class NotificarConviteParaEvento extends Notification
                 . ' até ' . Carbon::parse($this->convite->evento->data_fim)->format('d/m/Y H:i');
         }
         return (new MailMessage)
-                    ->greeting('Olá!')
                     ->subject('Convite para evento')
+                    ->greeting('Olá!')
                     ->line('Você foi convidado para um evento.')
                     ->line('Evento: ' .  $this->convite->evento->titulo)
                     ->line('Responsável: ' . $this->convite->evento->agenda->funcionario->nome)
                     ->line('Data: ' . $data)
                     ->action('Confirme sua presença', $url);
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param mixed $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
     }
 
     public function toDatabase($notifiable){
