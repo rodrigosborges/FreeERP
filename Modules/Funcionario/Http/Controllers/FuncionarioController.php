@@ -661,6 +661,8 @@ class FuncionarioController extends Controller{
                 return $e;
             }
         }
+
+
         //parte de atestado
         public function CreateAtestado($id){
             
@@ -678,9 +680,11 @@ class FuncionarioController extends Controller{
             return view('funcionario::funcionario.atestado',compact('data'));
         }
 
-    public function storeAtestado(Request $request){
-        DB::beginTransaction();
 
+
+    public function storeAtestado(Request $request){
+        
+        DB::beginTransaction();
         try{
 
         $atestado = Atestado::create([
@@ -691,6 +695,8 @@ class FuncionarioController extends Controller{
             'funcionario_id' => $request['atestado']['funcionario_id']
             
         ]);
+        $funcionario = Funcionario::findOrFail($request->atestado['funcionario_id']);
+        $funcionario->update(['situacao' => $request->situacao]);
 
         DB::commit();
         return redirect('/funcionario/funcionario')->with('success','Atestado cadastrado com sucesso');
