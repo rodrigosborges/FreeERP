@@ -10,17 +10,17 @@
 </div>
 
 <div class="row">
-    <div class="form-group">
-        <div class="input-group col-12">
+    <div class="form-group col-lg-6 cl-sm-12">
+        <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="cliente"><i class="material-icons">picture_in_picture</i></span>
             </div>
             <input required type="text" class="form-control cpf-mask"  name="cpf"
                 placeholder="000.000.000-00 (CPF)" value="{{ isset($cliente->cpf) ? $cliente->cpf : old('cpf', '') }}">
         </div>
-        <span class="errors"> {{ $errors->first('cpf') }} </span>
+        <span class="error"> {{ $errors->first('cpf') }} </span>
     </div>
-    <div class="form-group col-lg-6 col-sm-12">
+    <div class="form-group col-lg-6">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="email"><i class="material-icons">email</i></span>
@@ -108,7 +108,7 @@
 
 <div class="row">
     <div class="form-group col-sm-3">
-        <label for="endereco[bairro]">bairro</label>
+        <label for="endereco[bairro]">Bairro:</label>
         <div class="input-group">
             <div class="input-group-prepend">
                     <span class="input-group-text"><i class="material-icons">location_city</i></span>
@@ -125,9 +125,9 @@
             </div>
             <select cidade="{{ old('endereco.cidade_id', isset($cliente) ? $cliente->endereco->cidade_id : "")}}" name="endereco[estado_id]" class="form-control" id="estado">
                 <option value="" disabled selected>Selecione</option>
-                @foreach($estados as $estado){
+                @foreach($estados as $estado)
                     <option value="{{$estado->id}}" uf="{{$estado->uf}}" {{ old('endereco.estado_id', isset($cliente) ? $cliente->endereco->cidade->estado_id : "") == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
-                }
+                
                 @endforeach
             </select>
         </div>  

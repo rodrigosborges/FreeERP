@@ -205,6 +205,7 @@ class ConsertoController extends Controller
     public function finalizar($id){
 
       $pagamento =  PagamentoAssistenciaModel::where('idConserto', $id)->get()->first();
+      
 
       return view('assistencia::paginas.pagamentos.finalizarPagamento', compact('pagamento'));
     }
