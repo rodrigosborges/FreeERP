@@ -16,7 +16,8 @@
                 Novo Evento
             @endif
         </h2>
-        <form action="{{isset($evento) && $rota != 'eventos.duplicar' ? route('eventos.editar', $evento->id) : route('eventos.salvar')}}" id="eventoForm" method="post" autocomplete="off">
+        <form action="{{isset($evento) && $rota != 'eventos.duplicar' ? route('eventos.editar', $evento->id) : route('eventos.salvar')}}" id="eventoForm"
+              method="post" autocomplete="off">
         @csrf
         {{isset($evento) && $rota != 'eventos.duplicar' ? method_field('PUT') : ''}}
 
@@ -104,7 +105,8 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="eventoAgenda">Agenda</label>
-                    <select id="eventoAgenda" class="form-control" name="eventoAgenda" required @if(isset($evento) && $rota != 'eventos.duplicar') disabled @endif>
+                    <select id="eventoAgenda" class="form-control" name="eventoAgenda" required
+                            @if(isset($evento) && $rota != 'eventos.duplicar') disabled @endif>
                         @foreach($agendas as $agenda)
                             <option value="{{$agenda->id}}" @if($evento) @if($agenda->id == $evento->agenda->id) selected
                                     @endif @elseif($agenda_selecionada == $agenda->id) selected @endif>{{$agenda->titulo}}
@@ -116,8 +118,12 @@
                     @endif
                 </div>
             </div>
-
             <button type="submit" class="btn btn-success">Salvar</button>
+            @if(isset($evento) && $rota != 'eventos.duplicar')
+                <a href="{{route('eventos.deletar', $evento->id)}}" class="btn btn-secondary text-white">
+                    Deletar
+                </a>
+            @endif
         </form>
     </div>
 @endsection

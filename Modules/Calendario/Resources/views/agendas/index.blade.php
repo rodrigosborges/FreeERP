@@ -70,7 +70,7 @@
                     </td>
                     <td class="acoes">
                         @if($agenda->trashed())
-                            <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" id="formDelAgPerm">
+                            <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" id="formAgDelPerm">
                                 @method('DELETE')
                                 @csrf
                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Deletar agenda permanentemente">

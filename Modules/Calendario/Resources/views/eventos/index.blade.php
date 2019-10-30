@@ -41,15 +41,11 @@
                     @endif
                     <td>@if($evento->nota){{$evento->nota}}@else --- @endif</td>
                     <td class="acoes">
-
-                        <form method="POST" action="{{route('eventos.deletar', $evento->id)}}" id="formEvDel">
-                            @method('DELETE')
-                            @csrf
-                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" title="Deletar evento">
-                                <i class="material-icons">delete</i>
-                            </button>
-                        </form>
-                        <a href="{{route('eventos.duplicar', $evento->id)}}" class="btn btn-sm btn-info text-white" data-toggle="tooltip" title="Duplicar evento">
+                        <a href="{{route('eventos.deletar', $evento->id)}}" class="btn btn-secondary btn-sm text-white deletar-evento" data-toggle="tooltip" title="Deletar evento">
+                            <i class="material-icons">delete</i>
+                        </a>
+                        <a href="{{route('eventos.duplicar', $evento->id)}}" class="btn btn-sm btn-info text-white" data-toggle="tooltip"
+                           title="Duplicar evento">
                             <i class="material-icons">file_copy</i>
                         </a>
                     </td>
@@ -67,7 +63,7 @@
 @section('css')
     @parent
     <style type="text/css">
-        .acoes form{
+        .acoes form {
             display: inline;
         }
     </style>
@@ -77,7 +73,8 @@
     @parent
     <script type="text/javascript">
         $(function () {
-            $('#formEvDel button').on('click', function () {
+            $('a.deletar-evento').on('click', function (event) {
+                event.preventDefault();
                 bootbox.confirm({
                     title: 'Confirmar ação',
                     message: 'Deseja realmente excluir o evento?',
@@ -85,8 +82,8 @@
                     backdrop: true,
                     locale: 'br',
                     callback: function (result) {
-                        if(result == true){
-                            $('#formEvDel').submit();
+                        if (result == true) {
+                            window.location = '{{route('eventos.deletar', $evento->id)}}';
                         }
                     }
                 });

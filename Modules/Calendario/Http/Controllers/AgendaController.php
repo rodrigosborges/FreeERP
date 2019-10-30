@@ -150,6 +150,11 @@ class AgendaController extends Controller
 
     public function eventos(Agenda $agenda)
     {
-        return view('calendario::eventos.index', ['eventos' => $agenda->eventos, 'agenda' => $agenda]);
+        if(!$agenda->eventos->isEmpty())
+            $retorno = view('calendario::eventos.index', ['eventos' => $agenda->eventos, 'agenda' => $agenda]);
+        else
+            $retorno = redirect()->route('agendas.index');
+
+        return $retorno;
     }
 }
