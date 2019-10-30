@@ -2,6 +2,8 @@
 
 namespace Modules\EstoqueMadeireira\Http\Controllers;
 use Modules\EstoqueMadeireira\Entities\Fornecedor;
+use Modules\EstoqueMadeireira\Entities\Categoria;
+
 use Modules\EstoqueMadeireira\Http\Requests\FornecedorRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -54,8 +56,8 @@ class FornecedorController extends Controller
 
     public function restore($id){
        
-        $fornecedores-> Fornecedor::onlyTrashed()->findOrFail($id);
-        $fornecedores->restore();
+        $fornecedor = Fornecedor::onlyTrashed()->findOrFail($id);
+        $fornecedor->restore();
 
         return redirect('estoquemadeireira/produtos/fornecedores')->with('success', 'Fornecedor restaurado com sucesso!');
 
@@ -63,8 +65,9 @@ class FornecedorController extends Controller
 
     public function create()
     {
-        $fornecedores = Fornecedor::all();     
-        return view('estoquemadeireira::Fornecedores/form', $this->template, compact('fornecedores'));
+        $fornecedores = Fornecedor::all();  
+        $categorias = Categoria::all();   
+        return view('estoquemadeireira::Fornecedores/form', $this->template, compact('fornecedores', 'categorias'));
 
         
     }
@@ -93,9 +96,10 @@ class FornecedorController extends Controller
         //     ];
        
         $fornecedor = Fornecedor::findOrFail($id);
+        $categorias = Categoria::all();
     
 
-        return view('estoquemadeireira::fornecedores/form', $this->template, compact('fornecedor'));
+        return view('estoquemadeireira::fornecedores/form', $this->template, compact('fornecedor','categorias'));
     }
 
      public function update(FornecedorRequest $request, $id)

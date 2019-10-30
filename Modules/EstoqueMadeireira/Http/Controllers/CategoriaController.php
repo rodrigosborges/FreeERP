@@ -79,7 +79,6 @@ class CategoriaController extends Controller
         try{
             Categoria::create($req->all());
             DB::commit();
-
             return redirect('/estoquemadeireira/produtos/categorias')->with('Success', 'Categoria cadastrada com sucesso!');
         } catch(\Exeception $e) {
             return back()->with('Error', 'Erro no cadastro de Categoria');

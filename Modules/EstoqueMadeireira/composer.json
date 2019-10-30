@@ -21,5 +21,8 @@
         "psr-4": {
             "Modules\\EstoqueMadeireira\\": ""
         }
+    },
+    "require": {
+        "laravellegends/pt-br-validator": "5.*"
     }
 }

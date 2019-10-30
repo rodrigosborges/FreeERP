@@ -50,7 +50,7 @@
                         @if($flag == 0)      
                         <th scope="col">CNPJ</th>              
                         <th scope="col">Editar</th> 
-                        <th scope="col">Desativar</th>              
+                        <th scope="col">Visualizar</th>              
                         @else
                         <th scope="col">Restaurar</th>
                         @endif
@@ -68,11 +68,8 @@
                                     <a href="{{url('/estoquemadeireira/produtos/fornecedores/' . $fornecedor->id . '/edit')}}"><button class="btn btn-sm btn-warning"><i class="material-icons" style="font-size:18px;">border_color</i></button></a>
                                     </td>
                                     <td>
-                                    <form method="POST" action="{{url('/estoquemadeireira/produtos/fornecedores/' . $fornecedor->id)}}">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger ml-3">Desativar</button>
-                                  </form>
+                                    <a href="{{url('/estoquemadeireira/produtos/fornecedores/ficha/' . $fornecedor->id)}}"><button class="btn btn-sm" style="font-size: 0px; background-color:blue;">
+                                <i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a>
                                     </td>
                                 @else
                                     <td>

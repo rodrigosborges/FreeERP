@@ -8,25 +8,31 @@ use Illuminate\Routing\Controller;
 
 class EstoqueMadeireiraController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function index()
-    {
+    public $template;
+
+    public function __construct(){
         $moduleInfo = [
             'icon' => 'android',
             'name' => 'Estoque Madeireira',
         ];
 
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Cadastro', 'route' => '/'],
-            ['icon' => 'search', 'tool' => 'Pedidos', 'route' => '#'],
-            ['icon' => 'edit', 'tool' => 'Estoque', 'route' => '#'],
-            //['icon' => 'delete', 'tool' => 'Remover', 'route' => '#'],
-        ];
+            ['icon' => 'add_box', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
+            ['icon' => 'add_box', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
+            ['icon' => 'add_box', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
+            ['icon' => 'edit', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
 
-        return view('estoquemadeireira::index',compact('moduleInfo','menu'));     
+        ];
+        $this->template = [
+            'moduleInfo' => $moduleInfo,
+            'menu' => $menu
+        ];
+    }
+    public function index()
+    {
+        $roda = '1';
+
+        return view('estoquemadeireira::index', $this->template, compact('roda'));     
     }
 
     /**

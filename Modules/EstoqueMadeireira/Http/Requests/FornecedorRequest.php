@@ -10,6 +10,7 @@ class FornecedorRequest extends FormRequest
         return [
             'nome' => ['required', 'min: 3', 'max: 40'],
             
+            
         ];
     }
     public function messages(){

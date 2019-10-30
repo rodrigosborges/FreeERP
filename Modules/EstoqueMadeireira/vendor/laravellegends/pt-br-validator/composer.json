@@ -1,0 +1,24 @@
+{
+    "name": "laravellegends/pt-br-validator",
+    "description": "Uma biblioteca contendo validações de formatos Brasileiros, para o Laravel 5",
+    "license" : "MIT",
+    "authors": [
+        {
+            "name": "Wallace de Souza Vizerra",
+            "email": "wallacemaxters@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": "5.0.* || 5.1.* || 5.2.* || 5.3.* || 5.4.* || 5.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelLegends\\PtBrValidator\\": "src/pt-br-validator"
+        }
+    },
+    "minimum-stability": "stable",
+    "require-dev": {
+        "orchestra/testbench": "3.1.*",
+        "phpunit/phpunit": "4.8.*"
+    }
+}

@@ -19,6 +19,7 @@ class Fornecedor extends Migration
             $table->string('telefone');
             $table->string('endereco');          
             $table->string('cnpj');
+            $table->integer('categoria_id')->unsigned()->index('fk_produtos_categoria');
             $table->timestamps();
             $table->softDeletes();
 

@@ -11,11 +11,11 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <label for="nome"><span><i class="material-icons" style="vertical-align:middle;">assignment_turned_in</i></span>&nbsp&nbsp<b>Fornecedor</b><br><br>{{$fornecedor->nome}}</label>
+                    <label for="nome"><span><i class="material-icons" style="vertical-align:middle;">account_circle</i></span>&nbsp&nbsp<b>Fornecedor</b><br><br>{{$fornecedor->nome}}</label>
                     
                 </div>
                 <div class="col-md-6">
-                    <label for="endereco"><i class="material-icons" style="vertical-align:middle;">attach_money</i>&nbsp&nbsp<b>Endereço</b><br><br>{{$fornecedor->endereco}}</label>
+                    <label for="endereco"><i class="material-icons" style="vertical-align:middle;">directions</i>&nbsp&nbsp<b>Endereço</b><br><br>{{$fornecedor->endereco}}</label>
                 </div>
 
                 
@@ -33,12 +33,20 @@
                 </div>   
                     
             </div>
+            <hr>
+           
+            <div class="row">
 
+            <div class="col-md-6">
+                <label for="cnpj"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Categoria</b><br><br>{{$fornecedor->categoria->nome}}</label>
+            </div>
+                
+            </div>
             <hr>
             
             
             
-            
+        
          
 
         </div>
@@ -46,7 +54,7 @@
     
     <div class="d-flex justify-content-end mt-3">
     <input type="button" class="btn btn-primary mr-3" value="Imprimir" onclick="window.print()"/>
-    <form method="POST" action="{{url('/estoquemadeireira/produtos/fornecedores' . $fornecedor->id)}}">
+    <form method="POST" action="{{url('/estoquemadeireira/produtos/fornecedores/' . $fornecedor->id)}}">
         @method('delete')
         @csrf
         <button type="submit" class="btn btn-danger ml-3">Desativar</button>
