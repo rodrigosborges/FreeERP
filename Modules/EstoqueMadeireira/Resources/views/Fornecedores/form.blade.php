@@ -11,12 +11,12 @@
                 <div class="card-header" style="">
                    <h1>Cadastro de Fornecedor</h1> 
                 </div>
-                <form action="{{isset($fornecedor) ?  url('/estoquemadeireira/produtos/fornecedores/' . $fornecedor->id) : url('/estoquemadeireira/produtos/fornecedores')}}" method="POST">
+                <form action="{{isset($fornecedor) ?  url('/estoquemadeireira/produtos/fornecedores/' . $fornecedor->id) : url('/estoquemadeireira/produtos/fornecedores')}}" id="formulario" method="POST">
                     @csrf
                     @if(isset($fornecedor))
                         @method('put')
                     @endif
-            
+                        <p id="alert" class="alert text-center"></p>
                         <div class="row mt-2 ml-2">
                             <div class="form-group col-4">
                                 <label for="nome">Nome</label>
@@ -60,7 +60,7 @@
                         </div>
                     
                         <div class="row col-8 mb-2" style="justify-content: flex-end;">
-                            <button type="submit" class="btn btn-primary">{{isset($categoria) ? 'Salvar' : 'Cadastrar' }}</button>
+                            <button type="submit" id="cadastrar" class="btn btn-primary">{{isset($categoria) ? 'Salvar' : 'Cadastrar' }}</button>
                         </div>
                 
                 </form>
@@ -83,9 +83,41 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){	
+        $("#alert").hide();
         $("#cnpj").mask("99.999.999/9999-99");
         $("#telefone").mask("(99)99999-9999");
+        $("#cadastrar").click(function(e){
+            validaCnpj(e)
+            validaTelefone(e)
+         
+        })
 	});
+
+    function validaCnpj(e){
+        $("#alert").hide();
+            e.preventDefault()
+            var valida = (/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)
+            if(valida.test($("#cnpj").val()))
+                $("#formulario").submit()
+            else{
+                $("#alert").fadeIn("slow")
+                $("#alert").html("CNPJ inválido")
+                $("#alert").addClass("alert-warning")
+            }
+    }
+
+    function validaTelefone(e){
+        $("#alert").hide()
+            e.preventDefault()
+            var valida =  (\([0-9]{2}\))\s([9]{1})?([0-9]{4})-([0-9]{4})
+            if(valida.test($("telefone").val()))
+                $("#formulario").submit()
+            else {
+                $("#alert").fadeIn("slow")
+                $("#alert").html("Telefone inválido!")
+                $("#alert").addClass("alert-warning")
+            }
+    }   
 </script>
 
 @endsection
