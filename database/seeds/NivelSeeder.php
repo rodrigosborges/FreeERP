@@ -1,12 +1,9 @@
 <?php
 
-namespace Modules\Eventos\Database\Seeders;
-
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class NivelTableSeeder extends Seeder
+class NivelSeeder extends Seeder
 {
     /**
      * Run the database seeds.

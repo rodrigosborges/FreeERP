@@ -170,6 +170,52 @@
             }
         </script>
         
+        <!-- Seleção do item do menu  -->
+        <script>
+            $(function () {
+                $.when(
+                    $('#sidebar a.nav-link span').each(function () {
+                        switch ($(this).text().trim()) {
+                            case 'Início':
+                                $(this).parent('a').addClass('inicio');
+                                break;
+                            case 'Eventos':
+                                $(this).parent('a').addClass('eventos');
+                                break;
+                            case 'Pessoas':
+                                $(this).parent('a').addClass('pessoas');
+                                break;
+                            case 'Certificados':
+                                $(this).parent('a').addClass('certificados');
+                                break;
+                        }
+                    }))
+                .done(function () {
+                    switch ('{{ \Illuminate\Support\Facades\Route::currentRouteName() }}'.trim()) {
+                        case 'eventos.index':
+                            $('.inicio').addClass('active');
+                            break;
+                        case 'eventos.exibir':
+                        case 'eventos.cadastrar':
+                        case 'eventos.editar':
+                        case 'programacao.exibir':
+                        case 'programacao.cadastrar':
+                            $('.eventos').addClass('active');
+                            break;
+                        case 'eventos.pessoas':
+                        case 'pessoas.exibir':
+                        case 'pessoas.cadastrar':
+                        case 'pessoas.editar':    
+                            $('.pessoas').addClass('active');
+                            break;
+                        case 'certificados.index':
+                            $('.certificados').addClass('active');
+                            break;
+                    }
+                });
+            });
+        </script>
+        
         <!-- Máscaras dos forms -->
         <script>
             <!-- Código disponível no site do jQuery Mask Plugin -->

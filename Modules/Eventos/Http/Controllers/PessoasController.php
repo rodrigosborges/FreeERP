@@ -15,7 +15,11 @@ class PessoasController extends Controller
     public function index()
     {
         $eventos = Evento::orderBy('nome')->get(); //RETORNA OS EVENTOS ORDENADOS PELO NOME
-        return view('eventos::pessoas', ['eventos' => $eventos, 'evento' => null]);
+        //VERIFICA SE EXISTE PELO MENOS 1 EVENTO CADASTRADO
+        if(count($eventos) < 1)
+            return view('eventos::cadastrarEvento');
+        else    
+            return view('eventos::pessoas', ['eventos' => $eventos, 'evento' => null]);
     }
     
     function exibir(Request $request)
