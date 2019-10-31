@@ -17,8 +17,7 @@ class ProgramacaoController extends Controller
         return view('eventos::programacao', ['evento' => $evento, 'atividades' => $atividades]);
     }
     
-    function cadastrar(Request $request)
-    {
+    function cadastrar(Request $request){
         $palestrante = new Palestrante();
         $palestrante->nome = $request->nomePalestrante;
         $palestrante->bio = $request->bio;
@@ -54,9 +53,31 @@ class ProgramacaoController extends Controller
     
     function editar (Request $request){
         $programacao = Programacao::find($request->id);
-        dd($programacao);
+        $programacao->update(['nome' => $request-> nome, 'tipo' => $request->tipo, 'descricao' => $request->descricao,
+            'data' => $request->data, 'horario' => $request->horario, 'duracao' => $request->duracao,
+            'local' => $request->local, 'vagas' => $request->vagas]);
+        
+        $palestrante = Palestrante::find($request->palestrante_id);
+        $palestrante->update(['nome' => $request-> nome, 'bio' => $request->bio]);
+        
+        if ($request->hasFile('fotoPalestrante')){
+            $arquivo = $request->fotoPalestrante;
+            $extensao = $arquivo->getClientOriginalExtension();
+            $nomeArquivo = time() . '.' . $extensao;
+            $upload = $request->imgEvento->storeAs('palestrantes', $nomeArquivo);
+            $palestrante->update(['foto' => $nomeArquivo]);
+        }
+        return redirect()->route('programacao.exibir', ['evento' => $request->eventoId])
+            ->with('success', $request->nome . ' alterado(a) com sucesso.');
     }
-
+    
+    public function excluir(Request $request)
+    {
+        $programacao = Programacao::find($request->id);
+        $programacao->delete();
+        return redirect()->route('programacao.exibir', ['evento' => $request->eventoId])
+            ->with('success', $programacao->nome . ' excluído(a) com sucesso.');
+    }
 
     function getAtividade($idAtividade){
         $atividade = DB::table('programacao')

@@ -63,7 +63,7 @@
                         <td class="text-center align-middle">{{$atividade->vagas}}</td>
                         <td class="text-center align-middle">
                             <button class="btn btn-xs" title="Visualizar / Editar" data-toggle="modal" data-target="#modalAtividade" onclick="visualizar('{{$atividade->id}}')"><i class="material-icons">search</i></button>
-                            <button class="btn btn-xs" data-toggle="modal" data-target="#modalExcluirAtividade"><i class="material-icons">delete</i></button>
+                            <button class="btn btn-xs" title="Excluir" data-toggle="modal" data-target="#modalExcluirAtividade" onclick="excluir('{{$evento->id}}', '{{$atividade->id}}', '{{$atividade->nome}}')"><i class="material-icons">delete</i></button>
                         </td> 
                     </tr>
                 @endforeach    
@@ -72,7 +72,7 @@
     </div>
     
     <!-- Modal para cadastrar, visualizar ou editar as atividades do evento -->
-    <form method="post" action="" enctype="multipart/form-data">
+    <form method="" action="" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="modal fade" id="modalAtividade" tabindex="-1" role="dialog" aria-labelledby="modalAtividade" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -81,9 +81,12 @@
                         <h5 class="modal-title" id="tituloModal"></h5>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
+                        <div class="form-group ids">
                             <!-- Passa o id do evento em que a atividade está sendo cadastrada -->
                             <input type="hidden" name="eventoId" value="{{$evento->id}}">
+                            <!-- Passa o id da atividade e do(a) palestrante para editar -->
+                            <input type="hidden" name="id" value="">
+                            <input type="hidden" name="palestrante_id" value="">
                         </div>
                         <div class="form-group">
                             <label for="nome" class="col-form-label">Nome:</label>
@@ -156,6 +159,30 @@
             </div>
         </div>
     </form>
+    
+    <!-- Modal de confirmação de exclusão -->
+    <form method="POST" action="{{route('programacao.excluir')}}">
+        @method('DELETE')
+        {{ csrf_field() }}
+        <div class="modal fade" id="modalExcluirAtividade" tabindex="-1" role="dialog" aria-labelledby="modalExcluirAtividade" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Excluir Atividade</h5>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id"/>
+                        <input type="hidden" name="eventoId"/>
+                        <p></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Sim</button>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </form>
 @endsection
 
 @section('js')
@@ -186,8 +213,9 @@
         $('#modalAtividade').on('show.bs.modal');
         
         function cadastrar(){
+            $('form').attr('method', 'POST');    
             $('form').attr('action', '{{route('programacao.cadastrar', $evento->id)}}');
-            $('input, textarea, select').val('');
+            $('.edit').val('');
             var input = document.getElementsByClassName('edit');
             for (var i=0; i<(input.length); i++){
                 input[i].disabled = false;
@@ -213,6 +241,8 @@
             
             $.get('/eventos/get-atividade/' + idatividade, function (atividade){
                 $.each(atividade, function (index, value){
+                    $('.modal-body [name=id]').val(idatividade);
+                    $('.modal-body [name=palestrante_id]').val(value.palestrante_id);
                     $('.modal-body [name=nome]').val(value.nome);
                     $('.modal-body [name=tipo]').val(value.tipo);
                     $('.modal-body [name=descricao]').val(value.descricao);
@@ -224,7 +254,7 @@
                     $('.modal-body [name=nomePalestrante]').val(value.nomePalestrante);
                     $('.modal-body [name=bio]').val(value.bio);
                     
-                    if(value.foto !== ''){
+                    if(value.foto !== null & value.foto !== ""){
                         $('.modal-body #img').attr("src", "http://127.0.0.1:8000/storage/palestrantes/" + value.foto);
                     }else{
                         $('.modal-body #img').attr("src", 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStl-KWsV0KVxQug2HoR6e3lx6UUSD4KAqyDbevILtDVDvs0YK1xA&s');
@@ -233,7 +263,9 @@
                 
             });
         }
+        
         function editar() {
+            $('form').attr('method', 'POST');
             $('form').attr('action', '{{route('programacao.editar', $evento->id)}}');
             var input = document.getElementsByClassName('edit');
 
@@ -241,10 +273,18 @@
                 input[i].disabled = false;
             }
 
-            //EDITA OS BOTÕES
+            $('.modal-header #tituloModal').html('Editar atividade');
             $('.modal-footer #btnEditar').hide();
             $('.modal-footer #btnFechar').html('Cancelar');
             $('.modal-footer #btnSalvar').show();
+        }
+        
+        $('#modalExcluirAtividade').on('show.bs.modal');
+        
+        function excluir (eventoId, id, nome) {
+            $('#modalExcluirAtividade [name=eventoId]').val(eventoId);
+            $('#modalExcluirAtividade [name=id]').val(id);
+            $('#modalExcluirAtividade p').text('Tem certeza que deseja excluir ' + nome + ' ?'); 
         }
     </script>
     
