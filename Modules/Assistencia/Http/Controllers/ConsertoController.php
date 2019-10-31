@@ -144,9 +144,9 @@ class ConsertoController extends Controller
     public function atualizar(Request $req, $id){
      
       $dados  = $req->all();
-      ConsertoAssistenciaModel::findOrFail($id)->update($dados);
-      $conserto = ConsertoAssistenciaModel::find($id)->latest()->first();
- 
+       ConsertoAssistenciaModel::findOrFail($id)->update($dados);
+       $conserto = ConsertoAssistenciaModel::findOrFail($id);
+   
       $pagamento = PagamentoAssistenciaModel::findOrFail($id);
       $pagamento->update(['valor' => $conserto['valor']]);
   
