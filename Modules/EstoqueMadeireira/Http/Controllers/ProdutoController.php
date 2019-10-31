@@ -134,4 +134,50 @@ class ProdutoController extends Controller
         $produto->delete();
         return redirect('/estoquemadeireira/produtos')->with('success', 'Produto desativado com sucesso!');
     }
+
+    public function busca(Request $request){
+    
+        
+        $sql = [];
+        $categorias = Categoria::all();
+        
+        if($request['pesquisa'] == null){
+            
+        }else{
+            array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);
+        }
+        if($request['categoria_id'] != -1){
+            array_push($sql, ['categoria_id', '=', $request['categoria_id']]);
+        }else{
+        }
+        if($request['precoMin'] != null){
+            if($request['precoMax'] != null){
+                array_push($sql, ['preco', '>=', $request['precMin']]);
+                array_push($sql, ['preco', '<=', $request['precoMax']]);
+            }else{
+                array_push($sql, ['preco', '>=', $request['precoMin']]);
+            }
+        }else if($request['precoMax'] != null){
+                array_push($sql, ['preco', '<=', $request['precoMax']]);
+        }
+        
+        //Se a flag for 1 retorna os produtos inativos, se for 2 os produtos ativos
+        if($request['flag'] == 1){
+            $produtos = Produto::onlyTrashed()->where($sql)->paginate(5);
+            if(count($produtos) == 0){
+                return redirect('/estoquemadeireira/produtos')->with('error', 'Nenhum resultado encontrado');
+            }
+            $flag = $request['flag'];
+            return view('estoquemadeireira::produto.index', $this->template, compact('produtos', 'categorias', 'flag'))->with('success', 'Resultado da pesquisa');
+        }else{
+            $produtos = Produto::where($sql)->paginate(5);
+            if(count($produtos) == 0){
+                return redirect('/estoquemadeireira/produto')->with('error', 'Nenhum resultado encontrado');
+            }
+            $flag = $request['flag'];
+            return view('estoquemadeireira::produtos.index', $this->template, compact('produtos', 'categorias', 'flag'))->with('success', 'Resultado da pesquisa');
+        }
+    }
+    
+
 }

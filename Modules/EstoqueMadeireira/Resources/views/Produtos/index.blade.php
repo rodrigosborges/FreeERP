@@ -4,13 +4,44 @@
 
 <div class="container">
     <div class="card col-md-12">
-        <div class="card"> 
-
+        <div class="card-body"> 
+            <div class="header text-left mb-4">
+                <h4>Pesquisar Produto</h4>
+            </div>
             
-        
+            <form method="POST" id="form" action="{{url('/estoquemadeireira/produtos/busca/')}}">
+                @csrf
+                <div class="row">
+                    <div class="form-group col-8">
+                        <input type="text" id="search-input" maxlength="40" placeholder="Insira o nome do produto" class="form-control" name="pesquisa">
+                    </div>            
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-7">
+                        <select name="categoria_id" id="" class="form-control">
+                            <option value="-1">Todas as Categorias</option>
+                            @foreach($categorias as $categoria)
+                             <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                            @endforeach
+                        </select>                      
+                    </div>
+                    <input type="text" name="flag" hidden value="{{$flag}}">
+                            <div class="form-group col-2">
+                                <input type="text" name="precoMin" class="form-control" onkeyUp="moeda(this);" placeholder="Preço minimo">
+                            </div>
+                            <div class="form-group col-2">
+                                <input type="text" name="precoMax" class="form-control" onkeyUp="moeda(this);" placeholder="Preço máximo">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
+                            </div>
+                </div>
+            
+            </form>
+            
         </div>
-    
-    
+        
     </div>
 
     <div class="nav nav-tabs justify-content-center">
@@ -130,3 +161,14 @@
 
 
 @stop
+
+<script>
+    function moeda(i) {
+        var v = i.value.replace(/\D/g,'');
+        v = (v/100).toFixed(2) + '';
+        v = v.replace(",", ".");
+        v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1$2$3.");
+        v = v.replace(/(\d)(\d{3}),/g, "$1$2.");
+        i.value = v;
+    }
+</script>

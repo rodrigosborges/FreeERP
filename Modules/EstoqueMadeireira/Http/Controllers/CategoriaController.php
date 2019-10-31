@@ -114,10 +114,6 @@ class CategoriaController extends Controller
         }
     }
 
-  
-
-
-
 
     public function destroy($id)
     {
@@ -125,4 +121,40 @@ class CategoriaController extends Controller
         $categoria->delete();
         return redirect('/estoquemadeireira/produtos/categorias')->with('success', 'Categoria desativada com sucesso!');
     }
+
+
+    public function busca(Request $request){
+        $sql = [];
+        $categorias = Categoria::all();
+        
+        
+        if($request['pesquisa'] == null){
+            return redirect('/estoquemadeireira/produtos/categorias')->with('error', 'Insira um nome para a pesquisa');
+
+        }else{
+            array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);
+        
+        
+        
+        //Se a flag for 1 retorna os produtos inativos, se for 2 os produtos ativos
+        if($request['flag'] == 1){
+            $categorias = Categoria::onlyTrashed()->where($sql)->paginate(5);
+            if(count($categorias) == 0){
+                return redirect('/estoquemadeireira/produtos/categorias')->with('error', 'Nenhum resultado encontrado');
+            }
+            $flag = $request['flag'];
+            return view('estoquemadeireira::Categoria.index', $this->template, compact('categorias', 'flag'))->with('success', 'Resultado da pesquisa');
+        }else{
+            $categorias = Categoria::where($sql)->paginate(5);
+            if(count($categorias) == 0){
+                return redirect('/estoquemadeireira/produtos/categorias')->with('error', 'Nenhum resultado encontrado');
+            }
+            $flag = $request['flag'];
+            return view('estoquemadeireira::Categoria.index', $this->template, compact('categorias', 'flag'))->with('success', 'Resultado da pesquisa');
+        }
+    }
+
+    }
 }
+
+

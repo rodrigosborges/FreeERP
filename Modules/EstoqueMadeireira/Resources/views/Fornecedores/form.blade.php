@@ -95,6 +95,8 @@
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script> 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
 
 <script type="text/javascript">
 	$(document).ready(function(){	
@@ -107,6 +109,15 @@
          
         })
 	});
+
+    $("#formulario").validade({
+        rules: {
+            'nome': {
+                maxlength: 2,
+            }
+        },
+        messeges: {}
+    })
 
     function validaCnpj(e){
         $("#alert").hide();

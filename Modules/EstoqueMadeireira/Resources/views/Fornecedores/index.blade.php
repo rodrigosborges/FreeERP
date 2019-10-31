@@ -3,16 +3,30 @@
 @section('content')
 
 <div class="container">
-    <div class="card col-md-12">
-        <div class="card"> 
+<div class="card col-md-12">
+        <div class="card-body"> 
+            <div class="header text-left">
+                <h4>Pesquisar Fornecedor</h4>
+            </div>
+            <form action="{{url('estoquemadeireira/produtos/fornecedores/busca')}}" method="POST" id="form">
+            @csrf
+            <div class="row">
+                    <div class="form-group col-8">
+                        <input type="text" id="search-input" maxlength="40" placeholder="Insira o nome do Fornecedor" class="form-control" name="pesquisa">
+                    </div>   
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
+                    </div>             
+                </div>
+                
 
+            </form>
             
         
         </div>
     
     
     </div>
-
     <div class="nav nav-tabs justify-content-center">
         <li class="nav-item">
             <a href="#ativos" class="nav-link active" role="tab" data-toggle="tab"> 

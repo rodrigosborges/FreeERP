@@ -134,4 +134,37 @@ class FornecedorController extends Controller
         return view('estoquemadeireira::fornecedores/ficha',$this->template , compact('fornecedor'));
     }
 
+    public function busca(Request $request){
+        $sql = [];
+        $fornecedores = Fornecedor::all();
+        
+        
+        if($request['pesquisa'] == null){
+            return redirect('/estoquemadeireira/produtos/fornecedores')->with('error', 'Insira um nome para a pesquisa');
+
+        }else{
+            array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);
+        
+        
+        
+        //Se a flag for 1 retorna os produtos inativos, se for 2 os produtos ativos
+        if($request['flag'] == 1){
+            $fornecedores = Fornecedor::onlyTrashed()->where($sql)->paginate(5);
+            if(count($fornecedores) == 0){
+                return redirect('/estoquemadeireira/produtos/fornecedores')->with('error', 'Nenhum resultado encontrado');
+            }
+            $flag = $request['flag'];
+            return view('estoquemadeireira::Fornecedores.index', $this->template, compact('fornecedores', 'flag'))->with('success', 'Resultado da pesquisa');
+        }else{
+            $fornecedores = Fornecedor::where($sql)->paginate(5);
+            if(count($fornecedores) == 0){
+                return redirect('/estoquemadeireira/produtos/fornecedores')->with('error', 'Nenhum resultado encontrado');
+            }
+            $flag = $request['flag'];
+            return view('estoquemadeireira::Fornecedores.index', $this->template, compact('fornecedores', 'flag'))->with('success', 'Resultado da pesquisa');
+        }
+    }
+
+    }
 }
+
