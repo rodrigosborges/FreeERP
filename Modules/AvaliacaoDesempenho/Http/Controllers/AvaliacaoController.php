@@ -87,7 +87,7 @@ class AvaliacaoController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        $data = [
+        $data = [   
             'processos' => Processo::all(),
             'funcionarios' => Funcionario::all(),
             'setores' => Setor::all(),
@@ -130,6 +130,16 @@ class AvaliacaoController extends Controller
                             'token' => $token,
                             'validade' => $validade
                         ]);
+                        
+                        $data = [
+                            'funcionario' => $funcionario,
+                            'avaliacao' => $avaliacao,
+                            'token' => $token,
+                            'validade' => $validade
+                        ];
+                        Mail::send('avaliacaodesempenho::teste', $data, function($message) use($data) {
+                            $message->to($data['funcionario']->email->email, 'aksjbdkasbd')->subject('akdbakdbakabdkabdksa');
+                        });
 
                     } else if ($funcionario->id == $setor->gestor->id) {
 
