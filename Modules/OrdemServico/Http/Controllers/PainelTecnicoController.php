@@ -36,8 +36,8 @@ class PainelTecnicoController extends Controller
             'model' => OrdemServico::where('tecnico_id', null)
             ->where('status_id','<>',$idStatusConcluida)
             ->where('status_id','<>',$idStatusInutilizado)->get(),
-            'thead' => ['Protocolo', 'Solicitante', 'Status','Problema'],
-            'row_db' => ['protocolo', 'solicitante_id', 'status_id','problema_id'],
+            'thead' => ['Protocolo', 'Solicitante', 'Status','Problema','Prioridade'],
+            'row_db' => ['protocolo', 'solicitante_id', 'status_id','problema_id','prioridade'],
             'create' => false,
             'acoes' => []
         ];
@@ -51,8 +51,8 @@ class PainelTecnicoController extends Controller
         $data = [
             'title' => 'Minhas Ordens de Serviços',
             'model' => OrdemServico::where('tecnico_id', Auth::user()->id)->where('status_id', '<>', $idStatusConcluida)->where('status_id', '<>', $idStatusInutilizado)->get(),
-            'thead' => ['Protocolo', 'Solicitante', 'Status'],
-            'row_db' => ['protocolo', 'solicitante_id', 'status_id'],
+            'thead' => ['Protocolo', 'Solicitante', 'Status','Problema','Prioridade'],
+            'row_db' => ['protocolo', 'solicitante_id', 'status_id','problema_id','prioridade'],
             'create' => false,
             'status' => Status::pluck('titulo', 'id'),
             'route' => 'modulo.tecnico.painel.',

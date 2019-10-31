@@ -55,7 +55,7 @@ class StatusController extends Controller
                 Aparelho::findOrFail($os->aparelho->id)->update(['inutilizacao' => true]);
             }
             DB::commit();
-            return redirect('/ordemservico/os')->with('success', 'Status atualizado com successo');
+            return redirect()->back()->with('success', 'Status atualizado com successo');
         } catch (Exception $e) {
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
