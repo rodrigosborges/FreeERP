@@ -11,6 +11,11 @@ class DateAfterValidator
 
     protected function isValidate($attribute, $value, $parameter)
     {
-        return strtotime($value) > strtotime($parameter);
+        $entrada = \DateTime::createFromFormat('d/m/Y H:i:s', $parameter);
+        $entrada = $entrada->format('Y-m-d H:i:s');
+        $saida = \DateTime::createFromFormat('d/m/Y H:i:s', $value);
+        $saida = $saida->format('Y-m-d H:i:s');
+
+        return strtotime($saida) > strtotime($entrada);
     }
 }

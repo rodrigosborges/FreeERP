@@ -27,7 +27,7 @@
                                 <i class="material-icons">update</i>
                             </span>
                         </div>
-                        <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="stored[{{$ponto->id}}][entrada]" class="form-control date-valid date-mask" value="{{old('stored.'.$ponto->id.'.entrada', $ponto->formated_entrada())}}">
+                        <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="stored[{{$ponto->id}}][entrada]" class="form-control date-validate date-mask" value="{{old('stored.'.$ponto->id.'.entrada', $ponto->formated_entrada())}}">
                     </div>
                     <span class="errors"> {{ $errors->first('stored.'.$ponto->id.'.entrada') }} </span>
                 </div>
@@ -39,7 +39,7 @@
                                 <i class="material-icons">update</i>
                             </span>
                         </div>
-                        <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="stored[{{$ponto->id}}][saida]" class="form-control date-valid date-mask" value="{{old('stored.'.$ponto->id.'.saida', $ponto->formated_saida())}}">
+                        <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="stored[{{$ponto->id}}][saida]" class="form-control date-validate date-mask" value="{{old('stored.'.$ponto->id.'.saida', $ponto->saida ? $ponto->formated_saida() : '')}}">
                     </div>
                     <span class="errors"> {{ $errors->first('stored.'.$ponto->id.'.saida') }} </span>
                 </div>
@@ -61,7 +61,7 @@
                                     <i class="material-icons">update</i>
                                 </span>
                             </div>
-                            <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="new[{{$key}}][entrada]" class="form-control date-valid date-mask" value="{{old('new.'.$key.'.entrada')}}">
+                            <input type="text" placeholder="Ex: 01/01/2019 08:00:00" name="new[{{$key}}][entrada]" class="form-control date-validate date-mask" value="{{old('new.'.$key.'.entrada')}}">
                         </div>
                         <span class="errors"> {{ $errors->first('new.'.$key.'.entrada') }} </span>
                     </div>
@@ -73,7 +73,7 @@
                                     <i class="material-icons">update</i>
                                 </span>
                             </div>
-                            <input type="text" placeholder="Ex: 01/01/2019 18:00:00" name="new[{{$key}}][saida]" class="form-control date-valid date-mask" value="{{old('new.'.$key.'.saida')}}">
+                            <input type="text" placeholder="Ex: 01/01/2019 18:00:00" name="new[{{$key}}][saida]" class="form-control date-validate date-mask" value="{{old('new.'.$key.'.saida')}}">
                         </div>
                         <span class="errors"> {{ $errors->first('new.'.$key.'.saida') }} </span>
                     </div>
@@ -100,9 +100,10 @@
 @section('script')
     <script>
 
-        jQuery.validator.addMethod("validDate", function(value, element) {
+        jQuery.validator.addMethod("validate_date", function(value, element) {
             var re = /([0][1-9]|[1][0-9]|[2][0-9]|[3][0-1])\/([0][1-9]|[1][0-2])\/([1][9][0-9]{2}|[2][0-9]{3})( ([0-1][0-9]|[2][0-3]):[0-5][0-9]:[0-5][0-9])/g
-            return this.optional(element) || (!/Invalid|NaN/.test(new Date(value).toString()) && re.test(value));
+
+            return this.optional(element) || (re.test(value));
             }, "Por favor, insira uma data válida no formato 00/00/0000 00:00:00");
 
         $(document).ready(function(){
@@ -147,7 +148,7 @@
                     .removeAttr('aria-describedby')
                     .rules('add', {
                         required:true, 
-                        validDate: true,
+                        validate_date: true,
                     })
             }else{
                 $(pontos[0]).removeClass("d-none")
@@ -166,10 +167,10 @@
         $(".date-mask").mask("00/00/0000 00:00:00")
 
         $(document).ready(function(){
-            $(".date-valid").each(function(){
+            $(".date-validate").each(function(){
                 $(this).rules("add", { 
                     required:true,  
-                    validDate: true,
+                    validate_date: true,
                 });
             })
         })

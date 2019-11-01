@@ -16,9 +16,10 @@ class CreatePontoTable extends Migration {
 		{
             $table->integer('id', true);
 			$table->integer('funcionario_id')->index('fk_ponto_funcionario');
-			$table->boolean('entrada');
+			$table->dateTime('entrada');
+			$table->dateTime('saida')->nullable();
 			$table->boolean('automatico')->default(0);
-            $table->dateTime('created_at');
+			$table->dateTime('updated_at')->nullable();
 		});
 	}
 

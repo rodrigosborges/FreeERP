@@ -19,6 +19,7 @@ class FrequenciaController extends Controller{
     }
 
     public function index($id){
+
         $funcionario = Funcionario::findOrFail($id);
         $pontos = $funcionario
             ->pontos()
@@ -97,7 +98,7 @@ class FrequenciaController extends Controller{
                 $ponto = Ponto::findOrFail($key);
                 if($ponto->entrada != $entrada || $ponto->saida != $saida){
                     $ponto->entrada = $entrada;
-                    $ponto->entrada = $saida;
+                    $ponto->saida = $saida;
                     $ponto->updated_at = date('Y-m-d H:i:s');
                     $ponto->automatico = 0;
                     $ponto->update();
@@ -197,8 +198,6 @@ class FrequenciaController extends Controller{
                 ]);
             }
             
-            
-
             DB::commit();
 
             return json_encode([
@@ -233,8 +232,8 @@ class FrequenciaController extends Controller{
         $minutes = 0;
         $seconds = 0;
 
-        for($i=0; $i < count($pontos); $i+=2){
-            $timeWorked = $pontos[$i]->time_worked();
+        foreach($pontos as $ponto){
+            $timeWorked = $ponto->time_worked();
 
             $secondsNew = explode(':',$timeWorked);
             $secondsNew = intVal(($secondsNew)[2]);

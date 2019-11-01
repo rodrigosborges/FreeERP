@@ -23,10 +23,13 @@ class Ponto extends Model{
     }
 
     public function get_time_saida(){
-        return date('H:i:s', strtotime($this->attributes['saida']));
+        return $this->attributes['saida'] ? date('H:i:s', strtotime($this->attributes['saida'])) : "N/A";
     }
 
     public function time_worked(){
+        if($this->attributes['saida'] == null)
+            return "00:00:00";
+
         $date1 = strtotime($this->attributes['entrada']);
         $date2 = strtotime($this->attributes['saida']);
         $diff = $date2 - $date1;
