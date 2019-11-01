@@ -6,6 +6,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use DB;
 use Modules\EstoqueMadeireira\Http\Requests\ProdutoRequest;
+use Modules\EstoqueMadeireira\Http\Requests\PesquisaProdutoRequest;
 use Modules\EstoqueMadeireira\Entities\Produto;
 use Modules\EstoqueMadeireira\Entities\Categoria;
 use Modules\EstoqueMadeireira\Entities\Fornecedor;
@@ -20,15 +21,15 @@ class ProdutoController extends Controller
     public $template;
     public function __construct(){
         $moduleInfo = [
-            'icon' => 'android',
+            'icon' => 'store',
             'name' => 'Estoque Madeireira',
         ];
 
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
-            ['icon' => 'add_box', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
-            ['icon' => 'add_box', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
-            ['icon' => 'edit', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
+            ['icon' => 'shopping_basket', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
+            ['icon' => 'class', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
+            ['icon' => 'account_circle', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
+            ['icon' => 'store', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
 
         ];
         $this->template = [
@@ -135,7 +136,7 @@ class ProdutoController extends Controller
         return redirect('/estoquemadeireira/produtos')->with('success', 'Produto desativado com sucesso!');
     }
 
-    public function busca(Request $request){
+    public function busca(PesquisaProdutoRequest $request){
     
         
         $sql = [];
@@ -172,7 +173,7 @@ class ProdutoController extends Controller
         }else{
             $produtos = Produto::where($sql)->paginate(5);
             if(count($produtos) == 0){
-                return redirect('/estoquemadeireira/produto')->with('error', 'Nenhum resultado encontrado');
+                return redirect('/estoquemadeireira/produtos')->with('error', 'Nenhum resultado encontrado');
             }
             $flag = $request['flag'];
             return view('estoquemadeireira::produtos.index', $this->template, compact('produtos', 'categorias', 'flag'))->with('success', 'Resultado da pesquisa');

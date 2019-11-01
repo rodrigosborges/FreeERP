@@ -12,7 +12,7 @@ class EstoqueMadeireiraController extends Controller
 
     public function __construct(){
         $moduleInfo = [
-            'icon' => 'android',
+            'icon' => 'store',
             'name' => 'Estoque Madeireira',
         ];
 
@@ -32,7 +32,7 @@ class EstoqueMadeireiraController extends Controller
     {
         $roda = '1';
 
-        return view('estoquemadeireira::index', $this->template, compact('roda'));     
+        return view('estoquemadeireira::estoque.index', $this->template, compact('roda'));     
     }
 
     /**

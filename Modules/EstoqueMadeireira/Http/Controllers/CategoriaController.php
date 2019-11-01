@@ -17,15 +17,15 @@ class CategoriaController extends Controller
 
     public function __construct(){
         $moduleInfo = [
-            'icon' => 'android',
+            'icon' => 'store',
             'name' => 'Estoque Madeireira',
         ];
 
         $menu = [
-            ['icon' => 'add_box', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
-            ['icon' => 'add_box', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
-            ['icon' => 'add_box', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
-            ['icon' => 'edit', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
+            ['icon' => 'shopping_basket', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
+            ['icon' => 'class', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
+            ['icon' => 'account_circle', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
+            ['icon' => 'store', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
 
         ];
         $this->template = [
