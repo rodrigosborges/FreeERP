@@ -13,11 +13,10 @@ class TelefoneTable extends Migration
      */
     public function up()
     {
-        
         Schema::create('telefone', function(Blueprint $table)
 		{
             $table->increments('id');
-            $table->integer('numero');
+            $table->bigInteger('numero');
             $table->integer('solicitante_id')->unsigned();
             $table->foreign('solicitante_id')->references('id')->on('solicitante');
         });

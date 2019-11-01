@@ -17,7 +17,7 @@ class OrdemServicoStoreRequest extends FormRequest
             "solicitante.id" => 'required|max:14',
             "solicitante.nome" => 'required',
             "solicitante.email" => 'required|email|unique:solicitante,email',
-            "endereco.cep" => 'max:8',
+            "endereco.cep" => 'max:9',
             "endereco.rua" => 'required',
             "endereco.bairro" => 'required',
             "endereco.numero" => 'required',

@@ -1,17 +1,17 @@
 
 $(document).ready(function () {
     //Busca Aparelho , se existir preenche atributos do aparelho automaticamente
-    $('#aparelho_id').keyup(function () {
-        $.getJSON("/ordemservico/aparelho/showAjax", {
-            id: $('#aparelho_id').val()
-        }, function () {
-            console.log("success");
+    $("input[name='aparelho[numero_serie]'").keyup(function () {
+        $.getJSON("/ordemservico/aparelho/showAparelho", {
+            numero_serie: $(this).val()
         }).done(function (data) {
-            $('#tipo_aparelho').val(data.tipo_aparelho).prop('readonly', true);
-            $('#marca').val(data.marca).prop('readonly', true);
+            $("input[name='aparelho[tipo_aparelho]'").val(data.tipo_aparelho).prop('readonly', true);
+            $("input[name='aparelho[marca]'").val(data.marca).prop('readonly', true);
+            $("input[name='aparelho[modelo]'").val(data.marca).prop('readonly', true);
         }).fail(function () {
-            $('#tipo_aparelho').val("").prop('readonly', false);
-            $('#marca').val("").prop('readonly', false);
+            $("input[name='aparelho[tipo_aparelho]'").val("").removeAttr('readonly');
+            $("input[name='aparelho[marca]'").val("").removeAttr('readonly');
+            $("input[name='aparelho[modelo]'").val("").removeAttr('readonly');
         })
 
     });

@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\OrdemServico\Entities\{
-    Solicitante
+    Solicitante,
+    Telefone
 };
 use DB;
 use Hamcrest\Core\HasToString;
@@ -56,6 +57,16 @@ class SolicitanteController extends Controller
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
         }
+    }
+
+    public function show(Request $request){
+        $solicitante = Solicitante::where('identificacao',$request->identificacao)->first();
+        $dados = [
+            'solicitante' => $solicitante,
+            'endereco' => $solicitante->endereco,
+            'telefones' => Telefone::where('solicitante_id',$solicitante->id)->get(),
+        ];
+        return response()->json($dados);
     }
 
 }

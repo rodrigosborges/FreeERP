@@ -7,7 +7,7 @@
                         <i class="material-icons">phone</i>
                     </span>
                 </div>
-                {{Form::text('telefone[][numero]',$value=null,array('id'=>'telefone','class' => 'form-control','placeholder'=>'Telefone'))}}
+                {{Form::text('telefone[][numero]',$value=null,array('id'=>'telefone','class' => 'telefone form-control','placeholder'=>'Telefone'))}}
             </div>
             <a class="btn btn-primary adicionar-telefone  ml-2 text-white">Adicionar</a>
             <a class="remover-telefone btn text-white btn-danger ml-2">Remover</a>

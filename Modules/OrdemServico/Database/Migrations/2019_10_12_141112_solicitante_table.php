@@ -16,6 +16,7 @@ class SolicitanteTable extends Migration
         Schema::create('solicitante', function(Blueprint $table)
 		{
             $table->increments('id');
+            $table->bigInteger('identificacao')->unique();
             $table->string('nome');
             $table->string('email');
             $table->integer('endereco_id')->unsigned();

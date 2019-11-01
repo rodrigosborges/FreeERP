@@ -84,14 +84,17 @@ class OrdemServicoController extends Controller
     {
         DB::beginTransaction();
         try {
-            $aparelho = Aparelho::firstOrCreate($request->aparelho)->id;
+            $aparelho = Aparelho::firstOrCreate(['numero_serie' => $request->aparelho['numero_serie']],$request->aparelho)->id;
             $problema = Problema::firstOrCreate($request->problema)->id;
             $endereco = Endereco::create($request->endereco)->id;
-            $solicitante = Solicitante::firstOrCreate([
-                'id' =>  $request->solicitante['id'],
+            $solicitante = Solicitante::updateOrCreate(
+                ['identificacao' =>  $request->solicitante['id']],
+                [
+                'identificacao' =>  $request->solicitante['id'],
                 'nome' =>  $request->solicitante['nome'],
                 'email' =>  $request->solicitante['email'],
                 'endereco_id' => $endereco
+                
             ]);
             $solicitante->telefones()->createMany($request->telefone);
 
@@ -146,9 +149,9 @@ class OrdemServicoController extends Controller
         DB::beginTransaction();
         try {
             $ordem_servico = OrdemServico::findOrFail($id);
-            $aparelho = Aparelho::firstOrCreate($request->aparelho)->id;
+            $aparelho = Aparelho::firstOrCreate(['numero_serie' => $request->aparelho['numero_serie']],$request->aparelho)->id;
             $problema = Problema::firstOrCreate($request->problema)->id;
-
+    
             $ordem_servico->update(
                 [
                     'aparelho_id' => $aparelho,
@@ -225,4 +228,13 @@ class OrdemServicoController extends Controller
         return redirect()->back()->with('error', 'Você não possui permissão para acessar a pagina!');
     }
 
+    public function showAparelho(Request $request){
+        $dados = Aparelho::where('numero_serie',$request->numero_serie)->firstOrFail();
+        return response()->json($dados);
+    }
+
+    public function showProblemas(){
+        $dados = Problema::all();
+        return response()->json($dados);
+    }
 }

@@ -1,5 +1,9 @@
 $(document).ready(function () {
-
+    $('#cep').mask('00000-000');
+    
+    $(".btn-success").click(function () {
+        $('#cep').unmask();
+    });
 
     //Buscando cidades só daquele estado 
 
@@ -61,4 +65,45 @@ $(document).ready(function () {
         }).fail(function () {
         })
     })
+
+    //Habilitando campos para atualização de solicitante 
+    $("input[name='endereco[cep]'").dblclick(function (){
+        $(this).removeAttr('readonly');
+    });
+
+    $("input[name='endereco[rua]'").dblclick(function (){
+        if($('#cep').val() == ""){
+            $(this).removeAttr('readonly');
+        }
+    });
+
+    $("input[name='endereco[bairro]'").dblclick(function (){
+        if($('#cep').val() == ""){
+            $(this).removeAttr('readonly');
+        }
+    });
+
+    $("#uf").dblclick(function (){
+        if($('#cep').val() == ""){
+            $(this).removeAttr('readonly');
+        }
+    });
+    
+    $("#localidade").dblclick(function (){
+        if($('#cep').val() == ""){
+            $(this).removeAttr('readonly');
+        }
+    });
+
+    $("input[name='endereco[complemento]'").dblclick(function (){
+        if($('#cep').val() == ""){
+            $(this).removeAttr('readonly');
+        }
+    });
+
+    $("input[name='endereco[numero]'").dblclick(function (){
+        $(this).removeAttr('readonly');
+    });
+
+  
 });

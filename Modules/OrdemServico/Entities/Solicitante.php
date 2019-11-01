@@ -8,7 +8,7 @@ class Solicitante extends Model
 {
     public $timestamps = false;
     protected $table = 'solicitante';
-    protected $fillable = array('nome','email','endereco_id');
+    protected $fillable = array('nome','email','endereco_id','identificacao');
 
     //relaçoes
     public function ordens_servico(){

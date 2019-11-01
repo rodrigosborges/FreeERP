@@ -7,7 +7,7 @@ $(document).ready(function () {
     }
 
     //Buscando Titulo de problema 
-    $.getJSON("/ordemservico/problema/showAjax", {}, function () {
+    $.getJSON("/ordemservico/problema/showProblemas", {}, function () {
         console.log("success");
     }).done(function (data) {
         gerarOpcao(data);

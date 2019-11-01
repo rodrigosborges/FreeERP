@@ -29,18 +29,21 @@
                                 <tr>
                                     @foreach($data['row_db'] as $atributo)
                                     <td>
+                                        <!--- Se o atributo for chave estrangeira , puxar o nome ao invés do id -->
                                         @if($atributo == 'solicitante_id')
                                         {{$model->solicitante->nome}}
                                         @elseif($atributo == 'status_id')
                                         {{$model->status->titulo}}
                                         @elseif($atributo == 'problema_id')
                                         {{$model->problema->titulo}}
-                                        @else
-                                        {{ $model->$atributo}}
-                                        @endif
-                                    </td>
-                                    @endforeach
-                                    <td>
+                                        <!--- Mostrar prioridades -->
+                                        @elseif($atributo == 'prioridade')
+                                        @if($model->$atributo == 3)
+                                        <span class="badge badge-success text-white">Baixa</span>
+                                        @elseif($model->$atributo == 2)
+                                        <span class="badge badge-warning text-white">Média</span>
+                                        @elseif($model->$atributo == 1)
+                                        <span class="badge badge-danger text-white">Alta</span @endif @else {{ $model->$atributo}} @endif </td> @endforeach <td>
                                         @foreach($data['acoes'] as $acao)
                                         <a href="{{route($data['route'] . $acao['complemento-route'],$model)}}" class="{{$acao['class']}}">{{$acao['nome']}}</a>
                                         @endforeach

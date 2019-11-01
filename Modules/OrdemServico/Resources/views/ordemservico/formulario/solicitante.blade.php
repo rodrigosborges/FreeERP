@@ -11,7 +11,7 @@
                             <i class="material-icons">person</i>
                         </span>
                     </div>
-                    {{Form::text("solicitante[id]",$value=null,array('id'=>'solicitante.id' , 'class' => 'form-control','placeholder'=>'CPF / CNPJ'))}}
+                    {{Form::text("solicitante[id]",$value=null,array('id'=>'solicitante.id' , 'class' => 'identificacao form-control','placeholder'=>'CPF'))}}
                 </div>
             </div>
             <div class="col-md-5 mb-3">
