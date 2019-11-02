@@ -108,6 +108,7 @@ class PagamentoController extends Controller
         DB::beginTransaction();
 
         try {
+
             $pagamento = new Pagamento;
             $funcionario = Funcionario::findOrFail($request->funcionario_id);
             $salario = ($funcionario->cargos->last()->salario);
@@ -239,20 +240,22 @@ class PagamentoController extends Controller
         DB::beginTransaction();
 
         try {
-            $pagamento = Pagamento::findOrFail($id);
-            $funcionario = Funcionario::findOrFail($request->funcionario);
-            
-            $salario = floatval($funcionario->cargos->find($request->cargos)->salario);
-            $salario = str_replace(',', '.', $salario);
-            $salario= number_format($salario, 2, ',', '');
-            $pagamento->valor = $salario;
-            $pagamento = str_replace(',', '.', $pagamento);
 
-            $pagamento->faltas = $request->faltas;
-            $pagamento->horas_extras = $request->horas_extras;
-            $pagamento->adicional_noturno = $request->adicional;
-            $pagamento->tipo_hora_extra = $request->tipo_hora_extra;
+            $pagamento = Pagamento::findOrFail($id);
+            $funcionario = Funcionario::findOrFail($id);
+            $salario = $funcionario->cargos->last()->salario;
+            $salario = str_replace('.', '', $salario);
+            $salario = str_replace(',', '.', $salario);
+
+            //$salario= number_format($salario, 2, ',', '');
+            $pagamento->valor = $salario;
+           // $pagamento = str_replace(',', '.', $pagamento);
+            $faltas = $request->faltas;
+            $horas_extras = $request->horas_extras;
+            $adicional_noturno = $request->adicional;
+            $tipo_hora_extra = $request->tipo_hora_extra;
             $inss = $this->calcularInss($salario);
+            
             if ($request->opcao_pagamento == "2") {
                 $temp = $salario * 0.4;
                 $pagamento->inss = $this->calcularInss($temp);
@@ -310,15 +313,17 @@ class PagamentoController extends Controller
 
 
     public function calcularInss($salario)
-    {
-
+    {  
+        $inss =0;
         if ($salario <= 1751.81) {
-            $inss = ($salario * 8) / 100;
+            $inss = ($salario * 8) /100;
         } else if ($salario > 1751.81) {
             $inss = ($salario * 9) / 100;
         } else {
             $inss = ($salario * 11) / 100;
+            
         }
+
         return $inss;
     }
 

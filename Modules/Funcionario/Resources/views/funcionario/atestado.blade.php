@@ -20,10 +20,9 @@
                 <label for="">Motivo da mudança de situação:</label>
                 <div class="input-group">
                     
-                    <select name="situacao" class="form-control">
-                    
-                    <option value="previdencia">Afastado Previdência</option>
-                    <option value="acidente">Afastado Acidente de Trabalho</option>
+                <select name="situacao" class="form-control">
+                    <option value="previdencia">Previdência</option>
+                    <option value="acidente">Acidente de Trabalho</option>
                 </select>
             </div>
         </div>
