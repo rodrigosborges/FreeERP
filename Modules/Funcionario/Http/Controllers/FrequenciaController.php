@@ -162,9 +162,25 @@ class FrequenciaController extends Controller{
 
             $dateEn = date('Y-m-d H:i:s');
 
+            $date = date('Y-m-d');
+
             $dateBr = date('d/m/Y H:i:s');
 
             $funcionario = Funcionario::findOrFail($id);
+
+            if($funcionario->ferias()->where('data_inicio', '<=', $date)->where('data_fim', '>=', $date)->count() > 0){
+                return json_encode([
+                    'horario'   => $dateBr,
+                    'mensagem'  => "Não foi possível registrar a entrada.<br>Funcionário se encontra de férias.",
+                ]);
+            }
+
+            if($funcionario->atestados()->where('data_inicio', '<=', $date)->where('data_fim', '>=', $date)->count() > 0){
+                return json_encode([
+                    'horario'   => $dateBr,
+                    'mensagem'  => "Não foi possível registrar a entrada.<br>Funcionário se encontra de atestado.",
+                ]);
+            }
             
             $mensagem = "Entrada registrada";
 

@@ -45,7 +45,7 @@ class Funcionario extends Model {
         return $this->hasMany('Modules\Funcionario\Entities\ControleFerias');
     }
 
-    public function Atestado(){
+    public function atestados(){
         return $this->hasMany('Modules\Funcionario\Entities\Atestado');
     }
 
