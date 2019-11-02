@@ -29,7 +29,7 @@
             @forelse($eventos as $evento)
                 <tr>
                     <th scope="row">{{$evento->id}}</th>
-                    <td><a href="{{route('eventos.editar', $evento->id)}}">{{$evento->titulo}}</a></td>
+                    <td><a href="{{route('eventos.editar', $evento->id)}}" @if($evento->data_fim->lessThan(\Carbon\Carbon::now())) style="text-decoration: line-through" @endif>{{$evento->titulo}}</a></td>
                     @if($evento->dia_todo == true)
                         <td>{{ \Carbon\Carbon::parse($evento->data_inicio)->format('d/m/Y')}} até
                             {{ \Carbon\Carbon::parse($evento->data_fim)->format('d/m/Y')}}

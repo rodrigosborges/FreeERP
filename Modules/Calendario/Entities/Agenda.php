@@ -39,7 +39,8 @@ class Agenda extends Model
                'agenda' => 'agenda' . $this->id,
                'className' => 'agenda' . $this->id,
                'descricao' => $evento->nota,
-               'allDay' => $evento->dia_todo
+               'allDay' => $evento->dia_todo,
+               'usuario' => $this->funcionario->user->id
             ]);
         }
         return $eventos;

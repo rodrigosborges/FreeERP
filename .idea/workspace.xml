@@ -3,11 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="b84905e5-ba51-4cac-9254-655e0db8a3b8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/FuncionarioTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/FuncionarioTableSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/UserTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/UserTableSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Convite.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Convite.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar-editar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar-editar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -263,7 +268,9 @@
       <workItem from="1571332639105" duration="1745000" />
       <workItem from="1571353084238" duration="19763000" />
       <workItem from="1572386788860" duration="5342000" />
-      <workItem from="1572456398845" duration="13818000" />
+      <workItem from="1572456398845" duration="13895000" />
+      <workItem from="1572552200005" duration="1100000" />
+      <workItem from="1572624823401" duration="11892000" />
     </task>
     <task id="LOCAL-00001" summary="Calendário exibindo todos eventos do usuário e algumas refatorações">
       <created>1562796695507</created>
@@ -468,7 +475,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572474591156</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Adicionado botão para excluir evento na edição">
+      <created>1572476891053</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1572476891053</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -504,7 +518,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Cor da agenda alterado para model e e alguns validations" />
     <MESSAGE value="Criada view index para agendas" />
     <MESSAGE value="Filtro de agendas na visão geral" />
     <MESSAGE value="Tooltip nos eventos na visão geral quando há descrição" />
@@ -529,7 +542,8 @@
     <MESSAGE value="Recebendo notificação via Pusher" />
     <MESSAGE value="Enviando notificação via e-mail ao ser convidado para evento" />
     <MESSAGE value="Criado command para verificar e enviar as notificações automaticamente" />
-    <option name="LAST_COMMIT_MESSAGE" value="Criado command para verificar e enviar as notificações automaticamente" />
+    <MESSAGE value="Adicionado botão para excluir evento na edição" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionado botão para excluir evento na edição" />
   </component>
   <component name="masterDetails">
     <states>

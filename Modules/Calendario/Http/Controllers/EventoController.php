@@ -6,6 +6,7 @@ namespace Modules\Calendario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Modules\Calendario\Entities\Agenda;
 use Modules\Calendario\Entities\Convite;
@@ -27,7 +28,7 @@ class EventoController extends Controller
     public function eventos()
     {
         $eventos = [];
-        $funcionario = Funcionario::find(1);
+        $funcionario = Funcionario::where('user_id', Auth::id())->first();
         $agendas = $funcionario->agendas;
         foreach ($agendas as $agenda) {
             $eventos = array_merge($eventos, $agenda->eventos_json);
@@ -38,6 +39,11 @@ class EventoController extends Controller
             if($compartilhamento->aprovacao && $compartilhamento->agenda->funcionario->id != $funcionario->id){
                 $eventos = array_merge($eventos, $compartilhamento->agenda->eventos_json);
             }
+        }
+
+        $convites = Convite::where('funcionario_id', $funcionario->id)->where('status', true)->get();
+        foreach ($convites as $convite){
+            array_push($eventos, $convite->evento_json);
         }
 
         return $eventos;
@@ -97,8 +103,6 @@ class EventoController extends Controller
             $evento->data_fim = $this->formatar_data($request->eventoDataFim);
             $evento->dia_todo = $request->eventoDiaTodo;
             $evento->nota = $request->eventoNota;
-            $agenda = Agenda::find($request->eventoAgenda);
-            $evento->agenda()->associate($agenda);
             if ($evento->notificacao) {
                 if($request->eventoNotificacaoTempo && $request->eventoNotificacaoPeriodo){
                     $evento->notificacao->tempo = $request->eventoNotificacaoTempo;

@@ -38,18 +38,19 @@ class AgendaController extends Controller
     public function salvar(AgendaSalvarRequest $request)
     {
         try {
+            $funcionario = Funcionario::where('user_id', Auth::id())->first();
             $agenda = new Agenda();
             $agenda->titulo = $request->agendaNome;
             $agenda->descricao = $request->agendaDescricao;
             $agenda->cor()->associate(Cor::find($request->agendaCor));
             //TODO Incluir o usuário logado
-            $agenda->funcionario()->associate(Funcionario::find(1));
+            $agenda->funcionario()->associate($funcionario);
             $agenda->save();
             if ($request->agendaCompartilhamento) {
                 foreach ($request->agendaCompartilhamento as $setor_id) {
                     $compartilhamento = new Compartilhamento();
                     $compartilhamento->setor()->associate(Setor::find($setor_id));
-                    $compartilhamento->funcionario()->associate(Funcionario::where('user_id', Auth::id())->first());
+                    $compartilhamento->funcionario()->associate($funcionario);
                     $agenda->compartilhamentos()->save($compartilhamento);
                 }
             }

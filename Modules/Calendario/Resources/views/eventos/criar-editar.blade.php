@@ -96,7 +96,9 @@
                                 @endif
                             @endforeach
                         @endif
-                        <option value="{{$funcionario->id}}" {{$selected}}>{{$funcionario->nome}}</option>
+                        @if($funcionario->id != auth()->id())
+                            <option value="{{$funcionario->id}}" {{$selected}}>{{$funcionario->nome}}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>

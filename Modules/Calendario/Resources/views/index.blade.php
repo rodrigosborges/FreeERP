@@ -135,14 +135,12 @@
                 businessHours: true, // display business hours
                 events: '{{route('eventos.index')}}',
                 eventRender: function (info) {
+
                     var agenda = info.event.extendedProps.agenda;
                     var descricao = info.event.extendedProps.descricao;
+                    var usuario = info.event.extendedProps.usuario;
                     var duplicar = '{{route('eventos.duplicar', 'id')}}';
                     duplicar = duplicar.replace('id', info.event.id);
-
-                    if (!$('#' + agenda).prop('checked')) {
-                        $(info.el).hide();
-                    }
 
                     if (descricao != null) {
                         $(info.el).tooltip({
@@ -151,7 +149,18 @@
                         $(info.el).find('.fc-title').append('<i style="font-size: inherit; line-height: inherit" class="material-icons float-right">info</i>');
                     }
 
-                    $(info.el).find('.fc-title').append('<a href="' + duplicar + '" class="float-right text-white"><i style="font-size: inherit; line-height: inherit" class="material-icons">file_copy</i></a>');
+                    if('{{auth()->id()}}' == usuario)
+                        $(info.el).find('.fc-title').append('<a href="' + duplicar + '" class="float-right text-white"><i style="font-size: inherit; line-height: inherit" class="material-icons">file_copy</i></a>');
+
+                    if(info.event.end){
+                        if(info.event.end.getTime() < Date.now()){
+                            $(info.el).css('text-decoration', 'line-through');
+                        }
+                    } else {
+                        if(info.event.start.getTime() < Date.now()){
+                            $(info.el).css('text-decoration', 'line-through');
+                        }
+                    }
                 },
                 dateClick: function (info) {
                     if (Object.keys(agendas).length <= 2) {
@@ -172,6 +181,11 @@
                     }
                 },
                 eventClick: function (info) {
+                    var usuario = info.event.extendedProps.usuario;
+                    if('{{auth()->id()}}' != usuario){
+                        alert('Evento não é seu!');
+                        return null;
+                    }
                     var url = '{{route('eventos.editar', 'id')}}';
                     url = url.replace('id', info.event.id);
                     window.location.href = url;
