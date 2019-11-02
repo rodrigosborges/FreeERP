@@ -11,7 +11,7 @@
                             <i class="material-icons">person</i>
                         </span>
                     </div>
-                    {{Form::text("solicitante[id]",$value=null,array('id'=>'solicitante.id' , 'class' => 'identificacao form-control','placeholder'=>'CPF'))}}
+                    {{Form::text("solicitante[id]",$value=null,array('id'=>'solicitante.id' , 'class' => 'identificacao form-control','placeholder'=>'CPF/CNPJ'))}}
                 </div>
             </div>
             <div class="col-md-5 mb-3">
@@ -22,7 +22,7 @@
                             <i class="material-icons">person</i>
                         </span>
                     </div>
-                    {{Form::text("solicitante[nome]",$value=null,array('id'=>'solicitante.nome','class' => 'form-control','placeholder'=>'Nome Completo'))}}
+                    {{Form::text("solicitante[nome]",$value=null,array('onkeyup' => 'somenteLetras(this)','id'=>'solicitante.nome','class' => 'form-control','placeholder'=>'Nome Completo'))}}
                 </div>
             </div>
     

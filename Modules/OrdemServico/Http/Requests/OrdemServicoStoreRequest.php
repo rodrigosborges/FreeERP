@@ -14,9 +14,9 @@ class OrdemServicoStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            "solicitante.id" => 'required|max:14',
+            "solicitante.id" => 'required|cpf_cnpj|unique:solicitante,identificacao,' . $this->solicitante['id'] .',identificacao',
             "solicitante.nome" => 'required',
-            "solicitante.email" => 'required|email|unique:solicitante,email',
+            "solicitante.email" => 'required|email|unique:solicitante,email,' . $this->solicitante['id'] .',identificacao',
             "endereco.cep" => 'max:9',
             "endereco.rua" => 'required',
             "endereco.bairro" => 'required',

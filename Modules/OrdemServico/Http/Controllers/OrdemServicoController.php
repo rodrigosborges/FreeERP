@@ -84,19 +84,23 @@ class OrdemServicoController extends Controller
     {
         DB::beginTransaction();
         try {
-            $aparelho = Aparelho::firstOrCreate(['numero_serie' => $request->aparelho['numero_serie']],$request->aparelho)->id;
+            $aparelho = Aparelho::firstOrCreate(['numero_serie' => $request->aparelho['numero_serie']], $request->aparelho)->id;
             $problema = Problema::firstOrCreate($request->problema)->id;
             $endereco = Endereco::create($request->endereco)->id;
             $solicitante = Solicitante::updateOrCreate(
                 ['identificacao' =>  $request->solicitante['id']],
                 [
-                'identificacao' =>  $request->solicitante['id'],
-                'nome' =>  $request->solicitante['nome'],
-                'email' =>  $request->solicitante['email'],
-                'endereco_id' => $endereco
-                
-            ]);
+                    'identificacao' =>  $request->solicitante['id'],
+                    'nome' =>  $request->solicitante['nome'],
+                    'email' =>  $request->solicitante['email'],
+                    'endereco_id' => $endereco
+
+                ]
+            );
+            DB::table('telefone')->where('solicitante_id', $solicitante->id)->delete();
+
             $solicitante->telefones()->createMany($request->telefone);
+
 
             $ordem_servico = OrdemServico::create(
                 [
@@ -149,9 +153,9 @@ class OrdemServicoController extends Controller
         DB::beginTransaction();
         try {
             $ordem_servico = OrdemServico::findOrFail($id);
-            $aparelho = Aparelho::firstOrCreate(['numero_serie' => $request->aparelho['numero_serie']],$request->aparelho)->id;
+            $aparelho = Aparelho::firstOrCreate(['numero_serie' => $request->aparelho['numero_serie']], $request->aparelho)->id;
             $problema = Problema::firstOrCreate($request->problema)->id;
-    
+
             $ordem_servico->update(
                 [
                     'aparelho_id' => $aparelho,
@@ -213,8 +217,8 @@ class OrdemServicoController extends Controller
             $data = [
                 'title' => 'Ordens Finalizadas',
                 'model' => OrdemServico::where('status_id', '=', $idStatusConcluida)
-                ->orWhere('status_id', '=', $idStatusInutilizado)
-                ->get(),
+                    ->orWhere('status_id', '=', $idStatusInutilizado)
+                    ->get(),
                 'thead' => ['Protocolo', 'Solicitante', 'Status', 'Prioridade'],
                 'row_db' => ['protocolo', 'solicitante_id', 'status_id', 'prioridade'],
                 'create' => false,
@@ -228,12 +232,14 @@ class OrdemServicoController extends Controller
         return redirect()->back()->with('error', 'Você não possui permissão para acessar a pagina!');
     }
 
-    public function showAparelho(Request $request){
-        $dados = Aparelho::where('numero_serie',$request->numero_serie)->firstOrFail();
+    public function showAparelho(Request $request)
+    {
+        $dados = Aparelho::where('numero_serie', $request->numero_serie)->firstOrFail();
         return response()->json($dados);
     }
 
-    public function showProblemas(){
+    public function showProblemas()
+    {
         $dados = Problema::all();
         return response()->json($dados);
     }

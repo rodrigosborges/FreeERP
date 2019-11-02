@@ -1,10 +1,25 @@
 $(document).ready(function () {
-    $('.identificacao').mask('000.000.000-00');
-    
+
+    // Quando o formulario é retornado com algum erro definir mascara de cpf ou cpnj 
+    if($(".identificacao").val().length == 14){
+        $(".identificacao").mask('00.000.000/0000-00');
+    }
+    else{
+        $(".identificacao").mask('000.000.000-00#');
+    }
+
+    //Alterar mascara de cpf para cnpj se for necessário
+    $('.identificacao').keyup(function () {
+        if( $(this).val().length > 15 ) {
+            $(this).mask('00.000.000/0000-00');
+        }
+    });
+
     $(".btn-success").click(function () {
         $('.identificacao').unmask();
     });
 
+    //função que habilita edição para campos que poderão ser editados 
     $("input[name='solicitante[email]'").dblclick(function () {
         $(this).removeAttr('readonly');
     });
@@ -24,12 +39,12 @@ $(document).ready(function () {
             $("input[name='endereco[numero]'").val(data.endereco.numero).prop('readonly', true);
             $("input[name='endereco[complemento]'").val(data.endereco.complemento).prop('readonly', true);
 
-            $primeiroCampoTel =  $('.telefones').find('.form-inline').first().find('input');
+            $primeiroCampoTel = $('.telefones').find('.form-inline').first().find('input');
             data.telefones.forEach(telefone => {
                 if ($primeiroCampoTel.val() == "") {
                     $('.telefones').find('.form-inline').first().find('input').val(telefone.numero).prop('readonly', true);
                 }
-                else{
+                else {
                     var div = $('.telefones').find('.form-inline').first().clone(true);
                     div.find('input').val('').mask('(99) 99999-9999').val(telefone.numero).prop('readonly', true);
                     $('.telefones').append(div);

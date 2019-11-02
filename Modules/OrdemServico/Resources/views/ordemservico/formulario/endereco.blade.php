@@ -63,7 +63,7 @@
                     <i class="material-icons">location_on</i>
                 </span>
             </div>
-            {{Form::text("endereco[numero]",$value=null,array('id'=>'endereco.numero','class' => 'form-control','placeholder'=>'Numero'))}}
+            {{Form::text("endereco[numero]",$value=null,array('id'=>'endereco.numero','onkeyup' => 'somenteNumeros(this)','class' => 'form-control','placeholder'=>'Numero'))}}
         </div>
     </div>
 

@@ -42,6 +42,7 @@
 @section('js')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script>
+<script src="{{Module::asset('ordemservico:js/ordemservico/tipocampos.js')}}"></script>
 <script src="{{Module::asset('ordemservico:js/ordemservico/solicitante.js')}}"></script>
 <script src="{{Module::asset('ordemservico:js/ordemservico/aparelho.js')}}"></script>
 <script src="{{Module::asset('ordemservico:js/ordemservico/contato.js')}}"></script>
