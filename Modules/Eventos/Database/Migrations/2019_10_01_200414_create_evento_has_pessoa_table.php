@@ -17,6 +17,7 @@ class CreateEventoHasPessoaTable extends Migration
             $table->integer('evento_id')->unsigned();
             $table->integer('pessoa_id')->unsigned();
             $table->integer('nivel_id')->unsigned();
+            $table->timestamps();
         });
     }
 

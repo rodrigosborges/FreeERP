@@ -17,7 +17,10 @@ class CreatePessoaTable extends Migration
             $table->increments('id');
             $table->string('nome', 80);
             $table->string('email', 80)->unique();
-            $table->string('telefone', 14);
+            $table->string('telefone', 14)->nullable();
+            $table->string('password');
+            $table->string('remember_token')->nullable();
+            $table->timestamps();
         });
     }
 

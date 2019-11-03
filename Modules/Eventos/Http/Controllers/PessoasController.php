@@ -31,12 +31,18 @@ class PessoasController extends Controller
     
     function cadastrar(Request $request)
     {
-        $pessoa = new Pessoa();
-        $pessoa->nome = $request->nome;
-        $pessoa->email = $request->email;
-        $pessoa->telefone = $request->telefone;
-        $pessoa->save();
-        $pessoa->eventos()->attach($request->eventoId);
+        try{
+            $pessoa = new Pessoa();
+            $pessoa->nome = $request->nome;
+            $pessoa->email = $request->email;
+            $pessoa->telefone = $request->telefone;
+            $pessoa->save();
+            $pessoa->eventos()->attach($request->eventoId);
+        } catch (\Exception $e){
+            return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
+                ->with('error', 'Falha ao adicionar ' . $request->nome . ': ' . $e->getMessage());
+        }
+        
         
         return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
             ->with('success', $request->nome . ' adicionado(a) com sucesso.');
@@ -44,8 +50,14 @@ class PessoasController extends Controller
     
     public function editar(Request $request)
     {
-        $pessoa = Pessoa::find($request->id);
-        $pessoa->update(['nome' => $request-> nome, 'email' => $request->email, 'telefone' => $request->telefone]);
+        try{
+            $pessoa = Pessoa::find($request->id);
+            $pessoa->update(['nome' => $request-> nome, 'email' => $request->email, 'telefone' => $request->telefone]);
+        } catch (\Exception $e) {
+            return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
+                ->with('error', 'Falha ao alterar ' . $request->nome . ': ' . $e->getMessage());
+        }
+        
         return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
             ->with('success', $request->nome . ' alterado(a) com sucesso.');
     }
@@ -56,19 +68,25 @@ class PessoasController extends Controller
     */
     public function excluir(Request $request)
     {
-        $pessoa = Pessoa::find($request->id);
-        $pessoa->eventos()->detach($request->eventoId);
+        try{
+            $pessoa = Pessoa::find($request->id);
+            $pessoa->eventos()->detach($request->eventoId);
+        } catch (\Exception $e) {
+            return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
+                ->with('error', 'Falha ao excluir ' . $pessoa->nome . ': ' . $e->getMessage());
+        }
+        
         return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
             ->with('success', $pessoa->nome . ' excluído(a) com sucesso.');
     }
     
-    //FUNÇÃO AINDA NÃO UTILIZADA PARA VERIFICAR NO FORM DO MODAL SE O E-MAIL JÁ FOI CADASTRADO
-    public function verificaEmail(Email $email) //ARRUMAR
+    //VERIFICA SE O E-MAIL JÁ FOI CADASTRADO
+    public function getPessoa($email)
     {
-        $resultado = DB::table('pessoa')
-            ->select('pessoa.id')
+        $pessoa = DB::table('pessoa')
             ->where('pessoa.email', $email)
-            -get();
-        return Response::json($resultado);
+            ->get()
+            ->toArray();
+        return $pessoa;
     }
 }

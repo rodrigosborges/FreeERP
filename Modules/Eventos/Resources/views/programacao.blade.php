@@ -84,16 +84,15 @@
                         <div class="form-group ids">
                             <!-- Passa o id do evento em que a atividade está sendo cadastrada -->
                             <input type="hidden" name="eventoId" value="{{$evento->id}}">
-                            <!-- Passa o id da atividade e do(a) palestrante para editar -->
+                            <!-- Passa o id da atividade para editar -->
                             <input type="hidden" name="id" value="">
-                            <input type="hidden" name="palestrante_id" value="">
                         </div>
                         <div class="form-group">
-                            <label for="nome" class="col-form-label">Nome:</label>
+                            <label for="nome" class="col-form-label">Nome*:</label>
                             <input type="text" class="form-control edit" name="nome" required>
                         </div>
                         <div class="form-group">
-                            <label for="email" class="col-form-label">Tipo:</label>
+                            <label for="email" class="col-form-label">Tipo*:</label>
                             <select class="form-control edit" name="tipo" required>
                                 <option value="" disabled selected>Selecione</option>
                                 <option value="Palesta">Palestra</option>
@@ -109,28 +108,28 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-xs-6 col-sm-5 col-md-5 col-lg-3">
-                                    <label for="data" class="col-form-label">Data:</label>
+                                    <label for="data" class="col-form-label">Data*:</label>
                                     <input type="date" class="form-control edit" name="data" required>
                                 </div>
                                 <div class="col-xs-6 col-sm-5 col-md-5 col-lg-3">
-                                    <label for="horario" class="col-form-label">Horário:</label>
+                                    <label for="horario" class="col-form-label">Horário*:</label>
                                     <input type="time" class="form-control edit" name="horario" required>
                                 </div>
                                 <div class="col-xs-6 col-sm-5 col-md-5 col-lg-3">
-                                    <label for="duracao" class="col-form-label">Duração:</label>
+                                    <label for="duracao" class="col-form-label">Duração*:</label>
                                     <input type="time" class="form-control edit" name="duracao" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="local" class="col-form-label">Local:</label>
+                            <label for="local" class="col-form-label">Local*:</label>
                             <input type="text" class="form-control edit" name="local" required>
                         </div>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
-                                    <label for="vagas" class="col-form-label">Vagas:</label>
-                                    <input type="number" class="form-control edit" name="vagas" required>
+                                    <label for="vagas" class="col-form-label">Vagas*:</label>
+                                    <input type="number" class="form-control edit" name="vagas" min="1" required>
                                 </div>
                             </div>
                         </div>
@@ -139,9 +138,10 @@
                             <div class="form-group">
                                 <img src="" id="img" alt="Foto" title='Foto'/></br>
                                 <input type='file' class="edit" name="fotoPalestrante" id="fotoPalestrante" accept="image/*" hidden>
+                                <p style="text-align: center; margin-top: -20px; color: gray;">Utilize uma foto quadrada!</p>
                             </div>
-                            <div class="form-group" style="margin-top: -50px;">
-                                <label for="nomePalestrante" class="col-form-label">Nome:</label>
+                            <div class="form-group" style="margin-top: -30px;">
+                                <label for="nomePalestrante" class="col-form-label">Nome*:</label>
                                 <input type="text" class="form-control edit" name="nomePalestrante" required>
                             </div>
                             <div class="form-group">
@@ -284,8 +284,20 @@
         function excluir (eventoId, id, nome) {
             $('#modalExcluirAtividade [name=eventoId]').val(eventoId);
             $('#modalExcluirAtividade [name=id]').val(id);
-            $('#modalExcluirAtividade p').text('Tem certeza que deseja excluir ' + nome + ' ?'); 
+            $('#modalExcluirAtividade p').text('Tem certeza que deseja excluir ' + nome + '?'); 
         }
+        
+        //VERIFICA SE A DATA DIGITADA É MENOR QUE A DATA ATUAL
+        $('.modal-body [name=data]').change(function(event) { 
+            var dataAtividade = $('.modal-body [name=data]').val();
+            $.get( "/eventos/get-data/", function( data ) {
+                if (dataAtividade < data){
+                    alert('Digite uma data válida');
+                }else{
+                    alert('ok');
+                }
+            });
+        });
     </script>
     
     <!-- Preview da imagem -->

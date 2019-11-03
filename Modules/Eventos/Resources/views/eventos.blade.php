@@ -2,6 +2,9 @@
 @section('title', 'Eventos')
 
 @section('css')
+    <!-- CHOSEN / MULTISELECT -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet" type="text/css">
+
     <style>
         .quebraDeTexto{
             white-space: nowrap;
@@ -24,7 +27,7 @@
         <h1 style="text-align: center;">Eventos</h1>
     </div>
     <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" align="right">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCadastrarEvento">Adicionar</button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEvento" onclick="cadastrar()">Adicionar</button>
     </div>
     <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px;">
         <table id="eventos" class="table table-striped">
@@ -45,25 +48,13 @@
                         </td>
                         <td class="text-center align-middle">{{$evento->local}}</td>
                         <td class="text-center align-middle quebraDeTexto">
-                            <button class="btn btn-xs" title="Programação">
-                                <a href="{{URL::route('programacao.exibir', $evento->id)}}">
-                                    <i class="material-icons">schedule</i> 
-                                </a>
-                            </button>
-                            <button class="btn btn-xs" title="Visualizar / Editar" data-toggle="modal" data-target="#modalVisualizarEvento"
-                                data-id="{{$evento->id}}" data-nome="{{$evento->nome}}" data-local="{{$evento->local}}"
-                                data-estado="{{$evento->estado_id}}" data-idcidade="{{$evento->cidade_id}}"
-                                data-datainicio="{{$evento->dataInicio}}" data-datafim="{{$evento->dataFim}}"
-                                data-descricao="{{$evento->descricao}}"
-                                data-imagem="http://127.0.0.1:8000/storage/eventos/{{$evento->imagem}}" data-empresa="{{$evento->empresa}}"
-                                data-email="{{$evento->email}}"
-                                data-telefone="{{$evento->telefone}}">
+                            <a class="btn btn-xs btn-secondary text-white" href="{{URL::route('programacao.exibir', $evento->id)}}">
+                                <i class="material-icons">schedule</i> 
+                            </a>
+                            <button class="btn btn-xs btn-secondary" title="Visualizar / Editar" data-toggle="modal" data-target="#modalEvento" onclick="visualizar('{{$evento->id}}')">
                                 <i class="material-icons">search</i>
                             </button>
-                            <button class="btn btn-xs" title="Excluir" data-toggle="modal" data-target="#modalExcluirEvento"
-                                data-id="{{$evento->id}}" data-nome="{{$evento->nome}}">
-                                <i class="material-icons">delete</i>
-                            </button>
+                            <button class="btn btn-xs btn-secondary" title="Excluir" data-toggle="modal" data-target="#modalExcluirEvento" onclick="excluir('{{$evento->id}}', '{{$evento->nome}}')"><i class="material-icons">delete</i></button>
                         </td> 
                     </tr>
                 @endforeach
@@ -71,29 +62,29 @@
         </table>
     </div>
 
-    <!-- Modal para cadastrar evento -->
-    <form method="post" action="{{route('eventos.cadastrar')}}" enctype="multipart/form-data">
+    <!-- Modal de evento -->
+    <form method="" action="" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <div class="modal fade" id="modalCadastrarEvento" tabindex="-1" role="dialog" aria-labelledby="modalCadastrarEvento" aria-hidden="true">
+        <div class="modal fade" id="modalEvento" tabindex="-1" role="dialog" aria-labelledby="modalEvento" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Cadastrar Evento</h5>
+                        <h5 class="modal-title" id="tituloModal"></h5>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="nome" class="col-form-label">Nome:</label>
-                            <input type="text" class="form-control" name="nome" required>
+                            <label for="nome" class="col-form-label">Nome*:</label>
+                            <input type="text" class="form-control edit" name="nome" required>
                         </div>
                         <div class="form-group">
-                            <label for="local" class="col-form-label">Local:</label>
-                            <input type="text" class="form-control" name="local" required>
+                            <label for="local" class="col-form-label">Local*:</label>
+                            <input type="text" class="form-control edit" name="local" required>
                         </div>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
-                                    <label for="estado" class="col-form-label">Estado:</label>
-                                    <select class="form-control" name="estado" id="estado" required>
+                                    <label for="estado" class="col-form-label">Estado*:</label>
+                                    <select class="form-control edit" name="estado" required>
                                         <option value="" disabled selected>Selecione</option>
                                         @foreach ($estados as $estado)
                                             <option value="{{$estado->id}}">{{$estado->uf}}</option>
@@ -101,137 +92,63 @@
                                     </select>
                                 </div>
                                 <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
-                                    <label for="cidade" class="col-form-label">Cidade:</label>
-                                    <select class="form-control" name="cidade" id="cidade" required>
-                                        
-                                    </select>
+                                    <label for="cidade" class="col-form-label">Cidade*:</label>
+                                    <select class="form-control edit" name="cidade" required></select>
                                 </div>
                             </div>
                         </div>                        
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-xs-6 col-sm-6 col-md-5 col-lg-3">
-                                    <label for="dataInicio" class="col-form-label">Data Início:</label>
-                                    <input type="date" class="form-control" name="dataInicio" required>
+                                    <label for="dataInicio" class="col-form-label">Data Início*:</label>
+                                    <input type="date" class="form-control edit" name="dataInicio" required>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-5 col-lg-3">
-                                    <label for="dataFim" class="col-form-label">Data Fim:</label>
-                                    <input type="date" class="form-control" name="dataFim" required>
+                                    <label for="dataFim" class="col-form-label">Data Fim*:</label>
+                                    <input type="date" class="form-control edit" name="dataFim" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="descricao" class="col-form-label">Descrição:</label>
-                            <textarea class="form-control" name="descricao" rows="15" required></textarea>
+                            <label for="descricao" class="col-form-label">Descrição*:</label>
+                            <textarea class="form-control edit" name="descricao" rows="15" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="imagem" class="col-form-label">Imagem:</label>
-                            <img src="http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png" class="img" alt="Imagem evento" title='Imagem evento'/></br>
-                            <input type='file' class="imgEvento" name="imgEvento" accept="image/*">
+                            <img src="" class="img" alt="Imagem evento" title='Imagem evento'/></br>
+                            <input type='file' class="imgEvento edit" name="imgEvento" accept="image/*">
                         </div>
                         <div class="form-group">
-                            <label for="empresa" class="col-form-label">Empresa/Instituição:</label>
-                            <input type="text" class="form-control" name="empresa" required>
+                            <label for="empresa" class="col-form-label">Empresa/Instituição*:</label>
+                            <input type="text" class="form-control edit" name="empresa" required>
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-form-label">E-mail:</label>
-                            <input type="text" class="form-control" name="email">
+                            <input type="text" class="form-control edit" name="email">
                         </div>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
                                     <label for="telefone" class="col-form-label">Telefone:</label>
-                                    <input type="text" class="form-control" name="telefone" id="telefone">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    
-    <!-- Modal para visualizar e/ou editar evento -->
-    <form method="post" action="{{route('eventos.editar')}}" enctype="multipart/form-data">
-        {{ csrf_field() }}
-        <div class="modal fade" id="modalVisualizarEvento" tabindex="-1" role="dialog" aria-labelledby="modalVisualizarEvento" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <!-- Passa o id do evento -->
-                        <div class="form-group">
-                            <input type="hidden" name="id" id="id">
-                        </div>
-                        <div class="form-group">
-                            <img src=" " class="img" alt="Imagem evento" title='Imagem evento'/></br>
-                            <input type='file' class="imgEvento" name="imgEvento" accept="image/*">
-                        </div>
-                        <div class="form-group">
-                            <label for="nome" class="col-form-label">Nome:</label>
-                            <input type="text" class="form-control edit" id="nome" name="nome" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="local" class="col-form-label">Local:</label>
-                            <input type="text" class="form-control edit" id="local" name="local" disabled>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
-                                    <label for="estado" class="col-form-label">Estado:</label>
-                                    <select class="form-control edit" name="estado" id="estado" disabled>
-                                        @foreach ($estados as $estado)
-                                            <option value="{{$estado->id}}">{{$estado->uf}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
-                                    <label for="cidade" class="col-form-label">Cidade:</label>
-                                    <select class="form-control edit" name="cidade" id="cidade" disabled>
-                                    </select>
+                                    <input type="text" class="form-control edit" name="telefone">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                    <label for="data_inicio" class="col-form-label">Data Início:</label>
-                                    <input type="date" class="form-control edit" id="dataInicio" name="dataInicio" disabled>
-                                </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                    <label for="data_fim" class="col-form-label">Data Fim:</label>
-                                    <input type="date" class="form-control edit" id="dataFim" name="dataFim" disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="descricao" class="col-form-label">Descrição:</label>
-                            <textarea class="form-control edit" id="descricao" name="descricao" rows="15" disabled></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="empresa" class="col-form-label">Empresa/Instituição:</label>
-                            <input type="text" class="form-control edit" id="empresa" name="empresa" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="col-form-label">E-mail:</label>
-                            <input type="text" class="form-control edit" id="email" name="email" disabled>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                    <label for="telefone" class="col-form-label">Telefone:</label>
-                                    <input type="text" class="form-control edit" id="telefone" name="telefone" disabled>
-                                </div>
-                            </div>
+                            <label for="organizador" class="col-form-label">Organizador(es):</label>
+                            <select class="chosen-select form-control" id="organizador" name="organizador[]" multiple>
+                                @foreach($pessoas as $pessoa)
+                                    @if(!$pessoa->id == auth::id())
+                                        <option value="{{$pessoa->id}}">{{$pessoa->nome}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id="btnEditar" onclick="editar()">Editar</button>
-                        <button type="button" class="btn btn-secondary" id="btnFechar" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary"id="btnSalvar">Salvar</button>
+                        <button type="button" class="btn btn-secondary" id="btnFechar" data-dismiss="modal"></button>
+                        <button type="submit" class="btn btn-primary" id="btnSalvar">Salvar</button>
                     </div>
                 </div>
             </div>
@@ -264,7 +181,10 @@
 @endsection
 
 @section('js')
-    <!-- DataTables -->
+    <!-- CHOSEN / MULTISELECT -->
+    <script src="https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.jquery.min.js"></script>
+    
+    <!-- DataTables e Chosen -->
     <script>
         $(function() {
             $('#eventos').DataTable({
@@ -288,65 +208,80 @@
     
     <!-- Modal -->
     <script>
-        $('#modalCadastrarEvento').on('show.bs.modal', function() {
-            $("#estado").prop('selectedIndex',0);
-            $("#cidade").html('<option value="" disabled selected>Selecione o estado</option>');
+        
+        $('#modalEvento').on('show.bs.modal', function (){
+            console.log('abriu');
+            $(".chosen-select").chosen({width: "inherit"});
         });
         
-        $('#modalVisualizarEvento').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
+        function cadastrar(){
+            $('form').attr('method', 'POST');    
+            $('form').attr('action', '{{route('eventos.cadastrar')}}');
+            $('.edit').val('');
+            var input = document.getElementsByClassName('edit');
+            for (var i=0; i<(input.length); i++){
+                input[i].disabled = false;
+            }            
             
-            //RECEBE VALORES DOS ATRIBUTOS DATA
-            var imagem = button.data('imagem');
-            var id = button.data('id');
-            var nome = button.data('nome');
-            var local = button.data('local');
-            var estado = button.data('estado');
-            var idcidade = button.data('idcidade');
-            var datainicio = button.data('datainicio');
-            var datafim = button.data('datafim');
-            var descricao = button.data('descricao');
-            var empresa = button.data('empresa');
-            var email = button.data('email');
-            var telefone = button.data('telefone'); 
+            $('.modal-header #tituloModal').html('Cadastrar evento');
+            $('.modal-body [name=estado]').prop('selectedIndex',0);
+            $('.modal-body [name=cidade]').html('<option value="" disabled selected>Selecione o estado</option>');
+            $('.modal-body .img').attr("src", "http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png");
             
-            //ATUALIZA O CONTEÚDO DO MODAL
-            var modal = $(this);
+            //EDITA OS BOTÕES
+            $('.modal-footer #btnEditar').hide();
+            $('.modal-footer #btnSalvar').show().html('Salvar');
+            $('.modal-footer #btnFechar').html('Fechar');
             
-            $('.modal-body .imgEvento').hide(); //ESCONDE O INPUT DA IMAGEM
-            $('.modal-footer #btnSalvar').hide(); //ESCONDE O BOTÃO SALVAR
             
-            if(imagem !== 'http://127.0.0.1:8000/storage/eventos/'){
-                modal.find('.modal-body .img').attr("src", imagem);
-            } else {
-                modal.find('.modal-body .img').attr("src", 'http://127.0.0.1:8000/storage/eventos/default.png');
-            }
-          
-            modal.find('.modal-body #id').val(id);
-            modal.find('.modal-body #nome').val(nome);
-            modal.find('.modal-body #local').val(local);
-            modal.find('.modal-body #estado').val(estado);
+        }
+        
+        function visualizar(idevento){
+            var input = document.getElementsByClassName('edit');
+            for (var i=0; i<(input.length); i++){
+                input[i].disabled = true;
+            }            
             
-            //POPULA O SELECT DE CIDADES
-            buscarCidades(estado, idcidade);
+            $('.modal-header #tituloModal').html('Visualizar evento');
             
-            modal.find('.modal-body #dataInicio').val(datainicio);
-            modal.find('.modal-body #dataFim').val(datafim);
-            modal.find('.modal-body #descricao').val(descricao);
-            modal.find('.modal-body #empresa').val(empresa);
-            modal.find('.modal-body #email').val(email);
-            modal.find('.modal-body #telefone').val(telefone);
-        });
+            //EDITA OS BOTÕES
+            $('.modal-footer #btnEditar').show();
+            $('.modal-footer #btnSalvar').hide();
+            $('.modal-footer #btnFechar').html('Cancelar');
+            
+            $.get('/eventos/get-evento/' + idevento, function (evento){
+                $.each(evento, function (index, value){
+                    $('.modal-body [name=id]').val(idevento);
+                    $('.modal-body [name=nome]').val(value.nome);
+                    $('.modal-body [name=local]').val(value.local);
+                    $('.modal-body [name=estado]').val(value.estado_id);
+                    buscarCidades(value.estado_id, value.cidade_id); //POPULA O SELECT DE CIDADES
+                    $('.modal-body [name=dataInicio]').val(value.dataInicio);
+                    $('.modal-body [name=dataFim]').val(value.dataFim);
+                    $('.modal-body [name=descricao]').val(value.descricao);
+                    $('.modal-body [name=empresa]').val(value.empresa);
+                    $('.modal-body [name=email]').val(value.email);
+                    $('.modal-body [name=telefone]').val(value.telefone);
+                    
+                    if(value.imagem !== null & value.imagem !== ""){
+                        $('.modal-body .img').attr("src", "http://127.0.0.1:8000/storage/eventos/" + value.imagem);
+                    }else{
+                        $('.modal-body .img').attr("src", 'http://127.0.0.1:8000/storage/eventos/default.png');
+                    }
+                });
+            });
+        }
         
         //LIBERA OS CAMPOS PARA EDIÇÃO
         function editar() {
+            $('form').attr('method', 'POST');    
+            $('form').attr('action', '{{route('eventos.editar')}}');
+            
             var input = document.getElementsByClassName('edit');
             
             for (var i=0; i<(input.length); i++) {
                 input[i].disabled = false;
             }
-            
-            $('.modal-body .imgEvento').show(); //EXIBE O INPUT DA IMAGEM
             
             //EDITA OS BOTÕES
             $('.modal-footer #btnEditar').hide();
@@ -354,13 +289,24 @@
             $('.modal-footer #btnSalvar').show();
         }
         
-        $('#modalExcluirEvento').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var id = button.data('id');
-            var nome = button.data('nome');
-            var modal = $(this);
-            modal.find('.modal-body #id').val(id);
-            modal.find('.modal-body p').text('Tem certeza que deseja excluir ' + nome + ' ?'); 
+        $('#modalExcluirEvento').on('show.bs.modal');
+        
+        function excluir (id, nome) {
+            $('#modalExcluirEvento [name=id]').val(id);
+            $('#modalExcluirEvento p').text('Tem certeza que deseja excluir ' + nome + '?'); 
+        }
+        
+        //VERIFICA SE A DATA DIGITADA É MENOR QUE A DATA ATUAL E SE A DATA FIM É MENOR 
+        //QUE A DATA DE INÍCIO DO EVENTO
+        $('.modal-body [name=dataInicio]').change(function(event) { 
+            var datainicio = $('.modal-body [name=dataInicio]').val();
+            $.get( "/eventos/get-data/", function( data ) {
+                if (datainicio < data){
+                    console.log('Digite uma data válida');
+                }else{
+                    console.log('ok');
+                }
+            });
         });
     </script>
     

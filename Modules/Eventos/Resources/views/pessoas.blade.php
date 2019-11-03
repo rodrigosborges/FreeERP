@@ -79,12 +79,12 @@
                                 <input type="hidden" name="eventoId" value="{{$evento->id}}">
                             </div>
                             <div class="form-group">
-                                <label for="nome" class="col-form-label">Nome:</label>
-                                <input type="text" class="form-control" name="nome" required>
-                            </div>
-                            <div class="form-group">
                                 <label for="email" class="col-form-label">E-mail:</label>
                                 <input type="text" class="form-control" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome" class="col-form-label">Nome:</label>
+                                <input type="text" class="form-control" name="nome" required>
                             </div>
                             <div class="form-group">
                                 <label for="telefone" class="col-form-label">Telefone:</label>
@@ -213,6 +213,19 @@
             var modal = $(this);
             modal.find('.modal-body #id').val(id);
             modal.find('.modal-body p').text('Tem certeza que deseja excluir ' + nome + ' desse evento?');
+        });
+        
+        $('.modal-body [name=email]').focusout(function(){
+            var email = $('.modal-body [name=email]').val();
+            $.get('/eventos/pessoas/get-pessoa/' + email, function(pessoa) {
+                $.each(pessoa, function (index, value){
+                    if (pessoa.length === 1){
+                        $('.modal-body [name=nome]').val(value.nome);
+                        $('#modalCadastrarPessoa .modal-body [name=telefone]').val(value.telefone);
+                    }
+                });
+                
+            });
         });
     </script>
     

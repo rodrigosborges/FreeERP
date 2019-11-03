@@ -20,6 +20,10 @@ class Evento extends Model
     {
         return $this->hasMany(Programacao::class);
     }
+    
+    public function permissoes(){
+        return $this->hasMany(Permissao::class);
+    }
 }
 
 

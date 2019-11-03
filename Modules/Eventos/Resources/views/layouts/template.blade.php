@@ -229,7 +229,7 @@
             };
 
             $(function() {
-                $('#telefone').mask(SPMaskBehavior, spOptions);
+                $('[name=telefone]').mask(SPMaskBehavior, spOptions);
             });
         </script>
         @yield('js')
