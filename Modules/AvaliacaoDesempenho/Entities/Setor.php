@@ -16,7 +16,7 @@ class Setor extends Model
     }
 
     public function funcionarios() {
-        return $this->hasMany('Modules\AvaliacaoDesempenho\Entities\Funcionario', 'funcionario_id', 'id');
+        return $this->hasMany('Modules\AvaliacaoDesempenho\Entities\Funcionario', 'setor_id', 'id');
     }
 
     public function avaliacoes() {

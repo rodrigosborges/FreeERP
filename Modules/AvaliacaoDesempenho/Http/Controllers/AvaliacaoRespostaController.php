@@ -3,6 +3,7 @@
 namespace Modules\AvaliacaoDesempenho\Http\Controllers;
 
 use DB;
+use Mail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -30,7 +31,7 @@ class AvaliacaoRespostaController extends Controller
 
         $input = $request->input('avaliado');
         
-        $avaliador = Avaliador::whereHas('funcionario', function(Builder $query) use($input) {
+        $avaliador = Avaliador::where('token', '!=', null)->where('concluido', 0)->whereHas('funcionario', function(Builder $query) use($input) {
             $query->whereHas('email', function(Builder $query) use($input) {
                 $query->where('email', $input['email']);
             });
@@ -39,7 +40,7 @@ class AvaliacaoRespostaController extends Controller
         if (empty($avaliador)) {
             return back()->with('error', 'Funcionario não encontrado');
         }
-
+        
         if (Carbon::today()->greaterThan($avaliador->validade)) {
             return back()->with('error', 'Seu acesso a esta Avaliação expirou');                             
         }
@@ -128,7 +129,7 @@ class AvaliacaoRespostaController extends Controller
                 ]);
 
                 if ($resultado->id) {
-                    
+                                        
                     $avaliacao = $avaliado->avaliacao;
                     $questoes = $avaliacao->questoes;
                     $avaliador = Avaliador::where('avaliacao_id', $avaliacao->id)->first();
@@ -155,12 +156,13 @@ class AvaliacaoRespostaController extends Controller
                     }
 
                     $funcionarios = $funcionarios->get();
+
+                    $avaliado->update(['concluido' => 1]);
                     
                     if (count($funcionarios) == 0) {
                         $avaliador->update(['token' => null, 'concluido' => 1]);
                         
-                        DB::commit();
-                        return back()->with('success', 'Avaliação Respondida com Sucesso');                 
+                        DB::commit();            
                         return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação Respondida com Sucesso');                 
                     }
                     
@@ -173,20 +175,29 @@ class AvaliacaoRespostaController extends Controller
                     return back()->with('error', 'Algo deu errado');
                 }
             
-            // PROVA PARA AVALIAR FUNCIONARIOS
+            // PROVA PARA AVALIAR GESTORES
             } else {
 
                 $avaliado = Avaliado::where('avaliacao_id', $input['avaliacao_id'])->first();
                 $avaliacao = $avaliado->avaliacao;
                 $avaliador = Avaliador::findOrFail($input['avaliador_id']);
-
+                
                 $resultado = ResultadoGestor::create([
                     'avaliador_id' => $avaliador->id,
                     'avaliado_id' => $avaliado->id, 
                     'respostas' => json_encode($input['questoes'])
-                ]);
-
+                    ]);
+                    
                 if ($resultado->id) {
+
+                    $concluidos = ResultadoGestor::where('avaliado_id', $avaliado->id)->get();
+
+                    $aux = $avaliacao->avaliadores;
+                    
+                    if (count($avaliacao->avaliadores) == count($concluidos)) {
+                        $avaliado->update(['concluido' => 1]);
+                    }
+
                     $avaliador->update(['token' => null, 'concluido' => 1]);
                     
                     DB::commit();
@@ -204,6 +215,41 @@ class AvaliacaoRespostaController extends Controller
 
             return back()->with('error', 'Não foi possível salvar as Respostas');
         }
+    }
 
+    public function recuperar() {
+        return view('avaliacaodesempenho::avaliados/recuperar');        
+    }
+
+    public function reenviar(Request $request) {
+        $input = $request->input('avaliado');
+
+        $avaliador = Avaliador::where('token', '!=', null)->where('concluido', 0)->whereHas('funcionario', function(Builder $query) use($input) {
+            $query->whereHas('email', function(Builder $query) use($input) {
+                $query->where('email', $input['email']);
+            });
+        })->first();
+
+        if (empty($avaliador)) {
+            return back()->with('error', 'Funcionario não encontrado');
+        }
+        
+        if (Carbon::today()->greaterThan($avaliador->validade)) {
+            return back()->with('error', 'Seu acesso a esta Avaliação expirou');                             
+        }
+
+        if ($avaliador->token == null) {
+            return back()->with('success', 'Esta Avaliação foi encerrada');                             
+        }
+
+        $data = [
+            'avaliador' => $avaliador
+        ];
+
+        Mail::send('avaliacaodesempenho::emails/_recuperar', $data, function($message) use($data) {
+            $message->to($data['avaliador']->funcionario->email->email, $data['avaliador']->funcionario->nome)->subject('Recuperação de Senha');
+        });
+
+        print_r($input);exit;
     }
 }

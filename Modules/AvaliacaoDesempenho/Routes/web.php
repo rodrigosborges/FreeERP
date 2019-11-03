@@ -27,6 +27,7 @@ Route::prefix('avaliacaodesempenho')->group(function() {
 
     //AVALIAÇÃO ROUTES
     Route::get('/avaliacao', 'AvaliacaoController@index');
+    Route::get('/avaliacao/{id}/show', 'AvaliacaoController@show');
     Route::get('/avaliacao/create', 'AvaliacaoController@create');
     Route::post('/avaliacao/store', 'AvaliacaoController@store');
     Route::get('/avaliacao/{id}/edit', 'AvaliacaoController@edit');
@@ -36,6 +37,10 @@ Route::prefix('avaliacaodesempenho')->group(function() {
 
     // REALIZAR AVALIAÇÃO ROUTES
     Route::get('/avaliacao/responder', 'AvaliacaoRespostaController@index');
+
+    Route::get('/avaliacao/recuperar', 'AvaliacaoRespostaController@recuperar');
+    Route::post('/avaliacao/reenviar', 'AvaliacaoRespostaController@reenviar');
+    
     Route::post('/avaliacao/responder', 'AvaliacaoRespostaController@responder');
     Route::post('/avaliacao/respostas', 'AvaliacaoRespostaController@resposta');
 

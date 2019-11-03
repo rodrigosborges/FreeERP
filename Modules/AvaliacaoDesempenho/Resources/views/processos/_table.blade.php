@@ -32,7 +32,7 @@
 
             <td class="text-center align-middle">{{ $processo->data_fim }}</td>
     
-            <td class="text-center align-middle">{{ is_null($processo->deleted_at) ? 'Ativado' : 'Desativado' }}</td>
+            <td class="text-center align-middle">{{ $processo->status->nome }}</td>
     
             <td class="text-center align-middle acoes">
     

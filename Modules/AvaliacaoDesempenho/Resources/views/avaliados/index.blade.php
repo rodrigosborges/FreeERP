@@ -16,7 +16,10 @@
 
     <div class="form">
 
-        <p>Digite seu E-mail e Senha</p>
+        <div style="display:flex; justify-content: space-between">
+            <p>Digite seu E-mail e Senha</p>
+            <a href="{{ url('avaliacaodesempenho/avaliacao/recuperar') }}">Reenviar Senha</a>
+        </div>
 
         <form action="{{ url('avaliacaodesempenho/avaliacao/responder') }}" method="POST">
             {{ csrf_field() }}

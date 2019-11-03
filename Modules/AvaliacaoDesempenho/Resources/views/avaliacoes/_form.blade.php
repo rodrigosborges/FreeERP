@@ -59,7 +59,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='avaliacao[data_inicio]' type="date" value="{{ old('avaliacao.data_inicio', isset($data['avaliacao']) ? $data['avaliacao']->data_inicio : '') }}"
+                            <input class="form-control date" name='avaliacao[data_inicio]' type="text" value="{{ old('avaliacao.data_inicio', isset($data['avaliacao']) ? $data['avaliacao']->data_inicio : '') }}"
                                 placeholder="Selecione a data de inicio">
 
                         </div>
@@ -80,7 +80,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='avaliacao[data_fim]' type="date" value="{{ old('avaliacao.data_fim', isset($data['avaliacao']) ? $data['avaliacao']->data_fim : '') }}"
+                            <input class="form-control date" name='avaliacao[data_fim]' type="text" value="{{ old('avaliacao.data_fim', isset($data['avaliacao']) ? $data['avaliacao']->data_fim : '') }}"
                                 placeholder="Selecione a data final">
 
                         </div>
@@ -186,7 +186,7 @@
                         <br>
                         <input type="radio" name='avaliacao[tipo_id]' value='2' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 0 ? 'checked' : '' }}> Avaliar Gestores
                         <br>
-                        <input type="radio" name='avaliacao[tipo_id]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 1 ? 'checked' : '' }}> Avaliar não Gestores
+                        <input type="radio" name='avaliacao[tipo_id]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 1 ? 'checked' : '' }}> Avaliar Funcionários
 
                     </div>
 

@@ -1,0 +1,28 @@
+.card-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.card-body {
+    padding: 20px 35px !important;
+}
+
+.info {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: space-between;
+    padding: 15px;
+    border-radius: 4px;
+    background: rgba(216, 216, 216, 0.404);
+}
+
+.info div {
+    line-height: 10px;
+}
+
+.detalhes {
+    width: 100%;
+    margin: 25px 0;
+}

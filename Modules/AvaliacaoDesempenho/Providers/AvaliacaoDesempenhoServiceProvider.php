@@ -4,6 +4,7 @@ namespace Modules\AvaliacaoDesempenho\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Console\Scheduling\Schedule;
 
 class AvaliacaoDesempenhoServiceProvider extends ServiceProvider
 {
@@ -18,7 +19,13 @@ class AvaliacaoDesempenhoServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->registerFactories();
+        $this->registerCommands();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('cron:avisos')->everyMinute();
+        });
     }
 
     /**
@@ -29,6 +36,15 @@ class AvaliacaoDesempenhoServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->loadHelpers();
+    }
+
+    protected function loadHelpers()
+    {
+        foreach (glob(__DIR__.'/../Helpers/*.php') as $filename)
+        {
+            require_once $filename;
+        }
     }
 
     /**
@@ -92,6 +108,11 @@ class AvaliacaoDesempenhoServiceProvider extends ServiceProvider
         if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(__DIR__ . '/../Database/factories');
         }
+    }
+
+    public function registerCommands()
+    {
+        $this->commands([\Modules\AvaliacaoDesempenho\Console\CronAvisoAvaliacao::class]);
     }
 
     /**

@@ -22,3 +22,8 @@
 .submit-btn {
     margin-top: 10px;
 }
+
+.errors {
+    font-size: 12px;
+    color: rgba(255, 0, 0, 0.938);
+}

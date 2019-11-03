@@ -12,4 +12,8 @@ class Status extends Model
     public function avaliacoes() {
         return $this->hasMany('Modules\AvaliacaoDesempenho\Entities\Avaliacao', 'status_id', 'id');
     }
+
+    public function processos() {
+        return $this->hasMany('Modules\AvaliacaoDesempenho\Entities\Avaliacao', 'status_id', 'id');
+    }
 }

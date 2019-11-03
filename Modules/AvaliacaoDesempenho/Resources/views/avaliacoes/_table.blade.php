@@ -48,6 +48,8 @@
     
             <td class="text-center align-middle acoes">
     
+              <a class="btn btn-info acoes-btn" title="Editar" href="/tcc/public/avaliacaodesempenho/avaliacao/{{ $avaliacao->id }}/show"><i class="material-icons md-14 md-light">edit</i></a>
+
               <a class="btn btn-warning btn-edit acoes-btn {{ !empty($avaliacao->deleted_at) ? 'disabled' : '' }}" title="Editar" href="/tcc/public/avaliacaodesempenho/avaliacao/{{ $avaliacao->id }}/edit"><i class="material-icons md-14 md-light">edit</i></a>
                 
               <form action="{{ url('avaliacaodesempenho/avaliacao', [$avaliacao->id]) }}" id="deleteForm_{{$avaliacao->id}}" method="POST">

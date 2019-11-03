@@ -3,6 +3,7 @@
 namespace Modules\AvaliacaoDesempenho\Http\Controllers;
 
 use DB;
+use Mail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -53,22 +54,67 @@ class AvaliacaoController extends Controller
             'setores' => Setor::all()
         ];
 
+        $avaliacoes = Avaliacao::all();
+
         DB::beginTransaction();
         try {
-            $avaliacoesEmAndamento = Avaliacao::has('avaliados')->whereHas('avaliadores', function(Builder $query) {
-                $query->where('concluido', 0);
-            })->get();
+
+            foreach ($avaliacoes as $i => $avaliacao) {
+
+                if ($avaliacao->tipo->id == 2) {
+                    $definido = 1;
+                    $encerrado = 1;
     
-            $avaliacoesConcluidas = Avaliacao::has('avaliados')->whereHas('avaliadores', function(Builder $query) {
-                $query->where('concluido', 1);
-            })->get();            
-            
-            foreach ($avaliacoesEmAndamento as $key => $avaliacao) {
-                $avaliacao->update(['status_id' => 2]);
-            }
+                    foreach ($avaliacao->avaliadores as $j => $avaliador) {
+                        
+                        if ($avaliador->concluido == 1) {
+                            $definido = 0;
+                        }
+                        
+                        if ($avaliador->concluido == 0) {
+                            $encerrado = 0;
+                        }
+                    }
     
-            foreach ($avaliacoesConcluidas as $key => $avaliacao) {
-                $avaliacao->update(['status_id' => 3]);
+                    if ($encerrado == 1) {
+                        $avaliacao->update(['status_id' => 3]);
+                    }
+    
+                    if ($definido == 1) {
+                        $avaliacao->update(['status_id' => 1]);
+                    }
+    
+                    if ($definido == 0 && $encerrado == 0 ) {
+                        $avaliacao->update(['status_id' => 2]);
+                    }
+
+                } else if ($avaliacao->tipo->id == 1) {
+                    $definido = 1;
+                    $encerrado = 1;
+    
+                    foreach ($avaliacao->avaliados as $j => $avaliado) {
+                        
+                        if ($avaliado->concluido == 1) {
+                            $definido = 0;
+                        }
+                        
+                        if ($avaliado->concluido == 0) {
+                            $encerrado = 0;
+                        }
+                    }
+    
+                    if ($encerrado == 1) {
+                        $avaliacao->update(['status_id' => 3]);
+                    }
+    
+                    if ($definido == 1) {
+                        $avaliacao->update(['status_id' => 1]);
+                    }
+    
+                    if ($definido == 0 && $encerrado == 0 ) {
+                        $avaliacao->update(['status_id' => 2]);
+                    }
+                }                
             }
 
             DB::commit();
@@ -105,13 +151,13 @@ class AvaliacaoController extends Controller
 
             $input = $request->input('avaliacao');
 
-            echo '<pre>';print_r($input);exit;
-
             $setor = Setor::findOrFail($input['setor_id']);
-
+            
             $input['status_id'] = 1;
+
             $avaliacao = Avaliacao::create($input);
-            $funcionarios = Funcionario::where('setor_id', $input['setor_id'])->get();
+            
+            $funcionarios = Funcionario::where('setor_id', $setor->id)->get();
 
             // PROVA PARA AVALIAR GESTORES
             if ($input['tipo_id'] == 2) {
@@ -122,7 +168,7 @@ class AvaliacaoController extends Controller
 
                         $token =  bin2hex(random_bytes(16));
 
-                        $validade = Carbon::today()->add(10, 'days');
+                        $validade = date('Y-m-d', strtotime($input['data_fim']));
 
                         $avaliador = Avaliador::create([
                             'funcionario_id' => $funcionario->id, 
@@ -137,8 +183,9 @@ class AvaliacaoController extends Controller
                             'token' => $token,
                             'validade' => $validade
                         ];
-                        Mail::send('avaliacaodesempenho::teste', $data, function($message) use($data) {
-                            $message->to($data['funcionario']->email->email, 'aksjbdkasbd')->subject('akdbakdbakabdkabdksa');
+
+                        Mail::send('avaliacaodesempenho::emails/_email', $data, function($message) use($data) {
+                            $message->to($data['funcionario']->email->email, 'Funcionário')->subject('Avaliação de Desempenho');
                         });
 
                     } else if ($funcionario->id == $setor->gestor->id) {
@@ -165,7 +212,7 @@ class AvaliacaoController extends Controller
                     } else if ($funcionario->id == $setor->gestor->id) {
                         $token =  bin2hex(random_bytes(16));
 
-                        $validade = Carbon::today()->add(10, 'days');
+                        $validade =  date('Y-m-d', strtotime($input['data_fim']));
 
                         $avaliador = Avaliador::create([
                             'funcionario_id' => $funcionario->id,
@@ -173,6 +220,18 @@ class AvaliacaoController extends Controller
                             'token' => $token,
                             'validade' => $validade
                         ]);
+
+                        $data = [
+                            'funcionario' => $funcionario,
+                            'avaliacao' => $avaliacao,
+                            'token' => $token,
+                            'validade' => $validade,
+                            'setor' => $setor
+                        ];
+
+                        Mail::send('avaliacaodesempenho::emails/_email', $data, function($message) use($data) {
+                            $message->to($data['funcionario']->email->email, 'Gestor')->subject('Avaliação de Desempenho');
+                        });
                     }
                 }
             }
@@ -193,7 +252,18 @@ class AvaliacaoController extends Controller
 
     public function show($id)
     {
-        return view('avaliacaodesempenho::show');
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+
+        $avaliacao = Avaliacao::findOrFail($id);
+        $setor = Setor::findOrFail($avaliacao->setor->id);
+
+        $data = [
+            'avaliacao' => $avaliacao,
+            'setor' => $setor,
+        ];
+
+        return view('avaliacaodesempenho::avaliacoes/show', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function edit($id)
