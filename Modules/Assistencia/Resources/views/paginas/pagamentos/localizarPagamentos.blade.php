@@ -10,7 +10,7 @@
                 <div class="row">
                     <thead>
                         <tr>
-                            <th scope="col">Numero</th>
+                            <th scope="col">Número</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Valor</th>
                             <th scope="col">Status</th>
@@ -22,7 +22,7 @@
                     <tbody>
                         @foreach ($pagamentos as $pagamento)
                         <tr>
-                            <td scope="row">{{$pagamento->id }}</td>
+                            <td scope="row">{{$pagamento->conserto->numeroOrdem }}</td>
                             <td>{{$pagamento->cliente->nome }}</td>
                             <td> {{$pagamento->valor}} </td>
                             <td>{{$pagamento->status}}</td>

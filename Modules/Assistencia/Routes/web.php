@@ -34,7 +34,7 @@ Route::prefix('assistencia')->group(function() {
     Route::post('tecnico/buscar',['as'=>'tecnico.buscar','uses'=>'TecnicoController@buscar']);
     /* /tecnicos*/
     /*Estoque (peça e serviço) */
-    Route::get('estoque',['as'=>'estoque.index','uses'=>'EstoqueController@index']);
+    
 
     Route::get('estoque/pecas/cadastrar',['as'=>'pecas.cadastrar','uses'=>'PecasController@cadastrar']);
     Route::post('estoque/pecas/salvar',['as'=>'pecas.salvar','uses'=>'PecasController@salvar']);
@@ -46,13 +46,13 @@ Route::prefix('assistencia')->group(function() {
     Route::get('estoque/pecas/deletarItem/{id}',['as'=>'itemPeca.deletar','uses'=>'PecasController@deletarItem']);
 
 
-    Route::get('estoque/servicos/cadastrar',['as'=>'servicos.cadastrar','uses'=>'ServicosController@cadastrar']);
-    Route::post('estoque/servicos/salvar',['as'=>'servicos.salvar','uses'=>'ServicosController@salvar']);
-    Route::get('estoque/servicos/localizar',['as'=>'servicos.localizar','uses'=>'ServicosController@localizar']);
-    Route::get('estoque/servicos/editar/{id}',['as'=>'servicos.editar','uses'=>'ServicosController@editar']);
-    Route::put('estoque/servicos/atualizar/{id}',['as'=>'servicos.atualizar','uses'=>'ServicosController@atualizar']);
-    Route::get('estoque/servicos/deletar/{id}',['as'=>'servicos.deletar','uses'=>'ServicosController@deletar']);
-    Route::post('estoque/servicos/buscar',['as'=>'servicos.buscar','uses'=>'ServicosController@buscar']);
+    Route::get('servicos/cadastrar',['as'=>'servicos.cadastrar','uses'=>'ServicosController@cadastrar']);
+    Route::post('servicos/salvar',['as'=>'servicos.salvar','uses'=>'ServicosController@salvar']);
+    Route::get('servicos/localizar',['as'=>'servicos.localizar','uses'=>'ServicosController@localizar']);
+    Route::get('servicos/editar/{id}',['as'=>'servicos.editar','uses'=>'ServicosController@editar']);
+    Route::put('servicos/atualizar/{id}',['as'=>'servicos.atualizar','uses'=>'ServicosController@atualizar']);
+    Route::get('servicos/deletar/{id}',['as'=>'servicos.deletar','uses'=>'ServicosController@deletar']);
+    Route::post('servicos/buscar',['as'=>'servicos.buscar','uses'=>'ServicosController@buscar']);
     /*Estoque (peça e serviço) */
 
     /*consertos/ Ordem de servicos*/

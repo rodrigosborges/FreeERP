@@ -1,4 +1,4 @@
-<ul class="nav justify-content-center">
+<ul class="nav justify-content-center nav-tabs nav-justified">
     <li class="nav-item">
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
             aria-selected="true">Ativos</a>

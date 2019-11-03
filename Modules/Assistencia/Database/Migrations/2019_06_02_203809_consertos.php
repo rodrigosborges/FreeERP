@@ -25,6 +25,7 @@ class Consertos extends Migration
           $table->string('imei_aparelho');
           $table->text('defeito');
           $table->text('obs');
+          $table->decimal('sinal', 6,2)->nullable();
           $table->integer('idCliente')->unsigned();
           $table->integer('idTecnico')->unsigned();
           $table->foreign('idCliente')->references('id')->on('cliente_assistencia')->onDelete('cascade');

@@ -16,7 +16,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                Ordem de serviço Nº {{$pagamento->conserto->id}}
+                Ordem de serviço Nº {{$pagamento->conserto->numeroOrdem}}
             </div>
             <div class="col-4">
                 Modelo do aparelho: {{$pagamento->conserto->modelo_aparelho}}

@@ -129,6 +129,7 @@ class ConsertoController extends Controller
           $pecas->save();
         }
       }
+      
       if(isset($dados['servicos']) ? true : false){
         for ($i=0; $i < count($dados['servicos']); $i++) {
           $servicos = new ItemServico;

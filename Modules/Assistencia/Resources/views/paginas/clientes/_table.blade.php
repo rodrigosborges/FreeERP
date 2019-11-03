@@ -1,4 +1,4 @@
-<ul class="nav justify-content-center">
+<ul class="nav justify-content-center nav-tabs nav-justified">
     <li class="nav-item">
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
             aria-selected="true">Ativos</a>
@@ -88,11 +88,15 @@
                 </div>
                 <div class="row">
                     <tbody>
+                    
                         @foreach ($clientesDeletados as $cliente)
                         <tr>
+                        <?php 
+                            $data = new DateTime($cliente->data_nascimento);
+                        ?>
                             <td scope="row">{{$cliente->nome }}</td>
                             <td>{{$cliente->cpf }}</td>
-                            <td>{{$cliente->data_nascimento }}</td>
+                            <td>{{ $data->format('d/m/Y') }}</td>
                             <td>{{$cliente->celnumero }}</td>
                             <td>{{$cliente->telefonenumero }}</td>
                             <td>

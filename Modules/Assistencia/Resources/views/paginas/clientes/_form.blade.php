@@ -95,7 +95,7 @@
         <span class="error"> {{ $errors->first('endereco.logradouro') }} </span>
     </div>
     <div class="form-group col-sm-2">
-        <label for="endereco[numero]">Numero</label>
+        <label for="endereco[numero]">Número</label>
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">house</i></span>

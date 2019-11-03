@@ -7,7 +7,8 @@ $moduleInfo = [
 $menu = [
     ['icon' => 'build', 'tool' => 'Consertos', 'route' => 'consertos.index'],
     ['icon' => 'face', 'tool' => 'Clientes', 'route' => 'cliente.index'],
-    ['icon' => 'shopping_cart', 'tool' => 'Estoques', 'route' => 'estoque.index'],
+    ['icon' => 'shopping_cart', 'tool' => 'Peças', 'route' => 'pecas.localizar'],
+    ['icon' => 'shopping_cart', 'tool' => 'Mão de obra', 'route' => 'servicos.localizar'],
     ['icon' => 'payment', 'tool' => 'Pagamentos', 'route' => 'pagamento.index'],
     ['icon' => 'perm_identity', 'tool' => 'Tecnicos', 'route' => 'tecnico.index']
 ];

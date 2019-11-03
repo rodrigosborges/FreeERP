@@ -11,7 +11,7 @@
         <div class="form-group row">
             <form class="input-group col-6" action="{{route('consertos.buscar')}}" method="post">
                 {{ csrf_field() }}
-                <input type="text" class="form-control" name="busca" placeholder="Numero da ordem"
+                <input type="text" class="form-control" name="busca" placeholder="Número da ordem"
                     aria-label="Buscar OS" aria-describedby="button-addon2">
                 <div class="input-group-append">
                     <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2"></input>
