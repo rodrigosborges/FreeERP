@@ -13,7 +13,7 @@ class TipoUnidade extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_unidade', function (Blueprint $table) {
+        Schema::create('tipoUnidade', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome', 20);
             $table->integer('quantidade_itens');

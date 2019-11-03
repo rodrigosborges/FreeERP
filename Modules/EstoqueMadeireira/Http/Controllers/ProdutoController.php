@@ -143,7 +143,10 @@ class ProdutoController extends Controller
         $categorias = Categoria::all();
         
         if($request['pesquisa'] == null){
-            
+            if($request['precoMin'  ] == null){
+                return redirect('/estoquemadeireira/produtos')->with('error', 'Insira algum dado para a pesquisa');
+            }
+            return redirect('/estoquemadeireira/produtos')->with('error', 'Insira algum dado para a pesquisa');
         }else{
             array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);
         }
@@ -153,7 +156,7 @@ class ProdutoController extends Controller
         }
         if($request['precoMin'] != null){
             if($request['precoMax'] != null){
-                array_push($sql, ['preco', '>=', $request['precMin']]);
+                array_push($sql, ['preco', '>=', $request['precoMin']]);
                 array_push($sql, ['preco', '<=', $request['precoMax']]);
             }else{
                 array_push($sql, ['preco', '>=', $request['precoMin']]);

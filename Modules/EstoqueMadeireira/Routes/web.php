@@ -14,19 +14,29 @@
 Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/', 'EstoqueMadeireiraController@index');
    
+    
+    
     //ROTAS DE BUSCAS
+    Route::post('/busca', 'EstoqueMadeireiraController@busca');
+    Route::post('/tiponidade/busca', 'tipoUnidadeController@busca');
     Route::post('/produtos/busca', 'ProdutoController@busca');
     Route::post('/produtos/categorias/busca', 'CategoriaController@busca');
     Route::post('/produtos/fornecedores/busca', 'FornecedorController@busca');
-    
+
+
+
     Route::get('/produtos/fornecedores/inativos', 'FornecedorController@inativos');
     Route::get('/produtos/categorias/inativos', 'CategoriaController@inativos');
+    Route::get('/tipounidade/inativos', 'tipoUnidadeController@inativos');
+    Route::put('/tipounidade/{id}/restore', 'tipoUnidadeController@restore');
 
     Route::resource('/produtos/fornecedores', 'FornecedorController');
     Route::resource('/produtos/categorias', 'CategoriaController'); 
     Route::get('produtos/fornecedores/ficha/{id}', 'FornecedorController@ficha');
     Route::put('produtos/fornecedores/{id}/restore', 'FornecedorController@restore');
-
+    Route::resource('/tipounidade', 'tipoUnidadeController');
+    
+ 
     
     //ROTA DE PRODUTOS
     Route::get('/produtos/inativos', 'ProdutoController@inativos'); 

@@ -2,7 +2,7 @@
 @section('title', 'Ficha de Fornecedor')
 @section('content')
 
-<div class="container" style="justify-content: center" id="imprimir">
+<div class="container" style="" id="imprimir">
     <div class="card">
         <div class="card-header">
             Ficha do Fornecedor
@@ -38,7 +38,7 @@
             <div class="row">
 
             <div class="col-md-6">
-                <label for="cnpj"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Categoria</b><br><br>{{$fornecedor->categoria->nome}}</label>
+                <label for="cnpj"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Categoria</b><br><br>{{$categoria->nome}}</label>
             </div>
                 
             </div>

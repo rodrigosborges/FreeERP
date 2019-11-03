@@ -130,8 +130,8 @@ class FornecedorController extends Controller
 
     public function ficha($id){
         $fornecedor = Fornecedor::findOrFail($id);
-
-        return view('estoquemadeireira::fornecedores/ficha',$this->template , compact('fornecedor'));
+        $categoria = Categoria::findOrFail($fornecedor->categoria_id);
+        return view('estoquemadeireira::fornecedores/ficha',$this->template , compact('fornecedor', 'categoria'));
     }
 
     public function busca(Request $request){

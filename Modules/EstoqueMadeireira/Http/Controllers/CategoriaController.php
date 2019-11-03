@@ -64,7 +64,7 @@ class CategoriaController extends Controller
     public function create()
     {
         $categorias = Categoria::all();
-      
+       
         
         return view('estoquemadeireira::categoria/form', $this->template, compact('categorias'));
 

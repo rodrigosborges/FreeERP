@@ -45,15 +45,6 @@
 
 
 
-@endsection
-@section('js')
-<script src="js/jquery-1.2.6.pack.js" type="text/javascript"></script>
-<script src="js/jquery.maskedinput-1.1.4.pack.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-	$(document).ready(function(){	
-		$("#cnpj").mask("99.999.999/9999-99");
-	});
-</script>
 
 @endsection
