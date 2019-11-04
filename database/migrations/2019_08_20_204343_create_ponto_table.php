@@ -19,6 +19,7 @@ class CreatePontoTable extends Migration {
 			$table->dateTime('entrada');
 			$table->dateTime('saida')->nullable();
 			$table->boolean('automatico')->default(0);
+			$table->text('justificativa')->nullable();
 			$table->dateTime('updated_at')->nullable();
 		});
 	}

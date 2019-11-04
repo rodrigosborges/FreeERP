@@ -10,18 +10,28 @@
 
 @section('body')
 
-    <div class="row">
-        <div class="col-md-8">
-            <form id="form">
+    <form id="form" method="POST" action="{{ url('/funcionario/frequencia/'.$data['funcionario']->id.'/horasdiarias') }}">
+        @csrf
+        <div class="row mb-4">
+            <div class="col-md-4">
                 <div class="form-group">
+                    <label class="control-label">Horas diárias</label>
                     <div class="input-group">
-                        <input id="search-input" class="form-control" type="text" name="pesquisa" />
-                        <i id="search-button" class="btn btn-info material-icons ml-2">search</i>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">query_builder</i>
+                            </span>
+                        </div>
+                        <input id="horas_diarias" class="form-control" type="number" name="horas_diarias" min=1 max=12 value="{{$data['funcionario']->horas_diarias}}"/>    
                     </div>
+                    <span class="errors"> {{ $errors->first('horas_diarias') }} </span>
                 </div>
-            </form>
+            </div>
+            <div class="col-md-2 pt-4">
+                <button type="submit" class="btn btn-info mt-2">Alterar horas diárias</button>
+            </div>
         </div>
-    </div>
+    </form>
 
     <div class="row">
         <div class="col-md-12">
@@ -41,9 +51,9 @@
                                 <td>{{ucfirst($ponto->nome_mes)}}</td>
                                 <td>{{$ponto->ano}}</td>
                                 <td>
-                                    <a href='{{ url("funcionario/frequencia/".$ponto->funcionario_id."/xls/".$ponto->ano."/".$ponto->mes) }}' class="btn btn-primary {{$ponto->hasAutomatico == 1 ? 'disabled' : ''}}">XLS</a>
-                                    <a target="__blank" href='{{ url("funcionario/frequencia/".$ponto->funcionario_id."/pdf/".$ponto->ano."/".$ponto->mes) }}' class="ml-2 btn btn-secondary {{$ponto->hasAutomatico == 1 ? 'disabled' : ''}}">PDF</a>
-                                    <a href='{{ url("funcionario/frequencia/".$ponto->funcionario_id."/edit/".$ponto->ano."/".$ponto->mes) }}' class="ml-2 btn btn-warning">Editar</a>
+                                    <a href='{{ url("funcionario/frequencia/".$data["funcionario"]->id."/xls/".$ponto->ano."/".$ponto->mes) }}' class="btn btn-primary {{$ponto->hasAutomatico == 1 ? 'disabled' : ''}}">XLS</a>
+                                    <a target="__blank" href='{{ url("funcionario/frequencia/".$data["funcionario"]->id."/pdf/".$ponto->ano."/".$ponto->mes) }}' class="ml-2 btn btn-secondary {{$ponto->hasAutomatico == 1 ? 'disabled' : ''}}">PDF</a>
+                                    <a href='{{ url("funcionario/frequencia/".$data["funcionario"]->id."/edit/".$ponto->ano."/".$ponto->mes) }}' class="ml-2 btn btn-warning">Editar</a>
                                 </td>
                                 <td class='text-center'>
                                     @if($ponto->hasAutomatico == 0)
@@ -67,7 +77,6 @@
 @endsection
 
 @section('script')
-    <script src="{{Module::asset('funcionario:js/views/funcionario/index.js')}}"></script>
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()

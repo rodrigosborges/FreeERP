@@ -24,9 +24,9 @@ class FrequenciaController extends Controller{
         $pontos = $funcionario
             ->pontos()
             ->select(
-                DB::raw('YEAR(entrada) ano, MONTH(entrada) mes, MONTHNAME(entrada) nome_mes, funcionario_id as funcionario_id'),
+                DB::raw('YEAR(entrada) ano, MONTH(entrada) mes, MONTHNAME(entrada) nome_mes'),
             )
-            ->groupby('ano','mes', 'nome_mes', 'funcionario_id')
+            ->groupby('ano','mes', 'nome_mes')
             ->orderby('ano', 'desc')
             ->orderby('mes', 'desc')
             ->get();
@@ -48,6 +48,17 @@ class FrequenciaController extends Controller{
         ];
 
         return view('funcionario::frequencia.index', compact('data'));
+    }
+
+    public function horasdiarias(Request $request, $id){
+        try{  
+            $funcionario = Funcionario::findOrFail($id);
+            $funcionario->horas_diarias = $request->horas_diarias;
+            $funcionario->update();
+            return back()->with('success', 'Horas diárias atualizada com sucesso.');
+        }catch(Exception $e){
+            return back()->with('error', 'Funcionário não encontrado.');
+        }
     }
 
     public function pdf($id, $ano, $mes){
@@ -96,9 +107,10 @@ class FrequenciaController extends Controller{
                 $saida = \DateTime::createFromFormat('d/m/Y H:i:s', $stored['saida']);
                 $saida = $saida->format('Y-m-d H:i:s');
                 $ponto = Ponto::findOrFail($key);
-                if($ponto->entrada != $entrada || $ponto->saida != $saida){
+                if($ponto->entrada != $entrada || $ponto->saida != $saida || ($ponto->justificativa != null && $ponto->justificativa != $stored['justificativa'])){
                     $ponto->entrada = $entrada;
                     $ponto->saida = $saida;
+                    $ponto->justificativa = $stored['justificativa'];
                     $ponto->updated_at = date('Y-m-d H:i:s');
                     $ponto->automatico = 0;
                     $ponto->update();
@@ -118,6 +130,7 @@ class FrequenciaController extends Controller{
                     $funcionario->pontos()->create([
                         'entrada'       => $entrada,
                         'saida'         => $saida,
+                        'justificativa' => $new['justificativa'],
                         'automatico'    => 0,
                         'updated_at'    => date('Y-m-d H:i:s')
                     ]);
@@ -178,7 +191,7 @@ class FrequenciaController extends Controller{
             if($funcionario->atestados()->where('data_inicio', '<=', $date)->where('data_fim', '>=', $date)->count() > 0){
                 return json_encode([
                     'horario'   => $dateBr,
-                    'mensagem'  => "Não foi possível registrar a entrada.<br>Funcionário se encontra de atestado.",
+                    'mensagem'  => "Não foi possível registrar a entrada.<br>Funcionário se encontra de licença.",
                 ]);
             }
             
@@ -192,7 +205,7 @@ class FrequenciaController extends Controller{
                 $ultimo->saida = $dateEn;
                 $ultimo->update();
 
-                if($diferenca > 10){
+                if($diferenca > $funcionario->horas_diarias){
                     $ultimo->automatico = 1;
                     $ultimo->update();
 

@@ -6,7 +6,7 @@ class Ponto extends Model{
     
     protected $table = 'ponto';
 
-    protected $fillable = ['entrada', 'saida', 'automatico'];
+    protected $fillable = ['entrada', 'saida', 'automatico', 'justificativa', 'updated_at'];
 
     public $timestamps = false;
 

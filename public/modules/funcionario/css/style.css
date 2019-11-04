@@ -44,3 +44,10 @@ div.error, .errors {
     left: 0;
     right: 0;
 }
+
+
+@media(min-width:768px){
+    .button-remove-ponto{
+        padding-top: 90px !important;
+    }
+}

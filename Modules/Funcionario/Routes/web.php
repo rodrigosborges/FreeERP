@@ -53,6 +53,7 @@ Route::prefix('funcionario')->group(function() {
     Route::resource('cargo', 'CargoController');
 
     Route::get('frequencia/{id}', 'FrequenciaController@index');
+    Route::post('frequencia/{id}/horasdiarias', 'FrequenciaController@horasdiarias');
     Route::get('frequencia/{id}/pdf/{ano}/{mes}', 'FrequenciaController@pdf');
     Route::get('frequencia/{id}/xls/{ano}/{mes}', 'FrequenciaController@xls');
     Route::get('frequencia/{id}/edit/{ano}/{mes}', 'FrequenciaController@edit');

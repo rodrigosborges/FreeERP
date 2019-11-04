@@ -31,6 +31,8 @@
                 <th align="center" style="background-color: #E0E0E0; width: 22px; border: 1px solid black; font-weight: bold;">Entrada</th>
                 <th align="center" style="background-color: #E0E0E0; width: 22px; border: 1px solid black; font-weight: bold;">Saída</th>
                 <th align="center" style="background-color: #E0E0E0; width: 22px; border: 1px solid black; font-weight: bold;">Tempo trabalhado</th>
+                <th align="center" style="background-color: #E0E0E0; width: 22px; border: 1px solid black; font-weight: bold;">Alterado</th>
+                <th align="center" style="background-color: #E0E0E0; width: 22px; border: 1px solid black; font-weight: bold;">Justificativa</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +42,8 @@
                     <td align="center" style="border: 1px solid black;">{{ $ponto->get_time_entrada() }}</td>
                     <td align="center" style="border: 1px solid black;">{{ $ponto->get_time_saida() }}</td>
                     <td align="center" style="border: 1px solid black;">{{ $ponto->time_worked() }}</td>
+                    <td align="center" style="border: 1px solid black;">{{ $ponto->updated_at ? 1 : 0 }}</td>
+                    <td align="center" style="border: 1px solid black;">{{ $ponto->justificativa }}</td>
                 </tr>
             @endforeach
         </tbody>

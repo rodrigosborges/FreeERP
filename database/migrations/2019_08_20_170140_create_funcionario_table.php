@@ -26,6 +26,7 @@ class CreateFuncionarioTable extends Migration {
 			$table->integer('endereco_id')->index('fk_funcionario_endereco1');
 			$table->integer('cargo_id')->index('fk_funcionario_cargo1');
 			$table->text('biometria')->nullable();
+			$table->integer('horas_diarias')->default(8);
 			$table->timestamps();
 			$table->softDeletes();
 		});

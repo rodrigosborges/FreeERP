@@ -268,9 +268,7 @@ $(document).ready(function(){
 
     let uf = $('.estados option:selected').data('uf')
     let cidadeSelecionada = $('#estado_id').data('cidade')
-
-    console.log(uf);
-    console.log(cidadeSelecionada);
+    
     atualizarCidades(uf, cidadeSelecionada)
 
 }) 

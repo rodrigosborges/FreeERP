@@ -68,7 +68,7 @@
         @foreach($data['pontos'] as $ponto)
             <div class="mt-2">
                 <div class="inline text-center">
-                    <span>{{ $ponto->get_day() }}</span>
+                    <span>{{$ponto->updated_at ? "*" : ""}}{{ $ponto->get_day() }}</span>
                 </div>
                 <div class="inline text-center">
                     <span>{{ $ponto->get_time_entrada() }}</span>
