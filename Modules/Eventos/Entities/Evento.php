@@ -18,7 +18,7 @@ class Evento extends Model
     
     public function programacao()
     {
-        return $this->hasMany(Programacao::class);
+        return $this->hasMany(Programacao::class)->orderBy('data', 'asc', 'horario', 'asc');
     }
     
     public function permissoes(){

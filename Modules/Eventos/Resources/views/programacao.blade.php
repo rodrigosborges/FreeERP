@@ -261,7 +261,6 @@
                         $('.modal-body #img').attr("src", 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStl-KWsV0KVxQug2HoR6e3lx6UUSD4KAqyDbevILtDVDvs0YK1xA&s');
                     }
                 });
-                
             });
         }
         

@@ -138,9 +138,9 @@
                             <label for="organizador" class="col-form-label">Organizador(es):</label>
                             <select class="chosen-select form-control" id="organizador" name="organizador[]" multiple>
                                 @foreach($pessoas as $pessoa)
-                                    <!-- @if(!$pessoa->id == auth::id())-->'
+                                    @if(!$pessoa->id == auth::id())
                                         <option value="{{$pessoa->id}}">{{$pessoa->nome}}</option>
-                                    <!--@endif -->
+                                    @endif
                                 @endforeach
                             </select>
                         </div>

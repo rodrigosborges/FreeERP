@@ -5,6 +5,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Eventos\Entities\Evento;
 use Modules\Eventos\Entities\Pessoa;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 class PessoasController extends Controller
 {
@@ -14,7 +15,10 @@ class PessoasController extends Controller
      */
     public function index()
     {
-        $eventos = Evento::orderBy('nome')->get(); //RETORNA OS EVENTOS ORDENADOS PELO NOME
+        $eventos = Evento::whereHas('permissoes', function (Builder $query){
+            $query->where('nivel_id', '=', 3)->orWhere('nivel_id', '=', 2);
+        })->get()->sortBy('nome');
+        //$eventos = Evento::orderBy('nome')->get(); //RETORNA OS EVENTOS ORDENADOS PELO NOME
         //VERIFICA SE EXISTE PELO MENOS 1 EVENTO CADASTRADO
         if(count($eventos) < 1)
             return view('eventos::cadastrarEvento');
@@ -35,7 +39,6 @@ class PessoasController extends Controller
             $pessoa = new Pessoa();
             $pessoa->nome = $request->nome;
             $pessoa->email = $request->email;
-            $pessoa->telefone = $request->telefone;
             $pessoa->save();
             $pessoa->eventos()->attach($request->eventoId);
         } catch (\Exception $e){
@@ -52,7 +55,7 @@ class PessoasController extends Controller
     {
         try{
             $pessoa = Pessoa::find($request->id);
-            $pessoa->update(['nome' => $request-> nome, 'email' => $request->email, 'telefone' => $request->telefone]);
+            $pessoa->update(['nome' => $request-> nome, 'email' => $request->email]);
         } catch (\Exception $e) {
             return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
                 ->with('error', 'Falha ao alterar ' . $request->nome . ': ' . $e->getMessage());

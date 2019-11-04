@@ -28,14 +28,9 @@
         
         <!-- Evento selecionado-->
         @else
-        <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12">
-            <h1 style="text-align: center;">Pessoas</h1>
-        </div>
-        <div class="col-xm-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+            <h1>Pessoas</h1>
             <h3>{{$evento->nome}}</h3>
-        </div>
-        <div class="col-xm-6 col-sm-6 col-md-6 col-lg-6" align="right">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCadastrarPessoa">Adicionar</button>
         </div>
         <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px;">
             <table id="pessoas" class="table table-striped">
@@ -49,15 +44,17 @@
                 </thead>
                 <tbody>
                     @foreach ($evento->pessoas as $evento_pessoa)
-                        <tr>
-                            <td class="text-center align-middle">{{$evento_pessoa->nome}}</td>
-                            <td class="text-center align-middle">{{$evento_pessoa->email}}</td>
-                            <td class="text-center align-middle">{{$evento_pessoa->telefone}}</td>
-                            <td class="text-center align-middle">
-                                <button class="btn btn-xs" data-toggle="modal" data-target="#modalEditarPessoa" data-id="{{$evento_pessoa->id}}" data-nome="{{$evento_pessoa->nome}}" data-email="{{$evento_pessoa->email}}" data-telefone="{{$evento_pessoa->telefone}}"><i class="material-icons">edit</i></button>
-                                <button class="btn btn-xs" data-toggle="modal" data-target="#modalExcluirPessoa" data-id="{{$evento_pessoa->id}}" data-nome="{{$evento_pessoa->nome}}"><i class="material-icons">delete</i></button>
-                            </td> 
-                        </tr>
+                        @if(!$evento_pessoa->id == auth::id())
+                            <tr>
+                                <td class="text-center align-middle">{{$evento_pessoa->nome}}</td>
+                                <td class="text-center align-middle">{{$evento_pessoa->email}}</td>
+                                <td class="text-center align-middle">{{$evento_pessoa->telefone}}</td>
+                                <td class="text-center align-middle">
+                                    <button class="btn btn-xs" data-toggle="modal" data-target="#modalEditarPessoa" data-id="{{$evento_pessoa->id}}" data-nome="{{$evento_pessoa->nome}}" data-email="{{$evento_pessoa->email}}" data-telefone="{{$evento_pessoa->telefone}}"><i class="material-icons">edit</i></button>
+                                    <button class="btn btn-xs" data-toggle="modal" data-target="#modalExcluirPessoa" data-id="{{$evento_pessoa->id}}" data-nome="{{$evento_pessoa->nome}}"><i class="material-icons">delete</i></button>
+                                </td> 
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>

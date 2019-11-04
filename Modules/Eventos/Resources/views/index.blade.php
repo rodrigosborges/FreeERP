@@ -54,8 +54,8 @@
         </div>
     </div>
 
-    <!-- BARRA DE PESQUISA -> ARRUMAR -->
-    <div class="row">
+    <!-- BARRA DE PESQUISA / SE DER TEMPO -->
+    <!-- <div class="row">
         <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12">
             <div class="well">
                 <div class="row">
@@ -81,11 +81,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     
     <!-- EVENTOS -->
     <div class="well">
-        <div class="row">
+        <div class="row justify-content-center">
             @foreach ($eventos as $evento)
                 <div class="col exibeEvento">
                     <div class="containerImg">

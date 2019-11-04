@@ -216,7 +216,7 @@
             });
         </script>
         
-        <!-- Máscaras dos forms -->
+        <!-- Máscara de telefone -->
         <script>
             <!-- Código disponível no site do jQuery Mask Plugin -->
             var SPMaskBehavior = function (val){

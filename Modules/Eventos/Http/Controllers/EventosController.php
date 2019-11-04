@@ -24,7 +24,9 @@ class EventosController extends Controller
        
     //EXIBE AS VIEWS
     public function index(){
-        $eventos = Evento::all();
+        $data = new Carbon();
+        $data->format('Y-m-d');
+        $eventos = Evento::orderBy('dataInicio', 'ASC')->where('dataInicio', '>=', $data)->get();
         $estados = Estado::all();
         return view('eventos::index', ['eventos' => $eventos,'estados' => $estados]);
     }
@@ -131,7 +133,8 @@ class EventosController extends Controller
     public function detalhar($id){
         $evento = Evento::find($id);
         $programacao = $evento->programacao;
-        return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]);
+        
+        return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]); 
     }
     
     public function getEvento($id){
