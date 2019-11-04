@@ -6,8 +6,11 @@
     @parent
     <div class="container">
         <h2>Convites</h2>
+        @if(!$convites['pendentes'] && !$convites['definidos'])
+            <p>Não há nenhum convite para evento.</p>
+        @endif
         @if($convites['pendentes']->isNotEmpty())
-            <p class="text-secondary">Confirme presença (ou não) nos eventos que foi convidado.</p>
+            <p class="text-secondary">Aguardando confirmação:</p>
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
@@ -49,13 +52,46 @@
                 @endforeach
                 </tbody>
             </table>
-        @else
-            <p>
-                Não há nenhum convite para evento aguardando confirmação.
-            </p>
         @endif
-        @if($convites['definidos']->isNotEmpty())
 
+        @if($convites['definidos']->isNotEmpty())
+            <p class="text-secondary">Aceitos e recusados:</p>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Solicitante</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($convites['definidos'] as $convite)
+                    <tr>
+                        <td>{{$convite->evento->titulo}}</td>
+                        <td>
+                            @if($convite->evento->nota)
+                                {{$convite->evento->nota}}
+                            @else
+                                ---
+                            @endif
+                        </td>
+                        @if($convite->evento->dia_todo == true)
+                            <td>{{ \Carbon\Carbon::parse($convite->evento->data_inicio)->format('d/m/Y')}}</td>
+                        @else
+                            <td>{{\Carbon\Carbon::parse($convite->evento->data_inicio)->format('d/m/Y H:i')}} até
+                                {{\Carbon\Carbon::parse($convite->evento->data_fim)->format('d/m/Y H:i')}}
+                            </td>
+                        @endif
+                        <td>{{$convite->evento->agenda->funcionario->nome}}</td>
+                        <td class="acoes">
+
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
         @endif
     </div>
 @endsection

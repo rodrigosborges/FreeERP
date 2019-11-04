@@ -149,8 +149,11 @@
                         $(info.el).find('.fc-title').append('<i style="font-size: inherit; line-height: inherit" class="material-icons float-right">info</i>');
                     }
 
-                    if('{{auth()->id()}}' == usuario)
+                    if('{{auth()->id()}}' == usuario) {
                         $(info.el).find('.fc-title').append('<a href="' + duplicar + '" class="float-right text-white"><i style="font-size: inherit; line-height: inherit" class="material-icons">file_copy</i></a>');
+                    } else {
+                        $(info.el).css('cursor', 'default');
+                    }
 
                     if(info.event.end){
                         if(info.event.end.getTime() < Date.now()){
@@ -183,7 +186,6 @@
                 eventClick: function (info) {
                     var usuario = info.event.extendedProps.usuario;
                     if('{{auth()->id()}}' != usuario){
-                        alert('Evento não é seu!');
                         return null;
                     }
                     var url = '{{route('eventos.editar', 'id')}}';

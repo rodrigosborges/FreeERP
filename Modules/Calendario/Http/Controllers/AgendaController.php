@@ -23,7 +23,7 @@ class AgendaController extends Controller
     public function agendas()
     {
         $funcionario = Funcionario::where('user_id', Auth::id())->first();
-        $agendas = Agenda::withTrashed('funcionario_id', $funcionario->id)->orderByRaw('deleted_at DESC, created_at DESC')->get();
+        $agendas = Agenda::withTrashed()->where('funcionario_id', $funcionario->id)->orderByRaw('deleted_at DESC, created_at DESC')->get();
         $lixeira = Agenda::onlyTrashed()->where('funcionario_id', $funcionario->id)->count();
         return view('calendario::agendas.index', ['agendas' => $agendas, 'lixeira' => $lixeira]);
     }
@@ -136,17 +136,17 @@ class AgendaController extends Controller
         $aprovacao = new Aprovacao();
         $aprovacao->funcionario()->associate(Funcionario::where('user_id', Auth::id())->first());
         $compartilhamento->aprovacao()->save($aprovacao);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Compartilhamento aprovado com sucesso.');
     }
 
     public function negar_compartilhamento(Compartilhamento $compartilhamento){
         $compartilhamento->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Compartilhamento negado com sucesso.');
     }
 
     public function revogar_aprovacao(Compartilhamento $compartilhamento){
         $compartilhamento->aprovacao()->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Compartilhamento revogado com sucesso.');
     }
 
     public function eventos(Agenda $agenda)

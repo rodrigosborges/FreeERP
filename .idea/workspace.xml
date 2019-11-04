@@ -3,16 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b84905e5-ba51-4cac-9254-655e0db8a3b8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/FuncionarioTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/FuncionarioTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/UserTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Database/Seeders/UserTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Convite.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Convite.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar-editar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar-editar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/template.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/template.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -271,6 +267,8 @@
       <workItem from="1572456398845" duration="13895000" />
       <workItem from="1572552200005" duration="1100000" />
       <workItem from="1572624823401" duration="11892000" />
+      <workItem from="1572653207351" duration="44000" />
+      <workItem from="1572887925448" duration="15350000" />
     </task>
     <task id="LOCAL-00001" summary="Calendário exibindo todos eventos do usuário e algumas refatorações">
       <created>1562796695507</created>
@@ -482,7 +480,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572476891053</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Pequenas correções de permissões">
+      <created>1572653234798</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1572653234798</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -518,7 +523,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Criada view index para agendas" />
     <MESSAGE value="Filtro de agendas na visão geral" />
     <MESSAGE value="Tooltip nos eventos na visão geral quando há descrição" />
     <MESSAGE value="Adicionado listagem de agendas, eventos, e botões para deletá-los" />
@@ -543,7 +547,19 @@
     <MESSAGE value="Enviando notificação via e-mail ao ser convidado para evento" />
     <MESSAGE value="Criado command para verificar e enviar as notificações automaticamente" />
     <MESSAGE value="Adicionado botão para excluir evento na edição" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adicionado botão para excluir evento na edição" />
+    <MESSAGE value="Pequenas correções de permissões" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pequenas correções de permissões" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/template.blade.php</url>
+          <line>109</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>
