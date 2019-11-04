@@ -46,7 +46,6 @@ $(document).ready(function(){
 })
 
 function tabela(url){
-    console.log(url)
     $.get(url, function(table){
         $('.table').html(table);
     })

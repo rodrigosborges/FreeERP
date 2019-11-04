@@ -15,9 +15,20 @@ class PagamentoController extends Controller
      * @return Response
      */
      public function index(){
-        $pagamentos = PagamentoAssistenciaModel::paginate(10);
 
-        return view('assistencia::paginas.pagamentos.localizarPagamentos', compact('pagamentos'));
+        return view('assistencia::paginas.pagamentos.localizarPagamentos');
+    }
+    public function table(Request $req, $status){
+        $pagamentos = PagamentoAssistenciaModel::where('status', $status)->paginate(10);
+
+        if($req->inicio)
+            return 'asfas';
+        if($req->fim)
+            return 'teste';
+
+
+        return view('assistencia::paginas.pagamentos.table', compact('pagamentos'));
+
     }
 
      public function recibo($id){

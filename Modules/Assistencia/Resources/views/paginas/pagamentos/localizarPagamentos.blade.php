@@ -5,55 +5,83 @@
         Lista de pagamentos
     </div>
     <div class="card-body">
-        <div class="table-responsive">
-            <table id="tabela" class="table table-striped">
-                <div class="row">
-                    <thead>
-                        <tr>
-                            <th scope="col">Número</th>
-                            <th scope="col">Cliente</th>
-                            <th scope="col">Valor</th>
-                            <th scope="col">Status</th>
-                        </tr>
+        <div class="row">
+            
+            <label class="col-form-label" for="data-inicio">Data inicial: </label>
+            <input type="date" name="data-inicio" class="col-sm-4 form-control">
 
-                    </thead>
-                </div>
-                <div class="row">
-                    <tbody>
-                        @foreach ($pagamentos as $pagamento)
-                        <tr>
-                            <td scope="row">{{$pagamento->conserto->numeroOrdem }}</td>
-                            <td>{{$pagamento->cliente->nome }}</td>
-                            <td> {{$pagamento->valor}} </td>
-                            <td>{{$pagamento->status}}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </div>
-                <tfoot>
-                    <tr>
-                        <td colspan="100%" class="text-center">
-                            <p class="text-center">
-                                Página {{$pagamentos->currentPage()}} de {{$pagamentos->lastPage()}}
-                                - Exibindo {{$pagamentos->perPage()}} registro(s) por página de {{$pagamentos->total()}}
-                                registro(s) no total
-                            </p>
-                        </td>
-                    </tr>
-                    @if($pagamentos->lastPage() > 1)
-                    <tr>
-                        <td colspan="100%">
-                            {{ $pagamentos->links() }}
-                        </td>
-                    </tr>
-                    @endif
-                </tfoot>
-
-            </table>
-
+            <label class="col-form-label" for="data-final">Data final:  </label>
+            <input type="date" name="data-final" class="col-sm-4 form-control">
+    
+            <div class="col-sm-2">
+                <button id="filtrar" class="btn btn-outline-primary">
+                    Filtrar
+                </button>
+            </div>
         </div>
+        
+
+        
+    
+    <ul class="nav justify-content-center nav-tabs nav-justified">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" id="pagos-tab" role="tab" href="#pagos" aria-selected="true">Pagos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" id="pendentes-tab" href="#pendentes" role="tab" aria-selected="false">Pendentes</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="pagos" role="tabpanel" aria-labelledby="home-tab">
+          
+        </div>
+        <div class="tab-pane fade" id="pendentes" role="tabpanel" aria-labelledby="profile-tab">
+           
+        </div>
+    </div>
     </div>
 
 </div>
 
 @stop
+@section('js')
+<script>
+    table('Pago', 'pagos')
+    var inicio = '';
+    var fim = '';
+    $('#pagos-tab').click(function(){
+        inicio = $("[name='data-inicio']").val();
+        fim = $("[name='data-final']").val();
+        table('Pago', 'pagos') 
+    })
+    $(document).on('click', '#pendentes-tab', function(){
+        inicio = $("[name='data-inicio']").val();
+        fim = $("[name='data-final']").val();
+        table('Pendente', 'pendentes') 
+    })
+    
+    $(document).on('click', '#filtrar', function(e){
+        e.preventDefault();
+        inicio = $("[name='data-inicio']").val();
+        fim = $("[name='data-final']").val();
+        table(main_url+'/assistencia/pagamento/table/')
+    })
+    $(document).on('click','.page-link', function(e){
+        e.preventDefault();
+        var status = $(this).closest('.tab-pane').attr('id')
+        tabela(status, $(this).attr('href')+'&inicio='+inicio+'&fim='+fim)
+    })
+    $("#filtrar").on("click", function () {
+        inicio = $("[name='data-inicio']").val();
+        fim = $("[name='data-final']").val();
+        tabela('Pago','pagos',main_url+'/assistencia/pagamento/table/'+status'&inicio='+inicio+'&fim='+fim);
+        tabela('Pendente','pendentes',main_url+'/assistencia/pagamento/table/'+status'&inicio='+inicio+'&fim='+fim);
+    });
+    function table(status, id, url) {
+       $.get(main_url+'/assistencia/pagamento/table/'+status'&inicio='+inicio+'&fim='+fim, function(tabela){
+            $('#'+id).html(tabela)
+       })
+        
+    }
+</script>
+@endsection
