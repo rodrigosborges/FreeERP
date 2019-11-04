@@ -159,14 +159,28 @@ class AvaliacaoRespostaController extends Controller
 
                     $avaliado->update(['concluido' => 1]);
                     
+                    $data = [
+                        'avaliador' => $avaliador,
+                        'avaliacao' => $avaliacao
+                    ];
+
                     if (count($funcionarios) == 0) {
                         $avaliador->update(['token' => null, 'concluido' => 1]);
                         
                         DB::commit();            
+
+                        Mail::send('avaliacaodesempenho::emails/_feedback', $data, function($message) use($data) {
+                            $message->to($data['avaliador']->funcionario->email->email, $data['avaliador']->funcionario->nome)->subject('Feedback Avaliação');
+                        });
+                        
                         return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação Respondida com Sucesso');                 
                     }
                     
                     DB::commit();
+
+                    Mail::send('avaliacaodesempenho::emails/_feedback', $data, function($message) use($data) {
+                        $message->to($data['avaliador']->funcionario->email->email, $data['avaliador']->funcionario->nome)->subject('Feedback Avaliação');
+                    });
                     
                     return view('avaliacaodesempenho::avaliados/avaliar-funcionario', compact('avaliacao', 'questoes', 'avaliador', 'setor', 'funcionarios', 'concluidos'))->with('success', 'Avaliação Respondida com Sucesso');
                 
@@ -202,9 +216,16 @@ class AvaliacaoRespostaController extends Controller
                     
                     DB::commit();
 
-                    return back()->with('success', 'Avaliação Respondida com Sucesso');                 
+                    $data = [
+                        'avaliador' => $avaliador,
+                        'avaliacao' => $avaliacao
+                    ];
 
-                    return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação Respondida com Sucesso');                    
+                    Mail::send('avaliacaodesempenho::emails/_feedback', $data, function($message) use($data) {
+                        $message->to($data['avaliador']->funcionario->email->email, $data['avaliador']->funcionario->nome)->subject('Feedback Avaliação');
+                    });
+
+                    return back()->with('success', 'Avaliação Respondida com Sucesso');                 
                 }
             }
 
@@ -249,7 +270,5 @@ class AvaliacaoRespostaController extends Controller
         Mail::send('avaliacaodesempenho::emails/_recuperar', $data, function($message) use($data) {
             $message->to($data['avaliador']->funcionario->email->email, $data['avaliador']->funcionario->nome)->subject('Recuperação de Senha');
         });
-
-        print_r($input);exit;
     }
 }

@@ -1,11 +1,8 @@
 .dash-cards {
     border: 1px solid #BBB; 
     border-radius: 4px;
-    margin: 10px;
+    margin: 20px 10px;
     padding: 25px;
-}
-
-.dash-cards .card {
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 10px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -25,9 +22,24 @@
     border-radius: 5px;
     border: 1px solid lightgray;
     padding: 20px;
-    background: rgba(212, 212, 212, 0.554)
+    background: rgba(212, 212, 212, 0.554);
+    display: flex;
+    justify-content: space-between;
+}
+
+.info div {
+
+}
+
+.info p {
+    line-height: 10px;
 }
 
 .setores-list {
-    
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.setores-list li {
+    list-style: none;
 }
