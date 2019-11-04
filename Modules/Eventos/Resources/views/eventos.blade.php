@@ -138,9 +138,9 @@
                             <label for="organizador" class="col-form-label">Organizador(es):</label>
                             <select class="chosen-select form-control" id="organizador" name="organizador[]" multiple>
                                 @foreach($pessoas as $pessoa)
-                                    @if(!$pessoa->id == auth::id())
+                                    <!-- @if(!$pessoa->id == auth::id())-->'
                                         <option value="{{$pessoa->id}}">{{$pessoa->nome}}</option>
-                                    @endif
+                                    <!--@endif -->
                                 @endforeach
                             </select>
                         </div>
@@ -266,7 +266,7 @@
                     if(value.imagem !== null & value.imagem !== ""){
                         $('.modal-body .img').attr("src", "http://127.0.0.1:8000/storage/eventos/" + value.imagem);
                     }else{
-                        $('.modal-body .img').attr("src", 'http://127.0.0.1:8000/storage/eventos/default.png');
+                        $('.modal-body .img').attr("src", 'http://ulbra-to.br/geda/wp-content/themes/geda/img/miniatura.jpg');
                     }
                 });
             });
@@ -331,27 +331,5 @@
         }
     </script>
     
-    <!-- Selects de estados e cidades -->
-    <script type="text/javascript">
-        $('select[name=estado]').change(function () {
-            var idestado = $(this).val();
-            buscarCidades(idestado);
-        });
-        
-        function buscarCidades (idestado, idcidade){
-            $.get('/eventos/get-cidades/' + idestado, function (cidades) {
-                $('select[name=cidade]').empty();
-                $.each(cidades, function (index, value) {
-                    if(idcidade !== null){
-                        if(idcidade === value.id)
-                            $('select[name=cidade]').append('<option value=' + value.id + ' selected>' + value.nomeCidade + '</option>');
-                        else
-                            $('select[name=cidade]').append('<option value=' + value.id + '>' + value.nomeCidade + '</option>');
-                    }else{
-                        $('select[name=cidade]').append('<option value=' + value.id + '>' + value.nomeCidade + '</option>');
-                    }
-                });
-            });
-        }
-    </script>
+    
 @endsection

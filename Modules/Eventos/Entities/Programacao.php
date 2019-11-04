@@ -15,4 +15,9 @@ class Programacao extends Model
     {
         return $this->belongsTo(Evento::class);
     }
+    
+    public function palestrante()
+    {
+        return $this->belongsTo(Palestrante::class);
+    }
 }

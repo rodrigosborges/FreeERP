@@ -24,11 +24,7 @@ class EventosController extends Controller
        
     //EXIBE AS VIEWS
     public function index(){
-        $eventos = DB::table('evento')
-                ->join('cidade', 'evento.cidade_id', '=', 'cidade.id')
-                ->join('estado', 'cidade.estado_id', '=', 'estado.id')
-                ->select('evento.id','nome','local','dataInicio','dataFim','descricao','imagem','empresa','email','telefone','cidade_id','nomeCidade','estado_id','nomeEstado','uf')
-                ->get();
+        $eventos = Evento::all();
         $estados = Estado::all();
         return view('eventos::index', ['eventos' => $eventos,'estados' => $estados]);
     }
@@ -37,12 +33,6 @@ class EventosController extends Controller
         $eventos = Evento::whereHas('permissoes', function (Builder $query){
             $query->where('nivel_id', '=', 3)->orWhere('nivel_id', '=', 2);
         })->get();
-        
-        /*$eventos = DB::table('evento')
-                ->join('cidade', 'evento.cidade_id', '=', 'cidade.id')
-                ->join('estado', 'cidade.estado_id', '=', 'estado.id')
-                ->select('evento.id','nome','local','dataInicio','dataFim','descricao','imagem','empresa','email','telefone','cidade_id','nomeCidade','estado_id','nomeEstado','uf')
-                ->get();*/
         $estados = Estado::all();
         $pessoas = Pessoa::all();
         return view('eventos::eventos', ['eventos' => $eventos,'estados' => $estados, 'pessoas' => $pessoas]);
@@ -71,7 +61,7 @@ class EventosController extends Controller
             } else {
                 $evento->imagem = '';
             }
-
+            
             $evento->save(); 
             
             $permissao = new Permissao();
@@ -81,14 +71,16 @@ class EventosController extends Controller
             
             $permissao->save();
             
-            foreach ($request->organizador as $pessoa_id){
-                $permissao = new Permissao();
-                $permissao->evento()->associate($evento);
-                $permissao->nivel()->associate(Nivel::find(2));
-                $permissao->pessoa()->associate($pessoa_id);
-                $permissao->save();
-            }
-            
+            $organizadores = $request->organizador;
+            if($organizadores != null){
+                foreach ($organizadores as $pessoa_id){
+                    $permissao = new Permissao();
+                    $permissao->evento()->associate($evento);
+                    $permissao->nivel()->associate(Nivel::find(2));
+                    $permissao->pessoa()->associate($pessoa_id);
+                    $permissao->save();
+                }
+            }            
         } catch (\Exception $e){
             return redirect()->route('eventos.exibir')
                 ->with('error', 'Falha ao adicionar evento: ' . $e->getMessage());
@@ -134,6 +126,12 @@ class EventosController extends Controller
         
         return redirect()->route('eventos.exibir')
             ->with('success', $evento->nome . ' excluído(a) com sucesso.');
+    }
+    
+    public function detalhar($id){
+        $evento = Evento::find($id);
+        $programacao = $evento->programacao;
+        return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]);
     }
     
     public function getEvento($id){

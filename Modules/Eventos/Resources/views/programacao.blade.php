@@ -61,7 +61,7 @@
                             {{\Carbon\Carbon::parse($atividade->duracao)->format('H:i')}}
                         </td>
                         <td class="text-center align-middle">{{$atividade->vagas}}</td>
-                        <td class="text-center align-middle">
+                        <td class="text-center align-middle" style="white-space: nowrap;">
                             <button class="btn btn-xs" title="Visualizar / Editar" data-toggle="modal" data-target="#modalAtividade" onclick="visualizar('{{$atividade->id}}')"><i class="material-icons">search</i></button>
                             <button class="btn btn-xs" title="Excluir" data-toggle="modal" data-target="#modalExcluirAtividade" onclick="excluir('{{$evento->id}}', '{{$atividade->id}}', '{{$atividade->nome}}')"><i class="material-icons">delete</i></button>
                         </td> 
@@ -95,10 +95,11 @@
                             <label for="email" class="col-form-label">Tipo*:</label>
                             <select class="form-control edit" name="tipo" required>
                                 <option value="" disabled selected>Selecione</option>
-                                <option value="Palesta">Palestra</option>
+                                <option value="Palestra">Palestra</option>
                                 <option value="Workshop">Workshop</option>
                                 <option value="Minicurso">Minicurso</option>
                                 <option value="Seminário">Seminário</option>
+                                <option value="Outro">Outro</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -244,7 +245,7 @@
                     $('.modal-body [name=id]').val(idatividade);
                     $('.modal-body [name=palestrante_id]').val(value.palestrante_id);
                     $('.modal-body [name=nome]').val(value.nome);
-                    $('.modal-body [name=tipo]').val(value.tipo);
+                    $('.modal-body [name=tipo]').val(value.tipo);                            
                     $('.modal-body [name=descricao]').val(value.descricao);
                     $('.modal-body [name=data]').val(value.data);
                     $('.modal-body [name=horario]').val(value.horario);

@@ -107,7 +107,7 @@
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="material-icons mr-2 btn-circle">apps</i>
-                        <i class="material-icons btn-circle">person</i>
+                        <a class="text-dark" href="{{url('/logout')}}"><i class="material-icons btn-circle">person</i></a>
                     </div>
                 </div>
                 <div id="content">
@@ -231,6 +231,30 @@
             $(function() {
                 $('[name=telefone]').mask(SPMaskBehavior, spOptions);
             });
+        </script>
+        
+        <!-- Selects de estados e cidades -->
+        <script type="text/javascript">
+            $('select[name=estado]').change(function () {
+                var idestado = $(this).val();
+                buscarCidades(idestado);
+            });
+
+            function buscarCidades (idestado, idcidade){
+                $.get('/eventos/get-cidades/' + idestado, function (cidades) {
+                    $('select[name=cidade]').empty();
+                    $.each(cidades, function (index, value) {
+                        if(idcidade !== null){
+                            if(idcidade === value.id)
+                                $('select[name=cidade]').append('<option value=' + value.id + ' selected>' + value.nomeCidade + '</option>');
+                            else
+                                $('select[name=cidade]').append('<option value=' + value.id + '>' + value.nomeCidade + '</option>');
+                        }else{
+                            $('select[name=cidade]').append('<option value=' + value.id + '>' + value.nomeCidade + '</option>');
+                        }
+                    });
+                });
+            }
         </script>
         @yield('js')
     </body>

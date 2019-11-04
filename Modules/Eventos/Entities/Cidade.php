@@ -11,7 +11,10 @@ class Cidade extends Model{
     public $timestamps = false;
 
     public function estado(){
-        return $this->belongsTo('Estado','estado_id');
+        return $this->belongsTo(Estado::class);
     }
     
+    public function evento(){
+        return $this->hasOne(Evento::class);
+    }
 }   

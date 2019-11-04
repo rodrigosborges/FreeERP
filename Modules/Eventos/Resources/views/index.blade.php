@@ -20,15 +20,16 @@
             border-radius: 10px;
         }
         
-        .img{
+        .containerImg{
+            display: flex;
+            align-items: center;
+            justify-content: center;
             height: 260px;
-            padding: 5px 5px 5px 5px;
-            background-color: #000;
         }
         
         .info{
             padding: 5px 5px 5px 5px;
-            background-color: #ddd;
+            border-top: 1px solid grey;
         }
         
         h2{
@@ -42,8 +43,6 @@
         img{
             max-height: 250px;
             max-width: 250px;
-            height: auto;
-            width: auto;
         }
     </style>
 @endsection
@@ -64,16 +63,16 @@
                         <input type="text" class="form-control" placeholder="Pesquisar evento"/>
                     </div>
                     <div class="col">
-                        <select name="selecionarEstado" class="form-control">
-                            <option value="TD">Todos os estados</option>
-                            <option value="AC">Acre</option>
-                            <option value="AL">Alagoas</option>
+                        <select name="estado" class="form-control">
+                            <option value="" disabled selected>Todos os estados</option>
+                            @foreach ($estados as $estado)
+                                <option value="{{$estado->id}}">{{$estado->uf}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col">
-                        <select name="selecionarCidade" class="form-control">
-                            <option value="TD">Todas as cidades</option>
-                            <option value="AC">Caraguatatuba</option>
+                        <select name="cidade" class="form-control">
+                            <option value="" disabled selected>Todas as cidades</option>
                         </select>
                     </div>
                     <div class="col" style="float: right;">
@@ -87,22 +86,27 @@
     <!-- EVENTOS -->
     <div class="well">
         <div class="row">
-            <div class="col exibeEvento">
-                <div class="img">
-                    <img src="">
-                    
+            @foreach ($eventos as $evento)
+                <div class="col exibeEvento">
+                    <div class="containerImg">
+                        <div class="img">
+                            @if($evento->imagem != '')
+                                <img src="http://127.0.0.1:8000/storage/eventos/{{$evento->imagem}}">
+                            @else
+                                <img src="http://ulbra-to.br/geda/wp-content/themes/geda/img/miniatura.jpg">
+                            @endif
+                        </div>
+                    </div>
+                    <div class="info">
+                        <a class="text-dark" href="{{route('eventos.detalhar', $evento->id)}}"><h2>{{$evento->nome}}</h2></a>
+                        <p>{{\Carbon\Carbon::parse($evento->dataInicio)->format('d/m/Y')}} - {{$evento->cidade->nomeCidade}}/{{$evento->cidade->estado->uf}}</p>
+                    </div>
                 </div>
-                <div class="info">
-                    <h2>Título evento</h2>
-                    <p>xx/xx - Cidade/UF</p>
-                </div>
-            </div>
-            <div class="col exibeEvento">
-
-            </div>
-            <div class="col exibeEvento">
-
-            </div>
+            @endforeach
         </div>
     </div>
+@endsection
+
+@section('js')
+    
 @endsection

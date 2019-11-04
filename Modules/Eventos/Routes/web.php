@@ -11,6 +11,7 @@
 */
 Route::get('/eventos', 'EventosController@index')->name('eventos.index');
 Route::get('/eventos/exibir', 'EventosController@exibir')->name('eventos.exibir');
+Route::get('/eventos/{id}', 'EventosController@detalhar')->name('eventos.detalhar');
 Route::post('/eventos/cadastrar', 'EventosController@cadastrar')->name('eventos.cadastrar');
 Route::post('/eventos/editar', 'EventosController@editar')->name('eventos.editar');
 Route::delete('/eventos/excluir', 'EventosController@excluir')->name('eventos.excluir');

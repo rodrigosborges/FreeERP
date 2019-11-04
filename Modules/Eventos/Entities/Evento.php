@@ -24,6 +24,10 @@ class Evento extends Model
     public function permissoes(){
         return $this->hasMany(Permissao::class);
     }
+    
+    public function cidade(){
+        return $this->belongsTo(Cidade::class);
+    }
 }
 
 
