@@ -3,6 +3,7 @@
 namespace Modules\AvaliacaoDesempenho\Http\Controllers;
 
 use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\AvaliacaoDesempenho\Entities\Funcionario;
@@ -19,6 +20,8 @@ class ProcessoController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
+
         $this->moduleInfo = [
             'icon' => 'android',
             'name' => 'Avaliacao Desempenho',
@@ -43,6 +46,51 @@ class ProcessoController extends Controller
             'funcionarios' => Funcionario::all(),
         ];
 
+        $processos = Processo::all();
+
+        DB::beginTransaction();
+        try {
+            foreach ($processos as $key => $processo) {
+
+                $definido = 1;
+                $encerrado = 1;
+
+                foreach ($processo->avaliacoes as $key => $avaliacao) {
+
+                    if ($avaliacao->status->id == 1) {
+                        $encerrado = 0;
+                    }
+
+                    if ($avaliacao->status->id == 2 || $avaliacao->status->id == 3 || $avaliacao->status->id == 4) {
+                        $definido = 0;
+                    }
+                }
+
+                if ($definido == 1) {
+                    $processo->update(['status_id' => 1]);
+                }
+                if ($encerrado == 1) {
+                    $processo->update(['status_id' => 3]);
+                }
+                if ($definido == 0 && $encerrado == 0) {
+                    $processo->update(['status_id' => 2]);
+                }
+
+                $data_fim = implode('-', array_reverse(explode('/', $processo->data_fim)));
+
+                if (Carbon::today()->greaterThan($data_fim) && $processo->status->id != 3) {
+                    $processo->update(['status_id' => 4]);
+                }
+            }
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            echo '<pre>';print_r($th->getMessage());exit;
+        }
+
         return view('avaliacaodesempenho::processos/index', compact('moduleInfo', 'menu', 'data'));
     }
 
@@ -63,7 +111,7 @@ class ProcessoController extends Controller
 
         try {
 
-            $input = $request->input('processo');   
+            $input = $request->input('processo');
 
             $processo = Processo::create($input);
 
@@ -127,25 +175,26 @@ class ProcessoController extends Controller
         try {
             $processo = Processo::withTrashed()->findOrFail($id);
 
-            if($processo->trashed()) {
+            if ($processo->trashed()) {
 
                 $processo->restore();
 
                 DB::commit();
-                
+
                 return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo ativado com Sucesso');
 
             } else {
-                
+
                 $processo->delete();
-                
+
                 DB::commit();
 
                 return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo desativado com Sucesso');
             }
 
         } catch (\Throwable $th) {
-            echo '<pre>';print_r($th->getMessage());exit;
+            echo '<pre>';
+            print_r($th->getMessage());exit;
             DB::rollback();
 
             return redirect('/avaliacaodesempenho/processo')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
@@ -178,7 +227,7 @@ class ProcessoController extends Controller
 
         }
         $processos = $processos->get();
-        
+
         $table = view('avaliacaodesempenho::processos/_table', compact('processos'))->render();
         return response()->json(['success' => true, 'html' => $table]);
     }

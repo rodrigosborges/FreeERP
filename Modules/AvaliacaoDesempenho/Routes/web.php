@@ -75,4 +75,6 @@ Route::prefix('avaliacaodesempenho')->group(function() {
     Route::get('/relatorio', 'RelatorioController@index');
 
     Route::post('/ajax/field', 'BaseController@search');
+
+    Route::get('/cron/avisos', 'CronController@avisos');
 });

@@ -22,4 +22,21 @@ class Processo extends Model
     public function status() {
         return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Status', 'status_id');
     }
+
+    // GETTERS E SETTERS
+    public function getDataInicioAttribute() {
+        return date("d/m/Y", strtotime($this->attributes['data_inicio']));
+    }
+
+    public function getDataFimAttribute() {
+        return date("d/m/Y", strtotime($this->attributes['data_fim']));
+    }
+
+    public function setDataInicioAttribute($data) {
+        $this->attributes['data_inicio'] = implode('-', array_reverse(explode('/', $data))) ? : '';
+    }
+
+    public function setDataFimAttribute($data) {
+        $this->attributes['data_fim'] = implode('-', array_reverse(explode('/', $data))) ? : '';        
+    }
 }

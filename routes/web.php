@@ -40,3 +40,7 @@ Route::get('/', function () {
         'menu' => $menu,
     ]);
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

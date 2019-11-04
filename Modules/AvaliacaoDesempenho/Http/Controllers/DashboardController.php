@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
+use Modules\AvaliacaoDesempenho\Entities\Processo;
+use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
+use Modules\AvaliacaoDesempenho\Entities\Funcionario;
+
 class DashboardController extends Controller
 {
     
@@ -14,6 +18,9 @@ class DashboardController extends Controller
     protected $menu;
   
     public function __construct() {
+
+        $this->middleware('auth');
+
         $this->moduleInfo = [
             'icon' => 'android',
             'name' => 'Avaliacao Desempenho',
@@ -35,7 +42,18 @@ class DashboardController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        return view('avaliacaodesempenho::dashboard/index', compact('moduleInfo','menu'));
+        $data = [
+            'processos' => Processo::all(),
+            'avaliacoes' => Avaliacao::all(),
+            'funcionarios' => Funcionario::all(),
+            'processos_abertos' => Processo::where('status_id', '!=', 3)->where('status_id', '!=', 4)->get(),
+            'processos_atrasados' => Processo::where('status_id', 4)->get(),
+            'avaliacoes_abertas' => Avaliacao::where('status_id', '!=', 3)->where('status_id', '!=', 4)->get(),
+            'avaliacoes_atrasadas' => Avaliacao::where('status_id', 4)->get(),
+            'processo_ultimo' => Processo::where('status_id', 3)->orderBy('data_inicio', 'desc')->limit(1)->get()
+        ];
+
+        return view('avaliacaodesempenho::dashboard/index', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function create()

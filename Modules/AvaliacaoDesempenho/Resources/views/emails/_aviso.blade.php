@@ -7,7 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>akhsbdakhbdsakbdakbdsa</h1>
 
+    <h3>Prezado(a) {{ $avaliador->funcionario->nome }}</h3>
+
+    <p>Você possui uma avaliaçâo pendente</p>
+    <p>Faltam {{ $dias }} dias para o prazo final da avaliação</p>
+
+    <a href="http://localhost/tcc/public/avaliacaodesempenho/avaliacao/responder">
+        <p>Visite o link para ter acesso ao questionário</p>
+    </a>
+    
 </body>
 </html>

@@ -60,7 +60,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='processo[data_inicio]' type="text" value="{{ old('processo.data_inicio', isset($data['processo']) ? $data['processo']->data_inicio : '') }}"
+                            <input class="form-control date" name='processo[data_inicio]' type="text" value="{{ old('processo.data_inicio', isset($data['processo']) ? $data['processo']->data_inicio : '') }}"
                                 placeholder="Selecione a data de inicio">
 
                         </div>
@@ -81,7 +81,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='processo[data_fim]' type="date" value="{{ old('processo.data_fim', isset($data['processo']) ? $data['processo']->data_fim : '') }}"
+                            <input class="form-control date" name='processo[data_fim]' type="text" value="{{ old('processo.data_fim', isset($data['processo']) ? $data['processo']->data_fim : '') }}"
                                 placeholder="Selecione a data final">
 
                         </div>

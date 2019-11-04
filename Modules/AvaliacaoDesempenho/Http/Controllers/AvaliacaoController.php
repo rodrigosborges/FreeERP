@@ -21,13 +21,15 @@ use Modules\AvaliacaoDesempenho\Http\Requests\Avaliacao\StoreAvaliacao;
 use Modules\AvaliacaoDesempenho\Http\Requests\Avaliacao\UpdateAvaliacao;
 
 class AvaliacaoController extends Controller
-{
-    
+{  
     protected $moduleInfo;
 
     protected $menu;
   
     public function __construct() {
+        
+        $this->middleware('auth');
+
         $this->moduleInfo = [
             'icon' => 'android',
             'name' => 'Avaliacao Desempenho',
@@ -114,7 +116,13 @@ class AvaliacaoController extends Controller
                     if ($definido == 0 && $encerrado == 0 ) {
                         $avaliacao->update(['status_id' => 2]);
                     }
-                }                
+                }
+
+                $data_fim = implode('-', array_reverse(explode('/', $avaliacao->data_fim)));
+
+                if (Carbon::today()->greaterThan($data_fim) && $avaliacao->status->id != 3) {
+                    $avaliacao->update(['status_id' => 4]);
+                }
             }
 
             DB::commit();
@@ -166,9 +174,9 @@ class AvaliacaoController extends Controller
     
                     if ($funcionario->id != $setor->gestor->id) {
 
-                        $token =  bin2hex(random_bytes(16));
-
-                        $validade = date('Y-m-d', strtotime($input['data_fim']));
+                        $token = bin2hex(random_bytes(16));
+                        
+                        $validade = implode('-', array_reverse(explode('/', $input['data_fim'])));
 
                         $avaliador = Avaliador::create([
                             'funcionario_id' => $funcionario->id, 
@@ -210,9 +218,9 @@ class AvaliacaoController extends Controller
                         ]);
                             
                     } else if ($funcionario->id == $setor->gestor->id) {
-                        $token =  bin2hex(random_bytes(16));
+                        $token = bin2hex(random_bytes(16));
 
-                        $validade =  date('Y-m-d', strtotime($input['data_fim']));
+                        $validade = implode('-', array_reverse(explode('/', $input['data_fim'])));
 
                         $avaliador = Avaliador::create([
                             'funcionario_id' => $funcionario->id,
