@@ -4,6 +4,7 @@ namespace Modules\EstoqueMadeireira\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\Facades\Validator;
 
 class EstoqueMadeireiraServiceProvider extends ServiceProvider
 {
@@ -14,6 +15,9 @@ class EstoqueMadeireiraServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Validator::extend('cpf', 'Modules\EstoqueMadeireira\Validators\cpfValidator@validate');
+        Validator::extend('telefone', 'Modules\EstoqueMadeireira\Validators\telefoneValidator@validate');
+        Validator::extend('cnpj', 'Modules\EstoqueMadeireira\Validators\cpnjValidator@validade');
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();

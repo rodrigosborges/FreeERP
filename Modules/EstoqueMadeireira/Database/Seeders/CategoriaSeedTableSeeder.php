@@ -12,7 +12,7 @@ class CategoriaSeedTableSeeder extends Seeder{
         //'created_at' => ''
       ],
       [  'nome' => 'CategoriaTeste2'
-        //'created_at' => '']
+        //'created_at' => ''
       ],
       [  'nome' => 'CategoriaTeste3'
         //'created_at' => ''

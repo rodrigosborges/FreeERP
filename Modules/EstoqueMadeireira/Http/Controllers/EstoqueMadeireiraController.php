@@ -23,6 +23,7 @@ class EstoqueMadeireiraController extends Controller
             ['icon' => 'shopping_basket', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
             ['icon' => 'class', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
             ['icon' => 'account_circle', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
+            ['icon' => 'attach_money', 'tool' => 'Vendas', 'route' => '/estoquemadeireira/vendas'],
             ['icon' => 'store', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
 
 
@@ -41,46 +42,7 @@ class EstoqueMadeireiraController extends Controller
     }
 
 
-    //TIPO UNIDADE ABAIXO
-
-
-    public function tipoUnidadeindex(){
-        $flag = 0;
-        $tipoUnidade = tipoUnidade::paginate(5);
-        
-
-        return view('estoquemadeireira::tipoUnidade.index', $this->template, compact('tipoUnidade', 'flag'));
-
-    }
-
-    public function tipoUnidadeinativos(){
-        $flag = 1;
-        $tipoUnidade = tipoUnidade::onlyTrashed()->paginate(5);
-
-        return view('estoquemadeireira::tipoUnidade.index', $this->template, compact('tipoUnidade', 'flag'));
-
-
-    }
-
-    public function createTipoUnidade(){
-
-    }
-
-    public function storeTipoUnidade(Request $request){
-
-    }
-
-    public function deleteTipoUnidade($id){
-
-
-    }
-
-    public function editTipoUnidade($id){
-
-    }
-
-    //FIM TIPO UNIDADE
-
+    
 
 
 

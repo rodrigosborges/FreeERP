@@ -51,7 +51,7 @@
                                 <i class="material-icons" style="vertical-align:middle; font-size:25px;">note_add</i>Adicionar 
                             </a>
                             <a href="{{url('/estoquemadeireira/produtos/categorias/inativos')}}" class="btn btn-danger btn-sm mt-2 mb-3">
-                                <i class="material-icons" style="vertical-align:middle; font-size:25px;">delete</i>Categorias Inativas
+                                <i class="material-icons" style="vertical-align:middle; font-size:25px;">delete</i>Inativas
                             </a>
                         @else
                             <a href="{{url('/estoquemadeireira/produtos/categorias')}}" class="btn btn-info btn-sm mt-2 mb-2" >

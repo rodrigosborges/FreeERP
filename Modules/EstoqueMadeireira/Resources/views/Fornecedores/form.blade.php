@@ -51,27 +51,12 @@
 
                         </div>
 
-                        <div class="row col-4 ml-2">
+                        <div class="row mt-2 ml2">
                             <div class="form-group">
-                                <label for="categoria">Categoria</label>
-                                <select class="form-control" name="categoria_id">
-                                    @if(isset($produto))
-                                        @foreach($categorias as $categoria)
-                                            @if($categoria->id == $produto->categoria_id)
-                                                <option value="{{$categoria->id}}" selected>{{$categoria->nome}}</option>
-                                            @else
-                                                <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        <option disabled value="" selected>Selecione uma Categoria</option>
-                                            @foreach($categorias as $categoria)
-                                                <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
-                                            @endforeach
-                                    @endif
-                                </select>
-                                {{$errors->first('categoria_id')}}            
+
                             </div>
+                        
+                        
                         </div>
                     
                         <div class="row col-8 mb-2" style="justify-content: flex-end;">
@@ -95,8 +80,6 @@
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script> 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-
 
 <script type="text/javascript">
 	$(document).ready(function(){	
@@ -109,15 +92,6 @@
          
         })
 	});
-
-    $("#formulario").validade({
-        rules: {
-            'nome': {
-                maxlength: 2,
-            }
-        },
-        messeges: {}
-    })
 
     function validaCnpj(e){
         $("#alert").hide();
@@ -135,7 +109,7 @@
     function validaTelefone(e){
         $("#alert").hide()
             e.preventDefault()
-            var valida =  (\([0-9]{2}\))\s([9]{1})?([0-9]{4})-([0-9]{4})
+            var valida = (/^1\d\d(\d\d)?$|^0800 ?\d{3} ?\d{4}$|^(\(0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d\) ?|0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d[ .-]?)?(9|9[ .-])?[2-9]\d{3}[ .-]?\d{4}$/gm)
             if(valida.test($("telefone").val()))
                 $("#formulario").submit()
             else {
