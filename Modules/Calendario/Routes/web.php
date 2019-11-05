@@ -25,11 +25,14 @@ Route::post('/calendario/agendas', 'AgendaController@salvar')->name('agendas.sal
 Route::get('/calendario/agendas/{agenda}/eventos', 'AgendaController@eventos')->name('agendas.eventos.index');
 Route::delete('/calendario/agendas/{agenda}', 'AgendaController@deletar')->name('agendas.deletar');
 
-Route::get('/calendario/convites/{convite}/aceitar', 'EventoController@aceitar_convite')->name('convites.aceitar');
+Route::get('/calendario/convites/{convite}', 'EventoController@convites')->name('convites.ver');
+Route::get('/calendario/convites/{convite}/aceitar', 'EventoController@aceitarConvite')->name('convites.aceitar');
+Route::get('/calendario/convites/{convite}/revogar', 'EventoController@revogarConvite')->name('convites.revogar');
+Route::get('/calendario/convites/{convite}/deletar', 'EventoController@deletarConvite')->name('convites.deletar');
 
-Route::get('/calendario/compartilhamentos/{compartilhamento}/aprovar', 'AgendaController@aprovar_compartilhamento')->name('compartilhamentos.aprovar');
-Route::get('/calendario/compartilhamentos/{compartilhamento}/negar', 'AgendaController@negar_compartilhamento')->name('compartilhamentos.negar');
-Route::get('/calendario/compartilhamentos/{compartilhamento}/revogar', 'AgendaController@revogar_aprovacao')->name('compartilhamentos.revogar');
+Route::get('/calendario/compartilhamentos/{compartilhamento}/aprovar', 'AgendaController@aprovarCompartilhamento')->name('compartilhamentos.aprovar');
+Route::get('/calendario/compartilhamentos/{compartilhamento}/deletar', 'AgendaController@negarCompartilhamento')->name('compartilhamentos.deletar');
+Route::get('/calendario/compartilhamentos/{compartilhamento}/revogar', 'AgendaController@revogarAprovacao')->name('compartilhamentos.revogar');
 
 Route::get('/calendario/agendas/eventos/criar', 'EventoController@criarOuEditar')->name('eventos.criar');
 Route::get('/calendario/agendas/eventos/{evento}', 'EventoController@criarOuEditar')->name('eventos.editar');

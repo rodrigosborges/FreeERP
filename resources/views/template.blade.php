@@ -91,7 +91,6 @@
             margin-top: 64px;
             background-color: #FFF;
             display: none;
-            width: 300px;
             position: absolute;
             top: 0;
             right: 0;
@@ -106,17 +105,21 @@
             list-style-type: none;
         }
 
-        #notificacoes ul li{
+        #notificacoes ul li {
             margin-bottom: 10px;
         }
 
-        .badge-notifications{
+        #notificacoes ul li a {
+            margin-left: 10px;
+        }
+
+        .badge-notifications {
             position: relative;
             top: -20px;
             left: -20px;
         }
 
-        #notificacao:hover{
+        #notificacao:hover {
             text-decoration: none;
         }
     </style>
@@ -125,12 +128,18 @@
 <body>
 <div id="notificacoes" class="shadow-sm">
     <ul>
-        <li>Notificação 1
-            <span class="float-right">x</span>
-        </li>
-        <li>Notificação 2
-            <span class="float-right">x</span>
-        </li>
+        @foreach(auth()->user()->unreadNotifications as $notificacao)
+            <li>
+                @if($notificacao->type == 'Modules\Calendario\Notifications\NotificarConviteParaEvento' && \Modules\Calendario\Entities\Convite::where('id', $notificacao->data['convite_id'])->count() > 0)
+                    <a href="{{route('convites.ver', \Modules\Calendario\Entities\Convite::find($notificacao->data['convite_id'])->id)}}">
+                        {{\Modules\Calendario\Entities\Convite::find($notificacao->data['convite_id'])->evento->agenda->funcionario->nome}}
+                        convidou você para um evento.
+                    </a>
+                    <a href="#" class="float-right">X</a>
+                @endif
+
+            </li>
+        @endforeach
     </ul>
 </div>
 <div class="d-flex">
@@ -157,7 +166,9 @@
             <div class="d-flex align-items-center">
                 <a href="#" id="notificacao">
                     <i class="material-icons btn-circle">notifications</i>
-                    <span class="badge badge-pill badge-secondary badge-notifications">4</span>
+                    <span class="badge badge-pill badge-secondary badge-notifications">
+                        {{auth()->user()->unreadNotifications->count()}}
+                    </span>
                 </a>
                 <i class="material-icons mr-2 btn-circle">apps</i>
                 <i class="material-icons btn-circle">person</i>
@@ -218,9 +229,11 @@
     }
 
     $(function () {
-        $('#notificacao').click(function () {
-            $('#notificacoes').toggle();
-        });
+        if('{{auth()->user()->unreadNotifications->count()}}' > 0){
+            $('#notificacao').click(function (e) {
+                $('#notificacoes').toggle();
+            });
+        }
     });
 </script>
 @yield('js')

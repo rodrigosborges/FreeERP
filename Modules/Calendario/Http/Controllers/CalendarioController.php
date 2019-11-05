@@ -5,7 +5,6 @@ namespace Modules\Calendario\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Modules\Calendario\Entities\Convite;
 use Modules\Calendario\Entities\Funcionario;
 
 class CalendarioController extends Controller

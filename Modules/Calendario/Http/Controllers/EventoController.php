@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
 use Modules\Calendario\Entities\Agenda;
 use Modules\Calendario\Entities\Convite;
 use Modules\Calendario\Entities\Evento;
@@ -16,7 +16,7 @@ use Modules\Calendario\Entities\Funcionario;
 use Modules\Calendario\Entities\Notificacao;
 use Modules\Calendario\Events\EventoCriado;
 use Modules\Calendario\Notifications\NotificarConviteParaEvento;
-use Modules\Calendario\Notifications\NotificarEventoProximo;
+use function Sodium\add;
 
 class EventoController extends Controller
 {
@@ -163,35 +163,47 @@ class EventoController extends Controller
         return redirect()->route('agendas.eventos.index', $evento->agenda->id)->with('success', 'Evento deletado com sucesso.');
     }
 
-    public function convites()
+    public function convites(Convite $convite = null)
     {
-        $convites['pendentes'] = Convite::where('status', null)->where('funcionario_id', Auth::id())->whereHas('evento', function (Builder $query) {
-            $query->whereHas('agenda', function (Builder $query) {
-                $query->where('deleted_at', '=', null);
-            });
-        })->get();
-        $convites['definidos'] = Convite::where('status', '<>', null)->where('funcionario_id', Auth::id())->whereHas('evento', function (Builder $query) {
+        if (!$convite) {
+            $convites['pendentes'] = Convite::where('status', null)->where('funcionario_id', Auth::id())->whereHas('evento', function (Builder $query) {
                 $query->whereHas('agenda', function (Builder $query) {
                     $query->where('deleted_at', '=', null);
                 });
             })->get();
+            $convites['definidos'] = Convite::where('status', '<>', null)->where('funcionario_id', Auth::id())->whereHas('evento', function (Builder $query) {
+                $query->whereHas('agenda', function (Builder $query) {
+                    $query->where('deleted_at', '=', null);
+                });
+            })->get();
+        }
+        else{
+            $convites['definidos'] = new Collection();
+            $convites['pendentes'] = new Collection();
+            if($convite->status)
+                $convites['definidos']->add($convite);
+            else
+                $convites['pendentes']->add($convite);
+        }
         return view('calendario::eventos.convites', ['convites' => $convites]);
     }
 
-    public function aceitar_convite(Convite $convite)
+    public function aceitarConvite(Convite $convite)
     {
         $convite->status = true;
         $convite->save();
-        return redirect()->back()->with('success', 'Convite aceito com sucesso.');
+        return redirect()->route('convites.index')->with('success', 'Convite aceito com sucesso.');
     }
 
-    public function notificar()
-    {
-        $funcionario = Funcionario::find(1);
-        $users[] = $funcionario->user;
-        $convite = new NotificarEventoProximo(Evento::find(1));
-        Notification::send($users, $convite);
-        return 'Notificado';
+    public function deletarConvite(Convite $convite){
+        $convite->delete();
+        return redirect()->route('convites.index')->with('success', 'Convite deletado com sucesso.');
+    }
+
+    public function revogarConvite(Convite $convite){
+        $convite->status = null;
+        $convite->save();
+        return redirect()->route('convites.index')->with('success', 'Convite revogado com sucesso.');
     }
 
     private function formatar_data($data)

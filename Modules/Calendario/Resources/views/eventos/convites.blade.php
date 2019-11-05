@@ -6,7 +6,7 @@
     @parent
     <div class="container">
         <h2>Convites</h2>
-        @if(!$convites['pendentes'] && !$convites['definidos'])
+        @if($convites['pendentes']->isEmpty() && $convites['definidos']->isEmpty())
             <p>Não há nenhum convite para evento.</p>
         @endif
         @if($convites['pendentes']->isNotEmpty())
@@ -41,8 +41,8 @@
                         @endif
                         <td>{{$convite->evento->agenda->funcionario->nome}}</td>
                         <td class="acoes">
-                            <a href="{{route('convites.aceitar', $convite->id)}}" class="btn btn-secondary btn-sm text-white small">
-                                <i class="material-icons">thumb_down</i>
+                            <a href="{{route('convites.deletar', $convite->id)}}" class="btn btn-secondary btn-sm text-white small">
+                                <i class="material-icons">delete</i>
                             </a>
                             <a href="{{route('convites.aceitar', $convite->id)}}" class="btn btn-success btn-sm text-white small">
                                 <i class="material-icons">thumb_up</i>
@@ -55,7 +55,7 @@
         @endif
 
         @if($convites['definidos']->isNotEmpty())
-            <p class="text-secondary">Aceitos e recusados:</p>
+            <p class="text-secondary">Aceitos e/ou recusados:</p>
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
@@ -86,7 +86,9 @@
                         @endif
                         <td>{{$convite->evento->agenda->funcionario->nome}}</td>
                         <td class="acoes">
-
+                            <a href="{{route('convites.revogar', $convite->id)}}" class="btn btn-info btn-sm text-white small">
+                                <i class="material-icons">redo</i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

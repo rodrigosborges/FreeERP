@@ -29,8 +29,8 @@
                         <td>{{$solicitacao->setor->sigla}}</td>
                         <td>{{$solicitacao->agenda->funcionario->nome}}</td>
                         <td class="acoes">
-                            <a href="{{route('compartilhamentos.negar', $solicitacao)}}" class="btn btn-secondary btn-sm text-white">
-                                <i class="material-icons">clear</i>
+                            <a href="{{route('compartilhamentos.deletar', $solicitacao)}}" class="btn btn-secondary btn-sm text-white">
+                                <i class="material-icons">delete</i>
                             </a>
                             <a href="{{route('compartilhamentos.aprovar', $solicitacao)}}" class="btn btn-success btn-sm text-white">
                                 <i class="material-icons">done</i>

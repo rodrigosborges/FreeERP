@@ -132,19 +132,19 @@ class AgendaController extends Controller
         return view('calendario::agendas.compartilhamentos', ['solicitacoes' => $solicitacoes]);
     }
 
-    public function aprovar_compartilhamento(Compartilhamento $compartilhamento){
+    public function aprovarCompartilhamento(Compartilhamento $compartilhamento){
         $aprovacao = new Aprovacao();
         $aprovacao->funcionario()->associate(Funcionario::where('user_id', Auth::id())->first());
         $compartilhamento->aprovacao()->save($aprovacao);
         return redirect()->back()->with('success', 'Compartilhamento aprovado com sucesso.');
     }
 
-    public function negar_compartilhamento(Compartilhamento $compartilhamento){
+    public function negarCompartilhamento(Compartilhamento $compartilhamento){
         $compartilhamento->delete();
         return redirect()->back()->with('success', 'Compartilhamento negado com sucesso.');
     }
 
-    public function revogar_aprovacao(Compartilhamento $compartilhamento){
+    public function revogarAprovacao(Compartilhamento $compartilhamento){
         $compartilhamento->aprovacao()->delete();
         return redirect()->back()->with('success', 'Compartilhamento revogado com sucesso.');
     }
