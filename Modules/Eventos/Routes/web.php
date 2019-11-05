@@ -11,9 +11,11 @@
 */
 Route::get('/eventos', 'EventosController@index')->name('eventos.index');
 Route::get('/eventos/exibir', 'EventosController@exibir')->name('eventos.exibir');
+Route::get('/eventos/inscricoes', 'EventosController@inscricoes')->name('eventos.inscricoes');
 Route::get('/eventos/detalha/{id}', 'EventosController@detalhar')->name('eventos.detalhar');
 Route::post('/eventos/cadastrar', 'EventosController@cadastrar')->name('eventos.cadastrar');
 Route::post('/eventos/editar', 'EventosController@editar')->name('eventos.editar');
+Route::get('/eventos/inscricao/{id}', 'EventosController@inscricao')->name('eventos.inscricao');
 Route::delete('/eventos/excluir', 'EventosController@excluir')->name('eventos.excluir');
 
 Route::get('/eventos/programacao/{id}', 'ProgramacaoController@exibir')->name('programacao.exibir');

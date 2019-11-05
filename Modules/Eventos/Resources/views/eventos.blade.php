@@ -27,6 +27,7 @@
         <h1 style="text-align: center;">Eventos</h1>
     </div>
     <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" align="right">
+        <a href="{{route('eventos.inscricoes')}}"></a>
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEvento" onclick="cadastrar()">Adicionar</button>
     </div>
     <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px;">

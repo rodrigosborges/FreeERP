@@ -80,7 +80,7 @@
                         <p style="margin-bottom: 0px;">{{$atividade->vagas}} vagas</p>
                     </div>
                     <div class="col-flex" style="display: flex; align-items: center; justify-content: center;">
-                        <button class="btn btn-success">Inscreva-se</button>
+                        <a class="btn btn-success" href="{{route('eventos.inscricao', $atividade->id)}}">Inscreva-se</a>
                     </div>
                 </div>
             

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Modules\Eventos\Entities\Evento;
 use Modules\Eventos\Entities\Estado;
 use Modules\Eventos\Entities\Permissao;
+use Modules\Eventos\Entities\Programacao;
 use Modules\Eventos\Entities\Nivel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
@@ -133,6 +134,26 @@ class EventosController extends Controller
     public function detalhar($id){
         $evento = Evento::find($id);
         $programacao = $evento->programacao;
+        
+        return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]); 
+    }
+    
+    public function inscricao($id)
+    {    
+        $evento = Programacao::find($id)->evento()->get('id')->first();
+        $permissao = new Permissao();
+        $permissao->evento()->associate($evento);
+        $permissao->nivel()->associate(Nivel::find(1));
+        $permissao->pessoa()->associate(Auth::user());
+        $permissao->programacao()->associate($id);
+
+        $permissao->save();
+        
+        return redirect()->route('eventos.detalhar', ['evento' => $evento]);
+    }
+    
+    public function inscricoes($id){
+        
         
         return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]); 
     }
