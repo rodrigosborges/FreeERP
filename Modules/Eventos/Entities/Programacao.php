@@ -20,4 +20,8 @@ class Programacao extends Model
     {
         return $this->belongsTo(Palestrante::class);
     }
+
+    public function participantes(){
+        return $this->belongsToMany(Pessoa::class, 'evento_has_participante');
+    }
 }

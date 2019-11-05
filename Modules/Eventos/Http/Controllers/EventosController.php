@@ -134,27 +134,20 @@ class EventosController extends Controller
     public function detalhar($id){
         $evento = Evento::find($id);
         $programacao = $evento->programacao;
-        
         return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]); 
     }
     
-    public function inscricao($id)
-    {    
-        $evento = Programacao::find($id)->evento()->get('id')->first();
-        $permissao = new Permissao();
-        $permissao->evento()->associate($evento);
-        $permissao->nivel()->associate(Nivel::find(1));
-        $permissao->pessoa()->associate(Auth::user());
-        $permissao->programacao()->associate($id);
+    public function inscricao(Programacao $programacao)
+    {
+        if($programacao->participantes()->where('pessoa_id', Auth::id())->first())
+            $programacao->participantes()->detach(Auth::id());
+        else
+            $programacao->participantes()->attach(Auth::id());
 
-        $permissao->save();
-        
-        return redirect()->route('eventos.detalhar', ['evento' => $evento]);
+        return redirect()->route('eventos.detalhar', ['evento' => $programacao->evento]);
     }
     
     public function inscricoes($id){
-        
-        
         return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]); 
     }
     

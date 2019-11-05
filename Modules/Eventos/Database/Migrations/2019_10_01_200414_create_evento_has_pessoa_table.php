@@ -21,8 +21,8 @@ class CreateEventoHasPessoaTable extends Migration
             $table->foreign('pessoa_id')->references('id')->on('pessoa')->onDelete('CASCADE');
             $table->integer('nivel_id')->unsigned();
             $table->foreign('nivel_id')->references('id')->on('nivel')->onDelete('CASCADE');
-            $table->integer('programacao_id')->unsigned()->nullable();
-            $table->foreign('programacao_id')->references('id')->on('programacao')->onDelete('CASCADE');
+            //$table->integer('programacao_id')->unsigned()->nullable();
+            //$table->foreign('programacao_id')->references('id')->on('programacao')->onDelete('CASCADE');
             $table->timestamps();
         });
     }
