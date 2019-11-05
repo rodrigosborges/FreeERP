@@ -25,17 +25,17 @@
     
     <ul class="nav justify-content-center nav-tabs nav-justified">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" id="pagos-tab" role="tab" href="#pagos" aria-selected="true">Pagos</a>
+            <a class="nav-link active" data-toggle="tab"  id="pagos-tab" role="tab" href="#pagos" aria-selected="true">Pagos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" id="pendentes-tab" href="#pendentes" role="tab" aria-selected="false">Pendentes</a>
+            <a class="nav-link" data-toggle="tab"  id="pendentes-tab" href="#pendentes" role="tab" aria-selected="false">Pendentes</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="pagos" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane fade show active" data-status="Pago" id="pagos" role="tabpanel" aria-labelledby="home-tab">
           
         </div>
-        <div class="tab-pane fade" id="pendentes" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade" id="pendentes" data-status="Pendente"  role="tabpanel" aria-labelledby="profile-tab">
            
         </div>
     </div>
@@ -46,41 +46,38 @@
 @stop
 @section('js')
 <script>
-    table('Pago', 'pagos')
+    
     var inicio = '';
     var fim = '';
-    $('#pagos-tab').click(function(){
-        inicio = $("[name='data-inicio']").val();
-        fim = $("[name='data-final']").val();
+    var page = '';
+    table('Pago', 'pagos')
+    $(document).on('click', '#pagos-tab',  function(){
         table('Pago', 'pagos') 
     })
     $(document).on('click', '#pendentes-tab', function(){
-        inicio = $("[name='data-inicio']").val();
-        fim = $("[name='data-final']").val();
         table('Pendente', 'pendentes') 
-    })
-    
-    $(document).on('click', '#filtrar', function(e){
-        e.preventDefault();
-        inicio = $("[name='data-inicio']").val();
-        fim = $("[name='data-final']").val();
-        table(main_url+'/assistencia/pagamento/table/')
     })
     $(document).on('click','.page-link', function(e){
         e.preventDefault();
-        var status = $(this).closest('.tab-pane').attr('id')
-        tabela(status, $(this).attr('href')+'&inicio='+inicio+'&fim='+fim)
+        var id = $(this).closest('.tab-pane').attr('id')
+        var status = $(this).closest('.tab-pane').attr('data-status')
+        var page = $(this).attr('href').split('=')
+        table(status,id,page[1])
+        
     })
-    $("#filtrar").on("click", function () {
+   
+   $(document).on('click', '#filtrar', function() {
+        table('Pago', 'pagos')
+        table('Pendente', 'pendentes') 
+
+   })
+    function table(status, id, page=null) {
         inicio = $("[name='data-inicio']").val();
         fim = $("[name='data-final']").val();
-        tabela('Pago','pagos',main_url+'/assistencia/pagamento/table/'+status'&inicio='+inicio+'&fim='+fim);
-        tabela('Pendente','pendentes',main_url+'/assistencia/pagamento/table/'+status'&inicio='+inicio+'&fim='+fim);
-    });
-    function table(status, id, url) {
-       $.get(main_url+'/assistencia/pagamento/table/'+status'&inicio='+inicio+'&fim='+fim, function(tabela){
-            $('#'+id).html(tabela)
-       })
+        console.log('asfas')
+        $.get(main_url+'/assistencia/pagamento/table/'+status+'?page='+page+'&inicio='+inicio+'&fim='+fim, function(tabela){
+                $('#'+id).html(tabela)
+        })
         
     }
 </script>

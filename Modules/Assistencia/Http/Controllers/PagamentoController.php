@@ -19,13 +19,15 @@ class PagamentoController extends Controller
         return view('assistencia::paginas.pagamentos.localizarPagamentos');
     }
     public function table(Request $req, $status){
-        $pagamentos = PagamentoAssistenciaModel::where('status', $status)->paginate(10);
+        $pagamentos = PagamentoAssistenciaModel::where('status', $status);
 
         if($req->inicio)
-            return 'asfas';
-        if($req->fim)
-            return 'teste';
+            $pagamentos = $pagamentos->where('updated_at', '>=', $req->inicio);
 
+        if($req->fim)
+            $pagamentos = $pagamentos->where('updated_at', '<=', $req->fim);
+
+        $pagamentos = $pagamentos->paginate(10);
 
         return view('assistencia::paginas.pagamentos.table', compact('pagamentos'));
 
