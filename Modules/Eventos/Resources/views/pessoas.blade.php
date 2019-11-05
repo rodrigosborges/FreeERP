@@ -38,101 +38,27 @@
                     <tr>
                         <th class="text-center">Nome</th>
                         <th class="text-center">E-mail</th>
-                        <th class="text-center">Telefone</th>
+                        <th class="text-center">Inscrito(a) em</th>
                         <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($evento->pessoas as $evento_pessoa)
-                        @if(!$evento_pessoa->id == auth::id())
+                    @foreach($evento->programacao as $atividade)
+                        @foreach($atividade->participantes as $pessoa)
                             <tr>
-                                <td class="text-center align-middle">{{$evento_pessoa->nome}}</td>
-                                <td class="text-center align-middle">{{$evento_pessoa->email}}</td>
-                                <td class="text-center align-middle">{{$evento_pessoa->telefone}}</td>
+                                <td class="text-center align-middle">{{$pessoa->nome}}</td>
+                                <td class="text-center align-middle">{{$pessoa->email}}</td>
+                                <td class="text-center align-middle">{{$atividade->nome}}</td>
                                 <td class="text-center align-middle">
-                                    <button class="btn btn-xs" data-toggle="modal" data-target="#modalEditarPessoa" data-id="{{$evento_pessoa->id}}" data-nome="{{$evento_pessoa->nome}}" data-email="{{$evento_pessoa->email}}" data-telefone="{{$evento_pessoa->telefone}}"><i class="material-icons">edit</i></button>
-                                    <button class="btn btn-xs" data-toggle="modal" data-target="#modalExcluirPessoa" data-id="{{$evento_pessoa->id}}" data-nome="{{$evento_pessoa->nome}}"><i class="material-icons">delete</i></button>
+                                    <button title="Remover" class="btn btn-xs" data-toggle="modal" data-target="#modalExcluirPessoa" data-id="{{$pessoa->id}}" data-nome="{{$pessoa->nome}}" data-atividade="{{$atividade->id}}"><i class="material-icons">delete</i></button>
                                 </td> 
                             </tr>
-                        @endif
+                        @endforeach
                     @endforeach
                 </tbody>
             </table>
         </div>
-        @endif
-        
-        <!-- Modal para cadastrar pessoa-->
-        <form method="post" action="{{route('pessoas.cadastrar')}}">
-            {{ csrf_field() }}
-            <div class="modal fade" id="modalCadastrarPessoa" tabindex="-1" role="dialog" aria-labelledby="modalCadastrarPessoa" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="tituloModal">Cadastrar Pessoa</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <!-- Passa o id do evento em que a pessoa está sendo cadastrada -->
-                                <input type="hidden" name="eventoId" value="{{$evento->id}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="col-form-label">E-mail:</label>
-                                <input type="text" class="form-control" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-form-label">Nome:</label>
-                                <input type="text" class="form-control" name="nome" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="telefone" class="col-form-label">Telefone:</label>
-                                <input type="text" class="form-control" name="telefone" id="telefone">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-primary">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        
-        <!-- Modal para editar pessoa-->
-        <form method="post" action="{{route('pessoas.editar')}}">
-            {{ csrf_field() }}
-            <div class="modal fade" id="modalEditarPessoa" tabindex="-1" role="dialog" aria-labelledby="modalEditarPessoa" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="tituloModal">Editar Pessoa</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <!-- Passa o id do evento em que a pessoa está sendo alterada e o id da pessoa -->
-                                <input type="hidden" name="eventoId" value="{{$evento->id}}">
-                                <input type="hidden" name="id" id="id">
-                            </div>
-                            <div class="form-group">
-                                <label for="nome" class="col-form-label">Nome:</label>
-                                <input type="text" class="form-control" name="nome" id="nome" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="col-form-label">E-mail:</label>
-                                <input type="text" class="form-control" name="email" id="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="telefone" class="col-form-label">Telefone:</label>
-                                <input type="text" class="form-control" name="telefone" id="telefone">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
+        @endif        
         
         <!-- Modal de confirmação de exclusão -->
         <form method="POST" action="{{route('pessoas.excluir')}}">
@@ -144,9 +70,9 @@
                             <h5 class="modal-title" id="tituloModal">Excluir Pessoa</h5>
                         </div>
                         <div class="modal-body">
-                            <!-- Passa o id do evento e o id da pessoa para excluir-->
-                            <input type="hidden" name="eventoId" value="{{$evento->id}}">
+                            <!-- Passa o id da atividade e da id da pessoa para excluir-->
                             <input type="hidden" name="id" id="id">
+                            <input type="hidden" name="AtividadeId" id="AtividadeId">
                             <p></p>
                         </div>
                         <div class="modal-footer">
@@ -188,41 +114,15 @@
     <script>
         $('#modalCadastrarPessoa').on('show.bs.modal');
         
-        $('#modalEditarPessoa').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            //RECEBE VALORES DOS ATRIBUTOS DATA
-            var id = button.data('id');
-            var nome = button.data('nome');
-            var email = button.data('email');
-            var telefone = button.data('telefone'); 
-            //ATUALIZA O CONTEÚDO DO MODAL
-            var modal = $(this);
-            modal.find('.modal-body #id').val(id);
-            modal.find('.modal-body #nome').val(nome);
-            modal.find('.modal-body #email').val(email);
-            modal.find('.modal-body #telefone').val(telefone); 
-        });
-        
         $('#modalExcluirPessoa').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var id = button.data('id');
             var nome = button.data('nome');
+            var AtividadeId = button.data('atividade');
             var modal = $(this);
             modal.find('.modal-body #id').val(id);
-            modal.find('.modal-body p').text('Tem certeza que deseja excluir ' + nome + ' desse evento?');
-        });
-        
-        $('.modal-body [name=email]').focusout(function(){
-            var email = $('.modal-body [name=email]').val();
-            $.get('/eventos/pessoas/get-pessoa/' + email, function(pessoa) {
-                $.each(pessoa, function (index, value){
-                    if (pessoa.length === 1){
-                        $('.modal-body [name=nome]').val(value.nome);
-                        $('#modalCadastrarPessoa .modal-body [name=telefone]').val(value.telefone);
-                    }
-                });
-                
-            });
+            modal.find('.modal-body #AtividadeId').val(AtividadeId);
+            modal.find('.modal-body p').text('Tem certeza que deseja remover a inscrição de ' + nome + ' dessa atividade?');
         });
     </script>
     

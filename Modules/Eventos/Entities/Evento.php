@@ -28,6 +28,16 @@ class Evento extends Model
     public function cidade(){
         return $this->belongsTo(Cidade::class);
     }
+    
+    //RETORNA TODOS OS PARTICIPANTES DE UM EVENTO
+    public function participantes()
+    {
+        $programacao = $this->programacao()->get();
+        foreach($programacao as $atividade){
+            $participantes[] = $atividade->participantes;
+        }
+        return $participantes;
+    }
 }
 
 

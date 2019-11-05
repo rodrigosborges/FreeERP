@@ -135,6 +135,17 @@
                             </button>
                         </div>
                     @endif
+                    
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    
                     @yield('content')
                 </div>
                 <div class="d-flex align-items-center" id="footer">
@@ -227,7 +238,6 @@
                     field.mask(SPMaskBehavior.apply({}, arguments), options);
                 }
             };
-
             $(function() {
                 $('[name=telefone]').mask(SPMaskBehavior, spOptions);
             });

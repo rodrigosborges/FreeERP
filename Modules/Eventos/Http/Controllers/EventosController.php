@@ -6,15 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Eventos\Entities\Evento;
 use Modules\Eventos\Entities\Estado;
 use Modules\Eventos\Entities\Permissao;
 use Modules\Eventos\Entities\Programacao;
-use Modules\Eventos\Entities\Nivel;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Builder;
 use Modules\Eventos\Entities\Pessoa;
+use Modules\Eventos\Entities\Nivel;
+use Modules\Eventos\Http\Requests\SalvaEvento;
 use Carbon\Carbon;
+
 
 class EventosController extends Controller
 {
@@ -32,16 +34,17 @@ class EventosController extends Controller
         return view('eventos::index', ['eventos' => $eventos,'estados' => $estados]);
     }
     
-    public function exibir(){
+    public function exibir()
+    {        
         $eventos = Evento::whereHas('permissoes', function (Builder $query){
-            $query->where('nivel_id', '=', 3)->orWhere('nivel_id', '=', 2);
+            $query->where('pessoa_id', '=', auth::id());
         })->get();
         $estados = Estado::all();
         $pessoas = Pessoa::all();
         return view('eventos::eventos', ['eventos' => $eventos,'estados' => $estados, 'pessoas' => $pessoas]);
     }
     
-    public function cadastrar(Request $request)
+    public function cadastrar(SalvaEvento $request)
     {
         try{
             $evento = new Evento();
@@ -69,7 +72,7 @@ class EventosController extends Controller
             
             $permissao = new Permissao();
             $permissao->evento()->associate($evento);
-            $permissao->nivel()->associate(Nivel::find(3));
+            $permissao->nivel()->associate(Nivel::find(2));
             $permissao->pessoa()->associate(Auth::user());
             
             $permissao->save();
@@ -79,7 +82,7 @@ class EventosController extends Controller
                 foreach ($organizadores as $pessoa_id){
                     $permissao = new Permissao();
                     $permissao->evento()->associate($evento);
-                    $permissao->nivel()->associate(Nivel::find(2));
+                    $permissao->nivel()->associate(Nivel::find(1));
                     $permissao->pessoa()->associate($pessoa_id);
                     $permissao->save();
                 }
@@ -138,24 +141,15 @@ class EventosController extends Controller
         return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]); 
     }
     
-    public function inscricao($id)
+    public function inscricao(Programacao $programacao)
     {    
-        $evento = Programacao::find($id)->evento()->get('id')->first();
-        $permissao = new Permissao();
-        $permissao->evento()->associate($evento);
-        $permissao->nivel()->associate(Nivel::find(1));
-        $permissao->pessoa()->associate(Auth::user());
-        $permissao->programacao()->associate($id);
+        if ($programacao->participantes()->where('pessoa_id', Auth::id())->first()) {
+            $programacao->participantes()->detach(Auth::id());
+        } else {
+            $programacao->participantes()->attach(Auth::id());
+        }
 
-        $permissao->save();
-        
-        return redirect()->route('eventos.detalhar', ['evento' => $evento]);
-    }
-    
-    public function inscricoes($id){
-        
-        
-        return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]); 
+        return redirect()->route('eventos.detalhar', ['evento' => $programacao->evento]);
     }
     
     public function getEvento($id){

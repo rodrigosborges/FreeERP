@@ -18,4 +18,9 @@ class Pessoa extends Authenticatable
     {
         return $this->belongsToMany(Evento::class, 'evento_has_pessoa', 'pessoa_id', 'evento_id');
     }
+    
+    public function atividades()
+    {
+        return $this->belongsToMany(Programacao::class, 'evento_has_participante');
+    }
 }

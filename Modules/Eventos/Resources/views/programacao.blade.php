@@ -286,18 +286,6 @@
             $('#modalExcluirAtividade [name=id]').val(id);
             $('#modalExcluirAtividade p').text('Tem certeza que deseja excluir ' + nome + '?'); 
         }
-        
-        //VERIFICA SE A DATA DIGITADA É MENOR QUE A DATA ATUAL
-        $('.modal-body [name=data]').change(function(event) { 
-            var dataAtividade = $('.modal-body [name=data]').val();
-            $.get( "/eventos/get-data/", function( data ) {
-                if (dataAtividade < data){
-                    alert('Digite uma data válida');
-                }else{
-                    alert('ok');
-                }
-            });
-        });
     </script>
     
     <!-- Preview da imagem -->

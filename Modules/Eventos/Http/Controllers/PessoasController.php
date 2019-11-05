@@ -5,8 +5,9 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Eventos\Entities\Evento;
 use Modules\Eventos\Entities\Pessoa;
+use Modules\Eventos\Entities\Programacao;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
+
 class PessoasController extends Controller
 {
     /**
@@ -28,43 +29,11 @@ class PessoasController extends Controller
     
     function exibir(Request $request)
     {
-        $eventoId = $request->evento;
-        $evento = Evento::find($eventoId);
+        $evento = Evento::find($request->evento);
+        
         return view('eventos::pessoas', ['evento' => $evento, 'eventos' => []]);
     }
-    
-    function cadastrar(Request $request)
-    {
-        try{
-            $pessoa = new Pessoa();
-            $pessoa->nome = $request->nome;
-            $pessoa->email = $request->email;
-            $pessoa->save();
-            $pessoa->eventos()->attach($request->eventoId);
-        } catch (\Exception $e){
-            return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
-                ->with('error', 'Falha ao adicionar ' . $request->nome . ': ' . $e->getMessage());
-        }
         
-        
-        return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
-            ->with('success', $request->nome . ' adicionado(a) com sucesso.');
-    }
-    
-    public function editar(Request $request)
-    {
-        try{
-            $pessoa = Pessoa::find($request->id);
-            $pessoa->update(['nome' => $request-> nome, 'email' => $request->email]);
-        } catch (\Exception $e) {
-            return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
-                ->with('error', 'Falha ao alterar ' . $request->nome . ': ' . $e->getMessage());
-        }
-        
-        return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
-            ->with('success', $request->nome . ' alterado(a) com sucesso.');
-    }
-    
     /* 
     * A função excluir não exclui a pessoa de fato, pois ela pode participar de mais de um evento,
     * e sim o relacionamento na tabela pivot que relaciona a pessoa ao evento
@@ -72,24 +41,16 @@ class PessoasController extends Controller
     public function excluir(Request $request)
     {
         try{
+            $programacao = Programacao::find($request->AtividadeId);
+            $programacao->participantes()->detach($request->id);
             $pessoa = Pessoa::find($request->id);
-            $pessoa->eventos()->detach($request->eventoId);
         } catch (\Exception $e) {
-            return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
+            return redirect()->route('pessoas.exibir', ['evento' => $programacao->evento_id])
                 ->with('error', 'Falha ao excluir ' . $pessoa->nome . ': ' . $e->getMessage());
         }
         
-        return redirect()->route('pessoas.exibir', ['evento' => $request->eventoId])
+        return redirect()->route('pessoas.exibir', ['evento' => $programacao->evento_id])
             ->with('success', $pessoa->nome . ' excluído(a) com sucesso.');
     }
     
-    //VERIFICA SE O E-MAIL JÁ FOI CADASTRADO
-    public function getPessoa($email)
-    {
-        $pessoa = DB::table('pessoa')
-            ->where('pessoa.email', $email)
-            ->get()
-            ->toArray();
-        return $pessoa;
-    }
 }

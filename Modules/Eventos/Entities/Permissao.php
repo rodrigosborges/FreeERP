@@ -20,8 +20,4 @@ class Permissao extends Model
     public function nivel(){
         return $this->belongsTo(Nivel::class);
     }
-    
-    public function programacao(){
-        return $this->belongsTo(Programacao::class);
-    }
 }

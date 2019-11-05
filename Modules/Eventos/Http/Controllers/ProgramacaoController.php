@@ -25,10 +25,13 @@ class ProgramacaoController extends Controller
 
             if ($request->hasFile('fotoPalestrante')){
                 $arquivo = $request->fotoPalestrante;
-                $extensao = $arquivo->getClientOriginalExtension();
-                $nomeArquivo = time() . '.' . $extensao;
-                $upload = $request->fotoPalestrante->storeAs('palestrantes', $nomeArquivo);
-                $palestrante->foto = $nomeArquivo;
+                $tamanho = getimagesize($arquivo);
+                if($tamanho[0] == $tamanho[1]) {
+                    $extensao = $arquivo->getClientOriginalExtension();
+                    $nomeArquivo = time() . '.' . $extensao;
+                    $upload = $request->fotoPalestrante->storeAs('palestrantes', $nomeArquivo);
+                    $palestrante->foto = $nomeArquivo;
+                }
             } else {
                 $palestrante->foto = '';
             }
@@ -56,21 +59,24 @@ class ProgramacaoController extends Controller
     }
     
     function editar (Request $request){
+        
         try{
             $programacao = Programacao::find($request->id);
             $programacao->update(['nome' => $request-> nome, 'tipo' => $request->tipo, 'descricao' => $request->descricao,
                 'data' => $request->data, 'horario' => $request->horario, 'duracao' => $request->duracao,
                 'local' => $request->local, 'vagas' => $request->vagas]);
 
-            $palestrante = Palestrante::find($request->palestrante_id);
+            $palestrante = Palestrante::find($programacao->palestrante_id);
             $palestrante->update(['nome' => $request-> nome, 'bio' => $request->bio]);
 
             if ($request->hasFile('fotoPalestrante')){
                 $arquivo = $request->fotoPalestrante;
-                $extensao = $arquivo->getClientOriginalExtension();
-                $nomeArquivo = time() . '.' . $extensao;
-                $upload = $request->imgEvento->storeAs('palestrantes', $nomeArquivo);
-                $palestrante->update(['foto' => $nomeArquivo]);
+                if($tamanho[0] == $tamanho[1]) {
+                    $extensao = $arquivo->getClientOriginalExtension();
+                    $nomeArquivo = time() . '.' . $extensao;
+                    $upload = $request->fotoPalestrante->storeAs('palestrantes', $nomeArquivo);
+                    $palestrante->update(['foto' => $nomeArquivo]);
+                }
             }
         } catch (\Exception $e) {
             return redirect()->route('programacao.exibir', ['evento' => $request->eventoId])

@@ -13,7 +13,6 @@ class NivelSeeder extends Seeder
     public function run()
     {
         DB::table('nivel')->insert([
-            ['descricao' => 'participante'],
             ['descricao' => 'organizador'],
             ['descricao' => 'administrador'],
         ]);

@@ -15,7 +15,7 @@ Route::get('/eventos/inscricoes', 'EventosController@inscricoes')->name('eventos
 Route::get('/eventos/detalha/{id}', 'EventosController@detalhar')->name('eventos.detalhar');
 Route::post('/eventos/cadastrar', 'EventosController@cadastrar')->name('eventos.cadastrar');
 Route::post('/eventos/editar', 'EventosController@editar')->name('eventos.editar');
-Route::get('/eventos/inscricao/{id}', 'EventosController@inscricao')->name('eventos.inscricao');
+Route::get('/eventos/inscricao/{programacao}', 'EventosController@inscricao')->name('eventos.inscricao');
 Route::delete('/eventos/excluir', 'EventosController@excluir')->name('eventos.excluir');
 
 Route::get('/eventos/programacao/{id}', 'ProgramacaoController@exibir')->name('programacao.exibir');
@@ -25,8 +25,8 @@ Route::delete('/eventos/programacao/excluir', 'ProgramacaoController@excluir')->
 
 Route::get('/eventos/pessoas', 'PessoasController@index')->name('eventos.pessoas');
 Route::any('/eventos/pessoas/exibir', 'PessoasController@exibir')->name('pessoas.exibir');
-Route::post('/eventos/pessoas/cadastrar', 'PessoasController@cadastrar')->name('pessoas.cadastrar');
-Route::post('/eventos/pessoas/editar', 'PessoasController@editar')->name('pessoas.editar');
+//Route::post('/eventos/pessoas/cadastrar', 'PessoasController@cadastrar')->name('pessoas.cadastrar');
+//Route::post('/eventos/pessoas/editar', 'PessoasController@editar')->name('pessoas.editar');
 Route::post('/eventos/pessoas/excluir', 'PessoasController@excluir')->name('pessoas.excluir');
 
 Route::get('/eventos/get-cidades/{idEstado}', 'CidadeController@getCidades');
