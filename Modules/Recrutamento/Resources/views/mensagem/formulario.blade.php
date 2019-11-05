@@ -12,7 +12,26 @@
             @endif
             <h3>Candidato: {{$data['candidato']->nome}}</h3>
             <hr> 
-            
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="assunto" class="control-label">Assunto</label>
+                        <input required type="text" name="assunto" id="assunto" class="form-control" value="{{ $data['model'] ? $data['model']->assunto : old('assunto', "") }}">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="email" class="control-label">Email</label>
+                        <select name="email" id="email" class="form-control">
+                            <option value="">Selecione um Email</option>
+                            @foreach($data['emails'] as $email)
+                                <option value="{{$email->email}}">{{$email->email}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="form-group">
                 <label class="font-weight-bold" for="mensagem">Mensagem</label>
                 <textarea class="form-control" id="mensagem" name="mensagem" rows="6"></textarea>

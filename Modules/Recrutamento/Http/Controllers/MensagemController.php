@@ -3,12 +3,13 @@
 namespace Modules\Recrutamento\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
-use App\Entities\{Endereco,Estado,Cidade, Email, Telefone, TipoTelefone};
-use Modules\Recrutamento\Entities\{Candidato,Vaga,Mensagem};
+use App\Entities\{Endereco,Estado,Cidade, Telefone, TipoTelefone};
+use Modules\Recrutamento\Entities\{Candidato,Vaga,Mensagem,Email};
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Mail;
+use Auth;
 
 class MensagemController extends Controller
 {
@@ -25,12 +26,13 @@ class MensagemController extends Controller
             'name' => 'RECRUTAMENTO',
         ];
         $this->menu = [
-            ['icon' => 'assignment', 'tool' => 'Vagas', 'route' => '/recrutamento/vaga'],
-            ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
-            ['icon' => 'assignment', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
-            ['icon' => 'assignment', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
+            ['icon' => 'next_week', 'tool' => 'Vagas', 'route' => '/recrutamento/vaga'],
+            ['icon' => 'category', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
+            ['icon' => 'work', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
             ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
             ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
+            ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/email'],
+            ['icon' => 'power_settings_new', 'tool' => 'Logout', 'route' => '/logout'],
 		];
     }
 
@@ -59,16 +61,26 @@ class MensagemController extends Controller
      */
     public function store(Request $request)
     {
+        
         $candidato = Candidato::findOrFail($request->candidato_id);
         $email= $candidato->email()->first()->email;
         $mensagem = Mensagem::Create($request->all());
         if($mensagem){
-            Mail::send('recrutamento::email.mensagem',['mensagem' => $mensagem], function ($m) use ($candidato){
-                $m->from('comprateste06@gmail.com', 'RH Empresa');
-                $m->to($candidato->email()->first()->email, $candidato->nome)->subject('RH Empresa');
+            Mail::send('recrutamento::email.mensagem',['mensagem' => $mensagem], function ($m) use ($candidato,$request){
+                $m->from($request->email);
+                $m->to($candidato->email()->first()->email, $candidato->nome)->subject($request->assunto);
+            });
+
+            //Avaliador
+            
+            $mail_to = Auth::user()->email;
+            $apelido = Auth::user()->apelido;
+            Mail::send('recrutamento::email.mensagem',['mensagem' => $mensagem], function ($m) use ($mail_to,$request,$apelido){
+                $m->from($request->email);
+                $m->to($mail_to,  $apelido)->subject($request->assunto);
             });
         }else{
-            return redirect()->back()->with('error', 'Erro ao Marcar Entrevista');
+            return redirect()->back()->with('error', 'Erro ao Enviar Mensagem');
         }
         return redirect('recrutamento/candidato')->with('success', 'Mensagem enviada com sucesso');
     }
@@ -122,6 +134,7 @@ class MensagemController extends Controller
             'candidato'	=> Candidato::findOrFail($id),
             'url'       => url("recrutamento/mensagem/"),
             'button'    => 'Enviar Email',
+            'emails'    => Email::all(),
             "model"		=> null,
 		]; 
         return view('recrutamento::mensagem.formulario', compact('data','moduleInfo','menu'));

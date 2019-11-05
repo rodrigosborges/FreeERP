@@ -3,16 +3,14 @@
 namespace Modules\Recrutamento\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\Recrutamento\Entities\{Etapa};
+use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
+use Modules\Recrutamento\Entities\{Email};
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EtapaController extends Controller
+class EmailMensagemController extends Controller
 {
-
-    protected $moduleInfo;
-    protected $menu;
     public function  __construct(){
         $this->moduleInfo = [
             'icon' => 'people',
@@ -29,29 +27,17 @@ class EtapaController extends Controller
 		];
     }
 
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function index(Request $request)
+
+    public function index()
     {
-        if($request->pesquisa != "" || $request->pesquisa != null){
-            $pesquisa = Etapa::where('nome', 'like', '%'.$request->pesquisa.'%')->get();
-            $pesquisa_inativos = Etapa::onlyTrashed()->where('nome', 'like', '%'.$request->pesquisa.'%')->get();
-        }else{
-            $pesquisa = Etapa::all();
-            $pesquisa_inativos = Etapa::onlyTrashed()->get();
-        }
-        
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-            'etapas'	=>  $pesquisa,
-            'etapas_inativas'	=> $pesquisa_inativos,
-            'title'		=> "Lista de Etapas",
-            
+			'emails'		=> Email::all(),
+			'emails_inativos'		=> Email::onlyTrashed()->get(),
+			'title'		=> "Email",
 		]; 
-        return view('recrutamento::etapa.index', compact('data','moduleInfo','menu'));
+        return view('recrutamento::email.index', compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -63,13 +49,13 @@ class EtapaController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-            'url'       => url('recrutamento/etapa'), 
-            'title'		=> "Cadastro de Etapa",
+			'url'       => url('recrutamento/email'), 
+            'title'		=> "Cadastro de Email",
             'button'    => "Salvar",
             'model'     => null,
-            "voltar"    => url('recrutamento/etapa'),
+            "voltar"    => url('recrutamento/email'),
 		]; 
-        return view('recrutamento::etapa.form', compact('data','moduleInfo','menu'));
+        return view('recrutamento::email.form', compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -79,11 +65,18 @@ class EtapaController extends Controller
      */
     public function store(Request $request)
     {
+        $emails = Email::all();
+        foreach($emails as $email){
+            if(strtoupper($request->email) == strtoupper($email->email)){
+                return back()->with('error', 'Esse email já existe');
+            }
+        }
+
         DB::beginTransaction();
 		try{    
-            $etapa = Etapa::Create($request->all());          
+            $email = Email::Create($request->all());          
 			DB::commit();
-			return redirect('/recrutamento/etapa')->with('success', 'Etapa cadastrada com sucesso');
+			return redirect('/recrutamento/email')->with('success', 'Email cadastrado com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -97,7 +90,7 @@ class EtapaController extends Controller
      */
     public function show($id)
     {
-       // 
+        //
     }
 
     /**
@@ -110,13 +103,13 @@ class EtapaController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-            'url'       => url('recrutamento/etapa/'.$id), 
-            'title'		=> "Atualziação de Etapa",
+            'url'       => url('recrutamento/email/'.$id), 
+            'title'		=> "Atualziação de Email",
             'button'    => "Atualizar",
-            'model'     => Etapa::findOrFail($id),
-            "voltar"    => url('recrutamento/etapa'),
+            'model'     => Email::findOrFail($id),
+            "voltar"    => url('recrutamento/email'),
 		]; 
-        return view('recrutamento::etapa.form', compact('data','moduleInfo','menu'));
+        return view('recrutamento::email.form', compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -127,12 +120,21 @@ class EtapaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $emails = Email::all();
+        foreach($emails as $email){
+            if($email->id != $id){
+                if(strtoupper($request->email) == strtoupper($email->email)){
+                    return back()->with('error', 'Email já existe');
+                }
+            }
+        }
+
         DB::beginTransaction();
 		try{    
-            $etapa = Etapa::FindOrFail($id);
-            $etapa->update($request->all());          
+            $email = Email::FindOrFail($id);
+            $email->update($request->all());          
 			DB::commit();
-			return redirect('/recrutamento/etapa')->with('success', 'Etapa atualizada com sucesso');
+			return redirect('/recrutamento/email')->with('success', 'Email atualizado com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -148,10 +150,10 @@ class EtapaController extends Controller
     {
         DB::beginTransaction();
 		try{    
-            $etapa = Etapa::FindOrFail($id);
-            $etapa->delete();          
+            $email = Email::FindOrFail($id);
+            $email->delete();          
 			DB::commit();
-			return redirect('/recrutamento/etapa')->with('success', 'Etapa deletada com sucesso');
+			return redirect('/recrutamento/email')->with('success', 'Email deletado com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -162,10 +164,10 @@ class EtapaController extends Controller
     {
         DB::beginTransaction();
 		try{    
-            $etapa = Etapa::onlyTrashed()->where('id', $id)->first();
-            $etapa->restore();          
+            $email = Email::onlyTrashed()->where('id', $id)->first();
+            $email->restore();          
 			DB::commit();
-			return redirect('/recrutamento/etapa')->with('success', 'Etapa restaurada com sucesso');
+			return redirect('/recrutamento/email')->with('success', 'Email restaurado com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');

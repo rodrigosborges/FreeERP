@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Entities\{Endereco,Estado,Cidade, Email, Telefone, TipoTelefone};
 use Modules\Recrutamento\Entities\{Candidato,Vaga,Etapa};
+use Auth;
 
 class CandidatoController extends Controller
 {
@@ -21,14 +22,17 @@ class CandidatoController extends Controller
             'icon' => 'people',
             'name' => 'RECRUTAMENTO',
         ];
-        $this->menu = [
-            ['icon' => 'assignment', 'tool' => 'Vagas', 'route' => '/recrutamento/vaga'],
-            ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
-            ['icon' => 'assignment', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
-            ['icon' => 'assignment', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
-            ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
-            ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
-		];
+        
+            $this->menu = [
+                ['icon' => 'next_week', 'tool' => 'Vagas', 'route' => '/recrutamento/vaga'],
+                ['icon' => 'category', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
+                ['icon' => 'work', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
+                ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
+                ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
+                ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/email'],
+                ['icon' => 'power_settings_new', 'tool' => 'Logout', 'route' => '/logout'],
+            ];
+       
     }
     
     public function index(Request $request)
@@ -233,7 +237,9 @@ class CandidatoController extends Controller
     public function novo($id)
     {
         $moduleInfo = $this->moduleInfo;
-        $menu = $this->menu;
+        $menu = $this->menu = [
+            ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
+        ];
         $data = [
 			"url" 	 	=> url("recrutamento/candidato/"),
 			"button" 	=> "Salvar",

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Modules\Recrutamento\Entities\{Vaga,Candidato,Cargo,Categoria};
 use App\Entities\{Estado,Cidade,TipoTelefone,Telefone,Endereco};
+use Auth;
 
 class VagaController extends Controller
 {
@@ -14,6 +15,8 @@ class VagaController extends Controller
      * Display a listing of the resource.
      * @return Response
     */
+    
+
     protected $moduleInfo;
     protected $menu;
     public function  __construct(){
@@ -22,13 +25,14 @@ class VagaController extends Controller
             'name' => 'RECRUTAMENTO',
         ];
         $this->menu = [
-            ['icon' => 'assignment', 'tool' => 'Vagas', 'route' => '/recrutamento/vaga'],
-            ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
-            ['icon' => 'assignment', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
-            ['icon' => 'assignment', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
+            ['icon' => 'next_week', 'tool' => 'Vagas', 'route' => '/recrutamento/vaga'],
+            ['icon' => 'category', 'tool' => 'Categorias', 'route' => '/recrutamento/categoria'],
+            ['icon' => 'work', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
             ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
             ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
-		];
+            ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/email'],
+            ['icon' => 'power_settings_new', 'tool' => 'Logout', 'route' => '/logout'],
+        ];
     }
 
 
@@ -104,6 +108,11 @@ class VagaController extends Controller
      */
     public function show($id)
     {
+        if(!Auth::user()){
+            $menu = $this->menu = [
+                ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
+            ];
+        }
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
@@ -186,6 +195,10 @@ class VagaController extends Controller
 
     public function vagasDisponiveis(Request $request)
     {
+        $this->menu = [
+            ['icon' => 'assignment', 'tool' => 'Vagas Disponíveis', 'route' => '/recrutamento/vagasDisponiveis'],
+		];
+
         if($request->pesquisa != "" || $request->pesquisa != null){
 
             $pesquisaCargo = Cargo::where('categoria_id', '=', $request->pesquisa)->first();
@@ -227,7 +240,8 @@ class VagaController extends Controller
 			'candidatos'		=> $candidatos,
 			'candidatos_inativos'		=> $candidatosInativos,
 			'title'		=> "Lista de Candidatos",
-		]; 
+        ]; 
+        // return $candidatos[0]->etapas()->get()[0]->pivot->nota;
         return view('recrutamento::vaga.candidatos', compact('data','moduleInfo','menu'));
     }
 

@@ -10,7 +10,7 @@ class Mensagem extends Model
     use SoftDeletes;
     protected $table = 'mensagem';
     public $timestamps = true;
-    protected $fillable = array('id','candidato_id','mensagem');
+    protected $fillable = array('id','candidato_id','mensagem','assunto');
 
     public function candidato(){
         return $this->belongsTo('Modules\Recrutamento\Entities\Candidato','candidato_id');

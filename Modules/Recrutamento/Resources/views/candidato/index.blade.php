@@ -35,10 +35,10 @@
                             <form action="{{url('recrutamento/candidato', [$item->id])}}" method="POST">
                                 {{method_field('DELETE')}}
                                 {{ csrf_field() }}
-                                <a class="btn btn-primary" href='{{ url("recrutamento/candidato/$item->id") }}'><i class="material-icons" style=" vertical-align: middle;">visibility</i> Visualizar</a> 
-                                <a class="btn btn-primary" href='{{ url("recrutamento/mensagem/enviarMensagem/$item->id") }}'><i class="material-icons" style=" vertical-align: middle;">message</i> Enviar Mensagem</a> 
-                                <a class="btn btn-primary" href='{{ url("recrutamento/candidato/addEtapa/$item->id") }}'><i class="material-icons" style=" vertical-align: middle;">file_copy</i> Etapas</a> 
-                                <button type="submit" class="btn btn-danger"><i class="material-icons" style=" vertical-align: middle;">delete</i> Deletar</button>
+                                <a class="btn btn-outline-primary" href='{{ url("recrutamento/candidato/$item->id") }}'><i class="material-icons" style=" vertical-align: middle;">visibility</i> Visualizar</a> 
+                                <a class="btn btn-outline-primary" href='{{ url("recrutamento/mensagem/enviarMensagem/$item->id") }}'><i class="material-icons" style=" vertical-align: middle;">message</i> Enviar Mensagem</a> 
+                                <a class="btn btn-outline-primary" href='{{ url("recrutamento/candidato/addEtapa/$item->id") }}'><i class="material-icons" style=" vertical-align: middle;">file_copy</i> Etapas</a> 
+                                <button type="submit" class="btn btn-outline-danger"><i class="material-icons" style=" vertical-align: middle;">delete</i> Deletar</button>
                             </form>
                         </td>
                     </tr>
