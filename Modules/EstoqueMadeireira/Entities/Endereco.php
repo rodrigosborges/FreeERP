@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Endereco extends Model
 {
+    use SoftDeletes;
     protected $table = 'enderecos';
     protected $fillable = ['cliente_id','endereco', 'complemento'];
 

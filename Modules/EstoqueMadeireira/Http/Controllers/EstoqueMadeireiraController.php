@@ -3,11 +3,16 @@
 namespace Modules\EstoqueMadeireira\Http\Controllers;
 use Modules\EstoqueMadeireira\Entities\Estoque;
 use Modules\EstoqueMadeireira\Entities\tipoUnidade;
+use Modules\EstoqueMadeireira\Entities\Categoria;
+use Modules\EstoqueMadeireira\Entities\MovimentacaoEstoque;
+use Modules\EstoqueMadeireira\Entities\Produto;
 
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use DB;
+
 
 class EstoqueMadeireiraController extends Controller
 {
@@ -33,72 +38,92 @@ class EstoqueMadeireiraController extends Controller
             'menu' => $menu
         ];
     }
+    
+    
+    
+    
+    //Tela inicial
     public function index()
     {
         $flag = 0;
-        $notificacoes = '';
-        $estoques = Estoque::paginate(5);
-        return view('estoquemadeireira::estoque.index', $this->template, compact('estoques', 'flag', 'notificacoes'));     
+        $notificacoes = $this->verificarNotificacao();
+        $itens = Estoque::paginate(5);
+        return view('estoquemadeireira::estoque.index', $this->template, compact('itens', 'flag', 'notificacoes'));     
     }
 
 
     
 
 
-
+    //Criação do estoque, usando 'data' para comprimir todos os dados em uma só variável, e passando as notificações pro template
     public function create()
     {
-        return view('estoquemadeireira::create');
+       
+       
+        $notificacao = $this->verificarNotificacao();
+        $data = [
+            'titulo' => 'Cadastrar Estoque',
+            'button' => 'Cadastrar',
+            'url' => 'estoque',
+            'estoque' => null,
+            'produtos' => Produto::all(),
+            'tipoUnidade' => TipoUnidade::all()
+        ];
+
+        return view('estoquemadeireira::.estoque.form', compact('data', 'notificao'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
+
+    //Função para salvar o estoque no Banco 
     public function store(Request $request)
     {
-        //
+        try{
+            $estoque = Estoque::create($request->all());
+            $produto = Produto::findOrFail($request->produto_id);
+            $estoque->produtos()->attach($produto);
+            $estoque->save();
+            MovimentacaoEstoque::create(
+                [
+                    'estoque_id' => $estoque->id,
+                    'quantidade' => $estoque->quantidade,
+                    'preco_custo' => $request['preco_custo'],
+                    'observacao' => "Entrada Inicial",
+                ]
+            );
+            DB::commit();
+            return redirect('/estoque')->with('success', 'Item de estoque registrado com sucesso!');
+        } 
+        catch (Exception $ex) {
+            DB::rollback();
+            return back()->with('danger', "Erro ao tentar registrar item. cod:" + $ex->getMessage());
+        }
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('estoquemadeireira::show');
-    }
+    
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
+
+
     public function edit($id)
     {
         return view('estoquemadeireira::edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
+
     public function destroy($id)
     {
-        //
+        
     }
+
+    public static function verificarNotificacao()
+    {
+        $itens = Estoque::where('quantidade', '<=', DB::raw('quantidade_notificacao'))->paginate(10);
+        return count($itens);
+    }
+
 }

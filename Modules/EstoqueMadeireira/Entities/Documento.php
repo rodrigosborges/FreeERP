@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class documento extends Model
 {
+    use SoftDeletes;
     protected $table = 'documentos';
     protected $fillable = ['nome', 'tipoDocumento_id', 'cliente_id'];
 

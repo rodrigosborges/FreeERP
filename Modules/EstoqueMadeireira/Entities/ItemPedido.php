@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class itemPedido extends Model
 {
+    use SoftDeletes;
     protected $fillable = ['pedido_id', 'produto_id', 'quantidade', 'precoCusto', 'precoVenda'];
     protected $table = 'item_pedidos';
 

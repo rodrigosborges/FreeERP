@@ -1,6 +1,6 @@
 @extends('estoquemadeireira::layouts.master')
 
-@section('title', 'Cadastro de Cliente')
+@section('title', 'Cadastro de tipo de Unidade')
 
 @section('content')
 
@@ -9,7 +9,7 @@
     <div class="container col-12" style="justify-content: center">
         <div class="card">
                 <div class="card-header" style="">
-                   <h1>Cadastro de Cliente</h1> 
+                   <h1>Cadastro de Tipo de Unidade</h1> 
                 </div>
                 <form action="{{url($data['url'])}}" method="POST">
 
@@ -21,13 +21,13 @@
                 <div class="row ml-2 mt-2">
                     <div class="form-group col-4">
                         <label for="nome">Nome</label>
-                        <input required type="text" class="form-control" placeholder="Insira o tipo de unidade" name="nome" value="{{($data['cliente'])?$data['cliente']->nome : ''}}">
+                        <input required type="text" class="form-control" placeholder="ex: Caixa, Container" name="nome" value="{{($data['tipo'])?$data['tipo']->nome : ''}}">
                         <span style="color:red">{{$errors->first('nome')}}</span>
                     </div>
                     <div class="form-group col-4">
-                        <label for="nome">Telefone</label>
-                        <input required type="text" class="form-control" placeholder="Insira a telefone" name="telefon" value="{{($data['cliente'])?$data['cliente']->telefone : ''}}">
-                        <span style="color:red">{{$errors->first('telefone')}}</span>
+                    <label for="nome">Quantidade de itens</label>
+                        <input required type="text" class="form-control" placeholder="Insira a quantidade de itens" name="quantidade_itens" value="{{($data['tipo'])?$data['tipo']->quantidade_itens : ''}}">
+                        <span style="color:red">{{$errors->first('quantidade_itens')}}</span>
                     </div>
 
                     

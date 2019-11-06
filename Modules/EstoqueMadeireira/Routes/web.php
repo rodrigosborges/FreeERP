@@ -22,34 +22,51 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::post('/produtos/busca', 'ProdutoController@busca');
     Route::post('/produtos/categorias/busca', 'CategoriaController@busca');
     Route::post('/produtos/fornecedores/busca', 'FornecedorController@busca');
+    Route::post('/movimentacao/buscar', 'MovimentacaoEstoqueController@buscar');
 
 
-
-    Route::get('/produtos/fornecedores/inativos', 'FornecedorController@inativos');
-    Route::get('/produtos/categorias/inativos', 'CategoriaController@inativos');
-    Route::get('/tipounidade/inativos', 'tipoUnidadeController@inativos');
-    Route::put('/tipounidade/{id}/restore', 'tipoUnidadeController@restore');
-
-    Route::resource('/vendas/cliente', 'ClienteController');
-    Route::resource('/produtos/fornecedores', 'FornecedorController');
-    Route::resource('/produtos/categorias', 'CategoriaController'); 
-    Route::get('produtos/fornecedores/ficha/{id}', 'FornecedorController@ficha');
-    Route::put('produtos/fornecedores/{id}/restore', 'FornecedorController@restore');
-    Route::resource('/tipounidade', 'tipoUnidadeController');
-    
- 
-    
-    //ROTA DE PRODUTOS
+    //PRODUTOS
     Route::get('/produtos/inativos', 'ProdutoController@inativos'); 
     Route::get('/produtos/ficha/{id}', 'ProdutoController@ficha');
     Route::put('/produtos/{id}/restore', 'ProdutoController@restore');
+
+
+    //FORNECEDORES 
+    Route::get('/produtos/fornecedores/inativos', 'FornecedorController@inativos');
+    Route::get('produtos/fornecedores/ficha/{id}', 'FornecedorController@ficha');
+    Route::put('produtos/fornecedores/{id}/restore', 'FornecedorController@restore');
     
-    Route::resource('/produtos', 'ProdutoController');  
-    
-    
-    //ROTA DE CATEGORIA
+
+    //CATEGORIAS
+    Route::get('/produtos/categorias/inativos', 'CategoriaController@inativos');
     Route::put('/produtos/categorias/{id}/restore', 'CategoriaController@restore');
+
+
+    //TIPO DE UNIDADE
+    Route::get('/tipounidade/inativos', 'tipoUnidadeController@inativos');
+    Route::put('/tipounidade/{id}/restore', 'tipoUnidadeController@restore');
+
+
+    //MOVIMENTAÇÃO 
+    Route::get('/movimentacao/alterar/{id}', 'MovimentacaoEstoqueController@alterarEstoque');
+    Route::get('/movimentacao/alterar/{id}/adicionar', 'MovimentacaoEstoqueController@adicionar');
+    Route::post('/movimentacao/alterar', 'MovimentacaoEstoqueController@salvarEstoque');
+    Route::get('/movimentacao/alterar/{id}/remover', 'MovimentacaoEstoqueController@remover');
+    Route::resource('/movimentacao', 'MovimentacaoEstoqueController');
+
+
+
+
+    //ROTAS PADRÕES DO LARAVEL 
+    Route::resource('/', 'EstoqueMadeireiraController');
+    Route::resource('/vendas/cliente', 'ClienteController');
+    Route::resource('/produtos/fornecedores', 'FornecedorController');
+    Route::resource('/produtos/categorias', 'CategoriaController'); 
+    Route::resource('/produtos', 'ProdutoController');  
+    Route::resource('/tipounidade', 'tipoUnidadeController');
+
     
+
 
    
 

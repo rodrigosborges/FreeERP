@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class formaPagamento extends Model
 {
+    use SoftDeletes;
     protected $fillable = ['nome', 'taxa', 'preco'];
     protected $table = 'forma_pagamentos';
 
