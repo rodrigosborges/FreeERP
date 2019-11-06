@@ -57,7 +57,7 @@ class ProcessoController extends Controller
 
                 foreach ($processo->avaliacoes as $key => $avaliacao) {
 
-                    if ($avaliacao->status->id == 1) {
+                    if ($avaliacao->status->id == 1 || $avaliacao->status->id == 2 || $avaliacao->status->id == 4) {
                         $encerrado = 0;
                     }
 

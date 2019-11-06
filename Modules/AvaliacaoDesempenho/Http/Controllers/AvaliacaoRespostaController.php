@@ -260,7 +260,7 @@ class AvaliacaoRespostaController extends Controller
         }
 
         if ($avaliador->token == null) {
-            return back()->with('success', 'Esta Avaliação foi encerrada');                             
+            return back()->with('error', 'Esta Avaliação foi encerrada');                             
         }
 
         $data = [

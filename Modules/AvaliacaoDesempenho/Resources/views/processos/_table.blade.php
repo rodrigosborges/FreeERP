@@ -4,6 +4,8 @@
   
       <tr>
   
+        <th class="text-center">Nome</th>
+
         <th class="text-center">Responsavel</th>
   
         <th class="text-center">Data Inicio</th>
@@ -26,6 +28,8 @@
     
           <tr class="{{ !empty($processo->deleted_at) ? 'table-inactive' : '' }}">
     
+            <td class="text-center align-middle">{{ $processo->nome }}</td>
+
             <td class="text-center align-middle">{{ $processo->responsavel->nome }}</td>
     
             <td class="text-center align-middle">{{ $processo->data_inicio }}</td>

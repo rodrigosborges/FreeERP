@@ -94,43 +94,67 @@
 
     </div>
 
+    <h1>Resumo Processos</h1>
+
+    @foreach ($data['processos'] as $processo)
+    
     <div class="row dash-cards">
 
         <div class="col-md-12">
 
-            @if ($data['processo_ultimo'][0]->status->id == 3)
-
-                <h1>Resultados Ultimo Processo</h1>
+            @if ($processo->status->id == 3)
 
                 <div class="info">
                     
                     <div>
-                        <p><b>Processo: </b>{{ $data['processo_ultimo'][0]->nome }}</p>
-                        <p><b>Data Encerramento: </b>{{ $data['processo_ultimo'][0]->data_fim }}</p>
-                        <p><b>Status: </b>{{ $data['processo_ultimo'][0]->status->nome }}</p>
+                        <p><b>Processo: </b>{{ $processo->nome }}</p>
+                        <p><b>Data Encerramento: </b>{{ $processo->data_fim }}</p>
                     </div>
                     <div>
-                        <p><b>Avaliações: </b>{{ count($data['processo_ultimo'][0]->avaliacoes) }}</p>
-                        <ul class="setores-list">
-                            <b>Setores Avaliados: </b>
-                            @foreach ($data['processo_ultimo'][0]->avaliacoes as $avaliacao)
-                                <li><b>{{ ucwords($avaliacao->nome) }}:</b> {{ $avaliacao->setor->nome }}</li>
-                            @endforeach
-                        </ul>
+                        <p><b>Avaliações: </b>{{ count($processo->avaliacoes) }}</p>
+                        <p><b>Status: </b>{{ $processo->status->nome }}</p>
                     </div>
 
                 </div>
+
+                <br><br>
+
+                <table class="table table-stripped table-sm">
+
+                    <thead>
+                        <tr>
+                            <th>Avaliação</th>
+                            <th>Setor</th>
+                            <th>Data Final</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach ($processo->avaliacoes as $avaliacao)
+                            @if ($avaliacao->status->id != 3)
+                                <tr>
+                                    <td>{{ $avaliacao->nome }}</td>
+                                    <td>{{ $avaliacao->setor->nome }}</td>
+                                    <td>{{ $avaliacao->data_fim }}</td>
+                                    <td>{{ $avaliacao->status->nome }}</td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+
+                </table>
             
-            @else
+            @else        
             
                 <div class="info">
                     <div>
-                        <p><b>Processo: </b>{{ $data['processo_ultimo'][0]->nome }}</p>
-                        <p><b>Status: </b>{{ $data['processo_ultimo'][0]->status->nome }}</p>
+                        <p><b>Processo: </b>{{ $processo->nome }}</p>
+                        <p><b>Status: </b>{{ $processo->status->nome }}</p>
                     </div>
                     <div>
-                        <p><b>Data Encerramento: </b>{{ $data['processo_ultimo'][0]->data_fim }}</p>
-                        <p><b>Avaliações: </b>{{ count($data['processo_ultimo'][0]->avaliacoes) }}</p>
+                        <p><b>Data Encerramento: </b>{{ $processo->data_fim }}</p>
+                        <p><b>Avaliações: </b>{{ count($processo->avaliacoes) }}</p>
                     </div>
                 </div>
 
@@ -150,7 +174,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($data['processo_ultimo'][0]->avaliacoes as $avaliacao)
+                        @foreach ($processo->avaliacoes as $avaliacao)
                             @if ($avaliacao->status->id != 3)
                                 <tr>
                                     <td>{{ $avaliacao->nome }}</td>
@@ -181,7 +205,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($data['processo_ultimo'][0]->avaliacoes as $avaliacao)
+                        @foreach ($processo->avaliacoes as $avaliacao)
                             @if ($avaliacao->status->id == 3)
                                 <tr>
                                     <td>{{ $avaliacao->nome }}</td>
@@ -201,6 +225,8 @@
         </div>
 
     </div>
+
+    @endforeach
 
 </div>
 

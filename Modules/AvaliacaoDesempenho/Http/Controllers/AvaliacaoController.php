@@ -372,7 +372,7 @@ class AvaliacaoController extends Controller
             }
 
         }
-        $avaliacoes = $avaliacoes->paginate(5);
+        $avaliacoes = $avaliacoes->paginate(20);
         
         return view('avaliacaodesempenho::avaliacoes._table', compact('avaliacoes'));
     }
