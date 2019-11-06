@@ -23,7 +23,7 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::post('/produtos/categorias/busca', 'CategoriaController@busca');
     Route::post('/produtos/fornecedores/busca', 'FornecedorController@busca');
     Route::post('/movimentacao/buscar', 'MovimentacaoEstoqueController@buscar');
-
+    Route::post('/busca', 'EstoqueMadeireiraController@busca');
 
     //PRODUTOS
     Route::get('/produtos/inativos', 'ProdutoController@inativos'); 
@@ -54,6 +54,10 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/movimentacao/alterar/{id}/remover', 'MovimentacaoEstoqueController@remover');
     Route::resource('/movimentacao', 'MovimentacaoEstoqueController');
 
+
+    //ROTAS DE RELATÓRIO
+    Route::get('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacao');
+    Route::post('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacaoBusca');
 
 
 

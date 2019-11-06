@@ -80,7 +80,33 @@
                         </select>
                         {{$errors->first('fornecedor_id')}}
                     </div>
+                   
+                   <div class="form-group ml-2">
+                    <label for="unidadeMedida">Unidade de Medida</label>
+                    <select name="unidadeMedida_id" class="form-control">
+                        @if(isset($unidadeMedida))
+                            @foreach($unidadeMedidas as $medidas)
+                                @if($medidas->id == $produto->unidadeMedida_id)
+                                    <option value="{{$medidas->id}}" selected>{{$medidas->nome}}></option>
+                                @else
+                                    <option value="{{$medidas->id}}">{{$medidas->nome}}</option>
+                                @endif
+                            @endforeach
+                        @else
+                                <option disabled value="" selected>Selecione uma unidade de medida</option>
+                                @foreach($unidadeMedidas as $medidas)
+                                <option value="{{$medidas->id}}">{{$medidas->nome}}</option>
+                                @endforeach
+                        @endif  
+                    
+                    
+                    
+                    </select>
 
+                   
+                   
+                   </div>
+                   
 
             </div>
                 

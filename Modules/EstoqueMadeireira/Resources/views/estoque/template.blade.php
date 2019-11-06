@@ -38,10 +38,6 @@ $this->template = [
 
         </div>
         <ul class="nav justify-content-center" style="background-color: rgb(100,149,237); margin-bottom:5px">
-            <li class="nav-item ">
-                <a class="nav-link text-white " href="{{url('estoquemadeireira/notificacoes')}}">Notificações <span class="badge badge-warning">{{isset($notificacoes) && $notificacoes > 0 ? $notificacoes : ''}}</span></a>
-            </li>
-
 
             <li class="nav-item ">
                 <a class="nav-link text-white " href="{{url('estoquemadeireira/')}}">Itens em estoque</a>
@@ -58,9 +54,7 @@ $this->template = [
                 <div class="dropdown">
                     <a class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Relatorios</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="dropdown-item" href="{{url('/estoquemadeireira/relatorio/saida-produtos')}}">Saída de produtos</a>
-                            <a class="dropdown-item" href="{{url('/estoque/relatorio/movimentacao')}}">Movimentação de produtos</a>
-                            <a class="dropdown-item" href="{{url('/estoque/relatorio/custos')}}">Custo</a>
+                            <a class="dropdown-item" href="{{url('/estoquemadeireira/relatorio/movimentacao')}}">Movimentação</a>
                         </div>
                 </div>
             </li>

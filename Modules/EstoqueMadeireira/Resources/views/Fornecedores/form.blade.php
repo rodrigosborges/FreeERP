@@ -58,6 +58,26 @@
                         
                         
                         </div>
+                        <div class="form-group ml-2">
+                            <label for="categoria">Categoria</label>
+                            <select class="form-control" name="categoria_id">
+                                @if(isset($fornecedor))
+                                    @foreach($categorias as $categoria)
+                                        @if($categoria->id == $produto->categoria_id)
+                                            <option value="{{$categoria->id}}" selected>{{$categoria->nome}}</option>
+                                        @else
+                                            <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <option disabled value="" selected>Selecione uma Categoria</option>
+                                        @foreach($categorias as $categoria)
+                                            <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                                        @endforeach
+                                @endif
+                            </select>
+                            {{$errors->first('categoria_id')}}            
+                        </div>
                     
                         <div class="row col-8 mb-2" style="justify-content: flex-end;">
                             <button type="submit" id="cadastrar" class="btn btn-primary">{{isset($categoria) ? 'Salvar' : 'Cadastrar' }}</button>

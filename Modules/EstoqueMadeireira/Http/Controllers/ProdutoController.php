@@ -10,6 +10,8 @@ use Modules\EstoqueMadeireira\Http\Requests\PesquisaProdutoRequest;
 use Modules\EstoqueMadeireira\Entities\Produto;
 use Modules\EstoqueMadeireira\Entities\Categoria;
 use Modules\EstoqueMadeireira\Entities\Fornecedor;
+use Modules\EstoqueMadeireira\Entities\UnidadeMedida;
+
 
 
 
@@ -72,9 +74,9 @@ class ProdutoController extends Controller
     {
         $categorias = Categoria::all();
         $fornecedores = Fornecedor::all();
+        $unidadeMedidas = UnidadeMedida::all();
         
-        
-        return view('estoquemadeireira::produtos/form', $this->template, compact('categorias', 'fornecedores'));
+        return view('estoquemadeireira::produtos/form', $this->template, compact('categorias', 'fornecedores', 'unidadeMedidas'));
 
         
     }

@@ -47,10 +47,10 @@
                     <div class="col-12 text-right">
                         @if($flag == 0)
                             <a href="{{url('/estoquemadeireira/produtos/fornecedores/create')}}" class="btn btn-success btn-sm mt-2 mb-3">
-                                <i class="material-icons" style="vertical-align:middle; font-size:25px;">note_add</i>Adicionar Fornecedor
+                                <i class="material-icons" style="vertical-align:middle; font-size:25px;">note_add</i>Adicionar 
                             </a>
                             <a href="{{url('/estoquemadeireira/produtos/fornecedores/inativos')}}" class="btn btn-danger btn-sm mt-2 mb-3">
-                                <i class="material-icons" style="vertical-align:middle; font-size:25px;">delete</i>Fornecedores Inativos
+                                <i class="material-icons" style="vertical-align:middle; font-size:25px;">delete</i>Inativos
                             </a>
                         @else
                             <a href="{{url('/estoquemadeireira/produtos/fornecedores')}}" class="btn btn-info btn-sm mt-2 mb-2" >

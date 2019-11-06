@@ -11,7 +11,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <label for="nome"><span><i class="material-icons" style="vertical-align:middle;">assignment_turned_in</i></span>&nbsp&nbsp<b>Produto</b><br><br>{{$produto->nome}}</label>
+                    <label for="nome"><span><i class="material-icons" style="vertical-align:middle;">assignment_turned_in</i></span>&nbsp&nbsp<b>Produto</b><br><br>{{$produto->nome }}</label>
                     
                 </div>
                 <div class="col-md-6">

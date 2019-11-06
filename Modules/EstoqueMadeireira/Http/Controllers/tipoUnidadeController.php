@@ -81,11 +81,6 @@ class tipoUnidadeController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        return view('estoquemadeireira::show');
-    }
-
     
     public function edit($id)
     {

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TipoUnidade extends Migration
+class CreateUnidadeMedidasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,20 @@ class TipoUnidade extends Migration
      */
     public function up()
     {
-        Schema::create('tipoUnidade', function (Blueprint $table) {
+        Schema::create('unidade_medidas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome', 20);
-            $table->softDeletes();
+            $table->string('nome', 10);
             $table->timestamps();
         });
-        //
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::dropifExists('tipo_unidade');
+        Schema::dropIfExists('unidade_medidas');
     }
 }

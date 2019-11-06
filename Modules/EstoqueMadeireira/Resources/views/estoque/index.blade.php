@@ -57,10 +57,10 @@
             <td>{{$item->tipoUnidade->nome}}-({{$item->tipoUnidade->quantidade_itens}} itens)</td>
             <td>{{$item->quantidade}}</td>
             <td>
-                <a href="{{url('/estoque/movimentacao/alterar/' . $item->id)}}"><button class="btn btn-primary btn-sm" style="font-size:0px"> <i class="material-icons" style="font-size:18px;">list</i></button></a>
+                <a href="{{url('/estoquemadeireira/movimentacao/alterar/' . $item->id)}}"><button class="btn btn-primary btn-sm" style="font-size:0px"> <i class="material-icons" style="font-size:18px;">list</i></button></a>
             </td>
             <td>
-                <a class="btn btn-sm btn-warning" style="font-size:0px" href="{{url('estoque/'.$item->id.'/edit')}}">
+                <a class="btn btn-sm btn-warning" style="font-size:0px" href="{{url('estoquemadeireira/'.$item->id.'/edit')}}">
                     <i class="material-icons" style="font-size:18px;">border_color</i>
                 </a>
             </td>
@@ -125,7 +125,7 @@
             <td>{{$item->quantidade}}</td>
           
             <td>
-            <form method="POST" action="{{url('estoque/'.$item->id . '/restore')}}">
+            <form method="POST" action="{{url('estoquemadeireira/'.$item->id . '/restore')}}">
                     @method('put')
                     @csrf
                     <button type="submit" class="btn btn-info"> <i class="material-icons">restore_from_trash</i></button>

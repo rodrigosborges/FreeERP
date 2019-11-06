@@ -8,7 +8,7 @@ class tipoUnidade extends Model
 {
     use SoftDeletes;
     protected $table = 'tipoUnidade';
-    protected $fillable = ['nome','quantidade_itens'];
+    protected $fillable = ['nome'];
    
    
    

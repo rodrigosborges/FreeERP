@@ -61,8 +61,7 @@
                     </div>
 
                     <tr>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Quantidade de Itens</th>
+                        <th scope="col">Nome</th>                   
                         @if($flag == 0)
                         <th scope="col">Editar</th> 
                         <th scope="col">Desativar</th>              
@@ -76,8 +75,7 @@
                         @if(isset($tipos))
                         @foreach($tipos as $tipo)
                             <tr>
-                                <td>{{$tipo->nome}}</td>
-                                <td>{{$tipo->quantidade_itens}}</td>
+                                <td>{{$tipo->nome}}</td>        
                                 @if($flag == 0)
                                     <td>  
                                     <a href="{{url('/estoquemadeireira/tipounidade/' . $tipo->id . '/edit')}}"><button class="btn btn-sm btn-warning"><i class="material-icons" style="font-size:18px;">border_color</i></button></a>

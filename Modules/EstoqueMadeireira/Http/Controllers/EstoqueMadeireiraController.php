@@ -46,9 +46,8 @@ class EstoqueMadeireiraController extends Controller
     public function index()
     {
         $flag = 0;
-        $notificacoes = $this->verificarNotificacao();
         $itens = Estoque::paginate(5);
-        return view('estoquemadeireira::estoque.index', $this->template, compact('itens', 'flag', 'notificacoes'));     
+        return view('estoquemadeireira::estoque.index', $this->template, compact('itens', 'flag'));     
     }
 
 
@@ -57,10 +56,7 @@ class EstoqueMadeireiraController extends Controller
 
     //Criação do estoque, usando 'data' para comprimir todos os dados em uma só variável, e passando as notificações pro template
     public function create()
-    {
-       
-       
-        $notificacao = $this->verificarNotificacao();
+    {           
         $data = [
             'titulo' => 'Cadastrar Estoque',
             'button' => 'Cadastrar',
@@ -69,12 +65,12 @@ class EstoqueMadeireiraController extends Controller
             'produtos' => Produto::all(),
             'tipoUnidade' => TipoUnidade::all()
         ];
-
-        return view('estoquemadeireira::.estoque.form', compact('data', 'notificao'));
+            
+        return view('estoquemadeireira::.estoque.form', $this->template, compact('data'));
     }
 
 
-    //Função para salvar o estoque no Banco 
+    //Função para salvar o estoque no Banco e já criar a movimentação junto
     public function store(Request $request)
     {
         try{
@@ -90,8 +86,9 @@ class EstoqueMadeireiraController extends Controller
                     'observacao' => "Entrada Inicial",
                 ]
             );
+            return $request;
             DB::commit();
-            return redirect('/estoque')->with('success', 'Item de estoque registrado com sucesso!');
+            return redirect('/estoquemadeireira')->with('success', 'Item de estoque registrado com sucesso!');
         } 
         catch (Exception $ex) {
             DB::rollback();
@@ -120,10 +117,11 @@ class EstoqueMadeireiraController extends Controller
         
     }
 
-    public static function verificarNotificacao()
-    {
-        $itens = Estoque::where('quantidade', '<=', DB::raw('quantidade_notificacao'))->paginate(10);
-        return count($itens);
-    }
+    //NOTIFICAÇÕES POR ENQUANTO NÃO FEITO
+    // public static function verificarNotificacao()
+    // {
+    //     $itens = Estoque::where('quantidade', '<=', DB::raw('quantidade_notificacao'))->paginate(10);
+    //     return count($itens);
+    // }
 
 }
