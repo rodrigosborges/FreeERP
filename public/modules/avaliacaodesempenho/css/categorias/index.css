@@ -32,3 +32,12 @@
     font-size: 12px;
     color: rgba(255, 0, 0, 0.938);
 }
+
+table.dataTable thead th {
+    border-bottom: none !important;
+}
+
+table.dataTable.no-footer {
+    border-top: none !important;
+    border-bottom: 1px solid lightgray !important;
+}

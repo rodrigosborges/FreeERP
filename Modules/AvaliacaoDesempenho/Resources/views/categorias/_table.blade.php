@@ -1,4 +1,4 @@
-<table class="table table-bordered table-hover">
+<table id='table' class='table table-hover table-bordered'>
 
     <thead>
   

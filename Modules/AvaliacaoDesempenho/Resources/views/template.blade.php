@@ -2,6 +2,7 @@
 
 @section('css')
 <link rel='stylesheet' href="{{Module::asset('avaliacaodesempenho:css/plugins/datatable.min.css')}}"/>
+<link rel='stylesheet' href="{{Module::asset('avaliacaodesempenho:css/plugins/datatable-bootstrap.min.css')}}"/>
 
 @yield('style')
 @endsection

@@ -12,6 +12,22 @@ $(document).ready(function () {
         },
         success: function (data) {
             $('#SetorTable').append(data)
+            $('#table').DataTable({
+                'searching': false,
+                'lengthChange': false,
+                "pageLength": 5,
+                "language": {
+                    "zeroRecords": "Não foram encontrados resultados",
+                    "emptyTable": "Não foram encontrados resultados",
+                    "info": "Exibindo _START_ a _END_ de _TOTAL_ registros no total",                    
+                    "infoEmpty": "",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Proxima",
+                        "last": "Ultima",
+                    }
+                }
+            })
         }
     })
 })
@@ -40,6 +56,22 @@ $(document).on('click', '#submit-btn', function (e) {
         success: function (data) {
             $('#SetorTable').html('')
             $('#SetorTable').append(data)
+            $('#table').DataTable({
+                'searching': false,
+                'lengthChange': false,
+                "pageLength": 5,
+                "language": {
+                    "zeroRecords": "Não foram encontrados resultados",
+                    "emptyTable": "Não foram encontrados resultados",
+                    "info": "Exibindo _START_ a _END_ de _TOTAL_ registros no total",                    
+                    "infoEmpty": "",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Proxima",
+                        "last": "Ultima",
+                    }
+                }
+            })
         }
     })
 })
