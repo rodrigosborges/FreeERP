@@ -34,3 +34,5 @@ Route::get('/eventos/get-atividade/{idAtividade}', 'ProgramacaoController@getAti
 Route::get('/eventos/get-evento/{id}', 'EventosController@getEvento');
 Route::get('/eventos/get-data/', 'EventosController@getData');
 Route::get('/eventos/pessoas/get-pessoa/{email}', 'PessoasController@getPessoa');
+
+Route::get('/pdf/{id}', 'EventosController@certificados')->name('gerar.certificados');

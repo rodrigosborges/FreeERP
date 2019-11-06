@@ -32,6 +32,10 @@
             <h1>Pessoas</h1>
             <h3>{{$evento->nome}}</h3>
         </div>
+        <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" align="right">
+            <button class="btn btn-primary btnGerar">Gerar certificados</button>
+            <button class="btn btn-success btnGerado" disabled>Certificados Gerados</button>
+        </div>
         <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px;">
             <table id="pessoas" class="table table-striped">
                 <thead>
@@ -126,4 +130,10 @@
         });
     </script>
     
+    <!-- Certificado -->
+    <script>
+        $('.btnGerar').click(function(){
+            window.location.href = "{{ route('gerar.certificados', $evento->id) }}";
+        });
+    </script>
 @endsection

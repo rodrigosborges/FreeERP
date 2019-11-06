@@ -14,6 +14,7 @@ use Modules\Eventos\Entities\Permissao;
 use Modules\Eventos\Entities\Programacao;
 use Modules\Eventos\Entities\Pessoa;
 use Modules\Eventos\Entities\Nivel;
+use Modules\Eventos\Entities\Certificado;
 use Modules\Eventos\Http\Requests\SalvaEvento;
 use Carbon\Carbon;
 
@@ -165,5 +166,44 @@ class EventosController extends Controller
     public function getData(){
         $data = new Carbon();
         return $data->format('Y-m-d');
+    }
+    
+    public function certificados($id){
+        $evento = Evento::find($id);
+        $programacao = $evento->programacao;
+        
+        foreach($programacao as $atividade){
+            $participantes = $atividade->participantes()->get();
+        }
+        
+        foreach($participantes as $participante){
+            $this->gerarCertificado($evento->id, $participante);
+        }
+        
+        return redirect()->route('pessoas.exibir', ['evento' => $evento->id])
+            ->with('success', 'Certificados emitidos com sucesso.');
+    }
+    
+    public function gerarCertificado($id,$participante){
+        $evento = Evento::find($id);
+        $pessoa = $participante;
+        $atividades = $pessoa->atividades;
+        foreach ($atividades as $atividade){
+            if($atividade->evento_id == $evento->id){
+                $participou[] = $atividade->duracao;
+            }
+        }
+        $data = new Carbon();
+        $data = $data->formatLocalized('%d de %B de %Y');
+        $nomeArquivo = "storage/certificado/" . time() . ".pdf";
+        $pdf = \PDF::loadView('eventos::certificado',['evento' => $evento, 'pessoa' => $pessoa, 'participou' => array_sum($participou), 'data' => $data])
+                ->setPaper('a4', 'landscape')
+                ->save($nomeArquivo);
+        $certificado = new Certificado();
+        $certificado->evento()->associate($evento);
+        $certificado->pessoa()->associate($pessoa);
+        $certificado->certificado = $nomeArquivo;
+
+        $certificado->save();
     }
 }

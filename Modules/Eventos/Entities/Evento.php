@@ -38,6 +38,10 @@ class Evento extends Model
         }
         return $participantes;
     }
+    
+    public function certificado(){
+        return $this->hasOne(Certificado::class);
+    }
 }
 
 

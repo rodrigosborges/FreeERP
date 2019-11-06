@@ -139,7 +139,7 @@
                             <div class="form-group">
                                 <img src="" id="img" alt="Foto" title='Foto'/></br>
                                 <input type='file' class="edit" name="fotoPalestrante" id="fotoPalestrante" accept="image/*" hidden>
-                                <p style="text-align: center; margin-top: -20px; color: gray;">Utilize uma foto quadrada!</p>
+                                <p style="text-align: center; margin-top: -20px; color: gray;">Utilize uma foto quadrada ou ela não será salva!</p>
                             </div>
                             <div class="form-group" style="margin-top: -30px;">
                                 <label for="nomePalestrante" class="col-form-label">Nome*:</label>
@@ -299,16 +299,18 @@
         });    
 
         function readURL(input) {    
-            if (input.files && input.files[0]) {   
-                var reader = new FileReader();
+            
+        if (input.files && input.files[0]) {    
+            var reader = new FileReader();
                 var filename = $("#img").val();
                 filename = filename.substring(filename.lastIndexOf('\\')+1);
                 reader.onload = function(e) {
                     $('img').attr('src', e.target.result);
                     $('img').hide();
-                    $('img').fadeIn(500);       
+                    $('img').fadeIn(500);
+
                 };
-                reader.readAsDataURL(input.files[0]);    
+                reader.readAsDataURL(input.files[0]); 
             } 
         }
     </script>
