@@ -83,7 +83,7 @@
                         @if(!$atividade->participantes()->where('pessoa_id', auth()->id())->first())
                             <a class="btn btn-success" href="{{route('eventos.inscricao', $atividade->id)}}">Inscreva-se</a>
                         @else
-                            <a class="btn btn-danger" href="{{route('eventos.inscricao', $atividade->id)}}">Cancelar inscricao</a>
+                            <a class="btn btn-danger" href="{{route('eventos.inscricao', $atividade->id)}}">Cancelar inscrição</a>
                         @endif
                     </div>
                 </div>

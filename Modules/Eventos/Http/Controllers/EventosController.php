@@ -137,7 +137,6 @@ class EventosController extends Controller
     public function detalhar($id){
         $evento = Evento::find($id);
         $programacao = $evento->programacao;
-        
         return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]); 
     }
     
@@ -151,7 +150,7 @@ class EventosController extends Controller
 
         return redirect()->route('eventos.detalhar', ['evento' => $programacao->evento]);
     }
-    
+            
     public function getEvento($id){
         $evento = DB::table('evento')
                 ->where('evento.id', '=', $id)
