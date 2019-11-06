@@ -21,7 +21,7 @@
     <div class="form-group col-lg-3 col-sm-12">
         <label for="sinal">Adiantamento:</label>
         <div class="input-group-prepend">
-            <input type="text" class="form-control" name="sinal">
+            <input type="text" class="form-control" name="sinal" value="{{isset($conserto->sinal) ? $conserto->sinal : old('sinal', '')}}">
         </div>
     </div>
 

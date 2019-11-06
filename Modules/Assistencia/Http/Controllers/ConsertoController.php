@@ -78,6 +78,7 @@ class ConsertoController extends Controller
     }
     public function editar($id) {
       $conserto = ConsertoAssistenciaModel::findOrFail($id);
+      $conserto['sinal'] = str_replace(".",",", $conserto ['sinal']);
       $pecas = ItemPeca::all();
       $servicos = ServicoAssistenciaModel::all();
       $tecnicos = TecnicoAssistenciaModel::all();
@@ -106,12 +107,16 @@ class ConsertoController extends Controller
     public function salvar(StoreConsertosRequest $req){
 
       $dados  = $req->all();
+      $dados['valor'] = str_replace(",",".",$dados['valor']);
+      if($dados['sinal'])
+        $dados['sinal'] = str_replace(",",".",$dados['sinal']);
+        
       $conserto = ConsertoAssistenciaModel::create($dados);
       $idConserto = $conserto->id;
       PagamentoAssistenciaModel::create([
         'idConserto' => $conserto->id,
         'idCliente' => $conserto->idCliente,
-        'valor' => $conserto->valor,
+        'valor' => ($dados['sinal']) ? $dados['valor']-$dados['sinal'] : $dados['valor'],
         'status' => 'Pendente',
         'forma' => 'Não pago'
       ]);
@@ -145,11 +150,14 @@ class ConsertoController extends Controller
     public function atualizar(Request $req, $id){
      
       $dados  = $req->all();
+      $dados['valor'] = str_replace(",",".",$dados['valor']);
+      if($dados['sinal'])
+        $dados['sinal'] = str_replace(",",".",$dados['sinal']);
        ConsertoAssistenciaModel::findOrFail($id)->update($dados);
        $conserto = ConsertoAssistenciaModel::findOrFail($id);
    
       $pagamento = PagamentoAssistenciaModel::findOrFail($id);
-      $pagamento->update(['valor' => $conserto['valor']]);
+      $pagamento->update(['valor' => ($conserto['valor']) ? $conserto['valor']- $conserto['sinal'] : $conserto['valor']]);
   
       SituacaoOsModel::create([
         'situacao' => $dados['situacao'],

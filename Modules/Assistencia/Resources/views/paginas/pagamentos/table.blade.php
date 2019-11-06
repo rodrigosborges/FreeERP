@@ -12,7 +12,7 @@
         <tr>
             <td scope="row">{{$pagamento->conserto->numeroOrdem }}</td>
             <td>{{$pagamento->cliente->nome }}</td>
-            <td> {{$pagamento->valor}} </td>
+            <td> R$ {{$pagamento->valor}} </td>
             <td>{{$pagamento->status}}</td>
         </tr>
         @endforeach

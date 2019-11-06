@@ -86,7 +86,34 @@ $(document).ready(function() {
         }
     })
 })
-
+$("[name='sinal']").inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': false,
+                'allowMinus': false,
+                'prefix': 'R$ ',
+                'placeholder': '',
+                'rightAlign':false,
+                'max': 9999,
+                'removeMaskOnSubmit':true
+    });
+    $('#valorTotal').inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': false,
+                'allowMinus': false,
+                'prefix': 'R$ ',
+                'placeholder': '',
+                'rightAlign':false,
+                'max': 9999,
+                 'removeMaskOnSubmit':true
+    });
 /*$('#valor_peca').change(function(){
 	var valor = 0;
 	$('#valor_peca > option:selected').each(function(index, element) {

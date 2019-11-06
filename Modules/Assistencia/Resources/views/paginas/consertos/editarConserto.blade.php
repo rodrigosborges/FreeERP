@@ -47,6 +47,7 @@ $(document).ready(function() {
 </script>
 <script>
 $(document).ready(function() {
+
     $(document).mouseover(function() {
         var valor = 0;
         $('#valor_peca > option:selected').each(function(index, element) {
@@ -59,7 +60,34 @@ $(document).ready(function() {
 
 
     });
-
+    $("[name='sinal']").inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': false,
+                'allowMinus': false,
+                'prefix': 'R$ ',
+                'placeholder': '',
+                'rightAlign':false,
+                'max': 9999,
+                'removeMaskOnSubmit':true
+    });
+    $('#valorTotal').inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': false,
+                'allowMinus': false,
+                'prefix': 'R$ ',
+                'placeholder': '',
+                'rightAlign':false,
+                'max': 9999,
+                 'removeMaskOnSubmit':true
+    });
     $('#salvar').click(function() {
         if ($('#valor_peca').val() == null) {
             $('#valor_peca').val(0)
@@ -71,44 +99,6 @@ $(document).ready(function() {
         }
     })
 })
-
-/*$('#valor_peca').change(function(){
-	var valor = 0;
-	$('#valor_peca > option:selected').each(function(index, element) {
-		valor = valor + Number.parseFloat( $(element).attr('data-valor'));
-		$('#valorTotal').val(valor);
-	});
-
-});
-
-$('#valor_servico').change(function(){
-	var valor = 0;
-	$('#valor_servico > option:checked').each(function(index, element) {
-		valor = valor + Number.parseFloat( $(element).attr('data-valor'));
-		var valorTotal =
-		$('#valorTotal').val(valor);
-	});
-
-});*/
-</script>
-<script>
-/*$("[name='selecionarCliente']").on('keyup',function(){
-
-			$.ajax({
-			type: "GET",
-			url: `${main_url}/assistencia/conserto/nomeClientes`,
-			data: {
-						'selecionarCliente': $(this).val()
-					},
-			success: function (data) { $("[name='selecionarCliente']").autocomplete({
-								source: data, select: function( event, ui ) {
-									inserirDadosCliente(ui.item.value)
-								}
-							})
-			},
-		})
-
-	})*/
 
 $('#selecionarCliente').change(function() {
 
@@ -133,24 +123,6 @@ function inserirDadosCliente(val) {
         },
     })
 }
-/*$("[name='selecionarTecnico']").on('keyup',function(){
-		console.log('teste')
-		$.ajax({
-		type: "GET",
-		url: `${main_url}/assistencia/conserto/nomeTecnicos`,
-		data: {
-					'selecionarTecnico': $(this).val()
-				},
-		success: function (data) {
-						$("[name='selecionarTecnico']").autocomplete({
-							source: data,
-							select: function( event, ui ) {
-								inserirDadosTecnico(ui.item.value)
-							}
-						})
-		},
-	})
-})*/
 $('#selecionarTecnico').change(function() {
 
     var dados = $('#selecionarTecnico option:selected').attr("data-puxar")

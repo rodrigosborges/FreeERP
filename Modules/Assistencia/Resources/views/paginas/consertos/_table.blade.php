@@ -1,12 +1,12 @@
 <div class="table-responsive">
-    <table id="tabela" class="table table-striped">
+    <table id="tabela" class="table table-striped text-center">
         <div class="row">
             <thead>
                 <tr>
                     <th scope="col">Número</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Aparelho</th>
-                    <th scope="col">Valor</th>
+                    <th scope="col">Valor a ser pago</th>
                     <th>Ações</th>
                 </tr>
 
@@ -19,7 +19,7 @@
                     <td scope="row">{{$conserto->numeroOrdem }}</td>
                     <td>{{$conserto->cliente->nome }}</td>
                     <td>{{$conserto->modelo_aparelho }}</td>
-                    <td>{{ $conserto->valor }}</td>
+                    <td>R$ {{ $conserto->valor  - $conserto->sinal}}</td>
                     <td>
                         <a href="{{route('consertos.verMais', $conserto->id)}}"><button type="button"
                                 class="btn btn-primary">Ver mais</button></a>
