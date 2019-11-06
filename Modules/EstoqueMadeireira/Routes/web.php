@@ -30,6 +30,7 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/tipounidade/inativos', 'tipoUnidadeController@inativos');
     Route::put('/tipounidade/{id}/restore', 'tipoUnidadeController@restore');
 
+    Route::resource('/vendas/cliente', 'ClienteController');
     Route::resource('/produtos/fornecedores', 'FornecedorController');
     Route::resource('/produtos/categorias', 'CategoriaController'); 
     Route::get('produtos/fornecedores/ficha/{id}', 'FornecedorController@ficha');
