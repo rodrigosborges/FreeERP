@@ -10,7 +10,7 @@
                 <div class="input-group-prepend">
     
                     <span class="input-group-text">
-                        <i class="material-icons">android</i>
+                        <i class="material-icons">find_in_page</i>
                     </span>
 
                 </div>
@@ -28,7 +28,7 @@
                 <div class="input-group-prepend">
     
                     <span class="input-group-text">
-                        <i class="material-icons">android</i>
+                        <i class="material-icons">style</i>
                     </span>
     
                 </div>
