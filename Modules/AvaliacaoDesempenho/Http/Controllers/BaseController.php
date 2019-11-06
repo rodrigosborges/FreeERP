@@ -141,7 +141,7 @@ class BaseController extends Controller
     public function search_field(Request $request)
     {
         $table = $request->input('table');
-        $param = $request->input('parameter');
+        $param = $request->input('phrase');
 
         if (!empty($request->input('id'))) {
             $id = $request->input('id');

@@ -204,8 +204,10 @@
                         
                         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
-                        <select id="selectQuestoes" class="form-control selectpicker select-questoes" data-live-search="true">
-                        </select>
+                        <input id='questoes' type="text" class='form-control'>
+
+                        <!-- <select id="selectQuestoes" class="form-control selectpicker select-questoes" data-live-search="true">
+                        </select> -->
 
                     </div>
 

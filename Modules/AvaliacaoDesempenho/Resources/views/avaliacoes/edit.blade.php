@@ -9,8 +9,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{Module::asset('avaliacaodesempenho:js/plugins/bootstrap-select.min.js')}}"></script>
+<!-- <script src="{{Module::asset('avaliacaodesempenho:js/plugins/bootstrap-select.min.js')}}"></script> -->
 <script src="{{Module::asset('avaliacaodesempenho:js/plugins/jquery-mask.js')}}"></script>
-<script src="{{Module::asset('avaliacaodesempenho:js/avaliacoes/_select-search.js')}}"></script>
+<!-- <script src="{{Module::asset('avaliacaodesempenho:js/avaliacoes/_select-search.js')}}"></script> -->
 <script src="{{Module::asset('avaliacaodesempenho:js/avaliacoes/_masks.js')}}"></script>
 @endsection
