@@ -372,9 +372,8 @@ class AvaliacaoController extends Controller
             }
 
         }
-        $avaliacoes = $avaliacoes->get();
+        $avaliacoes = $avaliacoes->paginate(5);
         
-        $table = view('avaliacaodesempenho::avaliacoes/_table', compact('avaliacoes'))->render();
-        return response()->json(['success' => true, 'html' => $table]);
+        return view('avaliacaodesempenho::avaliacoes._table', compact('avaliacoes'));
     }
 }

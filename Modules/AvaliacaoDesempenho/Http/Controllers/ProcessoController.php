@@ -228,7 +228,6 @@ class ProcessoController extends Controller
         }
         $processos = $processos->get();
 
-        $table = view('avaliacaodesempenho::processos/_table', compact('processos'))->render();
-        return response()->json(['success' => true, 'html' => $table]);
+        return view('avaliacaodesempenho::processos/_table', compact('processos'));
     }
 }

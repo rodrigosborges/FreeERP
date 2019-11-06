@@ -10,7 +10,7 @@ $(document).ready(function () {
             term: ''
         },
         success: function (data) {
-            $('#ProcessoTable').append(data.html)
+            $('#ProcessoTable').append(data)
         }
     })
 })
@@ -42,7 +42,7 @@ $(document).on('click', '#submit-btn', function (e) {
         },
         success: function (data) {
             $('#ProcessoTable').html('')
-            $('#ProcessoTable').append(data.html)
+            $('#ProcessoTable').append(data)
         }
     })
 })

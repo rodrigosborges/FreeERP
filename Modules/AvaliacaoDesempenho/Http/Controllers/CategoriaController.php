@@ -174,7 +174,6 @@ class CategoriaController extends Controller
         }
         $categorias = $categorias->get();
         
-        $table = view('avaliacaodesempenho::categorias/_table', compact('categorias'))->render();
-        return response()->json(['success' => true, 'html' => $table]);
+        return view('avaliacaodesempenho::categorias._table', compact('categorias'));
     }
 }

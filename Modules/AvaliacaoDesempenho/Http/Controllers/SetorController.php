@@ -172,7 +172,6 @@ class SetorController extends Controller
         }
         $setores = $setores->get();
         
-        $table = view('avaliacaodesempenho::setores/_table', compact('setores'))->render();
-        return response()->json(['success' => true, 'html' => $table]);
+        return view('avaliacaodesempenho::setores._table', compact('setores'));
     }
 }

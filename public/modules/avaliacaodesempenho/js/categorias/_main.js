@@ -10,7 +10,7 @@ $(document).ready(function () {
             term: ''
         },
         success: function (data) {
-            $('#CategoriaTable').append(data.html)
+            $('#CategoriaTable').append(data)
         }
     })
 })
@@ -37,7 +37,7 @@ $(document).on('click', '#submit-btn', function (e) {
         },
         success: function (data) {
             $('#CategoriaTable').html('')
-            $('#CategoriaTable').append(data.html)
+            $('#CategoriaTable').append(data)
         }
     })
 })

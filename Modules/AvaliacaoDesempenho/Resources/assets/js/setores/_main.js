@@ -10,7 +10,7 @@ $(document).ready(function () {
             term: ''
         },
         success: function (data) {
-            $('#SetorTable').append(data.html)
+            $('#SetorTable').append(data)
         }
     })
 })
@@ -37,7 +37,7 @@ $(document).on('click', '#submit-btn', function (e) {
         },
         success: function (data) {
             $('#SetorTable').html('')
-            $('#SetorTable').append(data.html)
+            $('#SetorTable').append(data)
         }
     })
 })

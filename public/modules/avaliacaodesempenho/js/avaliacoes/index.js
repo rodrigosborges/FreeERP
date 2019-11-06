@@ -10,7 +10,8 @@ $(document).ready(function () {
             term: ''
         },
         success: function (data) {
-            $('#AvaliacaoTable').append(data.html)
+            console.log(data)
+            $('#AvaliacaoTable').append(data)
         }
     })
 
@@ -46,7 +47,7 @@ $(document).on('click', '#submit-btn', function (e) {
         },
         success: function (data) {
             $('#AvaliacaoTable').html('')
-            $('#AvaliacaoTable').append(data.html)
+            $('#AvaliacaoTable').append(data)
         }
     })
 })
