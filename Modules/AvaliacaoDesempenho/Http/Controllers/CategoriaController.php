@@ -146,34 +146,4 @@ class CategoriaController extends Controller
             return redirect('/avaliacaodesempenho/categoria')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
         }
     }
-
-    public function search(Request $request)
-    {
-
-        $terms = $request->input('term');
-        $status = $request->input('status');
-
-        if (empty($terms) && empty($status)) {
-
-            $categorias = Categoria::withTrashed();
-
-        } else {
-
-            if ($status == '1') {
-                $categorias = Categoria::where('deleted_at', null);
-            } else if ($status == '0') {
-                $categorias = Categoria::onlyTrashed();
-            } else {
-                $categorias = Categoria::withTrashed();
-            }
-
-            foreach ($terms as $key => $term) {
-                $categorias = $categorias->where($key, 'LIKE', '%' . $term . '%');
-            }
-
-        }
-        $categorias = $categorias->get();
-        
-        return view('avaliacaodesempenho::categorias._table', compact('categorias'));
-    }
 }

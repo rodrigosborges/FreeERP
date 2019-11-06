@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Processo extends Model
 {
     protected $table = 'processo';
-    protected $fillable = ['data_inicio', 'data_fim', 'funcionario_id', 'status_id'];
+    protected $fillable = ['nome', 'data_inicio', 'data_fim', 'funcionario_id', 'status_id'];
     use SoftDeletes;
 
     public function responsavel() {

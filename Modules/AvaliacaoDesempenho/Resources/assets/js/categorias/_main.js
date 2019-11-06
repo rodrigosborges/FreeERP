@@ -4,9 +4,10 @@ $(document).ready(function () {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/categoria/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/search',
         data: {
             _token: _token,
+            table: 'categorias',
             term: ''
         },
         success: function (data) {
@@ -29,9 +30,10 @@ $(document).on('click', '#submit-btn', function (e) {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/categoria/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/search',
         data: {
             _token: _token,
+            table: 'categorias',
             term: search,
             status: status
         },

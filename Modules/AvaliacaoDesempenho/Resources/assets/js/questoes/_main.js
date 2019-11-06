@@ -4,13 +4,14 @@ $(document).ready(function () {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/questao/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/search',
         data: {
             _token: _token,
+            table: 'questoes',
             term: ''
         },
         success: function (data) {
-            $('#QuestaoListar').append(data.html)
+            $('#QuestaoListar').append(data)
         }
     })
 })
@@ -33,15 +34,16 @@ $(document).on('click', '#submit-btn', function (e) {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/questao/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/search',
         data: {
             _token: _token,
+            table: 'questoes',
             term: search,
             status: status
         },
         success: function (data) {
             $('#QuestaoListar').html('')
-            $('#QuestaoListar').append(data.html)
+            $('#QuestaoListar').append(data)
         }
     })
 })

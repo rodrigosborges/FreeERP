@@ -16,9 +16,9 @@
   
     <tbody>
 
-      @if ($categorias->count())
+      @if ($result->count())
   
-        @foreach($categorias as $categoria)
+        @foreach($result as $categoria)
     
           <tr class="{{ !empty($categoria->deleted_at) ? 'table-inactive' : '' }}">
     

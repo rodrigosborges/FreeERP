@@ -346,34 +346,4 @@ class AvaliacaoController extends Controller
             return redirect('/avaliacaodesempenho/categoria')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
         }
     }
-
-    public function search(Request $request)
-    {
-
-        $terms = $request->input('term');
-        $status = $request->input('status');
-
-        if (empty($terms) && empty($status)) {
-
-            $avaliacoes = Avaliacao::withTrashed();
-
-        } else {
-
-            if ($status == '1') {
-                $avaliacoes = Avaliacao::where('deleted_at', null);
-            } else if ($status == '0') {
-                $avaliacoes = Avaliacao::onlyTrashed();
-            } else {
-                $avaliacoes = Avaliacao::withTrashed();
-            }
-
-            foreach ($terms as $key => $term) {
-                $avaliacoes = $avaliacoes->where($key, 'LIKE', '%' . $term . '%');
-            }
-
-        }
-        $avaliacoes = $avaliacoes->paginate(20);
-        
-        return view('avaliacaodesempenho::avaliacoes._table', compact('avaliacoes'));
-    }
 }

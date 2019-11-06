@@ -1,6 +1,6 @@
-@if ($questoes->count())
+@if ($result->count())
 
-  @foreach ($questoes as $questao)
+  @foreach ($result as $questao)
 
   <div class="card">
       

@@ -3,7 +3,25 @@
     
     <div class="form-row">
 
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-7">
+        
+            <div class="input-group">
+
+                <div class="input-group-prepend">
+
+                    <span class="input-group-text">
+                        <i class="material-icons">subject</i>
+                    </span>
+
+                </div>
+                
+                <input type="text" class="form-control" name="_nome" placeholder="Busque por Nome">
+
+            </div>
+
+        </div>
+
+        <div class="form-group col-md-5">
     
             <div class="input-group">
     

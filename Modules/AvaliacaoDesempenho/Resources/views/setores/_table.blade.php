@@ -16,9 +16,9 @@
   
     <tbody>
 
-      @if ($setores->count())
+      @if ($result->count())
   
-        @foreach($setores as $setor)
+        @foreach($result as $setor)
     
           <tr class="{{ !empty($setor->deleted_at) ? 'table-inactive' : '' }}">
     

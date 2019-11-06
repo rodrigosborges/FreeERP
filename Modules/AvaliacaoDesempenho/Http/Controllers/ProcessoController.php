@@ -157,7 +157,7 @@ class ProcessoController extends Controller
             $processo->update($input);
 
             DB::commit();
-            return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo Criado com Sucesso');
+            return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo Atualizado com Sucesso');
 
         } catch (\Throwable $th) {
 
@@ -199,35 +199,5 @@ class ProcessoController extends Controller
 
             return redirect('/avaliacaodesempenho/processo')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
         }
-    }
-
-    public function search(Request $request)
-    {
-
-        $terms = $request->input('term');
-        $status = $request->input('status');
-
-        if (empty($terms) && empty($status)) {
-
-            $processos = Processo::withTrashed();
-
-        } else {
-
-            if ($status == '1') {
-                $processos = Processo::where('deleted_at', null);
-            } else if ($status == '0') {
-                $processos = Processo::onlyTrashed();
-            } else {
-                $processos = Processo::withTrashed();
-            }
-
-            foreach ($terms as $key => $term) {
-                $processos = $processos->where($key, 'LIKE', '%' . $term . '%');
-            }
-
-        }
-        $processos = $processos->get();
-
-        return view('avaliacaodesempenho::processos/_table', compact('processos'));
     }
 }

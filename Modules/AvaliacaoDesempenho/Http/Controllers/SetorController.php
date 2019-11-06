@@ -144,34 +144,4 @@ class SetorController extends Controller
             return redirect('/avaliacaodesempenho/setor')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
         }
     }
-
-    public function search(Request $request)
-    {
-
-        $terms = $request->input('term');
-        $status = $request->input('status');
-
-        if (empty($terms) && empty($status)) {
-
-            $setores = Setor::withTrashed();
-
-        } else {
-
-            if ($status == '1') {
-                $setores = Setor::where('deleted_at', null);
-            } else if ($status == '0') {
-                $setores = Setor::onlyTrashed();
-            } else {
-                $setores = Setor::withTrashed();
-            }
-
-            foreach ($terms as $key => $term) {
-                $setores = $setores->where($key, 'LIKE', '%' . $term . '%');
-            }
-
-        }
-        $setores = $setores->get();
-        
-        return view('avaliacaodesempenho::setores._table', compact('setores'));
-    }
 }

@@ -22,9 +22,9 @@
   
     <tbody>
 
-      @if ($processos->count())
+      @if ($result->count())
   
-        @foreach($processos as $processo)
+        @foreach($result as $processo)
     
           <tr class="{{ !empty($processo->deleted_at) ? 'table-inactive' : '' }}">
     

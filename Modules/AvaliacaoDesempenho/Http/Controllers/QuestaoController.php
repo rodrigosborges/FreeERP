@@ -160,34 +160,4 @@ class QuestaoController extends Controller
             return redirect('/avaliacaodesempenho/questao')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
         }
     }
-
-    public function search(Request $request)
-    {
-
-        $terms = $request->input('term');
-        $status = $request->input('status');
-
-        
-        if (empty($terms) && empty($status)) {
-
-            $questoes = Questao::all();
-
-        } else {
-
-            if ($status == '0') {
-                $questoes = Questao::onlyTrashed();
-            } else {
-                $questoes = Questao::where('deleted_at', null);
-            } 
-
-            foreach ($terms as $key => $term) {
-                $questoes = $questoes->where($key, 'LIKE', '%' . $term . '%');
-            }
-            
-            $questoes = $questoes->get();
-        }
-        
-        $list = view('avaliacaodesempenho::questoes/_listar', compact('questoes'))->render();
-        return response()->json(['success' => true, 'html' => $list]);
-    }
 }

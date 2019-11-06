@@ -26,9 +26,9 @@
 
   <tbody>
 
-    @if ($avaliacoes->count())
+    @if ($result->count())
 
-    @foreach($avaliacoes as $avaliacao)
+    @foreach($result as $avaliacao)
 
     <tr class="{{ !empty($avaliacao->deleted_at) ? 'table-inactive' : '' }}">
 
@@ -88,20 +88,5 @@
     @endif
 
   </tbody>
-
-  <tfoot>
-    <tr>
-      <td colspan="100%" class="text-center">
-        <p class="text-center">
-          Página {{$avaliacoes->currentPage()}} de {{$avaliacoes->lastPage()}}
-          - Exibindo {{$avaliacoes->perPage()}} registro(s) por página de {{$avaliacoes->total()}}
-          registro(s) no total
-        </p>
-        @if($avaliacoes->lastPage() > 1)
-            {{ $avaliacoes->links() }}
-        @endif
-    </td>
-    </tr>
-  </tfoot>
 
 </table>

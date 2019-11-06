@@ -4,9 +4,10 @@ $(document).ready(function () {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/processo/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/search',
         data: {
             _token: _token,
+            table: 'processos',
             term: ''
         },
         success: function (data) {
@@ -21,8 +22,8 @@ $(document).on('click', '#submit-btn', function (e) {
     
     const _token = $('input[name="_token"]').val()
 
-    
     var search = {
+        nome: $('input[name="_nome"]').val(),
         funcionario_id: $('#_responsavel').children('option:selected').val(),
         data_inicio: $('input[name="_data_inicio"]').val(),
         data_fim: $('input[name="_data_fim"]').val()
@@ -34,9 +35,10 @@ $(document).on('click', '#submit-btn', function (e) {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/processo/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/search',
         data: {
             _token: _token,
+            table: 'processos',
             term: search,
             status: status
         },

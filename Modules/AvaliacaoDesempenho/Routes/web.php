@@ -23,7 +23,6 @@ Route::prefix('avaliacaodesempenho')->group(function() {
     Route::get('/processo/{id}/edit', 'ProcessoController@edit');
     Route::put('/processo/{id}', 'ProcessoController@update');
     Route::delete('/processo/{id}', 'ProcessoController@destroy');
-    Route::post('/processo/ajax/search', 'ProcessoController@search');
 
     //AVALIAÇÃO ROUTES
     Route::get('/avaliacao', 'AvaliacaoController@index');
@@ -33,8 +32,6 @@ Route::prefix('avaliacaodesempenho')->group(function() {
     Route::get('/avaliacao/{id}/edit', 'AvaliacaoController@edit');
     Route::put('/avaliacao/{id}', 'AvaliacaoController@update');
     Route::delete('/avaliacao/{id}', 'AvaliacaoController@destroy');
-    Route::post('/avaliacao/ajax/search', 'AvaliacaoController@search');
-    Route::get('/avaliacao/ajax/search', 'AvaliacaoController@search');
 
     // REALIZAR AVALIAÇÃO ROUTES
     Route::get('/avaliacao/responder', 'AvaliacaoRespostaController@index');
@@ -52,7 +49,6 @@ Route::prefix('avaliacaodesempenho')->group(function() {
     Route::get('/questao/{id}/edit', 'QuestaoController@edit');
     Route::put('/questao/{id}', 'QuestaoController@update');
     Route::delete('/questao/{id}', 'QuestaoController@destroy');
-    Route::post('/questao/ajax/search', 'QuestaoController@search');
     
     // CATEGORIA ROUTES
     Route::get('/categoria', 'CategoriaController@index');
@@ -61,7 +57,6 @@ Route::prefix('avaliacaodesempenho')->group(function() {
     Route::get('/categoria/{id}/edit', 'CategoriaController@edit');
     Route::put('/categoria/{id}', 'CategoriaController@update');
     Route::delete('/categoria/{id}', 'CategoriaController@destroy');
-    Route::post('/categoria/ajax/search', 'CategoriaController@search');
     
     // SETOR ROUTES
     Route::get('/setor', 'SetorController@index');
@@ -70,12 +65,13 @@ Route::prefix('avaliacaodesempenho')->group(function() {
     Route::get('/setor/{id}/edit', 'SetorController@edit');
     Route::put('/setor/{id}', 'SetorController@update');
     Route::delete('/setor/{id}', 'SetorController@destroy');
-    Route::post('/setor/ajax/search', 'SetorController@search');
 
     // RELATORIO ROUTES
     Route::get('/relatorio', 'RelatorioController@index');
 
-    Route::post('/ajax/field', 'BaseController@search');
+    Route::post('/ajax/search', 'BaseController@search');
+
+    Route::post('/ajax/field', 'BaseController@search_field');
 
     Route::get('/cron/avisos', 'CronController@avisos');
 });
