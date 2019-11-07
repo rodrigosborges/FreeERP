@@ -15,8 +15,8 @@ class CalendarioDatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(CorTableSeeder::class);
-        $this->call(SetorTableSeeder::class);
         $this->call(UserTableSeeder::class);
+        $this->call(SetorTableSeeder::class);
         $this->call(FuncionarioTableSeeder::class);
     }
 }

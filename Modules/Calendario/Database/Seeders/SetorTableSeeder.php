@@ -15,8 +15,7 @@ class SetorTableSeeder extends Seeder
     public function run()
     {
         Setor::insert([
-            ['sigla' => 'CTI', 'nome' => 'Coordenadoria de Tecnologia da Informação'],
-            ['sigla' => 'DRG', 'nome' => 'Diretoria Geral']
+            ['sigla' => 'CTI', 'nome' => 'Coordenadoria de Tecnologia da Informação', 'user_id' => '2']
         ]);
     }
 }

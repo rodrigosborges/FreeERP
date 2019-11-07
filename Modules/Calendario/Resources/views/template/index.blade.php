@@ -5,11 +5,17 @@ $moduleInfo = [
     'name' => config('calendario.name')
 ];
 
+$compartilhamentos = null;
+
+if(\Modules\Calendario\Entities\Setor::where('user_id', \Illuminate\Support\Facades\Auth::id())->get()->isNotEmpty()){
+    $compartilhamentos = ['icon' => 'share', 'tool' => 'Compartilhamentos', 'route' => route('compartilhamentos.index')];
+}
+
 $menu = [
     ['icon' => 'calendar_view_day', 'tool' => 'Visão Geral', 'route' => route('calendario.index')],
     ['icon' => 'calendar_today', 'tool' => 'Minhas Agendas', 'route' => route('agendas.index')],
     ['icon' => 'people', 'tool' => 'Convites', 'route' => route('convites.index')],
-    ['icon' => 'share', 'tool' => 'Compartilhamentos', 'route' => route('compartilhamentos.index')],
+    $compartilhamentos
 ];
 
 ?>

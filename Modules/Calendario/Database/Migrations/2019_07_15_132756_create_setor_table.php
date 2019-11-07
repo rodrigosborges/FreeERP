@@ -17,6 +17,8 @@ class CreateSetorTable extends Migration
             $table->bigIncrements('id');
             $table->string('sigla');
             $table->string('nome');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('user');
             $table->timestamps();
         });
     }

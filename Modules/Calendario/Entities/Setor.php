@@ -11,4 +11,8 @@ class Setor extends Model
     public function compartilhamentos(){
         return $this->hasMany('Modules\Calendario\Entities\Compartilhamento');
     }
+
+    public function chefia(){
+        return $this->belongsTo('Modules\Calendario\Entities\Funcionario');
+    }
 }

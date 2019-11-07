@@ -2,6 +2,7 @@
 
 namespace Modules\Calendario\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\QueryException;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -15,11 +16,15 @@ use Modules\Calendario\Http\Requests\AgendaSalvarRequest;
 
 class AgendaController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function agendas()
     {
         $funcionario = Funcionario::where('user_id', Auth::id())->first();
@@ -28,6 +33,10 @@ class AgendaController extends Controller
         return view('calendario::agendas.index', ['agendas' => $agendas, 'lixeira' => $lixeira]);
     }
 
+    /**
+     * @param Agenda|null $agenda
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function criarOuEditar(Agenda $agenda = null)
     {
         $cores = Cor::all();
@@ -35,6 +44,10 @@ class AgendaController extends Controller
         return view('calendario::agendas.criar-editar', ['cores' => $cores, 'agenda' => $agenda, 'setores' => $setores]);
     }
 
+    /**
+     * @param AgendaSalvarRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function salvar(AgendaSalvarRequest $request)
     {
         try {
@@ -43,7 +56,6 @@ class AgendaController extends Controller
             $agenda->titulo = $request->agendaNome;
             $agenda->descricao = $request->agendaDescricao;
             $agenda->cor()->associate(Cor::find($request->agendaCor));
-            //TODO Incluir o usuário logado
             $agenda->funcionario()->associate($funcionario);
             $agenda->save();
             if ($request->agendaCompartilhamento) {
@@ -60,6 +72,11 @@ class AgendaController extends Controller
         return redirect()->route('agendas.index')->with('success', 'Agenda "' . $request->agendaNome . '" criada com sucesso.');
     }
 
+    /**
+     * @param AgendaSalvarRequest $request
+     * @param Agenda $agenda
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function atualizar(AgendaSalvarRequest $request, Agenda $agenda)
     {
         try {
@@ -92,6 +109,10 @@ class AgendaController extends Controller
         return redirect()->route('agendas.index')->with('success', 'Agenda "' . $request->agendaNome . '" atualizada com sucesso.');
     }
 
+    /**
+     * @param Agenda $agenda
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deletar(Agenda $agenda)
     {
         try {
@@ -105,6 +126,10 @@ class AgendaController extends Controller
         return redirect()->route('agendas.index')->with('success', 'Agenda deletada com sucesso.');
     }
 
+    /**
+     * @param Agenda $agenda
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function restaurar(Agenda $agenda)
     {
         try {
@@ -115,23 +140,30 @@ class AgendaController extends Controller
         return redirect()->route('agendas.index')->with('success', 'Agenda restaurada com sucesso.');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function compartilhamentos(){
-        $agendas = Agenda::all();
+        $compartilhamentos = Compartilhamento::whereHas('setor', function (Builder $query){
+            $query->where('user_id', '=', Auth::id());
+        })->get();
         $solicitacoes['pendentes'] = [];
         $solicitacoes['aprovadas'] = [];
-        foreach ($agendas as $agenda){
-            foreach ($agenda->compartilhamentos as $compartilhamento){
+        foreach ($compartilhamentos as $compartilhamento){
                 if(!$compartilhamento->aprovacao){
                     array_push($solicitacoes['pendentes'], $compartilhamento);
                 }
                 else{
                     array_push($solicitacoes['aprovadas'], $compartilhamento);
                 }
-            }
         }
         return view('calendario::agendas.compartilhamentos', ['solicitacoes' => $solicitacoes]);
     }
 
+    /**
+     * @param Compartilhamento $compartilhamento
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function aprovarCompartilhamento(Compartilhamento $compartilhamento){
         $aprovacao = new Aprovacao();
         $aprovacao->funcionario()->associate(Funcionario::where('user_id', Auth::id())->first());
@@ -139,16 +171,29 @@ class AgendaController extends Controller
         return redirect()->back()->with('success', 'Compartilhamento aprovado com sucesso.');
     }
 
+    /**
+     * @param Compartilhamento $compartilhamento
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function negarCompartilhamento(Compartilhamento $compartilhamento){
         $compartilhamento->delete();
         return redirect()->back()->with('success', 'Compartilhamento negado com sucesso.');
     }
 
+    /**
+     * @param Compartilhamento $compartilhamento
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function revogarAprovacao(Compartilhamento $compartilhamento){
         $compartilhamento->aprovacao()->delete();
         return redirect()->back()->with('success', 'Compartilhamento revogado com sucesso.');
     }
 
+    /**
+     * @param Agenda $agenda
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function eventos(Agenda $agenda)
     {
         if(!$agenda->eventos->isEmpty())
