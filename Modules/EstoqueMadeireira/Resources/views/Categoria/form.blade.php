@@ -20,7 +20,7 @@
                 <div class="row ml-2 mt-2">
                     <div class="form-group col-4">
                         <label for="nome">Nome</label>
-                        <input required type="text" class="form-control" placeholder="Insira o nome da Categoria" name="nome" value="{{isset($categoria) ? $categoria->nome : ''}}">
+                        <input required type="text" class="form-control" maxlength="40" placeholder="Insira o nome da Categoria" name="nome" value="{{isset($categoria) ? $categoria->nome : ''}}">
                         <span style="color:red">{{$errors->first('nome')}}</span>
                     </div>
 

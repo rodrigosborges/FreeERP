@@ -58,7 +58,7 @@
                         
                         
                         </div>
-                        <div class="form-group ml-2">
+                        <div class="form-group col-3 ml-2">
                             <label for="categoria">Categoria</label>
                             <select class="form-control" name="categoria_id">
                                 @if(isset($fornecedor))
@@ -107,7 +107,6 @@
         $("#cnpj").mask("99.999.999/9999-99");
         $("#telefone").mask("(99)99999-9999");
         $("#cadastrar").click(function(e){
-            validaCnpj(e)
             validaTelefone(e)
          
         })
@@ -126,18 +125,6 @@
             }
     }
 
-    function validaTelefone(e){
-        $("#alert").hide()
-            e.preventDefault()
-            var valida = (/^1\d\d(\d\d)?$|^0800 ?\d{3} ?\d{4}$|^(\(0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d\) ?|0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d[ .-]?)?(9|9[ .-])?[2-9]\d{3}[ .-]?\d{4}$/gm)
-            if(valida.test($("telefone").val()))
-                $("#formulario").submit()
-            else {
-                $("#alert").fadeIn("slow")
-                $("#alert").html("Telefone inválido!")
-                $("#alert").addClass("alert-warning")
-            }
-    }   
 </script>
 
 @endsection

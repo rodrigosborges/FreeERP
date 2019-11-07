@@ -17,7 +17,7 @@ class EstoqueMadeireiraServiceProvider extends ServiceProvider
     {
         Validator::extend('cpf', 'Modules\EstoqueMadeireira\Validators\cpfValidator@validate');
         Validator::extend('telefone', 'Modules\EstoqueMadeireira\Validators\telefoneValidator@validate');
-        Validator::extend('cnpj', 'Modules\EstoqueMadeireira\Validators\cpnjValidator@validade');
+        Validator::extend('cnpj', 'Modules\EstoqueMadeireira\Validators\cnpjValidator@validate');
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
