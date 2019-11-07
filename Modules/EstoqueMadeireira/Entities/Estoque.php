@@ -8,8 +8,8 @@ class Estoque extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['quantidade', 'tipoUnidade_id' ];
-    protected $table = 'categoria';
+    protected $fillable = ['quantidade','tipoUnidade_id' ];
+    protected $table = 'estoque';
 
 
     public function produtos()
@@ -18,7 +18,7 @@ class Estoque extends Model
     }
     public function tipoUnidade()
     {
-        return $this->belongsToMany('Modules\EstoqueMadeireira\Entities\TipoUnidade', 'estoque_has_tipoUnidade', 'estoque_id', 'tipoUnidade_id')->withTrashed();
+        return $this->belongsTo('Modules\EstoqueMadeireira\Entities\tipoUnidade', 'tipoUnidade_id')->withTrashed();
     }
     public function movimentacaoEstoque()
     {

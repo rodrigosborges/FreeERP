@@ -54,7 +54,7 @@
         <tr>
             <td>{{$item->produtos->last()->nome}}</td>
             <td>{{$item->produtos->last()->categoria->nome}}</td>
-            <td>{{$item->tipoUnidade->nome}}-({{$item->tipoUnidade->quantidade_itens}} itens)</td>
+            <td>{{$item->tipoUnidade->nome}} </td>
             <td>{{$item->quantidade}}</td>
             <td>
                 <a href="{{url('/estoquemadeireira/movimentacao/alterar/' . $item->id)}}"><button class="btn btn-primary btn-sm" style="font-size:0px"> <i class="material-icons" style="font-size:18px;">list</i></button></a>
@@ -101,7 +101,7 @@
     <thead class="">
 
     <div class="col-12 text-right mb-4">
-    <a class="btn btn-info btn-sm" href="{{url('/estoque')}}">
+    <a class="btn btn-info btn-sm" href="{{url('/estoquemadeireira')}}">
         <i class="material-icons" style="vertical-align:middle; font-size:25px;">keyboard_backspace</i>Voltar</a>
     </div>
         

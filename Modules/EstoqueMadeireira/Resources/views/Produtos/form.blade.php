@@ -26,18 +26,20 @@
                     </div>
 
                     <div class="form-group col-3">
-                        <label for="preco">Preço</label>
+                        <label for="preco">Preço por Unidade</label>
                         <input required type="text" class="form-control" placeholder="R$" name="preco"  onKeyUp="verificaPreco(this);" value="{{isset($produto) ? $produto->preco : ''}}">
                         {{$errors->first('preco')}}
+                    </div>
+                    
+                    <div class="form-group col-3">
+                            <label for="codigo">Código de Barras</label>
+                            <input required type="number"  class="form-control"  placeholder="Insira o código do Produto" name="codigo" value="{{isset($produto) ? $produto->codigo : ''}}">
+                            {{$errors->first('codigo')}}
                     </div>
                 </div>
             
                 <div class="row ml-2 mt-2">
-                        <div class="form-group col-3">
-                            <label for="codigo">Código de Barras</label>
-                            <input required type="number"  class="form-control"  placeholder="Insira o código do Produto" name="codigo" value="{{isset($produto) ? $produto->codigo : ''}}">
-                            {{$errors->first('codigo')}}
-                        </div>
+                       
         
                         <div class="form-group ml-2">
                             <label for="categoria">Categoria</label>
@@ -60,7 +62,7 @@
                             {{$errors->first('categoria_id')}}            
                         </div>
                 
-                    <div class="form-group ml-2">
+                    <div class="form-group  ml-2">
                         <label for="fornecedor">Fornecedor</label>
                         <select name="fornecedor_id" class="form-control">
                             @if(isset($fornecedor))
@@ -81,22 +83,20 @@
                         {{$errors->first('fornecedor_id')}}
                     </div>
                    
-                   <div class="form-group ml-2">
+                   <div class="form-group col-2 ">
+                        <label for="tamanho">Tamanho</label>
+                        <input required type="text" class="form-control" placeholder="Tamanho" name="tamanho"  onKeyUp="verificaPreco(this);" value="{{isset($produto) ? $produto->tamanho : ''}}">
+
+                   </div>
+                   
+                   <div class="form-group col-2 ">
                     <label for="unidadeMedida">Unidade de Medida</label>
                     <select name="unidadeMedida_id" class="form-control">
-                        @if(isset($unidadeMedida))
+                        <option value="" disabled  selected>Selecione uma medida</option>
+                        @if(isset($unidadeMedidas))
                             @foreach($unidadeMedidas as $medidas)
-                                @if($medidas->id == $produto->unidadeMedida_id)
-                                    <option value="{{$medidas->id}}" selected>{{$medidas->nome}}></option>
-                                @else
-                                    <option value="{{$medidas->id}}">{{$medidas->nome}}</option>
-                                @endif
+                                <option value="{{$medidas->id}}" selected>{{$medidas->nome}}</option>
                             @endforeach
-                        @else
-                                <option disabled value="" selected>Selecione uma unidade de medida</option>
-                                @foreach($unidadeMedidas as $medidas)
-                                <option value="{{$medidas->id}}">{{$medidas->nome}}</option>
-                                @endforeach
                         @endif  
                     
                     

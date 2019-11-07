@@ -9,13 +9,5 @@ class tipoUnidade extends Model
     use SoftDeletes;
     protected $table = 'tipoUnidade';
     protected $fillable = ['nome'];
-   
-   
-   
-   public function estoque()
-    {
-        return $this->belongsTo('Modules\Estoque\Entities\Estoque')->withTrashed();
-    }
 
-    
 }

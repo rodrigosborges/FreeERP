@@ -101,8 +101,10 @@ class ProdutoController extends Controller
         $produto = Produto::findOrFail($id);
         $categorias = Categoria::all();
         $fornecedores = Fornecedor::all();
+        $unidadeMedidas = UnidadeMedida::all();
+
      
-        return view('estoquemadeireira::produtos.form', $this->template, compact('produto', 'categorias', 'fornecedores'));
+        return view('estoquemadeireira::produtos.form', $this->template, compact('produto', 'categorias', 'fornecedores','unidadeMedidas'));
     }
     
     public function update(ProdutoRequest $req, $id)

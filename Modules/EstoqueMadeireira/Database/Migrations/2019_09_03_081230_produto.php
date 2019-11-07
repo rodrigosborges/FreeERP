@@ -17,6 +17,7 @@ class Produto extends Migration
             $table->bigIncrements('id');
             $table->string('nome', 45);
             $table->string('descricao', 300);
+            $table->decimal('tamanho', 5,2)->nullable();
             $table->integer('categoria_id')->unsigned()->index('fk_produtos_categoria');
             $table->integer('fornecedor_id')->unsigned()->index('fk_produtos_fornecedor');
             $table->integer('unidadeMedida_id')->unsigned()->index('fk_produtos_unidadeMedida');

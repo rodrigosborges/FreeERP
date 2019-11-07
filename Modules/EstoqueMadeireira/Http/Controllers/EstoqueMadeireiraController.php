@@ -47,6 +47,12 @@ class EstoqueMadeireiraController extends Controller
     {
         $flag = 0;
         $itens = Estoque::paginate(5);
+        // $a = [];
+        // foreach($itens as $i){
+        //     array_push($a, $i->tipoUnidade);
+        // }
+
+        // return json_encode($itens);
         return view('estoquemadeireira::estoque.index', $this->template, compact('itens', 'flag'));     
     }
 
@@ -60,7 +66,7 @@ class EstoqueMadeireiraController extends Controller
         $data = [
             'titulo' => 'Cadastrar Estoque',
             'button' => 'Cadastrar',
-            'url' => 'estoque',
+            'url' => 'estoquemadeireira',
             'estoque' => null,
             'produtos' => Produto::all(),
             'tipoUnidade' => TipoUnidade::all()
@@ -86,7 +92,6 @@ class EstoqueMadeireiraController extends Controller
                     'observacao' => "Entrada Inicial",
                 ]
             );
-            return $request;
             DB::commit();
             return redirect('/estoquemadeireira')->with('success', 'Item de estoque registrado com sucesso!');
         } 

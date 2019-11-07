@@ -1,6 +1,6 @@
 @extends('estoquemadeireira::estoque.template')
 
-@section('title', 'Cadastro Estoque')
+@section('title', 'Cadastro de Estoque')
 
 @section('body')
 
@@ -59,7 +59,7 @@
     </div>
     <div class="row">
         <div class="col-12 text-right">
-            <button type="submit" id="send" class="btn btn-primary send">{{$data['button']}}</button>
+        <button type="submit" class="btn btn-primary">{{$data['button']}}</button>
         </div>
     </div>
 
@@ -67,85 +67,7 @@
 @endsection
 @section('js')
 
-<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
-<script type="text/javascript">
-    $(document).ready(function(e) {
-        if ($('.produto_id').val() == -1) {
-            $('.tipo_unidade_id').html('');
-        }
-    })
-    $('.feedback-errors').hide();
-    $('.send').click(function(event) {
-        event.preventDefault();
-        var error = false;
-        var message = "";
-        if ($('.produto_id').val() == -1) {
-            error = true;
-            message += "Selecione um produto<br>";
-            $('.produto_id').focus()
-        }
-        if ($('.tipo_unidade_id').val() == -1) {
-            error = true;
-            message += "\n Selecione um tipo de unidade<br>";
-            $('.tipo_unidade_id').focus()
-        }
-        if ($('.preco').val() == "") {
-            error = true;
-            message += "\n O Campo preço de custo é obrigatório<br>";
-            $('.preco_custo').focus()
-        }
-        if ($('.quantidade').val() == "") {
-            error = true;
-            message += "\n O campo quantidade é obrigatório<br>";
-            $('.quantidade').focus()
-        } else if ($('.quantidade').val() <= 0) {
-            error = true;
-            message += "\n A Quantidade não pode ser menor ou igual a 0";
-            $('.quantidade').focus()
-        }
-        if (!error) {
-            $('.feedback-errors').hide()
-            $('.feedback-errors').removeClass('alert-warning')
-            $('.feedback-errors').addClass('alert-primary')
-            $('.feedback-errors').fadeIn()
-            $('.feedback-errors').html("processando...")
-            $('.send').attr('disabled', true)
-            $('.estoqueForm').submit();
-        } else {
-            $('.feedback-errors').fadeIn()
-            $('.feedback-errors').html(message)
-            $('.feedback-errors').addClass('alert-warning')
-        }
-    })
-    $('.produto_id').change(function() {
-        var idProduto = $('.produto_id').val();
-        if (idProduto != -1)
-            buscaUnidade(idProduto)
-    })
-    function buscaUnidade(id) {
-        $.ajax({
-            url: '/buscaUnidades',
-            type: "POST",
-            data: {
-                id: id,
-                '_token': $('input[name=_token]').val(),
-            }
-        }).done(function(e) {
-            console.log("Ok:" + e);
-            var options = "<option value ='-1'>Selecione</option>"
-            var data = $.parseJSON(e);
-            console.log("Data:" + data)
-            $.each(data, function(cahve, valor) {
-                options += "<option value='" + valor.id + "'>" + valor.nome + "(" + valor.quantidade_itens + " itens)</option>"
-            })
-            $('.tipo_unidade_id').html(options);
-            // console.log(options)
-        }).fail(function() {
-            console.log('Fail')
-        }).always(function() {
-        })
-    }
-</script>
+
 <script>
     function moeda(i) {
         var v = i.value.replace(/\D/g, '');
