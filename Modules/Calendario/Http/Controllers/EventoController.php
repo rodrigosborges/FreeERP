@@ -14,8 +14,10 @@ use Modules\Calendario\Entities\Convite;
 use Modules\Calendario\Entities\Evento;
 use Modules\Calendario\Entities\Funcionario;
 use Modules\Calendario\Entities\Notificacao;
+use Modules\Calendario\Entities\User;
 use Modules\Calendario\Events\EventoCriado;
 use Modules\Calendario\Notifications\NotificarConviteParaEvento;
+use Modules\Calendario\Notifications\NotificarEventoProximo;
 use function Sodium\add;
 
 class EventoController extends Controller
@@ -26,6 +28,9 @@ class EventoController extends Controller
         $this->middleware('auth');
     }
 
+    public function notificar(){
+        User::find(1)->notify(new NotificarEventoProximo());
+    }
     public function eventos()
     {
         $eventos = [];

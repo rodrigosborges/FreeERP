@@ -4,7 +4,7 @@ namespace Modules\Calendario\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\Calendario\Console\EnviarNotificacaoEventoProximo;
+//use Modules\Calendario\Console\EnviarNotificacaoEventoProximo;
 
 class CalendarioServiceProvider extends ServiceProvider
 {
@@ -20,7 +20,7 @@ class CalendarioServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-        $this->commands(\Modules\Calendario\Console\EnviarNotificacaoEventoProximo::class);
+        //$this->commands(\Modules\Calendario\Console\EnviarNotificacaoEventoProximo::class);
     }
 
     /**

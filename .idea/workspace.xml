@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b84905e5-ba51-4cac-9254-655e0db8a3b8" name="Default Changelist" comment="">
+    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/FreeERP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FreeERP.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Providers/CalendarioServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Providers/CalendarioServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/template.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/template.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,32 +16,25 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
-      <executable path="composer" />
+      <executable />
     </execution>
   </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand />
-    <select />
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
       </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
     </option>
   </component>
   <component name="PackageJsonUpdateNotifier">
@@ -51,129 +42,113 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
-      <path value="$PROJECT_DIR$/vendor/symfony/debug" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
-      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
-      <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
-      <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
-      <path value="$PROJECT_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
-      <path value="$PROJECT_DIR$/vendor/dragonmantank/cron-expression" />
-      <path value="$PROJECT_DIR$/vendor/composer" />
-      <path value="$PROJECT_DIR$/vendor/psr/log" />
-      <path value="$PROJECT_DIR$/vendor/psr/container" />
-      <path value="$PROJECT_DIR$/vendor/erusev/parsedown" />
-      <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
-      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
-      <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-iconv" />
-      <path value="$PROJECT_DIR$/vendor/symfony/process" />
-      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
-      <path value="$PROJECT_DIR$/vendor/symfony/console" />
-      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
-      <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
-      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
-      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/vendor/symfony/debug" />
       <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
       <path value="$PROJECT_DIR$/vendor/symfony/routing" />
-      <path value="$PROJECT_DIR$/vendor/opis/closure" />
-      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
-      <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
-      <path value="$PROJECT_DIR$/vendor/filp/whoops" />
-      <path value="$PROJECT_DIR$/vendor/ramsey/uuid" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
-      <path value="$PROJECT_DIR$/vendor/nunomaduro/collision" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
-      <path value="$PROJECT_DIR$/vendor/nesbot/carbon" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
-      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
-      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-iconv" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-token-stream" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
-      <path value="$PROJECT_DIR$/vendor/psy/psysh" />
-      <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
-      <path value="$PROJECT_DIR$/vendor/fideloper/proxy" />
-      <path value="$PROJECT_DIR$/vendor/beyondcode/laravel-dump-server" />
-      <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/vendor/nwidart/laravel-modules" />
-      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
-      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
-      <path value="$PROJECT_DIR$/vendor/dnoegel/php-xdg-base-dir" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
-      <path value="$PROJECT_DIR$/vendor/league/flysystem" />
-      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/laravel/framework" />
       <path value="$PROJECT_DIR$/vendor/mockery/mockery" />
-      <path value="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver" />
-      <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/vendor/laravel/tinker" />
+      <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/vendor/dnoegel/php-xdg-base-dir" />
+      <path value="$PROJECT_DIR$/vendor/pusher/pusher-php-server" />
+      <path value="$PROJECT_DIR$/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/vendor/erusev/parsedown" />
+      <path value="$PROJECT_DIR$/vendor/filp/whoops" />
+      <path value="$PROJECT_DIR$/vendor/opis/closure" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/psy/psysh" />
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
-      <path value="$PROJECT_DIR$/vendor/symfony/translation" />
-      <path value="$PROJECT_DIR$/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/vendor/laravelcollective/html" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver" />
       <path value="$PROJECT_DIR$/vendor/jakub-onderka/php-console-highlighter" />
       <path value="$PROJECT_DIR$/vendor/jakub-onderka/php-console-color" />
-      <path value="$PROJECT_DIR$/vendor/laravel/tinker" />
-      <path value="$PROJECT_DIR$/vendor/laravel/framework" />
-      <path value="$PROJECT_DIR$/vendor/laravelcollective/html" />
+      <path value="$PROJECT_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
+      <path value="$PROJECT_DIR$/vendor/dragonmantank/cron-expression" />
+      <path value="$PROJECT_DIR$/vendor/nunomaduro/collision" />
+      <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/beyondcode/laravel-dump-server" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
       <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
-      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
-      <path value="$PROJECT_DIR$/vendor/xethron/laravel-4-generators" />
-      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
-      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
-      <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
-      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
-      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
-      <path value="$PROJECT_DIR$/vendor/xethron/migrations-generator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
       <path value="$PROJECT_DIR$/vendor/paragonie/sodium_compat" />
-      <path value="$PROJECT_DIR$/vendor/pusher/pusher-php-server" />
+      <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/vendor/fideloper/proxy" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/xethron/laravel-4-generators" />
+      <path value="$PROJECT_DIR$/vendor/xethron/migrations-generator" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
     </include_path>
   </component>
-  <component name="ProjectId" id="1OYej8uerDxwsvEUxrjr6kySgef" />
+  <component name="ProjectId" id="1TGQUYrMFVoeTXwMHCy6IA9gsIK" />
   <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="DatabaseDriversLRU" value="sqlite" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="dumpAutoload /home/hugo/dev/freeerp/Modules/Calendario/composer.json" value="--no-interaction --ansi --verbose" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Modules/Calendario/Database/Migrations" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
   </component>
   <component name="RecentsManager">
-    <key name="OPEN_URL_DIALOG">
-      <recent name="https://HugoCuba@bitbucket.org/ifspcaraguatatuba/painel-cti.git" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Modules/Calendario/Resources/assets" />
       <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Modules/Calendario/Database/Migrations" />
-      <recent name="$PROJECT_DIR$/Modules/Calendario/Resources/assets/audio" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -188,316 +163,18 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner scope="XML" />
-      <method v="2" />
-    </configuration>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="allServicesViewState">
-      <serviceView>
-        <treeState>
-          <expand />
-          <select />
-        </treeState>
-      </serviceView>
-    </option>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b84905e5-ba51-4cac-9254-655e0db8a3b8" name="Default Changelist" comment="" />
-      <created>1562780110105</created>
+      <changelist id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="" />
+      <created>1573083968523</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1562780110105</updated>
-      <workItem from="1562780111309" duration="13904000" />
-      <workItem from="1562865602646" duration="14776000" />
-      <workItem from="1562966513385" duration="5530000" />
-      <workItem from="1563207943100" duration="14718000" />
-      <workItem from="1563294497410" duration="18447000" />
-      <workItem from="1563749002771" duration="3921000" />
-      <workItem from="1564159097751" duration="321000" />
-      <workItem from="1564179879440" duration="1078000" />
-      <workItem from="1564505153882" duration="3000" />
-      <workItem from="1564513846121" duration="46000" />
-      <workItem from="1564595250629" duration="1421000" />
-      <workItem from="1564603072818" duration="11560000" />
-      <workItem from="1564682434025" duration="9914000" />
-      <workItem from="1564697184676" duration="3287000" />
-      <workItem from="1564765346864" duration="1026000" />
-      <workItem from="1565042513888" duration="3514000" />
-      <workItem from="1565109897090" duration="11000" />
-      <workItem from="1565196107870" duration="3587000" />
-      <workItem from="1565216309681" duration="4553000" />
-      <workItem from="1565289595187" duration="604000" />
-      <workItem from="1565374403515" duration="16484000" />
-      <workItem from="1565627050625" duration="17608000" />
-      <workItem from="1565728750510" duration="9982000" />
-      <workItem from="1565800844000" duration="1661000" />
-      <workItem from="1565819224839" duration="5139000" />
-      <workItem from="1565995078438" duration="7491000" />
-      <workItem from="1566243380910" duration="14000" />
-      <workItem from="1566244674503" duration="13018000" />
-      <workItem from="1566318122443" duration="165000" />
-      <workItem from="1566338167947" duration="4870000" />
-      <workItem from="1566422336530" duration="604000" />
-      <workItem from="1566423343886" duration="3855000" />
-      <workItem from="1566427476129" duration="497000" />
-      <workItem from="1566428932026" duration="936000" />
-      <workItem from="1566493176720" duration="392000" />
-      <workItem from="1566499240265" duration="13735000" />
-      <workItem from="1566577547069" duration="15153000" />
-      <workItem from="1567113067758" duration="2895000" />
-      <workItem from="1567194205360" duration="7676000" />
-      <workItem from="1567720166958" duration="2543000" />
-      <workItem from="1569266624035" duration="4000" />
-      <workItem from="1569611059880" duration="226000" />
-      <workItem from="1570015312533" duration="12002000" />
-      <workItem from="1570130720301" duration="7710000" />
-      <workItem from="1570220838187" duration="10315000" />
-      <workItem from="1570622862083" duration="8652000" />
-      <workItem from="1570726145627" duration="13772000" />
-      <workItem from="1570832539819" duration="6466000" />
-      <workItem from="1571258472726" duration="9788000" />
-      <workItem from="1571332639105" duration="1745000" />
-      <workItem from="1571353084238" duration="19763000" />
-      <workItem from="1572386788860" duration="5342000" />
-      <workItem from="1572456398845" duration="13895000" />
-      <workItem from="1572552200005" duration="1100000" />
-      <workItem from="1572624823401" duration="11892000" />
-      <workItem from="1572653207351" duration="44000" />
-      <workItem from="1572887925448" duration="15478000" />
-      <workItem from="1572974742999" duration="11693000" />
+      <updated>1573083968523</updated>
+      <workItem from="1573083970838" duration="1024000" />
     </task>
-    <task id="LOCAL-00001" summary="Calendário exibindo todos eventos do usuário e algumas refatorações">
-      <created>1562796695507</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1562796695508</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Bootbox adicionado para informar que não há agendas">
-      <created>1562872516729</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1562872516729</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Calculando data da notificação do evento, removido mutators do model e tratado no controller">
-      <created>1562882516095</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1562882516095</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Corrigido a criação das datas com o Carbon">
-      <created>1562972161037</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1562972161037</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Cor da agenda alterado para model e e alguns validations">
-      <created>1563218787426</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1563218787426</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Criada view index para agendas">
-      <created>1564094629906</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1564094629906</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Filtro de agendas na visão geral">
-      <created>1564693639481</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1564693639481</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Tooltip nos eventos na visão geral quando há descrição">
-      <created>1564700466503</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1564700466503</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Adicionado listagem de agendas, eventos, e botões para deletá-los">
-      <created>1565395431235</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1565395431235</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Verificação de rota ativada para active do menu">
-      <created>1565639931514</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1565639931514</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Modal de novo evento removido">
-      <created>1566254451869</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1566254451869</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Carregando corretamente a data na edição do evento e rota feita">
-      <created>1566343035458</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1566343035458</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Abrir edição do evento ao clicar nele na visão geral">
-      <created>1566429863092</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1566429863092</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Criado model para notificação">
-      <created>1566512394314</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1566512394314</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Adicionado as verificações para o campo email da notificação">
-      <created>1566580519115</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1566580519115</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Criado compartilhamento de evento com setores">
-      <created>1566596746362</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1566596746362</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Mensagens para confirmar deletar/restaurar agendas e eventos">
-      <created>1567200071838</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1567200071839</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Iniciando aprovação de compartilhamento de agenda">
-      <created>1567202592152</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1567202592152</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Separando a aprovação do compartilhamento">
-      <created>1567722697775</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1567722697775</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Criado model e migration para aprovação de compartilhamento">
-      <created>1570033597040</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1570033597040</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Adicionado revogação do compartilhamento">
-      <created>1570142861582</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1570142861582</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Ajustes na tela de compartilhamento de agenda">
-      <created>1570227020162</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1570227020162</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Função para duplicar eventos">
-      <created>1570731995216</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1570731995216</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Iniciando notificações de evento">
-      <created>1570745238011</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1570745238011</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Implementado autenticação">
-      <created>1570838952405</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1570838952405</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Iniciando notificação para convite de evento">
-      <created>1571272944072</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1571272944072</updated>
-    </task>
-    <task id="LOCAL-00027" summary="Recebendo notificação via Pusher">
-      <created>1571447749525</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1571447749525</updated>
-    </task>
-    <task id="LOCAL-00028" summary="Enviando notificação via e-mail ao ser convidado para evento">
-      <created>1572392124452</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1572392124452</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Criado command para verificar e enviar as notificações automaticamente">
-      <created>1572474591156</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1572474591156</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Adicionado botão para excluir evento na edição">
-      <created>1572476891053</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1572476891053</updated>
-    </task>
-    <task id="LOCAL-00031" summary="Pequenas correções de permissões">
-      <created>1572653234798</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1572653234798</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Correção nas listagens de convites e compartilhamentos">
-      <created>1572909839278</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1572909839278</updated>
-    </task>
-    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -508,82 +185,10 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list />
-          </value>
-        </entry>
-        <entry key="User">
-          <value>
-            <list />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Tooltip nos eventos na visão geral quando há descrição" />
-    <MESSAGE value="Adicionado listagem de agendas, eventos, e botões para deletá-los" />
-    <MESSAGE value="Verificação de rota ativada para active do menu" />
-    <MESSAGE value="Modal de novo evento removido" />
-    <MESSAGE value="Carregando corretamente a data na edição do evento e rota feita" />
-    <MESSAGE value="Abrir edição do evento ao clicar nele na visão geral" />
-    <MESSAGE value="Criado model para notificação" />
-    <MESSAGE value="Adicionado as verificações para o campo email da notificação" />
-    <MESSAGE value="Criado compartilhamento de evento com setores" />
-    <MESSAGE value="Mensagens para confirmar deletar/restaurar agendas e eventos" />
-    <MESSAGE value="Iniciando aprovação de compartilhamento de agenda" />
-    <MESSAGE value="Separando a aprovação do compartilhamento" />
-    <MESSAGE value="Criado model e migration para aprovação de compartilhamento" />
-    <MESSAGE value="Adicionado revogação do compartilhamento" />
-    <MESSAGE value="Ajustes na tela de compartilhamento de agenda" />
-    <MESSAGE value="Função para duplicar eventos" />
-    <MESSAGE value="Iniciando notificações de evento" />
-    <MESSAGE value="Implementado autenticação" />
-    <MESSAGE value="Iniciando notificação para convite de evento" />
-    <MESSAGE value="Recebendo notificação via Pusher" />
-    <MESSAGE value="Enviando notificação via e-mail ao ser convidado para evento" />
-    <MESSAGE value="Criado command para verificar e enviar as notificações automaticamente" />
-    <MESSAGE value="Adicionado botão para excluir evento na edição" />
-    <MESSAGE value="Pequenas correções de permissões" />
-    <MESSAGE value="Correção nas listagens de convites e compartilhamentos" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correção nas listagens de convites e compartilhamentos" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/resources/views/template.blade.php</url>
-          <line>108</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>

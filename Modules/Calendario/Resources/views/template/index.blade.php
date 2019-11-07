@@ -31,7 +31,6 @@ $menu = [
 @section('css')
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <link rel="stylesheet" href="{{ mix('css/calendario.css') }}">
     <style type="text/css">
         h2 {
             margin-bottom: 20px;
@@ -61,7 +60,7 @@ $menu = [
 
 @section('js')
     <script type="text/javascript" src="{{Module::asset(config('calendario.id').':bootbox.all.min.js')}}"></script>
-    <script src="{{ mix('js/calendario.js') }}"></script>
+    <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
     <script type="text/javascript">
         var userID = '{{auth()->id()}}';
         $(function () {
@@ -82,9 +81,21 @@ $menu = [
                 });
             }
 
-            Echo.private('Modules.Calendario.Entities.User.' + userID).notification((notification) => {
-                if (notification.type == 'Modules\\Calendario\\Notifications\\NotificarEventoProximo') {
-                    notificar(notification);
+            var pusher = new Pusher('6ca8d531d809db01d827', {
+                cluster: 'us2',
+                forceTLS: true,
+                authEndpoint: 'broadcasting/auth',
+                auth: {
+                    headers: {
+                        'X-CSRF-Token': '{{csrf_token()}}'
+                    }
+                }
+            });
+
+            var channel = pusher.subscribe('private-Modules.Calendario.Entities.User.' + userID);
+            channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function (data) {
+                if(data.type == 'Modules\\Calendario\\Notifications\\NotificarEventoProximo'){
+                    notificar(data);
                 }
             });
 
