@@ -4,7 +4,7 @@
 
 <table class="table text-center ">
 
-<h4>Pesquisar Movimentação</h4>
+<h5>Pesquisar Movimentação</h5>
                 <form method="POST" action="{{url('/estoquemadeireira/movimentacao/buscar')}}" id="form">
                     @csrf
                     <div class="row mb-3 mt-3">

@@ -47,12 +47,6 @@ class EstoqueMadeireiraController extends Controller
     {
         $flag = 0;
         $itens = Estoque::paginate(5);
-        // $a = [];
-        // foreach($itens as $i){
-        //     array_push($a, $i->tipoUnidade);
-        // }
-
-        // return json_encode($itens);
         return view('estoquemadeireira::estoque.index', $this->template, compact('itens', 'flag'));     
     }
 
@@ -107,7 +101,29 @@ class EstoqueMadeireiraController extends Controller
 
     public function edit($id)
     {
-        return view('estoquemadeireira::edit');
+        $estoque = Estoque::findOrFail($id);
+        $idProduto = $estoque->produtos->last()->id;
+        $data2 = array();
+        $itens = DB::table('estoque')
+            ->join('estoque_has_produto', function ($join) use ($idProduto) {
+                $join->where('produto_id', $idProduto)->whereraw('estoque.id = estoque_has_produto.estoque_id');
+            })->get();
+        foreach ($itens as $item) {
+            if ($item->tipo_unidade_id != $estoque->tipo_unidade_id) {
+                $data2[] = $item->tipo_unidade_id;
+            }
+        }
+        $data = [
+            'button' => 'atualizar',
+            'url' => 'estoquemadeireira/' . $id,
+            'titulo' => 'Editar Estoque',
+            'estoque' => $estoque,
+            'produtos' => Produto::withTrashed()->get(),
+            'produto' => $estoque->produtos->last(),
+            'tipoUnidade' => TipoUnidade::all()->except($data2),
+        ];
+        return view('estoquemadeireira::estoque.form', compact('data'));
+
     }
 
 
@@ -128,5 +144,34 @@ class EstoqueMadeireiraController extends Controller
     //     $itens = Estoque::where('quantidade', '<=', DB::raw('quantidade_notificacao'))->paginate(10);
     //     return count($itens);
     // }
+
+    public function Busca(Request $request){
+
+        $flag = 0;
+        $sql = [];
+        $itens = Estoque::all();
+        if($request['pesquisa'] == null){
+        return redirect('/estoquemadeireira')->with('error', 'Insira um nome para a pesquisa');
+        } else{
+            array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);
+
+            if($request['flag'] == 1){
+                $itens = Estoque::onlyTrashed()->where($sql)->paginate(5);
+                if(count($itens) == 0){
+                    return redirect('/estoquemadeireira')->with('error', 'Nenhum resultado encontrado');
+                }
+                $flag = $request['flag'];
+                return view('estoquemadeireira::estoque.index', $this->template, compact('categorias', 'flag'))->with('success', 'Resultado da pesquisa');
+            }else{
+                $itens = Estoque::where($sql)->paginate(5);
+                if(count($itens) == 0){
+                    return redirect('/estoquemadeireira')->with('error', 'Nenhum resultado encontrado');
+                }
+                $flag = $request['flag'];
+                return view('estoquemadeireira::estoque.index', $this->template, compact('categorias', 'flag'))->with('success', 'Resultado da pesquisa');
+            }
+        }
+    }
+
 
 }

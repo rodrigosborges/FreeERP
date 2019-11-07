@@ -84,10 +84,16 @@ class tipoUnidadeController extends Controller
     
     public function edit($id)
     {
-        $tipo = tipoUnidade::findOrFail($id);
-
-        return view('estoquemadeireira::tipoUnidade.form', $this->template, compact('tipo'));
+        $tipo = TipoUnidade::findOrFail($id);
+        $data = [
+            'button' => 'atualizar',
+            'url' => 'estoquemadeireira/tipounidade/' . $id,
+            'tipo' => TipoUnidade::findOrFail($id),
+            'titulo' => 'Editar Unidade',
+        ];
+        return view('estoquemadeireira::tipoUnidade.form', $this->template, compact('data', 'tipo'));
     }
+  
 
     public function restore($id){
         $tipo = tipoUnidade::onlyTrashed()->findOrFail($id);
@@ -102,7 +108,7 @@ class tipoUnidadeController extends Controller
      try{
          $tipo = tipoUnidade::findOrFail($id);
          $tipo->update($request->all());
-         DB:commit();
+         DB::commit();
          return redirect('/estoquemadeireira/tipounidade')->with('success', 'Tipo de unidade atualizado com sucesso!');
      }catch  (\Exception $e){
          DB::rollback();

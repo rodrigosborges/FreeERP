@@ -10,7 +10,7 @@
 <div class="header text-left mb-3 mt-3">
                 <h4>Pesquisar Estoque</h4>
             </div>
-                <form method="POST" action="{{url('/estoquemadeireira/buscar')}}" id="form">
+                <form method="POST" action="{{url('/estoquemadeireira/buscar')}}" id="pesquisa">
                     @csrf
                     <div class="row">
                         <div class="form-group col-11">

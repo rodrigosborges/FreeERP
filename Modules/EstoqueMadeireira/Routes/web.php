@@ -23,7 +23,7 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::post('/produtos/categorias/busca', 'CategoriaController@busca');
     Route::post('/produtos/fornecedores/busca', 'FornecedorController@busca');
     Route::post('/movimentacao/buscar', 'MovimentacaoEstoqueController@buscar');
-    Route::post('/busca', 'EstoqueMadeireiraController@busca');
+    Route::post('/buscar', 'EstoqueMadeireiraController@busca');
 
     //PRODUTOS
     Route::get('/produtos/inativos', 'ProdutoController@inativos'); 
@@ -54,6 +54,8 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/movimentacao/alterar/{id}/remover', 'MovimentacaoEstoqueController@remover');
     Route::resource('/movimentacao', 'MovimentacaoEstoqueController');
 
+    //ESTOQUE
+
 
     //ROTAS DE RELATÓRIO
     Route::get('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacao');
@@ -62,7 +64,7 @@ Route::prefix('estoquemadeireira')->group(function() {
 
 
     //ROTAS PADRÕES DO LARAVEL 
-    Route::resource('/', 'EstoqueMadeireiraController');
+    Route::resource('/estoquemadeireira', 'EstoqueMadeireiraController');
     Route::resource('/vendas/cliente', 'ClienteController');
     Route::resource('/produtos/fornecedores', 'FornecedorController');
     Route::resource('/produtos/categorias', 'CategoriaController'); 
