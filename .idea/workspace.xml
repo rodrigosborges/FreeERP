@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Providers/CalendarioServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Providers/CalendarioServiceProvider.php" afterDir="false" />
+    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="Echo substituido pelo pusher-js">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Console/EnviarNotificacaoEventoProximo.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Console/EnviarNotificacaoEventoProximo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarConviteParaEvento.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarConviteParaEvento.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarEventoProximo.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarEventoProximo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/template/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/template.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/template.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -188,7 +195,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

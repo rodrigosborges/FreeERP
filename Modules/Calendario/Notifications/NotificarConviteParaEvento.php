@@ -31,7 +31,7 @@ class NotificarConviteParaEvento extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -52,6 +52,7 @@ class NotificarConviteParaEvento extends Notification
                 . ' até ' . Carbon::parse($this->convite->evento->data_fim)->format('d/m/Y H:i');
         }
         return (new MailMessage)
+                    ->from('freeerp@ifspcaraguatatuba.edu.br', 'FreeERP')
                     ->subject('Convite para evento')
                     ->greeting('Olá!')
                     ->line('Você foi convidado para um evento.')
@@ -59,11 +60,5 @@ class NotificarConviteParaEvento extends Notification
                     ->line('Responsável: ' . $this->convite->evento->agenda->funcionario->nome)
                     ->line('Data: ' . $data)
                     ->action('Confirme sua presença', $url);
-    }
-
-    public function toDatabase($notifiable){
-        return [
-            'convite_id' => $this->convite->id
-        ];
     }
 }

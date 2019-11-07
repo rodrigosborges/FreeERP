@@ -84,7 +84,7 @@ $menu = [
             var pusher = new Pusher('6ca8d531d809db01d827', {
                 cluster: 'us2',
                 forceTLS: true,
-                authEndpoint: 'broadcasting/auth',
+                authEndpoint: '/broadcasting/auth',
                 auth: {
                     headers: {
                         'X-CSRF-Token': '{{csrf_token()}}'

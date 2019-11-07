@@ -2,7 +2,6 @@
 
 namespace Modules\Calendario\Http\Controllers;
 
-
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -15,11 +14,13 @@ use Modules\Calendario\Entities\Evento;
 use Modules\Calendario\Entities\Funcionario;
 use Modules\Calendario\Entities\Notificacao;
 use Modules\Calendario\Entities\User;
-use Modules\Calendario\Events\EventoCriado;
 use Modules\Calendario\Notifications\NotificarConviteParaEvento;
 use Modules\Calendario\Notifications\NotificarEventoProximo;
-use function Sodium\add;
 
+/**
+ * Class EventoController
+ * @package Modules\Calendario\Http\Controllers
+ */
 class EventoController extends Controller
 {
 
@@ -29,8 +30,14 @@ class EventoController extends Controller
     }
 
     public function notificar(){
-        User::find(1)->notify(new NotificarEventoProximo());
+
+        User::find(1)->notify(new NotificarEventoProximo(Evento::find(1)));
     }
+
+    /**
+     *
+     * @return array
+     */
     public function eventos()
     {
         $eventos = [];
@@ -60,6 +67,11 @@ class EventoController extends Controller
         return $eventos;
     }
 
+    /**
+     * @param Evento|null $evento
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function criarOuEditar(Evento $evento = null, Request $request)
     {
         $rota = $request->route()->getName();
@@ -69,6 +81,10 @@ class EventoController extends Controller
         return view('calendario::eventos.criar-editar', ['agendas' => $agendas, 'evento' => $evento, 'funcionarios' => $funcionarios, 'agenda_selecionada' => $agenda_selecionada, 'rota' => $rota]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function salvar(Request $request)
     {
         try {
@@ -106,6 +122,11 @@ class EventoController extends Controller
         return redirect()->route('agendas.eventos.index', $agenda->id)->with('success', 'Evento criado com sucesso.');
     }
 
+    /**
+     * @param Request $request
+     * @param Evento $evento
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function atualizar(Request $request, Evento $evento)
     {
         try {
@@ -158,6 +179,10 @@ class EventoController extends Controller
         return redirect()->route('calendario.index')->with('success', 'Evento "' . $request->eventoTitulo . '" atualizado com sucesso.');
     }
 
+    /**
+     * @param Evento $evento
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deletar(Evento $evento)
     {
         try {
@@ -168,6 +193,10 @@ class EventoController extends Controller
         return redirect()->route('agendas.eventos.index', $evento->agenda->id)->with('success', 'Evento deletado com sucesso.');
     }
 
+    /**
+     * @param Convite|null $convite
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function convites(Convite $convite = null)
     {
         if (!$convite) {
@@ -193,6 +222,10 @@ class EventoController extends Controller
         return view('calendario::eventos.convites', ['convites' => $convites]);
     }
 
+    /**
+     * @param Convite $convite
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function aceitarConvite(Convite $convite)
     {
         $convite->status = true;
@@ -200,17 +233,30 @@ class EventoController extends Controller
         return redirect()->route('convites.index')->with('success', 'Convite aceito com sucesso.');
     }
 
+    /**
+     * @param Convite $convite
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function deletarConvite(Convite $convite){
         $convite->delete();
         return redirect()->route('convites.index')->with('success', 'Convite deletado com sucesso.');
     }
 
+    /**
+     * @param Convite $convite
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function revogarConvite(Convite $convite){
         $convite->status = null;
         $convite->save();
         return redirect()->route('convites.index')->with('success', 'Convite revogado com sucesso.');
     }
 
+    /**
+     * @param $data
+     * @return Carbon
+     */
     private function formatar_data($data)
     {
         $formatos = ['d/m/Y H:i', 'd/m/Y'];

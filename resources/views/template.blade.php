@@ -170,7 +170,9 @@
                     </span>
                 </a>
                 <i class="material-icons mr-2 btn-circle">apps</i>
-                <i class="material-icons btn-circle">person</i>
+                <a href="{{route('logout')}}">
+                    <i class="material-icons btn-circle">person</i>{{\Modules\Calendario\Entities\Funcionario::where('user_id', auth()->id())->first()->nome}}
+                </a>
             </div>
         </div>
         <div id="content">
@@ -228,7 +230,7 @@
     }
 
     $(function () {
-        if('{{auth()->user()->unreadNotifications->count()}}' > 0){
+        if ('{{auth()->user()->unreadNotifications->count()}}' > 0) {
             $('#notificacao').click(function (e) {
                 $('#notificacoes').toggle();
             });

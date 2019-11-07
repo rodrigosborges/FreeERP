@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('evento:notificar-proximos')->everyMinute();
+        //Comando para notificar os funcionários sobre evento prestes a ocorrer
+         $schedule->command('evento:notificar')->everyMinute();
     }
 
     /**
