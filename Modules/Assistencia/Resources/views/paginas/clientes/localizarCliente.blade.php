@@ -12,9 +12,9 @@
         <div class="form-group row">
             <form class="input-group col-lg-9 col-sm-12" >
                 {{ csrf_field() }}
-                <input type="text" class="form-control" name="busca" placeholder="Pesquise por nome, cpf ou telefone">
+                <input type="text" class="form-control" name="busca" placeholder="Pesquise por nome">
                 <div class="input-group-append">
-                    <input class="btn btn-outline-secondary" id="buscar" value="Localizar" id="button-addon2">
+                    <button class="btn btn-info" id="buscar"  type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
             <div class="col-lg-3 col-sm-12 text-center">

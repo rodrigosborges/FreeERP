@@ -12,12 +12,13 @@
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="table-responsive">
-            <table id="tabela" class="table table-striped">
+            <table id="tabela" class="table table-striped text-center">
                 <div class="row">
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
                             <th scope="col">CPF</th>
+                            <th scope="col">Ações</th>
                         </tr>
 
                     </thead>

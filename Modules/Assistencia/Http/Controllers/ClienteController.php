@@ -135,20 +135,23 @@ class ClienteController extends Controller
       
     }
 
-    public function buscar(Request $req){
-      $clientes = ClienteAssistenciaModel::busca($req->busca);
-      $clientesDeletados = ClienteAssistenciaModel::buscaTrash($req->busca);
+    // public function buscar(Request $req){
+    //   $clientes = ClienteAssistenciaModel::busca($req->busca);
+    //   $clientesDeletados = ClienteAssistenciaModel::buscaTrash($req->busca);
 
-      return view('assistencia::paginas.clientes.localizarCliente', compact('clientes','clientesDeletados'));
-    }
-    public function table(Request $request){
+    //   return view('assistencia::paginas.clientes.localizarCliente', compact('clientes','clientesDeletados'));
+    // }
+
+    public function table(Request $request){ //retorna table para amostra em view (requisitado por js)
       $clientes = new ClienteAssistenciaModel;
       $clientesDeletados = ClienteAssistenciaModel::onlyTrashed();
-      if($request->busca){
+
+      if($request->busca){ //Verificar se existe valores de busca
         $clientes = $clientes->where('nome', 'LIKE', '%'.$request->busca.'%');
         $clientesDeletados = $clientesDeletados->where('nome', 'LIKE', '%'.$request->busca.'%');
       }
-      $clientes = $clientes->paginate(10);
+
+      $clientes = $clientes->paginate(10); 
       $clientesDeletados = $clientesDeletados->paginate(10);
       
       return view('assistencia::paginas.clientes._table', compact('clientes','clientesDeletados'));

@@ -14,23 +14,17 @@ class ClienteAssistenciaModel extends Model
   public function endereco(){
     return $this->belongsTo('App\Entities\Endereco');
   }
-  public static function busca($busca){ //buca para localização de cliente por nome, cpf ou telefone
-    return static::where('nome', 'LIKE', '%'.$busca.'%')
-                  ->orWhere('cpf', 'LIKE', '%'.$busca.'%')
-                  ->orWhere('telefonenumero', 'LIKE', '%'.$busca.'%')->paginate(10);
+  // public static function busca($busca){ //busca para localização de cliente por nome, cpf ou telefone
+  //   return static::where('nome', 'LIKE', '%'.$busca.'%')
+  //                 ->orWhere('cpf', 'LIKE', '%'.$busca.'%')
+  //                 ->orWhere('telefonenumero', 'LIKE', '%'.$busca.'%');
+  // }
 
-
-    //return static::where('nome', 'LIKE', '%'.$busca.'%')->paginate(10);
-  }
-
-  public static function buscaTrash($busca){ //buca para localização de cliente por nome, cpf ou telefone
-    return static::onlyTrashed()->where('nome', 'LIKE', '%'.$busca.'%')
-                  ->orWhere('cpf', 'LIKE', '%'.$busca.'%')
-                  ->orWhere('telefonenumero', 'LIKE', '%'.$busca.'%')->paginate(10);
-
-
-    //return static::where('nome', 'LIKE', '%'.$busca.'%')->paginate(10);
-  }
+  // public static function buscaTrash($busca){ //busca para localização de cliente por nome, cpf ou telefone
+  //   return static::onlyTrashed()->where('nome', 'LIKE', '%'.$busca.'%')
+  //                 ->orWhere('cpf', 'LIKE', '%'.$busca.'%')
+  //                 ->orWhere('telefonenumero', 'LIKE', '%'.$busca.'%');
+  // }
   
   public static function buscaCPF($busca){ //essa busca serve para a validação do cadastro
 

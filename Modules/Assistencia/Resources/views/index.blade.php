@@ -7,6 +7,15 @@
 .caixa {
     display: flex;
     justify-content: space-around;
+    list-style-type: none;
+}
+.nav-link {
+    color: #cfd8dc;
+
+}
+.nav-link:hover {
+    background: #30333C;
+    color: #cfd8dc;
 }
 </style>
 @stop
@@ -15,42 +24,40 @@
 <input type="hidden" name="pago" value="{{$pago}}">
 <input type="hidden" name="pendente" value="{{$pendente}}">
 
-<div class="card">
+    <ul class="navbar navbar-light caixa" style="background-color: #121212;">
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('consertos.index')}}">
+                <h3>Consertos</h3>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('cliente.index')}}">
+                <h3>Clientes</h3>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('pecas.localizar')}}">
+                <h3>Peças</h3>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('servicos.localizar')}}">
+                <h3>Mão de obra</h3>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('tecnico.index')}}">
+                <h3>Técnicos</h3>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('pagamento.index')}}">
+                <h3>Pagamentos</h3>
+            </a>
+        </li>
+    </ul>
 
-    <div class="card-header caixa">
-        <ul class="nav nav-tabs justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('consertos.index')}}">
-                    <h3>Consertos</h3>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('cliente.index')}}">
-                    <h3>Clientes</h3>
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                    aria-expanded="false">
-                    <h3>Estoque</h3>
-                </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{route('pecas.localizar')}}">Peças</a>
-                    <a class="dropdown-item" href="{{route('servicos.localizar')}}">Mão de obra</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('tecnico.index')}}">
-                    <h3>Tecnicos</h3>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('pagamento.index')}}">
-                    <h3>Pagamentos</h3>
-                </a>
-            </li>
-        </ul>
-    </div>
+<div class="card">
 
     <div class="row">
         <div class="col-lg-6">

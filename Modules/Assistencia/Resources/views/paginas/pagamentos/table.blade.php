@@ -1,4 +1,4 @@
-<table id="tabela" class="table table-striped">
+<table id="tabela" class="table table-striped text-center">
     <thead>
         <tr>
             <th scope="col">Número</th>

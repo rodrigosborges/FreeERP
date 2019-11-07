@@ -13,6 +13,6 @@ class TecnicoAssistenciaModel extends Model
 
     public static function busca($busca){
       return static::where('nome', 'LIKE', '%'.$busca.'%')
-      ->orWhere('cpf', 'LIKE', '%'.$busca.'%')->paginate(10);
+      ->orWhere('cpf', 'LIKE', '%'.$busca.'%');
       }
 }

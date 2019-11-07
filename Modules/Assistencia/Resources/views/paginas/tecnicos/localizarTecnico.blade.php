@@ -14,7 +14,7 @@
                 <input type="text" class="form-control" name="busca" placeholder="Nome do tecnico"
                     aria-label="Buscar tecnico" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2">
+                    <button class="btn btn-info" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                 </div>
             </form>
             <div class="col-md-6">

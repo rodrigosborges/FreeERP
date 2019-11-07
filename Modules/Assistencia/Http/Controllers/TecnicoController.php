@@ -85,8 +85,10 @@ class TecnicoController extends Controller
   }
 
   public function buscar(Request $req){
-    $tecnicos = TecnicoAssistenciaModel::busca($req->busca);
-    return view('assistencia::paginas.tecnicos.localizarTecnico',compact('tecnicos'));
+    $tecnicos = TecnicoAssistenciaModel::busca($req->busca)->paginate(10);
+    $tecnicosDeletados = TecnicoAssistenciaModel::busca($req->busca)->onlyTrashed()->paginate(10);
+    
+    return view('assistencia::paginas.tecnicos.localizarTecnico',compact('tecnicos','tecnicosDeletados'));
   }
 
 

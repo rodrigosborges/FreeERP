@@ -12,7 +12,7 @@
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="table-responsive-xl">
-            <table id="tabela" class="table table-striped">
+            <table id="tabela" class="table table-striped text-center">
                 <div class="row">
                     <thead>
                         <tr>
@@ -20,7 +20,6 @@
                             <th scope="col">CPF</th>
                             <th scope="col">Nascimento</th>
                             <th scope="col">Celular</th>
-                            <th scope="col">Telefone</th>
                             <th scope="col">Ações</th>
                         </tr>
 
@@ -37,7 +36,6 @@
                             <td>{{$cliente->cpf }}</td>
                             <td>{{ $data->format('d/m/Y') }}</td>
                             <td>{{$cliente->celnumero }}</td>
-                            <td>{{$cliente->telefonenumero }}</td>
                             <td>
                                 <a href="{{route('cliente.editar',$cliente->id)}}"><button type="button"
                                         class="btn btn-dark">Editar</button></a>
@@ -72,7 +70,7 @@
     </div>
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
         <div class="table-responsive-xl">
-            <table id="tabela" class="table table-striped">
+            <table id="tabela" class="table table-striped text-center">
                 <div class="row">
                     <thead>
                         <tr>
@@ -80,7 +78,6 @@
                             <th scope="col">CPF</th>
                             <th scope="col">Nascimento</th>
                             <th scope="col">Celular</th>
-                            <th scope="col">Telefone</th>
                             <th scope="col">Ações</th>
                         </tr>
 
@@ -98,7 +95,6 @@
                             <td>{{$cliente->cpf }}</td>
                             <td>{{ $data->format('d/m/Y') }}</td>
                             <td>{{$cliente->celnumero }}</td>
-                            <td>{{$cliente->telefonenumero }}</td>
                             <td>
                                 <a href="{{route('cliente.deletar', $cliente->id)}}"><button type="button"
                                         class="btn btn-warning">Ativar</button></a>

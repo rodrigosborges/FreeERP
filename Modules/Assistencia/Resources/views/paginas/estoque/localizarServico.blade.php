@@ -21,7 +21,7 @@
                 <input type="text" class="form-control" name="busca" placeholder="Nome da mão-de-obra"
                     aria-label="Buscar" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="Localizar">
+                <button class="btn btn-info" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                 </div>
             </form>
 
@@ -34,7 +34,7 @@
         </div>
         <div class="card">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped text-center">
                     <div class="row">
                         <thead>
                             <tr>

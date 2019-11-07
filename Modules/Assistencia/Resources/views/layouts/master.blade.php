@@ -10,7 +10,7 @@ $menu = [
     ['icon' => 'shopping_cart', 'tool' => 'Peças', 'route' => 'pecas.localizar'],
     ['icon' => 'shopping_cart', 'tool' => 'Mão de obra', 'route' => 'servicos.localizar'],
     ['icon' => 'payment', 'tool' => 'Pagamentos', 'route' => 'pagamento.index'],
-    ['icon' => 'perm_identity', 'tool' => 'Tecnicos', 'route' => 'tecnico.index']
+    ['icon' => 'perm_identity', 'tool' => 'Técnicos', 'route' => 'tecnico.index']
 ];
 ?>
 <!DOCTYPE html>
@@ -19,21 +19,23 @@ $menu = [
         <meta charset="utf-8">
         <title>FreeERP @yield('title')</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <!-- Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
         <style>
+            * {font-family: 'Roboto', sans-serif;}
             #sidebar {
-                background: #303e45;
+                background: #121212;
                 position: fixed;
                 min-width: 210px;
                 min-height: 100vh;
             }
             #sidebar a { color: #cfd8dc }
-            #sidebar a:hover { background: #29353d }
+            #sidebar a:hover { background: #30333C }
             #sidebar a.active {
                 color: #fff;
                 background: #29353d;
@@ -112,12 +114,9 @@ $menu = [
                 <div class="shadow-sm d-flex align-items-center justify-content-between" id="header">
                     <div class="d-flex align-items-center">
                         <i class="material-icons mr-2 btn-circle" onclick="toggleMenu()">menu</i>
-                        <span>Assistencia Técnica de smartphone</span>
+                        <span><strong>ASSISTÊNCIA TÉCNICA DE SMARTPHONES</strong> </span>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <i class="material-icons mr-2 btn-circle">apps</i>
-                        <i class="material-icons btn-circle">person</i>
-                    </div>
+                    
                 </div>
                 <div id="content">
                     @if(Session::get('success'))
@@ -150,7 +149,7 @@ $menu = [
 
                 </div>
                 <div class="d-flex align-items-center" id="footer">
-                    Desenvolvido por IFSP Caraguatatuba &copy
+                    Desenvolvido por Rafael Alves &copy
                 </div>
             </div>
         </div>

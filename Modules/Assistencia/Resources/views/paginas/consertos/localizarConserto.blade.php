@@ -14,7 +14,7 @@
                 <input type="text" class="form-control" name="busca" placeholder="Número da ordem"
                     aria-label="Buscar OS" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <input class="btn btn-outline-secondary" type="submit" value="Localizar" id="button-addon2"></input>
+                    <button class="btn btn-info" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                 </div>
             </form>
             <div class="col-6">
