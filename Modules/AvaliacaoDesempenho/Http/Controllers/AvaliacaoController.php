@@ -21,13 +21,13 @@ use Modules\AvaliacaoDesempenho\Http\Requests\Avaliacao\StoreAvaliacao;
 use Modules\AvaliacaoDesempenho\Http\Requests\Avaliacao\UpdateAvaliacao;
 
 class AvaliacaoController extends Controller
-{  
+{
     protected $moduleInfo;
 
     protected $menu;
-  
+
     public function __construct() {
-        
+
         $this->middleware('auth');
 
         $this->moduleInfo = [
@@ -66,26 +66,26 @@ class AvaliacaoController extends Controller
                 if ($avaliacao->tipo->id == 2) {
                     $definido = 1;
                     $encerrado = 1;
-    
+
                     foreach ($avaliacao->avaliadores as $j => $avaliador) {
-                        
+
                         if ($avaliador->concluido == 1) {
                             $definido = 0;
                         }
-                        
+
                         if ($avaliador->concluido == 0) {
                             $encerrado = 0;
                         }
                     }
-    
+
                     if ($encerrado == 1) {
                         $avaliacao->update(['status_id' => 3]);
                     }
-    
+
                     if ($definido == 1) {
                         $avaliacao->update(['status_id' => 1]);
                     }
-    
+
                     if ($definido == 0 && $encerrado == 0 ) {
                         $avaliacao->update(['status_id' => 2]);
                     }
@@ -93,26 +93,26 @@ class AvaliacaoController extends Controller
                 } else if ($avaliacao->tipo->id == 1) {
                     $definido = 1;
                     $encerrado = 1;
-    
+
                     foreach ($avaliacao->avaliados as $j => $avaliado) {
-                        
+
                         if ($avaliado->concluido == 1) {
                             $definido = 0;
                         }
-                        
+
                         if ($avaliado->concluido == 0) {
                             $encerrado = 0;
                         }
                     }
-    
+
                     if ($encerrado == 1) {
                         $avaliacao->update(['status_id' => 3]);
                     }
-    
+
                     if ($definido == 1) {
                         $avaliacao->update(['status_id' => 1]);
                     }
-    
+
                     if ($definido == 0 && $encerrado == 0 ) {
                         $avaliacao->update(['status_id' => 2]);
                     }
@@ -141,7 +141,7 @@ class AvaliacaoController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        $data = [   
+        $data = [
             'processos' => Processo::all(),
             'funcionarios' => Funcionario::all(),
             'setores' => Setor::all(),
@@ -158,33 +158,35 @@ class AvaliacaoController extends Controller
         try {
 
             $input = $request->input('avaliacao');
-
-            $setor = Setor::findOrFail($input['setor_id']);
             
+            $setor = Setor::findOrFail($input['setor_id']);
+
             $input['status_id'] = 1;
 
             $avaliacao = Avaliacao::create($input);
-            
+
+            $avaliacao->questoes()->sync($input['questoes']);
+
             $funcionarios = Funcionario::where('setor_id', $setor->id)->get();
 
             // PROVA PARA AVALIAR GESTORES
             if ($input['tipo_id'] == 2) {
 
                 foreach ($funcionarios as $key => $funcionario) {
-    
+
                     if ($funcionario->id != $setor->gestor->id) {
 
                         $token = bin2hex(random_bytes(16));
-                        
+
                         $validade = implode('-', array_reverse(explode('/', $input['data_fim'])));
 
                         $avaliador = Avaliador::create([
-                            'funcionario_id' => $funcionario->id, 
-                            'avaliacao_id' => $avaliacao->id, 
+                            'funcionario_id' => $funcionario->id,
+                            'avaliacao_id' => $avaliacao->id,
                             'token' => $token,
                             'validade' => $validade
                         ]);
-                        
+
                         $data = [
                             'funcionario' => $funcionario,
                             'avaliacao' => $avaliacao,
@@ -209,14 +211,14 @@ class AvaliacaoController extends Controller
             } else if ($input['tipo_id'] == 1) {
 
                 foreach ($funcionarios as $key => $funcionario) {
-    
+
                     if ($funcionario->id != $setor->gestor->id) {
-                        
+
                         $avaliado = Avaliado::create([
-                            'funcionario_id' => $funcionario->id, 
-                            'avaliacao_id' => $avaliacao->id, 
+                            'funcionario_id' => $funcionario->id,
+                            'avaliacao_id' => $avaliacao->id,
                         ]);
-                            
+
                     } else if ($funcionario->id == $setor->gestor->id) {
                         $token = bin2hex(random_bytes(16));
 
@@ -243,7 +245,7 @@ class AvaliacaoController extends Controller
                     }
                 }
             }
-            
+
             DB::commit();
 
             return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação Criada com Sucesso');
@@ -300,13 +302,13 @@ class AvaliacaoController extends Controller
             $input = $request->input('avaliacao');
 
             $avaliacao->update($input);
-            
+
             DB::commit();
 
             return redirect('avaliacaodesempenho/avaliacao')->with('success', 'Avaliação cadastrada com sucesso.');
-            
+
         } catch (\Throwable $th) {
-            
+
             DB::rollback();
 
             echo '<pre>';print_r($th->getMessage());exit;
@@ -327,13 +329,13 @@ class AvaliacaoController extends Controller
                 $categoria->restore();
 
                 DB::commit();
-                
+
                 return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria ativada com Sucesso');
 
             } else {
-                
+
                 $categoria->delete();
-                
+
                 DB::commit();
 
                 return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria desativada com Sucesso');

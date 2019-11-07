@@ -1,10 +1,10 @@
 @if(isset($data['avaliacao']->id))
     <form id='avaliacaoForm' action="{{ url('avaliacaodesempenho/avaliacao', [$data['avaliacao']->id]) }}" method="POST">
     @method('PUT')
-    {{ csrf_field() }}      
+    {{ csrf_field() }}
 @else
     <form id='avaliacaoForm' action='{{ url("avaliacaodesempenho/avaliacao/store") }}' method="POST">
-    {{ csrf_field() }} 
+    {{ csrf_field() }}
 @endif
 
     <div class='row'>
@@ -144,7 +144,7 @@
                             </select>
 
                         </div>
-                        
+
                         <span class="errors"> {{ $errors->first('avaliacao.funcionario_id') }} </span>
 
                     </div>
@@ -182,7 +182,7 @@
                     <div class="form-group col-md-12">
 
                         <label>Tipo de Avaliação</label>
-                        
+
                         <br>
                         <input type="radio" name='avaliacao[tipo_id]' value='2' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 0 ? 'checked' : '' }}> Avaliar Gestores
                         <br>
@@ -198,18 +198,22 @@
 
                 <h4>QUESTÕES</h4>
 
+                <div id="input-questoes" class="input-questoes">
+
+                </div>
+
                 <div class="form-row">
 
                     <div class="form-group col-md-12">
-                        
+
                         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
                         <input id='questoes' type="text" class='form-control'>
 
-                        <!-- <select id="selectQuestoes" class="form-control selectpicker select-questoes" data-live-search="true">
-                        </select> -->
-
                     </div>
+
+                    <span class="errors"> {{ $errors->first('avaliacao.questoes') }} </span>
+                    <span class="errors"> {{ $errors->first('avaliacao.questoes.*') }} </span>
 
                 </div>
 
@@ -220,7 +224,7 @@
                         <div class="card-header"></div>
 
                         <div class="card-body">
-                        
+
                             <div class="enunciado"></div>
                             <div class="options">
                                 <ul></ul>

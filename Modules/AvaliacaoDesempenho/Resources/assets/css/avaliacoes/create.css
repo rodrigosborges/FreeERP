@@ -22,3 +22,13 @@
     font-size: 12px;
     color: rgba(255, 0, 0, 0.938);
 }
+
+.input-questao {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  background: lightgray;
+  margin: 20px 10px;
+  padding: 10px;
+}

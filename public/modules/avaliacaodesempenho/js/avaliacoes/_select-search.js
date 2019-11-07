@@ -1,10 +1,10 @@
+$(document).on('keyup keydown', '#questoes', function() {
+  if ($("#questoes").val() == '') {
+    $('#questaoCard').addClass('hidden')
+  }
+})
+
 $(document).ready(function() {
-    $('#questoes').on('keyup keydown paste', function () {
-        console.log('asdasdasdas')
-        if ($("#questoes").val() == '') {
-            $('#questaoCard').addClass('hidden')
-        }   
-    })
 
     const _token = $('#token').val()
 
@@ -51,9 +51,9 @@ $(document).ready(function() {
 function populateCard(data) {
 
     $('#questaoCard').html(`
-                
+
         <div class='card'>
-        
+
             <div class='card-header'>
                 <b>Categoria: ${data.categoria.nome}</b>
             </div>
@@ -79,4 +79,47 @@ function populateCard(data) {
     `)
 
     $('#questaoCard').removeClass('hidden')
+}
+
+function salvarQuestao(id, enunciado) {
+
+  $('#input-questoes').append(`
+
+    <div class='row input-questao'>
+      <input class='name-questao' type='hidden' name='avaliacao[questoes][]' value='${id}'></input>
+
+      <div>
+        <h6 class='questao-count'></h6>
+        <p><b>Enunciado: </b>${enunciado}</p>
+      </div>
+
+      <button type='button' class='btn btn-danger btn-sm float-right'><i class="material-icons md-18">close</i>
+    </div>
+
+  `)
+
+  recontarQuestoes()
+}
+
+function excluirQuestao(count) {
+
+  $(`#input-questoes :input[name="avaliacao[questoes][${count}]"]`).parent().remove()
+
+  recontarQuestoes()
+}
+
+function recontarQuestoes() {
+  var count1 = 0
+  var count2 = 0
+
+  $('.questao-count').each(function() {
+    $(this).html(`Questão ${count1+1}`)
+    count1++
+  })
+
+  $('.name-questao').each(function() {
+    $(this).attr('name', `avaliacao[questoes][${count2}]`)
+    $(this).siblings('button').attr('onclick', `excluirQuestao(${count2})`)
+    count2++
+  })
 }

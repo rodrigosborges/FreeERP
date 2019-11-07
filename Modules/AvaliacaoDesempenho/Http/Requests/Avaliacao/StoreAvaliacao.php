@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreAvaliacao extends FormRequest {
 
     public function rules() {
-        
+
         return [
             'avaliacao.nome' => 'required',
             'avaliacao.data_inicio' => 'required|date_format:d/m/Y',
@@ -14,7 +14,9 @@ class StoreAvaliacao extends FormRequest {
             'avaliacao.processo_id' => 'required',
             'avaliacao.funcionario_id' => 'required',
             'avaliacao.setor_id' => 'required',
-            'avaliacao.tipo_id' => 'required'
+            'avaliacao.tipo_id' => 'required',
+            'avaliacao.questoes' => 'required',
+            'avaliacao.questoes.*' => 'distinct'
         ];
     }
 
@@ -29,7 +31,8 @@ class StoreAvaliacao extends FormRequest {
     public function messages() {
 
         return [
-            'required' => 'Este campo é obrigatorio.'
+            'required' => 'Este campo é obrigatorio.',
+            'distinct' => 'Só é possivel cadastrar uma unica vez cada questão.'
         ];
     }
 }

@@ -28,11 +28,6 @@
     margin: 0 5px 0 5px;
 }
 
-#AvaliacaoTable {
-    width: 100%;
-    margin: 10px 0 0 -10px;
-}
-
 table.dataTable thead th {
     border-bottom: none !important;
 }

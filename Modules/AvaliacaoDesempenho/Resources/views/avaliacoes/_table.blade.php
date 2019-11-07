@@ -1,4 +1,4 @@
-<table id='table' class='table table-hover table-bordered'>
+<table id='table' class='table table-hover table-bordered table-responsive'>
 
   <thead>
 
@@ -11,8 +11,6 @@
       <th class="text-center">Responsavel</th>
 
       <th class="text-center">Setor</th>
-
-      <th class="text-center">Data Inicio</th>
 
       <th class="text-center">Tipo Avaliação</th>
 
@@ -39,8 +37,6 @@
       <td class="text-center align-middle">{{ $avaliacao->responsavel->nome }}</td>
 
       <td class="text-center align-middle">{{ $avaliacao->setor->nome }}</td>
-
-      <td class="text-center align-middle">{{ $avaliacao->data_fim }}</td>
 
       <td class="text-center align-middle">{{ $avaliacao->tipo->nome }}</td>
 
