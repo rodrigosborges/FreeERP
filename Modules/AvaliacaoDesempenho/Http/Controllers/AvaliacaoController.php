@@ -158,7 +158,7 @@ class AvaliacaoController extends Controller
         try {
 
             $input = $request->input('avaliacao');
-            
+
             $setor = Setor::findOrFail($input['setor_id']);
 
             $input['status_id'] = 1;
@@ -300,6 +300,8 @@ class AvaliacaoController extends Controller
             $avaliacao = Avaliacao::findOrFail($id);
 
             $input = $request->input('avaliacao');
+
+            $avaliacao->questoes()->sync($input['questoes']);
 
             $avaliacao->update($input);
 

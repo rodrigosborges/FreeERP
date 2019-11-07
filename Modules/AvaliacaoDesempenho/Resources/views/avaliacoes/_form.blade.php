@@ -161,7 +161,7 @@
                                 </span>
                             </div>
 
-                            <select class="form-control" name="avaliacao[setor_id]" {{ isset($data['avaliacao']) ? 'disabled' : '' }}
+                            <select class="form-control {{ isset($data['avaliacao']) ? 'readonly' : '' }}" name="avaliacao[setor_id]"
                                 id="avaliacao[setor_id]">
                                 <option value="">Selecione o Setor a ser avaliado</option>
                                 @foreach( $data['setores'] as $setor)
@@ -199,7 +199,22 @@
                 <h4>QUESTÕES</h4>
 
                 <div id="input-questoes" class="input-questoes">
+                    @if (isset($data['avaliacao']))
 
+                      @foreach ($data['avaliacao']->questoes as $key => $questao)
+                        <div class='row input-questao'>
+                          <input class='name-questao' type='hidden' name='avaliacao[questoes][{{ $key }}]' value={{ $questao->id }}></input>
+
+                          <div>
+                            <h6 class='questao-count'></h6>
+                            <p><b>Enunciado: </b>{{ $questao->enunciado }}</p>
+                          </div>
+
+                          <button type='button' class='btn btn-danger btn-sm float-right' onclick="excluirQuestao({{ $key }})"><i class="material-icons md-18">close</i>
+                        </div>
+                      @endforeach
+
+                    @endif
                 </div>
 
                 <div class="form-row">

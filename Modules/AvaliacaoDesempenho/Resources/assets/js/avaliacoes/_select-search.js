@@ -101,9 +101,9 @@ function salvarQuestao(id, enunciado) {
   recontarQuestoes()
 }
 
-function excluirQuestao(count) {
+function excluirQuestao(id) {
 
-  $(`#input-questoes :input[name="avaliacao[questoes][${count}]"]`).parent().remove()
+  $(`#input-questoes :input[name="avaliacao[questoes][${id}]"]`).parent().remove()
 
   recontarQuestoes()
 }

@@ -32,3 +32,9 @@
   margin: 20px 10px;
   padding: 10px;
 }
+
+.readonly {
+  background: #eee;
+  pointer-events: none;
+  touch-action: none;
+}
