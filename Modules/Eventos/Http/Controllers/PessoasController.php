@@ -7,9 +7,15 @@ use Modules\Eventos\Entities\Evento;
 use Modules\Eventos\Entities\Pessoa;
 use Modules\Eventos\Entities\Programacao;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class PessoasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      * @return Response
@@ -53,4 +59,9 @@ class PessoasController extends Controller
             ->with('success', $pessoa->nome . ' excluído(a) com sucesso.');
     }
     
+     function meusCertificados()
+    {        
+        $pessoa = Pessoa::find(Auth::id());
+        return view('eventos::meusCertificados', ['pessoa' => $pessoa]);
+    }
 }

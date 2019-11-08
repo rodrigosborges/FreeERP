@@ -45,7 +45,7 @@
     </head>
     <body>
         <h1>CERTIFICADO</h1>
-        <p id="texto" align="justify">Certificamos que <b>{{ $pessoa->nome }}</b> participou do evento <b>{{ $evento->nome }}</b> com carga horária de {{ $participou }}h.</p>
+        <p id="texto" align="justify">Certificamos que <b>{{ $pessoa->nome }}</b> participou do evento <b>{{ $evento->nome }}</b> com carga horária de {{\Carbon\Carbon::parse($cargaHoraria)->format('H:i')}}h.</p>
         <ul>
             
         </ul>

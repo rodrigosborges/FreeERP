@@ -8,8 +8,8 @@
     $menu = [
         ['icon' => 'home', 'tool' => 'Início', 'route' => route('eventos.index')],
         ['icon' => 'event', 'tool' => 'Eventos', 'route' => route('eventos.exibir')],
-        ['icon' => 'people', 'tool' => 'Pessoas', 'route' => route('eventos.pessoas')],
-        ['icon' => 'school', 'tool' => 'Certificados', 'route' => '#'],
+        ['icon' => 'people', 'tool' => 'Inscritos', 'route' => route('eventos.pessoas')],
+        ['icon' => 'school', 'tool' => 'Meus certificados', 'route' => route('certificados')],
     ];
 ?>
 

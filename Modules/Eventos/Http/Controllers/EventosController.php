@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Eventos\Entities\Evento;
 use Modules\Eventos\Entities\Estado;
@@ -25,6 +26,11 @@ class EventosController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
        
     //EXIBE AS VIEWS
     public function index(){
@@ -168,15 +174,18 @@ class EventosController extends Controller
         return $data->format('Y-m-d');
     }
     
-    public function certificados($id){
-        $evento = Evento::find($id);
-        $programacao = $evento->programacao;
+    public function certificados(Evento $evento){
+        $pessoas = new Collection();
         
-        foreach($programacao as $atividade){
-            $participantes = $atividade->participantes()->get();
+        foreach($evento->programacao as $atividade){
+            foreach($atividade->participantes as $participante){
+                $pessoas->add($participante);
+            }
         }
         
-        foreach($participantes as $participante){
+        $pessoas = $pessoas->unique();
+        
+        foreach($pessoas as $participante){
             $this->gerarCertificado($evento->id, $participante);
         }
         
@@ -184,19 +193,22 @@ class EventosController extends Controller
             ->with('success', 'Certificados emitidos com sucesso.');
     }
     
-    public function gerarCertificado($id,$participante){
+    public function gerarCertificado($id, $participante){
         $evento = Evento::find($id);
         $pessoa = $participante;
         $atividades = $pessoa->atividades;
+        $cargaHoraria = Carbon::createFromFormat('H:i', '00:00');
         foreach ($atividades as $atividade){
             if($atividade->evento_id == $evento->id){
-                $participou[] = $atividade->duracao;
+                $duracao = explode(":", $atividade->duracao);
+                $cargaHoraria->addHour($duracao[0]);
+                $cargaHoraria->addMinutes($duracao[1]);
             }
         }
         $data = new Carbon();
         $data = $data->formatLocalized('%d de %B de %Y');
-        $nomeArquivo = "storage/certificado/" . time() . ".pdf";
-        $pdf = \PDF::loadView('eventos::certificado',['evento' => $evento, 'pessoa' => $pessoa, 'participou' => array_sum($participou), 'data' => $data])
+        $nomeArquivo = "storage/certificado/" . time() . $pessoa->id . ".pdf";
+        $pdf = \PDF::loadView('eventos::certificado',['evento' => $evento, 'pessoa' => $pessoa, 'cargaHoraria' => $cargaHoraria, 'data' => $data])
                 ->setPaper('a4', 'landscape')
                 ->save($nomeArquivo);
         $certificado = new Certificado();

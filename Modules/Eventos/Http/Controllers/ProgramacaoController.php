@@ -5,15 +5,22 @@ namespace Modules\Eventos\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 use Modules\Eventos\Entities\Evento;
 use Modules\Eventos\Entities\Programacao;
 use Modules\Eventos\Entities\Palestrante;
 
 class ProgramacaoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function exibir($id){
         $evento = Evento::find($id);
-        $atividades = DB::table('programacao')->where('evento_id', $id)->get();
+        $atividades = Programacao::where('evento_id', $id)->get();
+        
         return view('eventos::programacao', ['evento' => $evento, 'atividades' => $atividades]);
     }
     

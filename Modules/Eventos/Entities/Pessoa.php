@@ -23,4 +23,8 @@ class Pessoa extends Authenticatable
     {
         return $this->belongsToMany(Programacao::class, 'evento_has_participante');
     }
+    
+    public function certificado(){
+        return $this->hasMany(Certificado::class);
+    }
 }

@@ -29,10 +29,12 @@ Route::any('/eventos/pessoas/exibir', 'PessoasController@exibir')->name('pessoas
 //Route::post('/eventos/pessoas/editar', 'PessoasController@editar')->name('pessoas.editar');
 Route::post('/eventos/pessoas/excluir', 'PessoasController@excluir')->name('pessoas.excluir');
 
+Route::get('/eventos/certificados', 'PessoasController@meusCertificados')->name('certificados');
+
 Route::get('/eventos/get-cidades/{idEstado}', 'CidadeController@getCidades');
 Route::get('/eventos/get-atividade/{idAtividade}', 'ProgramacaoController@getAtividade');
 Route::get('/eventos/get-evento/{id}', 'EventosController@getEvento');
 Route::get('/eventos/get-data/', 'EventosController@getData');
 Route::get('/eventos/pessoas/get-pessoa/{email}', 'PessoasController@getPessoa');
 
-Route::get('/pdf/{id}', 'EventosController@certificados')->name('gerar.certificados');
+Route::get('/pdf/{evento}', 'EventosController@certificados')->name('gerar.certificados');

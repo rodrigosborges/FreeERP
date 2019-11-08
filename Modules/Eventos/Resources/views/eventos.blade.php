@@ -135,7 +135,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label for="organizador" class="col-form-label">Organizador(es):</label>
                             <select class="chosen-select form-control" id="organizador" name="organizador[]" multiple>
                                 @foreach($pessoas as $pessoa)
@@ -144,7 +144,7 @@
                                     @endif
                                 @endforeach
                             </select>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id="btnEditar" onclick="editar()">Editar</button>

@@ -11,7 +11,7 @@
         <!-- Verifica se a variável 'eventoId' está vazia/nula para selecionar o evento -->
         @if(!$evento)
         <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
-            <h1 style="text-align: center;">Pessoas</h1>
+            <h1 style="text-align: center;">Inscritos</h1>
             <form method="POST" action="{{route('pessoas.exibir')}}">
                 {{ csrf_field() }}
                 <div class="form-group" style="margin-top: 25px;">
@@ -29,12 +29,15 @@
         <!-- Evento selecionado-->
         @else
         <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
-            <h1>Pessoas</h1>
+            <h1>Inscritos</h1>
             <h3>{{$evento->nome}}</h3>
         </div>
         <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" align="right">
-            <button class="btn btn-primary btnGerar">Gerar certificados</button>
-            <button class="btn btn-success btnGerado" disabled>Certificados Gerados</button>
+            @if(!$evento->certificado)
+                <button class="btn btn-primary btnGerar">Gerar certificados</button>
+            @else
+                <button class="btn btn-success btnGerado" disabled>Certificados gerados</button>
+            @endif
         </div>
         <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px;">
             <table id="pessoas" class="table table-striped">
@@ -54,7 +57,11 @@
                                 <td class="text-center align-middle">{{$pessoa->email}}</td>
                                 <td class="text-center align-middle">{{$atividade->nome}}</td>
                                 <td class="text-center align-middle">
-                                    <button title="Remover" class="btn btn-xs" data-toggle="modal" data-target="#modalExcluirPessoa" data-id="{{$pessoa->id}}" data-nome="{{$pessoa->nome}}" data-atividade="{{$atividade->id}}"><i class="material-icons">delete</i></button>
+                                    @if(!$evento->certificado)
+                                        <button title="Remover" class="btn btn-xs" data-toggle="modal" data-target="#modalExcluirPessoa" data-id="{{$pessoa->id}}" data-nome="{{$pessoa->nome}}" data-atividade="{{$atividade->id}}"><i class="material-icons">delete</i></button>
+                                    @else
+                                    <button title="Remover" class="btn btn-xs" disabled><i class="material-icons">delete</i></button>
+                                    @endif
                                 </td> 
                             </tr>
                         @endforeach
