@@ -196,16 +196,19 @@ class OrdemServicoController extends Controller
 
     public function updatePrioridade(Request $request, $id)
     {
-        DB::beginTransaction();
-        try {
-            $os = OrdemServico::all()->where('protocolo', $id)->first();
-            $os->update($request->all());
-            DB::commit();
-            return redirect('/ordemservico/os')->with('success', 'Prioridade atualizada com successo');
-        } catch (Exception $e) {
-            DB::rollback();
-            return back()->with('error', 'Erro no servidor');
+        if (Gate::allows('administrador', Auth::user())) {
+            DB::beginTransaction();
+            try {
+                $os = OrdemServico::all()->where('protocolo', $id)->first();
+                $os->update($request->all());
+                DB::commit();
+                return redirect('/ordemservico/os')->with('success', 'Prioridade atualizada com successo');
+            } catch (Exception $e) {
+                DB::rollback();
+                return back()->with('error', 'Erro no servidor');
+            }
         }
+        return redirect()->back()->with('error', 'Você não possui permissão para acessar a pagina!');
     }
 
     public function ordensFinalizadas(Request $request)
