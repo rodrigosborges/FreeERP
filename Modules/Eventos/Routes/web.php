@@ -11,7 +11,6 @@
 */
 Route::get('/eventos', 'EventosController@index')->name('eventos.index');
 Route::get('/eventos/exibir', 'EventosController@exibir')->name('eventos.exibir');
-Route::get('/eventos/inscricoes', 'EventosController@inscricoes')->name('eventos.inscricoes');
 Route::get('/eventos/detalha/{id}', 'EventosController@detalhar')->name('eventos.detalhar');
 Route::post('/eventos/cadastrar', 'EventosController@cadastrar')->name('eventos.cadastrar');
 Route::post('/eventos/editar', 'EventosController@editar')->name('eventos.editar');
@@ -23,11 +22,9 @@ Route::post('/eventos/programacao/{id}/cadastrar', 'ProgramacaoController@cadast
 Route::post('/eventos/programacao/{id}/editar', 'ProgramacaoController@editar')->name('programacao.editar');
 Route::delete('/eventos/programacao/excluir', 'ProgramacaoController@excluir')->name('programacao.excluir');
 
-Route::get('/eventos/pessoas', 'PessoasController@index')->name('eventos.pessoas');
-Route::any('/eventos/pessoas/exibir', 'PessoasController@exibir')->name('pessoas.exibir');
-//Route::post('/eventos/pessoas/cadastrar', 'PessoasController@cadastrar')->name('pessoas.cadastrar');
-//Route::post('/eventos/pessoas/editar', 'PessoasController@editar')->name('pessoas.editar');
-Route::post('/eventos/pessoas/excluir', 'PessoasController@excluir')->name('pessoas.excluir');
+Route::get('/eventos/inscritos', 'PessoasController@index')->name('eventos.pessoas');
+Route::any('/eventos/inscritos/exibir', 'PessoasController@exibir')->name('pessoas.exibir');
+Route::post('/eventos/inscritos/excluir', 'PessoasController@excluir')->name('pessoas.excluir');
 
 Route::get('/eventos/certificados', 'PessoasController@meusCertificados')->name('certificados');
 
@@ -35,6 +32,5 @@ Route::get('/eventos/get-cidades/{idEstado}', 'CidadeController@getCidades');
 Route::get('/eventos/get-atividade/{idAtividade}', 'ProgramacaoController@getAtividade');
 Route::get('/eventos/get-evento/{id}', 'EventosController@getEvento');
 Route::get('/eventos/get-data/', 'EventosController@getData');
-Route::get('/eventos/pessoas/get-pessoa/{email}', 'PessoasController@getPessoa');
 
 Route::get('/pdf/{evento}', 'EventosController@certificados')->name('gerar.certificados');

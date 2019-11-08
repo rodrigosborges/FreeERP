@@ -79,7 +79,18 @@
                 cursor: pointer;
                 padding: 10px;
             }
-            .btn-circle:hover { background: #ededed; }
+            .btn-circle:hover {
+                background: #ededed;
+            }
+            .modal .modal-dialog.modal-top-right{
+                top: 65px;
+                right: 10px;
+            }
+            .modal .modal-side{
+                position: absolute;
+                min-width: 300px;
+                margin: 0;
+            }
         </style>
         @yield('css')
     </head>
@@ -107,7 +118,7 @@
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="material-icons mr-2 btn-circle">apps</i>
-                        <a class="text-dark" href="{{url('/logout')}}"><i class="material-icons btn-circle">person</i></a>
+                        <i class="material-icons btn-circle" data-toggle="modal" data-target="#modalUsuario">person</i>
                     </div>
                 </div>
                 <div id="content">
@@ -153,6 +164,28 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Modal usuário -->
+        <form method="POST" action="{{url('/logout')}}">
+            {{ csrf_field() }}
+            <div class="modal  right" id="modalUsuario" tabindex="-1" role="dialog" aria-labelledby="modalUsuario" aria-hidden="true">
+                <div class="modal-dialog modal-side modal-top-right" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <p style="margin-top: 30px;">Usuário:</p>
+                            <p style="font-size: 20px; font-weight: bold;">{{Auth::user()->nome}}</p>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="submit" class="btn btn-secondary">Sair</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
         <!-- Bootstrap JS -->
         <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -193,10 +226,10 @@
                             case 'Eventos':
                                 $(this).parent('a').addClass('eventos');
                                 break;
-                            case 'Pessoas':
-                                $(this).parent('a').addClass('pessoas');
+                            case 'Inscritos':
+                                $(this).parent('a').addClass('inscritos');
                                 break;
-                            case 'Certificados':
+                            case 'Meus certificados':
                                 $(this).parent('a').addClass('certificados');
                                 break;
                         }
@@ -217,9 +250,9 @@
                         case 'pessoas.exibir':
                         case 'pessoas.cadastrar':
                         case 'pessoas.editar':    
-                            $('.pessoas').addClass('active');
+                            $('.inscritos').addClass('active');
                             break;
-                        case 'certificados.index':
+                        case 'certificados':
                             $('.certificados').addClass('active');
                             break;
                     }

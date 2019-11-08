@@ -25,10 +25,10 @@
 
 @section('content')
     <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12">
-        <h1 style="text-align: center;">{{$evento->nome}}</h1>
+        <h1 style="text-align: center;">Programação</h1>
     </div>
      <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12">
-        <h2 style="text-align: center;">Programação</h2>
+        <h2 style="text-align: center;">{{$evento->nome}}</h2>
     </div>
     <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" align="right">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAtividade" onclick="cadastrar()">Adicionar</button>
@@ -90,7 +90,7 @@
                             <input type="hidden" name="id" value="">
                         </div>
                         <div class="form-group">
-                            <label for="nome" class="col-form-label">Nome*:</label>
+                            <label for="nome" class="col-form-label">Atividade*:</label>
                             <input type="text" class="form-control edit" name="nome" required>
                         </div>
                         <div class="form-group">

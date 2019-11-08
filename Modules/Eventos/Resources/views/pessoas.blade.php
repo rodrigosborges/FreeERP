@@ -10,75 +10,94 @@
         
         <!-- Verifica se a variável 'eventoId' está vazia/nula para selecionar o evento -->
         @if(!$evento)
-        <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
-            <h1 style="text-align: center;">Inscritos</h1>
-            <form method="POST" action="{{route('pessoas.exibir')}}">
-                {{ csrf_field() }}
-                <div class="form-group" style="margin-top: 25px;">
-                    <label for="exampleFormControlSelect1">Selecione o evento</label>
-                    <select class="form-control" name="evento">
-                        @foreach ($eventos as $evento)
-                            <option value="{{$evento->id}}">{{$evento->nome}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-default">Ok</button>
-            </form>  
-        </div>
-        
+            <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
+                <h1 style="text-align: center;">Inscritos</h1>
+                <form method="POST" action="{{route('pessoas.exibir')}}">
+                    {{ csrf_field() }}
+                    <div class="form-group" style="margin-top: 25px;">
+                        <label for="evento">Selecione o evento</label>
+                        <select class="form-control" name="evento">
+                            @foreach ($eventos as $evento)
+                                <option value="{{$evento->id}}">{{$evento->nome}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default">Ok</button>
+                </form>  
+            </div>
+
         <!-- Evento selecionado-->
         @else
-        <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
-            <h1>Inscritos</h1>
-            <h3>{{$evento->nome}}</h3>
-        </div>
-        <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" align="right">
-            @if(!$evento->certificado)
-                <button class="btn btn-primary btnGerar">Gerar certificados</button>
-            @else
-                <button class="btn btn-success btnGerado" disabled>Certificados gerados</button>
-            @endif
-        </div>
-        <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px;">
-            <table id="pessoas" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th class="text-center">Nome</th>
-                        <th class="text-center">E-mail</th>
-                        <th class="text-center">Inscrito(a) em</th>
-                        <th class="text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($evento->programacao as $atividade)
-                        @foreach($atividade->participantes as $pessoa)
-                            <tr>
-                                <td class="text-center align-middle">{{$pessoa->nome}}</td>
-                                <td class="text-center align-middle">{{$pessoa->email}}</td>
-                                <td class="text-center align-middle">{{$atividade->nome}}</td>
-                                <td class="text-center align-middle">
-                                    @if(!$evento->certificado)
-                                        <button title="Remover" class="btn btn-xs" data-toggle="modal" data-target="#modalExcluirPessoa" data-id="{{$pessoa->id}}" data-nome="{{$pessoa->nome}}" data-atividade="{{$atividade->id}}"><i class="material-icons">delete</i></button>
-                                    @else
-                                    <button title="Remover" class="btn btn-xs" disabled><i class="material-icons">delete</i></button>
-                                    @endif
-                                </td> 
-                            </tr>
+            <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+                <h1>Inscritos</h1>
+                <h3>{{$evento->nome}}</h3>
+            </div>
+        
+            <div class="col-xm-10 col-sm-10 col-md-10 col-lg-10">
+                <div class="form-group" style="margin-bottom: 40px;">
+                    <label for="atividade">Filtrar por atividade</label>
+                    @if(count($evento->programacao) > 0)
+                        <select class="form-control" name="atividade">
+                            <option value="todas" selected>Todas</option>
+                    @else
+                        <select class="form-control" name="atividade" disabled>
+                            <option value="">Não há atividades cadastradas</option>
+                        @endif
+                        @foreach ($evento->programacao as $atividade)
+                            <option value="{{$atividade->id}}">{{$atividade->nome}}</option>
                         @endforeach
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </select>
+                </div> 
+            </div>
+            
+        
+            <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" align="right">
+                @if(!$evento->certificado)
+                    <button class="btn btn-primary btnGerar" data-toggle="modal" data-target="#modal" >Gerar certificados</button>
+                @else
+                    <button class="btn btn-success btnGerado" disabled>Certificados gerados</button>
+                @endif
+            </div>
+            <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px;">
+                <table id="pessoas" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Nome</th>
+                            <th class="text-center">E-mail</th>
+                            <th class="text-center">Inscrito(a) em</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($evento->programacao as $atividade)
+                            @foreach($atividade->participantes as $pessoa)
+                                <tr>
+                                    <td class="text-center align-middle">{{$pessoa->nome}}</td>
+                                    <td class="text-center align-middle">{{$pessoa->email}}</td>
+                                    <td class="text-center align-middle">{{$atividade->nome}}</td>
+                                    <td class="text-center align-middle">
+                                        @if(!$evento->certificado)
+                                            <button title="Remover" class="btn btn-xs" data-toggle="modal" data-target="#modal" onclick="excluir({{$pessoa->id}}, {{$atividade->id}}, '{{$pessoa->nome}}')"><i class="material-icons">delete</i></button>
+                                        @else
+                                            <button title="Remover" class="btn btn-xs" disabled><i class="material-icons">delete</i></button>
+                                        @endif
+                                    </td> 
+                                </tr>
+                            @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         @endif        
         
         <!-- Modal de confirmação de exclusão -->
-        <form method="POST" action="{{route('pessoas.excluir')}}">
+        <form method="POST" action="">
             {{ csrf_field() }}
-            <div class="modal fade" id="modalExcluirPessoa" tabindex="-1" role="dialog" aria-labelledby="modalExcluirPessoa" aria-hidden="true">
+            <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="tituloModal">Excluir Pessoa</h5>
+                            <h5 class="modal-title" id="tituloModal"></h5>
                         </div>
                         <div class="modal-body">
                             <!-- Passa o id da atividade e da id da pessoa para excluir-->
@@ -102,7 +121,7 @@
     <!-- DataTables -->
     <script>
         $(document).ready(function(){
-            $('#pessoas').DataTable({
+            var table = $('#pessoas').DataTable({
                 "language": {
                     "lengthMenu": "Mostrando _MENU_ registros por página",
                     "zeroRecords": "Nada encontrado",
@@ -118,29 +137,38 @@
                     }
                 }
             });
+            
+            $('[name=atividade]').change(function(){
+                table.search($('[name=atividade] option:selected').text()).draw();
+            });
         });
     </script>
     
     <!-- Modal -->
     <script>
-        $('#modalCadastrarPessoa').on('show.bs.modal');
+        function excluir(id, atividadeId, nome){
+            $('form').attr('method', 'POST');
+            $('form').attr('action', '{{route('pessoas.excluir')}}');
+            $('.modal-header #tituloModal').html('Cancelar inscrição');
+            $('.modal-body #id').val(id);
+            $('.modal-body #AtividadeId').val(atividadeId);
+            $('.modal-body p').text('Tem certeza que deseja cancelar a inscrição de ' + nome + ' nessa atividade?');
+        }
         
-        $('#modalExcluirPessoa').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var id = button.data('id');
-            var nome = button.data('nome');
-            var AtividadeId = button.data('atividade');
-            var modal = $(this);
-            modal.find('.modal-body #id').val(id);
-            modal.find('.modal-body #AtividadeId').val(AtividadeId);
-            modal.find('.modal-body p').text('Tem certeza que deseja remover a inscrição de ' + nome + ' dessa atividade?');
-        });
+        function certificado(){
+            $('form').attr('method', 'GET');
+            $('form').attr('action', '{{route('gerar.certificados', $evento->id)}}');
+            $('.modal-header #tituloModal').html('Gerar certificados');
+            $('.modal-body #id').val('$pessoa->id');
+            $('.modal-body #AtividadeId').val('$atividade->id');
+            $('.modal-body p').text('O certificado será emitido para todos os participantes do evento. Deseja realmente emitir agora?');
+        }
     </script>
     
     <!-- Certificado -->
     <script>
         $('.btnGerar').click(function(){
-            window.location.href = "{{ route('gerar.certificados', $evento->id) }}";
-        });
+            certificado();
+        });        
     </script>
 @endsection

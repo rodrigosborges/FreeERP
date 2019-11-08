@@ -23,9 +23,8 @@ class PessoasController extends Controller
     public function index()
     {
         $eventos = Evento::whereHas('permissoes', function (Builder $query){
-            $query->where('nivel_id', '=', 3)->orWhere('nivel_id', '=', 2);
+            $query->where('pessoa_id', '=', auth::id());
         })->get()->sortBy('nome');
-        //$eventos = Evento::orderBy('nome')->get(); //RETORNA OS EVENTOS ORDENADOS PELO NOME
         //VERIFICA SE EXISTE PELO MENOS 1 EVENTO CADASTRADO
         if(count($eventos) < 1)
             return view('eventos::cadastrarEvento');
