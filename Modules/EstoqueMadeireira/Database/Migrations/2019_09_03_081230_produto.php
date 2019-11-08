@@ -16,7 +16,7 @@ class Produto extends Migration
         Schema::create('produto', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome', 45);
-            $table->string('descricao', 300);
+            $table->string('descricao', 300)->nullable();
             $table->decimal('tamanho', 5,2)->nullable();
             $table->integer('categoria_id')->unsigned()->index('fk_produtos_categoria');
             $table->integer('fornecedor_id')->unsigned()->index('fk_produtos_fornecedor');

@@ -13,7 +13,7 @@ class CategoriaController extends Controller
 {   
     //CATEGORIA DE PRODUTOS, essa classe determina a que categoria X produto pertence
     //Propriedade: Nome OBRIGATÓRIO
-    //A função construct carrega as informações do template padrão do sistema
+    //A função construct carrega as informações do template padrão do sistema, passado no $this->template
 
 
 
@@ -42,7 +42,7 @@ class CategoriaController extends Controller
     //Inicio da sessão Categorias, carrega 5 categorias registradas, com Nome, e os botões de Editar e Deletar
     //A variável flag serve para carregar os ativos e os inativos na mesma view, onde 
     //Flag = 0: ATIVOS ; Flag = 1: INATIVOS
-    
+
     public function index()
     {
         $categorias = Categoria::paginate(5);
@@ -50,6 +50,8 @@ class CategoriaController extends Controller
       
         return view('estoquemadeireira::Categoria/index', $this->template, compact('categorias', 'flag'));
     }
+
+    //Retorna os inativos, com a opção de reativa-los 
 
     public function inativos()
     {
@@ -68,6 +70,8 @@ class CategoriaController extends Controller
 
     }
 
+    //Insere a nova categoria no banco (store), verificando se já não existe um registro igual no banco
+
     public function create()
     {
         $categorias = Categoria::all();
@@ -77,6 +81,7 @@ class CategoriaController extends Controller
 
         
     }
+
 
 
     public function store(CategoriaRequest $req)
@@ -92,18 +97,17 @@ class CategoriaController extends Controller
         }
     }
 
+    //Retorna o formulário com a categoria passada para ser editada 
+
     public function edit($id)
     {
-        // $data = [
-        //     'produto' => Produto::findOrFail($id),
-        //     'fornecedores' => Fornecedor::all(),
-        //     'categorias' => Categoria::all()
-        //     ];
+
        
         $categoria = Categoria::findOrFail($id);      
         return view('estoquemadeireira::categoria.form', $this->template, compact('categoria'));
     }
 
+    //Atualiza a Categoria
 
      public function update(CategoriaRequest $request, $id)
     {
@@ -121,6 +125,7 @@ class CategoriaController extends Controller
         }
     }
 
+    //Desativa a Categoria do sistema, sendo possível reativa-la depois
 
     public function destroy($id)
     {
@@ -129,6 +134,8 @@ class CategoriaController extends Controller
         return redirect('/estoquemadeireira/produtos/categorias')->with('success', 'Categoria desativada com sucesso!');
     }
 
+
+    //Função para encontrar uma categoria registrada, filtrando pelo Nome
 
     public function busca(Request $request){
         $sql = [];
@@ -142,8 +149,9 @@ class CategoriaController extends Controller
             array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);
         
         
+        //Flag = 0 (index de ativos) retorna as categorias ativas
+        //Flag = 1 (index de inativos) retorna as categorias inativas (onlyTrashed)
         
-        //Se a flag for 1 retorna os produtos inativos, se for 2 os produtos ativos
         if($request['flag'] == 1){
             $categorias = Categoria::onlyTrashed()->where($sql)->paginate(5);
             if(count($categorias) == 0){
@@ -163,5 +171,3 @@ class CategoriaController extends Controller
 
     }
 }
-
-

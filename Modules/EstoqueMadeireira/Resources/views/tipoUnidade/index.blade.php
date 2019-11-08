@@ -6,7 +6,7 @@
     <div class="card col-md-12">
         <div class="card-body"> 
             <div class="header text-left">
-                <h4>Pesquisar Tipo de Unidade</h4>
+                <h4>Pesquisar Nome de Unidade</h4>
             </div>
             <form action="{{url('estoquemadeireira/tipounidade/busca')}}" method="POST" id="form">
             @csrf
@@ -34,7 +34,7 @@
                 @if($flag == 1)
                     <h5>inativos</h5>
                 @else
-                    <h5>Tipo de Unidade</h5>
+                    <h5>Nome de Unidade</h5>
                 @endif
 
             </a>       

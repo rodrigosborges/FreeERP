@@ -14,6 +14,8 @@
 Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/', 'EstoqueMadeireiraController@index');
    
+
+    Route::put('/estoquemadeireira/{id}/edit', 'EstoqueMadeireiraController@edit');
     
     
     //ROTAS DE BUSCAS
@@ -55,7 +57,7 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::resource('/movimentacao', 'MovimentacaoEstoqueController');
 
     //ESTOQUE
-
+    Route::get('/inativos', 'EstoqueMadeireiraController@inativos');
 
     //ROTAS DE RELATÓRIO
     Route::get('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacao');

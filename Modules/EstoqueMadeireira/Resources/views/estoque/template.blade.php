@@ -44,7 +44,7 @@ $this->template = [
             </li>
 
             <li class="nav-item ">
-                <a class="nav-link text-white " href="{{url('estoquemadeireira/tipounidade')}}">Tipo de Unidade</a>
+                <a class="nav-link text-white " href="{{url('estoquemadeireira/tipounidade')}}">Nome de Unidade</a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link text-white " href="{{url('estoquemadeireira/movimentacao')}}">Movimentação</a>

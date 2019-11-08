@@ -35,7 +35,7 @@
             @if($m->quantidade > 0)
             <tr>
                 <td >{{$m->id}}</td>
-                <td>{{$m->estoque->produtos->last()->nome}} - {{$m->estoque->tipoUnidade->nome}}({{$m->estoque->tipoUnidade->quantidade_itens}} itens)</td>
+                <td>{{$m->estoque->produtos->last()->nome}} - {{$m->estoque->tipoUnidade->nome}} {{$m->estoque->tipoUnidade->quantidade_itens}}</td>
                 <td class="text-success">+{{$m->quantidade}}</td>
                 <td>{{$m->created_at}}</td>
                 <td><a href="{{url('/estoque/movimentacao/' . $m->id)}}"><button class="btn btn-sm" style="font-size:0px; background-color: rgb(100,149,237);"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>

@@ -44,7 +44,8 @@ class FornecedorController extends Controller
 
 
     //Lista 5 Fornecedores por página, carregando Nome e Cnpj, além dos botões de editar e visualizar ficha (desativa pela ficha)   ROTA: '/estoquemadeireira/produtos/fornecedores'
-
+    //A variável flag serve para carregar os ativos e os inativos na mesma view, onde 
+    //Flag = 0: ATIVOS ; Flag = 1: INATIVOS
     public function index()
     {
         $fornecedores = Fornecedor::paginate(5);

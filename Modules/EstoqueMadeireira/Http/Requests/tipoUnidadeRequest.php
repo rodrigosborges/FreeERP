@@ -8,9 +8,7 @@ class tipoUnidadeRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => ['required', 'min: 3', 'max: 40', 'unique:tipoUnidade,nome,'.$this->route('tipoUnidade')],
-            'quantidade_itens' => ['required', 'numeric']
-            
+            'nome' => ['required', 'min: 3', 'max: 40', 'unique:tipoUnidade,nome,'.$this->route('tipoUnidade')],            
         ];
     }
     public function messages(){
@@ -18,7 +16,7 @@ class tipoUnidadeRequest extends FormRequest
             'required' => 'O campo :attribute é obrigatório!',
             'min' => 'Minimo de :min caracteres!',
             'max' => 'Máximo de :max caracteres!',
-            'unique' => 'Tipo de Unidade já existente!'
+            'unique' => 'Nome de Unidade já existente!'
         ];
     }
     public function authorize()

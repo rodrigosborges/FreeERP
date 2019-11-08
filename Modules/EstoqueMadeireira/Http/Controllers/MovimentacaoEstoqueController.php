@@ -137,22 +137,22 @@ class MovimentacaoEstoqueController extends Controller
         }else{
             $movimentacao = MovimentacaoEstoque::where('id', $request->pesquisa)->orWhere('quantidade', $request->pesquisa)->paginate(10);
             if(count($movimentacao) > 0){
-                return view('estoque::estoque.movimentacao.index', compact('movimentacao'))->with('success', 'Resultado da Pesquisa')->with('notificacoes', $this->notificacoes);
+                return view('estoquemadeireira::estoque.movimentacao.index', compact('movimentacao'))->with('success', 'Resultado da Pesquisa');
             }else{
-                return redirect('/estoque/movimentacao')->with('error', 'Nenhum resultado encontrado');
+                return redirect('/estoquemadeireira/movimentacao')->with('error', 'Nenhum resultado encontrado');
             }
         }
         
         return view('estoque::estoque.movimentacao.index', compact('movimentacao'));
         if($request->pesquisa == null){
             $itens = Estoque::paginate(10);
-            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'))->with('notificacoes', $this->notificacoes);
+            return view('estoquemadeireira::estoque.index', $this->template, compact('itens','flag'));
         }else{  
             $itens = DB::table('estoque')
-            ->join('estoque_has_produto', 'estoque_has_produto.estoque_id', '=', 'estoque.id')
+            ->join('estoque_has_produto', 'estoque_has_produto.estoque_id', '1=', 'estoque.id')
             ->join('produto', 'produto.id', '=', 'estoque_has_produto.produto_id') 
             ->where('produto.nome', 'like', '%' . $request->pesquisa . '%')->paginate(10);   
-            return view('estoque::estoque.index', $this->dadosTemplate, compact('itens','flag'))->with('notificacoes', $this->notificacoes);
+            return view('estoque::estoque.index', $this->template, compact('itens','flag'));
   
         }
     }

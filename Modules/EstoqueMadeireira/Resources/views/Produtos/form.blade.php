@@ -33,7 +33,7 @@
                     
                     <div class="form-group ml-2">
                             <label for="categoria">Categoria</label>
-                            <select class="form-control" name="categoria_id">
+                            <select class="form-control" name="categoria_id" required>
                                 @if(isset($produto))
                                     @foreach($categorias as $categoria)
                                         @if($categoria->id == $produto->categoria_id)
@@ -56,7 +56,7 @@
                 <div class="row ml-2 mt-2">
                       <div class="form-group  ml-2">
                         <label for="fornecedor">Fornecedor</label>
-                        <select name="fornecedor_id" class="form-control">
+                        <select name="fornecedor_id" class="form-control" required>
                             @if(isset($fornecedor))
                                 @foreach($fornecedores as $fornecedor)
                                     @if($fornecedor->id == $produto->fornecedor_id)
@@ -77,11 +77,11 @@
                    
                    <div class="form-group col-2 ">
                         <label for="tamanho">Tamanho</label>
-                        <input required type="text" class="form-control" placeholder="Tamanho" name="tamanho"  onKeyUp="verificaPreco(this);" value="{{isset($produto) ? $produto->tamanho : ''}}">
+                        <input type="text" class="form-control" placeholder="Nenhum" name="tamanho"  onKeyUp="verificaPreco(this);" value="{{isset($produto) ? $produto->tamanho : ''}}">
 
                    </div>
                    
-                   <div class="form-group col-2 ">
+                   <div class="form-group col-3 ">
                     <label for="unidadeMedida">Unidade de Medida</label>
                     <select name="unidadeMedida_id" class="form-control">
                         <option value="" disabled  selected>Selecione uma medida</option>
@@ -105,7 +105,7 @@
             <div class="row" style="align-items: flex-start;">
                 <div class="form-group col-8 ml-4">
                     <label for="descricao">Descrição</label>
-                    <textarea class="form-control" placeholder="Insira a descrição do produto" name="descricao" rows="3" required>{{isset($produto) ? $produto->descricao : ''}}</textarea>
+                    <textarea class="form-control" placeholder="Insira a descrição do produto" name="descricao" rows="3">{{isset($produto) ? $produto->descricao : ''}}</textarea>
                     {{$errors->first('descricao')}}
                 </div>
             </div>

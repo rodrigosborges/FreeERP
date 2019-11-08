@@ -1,6 +1,6 @@
 @extends('estoquemadeireira::layouts.master')
 
-@section('title', 'Cadastro de tipo de Unidade')
+@section('title', 'Cadastro de Nome de Unidade')
 
 @section('content')
 

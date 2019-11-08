@@ -8,7 +8,7 @@ class ProdutoRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => ['required', 'min: 3', 'max: 40'],
+            'nome' => ['required', 'min: 3', 'max: 40', 'unique:produto,nome,'.$this->route('produto')],
             'preco' => ['required', 'numeric'],
             'descricao' => ['max: 500'],
         ];
