@@ -15,13 +15,13 @@ class ServicosController extends Controller
      return view('assistencia::paginas.estoque.cadastrarServico');
   }
 
-   public function localizar(){
+   public function localizar(){ //Listagem de serviços/mao de obra 
      $servicos = ServicoAssistenciaModel::paginate(10);
      $servicosDeletados = ServicoAssistenciaModel::onlyTrashed()->paginate(10);
      return view('assistencia::paginas.estoque.localizarServico',compact('servicos','servicosDeletados'));
    }
 
-   public function salvar(StoreServicoRequest $req){
+   public function salvar(StoreServicoRequest $req){ //Store de um novo serviço
     DB::beginTransaction();
     try {
       $dados  = $req->all();
@@ -37,14 +37,14 @@ class ServicosController extends Controller
      
    }
 
-   public function editar($id){
+   public function editar($id){ //GET para ediçao de um serviço
      $servico = ServicoAssistenciaModel::find($id);
      $servico ['valor'] = str_replace(".",",",$servico ['valor']);
      
      return view('assistencia::paginas.estoque.editarServico',compact('servico'));
    }
 
-   public function atualizar(StoreServicoRequest $req, $id){
+   public function atualizar(StoreServicoRequest $req, $id){ //UPDATE de um serviço
     DB::beginTransaction();
     try {
       $dados  = $req->all();
@@ -60,7 +60,7 @@ class ServicosController extends Controller
      
    }
 
-   public function deletar($id){
+   public function deletar($id){ //DELETE para um serviço
     DB::beginTransaction();
     try {
       $servico = ServicoAssistenciaModel::find($id);
@@ -75,7 +75,7 @@ class ServicosController extends Controller
     }
     
    }
-   public function buscar(Request $req){
+   public function buscar(Request $req){ //Método de busca de serviços
      $servicos = ServicoAssistenciaModel::busca($req->busca);
 
      return view('assistencia::paginas.estoque.localizarServico',compact('servicos'));

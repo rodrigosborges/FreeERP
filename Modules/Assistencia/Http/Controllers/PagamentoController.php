@@ -14,11 +14,11 @@ class PagamentoController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-     public function index(){
+     public function index(){ //GET da pagina de vizualizações de pagamentos
 
         return view('assistencia::paginas.pagamentos.localizarPagamentos');
     }
-    public function table(Request $req, $status){
+    public function table(Request $req, $status){ //Table para requisição do js na pagina de localização de pagamentos
         $pagamentos = PagamentoAssistenciaModel::where('status', $status);
 
         if($req->inicio)
@@ -33,7 +33,7 @@ class PagamentoController extends Controller
 
     }
 
-     public function recibo($id){
+     public function recibo($id){ //GET vizualização do recibo do pagamento
         $pagamento =  PagamentoAssistenciaModel::find($id);
         if($pagamento->status == 'Pago'){
             return view('assistencia::paginas.pagamentos.recibo', compact('pagamento'));
@@ -43,7 +43,7 @@ class PagamentoController extends Controller
      }
 
 
-    public function salvar(Request $req, $id) {
+    public function salvar(Request $req, $id) { //Finalização do pagamento
         DB::beginTransaction();
         try {
             $dados = $req->all();
@@ -76,61 +76,12 @@ class PagamentoController extends Controller
         }
 
     }
-    public function imprimir($id) {
+    public function imprimir($id) { //Imprimir/PDF do recibo
         $pagamento =  PagamentoAssistenciaModel::find($id);
 
         return \PDF::loadView('assistencia::paginas.pagamentos._recibo', compact('pagamento'))->stream();
                   
       }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('assistencia::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('assistencia::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }

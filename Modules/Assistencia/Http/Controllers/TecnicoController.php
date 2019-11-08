@@ -18,15 +18,15 @@ class TecnicoController extends Controller
 
     return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos','tecnicosDeletados'));
   }
-  public function localizar(){
+  public function localizar(){ //Listagem dos tecnicos
     $tecnicos = TecnicoAssistenciaModel::paginate(10);
     $tecnicosDeletados = TecnicoAssistenciaModel::onlyTrashed()->paginate(10);
     return view('assistencia::paginas.tecnicos.localizartecnico',compact('tecnicos','tecnicosDeletados'));
   }
-  public function cadastrar(){
+  public function cadastrar(){ //GET para a criação do tecnico
     return view('assistencia::paginas.tecnicos.cadastrotecnico');
   }
-  public function salvar(StoreTecnicoRequest $req){
+  public function salvar(StoreTecnicoRequest $req){ //STORE de um tecnico
     DB::beginTransaction();
       try {
         $dados  = $req->all();
@@ -41,12 +41,12 @@ class TecnicoController extends Controller
     
   }
 
-  public function editar($id){
+  public function editar($id){ //GET para a edição de um tecnico
     $tecnico = TecnicoAssistenciaModel::find($id);
     return view('assistencia::paginas.tecnicos.editarTecnico',compact('tecnico'))->with('success','Técnico atualizado com sucesso!');
   }
 
-  public function atualizar(StoreTecnicoRequest $req, $id){
+  public function atualizar(StoreTecnicoRequest $req, $id){ //UPDATE do tecnico
     DB::beginTransaction();
       try {
         $dados  = $req->all();
@@ -61,7 +61,7 @@ class TecnicoController extends Controller
     
   }
 
-  public function deletar($id){
+  public function deletar($id){ //DELETE / RESTORE de um tecnico
     DB::beginTransaction();
     $tecnico = TecnicoAssistenciaModel::withTrashed()->find($id);
       try {
@@ -84,7 +84,7 @@ class TecnicoController extends Controller
     
   }
 
-  public function buscar(Request $req){
+  public function buscar(Request $req){ //metodo de busca para a lsitagem de tecnicos
     $tecnicos = TecnicoAssistenciaModel::busca($req->busca)->paginate(10);
     $tecnicosDeletados = TecnicoAssistenciaModel::busca($req->busca)->onlyTrashed()->paginate(10);
     

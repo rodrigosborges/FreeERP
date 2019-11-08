@@ -18,7 +18,7 @@
         <div class="row form-group">
             <form class="input-group col-6" action="{{route('servicos.buscar')}}" method="post">
                 {{ csrf_field() }}
-                <input type="text" class="form-control" name="busca" placeholder="Nome da mão-de-obra"
+                <input type="text" class="form-control" name="busca" placeholder="Nome da mão de obra"
                     aria-label="Buscar" aria-describedby="button-addon2">
                 <div class="input-group-append">
                 <button class="btn btn-info" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>

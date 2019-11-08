@@ -9,7 +9,7 @@ use Modules\Assistencia\Entities\{ClienteAssistenciaModel,PagamentoAssistenciaMo
 
 class AssistenciaController extends Controller
 {
-     public function index(){
+     public function index(){ // Retorna a pagina principal
         $pago = PagamentoAssistenciaModel::where('status','pago')->count();
         $pendente = PagamentoAssistenciaModel::where('status','pendente')->count();
         $finalizados = ConsertoAssistenciaModel::where('situacao','Aguardando retirada do cliente')->paginate(4);

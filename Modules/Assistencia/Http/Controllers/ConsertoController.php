@@ -11,12 +11,12 @@ use Modules\Assistencia\Http\Requests\StoreConsertosRequest;
 
 class ConsertoController extends Controller
 {
-    public function index() {
+    public function index() { //metodo get para listagem de OS's
       
       return view('assistencia::paginas.conserto');
     }
 
-    public function cadastrar(){
+    public function cadastrar(){ //metodo get para a criação da OS
       $pecas = ItemPeca::all();
       $servicos = ServicoAssistenciaModel::all();
       $clientes = ClienteAssistenciaModel::all();
@@ -45,38 +45,34 @@ class ConsertoController extends Controller
       
     }
 
-    public function localizar() {
+    public function localizar() { //GET de listagem de OS
        $consertos = ConsertoAssistenciaModel::paginate(10);
 
        return view('assistencia::paginas.consertos.localizarConserto', compact('consertos'));
     }
 
-    public function buscar(Request $req) {
+    public function buscar(Request $req) { //Metodo de busca para listagem de OS.. melhoria do método em js (ex. Cliente)
        $consertos = ConsertoAssistenciaModel::busca($req->busca);
 
        return view('assistencia::paginas.consertos.localizarConserto', compact('consertos'));
     }
 
-    public function visualizarConserto($id) {
+    public function visualizarConserto($id) { //GET para informações gerais da OS
        $conserto = ConsertoAssistenciaModel::findOrFail($id);
        $pecaOS = PecaOs::where('idConserto', $id)->get();
        $itemServico = itemServico::where('idConserto', $id)->get();
 
        return view('assistencia::paginas.consertos.visualizarConserto', compact('conserto', 'pecaOS','itemServico'));
     }
-    public function imprimir($id) {
+    public function imprimir($id) { //GET geração de PDF da OS
       $conserto = ConsertoAssistenciaModel::findOrFail($id);
        $pecaOS = PecaOs::where('idConserto', $id)->get();
        $itemServico = itemServico::where('idConserto', $id)->get();
-      //  $html = view('assistencia::paginas.consertos.checklist', compact('conserto', 'pecaOS','itemServico'));
-      //  $pdf = App::make('dompdf.wrapper');
-      //  $pdf->loadHTML($html);
-      //  return $pdf->stream();
 
       return \PDF::loadView('assistencia::paginas.consertos.checklist', compact('conserto', 'pecaOS','itemServico'))->stream();
                 
     }
-    public function editar($id) {
+    public function editar($id) { //GET pagina de edição da OS
       $conserto = ConsertoAssistenciaModel::findOrFail($id);
       $conserto['sinal'] = str_replace(".",",", $conserto ['sinal']);
       $pecas = ItemPeca::all();
@@ -89,12 +85,12 @@ class ConsertoController extends Controller
       return view('assistencia::paginas.consertos.editarConserto', compact('conserto', 'clientes', 'id', 'pecas', 'servicos','pecaOS','itemServico','tecnicos'));
     }
     
-    public function verMais($id){
+    public function verMais($id){ //GET informações adicionais da OS
       $infos = SituacaoOsModel::where('idConserto', $id)->paginate(10);
 
       return view('assistencia::paginas.consertos.verMais', compact('infos'));
     }
-    public function excluirVerMais ($id){
+    public function excluirVerMais ($id){ //DELETE para informações adicionais da OS
       if($id != 1){
         SituacaoOsModel::where('id', $id)->delete();
         return back()->with('success', 'Informação deletada com sucesso.');
@@ -104,7 +100,7 @@ class ConsertoController extends Controller
 
     }
 
-    public function salvar(StoreConsertosRequest $req){
+    public function salvar(StoreConsertosRequest $req){ //POST/store da OS
 
       $dados  = $req->all();
       $dados['valor'] = str_replace(",",".",$dados['valor']);
@@ -147,7 +143,7 @@ class ConsertoController extends Controller
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço iniciada!');
       
     }
-    public function atualizar(Request $req, $id){
+    public function atualizar(Request $req, $id){ //PUT/update da OS
      
       $dados  = $req->all();
       $dados['valor'] = str_replace(",",".",$dados['valor']);
@@ -193,25 +189,25 @@ class ConsertoController extends Controller
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço alterada com sucesso');
   }
 
-    public function nomeClientes(Request $req){
+    public function nomeClientes(Request $req){ //Retorna o cliente no select do formulario da OS
 
       return ClienteAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',cpf) AS nomecpf"))->get()->pluck('nomecpf');
     }
-    public function nomeTecnicos(Request $req){
+    public function nomeTecnicos(Request $req){ //Retorna o tecnico no select do formilario da OS
 
       return TecnicoAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',cpf) AS nomecpf"))->get()->pluck('nomecpf');
     }
-    public function dadosCliente(Request $req){
+    public function dadosCliente(Request $req){ //Retorna dados do cliente 
        [$nome, $cpf] = explode('|',$req->input('nome'));
        return ClienteAssistenciaModel::where('nome',$nome)->where('cpf',$cpf)->select('id','nome','email','cpf','celnumero')->first();
     }
 
-    public function dadosTecnico(Request $req){
+    public function dadosTecnico(Request $req){ //Retorna dados do tecnico
        [$nome, $cpf] = explode('|',$req->input('nome'));
        return TecnicoAssistenciaModel::where('nome',$nome)->where('cpf',$cpf)->select('id','nome','cpf')->first();
     }
 
-    public function finalizar($id){
+    public function finalizar($id){ //Metodo de finalização da ordem
 
       $pagamento =  PagamentoAssistenciaModel::where('idConserto', $id)->get()->first();
       
@@ -220,21 +216,4 @@ class ConsertoController extends Controller
     }
 
 }
-/*
-public function nomePecas(Request $req){
-       return PecaAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',valor_venda) AS nomevenda"))->get()->pluck('nomevenda');
-     }
 
-     public function nomeServicos(Request $req){
-       return ServicoAssistenciaModel::where('nome','LIKE', "%".$req->input('nome')."%")->select(DB::raw("CONCAT(nome,'|',valor) AS nomemao"))->get()->pluck('nomemao');
-     }
-public function dadosPecas(Request $req){
-       [$nome, $valor] = explode('|',$req->input('nome'));
-       return PecaAssistenciaModel::where('nome',$nome)->where('valor_venda',$valor)->select('id','nome','valor_venda')->first();
-     }
-
-     public function dadosServicos(Request $req){
-       [$nome, $valor] = explode('|',$req->input('nome'));
-       return ServicoAssistenciaModel::where('nome',$nome)->where('valor',$valor)->select('id','nome','valor')->first();
-     }
-*/

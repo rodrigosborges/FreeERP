@@ -13,7 +13,7 @@ use DB;
 class ClienteController extends Controller
 {
 
-    public function index(){
+    public function index(){ //metodo get para lsitagem dos clientes
       DB::beginTransaction();
       try{
         $clientes = ClienteAssistenciaModel::paginate(10);
@@ -31,12 +31,12 @@ class ClienteController extends Controller
       }
     }
 
-    public function cadastrar(){
+    public function cadastrar(){ //metodo get para o cadastro do cliente
       $estados = Estado::all();
       return view('assistencia::paginas.clientes.cadastroCliente', compact('estados'));
     }
 
-    public function localizar(){
+    public function localizar(){ //metodo de retorno para a pagina de listagem do cliente
       DB::beginTransaction();
       try{
         $clientes = ClienteAssistenciaModel::paginate(10);
@@ -52,7 +52,7 @@ class ClienteController extends Controller
       }
     }
 
-    public function salvar(StoreClienteRequest $req){
+    public function salvar(StoreClienteRequest $req){ //Medodo create/storo do cliente
 
       DB::beginTransaction();
       try {
@@ -89,13 +89,13 @@ class ClienteController extends Controller
       
     }
 
-    public function editar($id){
+    public function editar($id){ //metodo get para a edição do cliente
       $cliente = ClienteAssistenciaModel::withTrashed()->findOrFail($id);
       $estados = Estado::all();
       return view('assistencia::paginas.clientes.editarCliente',compact('cliente','estados'))->with('success','Cliente atualizado com sucesso!');
     }
 
-    public function atualizar(StoreClienteRequest $req, $id){
+    public function atualizar(StoreClienteRequest $req, $id){ // Medodo de update do cliente
       
       DB::beginTransaction();
       try {
@@ -113,7 +113,7 @@ class ClienteController extends Controller
       
     }
 
-    public function deletar($id){
+    public function deletar($id){ // Metodo de delete e restore do cliente
       $cliente = ClienteAssistenciaModel::withTrashed()->findOrFail($id);
       DB::beginTransaction();
       try {
@@ -134,13 +134,6 @@ class ClienteController extends Controller
       }
       
     }
-
-    // public function buscar(Request $req){
-    //   $clientes = ClienteAssistenciaModel::busca($req->busca);
-    //   $clientesDeletados = ClienteAssistenciaModel::buscaTrash($req->busca);
-
-    //   return view('assistencia::paginas.clientes.localizarCliente', compact('clientes','clientesDeletados'));
-    // }
 
     public function table(Request $request){ //retorna table para amostra em view (requisitado por js)
       $clientes = new ClienteAssistenciaModel;

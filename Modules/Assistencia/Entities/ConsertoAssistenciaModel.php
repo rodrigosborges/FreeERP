@@ -13,8 +13,8 @@ class ConsertoAssistenciaModel extends Model
 
     protected $fillable = ['id','numeroOrdem', 'valor','sinal','situacao','data_entrada','modelo_aparelho','marca_aparelho','serial_aparelho','imei_aparelho','defeito','obs','idCliente','idTecnico','idPeca[]','idMaoObra[]'];
 
-    public static function busca($busca){
-      return static::where('id', 'LIKE', '%'.$busca.'%')
+    public static function busca($busca){ // Metodo de busca da OS por numero
+      return static::where('numeroOrdem', 'LIKE', '%'.$busca.'%')
                     /*->orWhere() //pesquisa por cliente
                     ->orWhere() //por modelo do aparelho
                     ->orWhere() //por 

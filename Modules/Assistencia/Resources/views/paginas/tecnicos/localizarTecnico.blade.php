@@ -11,8 +11,8 @@
         <div class="row">
             <form class="input-group mb-3 col-md-6" action="{{route('tecnico.buscar')}}" method="post">
                 {{ csrf_field() }}
-                <input type="text" class="form-control" name="busca" placeholder="Nome do tecnico"
-                    aria-label="Buscar tecnico" aria-describedby="button-addon2">
+                <input type="text" class="form-control" name="busca" placeholder="Nome do técnico"
+                    aria-label="Buscar técnico" aria-describedby="button-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-info" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                 </div>
@@ -20,7 +20,7 @@
             <div class="col-md-6">
                 <div class="text-right">
                     <a href="{{route('tecnico.cadastrar')}}"><button type="button" class="btn btn-info">Cadastrar
-                            tecnico</button></a>
+                            técnico</button></a>
                 </div>
             </div>
         </div>

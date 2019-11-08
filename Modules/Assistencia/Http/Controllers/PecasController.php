@@ -18,7 +18,7 @@ class PecasController extends Controller
      return view('assistencia::paginas.estoque.cadastrarPeca');
    }
 
-  public function localizar(){
+  public function localizar(){ //listagem de peças
      $pecas = PecaAssistenciaModel::paginate(10);
      $pecasDeletadas = PecaAssistenciaModel::onlyTrashed()->paginate(10);
 
@@ -29,7 +29,7 @@ class PecasController extends Controller
      return view('assistencia::paginas.estoque.localizarPeca',compact('pecas','pecasDeletadas'));
   }
 
-  public function salvar(StorePecaRequest $req){
+  public function salvar(StorePecaRequest $req){ //Store de nova peça
     DB::beginTransaction();
       try {
         $dados = $req->all();
@@ -56,7 +56,7 @@ class PecasController extends Controller
     
   }
 
-   public function editar($id){
+   public function editar($id){ //GET para ediçao de peça
       $peca = PecaAssistenciaModel::find($id);
       $itens = ItemPeca::where('idPeca', $id)->paginate(10);
       $peca ['valor_compra'] = str_replace(".",",",$peca ['valor_compra']);
@@ -65,7 +65,7 @@ class PecasController extends Controller
      return view('assistencia::paginas.estoque.editarPeca',compact('peca','itens'));
    }
 
-   public function atualizar(StorePecaRequest $req, $id){
+   public function atualizar(StorePecaRequest $req, $id){ //UPDATE de uma peça 
     DB::beginTransaction();
     try {
       $dados  = $req->all();
@@ -81,7 +81,7 @@ class PecasController extends Controller
      
    }
 
-   public function deletar($id){
+   public function deletar($id){ //DELETE de uma peça
     DB::beginTransaction();
     try {
       $peca = PecaAssistenciaModel::find($id);
@@ -95,7 +95,7 @@ class PecasController extends Controller
     }
       
    }
-   public function deletarItem($id){
+   public function deletarItem($id){ //DELETE de um itemPeca
     DB::beginTransaction();
     try {
       
@@ -113,7 +113,7 @@ class PecasController extends Controller
     }
     
  }
-   public function buscar(Request $req){
+   public function buscar(Request $req){ //Método de busca de peças
      $pecas = PecaAssistenciaModel::busca($req->busca);
      return view('assistencia::paginas.estoque.localizarPeca',compact('pecas'));
 

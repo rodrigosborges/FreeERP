@@ -70,7 +70,7 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th>Ordem</th>
+                                <th>nº da Ordem</th>
                                 <th>Cliente</th>
                                 <th>Contato</th>
                             </tr>
