@@ -64,7 +64,7 @@
                         <td>{{$solicitacao->agenda->titulo}}</td>
                         <td>{{isset($solicitacao->agenda->descricao) ? $solicitacao->agenda->descricao : '---'}}</td>
                         <td>{{$solicitacao->setor->sigla}}</td>
-                        <td>{{$solicitacao->agenda->funcionario_id}}</td>
+                        <td>{{$solicitacao->agenda->funcionario->nome}}</td>
                         <td class="acoes">
                             <a href="{{route('compartilhamentos.revogar', $solicitacao)}}" class="btn btn-info btn-sm text-white small">
                                 <i class="material-icons">redo</i>

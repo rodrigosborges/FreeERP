@@ -14,6 +14,7 @@ use Modules\Calendario\Entities\Evento;
 use Modules\Calendario\Entities\Funcionario;
 use Modules\Calendario\Entities\Notificacao;
 use Modules\Calendario\Entities\User;
+use Modules\Calendario\Notifications\NotificarAlteracaoEvento;
 use Modules\Calendario\Notifications\NotificarConviteParaEvento;
 use Modules\Calendario\Notifications\NotificarEventoProximo;
 
@@ -29,7 +30,8 @@ class EventoController extends Controller
         $this->middleware('auth');
     }
 
-    public function notificar(){
+    public function notificar()
+    {
 
         User::find(1)->notify(new NotificarEventoProximo(Evento::find(1)));
     }
@@ -75,7 +77,7 @@ class EventoController extends Controller
     public function criarOuEditar(Evento $evento = null, Request $request)
     {
         $rota = $request->route()->getName();
-        $agendas = Agenda::all();
+        $agendas = Agenda::where('funcionario_id', Auth::id())->orderBy('titulo')->get();
         $funcionarios = Funcionario::all();
         $agenda_selecionada = $request->agenda;
         return view('calendario::eventos.criar-editar', ['agendas' => $agendas, 'evento' => $evento, 'funcionarios' => $funcionarios, 'agenda_selecionada' => $agenda_selecionada, 'rota' => $rota]);
@@ -166,6 +168,12 @@ class EventoController extends Controller
             foreach ($evento->convites as $evento_convite) {
                 $achou = false;
                 foreach ($convites as $convite) {
+                    if ($convite->wasRecentlyCreated)
+                        $convite->funcionario->user->notify(new NotificarConviteParaEvento($convite));
+                    else
+                        if ($convite->status == true)
+                            $convite->funcionario->user->notify(new NotificarAlteracaoEvento($convite));
+
                     if ($convite->is($evento_convite))
                         $achou = true;
                 }
@@ -210,11 +218,10 @@ class EventoController extends Controller
                     $query->where('deleted_at', '=', null);
                 });
             })->get();
-        }
-        else{
+        } else {
             $convites['definidos'] = new Collection();
             $convites['pendentes'] = new Collection();
-            if($convite->status)
+            if ($convite->status)
                 $convites['definidos']->add($convite);
             else
                 $convites['pendentes']->add($convite);
@@ -238,7 +245,8 @@ class EventoController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function deletarConvite(Convite $convite){
+    public function deletarConvite(Convite $convite)
+    {
         $convite->delete();
         return redirect()->route('convites.index')->with('success', 'Convite deletado com sucesso.');
     }
@@ -247,7 +255,8 @@ class EventoController extends Controller
      * @param Convite $convite
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function revogarConvite(Convite $convite){
+    public function revogarConvite(Convite $convite)
+    {
         $convite->status = null;
         $convite->save();
         return redirect()->route('convites.index')->with('success', 'Convite revogado com sucesso.');

@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Modules\Calendario\Entities\Convite;
 
-class NotificarConviteParaEvento extends Notification
+class NotificarAlteracaoEvento extends Notification
 {
     use Queueable;
     private $convite;
@@ -52,9 +52,9 @@ class NotificarConviteParaEvento extends Notification
         }
         return (new MailMessage)
             ->from('freeerp@ifspcaraguatatuba.edu.br', 'FreeERP')
-            ->subject('Convite para evento')
+            ->subject('Alteração de evento')
             ->greeting('Olá!')
-            ->line('Você foi convidado para um evento.')
+            ->line('Alteração em evento que você confirmou presença.')
             ->line('Evento: ' . $this->convite->evento->titulo)
             ->line('Responsável: ' . $this->convite->evento->agenda->funcionario->nome)
             ->line('Data: ' . $data)

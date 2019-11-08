@@ -31,7 +31,8 @@ class Convite extends Model
             'className' => 'agenda' . $this->evento->agenda->id,
             'descricao' => $this->evento->nota,
             'allDay' => $this->evento->dia_todo,
-            'usuario' => $this->evento->agenda->funcionario->user->id
+            'usuario' => $this->evento->agenda->funcionario->user->id,
+            'nome' => $this->evento->agenda->funcionario->nome
         ];
     }
 }

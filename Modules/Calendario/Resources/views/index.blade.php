@@ -135,10 +135,10 @@
                 businessHours: true, // display business hours
                 events: '{{route('eventos.index')}}',
                 eventRender: function (info) {
-
                     var agenda = info.event.extendedProps.agenda;
                     var descricao = info.event.extendedProps.descricao;
                     var usuario = info.event.extendedProps.usuario;
+                    var nome = info.event.extendedProps.nome;
                     var duplicar = '{{route('eventos.duplicar', 'id')}}';
                     duplicar = duplicar.replace('id', info.event.id);
 
@@ -153,6 +153,10 @@
                         $(info.el).find('.fc-title').append('<a href="' + duplicar + '" class="float-right text-white"><i style="font-size: inherit; line-height: inherit" class="material-icons">file_copy</i></a>');
                     } else {
                         $(info.el).css('cursor', 'default');
+                        $(info.el).tooltip({
+                            'title': 'Criado por ' + nome
+                        });
+                        $(info.el).find('.fc-title').append('<i style="font-size: inherit; line-height: inherit" class="material-icons float-right">info</i>');
                     }
 
                     if(info.event.end){
