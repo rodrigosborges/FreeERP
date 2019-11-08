@@ -11,7 +11,6 @@ class ProdutoRequest extends FormRequest
             'nome' => ['required', 'min: 3', 'max: 40'],
             'preco' => ['required', 'numeric'],
             'descricao' => ['max: 500'],
-            'codigo' => ['required', 'numeric', 'digits_between:8,13','unique:produto,codigo,'.$this->route('produto')]
         ];
     }
     public function messages(){
@@ -21,7 +20,6 @@ class ProdutoRequest extends FormRequest
             'max' => 'Máximo de :max caracteres!',
             'unique' => ':attribute já cadastrado!',
             'numeric' => 'Insira apenas valores númericos',
-            'digits_between' => 'Insira entre 8 e 13 caracteres'
         ];
     }
     public function authorize()

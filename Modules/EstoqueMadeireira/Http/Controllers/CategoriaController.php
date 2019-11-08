@@ -10,7 +10,11 @@ use DB;
 
 
 class CategoriaController extends Controller
-{
+{   
+    //CATEGORIA DE PRODUTOS, essa classe determina a que categoria X produto pertence
+    //Propriedade: Nome OBRIGATÓRIO
+    //A função construct carrega as informações do template padrão do sistema
+
 
 
     public $template;
@@ -35,8 +39,10 @@ class CategoriaController extends Controller
         ];
     }
 
-
-
+    //Inicio da sessão Categorias, carrega 5 categorias registradas, com Nome, e os botões de Editar e Deletar
+    //A variável flag serve para carregar os ativos e os inativos na mesma view, onde 
+    //Flag = 0: ATIVOS ; Flag = 1: INATIVOS
+    
     public function index()
     {
         $categorias = Categoria::paginate(5);

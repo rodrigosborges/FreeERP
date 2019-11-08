@@ -64,7 +64,7 @@ Route::prefix('estoquemadeireira')->group(function() {
 
 
     //ROTAS PADRÕES DO LARAVEL 
-    Route::resource('/estoquemadeireira', 'EstoqueMadeireiraController');
+    Route::resource('/', 'EstoqueMadeireiraController');
     Route::resource('/vendas/cliente', 'ClienteController');
     Route::resource('/produtos/fornecedores', 'FornecedorController');
     Route::resource('/produtos/categorias', 'CategoriaController'); 

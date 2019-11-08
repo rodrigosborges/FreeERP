@@ -9,9 +9,13 @@ class UnidadeMedidaSeedTableSeeder extends Seeder {
     public function run(){
       DB::table('unidade_medidas')->insert([
       [
-      'nome' => 'M²',
+        'nome' => 'Sem Medida',
       
       ],
+      [
+        'nome' => 'M²',
+        
+        ],
       [
         'nome' => 'M³',
         

@@ -20,7 +20,8 @@ class FornecedorRequest extends FormRequest
             'unique' => 'Já existente!',
             'min' => 'Minimo de :min caracteres!',
             'max' => 'Máximo de :max caracteres!',
-            'cnpj' => 'CNPJ Inválido!'
+            'cnpj' => 'CNPJ Inválido!',
+            'telefone' => 'Telefone Inválido!'
         ];
     }
     public function authorize()

@@ -13,6 +13,9 @@ use DB;
 
 class FornecedorController extends Controller
 {
+    //FORNECEDOR DE PRODUTOS PARA O ESTOQUE, Classe "simples" para apenas registrar quem fornece 'X' produto;
+    //propriedades: Nome para identificação OBRIGATÓRIO, Endereço genérico OBRIGATÓRIO, CNPJ OBRIGATÓRIO, Telefone (Pode ser 8 ou 9 digitos, apenas um: Tel ou Cel), email OBRIGATÓRIO
+    //A função construct carrega as informações do template padrão do sistema, passado no $this->template
 
 
     public $template;
@@ -40,6 +43,7 @@ class FornecedorController extends Controller
     }
 
 
+    //Lista 5 Fornecedores por página, carregando Nome e Cnpj, além dos botões de editar e visualizar ficha (desativa pela ficha)   ROTA: '/estoquemadeireira/produtos/fornecedores'
 
     public function index()
     {
@@ -49,6 +53,8 @@ class FornecedorController extends Controller
         return view('estoquemadeireira::Fornecedores/index', $this->template, compact('fornecedores', 'flag'));
     }
 
+
+    //Retorna o index de fornecedores inativos no sistema, sendo possível recupera-los com a função RESTORE
     public function inativos()
     {
         $fornecedores = Fornecedor::onlyTrashed()->paginate(5);
@@ -66,11 +72,12 @@ class FornecedorController extends Controller
 
     }
 
+    //Criação do Fornecedor com todos os seus atributos, já validando no back e front (store)
+
     public function create()
     {
         $fornecedores = Fornecedor::all();  
-        $categorias = Categoria::all();   
-        return view('estoquemadeireira::Fornecedores/form', $this->template, compact('fornecedores', 'categorias'));
+        return view('estoquemadeireira::Fornecedores/form', $this->template, compact('fornecedores'));
 
         
     }
@@ -90,22 +97,21 @@ class FornecedorController extends Controller
         }
     }
 
+    //Edita o Fornecedor selecionado pelo id, retorna as informações atuais no formulário sendo possível atualiza-los (update)
+    
     public function edit($id)
     {
-        // $data = [
-        //     'produto' => Produto::findOrFail($id),
-        //     'fornecedores' => Fornecedor::all(),
-        //     'categorias' => Categoria::all()
-        //     ];
-       
+
         $fornecedor = Fornecedor::findOrFail($id);
-        $categorias = Categoria::all();
     
 
-        return view('estoquemadeireira::fornecedores/form', $this->template, compact('fornecedor','categorias'));
+        return view('estoquemadeireira::fornecedores/form', $this->template, compact('fornecedor'));
     }
 
-     public function update(FornecedorRequest $request, $id)
+
+    
+    
+    public function update(FornecedorRequest $request, $id)
     {
         DB::beginTransaction();
         try{
@@ -119,11 +125,9 @@ class FornecedorController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
+
+    //Desativa o fornecedor do sistema, sendo possível reativa-lo depois
+
     public function destroy($id)
     {
         $fornecedor = Fornecedor::findOrFail($id);
@@ -131,11 +135,17 @@ class FornecedorController extends Controller
         return redirect('/estoquemadeireira/produtos/fornecedores')->with('success', 'Fornecedor desativado com sucesso!');
     }
 
+    
+    
+    //Ficha do fornecedor, passando o id do mesmo para que se tenha uma melhor visualização  ROTA: /estoquemadeireira/produtos/fornecedores/ficha/{ID} 
+
     public function ficha($id){
         $fornecedor = Fornecedor::findOrFail($id);
-        $categoria = Categoria::findOrFail($fornecedor->categoria_id);
-        return view('estoquemadeireira::fornecedores/ficha',$this->template , compact('fornecedor', 'categoria'));
+        return view('estoquemadeireira::fornecedores/ficha',$this->template , compact('fornecedor'));
     }
+
+    
+    //Função de busca de fornecedor, filtrando os fornecedores APENAS pelo Nome
 
     public function busca(Request $request){
         $sql = [];
@@ -149,8 +159,9 @@ class FornecedorController extends Controller
             array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);
         
         
+        //Flag = 0 (index de ativos) retorna os fornecedores ativos
+        //Flag = 1 (index de inativos) retorna os fornecedores inativos (onlyTrashed)
         
-        //Se a flag for 1 retorna os produtos inativos, se for 2 os produtos ativos
         if($request['flag'] == 1){
             $fornecedores = Fornecedor::onlyTrashed()->where($sql)->paginate(5);
             if(count($fornecedores) == 0){

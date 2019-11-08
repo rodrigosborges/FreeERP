@@ -25,11 +25,11 @@
             <div class="row">
 
                 <div class="col-md-6">
-                    <label for="cnpj"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>CNPJ</b><br><br>{{$fornecedor->cnpj}}</label>
+                    <label for="cnpj"><i class="material-icons" style="vertical-align:middle;">how_to_vote</i>&nbsp&nbsp<b>CNPJ</b><br><br>{{$fornecedor->cnpj}}</label>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="telefone"><i class="material-icons" style="vertical-align:middle;">category</i>&nbsp&nbsp<b>telefone</b><br><br>{{$fornecedor->telefone}}</label>   
+                    <label for="telefone"><i class="material-icons" style="vertical-align:middle;">phone</i>&nbsp&nbsp<b>telefone</b><br><br>{{$fornecedor->telefone}}</label>   
                 </div>   
                     
             </div>
@@ -38,7 +38,7 @@
             <div class="row">
 
             <div class="col-md-6">
-                <label for="cnpj"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Categoria</b><br><br>{{$categoria->nome}}</label>
+                <label for="cnpj"><i class="material-icons" style="vertical-align:middle;">email</i>&nbsp&nbsp<b>Email</b><br><br>{{$fornecedor->email}}</label>
             </div>
                 
             </div>

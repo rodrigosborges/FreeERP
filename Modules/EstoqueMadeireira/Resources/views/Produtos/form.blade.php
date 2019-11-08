@@ -31,17 +31,7 @@
                         {{$errors->first('preco')}}
                     </div>
                     
-                    <div class="form-group col-3">
-                            <label for="codigo">Código de Barras</label>
-                            <input required type="number"  class="form-control"  placeholder="Insira o código do Produto" name="codigo" value="{{isset($produto) ? $produto->codigo : ''}}">
-                            {{$errors->first('codigo')}}
-                    </div>
-                </div>
-            
-                <div class="row ml-2 mt-2">
-                       
-        
-                        <div class="form-group ml-2">
+                    <div class="form-group ml-2">
                             <label for="categoria">Categoria</label>
                             <select class="form-control" name="categoria_id">
                                 @if(isset($produto))
@@ -61,8 +51,10 @@
                             </select>
                             {{$errors->first('categoria_id')}}            
                         </div>
-                
-                    <div class="form-group  ml-2">
+                </div>
+            
+                <div class="row ml-2 mt-2">
+                      <div class="form-group  ml-2">
                         <label for="fornecedor">Fornecedor</label>
                         <select name="fornecedor_id" class="form-control">
                             @if(isset($fornecedor))
