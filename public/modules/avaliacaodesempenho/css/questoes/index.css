@@ -12,8 +12,18 @@ ul {
     background: rgba(255, 213, 213, 0.815);
 }
 
-.card-header {
+.question-header {
     padding: 10px;
+}
+
+.question-header .row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1px;
+}
+
+.question-header .row:first-child {
+    margin: 0 9px;
 }
 
 .header {
@@ -31,4 +41,13 @@ ul {
 
 .acoes-btn {
     margin: 0 5px 0 5px;       
+}
+
+.opt-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-edit {
+    padding: 8px 15px;
 }
