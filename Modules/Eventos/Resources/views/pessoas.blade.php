@@ -139,7 +139,11 @@
             });
             
             $('[name=atividade]').change(function(){
-                table.search($('[name=atividade] option:selected').text()).draw();
+                if($('[name=atividade]').val() !== "todas"){
+                    table.search($('[name=atividade] option:selected').text()).draw();
+                } else {
+                    location.reload();
+                }
             });
         });
     </script>

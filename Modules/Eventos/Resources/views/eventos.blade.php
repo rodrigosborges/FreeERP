@@ -73,6 +73,9 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
+                            <input type="hidden" name="id"/>
+                        </div>
+                        <div class="form-group">
                             <label for="nome" class="col-form-label">Nome*:</label>
                             <input type="text" class="form-control edit" name="nome" required>
                         </div>
@@ -251,7 +254,7 @@
             
             $.get('/eventos/get-evento/' + idevento, function (evento){
                 $.each(evento, function (index, value){
-                    $('.modal-body [name=id]').val(idevento);
+                    $('.modal-body [name=id]').val(value.id);
                     $('.modal-body [name=nome]').val(value.nome);
                     $('.modal-body [name=local]').val(value.local);
                     $('.modal-body [name=estado]').val(value.estado_id);
@@ -288,9 +291,7 @@
             $('.modal-footer #btnFechar').html('Cancelar');
             $('.modal-footer #btnSalvar').show();
         }
-        
-        $('#modalExcluirEvento').on('show.bs.modal');
-        
+                
         function excluir (id, nome) {
             $('#modalExcluirEvento [name=id]').val(id);
             $('#modalExcluirEvento p').text('Tem certeza que deseja excluir ' + nome + '?'); 
