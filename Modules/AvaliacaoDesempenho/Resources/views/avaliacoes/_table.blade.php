@@ -1,4 +1,4 @@
-<table id='table' class='table table-hover table-bordered table-responsive'>
+<table id='table' class='table table-hover table-bordered'>
 
   <thead>
 
