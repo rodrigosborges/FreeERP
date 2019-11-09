@@ -33,7 +33,6 @@
                     </li>
                 </ul>
 
-                <div class='card-footer'></div>
             </div>
 
         </div>
@@ -60,7 +59,6 @@
                     </li>
                 </ul>
 
-                <div class='card-footer'></div>
             </div>
 
         </div>
@@ -86,8 +84,7 @@
                         <span class='list-content'>{{ count($data['processos_atrasados']) }}</span>
                     </li>
                 </ul>
-
-                <div class='card-footer'></div>
+                
             </div>
 
         </div>
@@ -102,50 +99,7 @@
 
         <div class="col-md-12">
 
-            @if ($processo->status->id == 3)
-
-                <div class="info">
-                    
-                    <div>
-                        <p><b>Processo: </b>{{ $processo->nome }}</p>
-                        <p><b>Data Encerramento: </b>{{ $processo->data_fim }}</p>
-                    </div>
-                    <div>
-                        <p><b>Avaliações: </b>{{ count($processo->avaliacoes) }}</p>
-                        <p><b>Status: </b>{{ $processo->status->nome }}</p>
-                    </div>
-
-                </div>
-
-                <br><br>
-
-                <table class="table table-stripped table-sm">
-
-                    <thead>
-                        <tr>
-                            <th>Avaliação</th>
-                            <th>Setor</th>
-                            <th>Data Final</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach ($processo->avaliacoes as $avaliacao)
-                            @if ($avaliacao->status->id != 3)
-                                <tr>
-                                    <td>{{ $avaliacao->nome }}</td>
-                                    <td>{{ $avaliacao->setor->nome }}</td>
-                                    <td>{{ $avaliacao->data_fim }}</td>
-                                    <td>{{ $avaliacao->status->nome }}</td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-
-                </table>
-            
-            @else        
+            @if ($processo->status->id != 3)       
             
                 <div class="info">
                     <div>
