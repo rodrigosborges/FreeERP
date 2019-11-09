@@ -68,6 +68,8 @@ Route::prefix('avaliacaodesempenho')->group(function() {
 
     // RELATORIO ROUTES
     Route::get('/relatorio', 'RelatorioController@index');
+    Route::post('/relatorio/avaliacoes', 'RelatorioController@getAvaliacoes');
+    Route::post('/relatorio/individual', 'RelatorioController@individual');
 
     Route::post('/ajax/search', 'BaseController@search');
 

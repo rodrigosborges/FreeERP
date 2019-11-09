@@ -96,8 +96,4 @@
 
 </table>
 
-@else
-
-<div class="alert alert-warning">Não foram encontrados registros.</div>
-
 @endif

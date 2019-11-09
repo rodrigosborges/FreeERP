@@ -66,6 +66,7 @@
         <div class='col-md-4'>
 
             <div class='card'>
+
                 <div class='card-header bg-primary'>
                     <span class='text-white'>RESUMO PROCESSOS</span>
                 </div>
@@ -91,7 +92,9 @@
 
     </div>
 
-    <h1>Resumo Processos</h1>
+    @if (count($data['processos']) > 0)
+        <h1>Resumo Processos</h1>
+    @endif
 
     @foreach ($data['processos'] as $processo)
     

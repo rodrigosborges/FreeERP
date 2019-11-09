@@ -90,18 +90,6 @@ CREATE TABLE `avaliacao` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Extraindo dados da tabela `avaliacao`
---
-
-INSERT INTO `avaliacao` (`id`, `nome`, `processo_id`, `funcionario_id`, `setor_id`, `tipo_id`, `status_id`, `data_inicio`, `data_fim`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(58, 'teste', 11, 6, 1, 2, 3, '2019-11-02', '2019-12-12', '2019-11-02 21:58:10', '2019-11-02 23:59:54', NULL),
-(59, 'teste 2', 12, 5, 1, 2, 3, '2019-11-02', '2019-12-12', '2019-11-02 22:18:32', '2019-11-02 23:46:31', NULL),
-(60, 'balas', 11, 5, 1, 1, 3, '2019-11-02', '2019-12-12', '2019-11-02 22:19:31', '2019-11-02 22:59:33', NULL),
-(63, 'aqui', 11, 5, 1, 1, 3, '2019-11-02', '2019-12-12', '2019-11-02 23:06:43', '2019-11-02 23:49:47', NULL),
-(64, 'asjjdnasjnd', 12, 6, 1, 2, 3, '2019-11-02', '2019-12-12', '2019-11-03 00:00:17', '2019-11-03 00:05:18', NULL),
-(65, 'asoidasudosaidasd123128312', 11, 8, 1, 2, 3, '2019-11-02', '2019-11-10', '2019-11-03 00:07:11', '2019-11-03 04:23:15', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -115,19 +103,6 @@ CREATE TABLE `avaliacao_has_questao` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Extraindo dados da tabela `avaliacao_has_questao`
---
-
-INSERT INTO `avaliacao_has_questao` (`id`, `avaliacao_id`, `questao_id`, `created_at`, `updated_at`) VALUES
-(1, 17, 5, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
-(2, 63, 4, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
-(3, 59, 2, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
-(4, 64, 5, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
-(5, 60, 4, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
-(6, 58, 2, '2019-10-06 03:00:00', '2019-10-06 03:00:00'),
-(7, 65, 2, '2019-10-06 03:00:00', '2019-10-06 03:00:00');
 
 -- --------------------------------------------------------
 
@@ -143,20 +118,6 @@ CREATE TABLE `avaliado` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `avaliado`
---
-
-INSERT INTO `avaliado` (`id`, `funcionario_id`, `avaliacao_id`, `concluido`, `created_at`, `updated_at`) VALUES
-(40, 5, 58, 1, '2019-11-02 21:58:10', '2019-11-02 23:59:49'),
-(41, 5, 59, 1, '2019-11-02 22:18:32', '2019-11-02 22:18:32'),
-(42, 7, 60, 1, '2019-11-02 22:19:36', '2019-11-02 22:19:36'),
-(43, 8, 60, 1, '2019-11-02 22:19:36', '2019-11-02 22:19:36'),
-(46, 7, 63, 1, '2019-11-02 23:06:48', '2019-11-02 23:49:16'),
-(47, 8, 63, 1, '2019-11-02 23:06:48', '2019-11-02 23:49:46'),
-(48, 5, 64, 1, '2019-11-03 00:00:17', '2019-11-03 00:01:40'),
-(49, 5, 65, 1, '2019-11-03 00:07:11', '2019-11-03 04:23:12');
 
 -- --------------------------------------------------------
 
@@ -174,22 +135,6 @@ CREATE TABLE `avaliador` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Extraindo dados da tabela `avaliador`
---
-
-INSERT INTO `avaliador` (`id`, `funcionario_id`, `avaliacao_id`, `token`, `concluido`, `validade`, `created_at`, `updated_at`) VALUES
-(44, 7, 58, NULL, 1, '2019-12-12', '2019-11-02 21:58:10', '2019-11-02 23:59:49'),
-(45, 8, 58, NULL, 1, '2019-12-12', '2019-11-02 21:58:14', '2019-11-02 22:21:26'),
-(46, 7, 59, NULL, 1, '2019-12-12', '2019-11-02 22:18:32', '2019-11-02 22:22:29'),
-(47, 5, 63, NULL, 1, '2019-12-12', '2019-11-02 22:18:37', '2019-11-02 23:49:47'),
-(48, 5, 60, NULL, 1, '2019-12-12', '2019-11-02 22:19:31', '2019-11-02 22:55:00'),
-(51, 8, 59, NULL, 1, '2019-12-12', '2019-11-02 23:06:43', '2019-11-02 23:41:45'),
-(52, 7, 64, NULL, 1, '2019-12-12', '2019-11-03 00:00:18', '2019-11-03 00:04:25'),
-(53, 8, 64, NULL, 1, '2019-12-12', '2019-11-03 00:00:23', '2019-11-03 00:05:14'),
-(54, 7, 65, NULL, 1, '2019-11-11', '2019-11-03 00:07:11', '2019-11-03 04:23:12'),
-(55, 8, 65, NULL, 1, '2019-11-11', '2019-11-03 00:07:16', '2019-11-03 04:22:19');
 
 -- --------------------------------------------------------
 
@@ -6204,14 +6149,6 @@ CREATE TABLE `processo` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Extraindo dados da tabela `processo`
---
-
-INSERT INTO `processo` (`id`, `nome`, `funcionario_id`, `status_id`, `data_inicio`, `data_fim`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(11, 'Processo 1', 5, 1, '2019-09-07', '2019-09-14', '2019-09-21 14:43:08', '2019-10-05 14:48:55', NULL),
-(12, 'Processo 2', 6, 1, '2019-09-10', '2019-09-23', '2019-09-22 23:52:54', '2019-10-05 14:46:22', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -6253,24 +6190,13 @@ INSERT INTO `questao` (`id`, `enunciado`, `opt1`, `opt2`, `opt3`, `opt4`, `opt5`
 
 CREATE TABLE `resultado_funcionario` (
   `id` int(11) NOT NULL,
+  `avaliacao_id` int(11) NOT NULL,
   `avaliador_id` int(11) NOT NULL,
   `avaliado_id` int(11) NOT NULL,
   `respostas` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `resultado_funcionario`
---
-
-INSERT INTO `resultado_funcionario` (`id`, `avaliador_id`, `avaliado_id`, `respostas`, `created_at`, `updated_at`) VALUES
-(18, 10, 2, '{\"5\":\"5\",\"4\":\"5\",\"2\":\"4\"}', '2019-10-21 23:05:59', '2019-10-21 23:05:59'),
-(19, 10, 3, '{\"5\":\"5\",\"4\":\"4\",\"2\":\"5\"}', '2019-10-21 23:06:33', '2019-10-21 23:06:33'),
-(21, 48, 43, '{\"4\":\"5\"}', '2019-11-02 22:55:00', '2019-11-02 22:55:00'),
-(22, 48, 42, '{\"4\":\"4\"}', '2019-11-02 22:55:59', '2019-11-02 22:55:59'),
-(46, 47, 46, '{\"4\":\"4\"}', '2019-11-02 23:49:16', '2019-11-02 23:49:16'),
-(48, 47, 47, '{\"4\":\"4\"}', '2019-11-02 23:49:46', '2019-11-02 23:49:46');
 
 -- --------------------------------------------------------
 
@@ -6280,6 +6206,7 @@ INSERT INTO `resultado_funcionario` (`id`, `avaliador_id`, `avaliado_id`, `respo
 
 CREATE TABLE `resultado_gestor` (
   `id` int(11) NOT NULL,
+  `avaliacao_id` int(11) NOT NULL,
   `avaliador_id` int(11) NOT NULL,
   `avaliado_id` int(11) NOT NULL,
   `respostas` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -6287,21 +6214,6 @@ CREATE TABLE `resultado_gestor` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `resultado_gestor`
---
-
-INSERT INTO `resultado_gestor` (`id`, `avaliador_id`, `avaliado_id`, `respostas`, `created_at`, `updated_at`) VALUES
-(11, 9, 1, '{\"5\":\"3\",\"4\":\"4\",\"2\":\"5\"}', '2019-10-21 23:01:39', '2019-10-21 23:01:39'),
-(12, 8, 1, '{\"5\":\"5\",\"4\":\"4\",\"2\":\"3\"}', '2019-10-21 23:04:10', '2019-10-21 23:04:10'),
-(13, 44, 40, '{\"5\":\"5\",\"4\":\"4\",\"2\":\"5\"}', '2019-11-02 22:00:11', '2019-11-02 22:00:11'),
-(14, 45, 40, '{\"5\":\"5\",\"2\":\"4\"}', '2019-11-02 22:21:26', '2019-11-02 22:21:26'),
-(15, 46, 41, '{\"2\":\"5\"}', '2019-11-02 22:22:29', '2019-11-02 22:22:29'),
-(21, 44, 40, '{\"5\":\"3\",\"2\":\"4\"}', '2019-11-02 23:59:49', '2019-11-02 23:59:49'),
-(23, 52, 48, '{\"5\":\"2\"}', '2019-11-03 00:04:25', '2019-11-03 00:04:25'),
-(24, 53, 48, '{\"5\":\"4\"}', '2019-11-03 00:05:14', '2019-11-03 00:05:14'),
-(25, 55, 49, '{\"2\":\"4\"}', '2019-11-03 04:22:19', '2019-11-03 04:22:19'),
-(26, 54, 49, '{\"2\":\"5\"}', '2019-11-03 04:23:12', '2019-11-03 04:23:12');
 
 -- --------------------------------------------------------
 
@@ -6645,6 +6557,7 @@ ALTER TABLE `questao`
 --
 ALTER TABLE `resultado_funcionario`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `resultado_funcionario_avaliacao_id_foreign` (`avaliacao_id`),
   ADD KEY `resultado_funcionario_avaliado_id_foreign` (`avaliado_id`),
   ADD KEY `resultado_funcionario_avaliador_id_foreign` (`avaliador_id`);
 
@@ -6653,6 +6566,7 @@ ALTER TABLE `resultado_funcionario`
 --
 ALTER TABLE `resultado_gestor`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `resultado_gestor_avaliacao_id_foreign` (`avaliacao_id`),
   ADD KEY `resultado_gestor_avaliado_id_foreign` (`avaliado_id`),
   ADD KEY `resultado_gestor_avaliador_id_foreign` (`avaliador_id`);
 
@@ -6996,6 +6910,7 @@ ALTER TABLE `questao`
 -- Limitadores para a tabela `resultado_funcionario`
 --
 ALTER TABLE `resultado_funcionario`
+  ADD CONSTRAINT `resultado_funcionario_avaliacao_id_foreign` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`),
   ADD CONSTRAINT `resultado_funcionario_avaliado_id_foreign` FOREIGN KEY (`avaliado_id`) REFERENCES `avaliado` (`id`),
   ADD CONSTRAINT `resultado_funcionario_avaliador_id_foreign` FOREIGN KEY (`avaliador_id`) REFERENCES `avaliador` (`id`);
 
@@ -7003,6 +6918,7 @@ ALTER TABLE `resultado_funcionario`
 -- Limitadores para a tabela `resultado_gestor`
 --
 ALTER TABLE `resultado_gestor`
+  ADD CONSTRAINT `resultado_gestor_avaliacao_id_foreign` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`),
   ADD CONSTRAINT `resultado_gestor_avaliado_id_foreign` FOREIGN KEY (`avaliado_id`) REFERENCES `avaliado` (`id`),
   ADD CONSTRAINT `resultado_gestor_avaliador_id_foreign` FOREIGN KEY (`avaliador_id`) REFERENCES `avaliador` (`id`);
 

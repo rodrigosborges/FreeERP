@@ -17,8 +17,8 @@ $(document).ready(function () {
                 'lengthChange': false,
                 "pageLength": 5,
                 "language": {
-                    "zeroRecords": "Não foram encontrados resultados",
-                    "emptyTable": "Não foram encontrados resultados",
+                    "zeroRecords": '<div style="color: red">Não foram encontrados registros.</div>',
+                    "emptyTable": '<div style="color: red">Não foram encontrados registros.</div>',
                     "info": "Exibindo _START_ a _END_ de _TOTAL_ registros no total",                    
                     "infoEmpty": "",
                     "paginate": {
@@ -61,8 +61,8 @@ $(document).on('click', '#submit-btn', function (e) {
                 'lengthChange': false,
                 "pageLength": 5,
                 "language": {
-                    "zeroRecords": "Não foram encontrados resultados",
-                    "emptyTable": "Não foram encontrados resultados",
+                    "zeroRecords": '<div style="color: red">Não foram encontrados registros.</div>',
+                    "emptyTable": '<div style="color: red">Não foram encontrados registros.</div>',
                     "info": "Exibindo _START_ a _END_ de _TOTAL_ registros no total",                    
                     "infoEmpty": "",
                     "paginate": {

@@ -22,7 +22,7 @@ class Avaliado extends Model
         if ($this->avaliacao->tipo->id == 1) {
             return $this->hasOne('Modules\AvaliacaoDesempenho\Entities\ResultadoGestor', 'avaliado_id', 'id');
         } else {
-            return $this->hasOne('Modules\AvaliacaoDesempenho\Entities\ResultadoNaoGestor', 'avaliado_id', 'id');
+            return $this->hasOne('Modules\AvaliacaoDesempenho\Entities\ResultadoFuncionario', 'avaliado_id', 'id');
         }
     }
 }

@@ -43,6 +43,15 @@ class Avaliacao extends Model
         return $this->hasMany('Modules\AvaliacaoDesempenho\Entities\Avaliado', 'avaliacao_id', 'id');
     }
 
+    public function resultados() {
+
+        if ($this->avaliacao->tipo->id == 1) {
+            return $this->hasMany('Modules\AvaliacaoDesempenho\Entities\ResultadoFuncionario', 'avalicao_id', 'id');
+        } else {
+            return $this->hasOne('Modules\AvaliacaoDesempenho\Entities\ResultadoGestor', 'avalicao_id', 'id');
+        }
+    }
+
     // GETTERS E SETTERS
     public function getDataInicioAttribute() {
         return date("d/m/Y", strtotime($this->attributes['data_inicio']));

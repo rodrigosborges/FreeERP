@@ -122,6 +122,7 @@ class AvaliacaoRespostaController extends Controller
                 $avaliado = Avaliado::where('avaliacao_id', $input['avaliacao_id'])->where('funcionario_id', $input['funcionario_id'])->first();
                 
                 $resultado = ResultadoFuncionario::create([
+                    'avaliacao_id' => $input['avaliacao_id'],
                     'avaliador_id' => $avaliador->id,
                     'avaliado_id' => $avaliado->id,
                     'respostas' => json_encode($input['questoes'])
@@ -196,6 +197,7 @@ class AvaliacaoRespostaController extends Controller
                 $avaliador = Avaliador::findOrFail($input['avaliador_id']);
                 
                 $resultado = ResultadoGestor::create([
+                    'avaliacao_id' => $input['avaliacao_id'],
                     'avaliador_id' => $avaliador->id,
                     'avaliado_id' => $avaliado->id, 
                     'respostas' => json_encode($input['questoes'])

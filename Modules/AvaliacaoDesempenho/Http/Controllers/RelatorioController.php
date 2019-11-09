@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
+use Modules\AvaliacaoDesempenho\Entities\Processo;
+use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
+use Modules\AvaliacaoDesempenho\Entities\Avaliador;
+use Modules\AvaliacaoDesempenho\Entities\Avaliado;
+
 class RelatorioController extends Controller
 {
     
@@ -37,12 +42,39 @@ class RelatorioController extends Controller
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+        $data = [
+            'processos' => Processo::where('status_id', '!=', 1)->get()
+        ];
 
-        return view('avaliacaodesempenho::relatorios/individual', compact('moduleInfo','menu'));
+        return view('avaliacaodesempenho::relatorios/individual', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function show($id)
     {
         return view('avaliacaodesempenho::show');
+    }
+
+    public function individual(Request $request) 
+    {
+        $id = $request->input('avaliacao');
+
+        $avaliacao = Avaliacao::findOrFail($id);
+
+        if ($avaliacao->tipo == 1) {
+            $resultados = ResultadoFuncionario::where('avaliacao_id', $avaliacao->id)->with('avaliacao')->with('avaliador')->with('avaliado');
+        } else {
+            $resultados = ResultadoGestor::where('avaliacao_id', $avaliacao->id)->with('avaliacao')->with('avaliador')->with('avaliado');
+        }
+
+        return $resultados->get();
+    }
+
+    public function getAvaliacoes(Request $request) 
+    {
+        $id = $request->input('id');
+
+        $processo = Processo::findOrFail($id);
+
+        return $processo->avaliacoes;
     }
 }

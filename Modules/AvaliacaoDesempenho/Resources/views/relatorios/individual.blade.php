@@ -33,5 +33,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{Module::asset('avaliacaodesempenho:js/relatorios/_main.js')}}"></script>
+<script src="{{Module::asset('avaliacaodesempenho:js/relatorios/_individual.js')}}"></script>
 @endsection
