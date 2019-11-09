@@ -29,7 +29,7 @@ class RelatorioController extends Controller
             ['icon' => 'add_box', 'tool' => 'Questões', 'route' => '/tcc/public/avaliacaodesempenho/questao'],
             ['icon' => 'add_box', 'tool' => 'Setor', 'route' => '/tcc/public/avaliacaodesempenho/setor'],
             ['icon' => 'add_box', 'tool' => 'Categorias', 'route' => '/tcc/public/avaliacaodesempenho/categoria'],
-            ['icon' => 'add_box', 'tool' => 'Relatorios', 'route' => '/tcc/public/avaliacaodesempenho/relatorio'],
+            ['icon' => 'add_box', 'tool' => 'Relatorios Individuais', 'route' => '/tcc/public/avaliacaodesempenho/relatorio'],
         ];
     }
 
@@ -38,36 +38,11 @@ class RelatorioController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        return view('avaliacaodesempenho::dashboard/index', compact('moduleInfo','menu'));
-    }
-
-    public function create()
-    {
-        return view('avaliacaodesempenho::create');
-    }
-
-    public function store(Request $request)
-    {
-        //
+        return view('avaliacaodesempenho::relatorios/individual', compact('moduleInfo','menu'));
     }
 
     public function show($id)
     {
         return view('avaliacaodesempenho::show');
-    }
-
-    public function edit($id)
-    {
-        return view('avaliacaodesempenho::edit');
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

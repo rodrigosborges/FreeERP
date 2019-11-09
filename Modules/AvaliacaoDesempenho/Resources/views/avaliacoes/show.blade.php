@@ -36,7 +36,7 @@
 
                         <div>
                             <p><b>Data Inicio:</b> {{ $data['avaliacao']->data_inicio }}</p>
-                            <p><b>Data Fim:</b> {{ $data['avaliacao']->data_fim }}</p>
+                            <p><b>Data Fim:</b> {{ date("d/m/Y", strtotime($data['avaliacao']->data_fim)) }}</p>                            
                             <p><b>Qtd de Avaliados:</b> {{ count($data['setor']->funcionarios)-1 }}</p>
                         </div>
 
@@ -51,7 +51,7 @@
                         
                         <div>
                             <p><b>Data Inicio:</b> {{ $data['avaliacao']->data_inicio }}</p>
-                            <p><b>Data Fim:</b> {{ $data['avaliacao']->data_fim }}</p>
+                            <p><b>Data Fim:</b> {{ date("d/m/Y", strtotime($data['avaliacao']->data_fim)) }}</p>
                             @foreach ($data['avaliacao']->avaliados as $avaliado)
                                 <p><b>Gestor Avaliado:</b> {{ $avaliado->funcionario->nome }}</p>
                             @endforeach
@@ -104,7 +104,7 @@
                                             {{ $funcionario->concluido == 0 ? 'Pendente' : 'Concluido' }}
                                         </td>
                                         <td class="text-center align-middle">
-                                            {{ $funcionario->concluido == 0 ? '' : $funcionario->updated_at }}
+                                            {{ $funcionario->concluido == 0 ? '' : date("d/m/Y", strtotime($funcionario->updated_at)) }}
                                         </td>
 
                                     </tr>
@@ -121,10 +121,6 @@
 
             </div>
 
-            <div class="card-footer">
-
-            </div>
-
         </div>
 
     </div>
@@ -133,9 +129,5 @@
 
 @endsection
 
-<!-- @section('scripts')
-<script src="{{Module::asset('avaliacaodesempenho:js/plugins/bootstrap-select.min.js')}}"></script>
-<script src="{{Module::asset('avaliacaodesempenho:js/plugins/jquery-mask.js')}}"></script>
-<script src="{{Module::asset('avaliacaodesempenho:js/avaliacoes/_select-search.js')}}"></script>
-<script src="{{Module::asset('avaliacaodesempenho:js/avaliacoes/_masks.js')}}"></script> -->
+@section('scripts')
 @endsection

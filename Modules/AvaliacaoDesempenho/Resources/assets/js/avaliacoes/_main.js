@@ -11,7 +11,6 @@ $(document).ready(function () {
             term: ''
         },
         success: function (data) {
-            console.log(data)
             $('#AvaliacaoTable').append(data)
             $('#table').DataTable({
                 'searching': false,

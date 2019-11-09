@@ -4,13 +4,30 @@ $(document).ready(function () {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/avaliacao/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/search',
         data: {
             _token: _token,
+            table: 'avaliacoes',
             term: ''
         },
         success: function (data) {
-            $('#AvaliacaoTable').append(data.html)
+            $('#AvaliacaoTable').append(data)
+            $('#table').DataTable({
+                'searching': false,
+                'lengthChange': false,
+                "pageLength": 5,
+                "language": {
+                    "zeroRecords": "Não foram encontrados resultados",
+                    "emptyTable": "Não foram encontrados resultados",
+                    "info": "Exibindo _START_ a _END_ de _TOTAL_ registros no total",                    
+                    "infoEmpty": "",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Proxima",
+                        "last": "Ultima",
+                    }
+                }
+            })
         }
     })
 
@@ -38,15 +55,32 @@ $(document).on('click', '#submit-btn', function (e) {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost/tcc/public/avaliacaodesempenho/avaliacao/ajax/search',
+        url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/search',
         data: {
             _token: _token,
+            table: 'avaliacoes',
             term: search,
             status: status
         },
         success: function (data) {
             $('#AvaliacaoTable').html('')
-            $('#AvaliacaoTable').append(data.html)
+            $('#AvaliacaoTable').append(data)
+            $('#table').DataTable({
+                'searching': false,
+                'lengthChange': false,
+                "pageLength": 5,
+                "language": {
+                    "zeroRecords": "Não foram encontrados resultados",
+                    "emptyTable": "Não foram encontrados resultados",
+                    "info": "Exibindo _START_ a _END_ de _TOTAL_ registros no total",
+                    "infoEmpty": "",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Proxima",
+                        "last": "Ultima",
+                    }
+                }
+            })
         }
     })
 })
