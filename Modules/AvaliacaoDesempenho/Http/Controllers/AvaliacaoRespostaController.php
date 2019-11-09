@@ -18,6 +18,7 @@ use Modules\AvaliacaoDesempenho\Entities\Setor;
 use Modules\AvaliacaoDesempenho\Entities\ResultadoGestor;
 use Modules\AvaliacaoDesempenho\Entities\ResultadoFuncionario;
 use Modules\AvaliacaoDesempenho\Http\Requests\Avaliacao\ResponderAvaliacao;
+use Modules\AvaliacaoDesempenho\Http\Requests\Avaliacao\RespostaAvaliacao;
 
 class AvaliacaoRespostaController extends Controller
 {
@@ -31,11 +32,11 @@ class AvaliacaoRespostaController extends Controller
 
         $input = $request->input('avaliado');
         
-        $avaliador = Avaliador::where('token', '!=', null)->where('concluido', 0)->whereHas('funcionario', function(Builder $query) use($input) {
+        $avaliador = Avaliador::where('token', '!=', null)->where('token', $input['token'])->whereHas('funcionario', function(Builder $query) use($input) {
             $query->whereHas('email', function(Builder $query) use($input) {
                 $query->where('email', $input['email']);
             });
-        })->first();
+        })->orderBy('avaliador.created_at', 'desc')->first();
 
         if (empty($avaliador)) {
             return back()->with('error', 'Funcionario não encontrado');
@@ -45,12 +46,8 @@ class AvaliacaoRespostaController extends Controller
             return back()->with('error', 'Seu acesso a esta Avaliação expirou');                             
         }
 
-        if ($avaliador->token == null) {
+        if ($avaliador->concluido == 1) {
             return back()->with('success', 'Esta Avaliação foi encerrada');                             
-        }
-        
-        if ($avaliador->token != $input['token']) {
-            return back()->with('error', 'Funcionario não encontrado');
         }
 
         $avaliacao = Avaliacao::findOrFail($avaliador->avaliacao->id);
@@ -106,8 +103,10 @@ class AvaliacaoRespostaController extends Controller
         }
     }
 
-    public function resposta(Request $request) {
+    public function resposta(RespostaAvaliacao $request) {
         $input = $request->input('avaliacao');
+
+        echo '<pre>';print_r($input);exit;
 
         DB::beginTransaction();
 

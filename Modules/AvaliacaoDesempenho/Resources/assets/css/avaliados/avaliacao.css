@@ -48,3 +48,11 @@
 .invisible {
     display: none;
 }
+
+table.dataTable.no-footer {
+    border: none !important;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+    border: none !important;
+}

@@ -5,6 +5,19 @@
 @endsection
 
 @section('content')
+
+@if ($errors->first('avaliacao') || $errors->first('avaliacao.questoes') || $errors->first('avaliacao.questoes.*'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <span> {{ $errors->first('avaliacao') }} </span>
+    <span> {{ $errors->first('avaliacao.questoes') }} </span>
+    <span> {{ $errors->first('avaliacao.questoes.*') }} </span>
+
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
 <div class="explanation">
     <p>Digite seu email e senha para ter acesso a avaliação.</p>
 

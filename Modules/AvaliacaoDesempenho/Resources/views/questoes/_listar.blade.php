@@ -1,6 +1,6 @@
 @if ($result->count())
 
-<table id='table' class="table">
+<table id='table'>
 
     <thead>
 
