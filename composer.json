@@ -13,6 +13,7 @@
         "cartalyst/sentinel": "2.0.*",
         "fideloper/proxy": "^4.0",
         "geekcom/validator-docs": "^3.2",
+        "johnkary/phpunit-speedtrap": "^3.1",
         "laravel/browser-kit-testing": "^5.1",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",

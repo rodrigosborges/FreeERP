@@ -2,6 +2,8 @@
 
 namespace Modules\OrdemServico\Http\Controllers;
 
+
+use Modules\OrdemServico\Http\Requests\StatusStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -25,7 +27,7 @@ class StatusController extends Controller
         return view('ordemservico::ordemservico.status.form',compact('data'));
     }
 
-    public function store(Request $request)
+    public function store(StatusStoreRequest $request)
     {
         DB::beginTransaction();
         try {

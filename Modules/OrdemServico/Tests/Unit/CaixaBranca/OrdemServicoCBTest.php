@@ -4,10 +4,9 @@ namespace Modules\OrdemServico\Tests\Unit;
 
 use Tests\TestCase;
 use Modules\Usuario\Entities\{Usuario};
-use Laravel\Dusk\DuskServiceProvider;
 use Modules\OrdemServico\Entities\OrdemServico;
 
-class OrdemServicoTest extends TestCase
+class OrdemServicoCBTest extends TestCase
 {
     public function testFormCreateOrdemServico()
     {
@@ -76,17 +75,19 @@ class OrdemServicoTest extends TestCase
         $response
         ->assertRedirect("/ordemservico/os");
     }
-/* 
+
     public function testUpdatePrioridade(){
         $user = Usuario::findOrFail(1);
+        $protocolo = OrdemServico::findOrFail(1)->protocolo;
+        
         $response = $this->WithoutMiddleware()->actingAs($user)->withHeaders([
             'X-Header' => 'Value',
         ])->json(
             'POST',
-            'ordemservico/prioridade/1/update',
-            ['prioridade' => '1']
+            'ordemservico/prioridade/' . $protocolo . '/update',
+            ['prioridade' => "1"]
         );
         $response
         ->assertRedirect("/ordemservico/os");
-    } */
+    } 
 }

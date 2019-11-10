@@ -63,7 +63,9 @@ class OrdemServicoStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => "O campo :attribute é Obrigátorio"
+            'required' => "O campo :attribute é obrigátorio",
+            'unique' => 'O :attribute já existe , por favor insira outro e tente novamente',
+            'max' => ':attribute inválido'
         ];
     }
 }

@@ -149,7 +149,7 @@
             $("#form-prioridade").attr("action", '/ordemservico/prioridade/' + id + "/update");
             $("#campo").remove();
             $('#prioridade').append("<select id='campo' required name='prioridade' class='custom-select mr-sm-2'><option value='3'> Baixa </option><option value='2'> Média </option><option value='1'> Alta </option></select>");
-            $('#campo').val(prioridade);
+            $("#campo").val( $('option:contains('+prioridade+')').val() );
             $('#definir-prioridade').modal('show');
         });
 

@@ -30,4 +30,13 @@
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
     </php>
+
+    <listeners> 
+        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" /> 
+    </listeners>
+
+    <logging>
+    <log type="coverage-html" target="Modules/OrdemServico/Tests/report"
+        lowUpperBound="50" highLowerBound="80" />
+</logging>
 </phpunit>

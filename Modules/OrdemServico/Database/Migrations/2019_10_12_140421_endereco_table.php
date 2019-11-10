@@ -19,7 +19,7 @@ class EnderecoTable extends Migration
             $table->integer('cep')->nullable();
             $table->string('rua');
             $table->string('bairro');
-            $table->string('numero');
+            $table->integer('numero');
             $table->string('complemento')->nullable();
             $table->integer('cidade_id')->unsigned();
             $table->foreign('cidade_id')->references('id')->on('cidade');
