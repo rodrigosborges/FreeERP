@@ -28,6 +28,10 @@ $menu = [
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
         <style>
             * {font-family: 'Roboto', sans-serif;}
+            .card-header {
+                background-color: white; 
+               
+            }
             #sidebar {
                 background: #121212;
                 position: fixed;

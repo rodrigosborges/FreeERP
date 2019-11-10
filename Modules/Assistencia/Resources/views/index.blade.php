@@ -24,102 +24,83 @@
 <input type="hidden" name="pago" value="{{$pago}}">
 <input type="hidden" name="pendente" value="{{$pendente}}">
 
-    <ul class="navbar navbar-light caixa" style="background-color: #121212;">
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('consertos.index')}}">
-                <h3>Consertos</h3>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('cliente.index')}}">
-                <h3>Clientes</h3>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('pecas.localizar')}}">
-                <h3>Peças</h3>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('servicos.localizar')}}">
-                <h3>Mão de obra</h3>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('tecnico.index')}}">
-                <h3>Técnicos</h3>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('pagamento.index')}}">
-                <h3>Pagamentos</h3>
-            </a>
-        </li>
-    </ul>
-
-<div class="card">
-
-    <div class="row">
-        <div class="col-lg-6">
+<ul class="navbar navbar-light caixa" style="background-color: #121212;">
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('consertos.index')}}">
+            <h3>Consertos</h3>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('cliente.index')}}">
+            <h3>Clientes</h3>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('pecas.localizar')}}">
+            <h3>Peças</h3>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('servicos.localizar')}}">
+            <h3>Mão de obra</h3>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('tecnico.index')}}">
+            <h3>Técnicos</h3>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('pagamento.index')}}">
+            <h3>Pagamentos</h3>
+        </a>
+    </li>
+</ul>
+<div class="row text-center d-flex justify-content-center">
+    <div class="card col-6 m-2">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>nº da Ordem</th>
+                    <th>Cliente</th>
+                    <th>Contato</th>
+                </tr>
+                @foreach($finalizados as $fin)
+                    <tr>
+                        <td>{{$fin->numeroOrdem}}</td>
+                        <td>{{$fin->cliente->nome}}</td>
+                        <td>{{$fin->cliente->celnumero}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+            <tfoot>
             
-            <div class="text-center">
-                <h4>Clientes para informar</h4>
-            
-            
-                <div class="table-responsive">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th>nº da Ordem</th>
-                                <th>Cliente</th>
-                                <th>Contato</th>
-                            </tr>
-                            @foreach($finalizados as $fin)
-                                <tr>
-                                    <td>{{$fin->numeroOrdem}}</td>
-                                    <td>{{$fin->cliente->nome}}</td>
-                                    <td>{{$fin->cliente->celnumero}}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                        
-                        </tfoot>
-                        <tfoot>
-                            <tr>
-                                <td colspan="100%" class="text-center">
-                                    <p class="text-center">
-                                        Página {{$finalizados->currentPage()}} de {{$finalizados->lastPage()}} páginas
+            </tfoot>
+            <tfoot>
+                <tr>
+                    <td colspan="100%" class="text-center">
+                        <p class="text-center">
+                            Página {{$finalizados->currentPage()}} de {{$finalizados->lastPage()}} páginas
 
-                                    </p>
-                                </td>
-                            </tr>
-                            @if($finalizados->lastPage() > 1)
-                            <tr>
-                                <td colspan="100%">
-                                    {{ $finalizados->links() }}
-                                </td>
-                            </tr>
-                            @endif
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body text-center">
-                    <div id="donutchart" style="width: 400px; height: 250px;"></div>
-                </div>
-            </div>
+                        </p>
+                    </td>
+                </tr>
+                @if($finalizados->lastPage() > 1)
+                <tr>
+                    <td colspan="100%">
+                        {{ $finalizados->links() }}
+                    </td>
+                </tr>
+                @endif
+            </tfoot>
+        </table>
+    </div>
+    <div class="card col-5 m-2">
+        <div class="card-body text-center">
+            <div id="donutchart" style="width: 400px; height: 250px;"></div>
         </div>
     </div>
-
-
-
 </div>
-
 @stop
 @section('js')
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

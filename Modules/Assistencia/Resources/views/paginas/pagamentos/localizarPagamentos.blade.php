@@ -2,23 +2,33 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        Lista de pagamentos
+        <div class="row d-flex text-center justify-content-between align-items-center">
+            <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
+            <h3>Pagamentos</h3>
+            <a href="{{url('/assistencia/tecnico')}}"><i class="material-icons">keyboard_arrow_right</i></a>
+        </div>
     </div>
     <div class="card-body">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             
-            <label class="col-form-label" for="data-inicio">Data inicial: </label>
-            <input type="date" name="data-inicio" class="col-sm-4 form-control">
-
-            <label class="col-form-label" for="data-final">Data final:  </label>
-            <input type="date" name="data-final" class="col-sm-4 form-control">
-    
-            <div class="col-sm-2">
-                <button id="filtrar" class="btn btn-outline-primary">
-                    Filtrar
-                </button>
+            <div class="input-group form-group col-lg-3 col-12">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="material-icons">calendar_today</i></span>
+                </div>
+                <input type="date" name="data-inicio" class="form-control">
             </div>
+            <div class="input-group form-group col-lg-3 col-12">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="material-icons">calendar_today</i></span>
+                </div>
+                <input type="date" name="data-final" class="form-control">
+            </div>  
+            <button id="filtrar" class="btn btn-info form-group ">
+                Filtrar
+            </button>
         </div>
+    
+
         
 
         

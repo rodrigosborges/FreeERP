@@ -9,15 +9,13 @@
 @section('content')
 <div class="card text-center">
     <div class="card-header">
-        <h3>Editar técnico</h3>
+        <div class="row d-flex text-center justify-content-between align-items-center">
+            <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
+            <h4>Editar técnico</h4>
+            <a href="{{url('/assistencia/tecnico')}}"><i class="material-icons mr-2">arrow_back</i></button></a>
+        </div>
     </div>
     <div class="card-body">
-        <div class="row ">
-            <div class="col-md-11 text-left">
-                <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
-                <a href="{{route('tecnico.localizar')}}"><i class="material-icons mr-2">arrow_back</i></button></a>
-            </div>
-        </div>
         <div class="row justify-content-center">
             <form class="col-md-8" action="{{route('tecnico.atualizar',$tecnico->id)}}" method="post"
                 enctype="multipart/form-data">

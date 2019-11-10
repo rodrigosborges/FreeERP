@@ -8,12 +8,15 @@
 @section('content')
 
 <div class="card">
-    <div class="card-body">
-        <div class="row ">
-            <div class="col-md-11 text-left">
-                <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
-            </div>
+    <div class="card-header">
+        <div class="row d-flex text-center justify-content-between align-items-center">
+            <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
+            <h3>Peças</h3>
+            <a href="{{url('/assistencia/servicos/localizar')}}"><i class="material-icons">keyboard_arrow_right</i></a>
         </div>
+    </div>
+    <div class="card-body">
+        
         <div class="row form-group">
             <form class="input-group col-6" action="{{route('pecas.buscar')}}" method="post">
                 {{ csrf_field() }}
