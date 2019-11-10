@@ -40,7 +40,7 @@
 
             <td class="text-center align-middle acoes">
 
-              <a class="btn btn-warning btn-edit acoes-btn {{ !empty($processo->deleted_at) ? 'disabled' : '' }}" title="Editar" href="/tcc/public/avaliacaodesempenho/processo/{{ $processo->id }}/edit"><i class="material-icons md-18 md-light">edit</i></a>
+              <a class="btn btn-warning btn-edit acoes-btn {{ !empty($processo->deleted_at) || $processo->status->id != 1 ? 'disabled' : '' }}" title="Editar" href="/tcc/public/avaliacaodesempenho/processo/{{ $processo->id }}/edit"><i class="material-icons md-18 md-light">edit</i></a>
 
               <form action="{{ url('avaliacaodesempenho/processo', [$processo->id]) }}" id="deleteForm_{{$processo->id}}" method="POST">
                 @method('DELETE')

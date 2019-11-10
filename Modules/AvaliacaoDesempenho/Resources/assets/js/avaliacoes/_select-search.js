@@ -72,7 +72,7 @@ function populateCard(data) {
             </div>
 
             <div class='card-footer'>
-                <button type='button' class='btn btn-primary btn-sm float-right save-card' onclick='salvarQuestao(${data.id},"${data.enunciado}")'>Salvar</button>
+                <button type='button' class='btn btn-primary btn-sm float-right save-card' onclick='salvarQuestao(${data.id},"${data.enunciado}")'>Adicionar</button>
             </div>
 
         </div>

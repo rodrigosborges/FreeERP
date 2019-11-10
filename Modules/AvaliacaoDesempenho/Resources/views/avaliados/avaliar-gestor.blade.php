@@ -47,69 +47,49 @@
                     <input type="hidden" name="avaliacao[funcionario_id]" value="{{$avaliador->funcionario->id}}">
                     <input type="hidden" name="avaliacao[tipo_avaliacao_id]" value="{{$avaliacao->tipo->id}}">
 
-                    <table id='table'>
-
-                        <thead>
-                    
-                            <tr>
-                    
-                                <th></th>
-                    
-                            </tr>
-                    
-                        </thead>
-                    
-                        <tbody>
+                    <div>
 
                         @foreach($questoes as $key => $questao)
-
-                            <tr>
-
-                                <th>
-
-                                <div class="card questao">
-
-                                    <div class="card-header">
-                                        <b>Categoria: {{ $questao->categoria->nome }}</b>
-                                    </div>
-
-                                    <div class="card-body">
-
-                                        <b>Enunciado:</b>
-                                        <p>{{ $questao->enunciado }}</p>
-                                
-                                        <hr>
-                                
-                                        <b>Alternativas:</b>
-                                        <ul>
-                                            <br>
-                                            a) <input required type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='1'> {{ $questao->opt1 }}
-                                            <br>
-                                            b) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='2'> {{ $questao->opt2 }}
-                                            <br>
-                                            c) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='3'> {{ $questao->opt3 }}
-                                            <br>
-                                            d) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='4'> {{ $questao->opt4 }}
-                                            <br>
-                                            e) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='5'> {{ $questao->opt5 }}
-                                        </ul>
-
-                                    </div>
-
+    
+                            <div class="card questao tab">
+    
+                                <div class="card-header">
+                                    <b>Categoria: {{ $questao->categoria->nome }}</b>
                                 </div>
+    
+                                <div class="card-body">
+    
+                                    <b>Enunciado:</b>
+                                    <p>{{ $questao->enunciado }}</p>
                             
-                                </th>
-
-                            </tr>
-
+                                    <hr>
+                            
+                                    <b>Alternativas:</b>
+                                    <ul>
+                                        <br>
+                                        a) <input required type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='1'> {{ $questao->opt1 }}
+                                        <br>
+                                        b) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='2'> {{ $questao->opt2 }}
+                                        <br>
+                                        c) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='3'> {{ $questao->opt3 }}
+                                        <br>
+                                        d) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='4'> {{ $questao->opt4 }}
+                                        <br>
+                                        e) <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='5'> {{ $questao->opt5 }}
+                                    </ul>
+    
+                                </div>
+    
+                            </div>
+    
                         @endforeach
-
-                        </tbody>
-
-                    </table>
-
-                    <div class="row">
-                        <button class="btn btn-success col-md-12" type='submit'>Enviar</button>
+                        
+                        <div class="control-buttons">
+                            <button class='btn btn-sm btn-primary col-md-1' type="button" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
+                            <button id='submit-btn' class="btn btn-sm btn-success col-md-4 invisible" type='submit'>Enviar</button>
+                            <button class='btn btn-sm btn-primary col-md-1' type="button" id="nextBtn" onclick="nextPrev(1)">Proxima</button>
+                        </div>
+                        
                     </div>
                 
                 </form>
@@ -123,5 +103,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{Module::asset('avaliacaodesempenho:js/avaliados/index.js')}}"></script>
+    <script src="{{Module::asset('avaliacaodesempenho:js/avaliados/gestores.js')}}"></script>
 @endsection

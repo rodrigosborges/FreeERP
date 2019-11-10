@@ -52,34 +52,37 @@ class ProcessoController extends Controller
         try {
             foreach ($processos as $key => $processo) {
 
-                $definido = 1;
-                $encerrado = 1;
+                if (count($processo->avaliacoes) > 0) {
 
-                foreach ($processo->avaliacoes as $key => $avaliacao) {
-
-                    if ($avaliacao->status->id == 1 || $avaliacao->status->id == 2 || $avaliacao->status->id == 4) {
-                        $encerrado = 0;
+                    $definido = 1;
+                    $encerrado = 1;
+    
+                    foreach ($processo->avaliacoes as $key => $avaliacao) {
+    
+                        if ($avaliacao->status->id == 1 || $avaliacao->status->id == 2 || $avaliacao->status->id == 4) {
+                            $encerrado = 0;
+                        }
+    
+                        if ($avaliacao->status->id == 2 || $avaliacao->status->id == 3 || $avaliacao->status->id == 4) {
+                            $definido = 0;
+                        }
                     }
-
-                    if ($avaliacao->status->id == 2 || $avaliacao->status->id == 3 || $avaliacao->status->id == 4) {
-                        $definido = 0;
+    
+                    if ($definido == 1) {
+                        $processo->update(['status_id' => 1]);
                     }
-                }
-
-                if ($definido == 1) {
-                    $processo->update(['status_id' => 1]);
-                }
-                if ($encerrado == 1) {
-                    $processo->update(['status_id' => 3]);
-                }
-                if ($definido == 0 && $encerrado == 0) {
-                    $processo->update(['status_id' => 2]);
-                }
-
-                $data_fim = implode('-', array_reverse(explode('/', $processo->data_fim)));
-
-                if (Carbon::today()->greaterThan($data_fim) && $processo->status->id != 3) {
-                    $processo->update(['status_id' => 4]);
+                    if ($encerrado == 1) {
+                        $processo->update(['status_id' => 3]);
+                    }
+                    if ($definido == 0 && $encerrado == 0) {
+                        $processo->update(['status_id' => 2]);
+                    }
+    
+                    $data_fim = implode('-', array_reverse(explode('/', $processo->data_fim)));
+    
+                    if (Carbon::today()->greaterThan($data_fim) && $processo->status->id != 3) {
+                        $processo->update(['status_id' => 4]);
+                    }
                 }
             }
 

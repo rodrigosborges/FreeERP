@@ -105,7 +105,7 @@ class AvaliacaoRespostaController extends Controller
 
     public function resposta(RespostaAvaliacao $request) {
         $input = $request->input('avaliacao');
-
+        
         echo '<pre>';print_r($input);exit;
 
         DB::beginTransaction();

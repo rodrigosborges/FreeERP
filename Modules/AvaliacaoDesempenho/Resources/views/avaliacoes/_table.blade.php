@@ -44,11 +44,11 @@
 
       <td class="text-center align-middle acoes">
 
-        <a class="btn btn-info acoes-btn" title="Editar"
+        <a class="btn btn-info acoes-btn" title="Show"
           href="/tcc/public/avaliacaodesempenho/avaliacao/{{ $avaliacao->id }}/show"><i
             class="material-icons md-18 md-light">search</i></a>
 
-        <a class="btn btn-warning btn-edit acoes-btn {{ !empty($avaliacao->deleted_at) ? 'disabled' : '' }}"
+        <a class="btn btn-warning btn-edit acoes-btn {{ !empty($avaliacao->deleted_at) || $avaliacao->status->id != 1 ? 'disabled' : '' }}"
           title="Editar" href="/tcc/public/avaliacaodesempenho/avaliacao/{{ $avaliacao->id }}/edit"><i
             class="material-icons md-18 md-light">edit</i></a>
 

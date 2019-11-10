@@ -301,9 +301,9 @@ class AvaliacaoController extends Controller
 
             $input = $request->input('avaliacao');
 
-            $avaliacao->questoes()->sync($input['questoes']);
-
             $avaliacao->update($input);
+            
+            $avaliacao->questoes()->sync($input['questoes']);
 
             DB::commit();
 

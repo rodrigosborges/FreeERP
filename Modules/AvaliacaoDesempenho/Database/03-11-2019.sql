@@ -5836,7 +5836,7 @@ CREATE TABLE `email` (
 
 INSERT INTO `email` (`id`, `email`) VALUES
 (1, 'nikolasagl@hotmail.com'),
-(2, 'deborah@hotmail.com'),
+(2, 'nikolasagl13@gmail.com'),
 (3, 'raul@hotmail.com'),
 (7, 'manuella@hotmail.com'),
 (8, 'marcella@hotmail.com');
@@ -6141,7 +6141,7 @@ CREATE TABLE `processo` (
   `id` int(11) NOT NULL,
   `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `funcionario_id` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL DEFAULT 1,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
