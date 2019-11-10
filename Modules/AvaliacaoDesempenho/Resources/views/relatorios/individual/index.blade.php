@@ -17,7 +17,7 @@
                 <h3> Pequisar</h3>
             </div>
 
-             @include('avaliacaodesempenho::relatorios._search-individual')
+             @include('avaliacaodesempenho::relatorios.individual._search-individual')
 
         </div>
 

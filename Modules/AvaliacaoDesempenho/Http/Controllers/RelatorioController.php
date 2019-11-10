@@ -10,6 +10,8 @@ use Modules\AvaliacaoDesempenho\Entities\Processo;
 use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
 use Modules\AvaliacaoDesempenho\Entities\Avaliador;
 use Modules\AvaliacaoDesempenho\Entities\Avaliado;
+use Modules\AvaliacaoDesempenho\Entities\ResultadoGestor;
+use Modules\AvaliacaoDesempenho\Entities\ResultadoFuncionario;
 
 class RelatorioController extends Controller
 {
@@ -46,7 +48,7 @@ class RelatorioController extends Controller
             'processos' => Processo::where('status_id', '!=', 1)->get()
         ];
 
-        return view('avaliacaodesempenho::relatorios/individual', compact('moduleInfo', 'menu', 'data'));
+        return view('avaliacaodesempenho::relatorios/individual/index', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function show($id)
@@ -60,13 +62,18 @@ class RelatorioController extends Controller
 
         $avaliacao = Avaliacao::findOrFail($id);
 
-        if ($avaliacao->tipo == 1) {
-            $resultados = ResultadoFuncionario::where('avaliacao_id', $avaliacao->id)->with('avaliacao')->with('avaliador')->with('avaliado');
+        if ($avaliacao->tipo->id == 1) {
+            $resultados = ResultadoFuncionario::where('avaliacao_id', $avaliacao->id)->with('avaliacao', 'avaliador', 'avaliado');
         } else {
-            $resultados = ResultadoGestor::where('avaliacao_id', $avaliacao->id)->with('avaliacao')->with('avaliador')->with('avaliado');
+            $resultados = ResultadoGestor::where('avaliacao_id', $avaliacao->id)->with('avaliacao', 'avaliador', 'avaliaod');
         }
 
-        return $resultados->get();
+        $result = $resultados->get();
+
+        return $result;
+
+        return view('avaliacaodesempenho::relatorios/individual/_table', compact('result'));
+        
     }
 
     public function getAvaliacoes(Request $request) 
