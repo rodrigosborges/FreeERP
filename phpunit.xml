@@ -19,7 +19,7 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./app</directory>
+            <directory suffix=".php">./Modules/OrdemServico/Tests</directory>
         </whitelist>
     </filter>
     <php>
@@ -30,10 +30,6 @@
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
     </php>
-
-    <listeners> 
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" /> 
-    </listeners>
 
     <logging>
     <log type="coverage-html" target="Modules/OrdemServico/Tests/report"
