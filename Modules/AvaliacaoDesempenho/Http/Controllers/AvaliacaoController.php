@@ -56,82 +56,7 @@ class AvaliacaoController extends Controller
             'setores' => Setor::all()
         ];
 
-        $avaliacoes = Avaliacao::all();
-
-        DB::beginTransaction();
-        try {
-
-            foreach ($avaliacoes as $i => $avaliacao) {
-
-                if ($avaliacao->tipo->id == 2) {
-                    $definido = 1;
-                    $encerrado = 1;
-
-                    foreach ($avaliacao->avaliadores as $j => $avaliador) {
-
-                        if ($avaliador->concluido == 1) {
-                            $definido = 0;
-                        }
-
-                        if ($avaliador->concluido == 0) {
-                            $encerrado = 0;
-                        }
-                    }
-
-                    if ($encerrado == 1) {
-                        $avaliacao->update(['status_id' => 3]);
-                    }
-
-                    if ($definido == 1) {
-                        $avaliacao->update(['status_id' => 1]);
-                    }
-
-                    if ($definido == 0 && $encerrado == 0 ) {
-                        $avaliacao->update(['status_id' => 2]);
-                    }
-
-                } else if ($avaliacao->tipo->id == 1) {
-                    $definido = 1;
-                    $encerrado = 1;
-
-                    foreach ($avaliacao->avaliados as $j => $avaliado) {
-
-                        if ($avaliado->concluido == 1) {
-                            $definido = 0;
-                        }
-
-                        if ($avaliado->concluido == 0) {
-                            $encerrado = 0;
-                        }
-                    }
-
-                    if ($encerrado == 1) {
-                        $avaliacao->update(['status_id' => 3]);
-                    }
-
-                    if ($definido == 1) {
-                        $avaliacao->update(['status_id' => 1]);
-                    }
-
-                    if ($definido == 0 && $encerrado == 0 ) {
-                        $avaliacao->update(['status_id' => 2]);
-                    }
-                }
-
-                $data_fim = implode('-', array_reverse(explode('/', $avaliacao->data_fim)));
-
-                if (Carbon::today()->greaterThan($data_fim) && $avaliacao->status->id != 3) {
-                    $avaliacao->update(['status_id' => 4]);
-                }
-            }
-
-            DB::commit();
-
-        } catch (\Throwable $th) {
-            DB::rollback();
-
-            echo '<pre>';print_r($th->getMessage());exit;
-        }
+        $this->updateStatus();
 
         return view('avaliacaodesempenho::avaliacoes/index', compact('moduleInfo', 'menu', 'data'));
     }
@@ -142,7 +67,7 @@ class AvaliacaoController extends Controller
         $menu = $this->menu;
 
         $data = [
-            'processos' => Processo::all(),
+            'processos' => Processo::where('status_id', '!=', 3)->where('status_id', '!=', 4)->get(),
             'funcionarios' => Funcionario::all(),
             'setores' => Setor::all(),
             'questoes' => Questao::all()
@@ -348,6 +273,85 @@ class AvaliacaoController extends Controller
             DB::rollback();
 
             return redirect('/avaliacaodesempenho/categoria')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
+        }
+    }
+
+    public function updateStatus() {
+        $avaliacoes = Avaliacao::all();
+
+        DB::beginTransaction();
+        try {
+
+            foreach ($avaliacoes as $i => $avaliacao) {
+
+                if ($avaliacao->tipo->id == 2) {
+                    $definido = 1;
+                    $encerrado = 1;
+
+                    foreach ($avaliacao->avaliadores as $j => $avaliador) {
+
+                        if ($avaliador->concluido == 1) {
+                            $definido = 0;
+                        }
+
+                        if ($avaliador->concluido == 0) {
+                            $encerrado = 0;
+                        }
+                    }
+
+                    if ($encerrado == 1) {
+                        $avaliacao->update(['status_id' => 3]);
+                    }
+
+                    if ($definido == 1) {
+                        $avaliacao->update(['status_id' => 1]);
+                    }
+
+                    if ($definido == 0 && $encerrado == 0 ) {
+                        $avaliacao->update(['status_id' => 2]);
+                    }
+
+                } else if ($avaliacao->tipo->id == 1) {
+                    $definido = 1;
+                    $encerrado = 1;
+
+                    foreach ($avaliacao->avaliados as $j => $avaliado) {
+
+                        if ($avaliado->concluido == 1) {
+                            $definido = 0;
+                        }
+
+                        if ($avaliado->concluido == 0) {
+                            $encerrado = 0;
+                        }
+                    }
+
+                    if ($encerrado == 1) {
+                        $avaliacao->update(['status_id' => 3]);
+                    }
+
+                    if ($definido == 1) {
+                        $avaliacao->update(['status_id' => 1]);
+                    }
+
+                    if ($definido == 0 && $encerrado == 0 ) {
+                        $avaliacao->update(['status_id' => 2]);
+                    }
+                }
+
+                $data_fim = implode('-', array_reverse(explode('/', $avaliacao->data_fim)));
+
+                if (Carbon::today()->greaterThan($data_fim) && $avaliacao->status->id != 3) {
+                    $avaliacao->update(['status_id' => 4]);
+                }
+            }
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            echo '<pre>';print_r($th->getMessage());exit;
         }
     }
 }

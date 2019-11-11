@@ -46,53 +46,7 @@ class ProcessoController extends Controller
             'funcionarios' => Funcionario::all(),
         ];
 
-        $processos = Processo::all();
-
-        DB::beginTransaction();
-        try {
-            foreach ($processos as $key => $processo) {
-
-                if (count($processo->avaliacoes) > 0) {
-
-                    $definido = 1;
-                    $encerrado = 1;
-    
-                    foreach ($processo->avaliacoes as $key => $avaliacao) {
-    
-                        if ($avaliacao->status->id == 1 || $avaliacao->status->id == 2 || $avaliacao->status->id == 4) {
-                            $encerrado = 0;
-                        }
-    
-                        if ($avaliacao->status->id == 2 || $avaliacao->status->id == 3 || $avaliacao->status->id == 4) {
-                            $definido = 0;
-                        }
-                    }
-    
-                    if ($definido == 1) {
-                        $processo->update(['status_id' => 1]);
-                    }
-                    if ($encerrado == 1) {
-                        $processo->update(['status_id' => 3]);
-                    }
-                    if ($definido == 0 && $encerrado == 0) {
-                        $processo->update(['status_id' => 2]);
-                    }
-    
-                    $data_fim = implode('-', array_reverse(explode('/', $processo->data_fim)));
-    
-                    if (Carbon::today()->greaterThan($data_fim) && $processo->status->id != 3) {
-                        $processo->update(['status_id' => 4]);
-                    }
-                }
-            }
-
-            DB::commit();
-
-        } catch (\Throwable $th) {
-            DB::rollback();
-
-            echo '<pre>';print_r($th->getMessage());exit;
-        }
+        $this->updateStatus();
 
         return view('avaliacaodesempenho::processos/index', compact('moduleInfo', 'menu', 'data'));
     }
@@ -201,6 +155,56 @@ class ProcessoController extends Controller
             DB::rollback();
 
             return redirect('/avaliacaodesempenho/processo')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
+        }
+    }
+
+    public function updateStatus() {
+        $processos = Processo::all();
+
+        DB::beginTransaction();
+        try {
+            foreach ($processos as $key => $processo) {
+
+                if (count($processo->avaliacoes) > 0) {
+
+                    $definido = 1;
+                    $encerrado = 1;
+    
+                    foreach ($processo->avaliacoes as $key => $avaliacao) {
+    
+                        if ($avaliacao->status->id == 1 || $avaliacao->status->id == 2 || $avaliacao->status->id == 4) {
+                            $encerrado = 0;
+                        }
+    
+                        if ($avaliacao->status->id == 2 || $avaliacao->status->id == 3 || $avaliacao->status->id == 4) {
+                            $definido = 0;
+                        }
+                    }
+    
+                    if ($definido == 1) {
+                        $processo->update(['status_id' => 1]);
+                    }
+                    if ($encerrado == 1) {
+                        $processo->update(['status_id' => 3]);
+                    }
+                    if ($definido == 0 && $encerrado == 0) {
+                        $processo->update(['status_id' => 2]);
+                    }
+    
+                    $data_fim = implode('-', array_reverse(explode('/', $processo->data_fim)));
+    
+                    if (Carbon::today()->greaterThan($data_fim) && $processo->status->id != 3) {
+                        $processo->update(['status_id' => 4]);
+                    }
+                }
+            }
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            echo '<pre>';print_r($th->getMessage());exit;
         }
     }
 }

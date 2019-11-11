@@ -170,6 +170,9 @@ class AvaliacaoRespostaController extends Controller
                         Mail::send('avaliacaodesempenho::emails/_feedback', $data, function($message) use($data) {
                             $message->to($data['avaliador']->funcionario->email->email, $data['avaliador']->funcionario->nome)->subject('Feedback Avaliação');
                         });
+
+                        app('Modules\AvaliacaoDesempenho\Http\Controllers\AvaliacaoController')->updateStatus();
+                        app('Modules\AvaliacaoDesempenho\Http\Controllers\ProcessoController')->updateStatus();
                         
                         return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação Respondida com Sucesso');                 
                     }
@@ -223,6 +226,9 @@ class AvaliacaoRespostaController extends Controller
                     Mail::send('avaliacaodesempenho::emails/_feedback', $data, function($message) use($data) {
                         $message->to($data['avaliador']->funcionario->email->email, $data['avaliador']->funcionario->nome)->subject('Feedback Avaliação');
                     });
+
+                    app('Modules\AvaliacaoDesempenho\Http\Controllers\AvaliacaoController')->updateStatus();
+                    app('Modules\AvaliacaoDesempenho\Http\Controllers\ProcessoController')->updateStatus();
 
                     return back()->with('success', 'Avaliação Respondida com Sucesso');                 
                 }
