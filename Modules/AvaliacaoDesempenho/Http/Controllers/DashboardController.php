@@ -53,39 +53,9 @@ class DashboardController extends Controller
             'processos_atrasados' => Processo::where('status_id', 4)->get(),
             'avaliacoes_abertas' => Avaliacao::where('status_id', '!=', 3)->where('status_id', '!=', 4)->get(),
             'avaliacoes_atrasadas' => Avaliacao::where('status_id', 4)->get(),
-            'processo_ultimo' => Processo::orderBy('created_at', 'desc')->limit(1)->get()
+            'processo_ultimo' => Processo::where('status_id', 3)->orderBy('created_at', 'desc')->limit(1)->get()
         ];
-
+        
         return view('avaliacaodesempenho::dashboard/index', compact('moduleInfo', 'menu', 'data'));
-    }
-
-    public function create()
-    {
-        return view('avaliacaodesempenho::create');
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        return view('avaliacaodesempenho::show');
-    }
-
-    public function edit($id)
-    {
-        return view('avaliacaodesempenho::edit');
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

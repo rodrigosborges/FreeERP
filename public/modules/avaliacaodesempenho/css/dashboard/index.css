@@ -43,3 +43,7 @@
 .setores-list li {
     list-style: none;
 }
+
+.dash-cards h4 {
+    margin: 0 auto 20px auto;
+}
