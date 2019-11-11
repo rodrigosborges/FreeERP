@@ -44,7 +44,7 @@ $(document).ready(function() {
                 'placeholder': '',
                 'rightAlign':false,
                 'max': 9999,
-                // 'removeMaskOnSubmit':true
+                'removeMaskOnSubmit':true
     });
 })
 </script>

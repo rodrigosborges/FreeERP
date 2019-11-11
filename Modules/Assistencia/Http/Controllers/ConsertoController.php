@@ -208,9 +208,18 @@ class ConsertoController extends Controller
     }
 
     public function finalizar($id){ //Metodo de finalização da ordem
-
       $pagamento =  PagamentoAssistenciaModel::where('idConserto', $id)->get()->first();
       
+      $pecas = PecaOs::where('idConserto', $id)->get();
+      foreach ($pecas as $item){
+        $itemPeca = ItemPeca::find($item->idItemPeca);
+        $itemPeca->delete();
+        $itemPeca->update();
+        $peca = PecaAssistenciaModel::where('id', $itemPeca->idPeca)->get()->first();
+        $peca->quantidade = ($peca->quantidade)-1;
+        $peca->update();
+      }
+ 
 
       return view('assistencia::paginas.pagamentos.finalizarPagamento', compact('pagamento'));
     }

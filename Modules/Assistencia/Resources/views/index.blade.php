@@ -57,43 +57,49 @@
     </li>
 </ul>
 <div class="row text-center d-flex justify-content-center">
+    
     <div class="card col-6 m-2">
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>nº da Ordem</th>
-                    <th>Cliente</th>
-                    <th>Contato</th>
-                </tr>
-                @foreach($finalizados as $fin)
+        <div class="card-header text-center">
+            <h4>Clientes para informar</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
                     <tr>
-                        <td>{{$fin->numeroOrdem}}</td>
-                        <td>{{$fin->cliente->nome}}</td>
-                        <td>{{$fin->cliente->celnumero}}</td>
+                        <th>nº da Ordem</th>
+                        <th>Cliente</th>
+                        <th>Contato</th>
                     </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-            
-            </tfoot>
-            <tfoot>
-                <tr>
-                    <td colspan="100%" class="text-center">
-                        <p class="text-center">
-                            Página {{$finalizados->currentPage()}} de {{$finalizados->lastPage()}} páginas
+                    @foreach($finalizados as $fin)
+                        <tr>
+                            <td>{{$fin->numeroOrdem}}</td>
+                            <td>{{$fin->cliente->nome}}</td>
+                            <td>{{$fin->cliente->celnumero}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                
+                </tfoot>
+                <tfoot>
+                    <tr>
+                        <td colspan="100%" class="text-center">
+                            <p class="text-center">
+                                Página {{$finalizados->currentPage()}} de {{$finalizados->lastPage()}} páginas
 
-                        </p>
-                    </td>
-                </tr>
-                @if($finalizados->lastPage() > 1)
-                <tr>
-                    <td colspan="100%">
-                        {{ $finalizados->links() }}
-                    </td>
-                </tr>
-                @endif
-            </tfoot>
-        </table>
+                            </p>
+                        </td>
+                    </tr>
+                    @if($finalizados->lastPage() > 1)
+                    <tr>
+                        <td colspan="100%">
+                            {{ $finalizados->links() }}
+                        </td>
+                    </tr>
+                    @endif
+                </tfoot>
+            </table>
+        </div>
     </div>
     <div class="card col-5 m-2">
         <div class="card-body text-center">

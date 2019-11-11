@@ -96,23 +96,24 @@ class PecasController extends Controller
       
    }
    public function deletarItem($id){ //DELETE de um itemPeca
-    DB::beginTransaction();
-    try {
+      DB::beginTransaction();
+      try {
+        
+        $item = ItemPeca::find($id);
+        $item->delete();
+        $item->update();
+        $peca = PecaAssistenciaModel::where('id', $item->idPeca)->get()->first();
+        $peca->quantidade = ($peca->quantidade)-1;
+        $peca->update();
+        DB::commit();
+        return redirect()->route('pecas.editar', $item->idPeca);
+      } catch (\Exception $e) {
+        DB::rollback();
+        return back();
+      }
       
-      $item = ItemPeca::find($id);
-      $item->delete();
-      $item->update();
-      $peca = PecaAssistenciaModel::where('id', $item->idPeca)->get()->first();
-      $peca->quantidade = ($peca->quantidade)-1;
-      $peca->update();
-      DB::commit();
-      return redirect()->route('pecas.editar', $item->idPeca);
-    } catch (\Exception $e) {
-      DB::rollback();
-      return back();
-    }
-    
- }
+  }
+ 
    public function buscar(Request $req){ //Método de busca de peças
      $pecas = PecaAssistenciaModel::busca($req->busca);
      return view('assistencia::paginas.estoque.localizarPeca',compact('pecas'));

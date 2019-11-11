@@ -44,6 +44,7 @@ Route::prefix('assistencia')->group(function() {
     Route::get('estoque/pecas/deletar/{id}',['as'=>'pecas.deletar','uses'=>'PecasController@deletar']);
     Route::post('estoque/pecas/buscar',['as'=>'pecas.buscar','uses'=>'PecasController@buscar']);
     Route::get('estoque/pecas/deletarItem/{id}',['as'=>'itemPeca.deletar','uses'=>'PecasController@deletarItem']);
+    Route::get('estoque/pecas/deleteItem/{id}',['as'=>'itemPeca.delete','uses'=>'PecasController@deleteItem']);
 
 
     Route::get('servicos/cadastrar',['as'=>'servicos.cadastrar','uses'=>'ServicosController@cadastrar']);

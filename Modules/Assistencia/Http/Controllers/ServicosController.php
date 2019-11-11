@@ -55,7 +55,7 @@ class ServicosController extends Controller
       return redirect()->route('servicos.localizar');
     } catch (\Exception $e) {
       DB::rollback();
-      return back();
+      return back()->with('error','Error no servidor!');
     }
      
    }
