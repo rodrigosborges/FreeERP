@@ -25,8 +25,7 @@ class PessoasController extends Controller
         $eventos = Evento::whereHas('permissoes', function (Builder $query){
             $query->where('pessoa_id', '=', auth::id());
         })->get()->sortBy('nome');
-        //VERIFICA SE EXISTE PELO MENOS 1 EVENTO CADASTRADO
-        if(count($eventos) < 1)
+        if(count($eventos) < 1) //VERIFICA SE EXISTE PELO MENOS 1 EVENTO CADASTRADO
             return view('eventos::cadastrarEvento');
         else    
             return view('eventos::pessoas', ['eventos' => $eventos, 'evento' => null]);
@@ -35,8 +34,20 @@ class PessoasController extends Controller
     function exibir(Request $request)
     {
         $evento = Evento::find($request->evento);
-        
-        return view('eventos::pessoas', ['evento' => $evento, 'eventos' => []]);
+        $permissoes = $evento->permissoes;
+        foreach ($permissoes as $permissao){
+            if($permissao->pessoa_id ==  Auth::id()){ //VERIFICA SE O USUÁRIO TEM PERMISSÃO DE ACESSO AO EVENTO
+                if(!isset($request->atividade) || $request->atividade === "todas"){ //VERIFICA SE 1 ATIVIDADE/PROGRAMAÇÃO FOI SELECIONADA
+                    $programacao = $evento->programacao; //RETORNA TODAS AS ATIVIDADES DO EVENTO
+                    return view('eventos::pessoas', ['evento' => $evento, 'eventos' => [], 'programacao' => $programacao]);
+                } else {
+                    $programacao = $evento->programacao()->where('id', $request->atividade)->get(); //RETORNA SÓ A ATIVIDADE SELECIONADA
+                    return view('eventos::pessoas', ['evento' => $evento, 'eventos' => [], 'programacao' => $programacao]);
+                }
+            } else {
+                abort(403, 'Ação não autorizada');
+            }
+        }
     }
         
     /* 
@@ -58,7 +69,7 @@ class PessoasController extends Controller
             ->with('success', $pessoa->nome . ' excluído(a) com sucesso.');
     }
     
-     function meusCertificados()
+    function meusCertificados()
     {        
         $pessoa = Pessoa::find(Auth::id());
         return view('eventos::meusCertificados', ['pessoa' => $pessoa]);

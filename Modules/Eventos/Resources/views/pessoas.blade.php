@@ -34,20 +34,25 @@
             </div>
         
             <div class="col-xm-10 col-sm-10 col-md-10 col-lg-10">
-                <div class="form-group" style="margin-bottom: 40px;">
-                    <label for="atividade">Filtrar por atividade</label>
-                    @if(count($evento->programacao) > 0)
-                        <select class="form-control" name="atividade">
-                            <option value="todas" selected>Todas</option>
-                    @else
-                        <select class="form-control" name="atividade" disabled>
-                            <option value="">Não há atividades cadastradas</option>
-                        @endif
-                        @foreach ($evento->programacao as $atividade)
-                            <option value="{{$atividade->id}}">{{$atividade->nome}}</option>
-                        @endforeach
-                    </select>
-                </div> 
+                <form method="POST" action="{{route('pessoas.exibir')}}">
+                    {{ csrf_field() }}
+                    <div class="form-group" style="margin-bottom: 40px;">
+                        <input type="hidden" name="evento" value="{{$evento->id}}">
+                        <label for="atividade">Filtrar por atividade</label>
+                        @if(count($evento->programacao) > 0)
+                            <select class="form-control" name="atividade" style="margin-bottom: 10px;">
+                                <option value="todas" selected>Todas</option>
+                        @else
+                            <select class="form-control" name="atividade" style="margin-bottom: 10px;" disabled>
+                                <option value="">Não há atividades cadastradas</option>
+                            @endif
+                            @foreach ($evento->programacao as $atividade)
+                                <option value="{{$atividade->id}}">{{$atividade->nome}}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-default">Ok</button>
+                    </div> 
+                </form>
             </div>
             
         
@@ -69,7 +74,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($evento->programacao as $atividade)
+                        @foreach($programacao as $atividade)
                             @foreach($atividade->participantes as $pessoa)
                                 <tr>
                                     <td class="text-center align-middle">{{$pessoa->nome}}</td>
@@ -135,14 +140,6 @@
                         "next":  "Próxima",
                         "previous": "Anterior"
                     }
-                }
-            });
-            
-            $('[name=atividade]').change(function(){
-                if($('[name=atividade]').val() !== "todas"){
-                    table.search($('[name=atividade] option:selected').text()).draw();
-                } else {
-                    location.reload();
                 }
             });
         });
