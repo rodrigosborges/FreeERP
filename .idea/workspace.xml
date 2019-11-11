@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="Filtro para somente a chefia verificar os compartilhamentos de agenda">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/js.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/css.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/js.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Agenda.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Entities/Convite.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Entities/Convite.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Console/EnviarNotificacaoEventoProximo.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Console/EnviarNotificacaoEventoProximo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/AgendaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/CalendarioController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarConviteParaEvento.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarConviteParaEvento.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Requests/EventoSalvarRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Requests/EventoSalvarRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar-editar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar-editar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -183,7 +186,8 @@
       <option name="presentableId" value="Default" />
       <updated>1573083968523</updated>
       <workItem from="1573083970838" duration="1275000" />
-      <workItem from="1573238155330" duration="3816000" />
+      <workItem from="1573238155330" duration="10027000" />
+      <workItem from="1573498374412" duration="6529000" />
     </task>
     <task id="LOCAL-00001" summary="Echo substituido pelo pusher-js">
       <created>1573085202447</created>
@@ -206,7 +210,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573162571955</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Criada notificação para alteração de evento">
+      <created>1573246303741</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1573246303741</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,6 +241,7 @@
     <MESSAGE value="Echo substituido pelo pusher-js" />
     <MESSAGE value="Refeito notificação para evento prestes a ocorrer" />
     <MESSAGE value="Filtro para somente a chefia verificar os compartilhamentos de agenda" />
-    <option name="LAST_COMMIT_MESSAGE" value="Filtro para somente a chefia verificar os compartilhamentos de agenda" />
+    <MESSAGE value="Criada notificação para alteração de evento" />
+    <option name="LAST_COMMIT_MESSAGE" value="Criada notificação para alteração de evento" />
   </component>
 </project>

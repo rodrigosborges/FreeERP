@@ -62,32 +62,10 @@
 
 @section('css')
     @parent
-    <style type="text/css">
-        .acoes form {
-            display: inline;
-        }
-    </style>
+    @include('calendario::eventos.css')
 @endsection
 
 @section('js')
     @parent
-    <script type="text/javascript">
-        $(function () {
-            $('a.deletar-evento').on('click', function (event) {
-                event.preventDefault();
-                bootbox.confirm({
-                    title: 'Confirmar ação',
-                    message: 'Deseja realmente excluir o evento?',
-                    onEscape: true,
-                    backdrop: true,
-                    locale: 'br',
-                    callback: function (result) {
-                        if (result == true) {
-                            window.location = '{{route('eventos.deletar', $evento->id)}}';
-                        }
-                    }
-                });
-            });
-        });
-    </script>
+    @include('calendario::eventos.js')
 @endsection

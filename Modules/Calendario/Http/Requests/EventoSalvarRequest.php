@@ -14,13 +14,24 @@ class EventoSalvarRequest extends FormRequest
     public function rules()
     {
         return [
-            'eventoTitulo' => 'required',
-            'eventoDataInicio' => 'required',
-            'eventoDataFim' => 'required',
-            'eventoNotificacaoTempo' => '',
-            'eventoNotificacaoPeriodo' => '',
-            'eventoDiaTodo' => '',
-            'eventoNota' => ''
+            'eventoTitulo' => 'required | string | max:100',
+            'eventoDataInicio' => 'required | date',
+            'eventoDataFim' => 'required | date | after_or_equal:eventoDataInicio',
+            'eventoNotificacaoTempo' => 'integer | max:999',
+            'eventoNotificacaoPeriodo' => 'integer | max:86400',
+            'eventoDiaTodo' => 'boolean',
+            'eventoNota' => 'max:500',
+            'eventoConvite' => 'array'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'eventoDataInicio' => 'data inicial',
+            'eventoDataFim' => 'data final',
+            'eventoNotificacaoTempo' => 'tempo',
+            'eventoNotificacaoPeriodo' => 'período',
         ];
     }
 

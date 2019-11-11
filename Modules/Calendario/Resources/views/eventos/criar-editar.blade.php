@@ -3,6 +3,7 @@
 @section('title', 'Calendário - Evento')
 
 @section('content')
+    @parent
     <div class="container">
         <h2>
             @if(isset($evento))
@@ -25,7 +26,7 @@
             <div class="form-group">
                 <label for="eventoTitulo">Título</label>
                 <input type="text" class="form-control" id="eventoTitulo" name="eventoTitulo" value="{{isset($evento) ? $evento->titulo : old('eventoTitulo')}}"
-                       required autofocus>
+                       required autofocus maxlength="100">
             </div>
 
             <!-- Data -->
@@ -80,7 +81,7 @@
             <!-- Nota -->
             <div class="form-group">
                 <label for="eventoNota">Descrição</label>
-                <textarea class="form-control" name="eventoNota" id="eventoNota" rows="3">{{isset($evento) ? $evento->nota : old('eventoNota')}}</textarea>
+                <textarea class="form-control" maxlength="500" name="eventoNota" id="eventoNota" rows="3">{{isset($evento) ? $evento->nota : old('eventoNota')}}</textarea>
             </div>
 
             <!-- Convites -->
@@ -122,7 +123,7 @@
             </div>
             <button type="submit" class="btn btn-success">Salvar</button>
             @if(isset($evento) && $rota != 'eventos.duplicar')
-                <a href="{{route('eventos.deletar', $evento->id)}}" class="btn btn-secondary text-white">
+                <a href="{{route('eventos.deletar', $evento->id)}}" class="btn btn-secondary text-white deletar-evento">
                     Deletar
                 </a>
             @endif
@@ -140,6 +141,9 @@
 
 @section('js')
     @parent
+    @if($evento)
+        @include('calendario::eventos.js')
+    @endif
     <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <script type="text/javascript"
@@ -201,6 +205,6 @@
             $('#eventoConvite').chosen({
                 placeholder_text_multiple: 'Funcionários'
             });
-        });
+    });
     </script>
 @endsection
