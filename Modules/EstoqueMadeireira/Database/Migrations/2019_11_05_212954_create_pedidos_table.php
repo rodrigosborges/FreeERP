@@ -19,7 +19,6 @@ class CreatePedidosTable extends Migration
             $table->decimal('taxa', 10,2);
             $table->decimal('desconto', 10,2);
             $table->softDeletes();    
-
             $table->timestamps();
         });
     }

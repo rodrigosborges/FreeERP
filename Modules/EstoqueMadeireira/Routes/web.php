@@ -17,13 +17,14 @@ Route::prefix('estoquemadeireira')->group(function() {
 
     
     //ROTAS DE BUSCAS
-    Route::post('/busca', 'EstoqueMadeireiraController@busca');
-    Route::post('/tiponidade/busca', 'tipoUnidadeController@busca');
-    Route::post('/produtos/busca', 'ProdutoController@busca');
-    Route::post('/produtos/categorias/busca', 'CategoriaController@busca');
-    Route::post('/produtos/fornecedores/busca', 'FornecedorController@busca');
-    Route::post('/movimentacao/buscar', 'MovimentacaoEstoqueController@buscar');
-    Route::post('/buscar', 'EstoqueMadeireiraController@busca');
+    Route::post('/busca', 'EstoqueMadeireiraController@busca');                     //BUSCA DO ESTOQUES
+    Route::post('/tiponidade/busca', 'tipoUnidadeController@busca');                //BUSCA DE NOME DE UNIDADES
+    Route::post('/produtos/busca', 'ProdutoController@busca');                      //BUSCA DE PRODUTOS
+    Route::post('/produtos/categorias/busca', 'CategoriaController@busca');         //BUSCA DE CATEGORIAS
+    Route::post('/produtos/fornecedores/busca', 'FornecedorController@busca');      //BUSCA DE FORNECEDORES
+    Route::post('/movimentacao/buscar', 'MovimentacaoEstoqueController@buscar');    //BUSCA DE MOVIMENTAÇÕES
+    Route::post('/vendas/clientes/busca', 'ClienteController@busca');               //BUSCA DE CLIENTES
+
 
     //PRODUTOS
     Route::get('/produtos/inativos', 'ProdutoController@inativos'); 
@@ -57,6 +58,12 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/inativos', 'EstoqueMadeireiraController@inativos');
     Route::get('/{id}/edit', 'EstoqueMadeireiraController@edit');
     Route::put('/{id}', 'EstoqueMadeireiraController@destroy');
+
+    //CLIENTES
+    Route::get('/vendas/clientes/inativos', 'ClienteController@inativos');
+    Route::put('/vendas/clientes/{id}/restore', 'ClienteController@restore');
+    Route::get('/vendas/clientes/ficha/{id}', 'ClienteController@ficha');
+    
 
     //ROTAS DE RELATÓRIOS
     Route::get('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacao');

@@ -11,7 +11,7 @@ class tipoDocumento extends Model
     protected $table = 'tipo_documentos';
 
 
-    public function Documento(){
-        
+    public function Cliente(){
+        return $this->belongsToMany('Modules\EstoqueMadeireira\Entities\Cliente', 'Documento', 'cliente_id', 'tipoDocumento_id')->withTrashed();
     }
 }

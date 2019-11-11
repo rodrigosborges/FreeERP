@@ -16,8 +16,8 @@ class CreateEnderecosTable extends Migration
         Schema::create('enderecos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('cliente_id')->unsigned()->index('fk_endereco_cliente');
-            $table->string('endereco', 256);
-            $table->string('complemento', 256);
+            $table->string('endereco', 256)->nullable();
+            $table->string('complemento', 256)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

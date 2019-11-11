@@ -15,7 +15,7 @@ class CreateTipoDocumentosTable extends Migration
     {
         Schema::create('tipo_documentos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome', 10);
+            $table->string('nome', 20);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -17,7 +17,7 @@ class CreateDocumentosTable extends Migration
             $table->bigIncrements('id');
             $table->integer('tipoDocumento_id')->unsigned()->index('fk_tipoDocumento_documento');
             $table->integer('cliente_id')->unsigned()->index('fk_tipoDocumento_cliente');
-            $table->string('numero', 15);
+            $table->string('numero', 20);
             $table->softDeletes();
             $table->timestamps();
         });

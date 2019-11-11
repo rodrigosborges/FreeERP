@@ -9,15 +9,19 @@ class Cliente extends Model
     use SoftDeletes;
     
     protected $table = 'clientes';
-    protected $fillable = ['nome', 'telefone'];
+    protected $fillable = ['nome', 'telefone','documento','endereco', 'email'];
 
+    // public function tipoDocumento(){
+    //     return $this->hasOne('Modules\EstoqueMadeireira\Entities\TipoDocumento', 'tipoDocumento_id')->withTrashed();
+    // }
+    
     public function documento(){
         return $this->hasMany('Modules\EstoqueMadeireira\Entities\Documento')->withTrashed();
 
     }
 
-    public function endereco(){
-        return $this->hasOne('Modules\EstoqueMadeireira\Entities\Endereco')->withTrashed();
+    public function enderecos(){
+        return $this->hasMany('Modules\EstoqueMadeireira\Entities\Endereco')->withTrashed();
 
     }
 }

@@ -19,6 +19,7 @@ class EstoqueMadeireiraDatabaseSeeder extends Seeder
           // FornecedorSeedTableSeeder::class,
           UnidadeMedidaSeedTableSeeder::class,
           TipoUnidadeSeedTableSeeder::class,
+          tipoDocumentoSeedTableSeeder::class,
           // ProdutoSeedTableSeeder::class,
         ]);
     }

@@ -2,6 +2,9 @@
 
 namespace Modules\EstoqueMadeireira\Http\Controllers;
 use Modules\EstoqueMadeireira\Entities\Cliente;
+use Modules\EstoqueMadeireira\Entities\Documento;
+use Modules\EstoqueMadeireira\Entities\Endereco;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -38,7 +41,6 @@ class ClienteController extends Controller
 
     public function index()
     {
-        
         $clientes = Cliente::paginate(5);
         $flag = 0;
         
@@ -53,6 +55,7 @@ class ClienteController extends Controller
         return view('estoquemadeireira::vendas.cliente.index', $this->template, compact('clientes', 'flag',));
     }
 
+    
     public function restore($id){
        
         $cliente = Cliente::onlyTrashed()->findOrFail($id);
@@ -67,8 +70,10 @@ class ClienteController extends Controller
          
         $data = [
             'button' => 'cadastrar',
-            'url' =>'estoquemadeireira/vendas/cliente',
+            'url' =>'estoquemadeireira/vendas/clientes',
             'cliente' => null,
+            'endereco' => null,
+            
         ];
         
         
@@ -79,14 +84,19 @@ class ClienteController extends Controller
 
     public function store(Request $req)
     {
-       
         DB::beginTransaction();
         try{
             Cliente::create($req->all());
+           $teste = Endereco::create([
+                'cliente_id' => $cliente_id,
+                'endereco' => $req->endereco,
+                'complemento' => $req->complemento,
+            ]);
+            return $teste;
             DB::commit();
-            return redirect('/estoquemadeireira/produtos/categorias')->with('Success', 'Categoria cadastrada com sucesso!');
+            return redirect('/estoquemadeireira/vendas/clientes')->with('Success', 'Cliente cadastrado com sucesso!');
         } catch(\Exeception $e) {
-            return back()->with('Error', 'Erro no cadastro de Categoria');
+            return back()->with('Error', 'Erro no cadastro de Cliente');
         }
     }
 
@@ -95,7 +105,7 @@ class ClienteController extends Controller
        
        
         $cliente = Cliente::findOrFail($id);      
-        return view('estoquemadeireira::categoria.form', $this->template, compact('cliente'));
+        return view('estoquemadeireira::vendas.cliente.form', $this->template, compact('cliente'));
     }
 
 
@@ -107,7 +117,7 @@ class ClienteController extends Controller
             $cliente = Cliente::findOrFail($id);
             $cliente->update($request->all());
             DB::commit();
-            return redirect('/estoquemadeireira/produtos/categorias')->with('success', 'Categoria atualizada com sucesso!');
+            return redirect('/estoquemadeireira/vendas/clientes')->with('success', 'Cliente atualizado com sucesso!');
       
         }catch (\Exception $e) {
             DB::rollback();
@@ -120,7 +130,14 @@ class ClienteController extends Controller
     {
         $cliente = cliente::findOrFail($id);
         $cliente->delete();
-        return redirect('/estoquemadeireira/produtos/categorias')->with('success', 'Categoria desativada com sucesso!');
+        return redirect('/estoquemadeireira/vendas/clientes')->with('success', 'Categoria desativada com sucesso!');
+    }
+
+
+    public function ficha($id)
+    {
+        $cliente = Cliente::findOrFail($id);
+        return view('estoquemadeireira::vendas.cliente.ficha', $this->template, compact('cliente'));
     }
 
 
