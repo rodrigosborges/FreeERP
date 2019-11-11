@@ -18,6 +18,7 @@ class CreatePagamentosTable extends Migration
             $table->integer('pedido_id')->unsigned()->index('fk_pagamento_pedido');
             $table->integer('formaPagamento_id')->unsigned()->index('fk_pagamento_formaPagamento');
             $table->decimal('valor', 14,2 );
+            $table->softDeletes();
             $table->timestamps();
 
 

@@ -17,6 +17,7 @@ class CreateTipoDocumentosTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome', 10);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

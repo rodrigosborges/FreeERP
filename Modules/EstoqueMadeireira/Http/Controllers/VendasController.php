@@ -14,7 +14,7 @@ use Illuminate\Routing\Controller;
 use DB;
 
 
-class EstoqueMadeireiraController extends Controller
+class VendasController extends Controller
 {
 
 
@@ -60,7 +60,7 @@ class EstoqueMadeireiraController extends Controller
     {
         $flag = 0;
         $itens = Estoque::paginate(5);
-        return view('estoquemadeireira::estoque.index', $this->template, compact('itens', 'flag'));     
+        return view('estoquemadeireira::vendas.index', $this->template, compact('itens', 'flag'));     
     }
  
     //Tela de estoques desativados
@@ -119,7 +119,7 @@ class EstoqueMadeireiraController extends Controller
 
     
 
-    public function edit($id)
+    public function edit(Request $id)
     {
         $estoque = Estoque::findOrFail($id);
         $idProduto = $estoque->produtos->last()->id;
@@ -129,13 +129,13 @@ class EstoqueMadeireiraController extends Controller
                 $join->where('produto_id', $idProduto)->whereraw('estoque.id = estoque_has_produto.estoque_id');
             })->get();
         foreach ($itens as $item) {
-            if ($item->tipoUnidade_id != $estoque->tipoUnidade_id) {
-                $data2[] = $item->tipoUnidade_id;
+            if ($item->tipo_unidade_id != $estoque->tipo_unidade_id) {
+                $data2[] = $item->tipo_unidade_id;
             }
         }
         $data = [
             'button' => 'atualizar',
-            'url' => 'estoque/' . $id,
+            'url' => 'estoquemadeireira/' . $id,
             'titulo' => 'Editar Estoque',
             'estoque' => $estoque,
             'produtos' => Produto::withTrashed()->get(),
@@ -143,6 +143,7 @@ class EstoqueMadeireiraController extends Controller
             'tipoUnidade' => TipoUnidade::all()->except($data2),
         ];
         return view('estoquemadeireira::estoque.form', compact('data'));
+
     }
 
     //Atualiza o estoque selecionado, já atualiza a movimentação também
@@ -177,9 +178,9 @@ class EstoqueMadeireiraController extends Controller
     public function verificaAlteracoes($request, $estoque)
     {
         $observacao = "Este item foi atualizado \n";
-        if (intval($request->tipoUnidade_id) != $estoque->tipoUnidade_id) {
-            // return "Request unidade id =" . intval($request->tipoUnidade_id) . "Produto Unidade id = " . $produto->unidade_id;
-            $novaUnidade = TipoUnidade::find($request->tipoUnidade_id);
+        if (intval($request->tipo_unidade_id) != $estoque->tipo_unidade_id) {
+            // return "Request unidade id =" . intval($request->tipo_unidade_id) . "Produto Unidade id = " . $produto->unidade_id;
+            $novaUnidade = TipoUnidade::find($request->tipo_unidade_id);
             $observacao .= "\n Alteração do tipo de unidade de " . $estoque->tipoUnidade->nome . " para " . $novaUnidade->nome;
         }
         if (floatVal($request->preco_custo) != floatVal($estoque->movimentacaoEstoque->last()->preco_custo)) {

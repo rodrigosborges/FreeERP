@@ -18,6 +18,7 @@ class CreateFormaPagamentosTable extends Migration
             $table->string('nome', 20);
             $table->decimal('taxa', 5,2);
             $table->integer('prazo');
+            $table->softDeletes();    
             $table->timestamps();
         });
     }

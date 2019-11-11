@@ -38,9 +38,10 @@ class ClienteController extends Controller
 
     public function index()
     {
+        
         $clientes = Cliente::paginate(5);
         $flag = 0;
-      
+        
         return view('estoquemadeireira::vendas.cliente.index', $this->template, compact('clientes', 'flag'));
     }
 

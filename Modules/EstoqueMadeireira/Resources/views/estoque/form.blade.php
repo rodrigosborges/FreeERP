@@ -35,7 +35,7 @@
                 <select class="custom-select tipoUnidade_id" id="tipoUnidade_id" name="tipoUnidade_id">
                     <option value="-1">Selecione a Unidade</option>
                     @foreach($data['tipoUnidade'] as $unidade)
-                    <option value="{{$unidade->id}}"  {{isset($data['estoque']) && $data['estoque']->tipo_unidade_id==$unidade->id?'selected':''}}>{{$unidade->nome}}  </option>
+                    <option value="{{$unidade->id}}"  {{isset($data['estoque']) && $data['estoque']->tipoUnidade_id==$unidade->id?'selected':''}}>{{$unidade->nome}}  </option>
                     @endforeach
 
                 </select>

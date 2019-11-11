@@ -41,7 +41,7 @@
         <tr>
             <th scope="col">Nome</th>
             <th scope="col">Categoria</th>
-            <th scope="col">Tipo</th>
+            <th scope="col">Unidade</th>
             <th scope="col">Quantidade</th>
             <th scope='col'>Gerenciar Estoque</th>
             <th scope="col">Editar</th>
@@ -60,7 +60,7 @@
                 <a href="{{url('/estoquemadeireira/movimentacao/alterar/' . $item->id)}}"><button class="btn btn-primary btn-sm" style="font-size:0px"> <i class="material-icons" style="font-size:18px;">list</i></button></a>
             </td>
             <td>
-                <a class="btn btn-sm btn-warning" style="font-size:0px" href="{{url('estoquemadeireira/'.$item->id.'/edit')}}">
+                <a class="btn btn-sm btn-warning" style="font-size:0px" href="{{url('estoquemadeireira/'.$item->id.'/edit')}}"> 
                     <i class="material-icons" style="font-size:18px;">border_color</i>
                 </a>
             </td>

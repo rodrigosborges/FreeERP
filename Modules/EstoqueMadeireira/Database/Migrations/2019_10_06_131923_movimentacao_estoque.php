@@ -21,6 +21,7 @@ class MovimentacaoEstoque extends Migration
             $table->decimal('preco_custo', 12,2)->nullable();
             $table->string('observacao', 256);
             $table->integer('quantidade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

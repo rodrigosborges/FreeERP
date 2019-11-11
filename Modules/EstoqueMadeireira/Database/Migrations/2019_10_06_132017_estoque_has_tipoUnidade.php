@@ -12,7 +12,7 @@ class EstoqueHasTipoUnidade extends Migration
         Schema::create('estoque_has_tipoUnidade', function (Blueprint $table){
             $table->integer('estoque_id');
             $table->integer('tipoUnidade_id')->index('fk_estoque_has_tipoUnidade');
-
+            $table->softDeletes();
             $table->primary(['estoque_id', 'tipoUnidade_id']);
         });
     }

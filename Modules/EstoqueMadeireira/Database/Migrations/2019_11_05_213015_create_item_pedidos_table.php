@@ -20,6 +20,7 @@ class CreateItemPedidosTable extends Migration
             $table->decimal('quantidade', 12,2);
             $table->decimal('precoCusto', 12,2);
             $table->decimal('precoVenda', 12,2);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

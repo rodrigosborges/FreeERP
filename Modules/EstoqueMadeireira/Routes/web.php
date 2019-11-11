@@ -12,11 +12,9 @@
 */
 
 Route::prefix('estoquemadeireira')->group(function() {
-    Route::get('/', 'EstoqueMadeireiraController@index');
    
 
-    Route::put('/estoquemadeireira/{id}/edit', 'EstoqueMadeireiraController@edit');
-    
+
     
     //ROTAS DE BUSCAS
     Route::post('/busca', 'EstoqueMadeireiraController@busca');
@@ -54,25 +52,29 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/movimentacao/alterar/{id}/adicionar', 'MovimentacaoEstoqueController@adicionar');
     Route::post('/movimentacao/alterar', 'MovimentacaoEstoqueController@salvarEstoque');
     Route::get('/movimentacao/alterar/{id}/remover', 'MovimentacaoEstoqueController@remover');
-    Route::resource('/movimentacao', 'MovimentacaoEstoqueController');
 
     //ESTOQUE
     Route::get('/inativos', 'EstoqueMadeireiraController@inativos');
+    Route::get('/{id}/edit', 'EstoqueMadeireiraController@edit');
+    Route::put('/{id}', 'EstoqueMadeireiraController@destroy');
 
-    //ROTAS DE RELATÓRIO
+    //ROTAS DE RELATÓRIOS
     Route::get('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacao');
     Route::post('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacaoBusca');
 
+    
 
-
-    //ROTAS PADRÕES DO LARAVEL 
+    //ROTAS PADRÕES (index, crate, edit, update, delete)
     Route::resource('/', 'EstoqueMadeireiraController');
-    Route::resource('/vendas/cliente', 'ClienteController');
+    Route::resource('/vendas/clientes', 'ClienteController');
+    Route::resource('/vendas', 'VendasController');
+    Route::resource('/movimentacao', 'MovimentacaoEstoqueController');
     Route::resource('/produtos/fornecedores', 'FornecedorController');
     Route::resource('/produtos/categorias', 'CategoriaController'); 
     Route::resource('/produtos', 'ProdutoController');  
     Route::resource('/tipounidade', 'tipoUnidadeController');
 
+    
     
 
 

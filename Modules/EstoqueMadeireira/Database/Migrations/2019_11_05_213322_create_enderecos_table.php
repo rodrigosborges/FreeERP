@@ -18,6 +18,7 @@ class CreateEnderecosTable extends Migration
             $table->integer('cliente_id')->unsigned()->index('fk_endereco_cliente');
             $table->string('endereco', 256);
             $table->string('complemento', 256);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

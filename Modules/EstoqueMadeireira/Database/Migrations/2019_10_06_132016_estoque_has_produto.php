@@ -15,7 +15,7 @@ class EstoqueHasProduto extends Migration
         Schema::create('estoque_has_produto', function (Blueprint $table) {
           $table->integer('estoque_id');
           $table->integer('produto_id')->index('fk_estoque_has_produto');
-      
+          $table->softDeletes();
           $table->primary(['estoque_id','produto_id']);
       });
     }

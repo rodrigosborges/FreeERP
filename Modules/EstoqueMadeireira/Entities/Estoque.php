@@ -8,7 +8,7 @@ class Estoque extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['quantidade','tipoUnidade_id' ];
+    protected $fillable = ['quantidade','tipoUnidade_id'];
     protected $table = 'estoque';
 
 
@@ -25,3 +25,5 @@ class Estoque extends Model
         return $this->hasMany('Modules\EstoqueMadeireira\Entities\MovimentacaoEstoque')->withTrashed();
     }
 }
+
+

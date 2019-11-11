@@ -18,6 +18,8 @@ class CreatePedidosTable extends Migration
             $table->integer('cliente_id')->unsigned()->index('fk_pedido_cliente');
             $table->decimal('taxa', 10,2);
             $table->decimal('desconto', 10,2);
+            $table->softDeletes();    
+
             $table->timestamps();
         });
     }
