@@ -233,7 +233,7 @@ class AgendaController extends Controller
     {
         //Verifica se o usuário que está aprovando é chefia naquele setor
         if ($compartilhamento)
-            if (!Auth::user()->is($compartilhamento->setor->chefia->user))
+            if (!Auth::id() == $compartilhamento->setor->user_id)
                 abort(403, 'Acesso negado.');
 
         //Cria o objeto da aprovação e vincula com o usuário logado (aprovador)
@@ -256,7 +256,7 @@ class AgendaController extends Controller
     {
         //Verifica se o usuário que está negando é chefia naquele setor
         if ($compartilhamento)
-            if (!Auth::user()->is($compartilhamento->setor->chefia->user))
+            if (!Auth::id() == $compartilhamento->setor->user_id)
                 abort(403, 'Acesso negado.');
 
         //Apaga o compartilhamento sem criar aprovação
@@ -276,7 +276,7 @@ class AgendaController extends Controller
     {
         //Verifica se o usuário que está negando é chefia naquele setor
         if ($compartilhamento)
-            if (!Auth::user()->is($compartilhamento->setor->chefia->user))
+            if (!Auth::id() == $compartilhamento->setor->user_id)
                 abort(403, 'Acesso negado.');
 
         //Excluí a aprovação do compartilhamento, retornando para um status de nova solicitação

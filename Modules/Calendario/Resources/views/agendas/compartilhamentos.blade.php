@@ -29,10 +29,10 @@
                         <td>{{$solicitacao->setor->sigla}}</td>
                         <td>{{$solicitacao->agenda->funcionario->nome}}</td>
                         <td class="acoes">
-                            <a href="{{route('compartilhamentos.deletar', $solicitacao)}}" class="btn btn-secondary btn-sm text-white">
+                            <a href="{{route('compartilhamentos.deletar', $solicitacao)}}" class="btn btn-secondary btn-sm text-white deletar-compartilhamento">
                                 <i class="material-icons">delete</i>
                             </a>
-                            <a href="{{route('compartilhamentos.aprovar', $solicitacao)}}" class="btn btn-success btn-sm text-white">
+                            <a href="{{route('compartilhamentos.aprovar', $solicitacao)}}" class="btn btn-success btn-sm text-white aprovar-compartilhamento">
                                 <i class="material-icons">done</i>
                             </a>
                         </td>
@@ -66,7 +66,8 @@
                         <td>{{$solicitacao->setor->sigla}}</td>
                         <td>{{$solicitacao->agenda->funcionario->nome}}</td>
                         <td class="acoes">
-                            <a href="{{route('compartilhamentos.revogar', $solicitacao)}}" class="btn btn-info btn-sm text-white small">
+                            <a href="{{route('compartilhamentos.revogar', $solicitacao)}}"
+                               class="btn btn-info btn-sm text-white small revogar-compartilhamento">
                                 <i class="material-icons">redo</i>
                             </a>
                         </td>
@@ -80,4 +81,9 @@
             </table>
         @endif
     </div>
+@endsection
+
+@section('js')
+    @parent
+    @include('calendario::agendas.js')
 @endsection

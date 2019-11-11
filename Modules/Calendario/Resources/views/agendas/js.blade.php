@@ -62,5 +62,53 @@
             });
 
         });
+
+        $('a.deletar-compartilhamento').on('click', function (event) {
+            event.preventDefault();
+            bootbox.confirm({
+                title: 'Confirmar ação',
+                message: 'Deseja realmente excluir o compartilhamento de agenda?',
+                onEscape: true,
+                backdrop: true,
+                locale: 'br',
+                callback: function (result) {
+                    if (result == true) {
+                        window.location = $('a.deletar-compartilhamento').attr('href');
+                    }
+                }
+            });
+        });
+
+        $('a.aprovar-compartilhamento').on('click', function (event) {
+            event.preventDefault();
+            bootbox.confirm({
+                title: 'Confirmar ação',
+                message: 'Deseja realmente aprovar o compartilhamento de agenda?',
+                onEscape: true,
+                backdrop: true,
+                locale: 'br',
+                callback: function (result) {
+                    if (result == true) {
+                        window.location = $('a.aprovar-compartilhamento').attr('href');
+                    }
+                }
+            });
+        });
+
+        $('a.revogar-compartilhamento').on('click', function (event) {
+            event.preventDefault();
+            bootbox.confirm({
+                title: 'Confirmar ação',
+                message: 'Deseja realmente revogar o compartilhamento de agenda?',
+                onEscape: true,
+                backdrop: true,
+                locale: 'br',
+                callback: function (result) {
+                    if (result == true) {
+                        window.location = $('a.revogar-compartilhamento').attr('href');
+                    }
+                }
+            });
+        });
     });
 </script>
