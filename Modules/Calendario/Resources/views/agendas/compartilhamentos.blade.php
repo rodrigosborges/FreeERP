@@ -81,16 +81,3 @@
         @endif
     </div>
 @endsection
-
-@section('css')
-    @parent
-    <style type="text/css">
-
-    </style>
-@endsection
-
-@section('js')
-    @parent
-    <script type="text/javascript">
-    </script>
-@endsection

@@ -15,8 +15,8 @@ class EventoSalvarRequest extends FormRequest
     {
         return [
             'eventoTitulo' => 'required | string | max:100',
-            'eventoDataInicio' => 'required | date',
-            'eventoDataFim' => 'required | date | after_or_equal:eventoDataInicio',
+            'eventoDataInicio' => 'required',
+            'eventoDataFim' => 'required',
             'eventoNotificacaoTempo' => 'integer | max:999',
             'eventoNotificacaoPeriodo' => 'integer | max:86400',
             'eventoDiaTodo' => 'boolean',

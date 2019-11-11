@@ -41,10 +41,10 @@
                         @endif
                         <td>{{$convite->evento->agenda->funcionario->nome}}</td>
                         <td class="acoes">
-                            <a href="{{route('convites.deletar', $convite->id)}}" class="btn btn-secondary btn-sm text-white small">
+                            <a href="{{route('convites.deletar', $convite->id)}}" class="btn btn-secondary btn-sm text-white small deletar-convite">
                                 <i class="material-icons">delete</i>
                             </a>
-                            <a href="{{route('convites.aceitar', $convite->id)}}" class="btn btn-success btn-sm text-white small">
+                            <a href="{{route('convites.aceitar', $convite->id)}}" class="btn btn-success btn-sm text-white small aceitar-convite">
                                 <i class="material-icons">thumb_up</i>
                             </a>
                         </td>
@@ -86,7 +86,7 @@
                         @endif
                         <td>{{$convite->evento->agenda->funcionario->nome}}</td>
                         <td class="acoes">
-                            <a href="{{route('convites.revogar', $convite->id)}}" class="btn btn-info btn-sm text-white small">
+                            <a href="{{route('convites.revogar', $convite->id)}}" class="btn btn-info btn-sm text-white small revogar-convite">
                                 <i class="material-icons">redo</i>
                             </a>
                         </td>
@@ -96,4 +96,9 @@
             </table>
         @endif
     </div>
+@endsection
+
+@section('js')
+    @parent
+    @include('calendario::eventos.js')
 @endsection

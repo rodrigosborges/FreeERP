@@ -282,6 +282,10 @@ class EventoController extends Controller
                 });
             })->get();
         } else {
+            if(!Auth::user()->is($convite->funcionario))
+                //Verifica se o usuário tentando ver o convite é o convidado
+                abort(403, 'Acesso negado.');
+
             //Caso tenha um ID na URL, existe apenas um convite
             $convites['definidos'] = new Collection();
             $convites['pendentes'] = new Collection();

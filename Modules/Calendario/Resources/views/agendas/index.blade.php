@@ -108,11 +108,7 @@
 
 @section('css')
     @parent
-    <style type="text/css">
-        .acoes form{
-            display: inline;
-        }
-    </style>
+    @include('calendario::agendas.css')
 @endsection
 
 @section('js')

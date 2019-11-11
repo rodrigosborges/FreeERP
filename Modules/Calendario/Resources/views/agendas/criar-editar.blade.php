@@ -65,22 +65,7 @@
     <link rel="stylesheet" type="text/css" href="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen.css')}}">
     <link rel="stylesheet" type="text/css"
           href="{{Module::asset(config('calendario.id').':chosen-1.8.7/chosen-bootstrap.css')}}">
-    <style type="text/css">
-        .color-btn {
-            border: 1px solid #000000;
-        }
-
-        .btn-colorselector {
-            width: 100px;
-            border: 1px solid #ced4da;
-        }
-
-        .dropdown-colorselector > .dropdown-menu > li > .color-btn.selected:after {
-            font-family: "Material Icons";
-            content: "\e5ca";
-            color: #000000;
-        }
-    </style>
+    @include('calendario::agendas.css')
 @endsection
 
 @section('js')
