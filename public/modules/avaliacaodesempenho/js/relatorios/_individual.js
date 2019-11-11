@@ -49,6 +49,22 @@ $(document).ready(function() {
             success: function (data) {
                 $('#RelatorioIndividualListar').html('')
                 $('#RelatorioIndividualListar').append(data)
+                $('#table').DataTable({
+                    'searching': false,
+                    'lengthChange': false,
+                    "pageLength": 10,
+                    "language": {
+                        "zeroRecords": '<div style="color: red">Não foram encontrados registros.</div>',
+                        "emptyTable": '<div style="color: red">Não foram encontrados registros.</div>',
+                        "info": "Exibindo _START_ a _END_ de _TOTAL_ registros no total",
+                        "infoEmpty": "",
+                        "paginate": {
+                            "previous": "Anterior",
+                            "next": "Proxima",
+                            "last": "Ultima",
+                        }
+                    }
+                })
             }
         })
     })

@@ -51,9 +51,14 @@ class RelatorioController extends Controller
         return view('avaliacaodesempenho::relatorios/individual/index', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function show($id)
+    public function show($tipo, $id)
     {
-        return view('avaliacaodesempenho::show');
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+
+        // AQUI AS FUNÇÕES DO HELPER Q VAO CALCULAR OS RELATORIOS
+        
+        return view('avaliacaodesempenho::relatorios/individual/show', compact('moduleInfo', 'menu'));
     }
 
     public function individual(Request $request) 
@@ -63,17 +68,14 @@ class RelatorioController extends Controller
         $avaliacao = Avaliacao::findOrFail($id);
 
         if ($avaliacao->tipo->id == 1) {
-            $resultados = ResultadoFuncionario::where('avaliacao_id', $avaliacao->id)->with('avaliacao', 'avaliador', 'avaliado');
+            $resultados = ResultadoFuncionario::where('avaliacao_id', $avaliacao->id)->with('avaliacao', 'avaliador', 'avaliado', 'avaliador.funcionario', 'avaliado.funcionario');
         } else {
-            $resultados = ResultadoGestor::where('avaliacao_id', $avaliacao->id)->with('avaliacao', 'avaliador', 'avaliaod');
+            $resultados = ResultadoGestor::where('avaliacao_id', $avaliacao->id)->with('avaliacao', 'avaliador', 'avaliado', 'avaliador.funcionario', 'avaliado.funcionario');
         }
 
         $result = $resultados->get();
 
-        return $result;
-
-        return view('avaliacaodesempenho::relatorios/individual/_table', compact('result'));
-        
+        return view('avaliacaodesempenho::relatorios/individual/_table', compact('result', 'avaliacao'));
     }
 
     public function getAvaliacoes(Request $request) 

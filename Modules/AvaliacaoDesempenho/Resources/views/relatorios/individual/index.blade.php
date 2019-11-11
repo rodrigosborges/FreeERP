@@ -1,7 +1,7 @@
 @extends('avaliacaodesempenho::template')
 
 @section('style')
-<link href="{{Module::asset('avaliacaodesempenho:css/relatorios/index.css')}}" rel="stylesheet">
+<link href="{{Module::asset('avaliacaodesempenho:css/relatorios/individual/index.css')}}" rel="stylesheet">
 @endsection
 
 @section('container')
