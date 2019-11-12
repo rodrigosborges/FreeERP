@@ -95,8 +95,11 @@ class EventoController extends Controller
             if (!Auth::user()->is($evento->agenda->funcionario->user))
                 abort(403, 'Acesso negado.');
 
-        //Recupera a rota dde onde originou o acesso (pode ser na tela de agendas ou tela inicial)
+        //Recupera a rota
         $rota = $request->route()->getName();
+
+        //Salva a origem da requisição para depois retornar
+        session()->flash('evento_origem', url()->previous());
 
         //Recupera todas agendas do usuário
         $agendas = Agenda::where('funcionario_id', Auth::id())->orderBy('titulo')->get();
@@ -153,10 +156,11 @@ class EventoController extends Controller
                     $convite->funcionario->user->notify(new NotificarConviteParaEvento($convite));
                 }
             }
+            //Retorna à URL de origem salva na session
         } catch (\Exception $e) {
-            return redirect()->route('agendas.eventos.index', $agenda->id)->with('error', 'Falha ao criar evento. Erro: ' . $e->getMessage());
+            return redirect(session('evento_origem'))->with('error', 'Falha ao criar evento. Erro: ' . $e->getMessage());
         }
-        return redirect()->route('agendas.eventos.index', $agenda->id)->with('success', 'Evento criado com sucesso.');
+        return redirect(session('evento_origem'))->with('success', 'Evento criado com sucesso.');
     }
 
     /**
@@ -233,9 +237,9 @@ class EventoController extends Controller
             }
             $evento->save();
         } catch (\Exception $e) {
-            return redirect()->route('calendario.index')->with('error', 'Falha ao atualizar evento "' . $request->eventoNome . '". Erro: ' . $e->getMessage());
+            return redirect(session('evento_origem'))->with('error', 'Falha ao atualizar evento "' . $request->eventoNome . '". Erro: ' . $e->getMessage());
         }
-        return redirect()->route('calendario.index')->with('success', 'Evento "' . $request->eventoTitulo . '" atualizado com sucesso.');
+        return redirect(session('evento_origem'))->with('success', 'Evento "' . $request->eventoTitulo . '" atualizado com sucesso.');
     }
 
     /**
@@ -251,12 +255,20 @@ class EventoController extends Controller
             if (!Auth::user()->is($evento->agenda->funcionario->user))
                 abort(403, 'Acesso negado.');
 
+        $origem = session('evento_origem');
+
+        //Verifica se há origem (tela inicial) e retorna para ela, ou então para os eventos da agenda
+        if($origem)
+            $retorno = $origem;
+        else
+            $retorno = route('agendas.eventos.index', $evento->agenda->id);
+
         try {
             $evento->delete();
         } catch (\Exception $e) {
-            return redirect()->route('agendas.eventos.index', $evento->agenda->id)->with('error', 'Falha ao deletar evento. Erro: ' . $e->getCode());
+            return redirect($retorno)->with('error', 'Falha ao deletar evento. Erro: ' . $e->getCode());
         }
-        return redirect()->route('agendas.eventos.index', $evento->agenda->id)->with('success', 'Evento deletado com sucesso.');
+        return redirect($retorno)->with('success', 'Evento deletado com sucesso.');
     }
 
     /**
@@ -282,7 +294,7 @@ class EventoController extends Controller
                 });
             })->get();
         } else {
-            if(!Auth::user()->is($convite->funcionario))
+            if (!Auth::user()->is($convite->funcionario))
                 //Verifica se o usuário tentando ver o convite é o convidado
                 abort(403, 'Acesso negado.');
 

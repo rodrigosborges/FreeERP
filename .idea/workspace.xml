@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="Mensagens de confirmação para ações nos compartilhamentos de agendas">
+    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Requests/AgendaSalvarRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Requests/AgendaSalvarRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Requests/EventoSalvarRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Requests/EventoSalvarRequest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -181,7 +179,7 @@
       <workItem from="1573238155330" duration="10027000" />
       <workItem from="1573498374412" duration="11897000" />
       <workItem from="1573577374314" duration="4000" />
-      <workItem from="1573578171689" duration="7218000" />
+      <workItem from="1573578171689" duration="11727000" />
     </task>
     <task id="LOCAL-00001" summary="Echo substituido pelo pusher-js">
       <created>1573085202447</created>
@@ -232,7 +230,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573510499406</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Ajuste no validador de datas do evento">
+      <created>1573588348206</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1573588348206</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,6 +265,7 @@
     <MESSAGE value="Ajustes na organização do css/js e no request de evento" />
     <MESSAGE value="Mensagens de confirmação para ações nos convites de evento" />
     <MESSAGE value="Mensagens de confirmação para ações nos compartilhamentos de agendas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Mensagens de confirmação para ações nos compartilhamentos de agendas" />
+    <MESSAGE value="Ajuste no validador de datas do evento" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajuste no validador de datas do evento" />
   </component>
 </project>
