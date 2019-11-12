@@ -195,7 +195,7 @@
 
     @endforeach
 
-    @if ($data['processo_ultimo'])
+    @if (isset($data['processo_ultimo'][0]))
 
         <div class="row dash-cards">
 

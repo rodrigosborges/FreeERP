@@ -70,7 +70,9 @@ Route::prefix('avaliacaodesempenho')->group(function() {
     Route::get('/relatorio', 'RelatorioController@index');
     Route::post('/relatorio/avaliacoes', 'RelatorioController@getAvaliacoes');
     Route::post('/relatorio/individual', 'RelatorioController@individual');
-    Route::get('/relatorio/{tipo}/{id}/show', 'RelatorioController@show');
+
+    Route::get('/relatorio/individual/{tipo}/{id}/show', 'RelatorioController@showIndividual');
+    Route::get('/relatorio/geral/{id}/show', 'RelatorioController@showGeral');
 
     Route::post('/ajax/search', 'BaseController@search');
 

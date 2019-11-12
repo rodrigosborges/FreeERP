@@ -51,12 +51,43 @@ class RelatorioController extends Controller
         return view('avaliacaodesempenho::relatorios/individual/index', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function show($tipo, $id)
+    public function showIndividual($tipo, $id)
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        // AQUI AS FUNÇÕES DO HELPER Q VAO CALCULAR OS RELATORIOS
+        $data = 0;
+
+        switch ($tipo) {
+            case 1:
+                $data = relatorioIndividual($tipo, $id);
+                break;
+
+            case 2:
+                $data = relatorioIndividual($tipo, $id);
+                break;
+            
+            default:
+                break;
+        }
+        
+        return view('avaliacaodesempenho::relatorios/individual/show', compact('moduleInfo', 'menu', 'data'));
+    }
+
+    public function showGeral($tipo, $id)
+    {
+        $moduleInfo = $this->moduleInfo;
+        $menu = $this->menu;
+
+        switch ($tipo) {
+            case 'individual':
+                relatorioIndividual($id);
+                break;
+            
+            default:
+                # code...
+                break;
+        }
         
         return view('avaliacaodesempenho::relatorios/individual/show', compact('moduleInfo', 'menu'));
     }

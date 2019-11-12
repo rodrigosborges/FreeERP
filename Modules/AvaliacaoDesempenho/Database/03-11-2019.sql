@@ -136,19 +136,6 @@ CREATE TABLE `avaliador` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `avaliador_has_avaliado`
---
-
-CREATE TABLE `avaliador_has_avaliado` (
-  `id` int(11) NOT NULL,
-  `avaliador_id` int(11) NOT NULL,
-  `avaliado_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -6419,14 +6406,6 @@ ALTER TABLE `avaliador`
   ADD KEY `avaliador_avaliacao_id_foreign` (`avaliacao_id`);
 
 --
--- Índices para tabela `avaliador_has_avaliado`
---
-ALTER TABLE `avaliador_has_avaliado`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `avaliador_has_avaliado_avaliador_id_foreign` (`avaliador_id`),
-  ADD KEY `avaliador_has_avaliado_avaliado_id_foreign` (`avaliado_id`);
-
---
 -- Índices para tabela `cargo`
 --
 ALTER TABLE `cargo`
@@ -6656,12 +6635,6 @@ ALTER TABLE `avaliador`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
--- AUTO_INCREMENT de tabela `avaliador_has_avaliado`
---
-ALTER TABLE `avaliador_has_avaliado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT de tabela `cargo`
 --
 ALTER TABLE `cargo`
@@ -6839,13 +6812,6 @@ ALTER TABLE `avaliado`
 ALTER TABLE `avaliador`
   ADD CONSTRAINT `avaliador_avaliacao_id_foreign` FOREIGN KEY (`avaliacao_id`) REFERENCES `avaliacao` (`id`),
   ADD CONSTRAINT `avaliador_funcionario_id_foreign` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`);
-
---
--- Limitadores para a tabela `avaliador_has_avaliado`
---
-ALTER TABLE `avaliador_has_avaliado`
-  ADD CONSTRAINT `avaliador_has_avaliado_avaliado_id_foreign` FOREIGN KEY (`avaliado_id`) REFERENCES `avaliado` (`id`),
-  ADD CONSTRAINT `avaliador_has_avaliado_avaliador_id_foreign` FOREIGN KEY (`avaliador_id`) REFERENCES `avaliador` (`id`);
 
 --
 -- Limitadores para a tabela `cidade`

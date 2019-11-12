@@ -50,7 +50,7 @@
                 <td class="text-center align-middle acoes">
             
                     <a class="btn btn-info acoes-btn" title="Show"
-                    href="/tcc/public/avaliacaodesempenho/relatorio/individual/{{ $resultado->id }}/show"><i
+                    href="/tcc/public/avaliacaodesempenho/relatorio/individual/{{ $avaliacao->tipo->id }}/{{ $resultado->id }}/show"><i
                         class="material-icons md-18 md-light">search</i></a>
             
                 </td>
