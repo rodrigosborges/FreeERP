@@ -8,7 +8,7 @@ use Modules\Funcionario\Entities\Cargo;
 class Funcionario extends Model {
     
     protected $table = 'funcionario';
-    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao', 'cargo_id', 'situacao', 'estado_civil_id', 'email_id', 'endereco_id','foto'];
+    protected $fillable = ['nome', 'data_nascimento', 'sexo', 'data_admissao', 'biometria', 'cargo_id', 'situacao', 'estado_civil_id', 'email_id', 'endereco_id','foto'];
     use SoftDeletes;
     
     public function estado_civil(){

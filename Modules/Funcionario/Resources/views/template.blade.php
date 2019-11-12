@@ -9,7 +9,8 @@
         ['icon' => 'work', 'tool' => 'Cargo', 'route' => url('funcionario/cargo')],
         ['icon' => 'monetization_on', 'tool' => 'Pagamentos', 'route' => url('funcionario/pagamento')],
         ['icon' => 'work_off', 'tool' => 'Férias', 'route' => url('funcionario/ferias')],
-        ['icon' => 'book', 'tool' => 'Relatório Férias', 'route' => url('funcionario/ferias/indexRelatorio')]
+        ['icon' => 'book', 'tool' => 'Relatório Férias', 'route' => url('funcionario/ferias/indexRelatorio')],
+        ['icon' => 'history', 'tool' => 'Logs', 'route' => url('funcionario/logs')]
 
     ];
 ?>

@@ -52,12 +52,18 @@ Route::prefix('funcionario')->group(function() {
     Route::resource('funcionario', 'FuncionarioController');
     Route::resource('cargo', 'CargoController');
 
+    //rotas de frequencia
     Route::get('frequencia/{id}', 'FrequenciaController@index');
     Route::post('frequencia/{id}/horasdiarias', 'FrequenciaController@horasdiarias');
     Route::get('frequencia/{id}/pdf/{ano}/{mes}', 'FrequenciaController@pdf');
     Route::get('frequencia/{id}/xls/{ano}/{mes}', 'FrequenciaController@xls');
     Route::get('frequencia/{id}/edit/{ano}/{mes}', 'FrequenciaController@edit');
     Route::put('frequencia/{id}/update/{ano}/{mes}', 'FrequenciaController@update');
+
+    //rotas de logs
+    Route::get('logs', 'LogController@index');
+    Route::get('logs/list', 'LogController@list');
+
     //Rotas Pagamento
     
     Route::resource('pagamento', 'PagamentoController');

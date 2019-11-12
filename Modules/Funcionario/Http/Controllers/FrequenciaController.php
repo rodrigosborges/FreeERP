@@ -5,7 +5,7 @@ namespace Modules\Funcionario\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Funcionario,Ponto};
+use Modules\Funcionario\Entities\{Funcionario,Ponto, Log};
 use Modules\Funcionario\Helpers\PontoExport;
 use Modules\Funcionario\Http\Requests\{PontoCreate, PontoEdit};
 use DB;
@@ -21,6 +21,7 @@ class FrequenciaController extends Controller{
     public function index($id){
 
         $funcionario = Funcionario::findOrFail($id);
+
         $pontos = $funcionario
             ->pontos()
             ->select(
@@ -107,9 +108,35 @@ class FrequenciaController extends Controller{
                 $saida = \DateTime::createFromFormat('d/m/Y H:i:s', $stored['saida']);
                 $saida = $saida->format('Y-m-d H:i:s');
                 $ponto = Ponto::findOrFail($key);
+                $funcionario = $ponto->funcionario;
                 if($ponto->entrada != $entrada || $ponto->saida != $saida || ($ponto->justificativa != null && $ponto->justificativa != $stored['justificativa'])){
+                    
+                    if($ponto->entrada != $entrada){
+                        Log::create([
+                            'mensagem'  => "Entrada do ponto(id:$key) alterada de $ponto->entrada para $entrada do funcionário $funcionario->nome(id:$funcionario->id).",
+                            'created_at'=> date('Y-m-d H:i:s')
+                        ]);
+                    }
+
+                    if($ponto->saida != $saida){
+                        Log::create([
+                            'mensagem'  => "Saída do ponto(id:$key) alterada de $ponto->saida para $saida do funcionário $funcionario->nome(id:$funcionario->id).",
+                            'created_at'=> date('Y-m-d H:i:s')
+                        ]);
+                    }
+
+                    if($ponto->justificativa != null && $ponto->justificativa != $stored['justificativa']){
+                        Log::create([
+                            'mensagem'  => "Justificativa do ponto(id:$key) alterada de ".$ponto->justificativa." para ".$stored['justificativa']." do funcionário $funcionario->nome(id:$funcionario->id).",
+                            'created_at'=> date('Y-m-d H:i:s')
+                        ]);
+                    }
+
                     $ponto->entrada = $entrada;
                     $ponto->saida = $saida;
+                    $ponto->justificativa = $stored['justificativa'];
+                    $ponto->updated_at = date('Y-m-d H:i:s');
+                    $ponto->automatico = 0;$ponto->saida = $saida;
                     $ponto->justificativa = $stored['justificativa'];
                     $ponto->updated_at = date('Y-m-d H:i:s');
                     $ponto->automatico = 0;
@@ -146,19 +173,31 @@ class FrequenciaController extends Controller{
     public function list(Request $request) {
         $funcionarios = new Funcionario;
 
-        if($request['pesquisa']) {
-            $funcionarios = $funcionarios->where('nome', 'like', '%'.$request['pesquisa'].'%');
+        if($request['search']) {
+            $funcionarios = $funcionarios->where('nome', 'like', '%'.$request['search'].'%');
         }
 
-        return response()->json($funcionarios->orderBy('biometria')->orderBy('nome')->select('id','nome','biometria')->paginate(10));
+        return response()->json(
+            $funcionarios->orderBy('nome')
+                ->orderBy('biometria')
+                ->with(['documento' => function($q) {
+                    $q->where('tipo_documento_id', 1)->select("numero")->first();
+                }])
+                ->select('id','nome','biometria')                
+                ->paginate(5));
     }
 
     public function biometry(Request $request,$id){
         try{  
-            $funcionario = Funcionario::findOrFail($id);
-            $funcionario->biometria = $request->biometria;
-            $funcionario->update();
-            return json_encode(true);
+            if($request->biometria){
+                $funcionario = Funcionario::findOrFail($id);
+                $funcionario->biometria = $request->biometria;
+                $funcionario->update();
+                return json_encode(true);
+            }
+            else{
+                return json_encode(false);
+            }
         }catch(Exception $e){
             return json_encode(false);
         }
@@ -181,17 +220,23 @@ class FrequenciaController extends Controller{
 
             $funcionario = Funcionario::findOrFail($id);
 
-            if($funcionario->ferias()->where('data_inicio', '<=', $date)->where('data_fim', '>=', $date)->count() > 0){
+            $ferias = $funcionario->ferias()->where('data_inicio', '<=', $date)->where('data_fim', '>=', $date);
+            if($ferias->count() > 0){
+                $ferias = $ferias->first();
+
                 return json_encode([
                     'horario'   => $dateBr,
-                    'mensagem'  => "Não foi possível registrar a entrada.<br>Funcionário se encontra de férias.",
+                    'mensagem'  => "Não foi possível registrar a entrada.<br>Funcionário encontra-se de férias  de ".date("d/m/Y", strtotime($ferias->data_inicio))." até ".date("d/m/Y", strtotime($ferias->data_fim)).".",
                 ]);
             }
 
-            if($funcionario->atestados()->where('data_inicio', '<=', $date)->where('data_fim', '>=', $date)->count() > 0){
+            $licenca = $funcionario->atestados()->where('data_inicio', '<=', $date)->where('data_fim', '>=', $date);
+            if($licenca->count() > 0){
+                $licenca = $licenca->first();
+
                 return json_encode([
                     'horario'   => $dateBr,
-                    'mensagem'  => "Não foi possível registrar a entrada.<br>Funcionário se encontra de licença.",
+                    'mensagem'  => "Não foi possível registrar a entrada.<br>Funcionário encontra-se de licença de ".date("d/m/Y", strtotime($licenca->data_inicio))." até ".date("d/m/Y", strtotime($licenca->data_fim)).".",
                 ]);
             }
             
