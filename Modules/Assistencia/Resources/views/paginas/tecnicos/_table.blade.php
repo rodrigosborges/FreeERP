@@ -80,8 +80,6 @@
                             <td scope="row">{{$tecnico->nome }}</td>
                             <td>{{$tecnico->cpf }}</td>
                             <td>
-                                <a href="{{route('tecnico.editar',$tecnico->id)}}"><button type="button"
-                                        class="btn btn-secondary">Editar</button></a>
                                 <a href="{{route('tecnico.deletar',$tecnico->id)}}"><button type="button"
                                         class="btn btn-warning">Ativar</button></a>
                             </td>
