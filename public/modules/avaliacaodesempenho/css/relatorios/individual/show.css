@@ -7,3 +7,14 @@
 .card-body h3 {
     text-align: center;
 }
+
+.opt-list {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+}
+
+.opt-list li {
+    margin: 20px 0;
+}

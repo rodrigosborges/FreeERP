@@ -15,7 +15,14 @@
 }
 
 .alternativas {
+    display: flex;
+    justify-content: space-between;
     list-style-type: none;
+    padding: 0;
+}
+
+.alternativas li {
+    margin: 20px 0 0 0;
 }
 
 .errors {

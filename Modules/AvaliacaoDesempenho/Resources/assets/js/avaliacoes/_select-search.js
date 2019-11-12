@@ -63,11 +63,11 @@ function populateCard(data) {
                 <br>
                 <b>Alternativas:</b>
                 <ul class='alternativas'>
-                    <li>a) - ${data.opt1}</li>
-                    <li>b) - ${data.opt2}</li>
-                    <li>c) - ${data.opt3}</li>
-                    <li>d) - ${data.opt4}</li>
-                    <li>e) - ${data.opt5}</li>
+                    <li><b>a)</b> ${data.opt1}</li>
+                    <li><b>b)</b> ${data.opt2}</li>
+                    <li><b>c)</b> ${data.opt3}</li>
+                    <li><b>d)</b> ${data.opt4}</li>
+                    <li><b>e)</b> ${data.opt5}</li>
                 </ul>
             </div>
 

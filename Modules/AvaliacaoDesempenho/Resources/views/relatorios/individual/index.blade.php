@@ -26,6 +26,8 @@
     <div class="card-body">
         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
         <div id="RelatorioIndividualListar"></div>
+
+        <p class='initial-info text-center'>Busque um processo em andamento ou finalizado e selecione uma avaliação</p>
     </div>
     
 </div>

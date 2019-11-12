@@ -7,7 +7,7 @@
 @section('container')
 
 <div class="card">
-
+    
     <div class="card-header result-resume">
 
         <div>
@@ -20,21 +20,20 @@
         <div>
             <p><b>Numero de Categorias: </b>{{ count($data['categorias']) }}</p>
             <p><b>Pontuação Total: </b>{{ $data['pontuacao'] }}/{{ count($data['questoes'])*5 }}</p>
-            <p><b>Pontuação por Categoria: </b>
-                @foreach ($data['pontuacaoCategoria'] as $key => $categoria)
-                    @foreach ($data['categorias'] as $aux)
-                        @if ($key == $aux->id)
-                            <li><b>{{ $aux->nome }}: </b>{{ $data['pontuacaoCategoria'][$key] }}</li>
-                        @endif
-                    @endforeach
+            <b>Pontuação por Categoria: </b>
+            @foreach ($data['pontuacaoCategoria'] as $key => $categoria)
+                @foreach ($data['categorias'] as $aux)
+                    @if ($key == $aux->id)
+                        <li><b>{{ $aux->nome }}: </b>{{ $data['pontuacaoCategoria'][$key] }}</li>
+                    @endif
                 @endforeach
-            </p>
+            @endforeach
         </div>
 
     </div>
 
     <div class="card-body">
-        <h3>QUESTÕES</h3>
+        <h3>Questões</h3>
 
         @foreach ($data['questoes'] as $questao)
 

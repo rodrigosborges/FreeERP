@@ -49,6 +49,8 @@ $(document).ready(function() {
             success: function (data) {
                 $('#RelatorioIndividualListar').html('')
                 $('#RelatorioIndividualListar').append(data)
+                $('.initial-info').css('display', 'none')
+
                 $('#table').DataTable({
                     'searching': false,
                     'lengthChange': false,
