@@ -15,7 +15,7 @@ class AgendaSalvarRequest extends FormRequest
     {
         return [
             'agendaNome' => 'required | string | max:100',
-            'agendaDescricao' => 'max:500',
+            'agendaDescricao' => 'max:500 | string | nullable',
             'agendaCor' => 'required | numeric'
         ];
     }
@@ -25,7 +25,6 @@ class AgendaSalvarRequest extends FormRequest
         return [
             'agendaNome' => 'título',
             'agendaDescricao' => 'descrição',
-            'agendaCor' => 'cor'
         ];
     }
 

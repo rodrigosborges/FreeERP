@@ -365,7 +365,7 @@ class EventoController extends Controller
      * @param $data
      * @return Carbon
      */
-    private function formatar_data($data)
+    public static function formatar_data($data)
     {
         $formatos = ['d/m/Y H:i', 'd/m/Y'];
         foreach ($formatos as $formato) {
