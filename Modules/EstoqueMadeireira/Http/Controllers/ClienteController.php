@@ -86,13 +86,12 @@ class ClienteController extends Controller
     {
         DB::beginTransaction();
         try{
-            Cliente::create($req->all());
+           $cliente = Cliente::create($req->all());
            $teste = Endereco::create([
-                'cliente_id' => $cliente_id,
+                'cliente_id' => $cliente->id,
                 'endereco' => $req->endereco,
                 'complemento' => $req->complemento,
             ]);
-            return $teste;
             DB::commit();
             return redirect('/estoquemadeireira/vendas/clientes')->with('Success', 'Cliente cadastrado com sucesso!');
         } catch(\Exeception $e) {
@@ -137,6 +136,7 @@ class ClienteController extends Controller
     public function ficha($id)
     {
         $cliente = Cliente::findOrFail($id);
+        
         return view('estoquemadeireira::vendas.cliente.ficha', $this->template, compact('cliente'));
     }
 

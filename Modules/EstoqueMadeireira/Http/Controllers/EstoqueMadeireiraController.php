@@ -193,21 +193,29 @@ class EstoqueMadeireiraController extends Controller
 
     public function destroy($id)
     {
+
+        
         $estoque = Estoque::findOrFail($id);
-        $movimentacao = MovimentacaoEstoque::where('observacao', 'Item Excluido')->where('estoque_id', $id)->get();
-        $tamanho = count($movimentacao);
-        if($movimentacao < 1){
-            MovimentacaoEstoque::create([
-                'estoque_id' => $estoque->id,
-                'quantidade' => $estoque->quantidade,
-                'preco_custo' => $estoque->movimentacaoEstoque->first()->preco_custo,
-                'observacao'
-            ]);
+        // $movimentacao = MovimentacaoEstoque::where('observacao', 'Item Excluido')->where('estoque_id', $id)->get();
+        // $tamanho = count($movimentacao);
+        // if($tamanho < 1){
+            // MovimentacaoEstoque::create([
+            //     'estoque_id' => $estoque->id,
+            //     'quantidade' => -$estoque->quantidade,
+            //     'preco_custo' => 0.0,
+            //     'observacao' => 'Estoque excluido'
+            // ]);
             $estoque->delete();
             return back()->with('success', 'Categoria Removida com sucesso');
-        }
+        // }
     }
 
+    public function restore($id){
+        $estoque = Estoque::onlyTrashed()->findOrFail($id);
+        $estoque->restore();
+
+        return redirect('/estoquemadeireira')->with('success', 'Estoque restaurado com sucesso!');
+    }
 
     public function Busca(Request $request){
 

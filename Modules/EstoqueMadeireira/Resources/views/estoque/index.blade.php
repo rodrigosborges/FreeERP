@@ -66,7 +66,7 @@
             </td>
             <td>
                 <form method="POST" action="{{url('estoquemadeireira/'.$item->id )}}">
-                    @method('delete')
+                    @method('put')
                     @csrf
                     <button type="submit" class="btn btn-sm btn-danger" style="font-size:0px">
 

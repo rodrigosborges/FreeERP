@@ -31,9 +31,9 @@
 
                     <div class="form-group col-4 ml-2">
                         <label for="endereco">Endereço</label>
-                        <input type="text" class="form-control" name="endereco" placeholder="Insira o Endereço" id="endereco" value="{{isset($endereco) ? $endereco->endereco: ' '}}">
+                        <input type="text" class="form-control" name="endereco" placeholder="Insira o Endereço" id="endereco" value="{{isset($endereco) ? $endereco->endereco: ''}}">
                         <label for="endereco">Complemento</label>
-                        <input type="text" class="form-control" name="complemento" placeholder="Insira o Endereço" id="complemento" value="{{isset($endereco) ? $endereco->complemento: ' '}}">
+                        <input type="text" class="form-control" name="complemento" placeholder="ex: Casa 1, Via" id="complemento" value="{{isset($endereco) ? $endereco->complemento: ''}}">
                     </div>
 
                 </div>  
@@ -95,7 +95,7 @@
         $("#alert").hide();
         $("#cnpj").mask("99.999.999/9999-99");
         $("#telefone").mask("(99)9999-99999");
-       
+        
 	});
 
     $(function() {

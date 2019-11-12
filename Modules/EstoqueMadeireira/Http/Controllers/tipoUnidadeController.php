@@ -88,7 +88,7 @@ class tipoUnidadeController extends Controller
         try{
             tipoUnidade::create($request->all());
             DB::commit();
-            return redirect('/estoquemadeireira/tipounidade')->with('Success', 'Tipo de Unidade cadastrado com sucesso!');
+            return redirect('/estoquemadeireira/tipounidade')->with('Success', 'Unidade cadastrada com sucesso!');
         } catch(\Exeception $e) {
             return back()->with('Error', 'Erro no cadastro de Tipo de Unidade');
         }
@@ -119,7 +119,7 @@ class tipoUnidadeController extends Controller
             $tipo = tipoUnidade::findOrFail($id);
             $tipo->update($request->all());
             DB::commit();
-            return redirect('/estoquemadeireira/tipounidade')->with('success', 'Tipo de unidade atualizado com sucesso!');
+            return redirect('/estoquemadeireira/tipounidade')->with('success', 'Unidade atualizada com sucesso!');
         }catch  (\Exception $e){
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
@@ -136,7 +136,7 @@ class tipoUnidadeController extends Controller
     {
         $tipo = tipoUnidade::findOrFail($id);
         $tipo->delete();
-        return redirect('estoquemadeireira/tipounidade')->with('success', 'Tipo de unidade desativada com sucesso!');
+        return redirect('estoquemadeireira/tipounidade')->with('success', 'Unidade desativada com sucesso!');
     }
 
 
@@ -145,7 +145,7 @@ class tipoUnidadeController extends Controller
     public function restore($id){
         $tipo = tipoUnidade::onlyTrashed()->findOrFail($id);
         $tipo->restore();
-        return redirect('estoquemadeireira/tipounidade')->with('success', 'Tipo de unidade reativado!');
+        return redirect('estoquemadeireira/tipounidade')->with('success', 'Unidade reativada com sucesso!');
     }
 
 

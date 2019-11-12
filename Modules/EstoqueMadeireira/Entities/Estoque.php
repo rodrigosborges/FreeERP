@@ -22,7 +22,7 @@ class Estoque extends Model
     }
     public function movimentacaoEstoque()
     {
-        return $this->hasMany('Modules\EstoqueMadeireira\Entities\MovimentacaoEstoque')->withTrashed();
+        return $this->hasMany('Modules\EstoqueMadeireira\Entities\MovimentacaoEstoque');
     }
 }
 

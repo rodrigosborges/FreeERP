@@ -15,7 +15,7 @@
                     
                 </div>
                 <div class="col-md-6">
-                    <label for="endereco"><i class="material-icons" style="vertical-align:middle;">directions</i>&nbsp&nbsp<b>Endereço</b><br><br>{{$cliente->endereco}}</label>
+                    <label for="endereco"><i class="material-icons" style="vertical-align:middle;">directions</i>&nbsp&nbsp<b>Endereço</b><br><br>{{$cliente->enderecos->first()->endereco}}, {{$cliente->enderecos->first()->complemento}}</label>
                 </div>
 
                 

@@ -58,6 +58,7 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/inativos', 'EstoqueMadeireiraController@inativos');
     Route::get('/{id}/edit', 'EstoqueMadeireiraController@edit');
     Route::put('/{id}', 'EstoqueMadeireiraController@destroy');
+    Route::put('/{d}/restore', 'EstoqueMadeireiraController@restore');
 
     //CLIENTES
     Route::get('/vendas/clientes/inativos', 'ClienteController@inativos');

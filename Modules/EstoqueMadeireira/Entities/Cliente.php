@@ -9,7 +9,7 @@ class Cliente extends Model
     use SoftDeletes;
     
     protected $table = 'clientes';
-    protected $fillable = ['nome', 'telefone','documento','endereco', 'email'];
+    protected $fillable = ['nome', 'telefone','documento', 'email'];
 
     // public function tipoDocumento(){
     //     return $this->hasOne('Modules\EstoqueMadeireira\Entities\TipoDocumento', 'tipoDocumento_id')->withTrashed();
