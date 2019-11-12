@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Calendario\Entities\Evento;
+use Modules\Calendario\Http\Controllers\EventoController;
 use Modules\Calendario\Notifications\NotificarEventoProximo;
 
 class EnviarNotificacaoEventoProximo extends Command
@@ -55,14 +56,17 @@ class EnviarNotificacaoEventoProximo extends Command
         //Formata a data de acordo com o tipo do evento
         foreach ($eventos as $evento){
             if($evento->dia_todo){
-                $data = Carbon::parse($evento->data_inicio)->format('d/m/Y');
+                $data_inicial = Carbon::parse($evento->data_inicio)->format('Y-m-d');
             } else {
-                $data = Carbon::parse($evento->data_inicio)->format('d/m/Y H:i');
+                $data_inicial = Carbon::parse($evento->data_inicio)->format('Y-m-d H:i');
             }
 
-            //Verifica se a hora atual é maior que a hora do evento subtraída a hora da solicitação de notificação
+            //Adiciona à hora atual o tempo da notificação
+            $data_notificacao = Carbon::now()->addSeconds($evento->notificacao->tempo * $evento->notificacao->periodo)->format('Y-m-d H:i');
+
+            //Verifica se a hora atual + tempo de notificação é superior ou igual à hora da solicitação de notificação
             //Essa seria a hora do disparo da notificação
-            if(Carbon::now() >= Carbon::create($data)->subSeconds($evento->notificacao->tempo * $evento->notificacao->periodo)){
+            if($data_notificacao >= $data_inicial){
                 //Envia a notificação ao dono do evento
                 $evento->agenda->funcionario->user->notify(new NotificarEventoProximo($evento));
                 //Verifica os convites e dispara notificação para os aceitos
@@ -71,11 +75,10 @@ class EnviarNotificacaoEventoProximo extends Command
                         $convite->funcionario->user->notify(new NotificarEventoProximo($evento));
                     }
                 }
+                //Atualiza a notificação do evento como já disparada, para não ocorrer novamente
+                $evento->notificacao->disparado = true;
+                $evento->notificacao->save();
             }
-
-            //Atualiza a notificação do evento como já disparada, para não ocorrer novamente
-            $evento->notificacao->disparado = true;
-            $evento->notificacao->save();
 
             //Avanço da barra
             $bar_eventos->advance();
