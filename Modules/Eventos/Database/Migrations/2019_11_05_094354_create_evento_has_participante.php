@@ -19,6 +19,7 @@ class CreateEventoHasParticipante extends Migration
             $table->foreign('programacao_id')->references('id')->on('programacao')->onDelete('CASCADE');
             $table->unsignedInteger('pessoa_id');
             $table->foreign('pessoa_id')->references('id')->on('pessoa')->onDelete('CASCADE');
+            $table->boolean('faltou')->nullable();
             $table->timestamps();
         });
     }

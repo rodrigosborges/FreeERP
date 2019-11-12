@@ -4,6 +4,7 @@ namespace Modules\Eventos\Entities;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\ResetPassword;
 
 class Pessoa extends Authenticatable
 {
@@ -26,5 +27,10 @@ class Pessoa extends Authenticatable
     
     public function certificado(){
         return $this->hasMany(Certificado::class);
+    }
+    
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }

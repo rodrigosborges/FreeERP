@@ -8,6 +8,7 @@ use Modules\Eventos\Entities\Pessoa;
 use Modules\Eventos\Entities\Programacao;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PessoasController extends Controller
 {
@@ -28,7 +29,7 @@ class PessoasController extends Controller
         if(count($eventos) < 1) //VERIFICA SE EXISTE PELO MENOS 1 EVENTO CADASTRADO
             return view('eventos::cadastrarEvento');
         else    
-            return view('eventos::pessoas', ['eventos' => $eventos, 'evento' => null]);
+            return view('eventos::pessoas', ['eventos' => $eventos, 'evento' => null, 'programacao' => null]);
     }
     
     function exibir(Request $request)
@@ -73,5 +74,25 @@ class PessoasController extends Controller
     {        
         $pessoa = Pessoa::find(Auth::id());
         return view('eventos::meusCertificados', ['pessoa' => $pessoa]);
+    }
+    
+    public function gerarLista($id){
+        $programacao = Programacao::find($id);
+        return view('eventos::lista', ['programacao' => $programacao]);
+    }
+    
+    public function presenca(Request $request){
+        if($request->faltou == 'true'){
+            $participante = DB::table('evento_has_participante')
+                ->where('programacao_id', $request->atividade)
+                ->where('pessoa_id', $request->pessoa)
+                ->update(['faltou' => 1]);
+        } else {
+            $participante = DB::table('evento_has_participante')
+                ->where('programacao_id', $request->atividade)
+                ->where('pessoa_id', $request->pessoa)
+                ->update(['faltou' => 0]);
+        }
+        return response()->json();
     }
 }

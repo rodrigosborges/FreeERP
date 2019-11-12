@@ -21,7 +21,6 @@
             <p>Sem certificados para exibir!</p>
         </div>
     @else
-        
         <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12">
             <ul>
                 @foreach($pessoa->certificado as $certificado)

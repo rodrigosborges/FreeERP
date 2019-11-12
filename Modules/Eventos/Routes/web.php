@@ -25,6 +25,7 @@ Route::delete('/eventos/programacao/excluir', 'ProgramacaoController@excluir')->
 Route::get('/eventos/inscritos', 'PessoasController@index')->name('eventos.pessoas');
 Route::any('/eventos/inscritos/exibir', 'PessoasController@exibir')->name('pessoas.exibir');
 Route::post('/eventos/inscritos/excluir', 'PessoasController@excluir')->name('pessoas.excluir');
+Route::post('/eventos/inscritos/teste', 'PessoasController@presenca')->name('pessoas.presenca');
 
 Route::get('/eventos/certificados', 'PessoasController@meusCertificados')->name('certificados');
 
@@ -34,3 +35,4 @@ Route::get('/eventos/get-evento/{id}', 'EventosController@getEvento');
 Route::get('/eventos/get-data/', 'EventosController@getData');
 
 Route::get('/pdf/{evento}', 'EventosController@certificados')->name('gerar.certificados');
+Route::get('/eventos/lista/{id}', 'PessoasController@gerarLista')->name('gerar.lista');

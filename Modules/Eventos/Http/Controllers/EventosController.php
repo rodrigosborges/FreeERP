@@ -179,14 +179,22 @@ class EventosController extends Controller
         
         foreach($evento->programacao as $atividade){
             foreach($atividade->participantes as $participante){
-                $pessoas->add($participante);
+                $faltou = DB::table('evento_has_participante')
+                    ->where('programacao_id', $atividade->id)
+                    ->where('pessoa_id', $participante->id)
+                    ->first('faltou');
+                if ($faltou->faltou != 1){
+                    $pessoas->add($participante);
+                }
             }
         }
         
         $pessoas = $pessoas->unique();
         
         foreach($pessoas as $participante){
-            $this->gerarCertificado($evento->id, $participante);
+            if($participante->faltou != 1){
+                $this->gerarCertificado($evento->id, $participante);
+            }
         }
         
         return redirect()->route('pessoas.exibir', ['evento' => $evento->id])
@@ -203,12 +211,13 @@ class EventosController extends Controller
                 $duracao = explode(":", $atividade->duracao);
                 $cargaHoraria->addHour($duracao[0]);
                 $cargaHoraria->addMinutes($duracao[1]);
+                $participou[] = $atividade;
             }
         }
         $data = new Carbon();
         $data = $data->formatLocalized('%d de %B de %Y');
         $nomeArquivo = "storage/certificado/" . time() . $pessoa->id . ".pdf";
-        $pdf = \PDF::loadView('eventos::certificado',['evento' => $evento, 'pessoa' => $pessoa, 'cargaHoraria' => $cargaHoraria, 'data' => $data])
+        $pdf = \PDF::loadView('eventos::certificado',['evento' => $evento, 'pessoa' => $pessoa, 'cargaHoraria' => $cargaHoraria, 'data' => $data, 'participou' => $participou])
                 ->setPaper('a4', 'landscape')
                 ->save($nomeArquivo);
         $certificado = new Certificado();
