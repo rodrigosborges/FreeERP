@@ -49,12 +49,31 @@ class PedidoController extends Controller
 
     //Retorna os inativos, com a opção de reativa-los 
 
-    public function finalizados()
+    
+    public function abertos()
     {
         $flag = 1;
-        $pedidos = Pedido::onlyTrashed()->paginate(5);
+        $pedidos = Pedido::all()->paginate(10);
         return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'flag',));
     }
+
+
+    public function enviados()
+    {
+        $flag = 2;
+        $pedidos = Pedido::all()->paginate(10);
+        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'flag',));
+    }
+    
+    public function finalizados()
+    {
+        $flag = 3;
+        $pedidos = Pedido::all()->paginate(10);
+        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'flag',));
+    }
+
+
+
 
     public function restore($id){
        
@@ -144,7 +163,7 @@ class PedidoController extends Controller
         $sql = [];
         $categorias = Categoria::all();
         
-        
+        return $request;
         if($request['pesquisa'] == null){
             return redirect('/estoquemadeireira/produtos/categorias')->with('error', 'Insira um nome para a pesquisa');
 
