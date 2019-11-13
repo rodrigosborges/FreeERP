@@ -14,10 +14,11 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">Título</th>
+                    <th scope="col">Agenda</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Setor</th>
                     <th scope="col">Solicitante</th>
+                    <th scope="col">Data</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -28,6 +29,7 @@
                         <td>{{isset($solicitacao->agenda->descricao) ? $solicitacao->agenda->descricao : '---'}}</td>
                         <td>{{$solicitacao->setor->sigla}}</td>
                         <td>{{$solicitacao->agenda->funcionario->nome}}</td>
+                        <td>{{\Carbon\Carbon::parse($solicitacao->created_at)->format('d/m/Y H:i')}}</td>
                         <td class="acoes">
                             <a href="{{route('compartilhamentos.deletar', $solicitacao)}}" class="btn btn-secondary btn-sm text-white deletar-compartilhamento">
                                 <i class="material-icons">delete</i>
@@ -51,10 +53,11 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">Título</th>
+                    <th scope="col">Agenda</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Setor</th>
                     <th scope="col">Solicitante</th>
+                    <th scope="col">Data</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -65,6 +68,7 @@
                         <td>{{isset($solicitacao->agenda->descricao) ? $solicitacao->agenda->descricao : '---'}}</td>
                         <td>{{$solicitacao->setor->sigla}}</td>
                         <td>{{$solicitacao->agenda->funcionario->nome}}</td>
+                        <td>{{\Carbon\Carbon::parse($solicitacao->created_at)->format('d/m/Y H:i')}}</td>
                         <td class="acoes">
                             <a href="{{route('compartilhamentos.revogar', $solicitacao)}}"
                                class="btn btn-info btn-sm text-white small revogar-compartilhamento">

@@ -81,7 +81,8 @@
             <!-- Nota -->
             <div class="form-group">
                 <label for="eventoNota">Descrição</label>
-                <textarea class="form-control" maxlength="500" name="eventoNota" id="eventoNota" rows="3">{{isset($evento) ? $evento->nota : old('eventoNota')}}</textarea>
+                <textarea class="form-control" maxlength="500" name="eventoNota" id="eventoNota"
+                          rows="3">{{isset($evento) ? $evento->nota : old('eventoNota')}}</textarea>
             </div>
 
             <!-- Convites -->
@@ -90,15 +91,19 @@
                 <select id="eventoConvite" name="eventoConvite[]" class="form-control" multiple>
                     @foreach($funcionarios as $funcionario)
                         @php($selected = '')
+                        @php($status = '')
                         @if(isset($evento))
                             @foreach($evento->convites as $convite)
                                 @if($convite->funcionario_id == $funcionario->id)
                                     @php($selected = 'selected')
+                                    @if($convite->status == true)
+                                        @php($status = true)
+                                    @endif
                                 @endif
                             @endforeach
                         @endif
                         @if($funcionario->id != auth()->id())
-                            <option value="{{$funcionario->id}}" {{$selected}}>{{$funcionario->nome}}</option>
+                            <option value="{{$funcionario->id}}" {{$selected}}>{{$funcionario->nome}} @if($status) &#10004; @endif</option>
                         @endif
                     @endforeach
                 </select>
@@ -205,6 +210,6 @@
             $('#eventoConvite').chosen({
                 placeholder_text_multiple: 'Funcionários'
             });
-    });
+        });
     </script>
 @endsection

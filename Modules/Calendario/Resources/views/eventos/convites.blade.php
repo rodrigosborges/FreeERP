@@ -14,10 +14,11 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">Título</th>
+                    <th scope="col">Evento</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Data</th>
-                    <th scope="col">Solicitante</th>
+                    <th scope="col">Responsável</th>
+                    <th scope="col">Criado</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -40,6 +41,7 @@
                             </td>
                         @endif
                         <td>{{$convite->evento->agenda->funcionario->nome}}</td>
+                        <td>{{\Carbon\Carbon::parse($convite->created_at)->format('d/m/Y H:i')}}</td>
                         <td class="acoes">
                             <a href="{{route('convites.deletar', $convite->id)}}" class="btn btn-secondary btn-sm text-white small deletar-convite">
                                 <i class="material-icons">delete</i>
@@ -59,10 +61,11 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">Título</th>
+                    <th scope="col">Evento</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Data</th>
-                    <th scope="col">Solicitante</th>
+                    <th scope="col">Responsável</th>
+                    <th scope="col">Criado</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -85,6 +88,7 @@
                             </td>
                         @endif
                         <td>{{$convite->evento->agenda->funcionario->nome}}</td>
+                        <td>{{\Carbon\Carbon::parse($convite->created_at)->format('d/m/Y H:i')}}</td>
                         <td class="acoes">
                             <a href="{{route('convites.revogar', $convite->id)}}" class="btn btn-info btn-sm text-white small revogar-convite">
                                 <i class="material-icons">redo</i>

@@ -294,7 +294,7 @@ class EventoController extends Controller
                 });
             })->get();
         } else {
-            if (!Auth::user()->is($convite->funcionario))
+            if (!Auth::user()->is($convite->funcionario->user))
                 //Verifica se o usuário tentando ver o convite é o convidado
                 abort(403, 'Acesso negado.');
 
