@@ -82,7 +82,7 @@ class QuestaoController extends Controller
             echo '<pre>';
             print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar a Questão');
+            return back()->with('error', 'Não foi possível cadastrar a Questão')->withInput($request->input());
         }
     }
 
@@ -123,7 +123,7 @@ class QuestaoController extends Controller
             echo '<pre>';
             print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar a Questão');
+            return back()->with('error', 'Não foi possível cadastrar a Questão')->withInput($request->input());
         }
     }
 

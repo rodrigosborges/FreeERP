@@ -62,3 +62,7 @@
 #nextBtn {
     align-self: flex-end;
 }
+
+.funcionario-nome {
+    margin-left: 20px;
+}

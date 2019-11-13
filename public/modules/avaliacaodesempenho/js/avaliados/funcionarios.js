@@ -4,10 +4,12 @@ $(document).ready(function() {
         e.preventDefault()
 
         var id = $(this).attr('id')
+        var nome = $(this).parent().siblings('.nome').text()
 
         $('.questoes').removeClass('invisible')
 
         $('#funcionarioId').val(id)    
+        $('.funcionario-nome').html('Funcionario: '+nome)    
     })
 })
 

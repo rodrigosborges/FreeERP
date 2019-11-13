@@ -81,7 +81,7 @@ class ProcessoController extends Controller
             echo '<pre>';
             print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar o Processo');
+            return back()->with('error', 'Não foi possível cadastrar o Processo')->withInput($request->input());
         }
     }
 
@@ -121,7 +121,7 @@ class ProcessoController extends Controller
             echo '<pre>';
             print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar o Processo');
+            return back()->with('error', 'Não foi possível cadastrar o Processo')->withInput($request->input());
         }
     }
 

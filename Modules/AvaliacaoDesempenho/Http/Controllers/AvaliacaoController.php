@@ -84,6 +84,12 @@ class AvaliacaoController extends Controller
 
             $input = $request->input('avaliacao');
 
+            $check = Avaliacao::where('setor_id', $input['setor_id'])->where('tipo_id', $input['tipo_id'])->where('status_id', '!=', 3)->get();
+
+            if ($check) {
+                return back()->with('error', 'Não foi possivel cadastrar. Já existe uma Avaliação com o mesmo tipo e setor em andamento.')->withInput($request->input());  
+            } 
+
             $setor = Setor::findOrFail($input['setor_id']);
 
             $input['status_id'] = 1;
@@ -181,7 +187,7 @@ class AvaliacaoController extends Controller
 
             echo '<pre>';print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar a Avaliação');
+            return back()->with('error', 'Não foi possível cadastrar a Avaliação')->withInput($request->input());
         }
     }
 
@@ -240,7 +246,7 @@ class AvaliacaoController extends Controller
 
             echo '<pre>';print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possivel editar a Avaliação');
+            return back()->with('error', 'Não foi possivel editar a Avaliação')->withInput($request->input());
         }
     }
 

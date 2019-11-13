@@ -278,5 +278,7 @@ class AvaliacaoRespostaController extends Controller
         Mail::send('avaliacaodesempenho::emails/_recuperar', $data, function($message) use($data) {
             $message->to($data['avaliador']->funcionario->email->email, $data['avaliador']->funcionario->nome)->subject('Recuperação de Senha');
         });
+
+        return view('avaliacaodesempenho::avaliados/index');
     }
 }

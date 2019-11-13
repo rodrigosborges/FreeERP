@@ -70,7 +70,7 @@ class SetorController extends Controller
             echo '<pre>';
             print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar o Setor');
+            return back()->with('error', 'Não foi possível cadastrar o Setor')->withInput($request->input());
         }
     }
 
@@ -109,7 +109,7 @@ class SetorController extends Controller
             echo '<pre>';
             print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar o Setor');
+            return back()->with('error', 'Não foi possível cadastrar o Setor')->withInput($request->input());
         }
     }
 

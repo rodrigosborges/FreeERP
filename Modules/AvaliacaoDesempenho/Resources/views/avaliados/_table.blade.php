@@ -15,7 +15,7 @@
         @foreach($funcionarios as $funcionario)
 
             <tr>
-                <td class="text-center align-middle">{{ $funcionario->nome }}</td>
+                <td class="nome text-center align-middle">{{ $funcionario->nome }}</td>
                 <td class="text-center align-middle">{{ $funcionario->cargo->nome }}</td>
                 <td class="text-center align-middle">
                     <button id="{{$funcionario->id}}" class="avaliar btn btn-primary btn-sm">Avaliar</button>

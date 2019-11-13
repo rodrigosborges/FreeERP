@@ -73,7 +73,7 @@ class CategoriaController extends Controller
 
             echo '<pre>';print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar a Categoria');
+            return back()->with('error', 'Não foi possível cadastrar a Categoria')->withInput($request->input());
         }
     }
 
@@ -111,7 +111,7 @@ class CategoriaController extends Controller
 
             echo '<pre>';print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar a Categoria');
+            return back()->with('error', 'Não foi possível cadastrar a Categoria')->withInput($request->input());
         }
     }
 
