@@ -96,7 +96,8 @@
 
             <div>
                 <p><b>Avaliação: </b>{{ $data['avaliacao']->nome }}</p>
-                <p><b>Avaliado: </b>{{ $data['avaliacao']->avaliados[0]->funcionario->nome }}</p>
+                <p><b>Gestor: </b>{{ $data['avaliacao']->avaliados[0]->funcionario->nome }}</p>
+                <p><b>Setor: </b>{{ $data['avaliacao']->setor->nome }}</p>
                 <p><b>Numero de Questões: </b>{{ count($data['avaliacao']->questoes) }}</p>
                 <p><b>Numero de Categorias: </b>{{ count($data['categorias']) }}</p>
             </div>
