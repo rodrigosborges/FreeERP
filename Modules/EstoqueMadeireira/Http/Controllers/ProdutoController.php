@@ -155,8 +155,9 @@ class ProdutoController extends Controller
 
     public function ficha($id){
         $produto = Produto::findOrFail($id);
-
-        return view('estoquemadeireira::produtos/ficha', $this->template, compact('produto'));
+        $unidadeMedida = UnidadeMedida::findOrFail($produto->unidadeMedida_id);
+        
+        return view('estoquemadeireira::produtos/ficha', $this->template, compact('produto', 'unidadeMedida'));
 
     }
 

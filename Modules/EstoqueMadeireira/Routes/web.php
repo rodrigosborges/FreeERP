@@ -58,11 +58,13 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/vendas/clientes/ficha/{id}', 'ClienteController@ficha');
     
     //PEDIDOS
+    Route::get('/vendas/pedidos/abertos', 'PedidoController@abertos');
+    Route::get('/vendas/pedidos/enviados', 'PedidoController@enviados');
     Route::get('/vendas/pedidos/finalizados', 'PedidoController@finalizados');
 
     //ROTAS DE RELATÓRIOS
-    Route::get('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacao');
-    Route::post('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacaoBusca');
+    Route::get('/relatorios/movimentacao', 'EstoqueMadeireiraController@relatorioMovimentacao');
+    Route::post('/relatorios/movimentacao', 'EstoqueMadeireiraController@relatorioMovimentacaoBusca');
 
     
 
@@ -73,18 +75,18 @@ Route::prefix('estoquemadeireira')->group(function() {
 
 
     //VENDAS
-
+    
     
 
-    //ROTAS PADRÕES (index, crate, edit, update, delete)
-    Route::resource('/vendas/pedidos', 'PedidoController');
-    Route::resource('/vendas/clientes', 'ClienteController');
-    Route::resource('/vendas', 'VendasController');
-    Route::resource('/movimentacao', 'MovimentacaoEstoqueController');
-    Route::resource('/produtos/fornecedores', 'FornecedorController');
-    Route::resource('/produtos/categorias', 'CategoriaController'); 
-    Route::resource('/produtos', 'ProdutoController');  
-    Route::resource('/tipounidade', 'tipoUnidadeController');
+    //ROTAS PADRÕES (index, create, edit, update, delete)
+    Route::resource('/vendas/pedidos', 'PedidoController');                  //Pedidos
+    Route::resource('/vendas/clientes', 'ClienteController');                //Clientes
+    Route::resource('/vendas', 'VendasController');                          //Vendas
+    Route::resource('/movimentacao', 'MovimentacaoEstoqueController');       //Movimentações
+    Route::resource('/produtos/fornecedores', 'FornecedorController');       //Fornecedores
+    Route::resource('/produtos/categorias', 'CategoriaController');          //Categorias
+    Route::resource('/produtos', 'ProdutoController');                       //Produtos
+    Route::resource('/tipounidade', 'tipoUnidadeController');                //Tpo de Unidade (NOME DE UNIDADE)
 
     
     
@@ -94,5 +96,5 @@ Route::prefix('estoquemadeireira')->group(function() {
 
 });
 
-Route::resource('/estoquemadeireira', 'EstoqueMadeireiraController');
+Route::resource('/estoquemadeireira', 'EstoqueMadeireiraController'); 
 Route::post('/buscacliente', 'PedidoController@buscaCliente');

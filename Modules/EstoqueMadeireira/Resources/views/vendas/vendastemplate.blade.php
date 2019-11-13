@@ -36,21 +36,26 @@ $this->template = [
         <ul class="nav justify-content-center" style="background-color: rgb(100,149,237); margin-bottom:5px">
 
             <li class="nav-item ">
-                <a class="nav-link text-white " href="{{url('estoquemadeireira/vendas/clientes')}}">Clientes</a>
+                <a class="nav-link text-white " href="{{url('estoquemadeireira/vendas')}}">Vendas</a>
+
             </li>
 
             <li class="nav-item ">
-                <a class="nav-link text-white " href="{{url('estoquemadeireira/vendas')}}">Vendas</a>
+               <a class="nav-link text-white " href="{{url('estoquemadeireira/vendas/clientes')}}">Clientes</a>
+
             </li>
             <li class="nav-item ">
-                <a class="nav-link text-white " href="{{url('estoquemadeireira/movimentacao')}}">Movimentação</a>
+                <a class="nav-link text-white " href="{{url('estoquemadeireira/vendas/pedidos')}}">Pedidos</a>
             </li>
         
             <li class="nav-item ">
                 <div class="dropdown">
-                    <a class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Relatorios</a>
+                    <a class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Status</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="dropdown-item" href="{{url('/estoquemadeireira/relatorio/movimentacao')}}">Movimentação</a>
+                            <a class="dropdown-item" href="{{url('/estoquemadeireira/vendas/pedidos/abertos')}}">Abertos</a>
+                            <a class="dropdown-item" href="{{url('/estoquemadeireira/vendas/pedidos/enviados')}}">Enviados</a>
+                            <a class="dropdown-item" href="{{url('/estoquemadeireira/vendas/pedidos/finalizados')}}">Finalizados</a>
+
                         </div>
                 </div>
             </li>

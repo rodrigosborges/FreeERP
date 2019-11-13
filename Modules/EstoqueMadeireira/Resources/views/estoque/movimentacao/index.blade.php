@@ -24,7 +24,7 @@
         
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Produto</th>
+            <th scope="col">Produto / Local</th>
             <th scope="col">Quantidade</th>
             <th scope="col">Data</th>
             <th scope="col">Detalhes</th>
@@ -35,18 +35,18 @@
             @if($m->quantidade > 0)
             <tr>
                 <td >{{$m->id}}</td>
-                <td>{{$m->estoque->produtos->last()->nome}} - {{$m->estoque->tipoUnidade->nome}} {{$m->estoque->tipoUnidade->quantidade_itens}}</td>
+                <td>{{$m->estoque->produtos->last()->nome}} - {{$m->estoque->tipoUnidade->nome}}</td>
                 <td class="text-success">+{{$m->quantidade}}</td>
                 <td>{{$m->created_at}}</td>
-                <td><a href="{{url('/estoque/movimentacao/' . $m->id)}}"><button class="btn btn-sm" style="font-size:0px; background-color: rgb(100,149,237);"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
+                <td><a href="{{url('/estoquemadeireira/movimentacao/' . $m->id)}}"><button class="btn btn-sm" style="font-size:0px; background-color: rgb(100,149,237);"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
             </tr>
             @else
             <tr>
                 <td>{{$m->id}}</td>
-                <td>{{$m->estoque->produtos->last()->nome}} - {{$m->estoque->tipoUnidade->nome}}({{$m->estoque->tipoUnidade->quantidade_itens}} itens)  </td>
+                <td>{{$m->estoque->produtos->last()->nome}} - {{$m->estoque->tipoUnidade->nome}}</td>
                 <td class="text-danger">{{$m->quantidade}}</td>
                 <td>{{$m->created_at}}</td>
-                <td><a href="{{url('/estoque/movimentacao/' . $m->id)}}"><button class="btn btn-sm" style="font-size:0px; background-color: rgb(100,149,237);"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
+                <td><a href="{{url('/estoquemadeireira/movimentacao/' . $m->id)}}"><button class="btn btn-sm" style="font-size:0px; background-color: rgb(100,149,237);"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
             </tr>
             @endif
         @endforeach

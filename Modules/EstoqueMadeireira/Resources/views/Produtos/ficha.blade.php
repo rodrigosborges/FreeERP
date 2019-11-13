@@ -24,9 +24,16 @@
             
             <div class="row">
 
+                @if(($produto->tamanho == null) && ($unidadeMedida->id == -1)){
                 <div class="col-md-6">
-                    <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Código de Barras</b><br><br>{{$produto->codigo}}</label>
+                    <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Tamanho</b><br><br> Sem Medição </label>
                 </div>
+                } 
+                @else
+                <div class="col-md-6">
+                    <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Tamanho</b><br><br>{{$produto->tamanho}} - {{$unidadeMedida->nome}} </label>
+                </div>
+                @endif
 
                 <div class="col-md-6">
                     <label for="categoria"><i class="material-icons" style="vertical-align:middle;">category</i>&nbsp&nbsp<b>Categoria</b><br><br>{{$produto->categoria->nome}}</label>   
@@ -40,10 +47,10 @@
                 <div class="col-md-6">
                     <label for="descricao"><i class="material-icons ficha-icon" style="vertical-align:middle;">event_note</i>&nbsp&nbsp<b>Descrição</b><br><br>{{$produto->descricao}}</label> 
                 </div>
-                <div class="col-md-6">
-                <label for="fornecedor"><span><i class="material-icons" style="vertical-align:middle;">account_circle</i></span>&nbsp&nbsp<b>Fornecedor</b><br><br>{{$produto->fornecedor->nome}}</label>
+                    <div class="col-md-6">
+                    <label for="fornecedor"><span><i class="material-icons" style="vertical-align:middle;">account_circle</i></span>&nbsp&nbsp<b>Fornecedor</b><br><br>{{$produto->fornecedor->nome}}</label>
 
-                </div>
+                    </div>
             </div>
             <hr>
             

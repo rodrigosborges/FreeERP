@@ -16,6 +16,9 @@
                     <div class="form-group col-8">
                         <input type="text" id="search-input" maxlength="40" placeholder="Insira o nome do Cliente" class="form-control" name="pesquisa">
                     </div>   
+                    <div class="form-group col-8 mt-1 mb-1">
+                        <input type="text" id="search-input" maxlength="40" placeholder="Insira o CPF ou CNPJ" class="form-control" name="pesquisa">
+                    </div> 
                     <div class="form-group">
                         <button type="submit" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
                     </div>             
@@ -53,7 +56,7 @@
                         <th scope="col">Nome</th>                       
                         @if($flag == 0)      
                         <th scope="col">Documento</th>              
-                        <th scope="col">email</th> 
+                        <th scope="col">Email</th> 
                         <th scope="col">Visualizar Cliente</th>              
                         @else
                         <th scope="col">Restaurar</th>

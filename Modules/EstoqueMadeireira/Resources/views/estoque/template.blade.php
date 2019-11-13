@@ -50,7 +50,7 @@ $this->template = [
                 <div class="dropdown">
                     <a class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Relatorios</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a class="dropdown-item" href="{{url('/estoquemadeireira/relatorio/movimentacao')}}">Movimentação</a>
+                            <a class="dropdown-item" href="{{url('/estoquemadeireira/relatorios/movimentacao')}}">Movimentação</a>
                         </div>
                 </div>
             </li>

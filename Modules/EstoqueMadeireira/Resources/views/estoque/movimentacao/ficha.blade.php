@@ -15,7 +15,7 @@
                     
                 </div>
                 <div class="col-md-4">
-                    <label for="preco"><i class="material-icons" style="vertical-align:middle;">attach_money</i>&nbsp&nbsp<b>Preço de Custo (un.)</b><br><br>R${{$movimentacao->preco_custo}}</label>
+                    <label for="preco"><i class="material-icons" style="vertical-align:middle;">attach_money</i>&nbsp&nbsp<b>Preço de Custo</b><br><br>R${{$movimentacao->preco_custo}}</label>
                 </div>
 
                 <div class="col-md-4">

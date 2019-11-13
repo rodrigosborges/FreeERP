@@ -18,7 +18,7 @@
                         </div>
                         <div class="form-group col-3">
                              <label for="tipoUnidade">Tipo de Unidade</label>
-                             <input class ="form-control" name="tipoUnidade" type="text" disabled value="{{$e->tipoUnidade->nome}}({{$e->tipoUnidade->quantidade_itens}} itens)">
+                             <input class ="form-control" name="tipoUnidade" type="text" disabled value="{{$e->tipoUnidade->nome}} {{$e->tipoUnidade->quantidade_itens}}">
                         </div>
                         <div class="form-group col-3">
                              <label for="quantidadeEstoque">Estoque Atual</label>
@@ -27,11 +27,11 @@
                     </div>
                     <div class="row">
                         <div class="col-12 text-center mt-3">
-                            <a href="{{url('/estoque/movimentacao/alterar/'. $e->id. '/adicionar')}}"><button class="btn btn-success btn-sm">Adicionar Estoque</button></a>
+                            <a href="{{url('/estoquemadeireira/movimentacao/alterar/'. $e->id. '/adicionar')}}"><button class="btn btn-success btn-sm">Adicionar Estoque</button></a>
                             @if($e->quantidade == 0)
-                                <a href="{{url('/estoque/movimentacao/alterar/'. $e->id. '/remover')}}"><button disabled class="btn btn-danger btn-sm ">Remover Estoque</button></a>
+                                <a href="{{url('/estoquemadeireira/movimentacao/alterar/'. $e->id. '/remover')}}"><button disabled class="btn btn-danger btn-sm ">Remover Estoque</button></a>
                             @else 
-                                <a href="{{url('/estoque/movimentacao/alterar/'. $e->id. '/remover')}}"><button  class="btn btn-danger btn-sm ">Remover Estoque</button></a>
+                                <a href="{{url('/estoquemadeireira/movimentacao/alterar/'. $e->id. '/remover')}}"><button  class="btn btn-danger btn-sm ">Remover Estoque</button></a>
                             @endif
                         </div>
                     </div>

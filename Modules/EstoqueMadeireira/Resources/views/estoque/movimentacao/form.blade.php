@@ -14,7 +14,7 @@
         @endif
         </div>
         <div class="card-body">
-        <form action="{{url('/estoque/movimentacao/alterar')}}" method="POST">
+        <form action="{{url('/estoquemadeireira/movimentacao/alterar')}}" method="POST">
         @csrf
             <div class="row">
                     <div class="form-group col-6">

@@ -33,7 +33,7 @@ class MovimentacaoEstoqueController extends Controller
     {
         
         $movimentacao = MovimentacaoEstoque::findOrFail($id);
-        return view('estoque::estoque.movimentacao.ficha', compact('movimentacao'))->with('notificacoes', $this->notificacoes);
+        return view('estoquemadeireira::estoque.movimentacao.ficha', compact('movimentacao'));
     }
     
     
@@ -42,7 +42,7 @@ class MovimentacaoEstoqueController extends Controller
     public function adicionar($id){
         $estoque = Estoque::findOrFail($id);
         $flag = 1;
-        return view('estoque::estoque.movimentacao.form', compact('estoque', 'flag'))->with('notificacoes', $this->notificacoes);
+        return view('estoquemadeireira::estoque.movimentacao.form', compact('estoque', 'flag'));
     }
 
 
@@ -53,7 +53,7 @@ class MovimentacaoEstoqueController extends Controller
         $estoque = Estoque::findOrFail($id);
         $flag = 0;
         
-        return view('estoque::estoque.movimentacao.form', compact('estoque', 'flag'))->with('notificacoes', $this->notificacoes);
+        return view('estoquemadeireira::estoque.movimentacao.form', compact('estoque', 'flag'));
     }
 
 
@@ -62,15 +62,12 @@ class MovimentacaoEstoqueController extends Controller
     public function alterarEstoque($id){
         $e = Estoque::findOrFail($id);
         $movimentacao = MovimentacaoEstoque::where('estoque_id', $e->id)->orderBy('created_at', 'DESC')->paginate(10);
-        return view('estoque::estoque.movimentacao.visualizar', compact('e', 'movimentacao'))->with('notificacoes', $this->notificacoes);
+        return view('estoquemadeireira::estoque.movimentacao.visualizar', compact('e', 'movimentacao'));
     }
 
 
 
-
-
-
-    public function salvarEstoque(MovimentacaoRequest $request){
+    public function salvarEstoque(Request $request){
         $estoque = Estoque::findOrFail($request->estoque_id);
         DB::beginTransaction(); 
         try{
@@ -94,7 +91,7 @@ class MovimentacaoEstoqueController extends Controller
                 ]);
                 $estoque->update();
                 DB::commit();
-            return redirect('/estoque/movimentacao/alterar/' . $estoque->id)->with('success', 'Registro salvo');
+            return redirect('/estoquemadeireira/movimentacao/alterar/' . $estoque->id)->with('success', 'Registro salvo');
         }catch(\Exception $e){
             return back()->with('error', 'Erro no servidor');
         }

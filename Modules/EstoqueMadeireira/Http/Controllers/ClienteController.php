@@ -55,15 +55,7 @@ class ClienteController extends Controller
         return view('estoquemadeireira::vendas.cliente.index', $this->template, compact('clientes', 'flag',));
     }
 
-    
-    public function restore($id){
-       
-        $cliente = Cliente::onlyTrashed()->findOrFail($id);
-        $cliente->restore();
 
-        return redirect('estoquemadeireira/vendas/cliente')->with('success', 'Categoria restaurada com sucesso!');
-
-    }
 
     public function create()
     {         
@@ -129,9 +121,15 @@ class ClienteController extends Controller
     {
         $cliente = cliente::findOrFail($id);
         $cliente->delete();
-        return redirect('/estoquemadeireira/vendas/clientes')->with('success', 'Categoria desativada com sucesso!');
+        return redirect('/estoquemadeireira/vendas/clientes')->with('success', 'Cliente desativado com sucesso!');
     }
 
+    public function restore($id)
+    {
+        $cliente = Cliente::onlyTrashed()->findOrFail($id);
+        $cliente->restore();
+        return redirect('/estoquemadeireira/vendas/clientes')->with('success', 'Cliente reativado com sucesso!');
+    }
 
     public function ficha($id)
     {

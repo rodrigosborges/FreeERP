@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="telefone"><i class="material-icons" style="vertical-align:middle;">phone</i>&nbsp&nbsp<b>Telefone</b><br><br>{{$cliente->tipoDocumento_id}}</label>   
+                    <label for="telefone"><i class="material-icons" style="vertical-align:middle;">phone</i>&nbsp&nbsp<b>Tipo de Pessoa</b><br><br>{{$cliente->tipoDocumento_id}}</label>   
                 </div>   
                     
             </div>
@@ -57,7 +57,7 @@
     
     <div class="d-flex justify-content-end mt-3">
     <input type="button" class="btn btn-primary mr-3" value="Imprimir" onclick="window.print()"/>
-    <form method="POST" action="{{url('/estoquemadeireira/vendas/clientes' . $cliente->id)}}">
+    <form method="POST" action="{{url('/estoquemadeireira/vendas/clientes/' . $cliente->id)}}">
         @method('delete')
         @csrf
         <button type="submit" class="btn btn-danger ml-3">Desativar</button>
