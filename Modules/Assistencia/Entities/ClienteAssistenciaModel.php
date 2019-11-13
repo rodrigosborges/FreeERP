@@ -11,23 +11,10 @@ class ClienteAssistenciaModel extends Model
   protected $table = 'cliente_assistencia';
   protected $fillable = ['id','nome','cpf','email','data_nascimento','celnumero','telefonenumero', 'endereco_id'];
 
-  public function endereco(){
+  public function endereco(){ //relacionamento ao endereço (função que retorna o mesmo)
     return $this->belongsTo('App\Entities\Endereco');
   }
-  // public static function busca($busca){ //busca para localização de cliente por nome, cpf ou telefone
-  //   return static::where('nome', 'LIKE', '%'.$busca.'%')
-  //                 ->orWhere('cpf', 'LIKE', '%'.$busca.'%')
-  //                 ->orWhere('telefonenumero', 'LIKE', '%'.$busca.'%');
-  // }
-
-  // public static function buscaTrash($busca){ //busca para localização de cliente por nome, cpf ou telefone
-  //   return static::onlyTrashed()->where('nome', 'LIKE', '%'.$busca.'%')
-  //                 ->orWhere('cpf', 'LIKE', '%'.$busca.'%')
-  //                 ->orWhere('telefonenumero', 'LIKE', '%'.$busca.'%');
-  // }
-  
   public static function buscaCPF($busca){ //essa busca serve para a validação do cadastro
-
     return static::where('cpf', 'LIKE', '%'.$busca.'%')->paginate(10);
   }
 

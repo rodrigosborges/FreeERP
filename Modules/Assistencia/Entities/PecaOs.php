@@ -9,7 +9,7 @@ class PecaOS extends Model
     protected $table = 'peca_os_assistencia';
     protected $fillable = ['id','idConserto','idItemPeca'];
     
-    public function itemPeca(){
+    public function itemPeca(){ //relacionamento ao itemPeca
         return $this->belongsTo('Modules\Assistencia\Entities\ItemPeca', 'idItemPeca');
     }
 }

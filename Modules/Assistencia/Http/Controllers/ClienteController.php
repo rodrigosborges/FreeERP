@@ -18,12 +18,8 @@ class ClienteController extends Controller
       try{
         $clientes = ClienteAssistenciaModel::paginate(10);
         $clientesDeletados = ClienteAssistenciaModel::onlyTrashed()->paginate(10);
-        
-
-
         DB::commit();
         return view('assistencia::paginas.clientes.localizarCliente', compact('clientes','clientesDeletados'));
-    
       } catch (\Exception $e) {
         
         DB::rollback();
@@ -32,7 +28,7 @@ class ClienteController extends Controller
     }
 
     public function cadastrar(){ //metodo get para o cadastro do cliente
-      $estados = Estado::all();
+      $estados = Estado::all(); //retorna os estados para o select de estados do form
       return view('assistencia::paginas.clientes.cadastroCliente', compact('estados'));
     }
 
@@ -41,7 +37,6 @@ class ClienteController extends Controller
       try{
         $clientes = ClienteAssistenciaModel::paginate(10);
         $clientesDeletados = ClienteAssistenciaModel::onlyTrashed()->paginate(10);
-        
         DB::commit();
         return view('assistencia::paginas.clientes.localizarCliente', compact('clientes','clientesDeletados'));
     
@@ -52,32 +47,29 @@ class ClienteController extends Controller
       }
     }
 
-    public function salvar(StoreClienteRequest $req){ //Medodo create/storo do cliente
-
+    public function salvar(StoreClienteRequest $req){ //Medodo store do cliente com parametro o request
       DB::beginTransaction();
       try {
-        
         $dados  = $req->all();
-        $endereco = Endereco::create($dados['endereco']);
-        $possivelCliente = ClienteAssistenciaModel::buscaCPF($dados['cpf']);
+        $endereco = Endereco::create($dados['endereco']); //cadastra o endereço na tabela de endereços
+        $possivelCliente = ClienteAssistenciaModel::buscaCPF($dados['cpf']); //verifica se existe algum cliente com este cpf
 
         
         if( sizeof($possivelCliente) == 1){
           DB::commit();
           return back()->with('error','O cliente já possui um cadastro!');
-          //redirect()->route('cliente.localizar') nao funciona
         } elseif (sizeof($possivelCliente) > 1) {
           DB::commit();
           return back()->with('warning','Verifique a quantidade de clientes com esse CPF!');
         }else{
-          ClienteAssistenciaModel::create([
+          ClienteAssistenciaModel::create([ //cria o cliente com os dados do request
             'nome' => $dados['nome'],
             'cpf' => $dados['cpf'],
             'email' => $dados['email'],
             'data_nascimento' => $dados['data_nascimento'],
             'celnumero' => $dados['celnumero'], 
             'telefonenumero' => isset($dados['telefonenumero']) ? $dados['telefonenumero'] : '',
-            'endereco_id' => $endereco->id
+            'endereco_id' => $endereco->id //vincula o cliente ao endereço
           ]);
           DB::commit();
           return redirect(route('cliente.localizar'))->with('success','Cliente cadastrado com sucesso!');
@@ -100,9 +92,9 @@ class ClienteController extends Controller
       DB::beginTransaction();
       try {
         $dados  = $req->all();
-        $cliente = ClienteAssistenciaModel::findOrFail($id);
-        $cliente->endereco->update($dados['endereco']);
-        $cliente->update($dados);
+        $cliente = ClienteAssistenciaModel::findOrFail($id);//encontra o cliente
+        $cliente->endereco->update($dados['endereco']);//atualiza os dados do endereço
+        $cliente->update($dados); //atualiza os dados do cliente
         
         DB::commit();
         return redirect()->route('cliente.localizar')->with('success','Cliente alterado com sucesso!');
@@ -117,7 +109,7 @@ class ClienteController extends Controller
       $cliente = ClienteAssistenciaModel::withTrashed()->findOrFail($id);
       DB::beginTransaction();
       try {
-        if($cliente->trashed()){
+        if($cliente->trashed()){ //verifica se o cliente esta apagado
           $cliente->restore();
           DB::commit();
           return back()->with('success','Cliente restaurado com sucesso!');
@@ -134,7 +126,7 @@ class ClienteController extends Controller
       }
       
     }
-
+    //função abaixo é requisitada por ajax na view de localizar cliente
     public function table(Request $request){ //retorna table para amostra em view (requisitado por js)
       $clientes = new ClienteAssistenciaModel;
       $clientesDeletados = ClienteAssistenciaModel::onlyTrashed();

@@ -20,16 +20,16 @@ class ConsertoAssistenciaModel extends Model
                     ->orWhere() //por 
                     ->orWhere()*/->paginate(10);
     }
-    public function cliente(){
+    public function cliente(){ //Relacionamento ao cliente
         return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente')->withTrashed();
     }
-    public function tecnico(){
+    public function tecnico(){ //relacionamento ao tecnico
         return $this->belongsTo('Modules\Assistencia\Entities\TecnicoAssistenciaModel', 'idTecnico')->withTrashed();
     }
-    public function peca(){
+    public function peca(){ //relacionamento a peca
         return $this->belongsTo('Modules\Assistencia\Entities\PecaAssistenciaModel', 'idPeca')->withTrashed();
     }
-    public function servico(){
+    public function servico(){ //relacionamento ao servico/mao de obra
         return $this->hasMany('Modules\Assistencia\Entities\ServicoAssistenciaModel', 'idMaoObra')->withTrashed();
     }
 

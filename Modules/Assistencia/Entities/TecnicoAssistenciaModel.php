@@ -11,7 +11,7 @@ class TecnicoAssistenciaModel extends Model
     protected $table = 'tecnico_assistencia';
     protected $fillable = ['id','nome','cpf'];
 
-    public static function busca($busca){
+    public static function busca($busca){ //metodo de busca por nome e cpf
       return static::where('nome', 'LIKE', '%'.$busca.'%')
       ->orWhere('cpf', 'LIKE', '%'.$busca.'%');
       }

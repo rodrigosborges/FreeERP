@@ -9,7 +9,7 @@ class ItemServico extends Model
   protected $table = 'item_servico_assistencia';
   protected $fillable = ['id','idConserto','idMaoObra'];
 
-  public function servico(){
+  public function servico(){ //relacionamento ao servico/mao de obra
       return $this->belongsTo('Modules\Assistencia\Entities\ServicoAssistenciaModel', 'idMaoObra');
   }
 }

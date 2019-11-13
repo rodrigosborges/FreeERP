@@ -11,7 +11,7 @@ class PecaAssistenciaModel extends Model
   protected $table = 'peca_assistencia';
   protected $fillable = ['id','nome','valor_compra','valor_venda','quantidade'];
 
-  public static function busca($busca)
+  public static function busca($busca) //metodo de busca dentro da coluna nome
   {
     return static::where('nome', 'LIKE', '%'.$busca.'%')->paginate(10);
   }

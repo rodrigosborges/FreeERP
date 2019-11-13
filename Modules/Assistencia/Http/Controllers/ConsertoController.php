@@ -12,7 +12,6 @@ use Modules\Assistencia\Http\Requests\StoreConsertosRequest;
 class ConsertoController extends Controller
 {
     public function index() { //metodo get para listagem de OS's
-      
       return view('assistencia::paginas.conserto');
     }
 

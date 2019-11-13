@@ -10,7 +10,7 @@ class SituacaoOsModel extends Model
     protected $fillable = ['situacao', 'obs','idConserto'];
 
 
-    public function conserto(){
+    public function conserto(){ //relacionamento ao conserto
       return $this->belongsTo('Modules\Assistencia\Entities\ConsertoAssistenciaModel', 'idConserto')->withTrashed();
     }
 }

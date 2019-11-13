@@ -10,11 +10,11 @@ class PagamentoAssistenciaModel extends Model
     protected $fillable = ['id','valor', 'status','forma','idConserto', 'idCliente'];
 
 
-    public function conserto(){
+    public function conserto(){//relacionamento ao conserto
       return $this->belongsTo('Modules\Assistencia\Entities\ConsertoAssistenciaModel', 'idConserto')->withTrashed();
     }
 
-    public function cliente(){
+    public function cliente(){ //relacionamento ao cliente
         return $this->belongsTo('Modules\Assistencia\Entities\ClienteAssistenciaModel', 'idCliente')->withTrashed();
     }
 
