@@ -42,8 +42,6 @@ $(document).on('click', '#submit-btn', function (e) {
     }
     var status = $('#_status').children('option:selected').val()
 
-    console.log(_token, search, status)
-
     $.ajax({
         method: 'POST',
         url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/search',

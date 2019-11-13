@@ -97,7 +97,9 @@ class RelatorioController extends Controller
     {
         $id = $request->input('id');
 
-        $processo = Processo::findOrFail($id);
+        $processo = Processo::findOrFail($id)->with('avaliacoes', 'avaliacoes.tipo', 'avaliacoes.setor', 'avaliacoes.status')->get();
+
+        return $processo;
 
         return $processo->avaliacoes;
     }

@@ -11,7 +11,6 @@ $(document).ready(function () {
             term: ''
         },
         success: function (data) {
-            console.log(data)
             $('#AvaliacaoTable').append(data)
             $('#table').DataTable({
                 'searching': false,
@@ -51,8 +50,6 @@ $(document).on('click', '#submit-btn', function (e) {
     }
 
     var status = $('#_status').children('option:selected').val()
-
-    console.log(_token, search, status)
 
     $.ajax({
         method: 'POST',

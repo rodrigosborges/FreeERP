@@ -36,8 +36,6 @@ $(document).on('keyup keydown paste', '.select-questoes', function () {
                 $('.dropdown-item').on('click', function (e) {
 
                     var id = $('#selectQuestoes option:selected').val()
-                    console.log($(this))
-                    console.log(id)
 
                     $('#questaoCard').removeClass('hidden')
 

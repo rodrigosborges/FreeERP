@@ -3,7 +3,7 @@
     
     <div class="form-row">
     
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-4">
     
             <div class="input-group">
     
@@ -26,7 +26,7 @@
     
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-7">
     
             <div class="input-group">
     

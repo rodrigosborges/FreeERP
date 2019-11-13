@@ -35,7 +35,7 @@
                 }
             ?>
 
-            <tr class="{{ !empty($resultado->deleted_at) ? 'table-inactive' : '' }}">
+            <tr>
         
                 <td class="text-center align-middle">{{ $resultado->avaliacao->nome }}</td>
             
@@ -45,7 +45,8 @@
             
                 <td class="text-center align-middle">{{ date("d/m/Y", strtotime($resultado->created_at)) }}</td>
                 
-                <td class="text-center align-middle">{{ $nota }}/{{ $count*5 }}</td>
+                <td class="text-center align-middle">{{ number_format((float)($nota/($count*5))*100, 1, '.', '') }}/100</td>
+                <!-- <td class="text-center align-middle">{{ $nota }}/{{ $count*5 }}</td> -->
             
                 <td class="text-center align-middle acoes">
             
@@ -91,29 +92,37 @@
     <hr>
 
     <div class="card">
-
+            
         <div class="card-body">
+            
+            @if ($data['avaliacao']->status->id != 3)
 
-            <div>
-                <p><b>Avaliação: </b>{{ $data['avaliacao']->nome }}</p>
-                <p><b>Gestor: </b>{{ $data['avaliacao']->avaliados[0]->funcionario->nome }}</p>
-                <p><b>Setor: </b>{{ $data['avaliacao']->setor->nome }}</p>
-                <p><b>Numero de Questões: </b>{{ count($data['avaliacao']->questoes) }}</p>
-                <p><b>Numero de Categorias: </b>{{ count($data['categorias']) }}</p>
-            </div>
+                <div style='color: red;'>A Avaliação ainda está em andamento. Por isso ainda não é possivel mostrar seu resultado final.</div>
 
-            <div>
-                <p><b>Media: </b>{{ $data['mediaGeral'] }}/{{ count($data['avaliacao']->questoes)*5 }}</p>
-                <b>Media por Categoria: </b>
-                @foreach ($data['mediaGeralCategoria'] as $key => $media)
-                    @foreach ($data['categorias'] as $aux)
-                        @if ($key == $aux->id)
-                            <li><b>{{ $aux->nome }}: </b>{{ $data['mediaGeralCategoria'][$key] }}/{{ $data['ocorrenciaCategorias'][$aux->id]*5 }}</li>
-                        @endif
+            @else
+
+                <div>
+                    <p><b>Avaliação: </b>{{ $data['avaliacao']->nome }}</p>
+                    <p><b>Gestor: </b>{{ $data['avaliacao']->avaliados[0]->funcionario->nome }}</p>
+                    <p><b>Setor: </b>{{ $data['avaliacao']->setor->nome }}</p>
+                    <p><b>Numero de Questões: </b>{{ count($data['avaliacao']->questoes) }}</p>
+                    <p><b>Numero de Categorias: </b>{{ count($data['categorias']) }}</p>
+                </div>
+
+                <div>
+                    <p><b>Media: </b>{{ ($data['mediaGeral']/(count($data['avaliacao']->questoes)*5))*100 }}/100</p>
+                    <b>Media por Categoria: </b>
+                    @foreach ($data['mediaGeralCategoria'] as $key => $media)
+                        @foreach ($data['categorias'] as $aux)
+                            @if ($key == $aux->id)
+                                <li><b>{{ $aux->nome }}: </b>{{ ($data['mediaGeralCategoria'][$key]/($data['ocorrenciaCategorias'][$aux->id]*5))*100 }}/100</li>
+                            @endif
+                        @endforeach
                     @endforeach
-                @endforeach
 
-            </div>
+                </div>
+            
+            @endif
 
         </div>
 

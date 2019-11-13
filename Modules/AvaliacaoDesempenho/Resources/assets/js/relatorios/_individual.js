@@ -19,10 +19,10 @@ $(document).ready(function() {
                     $('#_avaliacao').attr('disabled', false)
                     $('#submit-btn').attr('disabled', false)
     
-                    data.forEach(avaliacao => {
-                        var tipo = avaliacao.tipo_id === 1 ? 'Avaliar Funcionarios' : 'Avaliar Gestor'
+                    data[0].avaliacoes.forEach(avaliacao => {
+                        var tipo = avaliacao.tipo_id === 1 ? 'Funcionarios' : 'Gestor'                        
                         $('#_avaliacao').append(`
-                            <option value='${avaliacao.id}'>${avaliacao.nome} | ${tipo} </option>
+                            <option value='${avaliacao.id}'>${avaliacao.nome} | ${avaliacao.setor.nome} | ${tipo} | ${avaliacao.status.nome} </option>
                         `)
                     });
                 }
@@ -73,6 +73,10 @@ $(document).ready(function() {
 })
 
 function visualizarGeral(e) {
-    console.log('ashbdaskdbaskdjbas')
-    $('.gestor').removeClass('hidden')
+
+    if ($('.gestor').hasClass('hidden')) {
+        $('.gestor').removeClass('hidden')
+    } else {
+        $('.gestor').addClass('hidden')
+    }
 }
