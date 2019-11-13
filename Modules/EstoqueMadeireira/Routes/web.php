@@ -10,10 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::prefix('estoquemadeireira')->group(function() {
-   
-
+    
 
     
     //ROTAS DE BUSCAS
@@ -54,17 +52,13 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::post('/movimentacao/alterar', 'MovimentacaoEstoqueController@salvarEstoque');
     Route::get('/movimentacao/alterar/{id}/remover', 'MovimentacaoEstoqueController@remover');
 
-    //ESTOQUE
-    Route::get('/inativos', 'EstoqueMadeireiraController@inativos');
-    Route::get('/{id}/edit', 'EstoqueMadeireiraController@edit');
-    Route::put('/{id}', 'EstoqueMadeireiraController@destroy');
-    Route::put('/{d}/restore', 'EstoqueMadeireiraController@restore');
-
     //CLIENTES
     Route::get('/vendas/clientes/inativos', 'ClienteController@inativos');
     Route::put('/vendas/clientes/{id}/restore', 'ClienteController@restore');
     Route::get('/vendas/clientes/ficha/{id}', 'ClienteController@ficha');
     
+    //PEDIDOS
+    Route::get('/vendas/pedidos/finalizados', 'PedidoController@finalizados');
 
     //ROTAS DE RELATÓRIOS
     Route::get('/relatorio/movimentacao', 'EstoqueController@relatorioMovimentacao');
@@ -72,8 +66,18 @@ Route::prefix('estoquemadeireira')->group(function() {
 
     
 
+    //ESTOQUE
+    Route::get('/inativos', 'EstoqueMadeireiraController@inativos');
+    Route::put('/{id}/restore', 'EstoqueMadeireiraController@restore');
+
+
+
+    //VENDAS
+
+    
+
     //ROTAS PADRÕES (index, crate, edit, update, delete)
-    Route::resource('/', 'EstoqueMadeireiraController');
+    Route::resource('/vendas/pedidos', 'PedidoController');
     Route::resource('/vendas/clientes', 'ClienteController');
     Route::resource('/vendas', 'VendasController');
     Route::resource('/movimentacao', 'MovimentacaoEstoqueController');
@@ -90,3 +94,5 @@ Route::prefix('estoquemadeireira')->group(function() {
 
 });
 
+Route::resource('/estoquemadeireira', 'EstoqueMadeireiraController');
+Route::post('/buscacliente', 'PedidoController@buscaCliente');

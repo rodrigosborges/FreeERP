@@ -143,7 +143,7 @@ class ClienteController extends Controller
 
     public function busca(Request $request){
         $sql = [];
-        $categorias = Categoria::all();
+        $clientes = Cliente::all();
         
         
         if($request['pesquisa'] == null){
@@ -156,19 +156,19 @@ class ClienteController extends Controller
         
         //Se a flag for 1 retorna os produtos inativos, se for 2 os produtos ativos
         if($request['flag'] == 1){
-            $categorias = Categoria::onlyTrashed()->where($sql)->paginate(5);
-            if(count($categorias) == 0){
-                return redirect('/estoquemadeireira/produtos/categorias')->with('error', 'Nenhum resultado encontrado');
+            $clientes = Cliente::onlyTrashed()->where($sql)->paginate(5);
+            if(count($clientes) == 0){
+                return redirect('/estoquemadeireira/vendas/clientes')->with('error', 'Nenhum resultado encontrado');
             }
             $flag = $request['flag'];
-            return view('estoquemadeireira::Categoria.index', $this->template, compact('categorias', 'flag'))->with('success', 'Resultado da pesquisa');
+            return view('estoquemadeireira::vendas.cliente.index', $this->template, compact('clientes', 'flag'))->with('success', 'Resultado da pesquisa');
         }else{
-            $categorias = Categoria::where($sql)->paginate(5);
-            if(count($categorias) == 0){
-                return redirect('/estoquemadeireira/produtos/categorias')->with('error', 'Nenhum resultado encontrado');
+            $clientes = Cliente::where($sql)->paginate(5);
+            if(count($clientes) == 0){
+                return redirect('/estoquemadeireira/vendas/clientes')->with('error', 'Nenhum resultado encontrado');
             }
             $flag = $request['flag'];
-            return view('estoquemadeireira::Categoria.index', $this->template, compact('categorias', 'flag'))->with('success', 'Resultado da pesquisa');
+            return view('estoquemadeireira::vendas.cliente.index', $this->template, compact('clientes', 'flag'))->with('success', 'Resultado da pesquisa');
         }
     }
 

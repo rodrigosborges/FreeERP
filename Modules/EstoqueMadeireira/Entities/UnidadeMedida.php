@@ -1,7 +1,6 @@
 <?php
 
 namespace Modules\EstoqueMadeireira\Entities;
-
 use Illuminate\Database\Eloquent\Model;
 
 class unidadeMedida extends Model

@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\EstoqueMadeireira\Entities;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Pedido extends Model

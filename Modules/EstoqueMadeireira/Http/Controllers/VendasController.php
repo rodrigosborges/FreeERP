@@ -6,6 +6,8 @@ use Modules\EstoqueMadeireira\Entities\tipoUnidade;
 use Modules\EstoqueMadeireira\Entities\Categoria;
 use Modules\EstoqueMadeireira\Entities\MovimentacaoEstoque;
 use Modules\EstoqueMadeireira\Entities\Produto;
+use Modules\EstoqueMadeireira\Entities\{Cliente};
+
 
 
 use Illuminate\Http\Request;
@@ -59,8 +61,8 @@ class VendasController extends Controller
     public function index()
     {
         $flag = 0;
-        $itens = Estoque::paginate(5);
-        return view('estoquemadeireira::vendas.index', $this->template, compact('itens', 'flag'));     
+        $clientes = Cliente::paginate(5 );
+        return view('estoquemadeireira::vendas.index', $this->template, compact('clientes', 'flag'));     
     }
  
     //Tela de estoques desativados

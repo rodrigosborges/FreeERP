@@ -135,7 +135,7 @@ class EstoqueMadeireiraController extends Controller
         }
         $data = [
             'button' => 'atualizar',
-            'url' => 'estoque/' . $id,
+            'url' => 'estoquemadeireira/' . $id,
             'titulo' => 'Editar Estoque',
             'estoque' => $estoque,
             'produtos' => Produto::withTrashed()->get(),
@@ -149,7 +149,6 @@ class EstoqueMadeireiraController extends Controller
 
     public function update(Request $request, $id)
     {
-     
         DB::beginTransaction();
         try {
             $estoque = Estoque::findOrFail($id);
@@ -166,7 +165,7 @@ class EstoqueMadeireiraController extends Controller
                 ]
             );
             DB::commit();
-            return redirect('/estoque')->with('message', 'Item de estoque atualizado com sucesso')->with('success', 'Item de estoque atualizado com sucesso');
+            return redirect('/estoquemadeireira')->with('message', 'Item de estoque atualizado com sucesso')->with('success', 'Item de estoque atualizado com sucesso');
         } catch (Exception $ex) {
             DB::rollback();
             return back()->with('warning', ' Erro ao atualizar item de estoque! cod:' . $ex);

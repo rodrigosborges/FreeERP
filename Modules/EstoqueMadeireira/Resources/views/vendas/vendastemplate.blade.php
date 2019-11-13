@@ -1,23 +1,19 @@
 <?php
-
 $moduleInfo = [
     'icon' => 'store',
     'name' => 'Estoque Madeireira',
 ];
-
 $menu = [
     ['icon' => 'shopping_basket', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
     ['icon' => 'class', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
     ['icon' => 'account_circle', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
     ['icon' => 'attach_money', 'tool' => 'Vendas', 'route' => '/estoquemadeireira/vendas'],
     ['icon' => 'store', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
-
 ];
 $this->template = [
     'moduleInfo' => $moduleInfo,
     'menu' => $menu
 ];
-
 ?>
 
 
