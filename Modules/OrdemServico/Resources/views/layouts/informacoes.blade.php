@@ -6,7 +6,7 @@ $moduleInfo = [
 if (Gate::allows('administrador', Auth::user())) {
     $menu = [
         ['icon' => 'label', 'tool' => 'Gerenciar OS', 'route' => route('modulo.os.index')],
-        ['icon' => 'label', 'tool' => 'OS concluidas', 'route' => route('modulo.os.finalizadas')],
+        ['icon' => 'label', 'tool' => 'OS Finalizadas', 'route' => route('modulo.os.finalizadas')],
         ['icon' => 'label', 'tool' => 'Adicionar Status', 'route' => route('modulo.status.create')],
         ['icon' => 'power_settings_new', 'tool' => 'Sair', 'route' => '/logout'],
     ];

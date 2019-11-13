@@ -30,11 +30,12 @@ class OrdemServicoController extends Controller
         if (Gate::allows('administrador', Auth::user())) {
             $idStatusConcluida = Status::all()->where('titulo', 'Concluída')->first()->id;
             $idStatusInutilizado = Status::all()->where('titulo', 'Marcado como Inutilizável')->first()->id;
+            $idStatusCancelada = Status::all()->where('titulo', 'Cancelada')->first()->id;
 
             $ordensConcluidas = DB::table('ordem_servico')->where('status_id', $idStatusConcluida);
             $data = [
                 'title' => 'Administração de Ordem de Servico em Andamento',
-                'model' => OrdemServico::all()->where('status_id', '<>', $idStatusConcluida)->where('status_id', '<>', $idStatusInutilizado),
+                'model' => OrdemServico::all()->where('status_id', '<>', $idStatusConcluida)->where('status_id', '<>', $idStatusInutilizado)->where('status_id', '<>', $idStatusCancelada),
                 'thead' => ['Protocolo', 'Solicitante', 'Status', 'Prioridade'],
                 'row_db' => ['protocolo', 'solicitante_id', 'status_id', 'prioridade'],
                 'create' => true,
@@ -49,7 +50,7 @@ class OrdemServicoController extends Controller
                 'inutilizadosMes' => DB::table('aparelho')->where('inutilizacao', true)->whereMonth('updated_at', date('m'))->whereYear('updated_at', date('Y')),
                 'tempoMedio' => (DB::select("select avg(timediff(updated_at,created_at)) as media from ordem_servico where status_id =" . $idStatusConcluida)),
                 'ordensConcluidas' => $ordensConcluidas->whereMonth('updated_at', date('m'))->count(),
-                'status' => Status::pluck('titulo', 'id'),
+                'status' => Status::where('titulo','<>','Encaminhada para o Técnico')->pluck('titulo', 'id'),
                 'route' => 'modulo.os.',
                 'acoes' => [
                     ['nome' => 'Editar', 'class' => 'btn btn-outline-info btn-sm', 'complemento-route' => 'edit'],
@@ -217,10 +218,12 @@ class OrdemServicoController extends Controller
         if (Gate::allows('administrador', Auth::user())) {
             $idStatusConcluida = Status::all()->where('titulo', 'Concluída')->first()->id;
             $idStatusInutilizado = Status::all()->where('titulo', 'Marcado como Inutilizável')->first()->id;
+            $idStatusCancelada = Status::all()->where('titulo', 'Cancelada')->first()->id;
             $data = [
                 'title' => 'Ordens Finalizadas',
                 'model' => OrdemServico::where('status_id', '=', $idStatusConcluida)
                     ->orWhere('status_id', '=', $idStatusInutilizado)
+                    ->orWhere('status_id', '=' , $idStatusCancelada)
                     ->get(),
                 'thead' => ['Protocolo', 'Solicitante', 'Status', 'Prioridade'],
                 'row_db' => ['protocolo', 'solicitante_id', 'status_id', 'prioridade'],
