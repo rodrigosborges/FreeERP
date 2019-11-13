@@ -99,26 +99,26 @@ print
                     </div>
                     <div class="col-4">
                         <?php 
-              $val_peças = 0;
-              $val_servicos = 0;
-            ?>
+                        $val_peças = 0;
+                        $val_servicos = 0;
+                        ?>
                         @foreach ($pecaOS as $peca)
                         <?php 
-              $val_peças += $peca->itemPeca->peca->valor_venda;
-            ?>
+                        $val_peças += $peca->itemPeca->peca->valor_venda;
+                        ?>
                         @endforeach
                         @foreach ($itemServico as $servico)
                         <?php 
-              $val_servicos += $servico->servico->valor;
-            ?>
-                        @endforeach
-                        Peças: R${{$val_peças}}
+                        $val_servicos += $servico->servico->valor;
+                        ?>
+                        @endforeach 
+                        Peças: R${{number_format( $val_peças , 2, ',', '.')}}
                     </div>
                     <div class="col-4">
-                        Mão de obra: R${{$val_servicos}}
+                        Mão de obra: R${{number_format($val_servicos , 2, ',', '.')}}
                     </div>
                     <div class="col-4">
-                        Valor total: R${{$conserto->valor}}
+                        Valor total: R${{number_format( $conserto->valor , 2, ',', '.')}}
                     </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@ print
                     </div>
                     @foreach ($pecaOS as $peca)
                     <div class="col-12 text-center">
-                        {{$peca->itemPeca->peca->nome}} | R${{$peca->itemPeca->peca->valor_venda}}
+                        {{$peca->itemPeca->peca->nome}} | R${{number_format( $peca->itemPeca->peca->valor_venda , 2, ',', '.')}}
                     </div>
 
                     @endforeach
@@ -164,7 +164,7 @@ print
                     </div>
                     @foreach ($itemServico as $servico)
                     <div class="col-12 text-center">
-                        {{$servico->servico->nome}} | R${{$servico->servico->valor}}
+                        {{$servico->servico->nome}} | R${{number_format( $servico->servico->valor , 2, ',', '.')}}
                     </div>
 
                     @endforeach

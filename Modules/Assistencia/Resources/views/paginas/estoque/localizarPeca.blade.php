@@ -52,7 +52,7 @@
                             @foreach ($pecas as $peca)
                             <tr class="text-center">
                                 <td scope="row">{{$peca->nome }}</td>
-                                <td>R$ {{str_replace(".",",",$peca->valor_venda) }}</td>
+                                <td>R$ {{number_format( $peca->valor_venda , 2, ',', '.')}}</td>
                                 <td scope="row">{{number_format($peca->quantidade) }}</td>
                                 <td>
                                     <a href="{{route('pecas.editar',$peca->id)}}"><button type="button"

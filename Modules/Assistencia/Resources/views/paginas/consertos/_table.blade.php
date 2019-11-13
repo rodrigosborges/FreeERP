@@ -19,7 +19,7 @@
                     <td scope="row">{{$conserto->numeroOrdem }}</td>
                     <td>{{$conserto->cliente->nome }}</td>
                     <td>{{$conserto->modelo_aparelho }}</td>
-                    <td>R$ {{ $conserto->valor  - $conserto->sinal}}</td>
+                    <td>R$ {{ number_format($conserto->valor-$conserto->sinal, 2, ',', '.')}}</td>
                     <td>
                         <a href="{{route('consertos.verMais', $conserto->id)}}"><button type="button"
                                 class="btn btn-primary">Ver mais</button></a>

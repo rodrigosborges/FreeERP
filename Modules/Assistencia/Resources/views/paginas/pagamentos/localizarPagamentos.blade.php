@@ -10,14 +10,16 @@
     </div>
     <div class="card-body">
         <div class="row d-flex justify-content-center">
-            
-            <div class="input-group form-group col-lg-3 col-12">
+            <label for="data-inicio">Data inicial</label>
+            <div class="input-group form-group col-lg-4 col-12">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="material-icons">calendar_today</i></span>
                 </div>
                 <input type="date" name="data-inicio" class="form-control">
             </div>
-            <div class="input-group form-group col-lg-3 col-12">
+
+            <label for="data-final">Data final</label>
+            <div class="input-group form-group col-lg-4 col-12">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="material-icons">calendar_today</i></span>
                 </div>
@@ -26,7 +28,9 @@
             <button id="filtrar" class="btn btn-info form-group ">
                 Filtrar
             </button>
+            <div id="data" width="100%" class="errors"></div>
         </div>
+        
     
 
         
@@ -77,18 +81,40 @@
     })
    
    $(document).on('click', '#filtrar', function() {
-        table('Pago', 'pagos')
-        table('Pendente', 'pendentes') 
+        var data_inicio = $("[name='data-inicio']").val();
+        var data_fim = $("[name='data-final']").val();
+
+        if(data_inicio && data_fim){
+            if(data_fim<data_inicio){
+                $('#data').text('Data final não pode ser menor que data inicial!')
+            }else {
+                $('#data').text(' ')
+                table('Pago', 'pagos')
+                table('Pendente', 'pendentes') 
+            }
+        }else {
+            $('#data').text(' ')
+            table('Pago', 'pagos')
+            table('Pendente', 'pendentes') 
+        }
+
+
+        
 
    })
     function table(status, id, page=null) {
         inicio = $("[name='data-inicio']").val();
         fim = $("[name='data-final']").val();
-        console.log('asfas')
         $.get(main_url+'/assistencia/pagamento/table/'+status+'?page='+page+'&inicio='+inicio+'&fim='+fim, function(tabela){
                 $('#'+id).html(tabela)
         })
         
     }
+
+
+
+
+
+
 </script>
 @endsection

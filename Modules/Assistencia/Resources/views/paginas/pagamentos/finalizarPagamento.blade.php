@@ -25,7 +25,7 @@
                 Defeito: {{$pagamento->conserto->defeito}}
             </div>
             <div class="col-4">
-                Valor a ser pago: <span class="importante">R${{$pagamento->valor}}</span>
+                Valor a ser pago: <span class="importante">R${{number_format( $pagamento->valor , 2, ',', '.')}}</span>
             </div>
         </div>
         <hr>
