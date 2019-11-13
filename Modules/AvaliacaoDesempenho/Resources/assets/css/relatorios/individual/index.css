@@ -31,3 +31,7 @@ table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before
 .hidden {
     display: none;
 }
+
+.search-row .label {
+    margin: 15px;
+}

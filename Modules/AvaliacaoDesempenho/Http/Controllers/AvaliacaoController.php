@@ -42,7 +42,7 @@ class AvaliacaoController extends Controller
             ['icon' => 'add_box', 'tool' => 'Questões', 'route' => '/tcc/public/avaliacaodesempenho/questao'],
             ['icon' => 'add_box', 'tool' => 'Setor', 'route' => '/tcc/public/avaliacaodesempenho/setor'],
             ['icon' => 'add_box', 'tool' => 'Categorias', 'route' => '/tcc/public/avaliacaodesempenho/categoria'],
-            ['icon' => 'add_box', 'tool' => 'Relatorios Individuais', 'route' => '/tcc/public/avaliacaodesempenho/relatorio'],
+            ['icon' => 'add_box', 'tool' => 'Relatorios', 'route' => '/tcc/public/avaliacaodesempenho/relatorio'],
         ];
     }
 
