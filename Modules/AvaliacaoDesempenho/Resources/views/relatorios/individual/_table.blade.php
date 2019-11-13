@@ -110,12 +110,12 @@
                 </div>
 
                 <div>
-                    <p><b>Media: </b>{{ ($data['mediaGeral']/(count($data['avaliacao']->questoes)*5))*100 }}/100</p>
+                    <p><b>Media: </b>{{ number_format((float)($data['mediaGeral']/(count($data['avaliacao']->questoes)*5))*100, 1, '.', '') }}/100</p>
                     <b>Media por Categoria: </b>
                     @foreach ($data['mediaGeralCategoria'] as $key => $media)
                         @foreach ($data['categorias'] as $aux)
                             @if ($key == $aux->id)
-                                <li><b>{{ $aux->nome }}: </b>{{ ($data['mediaGeralCategoria'][$key]/($data['ocorrenciaCategorias'][$aux->id]*5))*100 }}/100</li>
+                                <li><b>{{ $aux->nome }}: </b>{{ number_format((float)($data['mediaGeralCategoria'][$key]/($data['ocorrenciaCategorias'][$aux->id]*5))*100, 1, '.', '') }}/100</li>
                             @endif
                         @endforeach
                     @endforeach

@@ -19,12 +19,12 @@
 
         <div>
             <p><b>Numero de Categorias: </b>{{ count($data['categorias']) }}</p>
-            <p><b>Pontuação Total: </b>{{ ($data['pontuacao']/(count($data['questoes'])*5))*100 }}/100</p>
+            <p><b>Pontuação Total: </b>{{ number_format((float)($data['pontuacao']/(count($data['questoes'])*5))*100, 1, '.', '') }}/100</p>
             <b>Pontuação por Categoria: </b>
             @foreach ($data['pontuacaoCategoria'] as $key => $categoria)
                 @foreach ($data['categorias'] as $aux)
                     @if ($key == $aux->id)
-                        <li><b>{{ $aux->nome }}: </b>{{ ($data['pontuacaoCategoria'][$key]/($data['ocorrenciaCategorias'][$aux->id]*5))*100 }}/100</li>
+                        <li><b>{{ $aux->nome }}: </b>{{ number_format((float)($data['pontuacaoCategoria'][$key]/($data['ocorrenciaCategorias'][$aux->id]*5))*100, 1, '.', '') }}/100</li>
                     @endif
                 @endforeach
             @endforeach
