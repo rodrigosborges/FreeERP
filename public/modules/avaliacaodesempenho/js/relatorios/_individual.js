@@ -71,3 +71,8 @@ $(document).ready(function() {
         })
     })
 })
+
+function visualizarGeral(e) {
+    console.log('ashbdaskdbaskdjbas')
+    $('.gestor').removeClass('hidden')
+}

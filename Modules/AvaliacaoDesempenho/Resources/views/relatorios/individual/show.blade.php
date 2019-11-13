@@ -24,7 +24,7 @@
             @foreach ($data['pontuacaoCategoria'] as $key => $categoria)
                 @foreach ($data['categorias'] as $aux)
                     @if ($key == $aux->id)
-                        <li><b>{{ $aux->nome }}: </b>{{ $data['pontuacaoCategoria'][$key] }}</li>
+                        <li><b>{{ $aux->nome }}: </b>{{ $data['pontuacaoCategoria'][$key] }}/{{ $data['ocorrenciaCategorias'][$aux->id]*5 }}</li>
                     @endif
                 @endforeach
             @endforeach

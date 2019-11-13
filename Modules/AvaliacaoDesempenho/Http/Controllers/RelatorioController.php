@@ -56,40 +56,19 @@ class RelatorioController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        $data = 0;
-
-        switch ($tipo) {
-            case 1:
-                $data = relatorioIndividual($tipo, $id);
-                break;
-
-            case 2:
-                $data = relatorioIndividual($tipo, $id);
-                break;
-            
-            default:
-                break;
-        }
+        $data = relatorioIndividual($tipo, $id);
         
         return view('avaliacaodesempenho::relatorios/individual/show', compact('moduleInfo', 'menu', 'data'));
     }
 
-    public function showGeral($tipo, $id)
+    public function showGestor($id)
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
 
-        switch ($tipo) {
-            case 'individual':
-                relatorioIndividual($id);
-                break;
-            
-            default:
-                # code...
-                break;
-        }
+        $data = relatorioGestor($id);
         
-        return view('avaliacaodesempenho::relatorios/individual/show', compact('moduleInfo', 'menu'));
+        return view('avaliacaodesempenho::relatorios/individual/gestor', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function individual(Request $request) 
@@ -99,14 +78,19 @@ class RelatorioController extends Controller
         $avaliacao = Avaliacao::findOrFail($id);
 
         if ($avaliacao->tipo->id == 1) {
-            $resultados = ResultadoFuncionario::where('avaliacao_id', $avaliacao->id)->with('avaliacao', 'avaliador', 'avaliado', 'avaliador.funcionario', 'avaliado.funcionario');
+
+            $result = ResultadoFuncionario::where('avaliacao_id', $avaliacao->id)->with('avaliacao', 'avaliador', 'avaliado', 'avaliador.funcionario', 'avaliado.funcionario')->get();
+            
+            return view('avaliacaodesempenho::relatorios/individual/_table', compact('result', 'avaliacao'));
+            
         } else {
-            $resultados = ResultadoGestor::where('avaliacao_id', $avaliacao->id)->with('avaliacao', 'avaliador', 'avaliado', 'avaliador.funcionario', 'avaliado.funcionario');
+
+            $result = ResultadoGestor::where('avaliacao_id', $avaliacao->id)->with('avaliacao', 'avaliador', 'avaliado', 'avaliador.funcionario', 'avaliado.funcionario')->get();
+            
+            $data = relatorioGestor($id);
+
+            return view('avaliacaodesempenho::relatorios/individual/_table', compact('result', 'avaliacao', 'data'));
         }
-
-        $result = $resultados->get();
-
-        return view('avaliacaodesempenho::relatorios/individual/_table', compact('result', 'avaliacao'));
     }
 
     public function getAvaliacoes(Request $request) 

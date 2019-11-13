@@ -64,11 +64,9 @@
                     echo '<tr>
                         <td colspan="2" style="text-align: center;"><b>Resultado Geral: </b>'.$avaliacao->nome.'</td>
                         <td colspan="2" style="text-align: center;"><b>Gestor: </b>'.$avaliacao->avaliados[0]->funcionario->nome.'</td>
+
                         <td colspan="2" style="text-align: center;"> 
-                            <a class="btn btn-info acoes-btn" title="Show"
-                            href="/tcc/public/avaliacaodesempenho/relatorio/gestor/'.$avaliacao->id.'/show">
-                            Visualizar Geral
-                            </a>
+                            <button id="VisualizarGeral" class="btn btn-info acoes-btn" onclick="visualizarGeral(this)">Visualizar Geral</button>
                         </td>
                     </tr>';
                 }
@@ -87,4 +85,39 @@
     </tbody>
     
 </table>
+
+@if (isset($data))
+<div class='gestor hidden'>
+    <hr>
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <div>
+                <p><b>Avaliação: </b>{{ $data['avaliacao']->nome }}</p>
+                <p><b>Avaliado: </b>{{ $data['avaliacao']->avaliados[0]->funcionario->nome }}</p>
+                <p><b>Numero de Questões: </b>{{ count($data['avaliacao']->questoes) }}</p>
+                <p><b>Numero de Categorias: </b>{{ count($data['categorias']) }}</p>
+            </div>
+
+            <div>
+                <p><b>Media: </b>{{ $data['mediaGeral'] }}/{{ count($data['avaliacao']->questoes)*5 }}</p>
+                <b>Media por Categoria: </b>
+                @foreach ($data['mediaGeralCategoria'] as $key => $media)
+                    @foreach ($data['categorias'] as $aux)
+                        @if ($key == $aux->id)
+                            <li><b>{{ $aux->nome }}: </b>{{ $data['mediaGeralCategoria'][$key] }}/{{ $data['ocorrenciaCategorias'][$aux->id]*5 }}</li>
+                        @endif
+                    @endforeach
+                @endforeach
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+@endif
       

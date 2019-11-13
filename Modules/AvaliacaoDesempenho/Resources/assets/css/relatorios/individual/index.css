@@ -14,3 +14,20 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
 table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_desc_disabled:before {
     content: none !important;
 }
+
+.gestor {
+    margin: 30px 0 10px 0;
+}
+
+.gestor hr {
+    margin-bottom: 30px;
+}
+
+.gestor .card-body {
+    display: flex;
+    justify-content: space-between;
+}
+
+.hidden {
+    display: none;
+}
