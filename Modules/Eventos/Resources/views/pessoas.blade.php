@@ -77,7 +77,6 @@
                     <tbody>
                         @foreach($programacao as $atividade)
                             @foreach($atividade->participantes as $pessoa)
-                                {{DB::table('evento_has_participante')->where('pessoa_id', '=', $pessoa->id)->where('programacao_id', '=', $atividade->id)->pluck('faltou')}}
                                 <tr>
                                     <td class="text-center align-middle">{{$pessoa->nome}}</td>
                                     <td class="text-center align-middle">{{$pessoa->email}}</td>

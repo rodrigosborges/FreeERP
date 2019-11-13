@@ -118,6 +118,21 @@ class EventosController extends Controller
                 $upload = $request->imgEvento->storeAs('eventos', $nomeArquivo);
                 $evento->update(['imagem' => $nomeArquivo]);
             }
+            
+            $excluiPermissao = Permissao::where('evento_id', $request->id)->where('nivel_id', 1)->delete();
+            
+            $organizadores = $request->organizador;
+            
+            if($organizadores != null){
+                foreach ($organizadores as $pessoa_id){
+                    $permissao = new Permissao();
+                    $permissao->evento()->associate($evento);
+                    $permissao->nivel()->associate(Nivel::find(1));
+                    $permissao->pessoa()->associate($pessoa_id);
+                    $permissao->save();
+                }
+            }
+            
         } catch (\Exception $e){
             return redirect()->route('eventos.exibir')
                 ->with('error', 'Falha ao atualizar evento ' . $request->nome . ': ' . $e->getMessage());
@@ -166,6 +181,14 @@ class EventosController extends Controller
                 ->select('evento.id','nome','local','dataInicio','dataFim','descricao','imagem','empresa','email','telefone','cidade_id','nomeCidade','estado_id','nomeEstado','uf')
                 ->get();
         return $evento;
+    }
+    
+    public function getOrganizador($id){
+        $organizadores = DB::table('evento_has_pessoa')
+                ->where('evento_id', '=', $id)
+                ->where('nivel_id', '=', 1)
+                ->get();
+        return $organizadores;
     }
     
     //RETORNA A DATA ATUAL

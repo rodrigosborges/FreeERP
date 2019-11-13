@@ -32,6 +32,7 @@ Route::get('/eventos/certificados', 'PessoasController@meusCertificados')->name(
 Route::get('/eventos/get-cidades/{idEstado}', 'CidadeController@getCidades');
 Route::get('/eventos/get-atividade/{idAtividade}', 'ProgramacaoController@getAtividade');
 Route::get('/eventos/get-evento/{id}', 'EventosController@getEvento');
+Route::get('/eventos/get-organizador/{id}', 'EventosController@getOrganizador');
 Route::get('/eventos/get-data/', 'EventosController@getData');
 
 Route::get('/pdf/{evento}', 'EventosController@certificados')->name('gerar.certificados');

@@ -3,7 +3,7 @@
 
 @section('css')
     <!-- CHOSEN / MULTISELECT -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('css/chosen.css') }}" rel="stylesheet" type="text/css">
 
     <style>
         .quebraDeTexto{
@@ -18,6 +18,9 @@
             display:block;
             margin-left: auto;
             margin-right: auto;
+        }
+        input[type=date],input[type=datetime-local],input[type=month],input[type=time]{
+            -webkit-appearance:none;
         }
     </style>
 @endsection
@@ -54,7 +57,9 @@
                             <button class="btn btn-xs btn-secondary" title="Visualizar / Editar" data-toggle="modal" data-target="#modalEvento" onclick="visualizar('{{$evento->id}}')">
                                 <i class="material-icons">search</i>
                             </button>
-                            <button class="btn btn-xs btn-secondary" title="Excluir" data-toggle="modal" data-target="#modalExcluirEvento" onclick="excluir('{{$evento->id}}', '{{$evento->nome}}')"><i class="material-icons">delete</i></button>
+                            @if($evento->permissoes->where('pessoa_id', Auth::id())->pluck('nivel_id')->first() == 2)
+                                <button class="btn btn-xs btn-secondary" title="Excluir" data-toggle="modal" data-target="#modalExcluirEvento" onclick="excluir('{{$evento->id}}', '{{$evento->nome}}')"><i class="material-icons">delete</i></button>
+                            @endif
                         </td> 
                     </tr>
                 @endforeach
@@ -137,19 +142,22 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="form-group">
+                        <!-- MULTI SELECT PARA SELECIONAR ORGANIZADORES, NÃO FUNCIONOU NO CHROME -->
+                        <div class="form-group">
                             <label for="organizador" class="col-form-label">Organizador(es):</label>
-                            <select class="chosen-select form-control" id="organizador" name="organizador[]" multiple>
+                            <select class="chosen-select form-control" id="organizador" name="organizador[]" data-placeholder="Selecione" multiple>
                                 @foreach($pessoas as $pessoa)
-                                    @if(!$pessoa->id == auth::id())
+                                    @if($pessoa->id != auth::id())
                                         <option value="{{$pessoa->id}}">{{$pessoa->nome}}</option>
                                     @endif
                                 @endforeach
                             </select>
-                        </div>-->
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="btnEditar" onclick="editar()">Editar</button>
+                        @if($evento->permissoes->where('pessoa_id', Auth::id())->pluck('nivel_id')->first() == 2)
+                            <button type="button" class="btn btn-primary" id="btnEditar" onclick="editar()">Editar</button>
+                        @endif
                         <button type="button" class="btn btn-secondary" id="btnFechar" data-dismiss="modal"></button>
                         <button type="submit" class="btn btn-primary" id="btnSalvar">Salvar</button>
                     </div>
@@ -185,9 +193,9 @@
 
 @section('js')
     <!-- CHOSEN / MULTISELECT -->
-    <script src="https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
     
-    <!-- DataTables e Chosen -->
+    <!-- DataTables -->
     <script>
         $(function() {
             $('#eventos').DataTable({
@@ -213,8 +221,7 @@
     <script>
         
         $('#modalEvento').on('show.bs.modal', function (){
-            console.log('abriu');
-            $(".chosen-select").chosen({width: "inherit"});
+            $(".chosen-select").chosen({width: "100%"});
         });
         
         function cadastrar(){
@@ -224,26 +231,25 @@
             var input = document.getElementsByClassName('edit');
             for (var i=0; i<(input.length); i++){
                 input[i].disabled = false;
-            }            
+            }
             
             $('.modal-header #tituloModal').html('Cadastrar evento');
             $('.modal-body [name=estado]').prop('selectedIndex',0);
             $('.modal-body [name=cidade]').html('<option value="" disabled selected>Selecione o estado</option>');
+            $('.modal-body #organizador option:selected').attr('selected',false);
             $('.modal-body .img').attr("src", "http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png");
             
             //EDITA OS BOTÕES
             $('.modal-footer #btnEditar').hide();
             $('.modal-footer #btnSalvar').show().html('Salvar');
             $('.modal-footer #btnFechar').html('Fechar');
-            
-            
         }
         
         function visualizar(idevento){
             var input = document.getElementsByClassName('edit');
             for (var i=0; i<(input.length); i++){
                 input[i].disabled = true;
-            }            
+            }
             
             $('.modal-header #tituloModal').html('Visualizar evento');
             
@@ -272,6 +278,15 @@
                         $('.modal-body .img').attr("src", 'http://ulbra-to.br/geda/wp-content/themes/geda/img/miniatura.jpg');
                     }
                 });
+            });
+            
+            $.get('/eventos/get-organizador/' + idevento, function (organizadores){
+                var vals = [];
+                $.each(organizadores, function (index, value){
+                    vals.push(value.pessoa_id);
+                });
+                console.log(vals);
+                $('#organizador').val(vals);
             });
         }
         
