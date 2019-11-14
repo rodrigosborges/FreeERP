@@ -19,7 +19,13 @@ class UnidadeMedidaSeedTableSeeder extends Seeder {
       [
         'nome' => 'M³',
         
-    ]
+      ],
+      [
+        'nome' => 'Cm'
+      ],
+      [
+        'nome' => 'Mm'
+      ]
      
     ]);
   }

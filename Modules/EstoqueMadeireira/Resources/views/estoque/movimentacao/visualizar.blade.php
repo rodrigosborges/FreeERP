@@ -57,7 +57,7 @@
                                            <td class="text-danger">{{$m->quantidade}}</td>
                                         @endif
                                         <td>{{$m->created_at}}</td>
-                                        <td><a href="{{url('/estoque/movimentacao/' . $m->id)}}"><button class="btn btn-sm btn-primary"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
+                                        <td><a href="{{url('/estoquemadeireira/movimentacao/' . $m->id)}}"><button class="btn btn-sm btn-primary"><i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a></td>
                                     </tr>                                  
                                 @endforeach
                             </tbody>

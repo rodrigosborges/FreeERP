@@ -193,7 +193,10 @@ class PedidoController extends Controller
 
     }
     public function buscaCliente(Request $request){
-        $query = Cliente::where('nome','like', '%'.$request->valor.'%');
-        return json_encode($query);
+        if($request->valor != null)
+            $query = Cliente::where('nome','like', $request->valor.'%')->get();
+        else
+            $query = [];
+        return $query;
     }
 }

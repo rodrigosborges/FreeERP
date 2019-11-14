@@ -97,4 +97,4 @@ Route::prefix('estoquemadeireira')->group(function() {
 });
 
 Route::resource('/estoquemadeireira', 'EstoqueMadeireiraController'); 
-Route::post('/buscacliente', 'PedidoController@buscaCliente');
+Route::get('/buscacliente', 'PedidoController@buscaCliente');
