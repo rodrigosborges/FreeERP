@@ -14,9 +14,11 @@ class UsuarioStoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'nome'  => ['required', 'min:5'],
             'apelido' => ['required', 'min:3', 'max:50','unique:usuario'],
-            'email' => ['required', 'email', 'unique:usuario,email,'.$this->route('id')],
-            'password' => ['required', 'min:8', 'max:16', 'same:repeat_password'],
+            'email' => ['required', 'email'],
+            'usuario.setor_id' => ['required'],
+            'password' => ['required','same:repeat_password'],
         ];
     }
 

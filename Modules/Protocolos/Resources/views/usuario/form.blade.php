@@ -3,7 +3,7 @@
 @section('title', 'Cadastrar usuário')
 
 @section('body')        
-    <form id="form-usuario" action="{{ $data['url'] }}" method="POST" enctype="form-data">
+    <form id="form-usuario" action="{{ $data['url'] }}" class="registerForm" method="POST" enctype="form-data">
         {{ csrf_field() }}
         @if($data['model'])
             @method('PUT')
@@ -11,20 +11,20 @@
 
         <div class="form-group mt-5">
             <label for="nome">Nome completo:<span class="required-symbol">*</span></label>
-            <input required minlenght='3' id="nome" maxlenght='50' value="{{old('nome', isset($usuario) ? $usuario->nome : '')}}" class="form-control" type="text" name="nome">
-            {{$errors->first('nome')}}
+                <input required minlenght='3' id="nome" maxlenght='50' value="{{old('nome', isset($usuario) ? $usuario->nome : '')}}" class="form-control" type="text" name="nome">
+                <small id="error" class="errors font-text text-danger">{{$errors->first('nome')}}</small>
         </div>
 
         <div class="form-group">
             <label for="apelido">Apelido:<span class="required-symbol">*</span></label>
             <input required minlenght='3' id="apelido" maxlenght='50' value="{{old('apelido', isset($usuario) ? $usuario->apelido : '')}}" class="form-control" type="text" name="apelido">
-            {{$errors->first('apelido')}}
+            <small id="error" class="errors font-text text-danger">{{$errors->first('apelido')}}</small>
         </div>
 
         <div class="form-group">
             <label for="email">E-mail:<span class="required-symbol">*</span></label>
             <input required id='email' value="{{old('email', isset($usuario) ? $usuario->email : '')}}" class="form-control" type="email" name="email">
-            {{$errors->first('email')}}
+            <small id="error" class="errors font-text text-danger">{{$errors->first('email')}}</small>
         </div>
 
         <div class="form-group">
@@ -48,7 +48,7 @@
             <div class="form-group">
             <label for="password">Senha:<span class="required-symbol">*</span></label>
                 <input id='password' required class="form-control" type="password" name="password">
-                {{$errors->first('password')}}
+                <small id="error" class="errors font-text text-danger">{{$errors->first('password')}}</small>
             </div>
 
             <div class="form-group">
@@ -79,8 +79,6 @@ var usuario_id = "{{isset($usuario) ? $usuario->id : ''}}"
         })
     });
 </script>
-
-<!-- <script src="{{Module::asset('usuario:js/usuario/validacao-form.js')}}"></script> -->
 @endsection
 
 

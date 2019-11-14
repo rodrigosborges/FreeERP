@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Protocolo, Usuario, Tramite, Documento};
-use Modules\Protocolos\Http\Requests\{CreateProtocolo};
+use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Protocolo, Usuario, Tramite, Status, Documento, Log};
+use Modules\Protocolos\Http\Requests\{ProtocoloStoreRequest, DocumentoStoreRequest};
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Khill\Lavacharts\Lavacharts;
 
 class ProtocolosController extends Controller
 {
@@ -19,48 +20,157 @@ class ProtocolosController extends Controller
      */
     public function index(Request $request)
     {
+
+        $dataAtualMenosUmAno = date('Y-m-d', strtotime('-1 years'));
+
         $data = [
-            'protocolos' => Protocolo::all(),
-            'title' => 'Lista de Protocolos',
+            'protocolos'    => Protocolo::all(),
+            'title'         => 'Lista de Protocolos',
+            'finalizado'    => Protocolo::onlyTrashed()->count(),
+            'andamento'     => Protocolo::where('status_id', '<>', '6')->where('updated_at', '>', $dataAtualMenosUmAno)->count(),
+            'encalhado'     => Protocolo::where('updated_at', '<', $dataAtualMenosUmAno)->count(),
+            'total'         => Protocolo::withTrashed()->count(),
         ];
 
         return view('protocolos::protocolo.index', compact('data'));
     }
+
+    public function chart(){
+        return view('protocolos::protocolo.chart');
+    }
+
 
     public function list(Request $request, $status){
 
         $id = Auth::user()->id;
         
         $protocolos = new Protocolo;
-        
-        //Retorna os protocolos que o usuário foi cadastrado como interessado.
-        // $protocolos = DB::table('protocolo')->join('protocolo_has_usuario', 'protocolo_has_usuario.protocolo_id', 'protocolo.id')
-        //         ->where('protocolo_has_usuario.usuario_id','=', $id);
-        //Retorna os protocolos que o usuário criou.
-        //$protocolos = DB::table('protocolo')->where('usuario_id', '=', $id); Retorna os protocolos criados pelo usuário logado.
+
+        $log = new Log;
 
 		if($request['pesquisa']) {
             $protocolos = $protocolos->where('assunto', 'like', '%'.$request['pesquisa'].'%');
         }
-        if($status == "ativos"){
-            $protocolos = $protocolos->join('protocolo_has_usuario', 'protocolo_has_usuario.protocolo_id', 'protocolo.id')->where('protocolo_has_usuario.usuario_id','=', $id);
+        if($status == "caixa-entrada"){
+
+            $protocolosIds = [];
+           
+            foreach(Protocolo::all() as $protocolo) {
+
+                $ultimoUsuarioQueModificou = $protocolo->user_modificador_id;
+                $interessados = $protocolo->interessado()->pluck('usuario_id')->toArray();
+                
+                if($protocolo->status_id == 1 && $protocolo->usuario_id !== Auth::user()->id) {
+                    
+                    if($protocolo->tipo_acesso != 1) {
+                        $protocolosIds[] = $protocolo->id;
+
+                    }
+                    else if($protocolo->tipo_acesso == 1 && in_array(Auth::user()->id, $interessados)) {
+                        $protocolosIds[] = $protocolo->id;
+                    }
+
+                }
+                else if($protocolo->status_id == 2 && $ultimoUsuarioQueModificou != Auth::user()->id) {
+                    
+                    if($protocolo->tipo_acesso != 1) {
+                        $protocolosIds[] = $protocolo->id;
+                    }
+                    else if($protocolo->tipo_acesso == 1 && (in_array(Auth::user()->id, $interessados) || $protocolo->usuario_id == Auth::user()->id)) {
+                        $protocolosIds[] = $protocolo->id;
+                    }
+                    
+                }
+            }
+            
+            $protocolos = $protocolos->whereIn('id', $protocolosIds);   
+            
         }
-        if($status == "meus-protocolos"){
-            $protocolos = $protocolos->where('usuario_id', '=', $id);
+        if($status == "despacho"){
+
+            $protocolosIds = [];
+
+            foreach(Protocolo::all() as $protocolo) {
+                $ultimoUsuarioQueModificou = $protocolo->logs->last()->usuario_id;
+                $usuarioQueModificou = Usuario::findOrFail($ultimoUsuarioQueModificou);
+                $usuarioLogado = Usuario::findOrFail(Auth::user()->id);
+
+                if($protocolo->status_id == 3){
+                    if($ultimoUsuarioQueModificou == Auth::user()->id || $usuarioQueModificou->setor->id == $usuarioLogado->setor->id){
+                        $protocolosIds[] = $protocolo->id;
+                    }
+                } 
+            }
+            
+            $protocolos = $protocolos->whereIn('id', $protocolosIds);
         }
+
+        if($status == "caixa-saida"){
+            
+            $protocolosIds = [];
+
+            foreach(Protocolo::all() as $protocolo){
+
+                $ultimoUsuarioQueModificou = $protocolo->user_modificador_id;
+                $usuarioQueModificou = Usuario::findOrFail($ultimoUsuarioQueModificou);
+                $usuarioLogado = Usuario::findOrFail(Auth::user()->id);
+
+                if($protocolo->status_id != 3){
+                    if($ultimoUsuarioQueModificou == Auth::user()->id){
+                        $protocolosIds[] = $protocolo->id;
+                    }
+                } 
+            }
+             
+            $protocolos = $protocolos->whereIn('id', $protocolosIds);
+           
+        }
+
 		if($status == "inativos"){
             $protocolos = $protocolos->onlyTrashed();
         }
             
         $protocolos = $protocolos->paginate(10);
         
+        
 		return view('protocolos::protocolo.table', compact('protocolos','status'));
 	}
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
+    public function receber($id){
+
+        $protocolo = Protocolo::findOrFail($id);
+
+        $protocolo->status_id = '3';
+        $protocolo->user_modificador_id = Auth::user()->id;
+        $protocolo->save();
+
+        try{
+
+            DB::beginTransaction();
+
+            $log = Log::Create([
+                'status_id'        => '3',
+                'usuario_id'    => Auth::user()->id,
+                'protocolo_id'  => $protocolo->id
+            ]);
+            
+            DB::commit();
+            
+            return back()->with('success', 'O protocolo agora aguarda seu despacho.');
+            
+		}catch(Exception $e){
+			DB::rollback();
+			return back();
+		}
+        
+
+        
+        // $produto->save();
+
+        // $compra->produto()->update([
+        //     'nome' => 'batata'
+        // ]);
+    }
     public function create(Request $request)
     {
         $data = [
@@ -73,6 +183,60 @@ class ProtocolosController extends Controller
             'button'            => 'Salvar',
         ];
         return view('protocolos::protocolo.form', compact('data'));
+    }
+
+    public function store(ProtocoloStoreRequest $request){
+
+
+        $interessados = explode(',', $request['interessados']);
+
+        $interessadosArray = [];
+
+        foreach($interessados as $interessado) {
+            $interessadosArray[] = [
+                'usuario_id' => $interessado
+            ];
+        }
+        
+        if(Protocolo::select()->get()->last() == ''){
+            $lastId = 1;
+        }else{
+            
+            $lastId= (Protocolo::select('id')->get()->last()->id)+1;
+        }
+
+        DB::beginTransaction();
+
+		try{
+
+			$protocolo = Protocolo::Create([
+                'numero'                => $lastId."-".date("Y"),
+                'assunto'               => $request['assunto'],
+                'tipo_protocolo_id'     => $request->protocolo['tipo_protocolo_id'],
+                'tipo_acesso'           => $request->protocolo['tipo_acesso'],
+                'status_id'             => '1',
+                'user_modificador_id'   => Auth::user()->id,
+                'usuario_id'            => Auth::user()->id,
+            ]);
+            
+
+            $protocolo->interessado()->attach($interessadosArray);
+
+            $log = Log::Create([
+                'status_id'        => '1',
+                'usuario_id'    => $protocolo->usuario_id,
+                'protocolo_id'  => $protocolo->id,
+            ]);
+           
+            DB::commit();
+            
+            return redirect('protocolos/protocolos')->with('success', 'Protocolo cadastrado com sucesso!');
+            
+		}catch(\Exception $e){
+			DB::rollback();
+			return back();
+		}
+        
     }
 
     public function fetch(Request $request){
@@ -89,14 +253,57 @@ class ProtocolosController extends Controller
         return $content;
     }
 
-    public function fetchApensado(Request $request){
-       
-        $query = $request->get('query'); 
-        $data = Protocolo::where('assunto', 'LIKE', '%'.$query.'%')->get();
+    public function teste($id){
+        $query = '1-';
+        $protocolo = Protocolo::findOrFail($id);
+        // $apenssados = $protocolo->apensados->first()->pivot->protocolo_id;
+
+        foreach ($protocolo->apensados()->get() as $key => $apensado) {
+            $array[$key] =  $apensado->pivot->apensado_id;
+        }
+
+        //return $array;
+
+        if(!isset($array)){
+            $data = Protocolo::where('numero', 'LIKE', '%'.$query.'%')->where('id', '!=', $id)->get();
+        }else{
+            $data = Protocolo::where('numero', 'LIKE', '%'.$query.'%')->whereNotIn('id',$array)->where('id', '!=', $id)->get();
+        }
+
+        
         $content = [];
         foreach($data as $dados){
             $content[] = [
-                'label' => $dados->assunto,
+                'label' => $dados->numero,
+                'value' => $dados->id
+            ];  
+        }
+        return $content;
+    }
+
+    public function fetchApensado(Request $request){
+        
+        $id = $request->id_protocolo;
+        $protocolo = Protocolo::findOrFail($id);
+        // $apenssados = $protocolo->apensados->first()->pivot->protocolo_id;
+        $query = $request->get('query');
+        foreach ($protocolo->apensados()->get() as $key => $apensado) {
+            $array[$key] =  $apensado->pivot->apensado_id;
+        }
+
+        //return $array;
+
+        if(!isset($array)){
+            $data = Protocolo::where('numero', 'LIKE', '%'.$query.'%')->where('id', '!=', $id)->get();
+        }else{
+            $data = Protocolo::where('numero', 'LIKE', '%'.$query.'%')->whereNotIn('id',$array)->where('id', '!=', $id)->get();
+        }
+
+        
+        $content = [];
+        foreach($data as $dados){
+            $content[] = [
+                'label' => $dados->numero,
                 'value' => $dados->id
             ];  
         }
@@ -114,6 +321,12 @@ class ProtocolosController extends Controller
     
             $protocolo->apensados()->attach($request->apensado);
 
+            $log = Log::Create([
+                'status_id'        => '5',
+                'usuario_id'    => Auth::user()->id,
+                'protocolo_id'  => $protocolo->id
+            ]);
+
             DB::commit();
             
             return response()->json(['protocolo' => $protocolo, 'status' => 'success'], 200);
@@ -128,61 +341,32 @@ class ProtocolosController extends Controller
 		}
     }
 
-    public function store(Request $request){
-
-
-        $interessados = explode(',', $request['interessados']);
-
-        $interessadosArray = [];
-
-        foreach($interessados as $interessado) {
-            $interessadosArray[] = [
-                'usuario_id' => $interessado
-            ];
-        }
-        
-
-        DB::beginTransaction();
-
-		try{
-
-			$protocolo = Protocolo::Create([
-                'assunto'               => $request['assunto'],
-                'tipo_protocolo_id'     => $request->protocolo['tipo_protocolo_id'],
-                'tipo_acesso'           => $request->protocolo['tipo_acesso'],
-                'usuario_id'            => Auth::user()->id,
-            ]);
-            
-
-            $protocolo->interessado()->attach($interessadosArray);
-           
-            DB::commit();
-            
-            return redirect('protocolos/protocolos')->with('success', 'Protocolo cadastrado com sucesso!');
-            
-		}catch(Exception $e){
-			DB::rollback();
-			return back();
-		}
-        
-    }
-
     public function encaminhar(Request $request, $id){
-
+        
+        $protocolo = Protocolo::findOrFail($id);
         $idLogado = Auth::user()->id;
         
-        $data = [
-           'url'        => url("protocolos/protocolos/$id"),
-           'model'      => '',
-           'usuario'    => Usuario::where('id','<>',$idLogado)->whereNotIn('id',function($query) use($id){
-                                        $query->select('usuario_id')->from('protocolo_has_usuario')->where('protocolo_id','=', $id);
-                                    })->get(),
-           'button'     => 'Encaminhar'
-        ];
+            $data = [
+            'url'        => url("protocolos/protocolos/$id"),
+            'model'      => '',
+            'usuario'    => Usuario::where('id','<>',$idLogado)->whereNotIn('id',function($query) use($id){
+                                            $query->select('usuario_id')->from('protocolo_has_usuario')->where('protocolo_id','=', $id);
+                                        })->get(),
+            'button'     => 'Despachar'
+            ];
 
-        // dd($data);
-        
-        return view('protocolos::protocolo.encaminhar', compact('data'));
+        $ultimoUsuarioQueModificou = $protocolo->user_modificador_id;
+        $interessados = $protocolo->interessado()->pluck('usuario_id')->toArray();
+
+        if($protocolo->tipo_acesso == 1 && $ultimoUsuarioQueModificou == Auth::user()->id || (in_array(Auth::user()->id, $interessados))){
+            return view('protocolos::protocolo.encaminhar', compact('data'));
+        }
+        else if($protocolo->tipo_acesso == 0){
+            return view('protocolos::protocolo.encaminhar', compact('data'));
+        }
+        else{
+            return back()->with('error', 'Esse protocolo é privado!');
+        }
     }
 
     public function salvarEncaminhamento(Request $request, $id){
@@ -204,10 +388,20 @@ class ProtocolosController extends Controller
             ]);
 
             $protocolo->interessado()->attach(['usuario_id' => $request->tramite['destino']]);
+            
+            $protocolo->status_id = '2';
+            $protocolo->user_modificador_id = Auth::user()->id;
+            $protocolo->save();
+
+            $log = Log::Create([
+                'status_id'        => '5',
+                'usuario_id'    => Auth::user()->id,
+                'protocolo_id'  => $protocolo->id
+            ]);
 
             DB::commit();
             
-            return redirect('protocolos/protocolos')->with('success', 'Encaminhamento feito com sucesso!');
+            return redirect('protocolos/protocolos')->with('success', 'Despachado com sucesso!');
             
 		}catch(Exception $e){
 			DB::rollback();
@@ -218,18 +412,25 @@ class ProtocolosController extends Controller
     public function acompanhar($id){
         
         
-
         $data = ([
-            'model'         => '',
-            'url'           => url("protocolos/acompanhar/$id"),
-            'protocolo'     => Protocolo::findOrFail($id),
-            'tramite'       => Tramite::where('protocolo_id', '=', $id)->get(),
-            'documento'     => Documento::where('protocolo_id', '=', $id)->get(),
-            'title'         => 'Acompanhamento de Protocolo',
-            'button'        => 'Adicionar',
+            'model'                 => '',
+            'url'                   => url("protocolos/acompanhar/$id"),
+            'protocolo'             => Protocolo::findOrFail($id),
+            'log'                   => Log::where('protocolo_id', '=', $id)->get(),
+            'ultima_modificacao'    => Log::where('protocolo_id', '=', $id)->where('status_id', '<>', '4')->get()->last(),
+            'tramite'               => Tramite::where('protocolo_id', '=', $id)->get(),
+            'documento'             => Documento::where('protocolo_id', '=', $id)->get(),
+            'title'                 => 'Acompanhamento de Protocolo',
+            'button'                => 'Adicionar',
         ]);
-      
         
+
+        $log = Log::Create([
+            'status_id'        => '4',
+            'usuario_id'    => Auth::user()->id,
+            'protocolo_id'  => $data['protocolo']->id
+        ]);
+
         if($data["protocolo"]->tipo_acesso == 1) {
 
             $interessadosIds = $data['protocolo']->interessado()->pluck('usuario_id')->toArray();
@@ -239,8 +440,6 @@ class ProtocolosController extends Controller
             } else{
                 return back()->with('error', 'Esse protocolo é privado!');
             }
-
-            
         }
         else{
             return view('protocolos::protocolo.acompanhar', compact('data'));
@@ -248,9 +447,9 @@ class ProtocolosController extends Controller
         return view('protocolos::protocolo.acompanhar', compact('data'));
     }
 
-    public function salvarDocumento(Request $request){
+    public function salvarDocumento(DocumentoStoreRequest $request){
 
-        if($request->hasFile('documento') && $request->file('documento')->isValid() && $request->documento->extension() == 'pdf'){
+        if($request->hasFile('documento') && $request->file('documento')->isValid() && $request->documento->extension() == 'pdf' || 'doc' || 'docx' || 'xsl' || 'csv'){
             $nome = md5(date('Y-m-d H:i:s'));
             $extensao = $request->documento->extension();
             $nameFile = "{$nome}.{$extensao}";
@@ -272,7 +471,12 @@ class ProtocolosController extends Controller
                 'documento'         => $documento,
                 'protocolo_id'      => $request['id-protocolo']
             ]);
- 
+            
+            $log = Log::Create([
+                'status_id'        => '5',
+                'usuario_id'    => Auth::user()->id,
+                'protocolo_id'  => $request['id-protocolo']
+            ]);
             
             DB::commit();
 
@@ -320,9 +524,24 @@ class ProtocolosController extends Controller
         $protocolo = Protocolo::withTrashed()->findOrFail($id);
         if($protocolo->trashed()) {
             $protocolo->restore();
+
+            $log = Log::Create([
+                'status_id'         => '3',
+                'usuario_id'        => Auth::user()->id,
+                'protocolo_id'      => $id
+            ]);
+
             return back()->with('success', 'Protocolo ativado com sucesso!');
         } else {
+
             $protocolo->delete();
+
+            $log = Log::Create([
+                'status_id'         => '6',
+                'usuario_id'        => Auth::user()->id,
+                'protocolo_id'      => $id
+            ]);
+
             return back()->with('success', 'Protocolo desativado com sucesso!');
         }
     }

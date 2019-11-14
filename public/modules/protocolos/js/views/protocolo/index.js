@@ -1,6 +1,6 @@
 function setLoading(target) {
     var loading = $('<h3></h3>').attr({'class': 'text-center'})
-    var img = $('<img />').attr({'src': main_url+"/modules/protocolos/img/load.svg"})
+    var img = '<div class="spinner-border text-dark" role="status"><span class="sr-only">Loading...</span></div>'
     img.appendTo(loading)
     target.html(loading)
 }

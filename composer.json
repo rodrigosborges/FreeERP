@@ -13,7 +13,8 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.7",
-        "nwidart/laravel-modules": "^5.0"
+        "nwidart/laravel-modules": "^5.0",
+        "khill/lavacharts" : "3.1.*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

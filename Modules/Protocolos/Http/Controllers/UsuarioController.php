@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Protocolos\Entities\{Usuario,Setor};
-use Modules\Protocolos\Http\Requests\{UsuarioStoreRequest,UsuarioUpdateRequest,TrocarSenhaRequest};
+use Modules\Protocolos\Http\Requests\{UsuarioStoreRequest};
 use Illuminate\Support\Facades\Hash;
 use DB;
 use Illuminate\Support\Facades\Storage;

@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="nome" class="control-label">Observação: <span class="required-symbol">*</span></label>
+                    <label for="nome" class="control-label">Despacho: <span class="required-symbol">*</span></label>
                     <textarea class="form-control" id="observacao" name="observacao" rows="3"></textarea>
                 </div>
             </div>

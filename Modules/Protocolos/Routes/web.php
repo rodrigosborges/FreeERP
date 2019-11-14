@@ -1,25 +1,12 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
-//Módulo de Protocolos
 Route::prefix('protocolos')->group(function() {
 
     Route::get('/protocolos_interessados', function() {
         return Modules\Protocolos\Entities\Protocolo::findOrFail(1)->interessado;
     });
 
-    
+    Route::get('/chart', 'ProtocolosController@chart');
     Route::get('/cadastrar', 'UsuarioController@create');
     Route::post('/envia', 'UsuarioController@store');
     
@@ -27,6 +14,8 @@ Route::prefix('protocolos')->group(function() {
     Route::post('protocolos/logar', 'LoginController@authenticate');
     Route::get('protocolos/logout', 'LoginController@logoutUsuario');
 
+    Route::get('protocolos/list/{status}', 'ProtocolosController@testList');
+    Route::get('protocolos/receber/{id}', 'ProtocolosController@receber');
     Route::get('protocolos/encaminhar/{id}', 'ProtocolosController@encaminhar');
     Route::post('protocolos/{id}', 'ProtocolosController@salvarEncaminhamento');
     Route::get('protocolos/list/{status}', 'ProtocolosController@list');
@@ -36,6 +25,9 @@ Route::prefix('protocolos')->group(function() {
     Route::post('protocolos/acompanhar/{id}', 'ProtocolosController@salvarDocumento');
     Route::get('protocolos/download/{id}', 'ProtocolosController@download');
     Route::post('salvarApensado/{id}', 'ProtocolosController@salvarApensado');
+    Route::get('teste/{id}', 'ProtocolosController@teste');
     Route::resource('protocolos', 'ProtocolosController')->middleware('auth');
+
+
 
 });

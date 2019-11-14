@@ -1,17 +1,28 @@
 <?php 
     $moduleInfo = [
-        'icon' => 'people',
+        'icon' => 'list_alt',
         'name' => 'Protocolos',
     ];
-    $menu = [
-        ['icon' => 'exit_to_app', 'tool' => Auth::check() ? Auth::user()->apelido : "Usuário não logado", 'route' => '/usuario'],
-        ['icon' => 'list_alt', 'tool' => 'Protocolo', 'route' => url('protocolos/protocolos')],
-        ['icon' => 'power_settings_new', 'tool' => 'Sair', 'route' => url('protocolos/protocolos/logout')],
-    ];
+
+    if(Auth::check()){
+        $menu = [
+            ['icon' => 'list_alt', 'tool' => 'Protocolo', 'route' => url('protocolos/protocolos')],
+            ['icon' => 'power_settings_new', 'tool' => 'Sair', 'route' => url('protocolos/protocolos/logout')],
+        ];
+    }
+    else{
+        $menu = [
+            ['icon' => 'list_alt', 'tool' => 'Protocolo', 'route' => url('protocolos/protocolos')],
+        ];
+    }
 
     $login = [
         'route' => url('protocolos/protocolos/login')
     ];
+
+    $name = [
+        'tool'  => Auth::check() ? Auth::user()->apelido : " "
+    ]
 ?>
 
 @extends('template')
@@ -24,6 +35,7 @@
 @endsection
 
 @section('content')
+    @yield('relatorio')
     <div class="container">
         <div class="card d-flex">
             <div class="card-header d-flex justify-content-center">

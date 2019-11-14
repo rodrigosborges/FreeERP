@@ -12,7 +12,7 @@ class Protocolo extends Model
 
     protected $table = 'protocolo';
 
-    protected $fillable = ['assunto', 'tipo_protocolo_id', 'tipo_acesso', 'usuario_id'];
+    protected $fillable = ['numero', 'assunto', 'tipo_protocolo_id', 'tipo_acesso', 'status_id', 'user_modificador_id', 'usuario_id'];
 
     //Relação com a tabela tipo_protocolo
     public function tipo_protocolo(){
@@ -29,13 +29,23 @@ class Protocolo extends Model
         return $this->belongsToMany('Modules\Protocolos\Entities\Usuario', 'protocolo_has_usuario', 'protocolo_id', 'usuario_id');
     }
 
+    //Relação com a tabela status
+    public function status(){
+        return $this->belongsTo('Modules\Protocolos\Entities\Status');
+    }
+
     //Relação com a tabela usuario
     public function usuario(){
         return $this->belongsTo('Modules\Protocolos\Entities\Usuario');
     }  
 
+    //Relação com a tabela usuario
+    public function usuario_modificador(){
+        return $this->belongsTo('Modules\Protocolos\Entities\Usuario', 'user_modificador_id');
+    } 
+
     public function tramite(){
-        return $this->belongsTo('Modules\Protocolos\Entities\Tramite');
+        return $this->hasMany('Modules\Protocolos\Entities\Tramite');
     } 
 
     public function apensados(){
@@ -44,5 +54,10 @@ class Protocolo extends Model
 
     public function getApensados() {
         return Protocolo::find($this->apensado_id);
+    }
+
+    //Relação com a tabela logs
+    public function logs(){
+        return $this->hasMany('Modules\Protocolos\Entities\Log');
     }
 }   

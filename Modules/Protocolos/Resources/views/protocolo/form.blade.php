@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label for="nome" class="control-label">Interessados: <span class="required-symbol">*</span></label>
                     <div class="input-group">
-                        <input id="arrayInteressados" type="hidden" value="" name="interessados">    
+                        <input id="arrayInteressados" type="hidden" name="interessados" value="">    
                         <div id="interessados" class="interessados"></div>
                     </div>
                     <br>
@@ -29,6 +29,7 @@
                         </div>
                         <input id="pesquisa" placeholder="Pesquise aqui" class="form-control" type="text" name="pesquisa"/>
                     </div>
+                    <small id="error" class="errors font-text text-danger">{{$errors->first('interessados')}}</small>
                 </div>
 
                 <div class="form-group">
@@ -39,17 +40,19 @@
                                 <i class="material-icons">description</i>
                             </span>
                         </div>
-                        <select required name="protocolo[tipo_protocolo_id]" class="form-control">
+                        <select required name="protocolo[tipo_protocolo_id]" id="tipo_protocolo" class="form-control">
                             <option value="">Selecione</option>
                             @foreach($data['tipo_protocolo'] as $item)
-                                <option value="{{ $item->id }}" {{ old('tipo_protocolo.tipo_protocolo_id', $data['model']? $data['model']->tipo_protocolo()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->tipo }} </option>
+                                <option value="{{ $item->id }}" {{ old('protocolo.tipo_protocolo_id', $data['model']? $data['model']->tipo_protocolo()->id : '') == $item->id ? 'selected' : '' }}> {{ $item->tipo }} </option>
                             @endforeach 
                         </select>
                     </div>
+                    <small id="error" class="errors font-text text-danger">{{$errors->first('protocolo.tipo_protocolo_id')}}</small>
                 </div>
                 <div class="form-group">
-                    <label for="nome" class="control-label">Assunto: <span class="required-symbol">*</span></label>
-                    <textarea class="form-control" id="assunto" name="assunto" rows="3"></textarea>
+                    <label for="nome" class="control-label">Despacho: <span class="required-symbol">*</span></label>
+                    <textarea class="form-control" min="20" max="500" id="assunto" value="" name="assunto" rows="3">{{old('assunto', isset($protocolo) ? $protocolo->assunto : '')}}</textarea>
+                    <small id="error" class="errors font-text text-danger">{{$errors->first('assunto')}}</small>
                 </div>
                 <div class="form-group">
                     <label for="nome" class="control-label">Nível de Acesso: <span class="required-symbol">*</span></label>
@@ -59,12 +62,13 @@
                                 <i class="material-icons lock-locked">lock</i>
                             </span>
                         </div>
-                        <select required name="protocolo[tipo_acesso]" class="form-control">
+                        <select required name="protocolo[tipo_acesso]" id="tipo_acesso" class="form-control">
                             <option value="">Selecione</option>
                             <option {{ old('protocolo.tipo_acesso', $data['model'] ? $data['model']->tipo_acesso : '') == '0' ? 'selected' : ''}} value='0'>Público</option>
                             <option {{ old('protocolo.tipo_acesso', $data['model'] ? $data['model']->tipo_acesso : '') == '1' ? 'selected' : ''}} value='1'>Privado</option>
                         </select>
                     </div>
+                <small id="error" class="errors font-text text-danger">{{$errors->first('protocolo.tipo_acesso')}}</small>
                 </div>
             </div>
         </div>
@@ -93,7 +97,6 @@
                     console.log('success')
                 })
             });
-           
     </script>
     <script src="{{Module::asset('Protocolos:js/views/protocolo/form.js')}}"></script>
 @endsection
