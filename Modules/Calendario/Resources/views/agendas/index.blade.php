@@ -12,6 +12,7 @@
                     <a class="btn btn-secondary btn-sm lixeira" data-toggle="tooltip" title="Mostrar lixeira">
                         <i class="material-icons">delete</i>
                     </a>
+                    <span class="badge badge-danger badge-lixeira">{{$lixeira}}</span>
                 @endif
             </div>
             <div class="float-left">
@@ -21,7 +22,7 @@
             </div>
         </div>
 
-        <table class="table table-striped table-hover">
+        <table class="agendas table table-striped table-hover">
             <thead>
             <tr>
                 <th scope="col">ID</th>

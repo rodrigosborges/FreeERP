@@ -15,7 +15,7 @@
                 </a>
             </div>
         </div>
-        <table class="table table-striped table-hover">
+        <table class="eventos table table-striped table-hover">
             <thead>
             <tr>
                 <th scope="col">#</th>

@@ -11,7 +11,7 @@
         @endif
         @if($convites['pendentes']->isNotEmpty())
             <p class="text-secondary">Aguardando confirmação:</p>
-            <table class="table table-striped table-hover">
+            <table class="convites table table-striped table-hover">
                 <thead>
                 <tr>
                     <th scope="col">Evento</th>
@@ -19,7 +19,7 @@
                     <th scope="col">Data</th>
                     <th scope="col">Responsável</th>
                     <th scope="col">Criado</th>
-                    <th></th>
+                    <th scope="col" class="text-center">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -58,7 +58,7 @@
 
         @if($convites['definidos']->isNotEmpty())
             <p class="text-secondary">Aceitos e/ou recusados:</p>
-            <table class="table table-striped table-hover">
+            <table class="convites table table-striped table-hover">
                 <thead>
                 <tr>
                     <th scope="col">Evento</th>
@@ -66,7 +66,7 @@
                     <th scope="col">Data</th>
                     <th scope="col">Responsável</th>
                     <th scope="col">Criado</th>
-                    <th></th>
+                    <th scope="col" class="text-center">Ações</th>
                 </tr>
                 </thead>
                 <tbody>

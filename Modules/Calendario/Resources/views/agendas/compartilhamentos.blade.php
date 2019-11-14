@@ -11,7 +11,7 @@
         @endif
         @if($solicitacoes['pendentes'])
             <p class="text-secondary">Aguardando aprovação:</p>
-            <table class="table table-striped table-hover">
+            <table class="compartilhamentos table table-striped table-hover">
                 <thead>
                 <tr>
                     <th scope="col">Agenda</th>
@@ -19,7 +19,7 @@
                     <th scope="col">Setor</th>
                     <th scope="col">Solicitante</th>
                     <th scope="col">Data</th>
-                    <th></th>
+                    <th scope="col" class="text-center">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -50,7 +50,7 @@
 
         @if($solicitacoes['aprovadas'])
             <p class="text-secondary">Aprovados:</p>
-            <table class="table table-striped table-hover">
+            <table class="compartilhamentos table table-striped table-hover">
                 <thead>
                 <tr>
                     <th scope="col">Agenda</th>
@@ -58,7 +58,7 @@
                     <th scope="col">Setor</th>
                     <th scope="col">Solicitante</th>
                     <th scope="col">Data</th>
-                    <th></th>
+                    <th scope="col" class="text-center">Ações</th>
                 </tr>
                 </thead>
                 <tbody>

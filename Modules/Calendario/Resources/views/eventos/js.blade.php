@@ -1,6 +1,16 @@
 <script type="text/javascript">
     $(function () {
-        $('.table').DataTable({
+        $('table.convites').DataTable({
+            "lengthChange": false,
+            "columnDefs": [
+                { "orderable": false, "targets": 5 }
+            ],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Portuguese-Brasil.json"
+            }
+        });
+
+        $('table.eventos').DataTable({
             "lengthChange": false,
             "columnDefs": [
                 { "orderable": false, "targets": 4 }

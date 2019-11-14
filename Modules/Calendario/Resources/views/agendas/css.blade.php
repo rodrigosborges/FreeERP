@@ -20,4 +20,10 @@
     .acoes{
         width: 120px;
     }
+
+    .badge-lixeira{
+        position: relative;
+        top: -20px;
+        left: -15px;
+    }
 </style>
