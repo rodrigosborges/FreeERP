@@ -19,7 +19,7 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./app</directory>
+            <directory suffix=".php">./tests</directory>
         </whitelist>
     </filter>
     <php>
@@ -30,4 +30,8 @@
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
     </php>
+    <logging>
+        <log type="coverage-html" target="Modules/assistencia/Tests/report"
+            lowUpperBound="50" highLowerBound="80" />
+    </logging>
 </phpunit>
