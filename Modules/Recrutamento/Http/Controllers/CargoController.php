@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Recrutamento\Entities\{Cargo,Categoria};
+use Modules\Recrutamento\Http\Requests\{CargoRequest};
+
 
 class CargoController extends Controller
 {
@@ -91,7 +93,7 @@ class CargoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CargoRequest $request)
     {
         $cargos = Cargo::all();
         foreach($cargos as $cargo){
@@ -149,7 +151,7 @@ class CargoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CargoRequest $request, $id)
     {
         $cargos = Cargo::all();
         foreach($cargos as $cargo){

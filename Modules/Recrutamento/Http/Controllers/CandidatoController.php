@@ -9,6 +9,7 @@ use App\Entities\{Endereco,Estado,Cidade, Email, Telefone, TipoTelefone};
 use Modules\Recrutamento\Entities\{Candidato,Vaga,Etapa};
 use Auth;
 
+
 class CandidatoController extends Controller
 {
     /**
@@ -87,7 +88,7 @@ class CandidatoController extends Controller
 
         //Upload do Curriculum
   
-        if($request->hasFile('curriculum') && $request->file('curriculum')->isValid() && $request->curriculum->extension() == 'pdf'){
+        if($request->hasFile('curriculum') && $request->file('curriculum')->isValid() && ($request->curriculum->extension() == 'pdf' || $request->curriculum->extension() == '.pdf') ){
             $nome = md5($request->candidato['nome'].date('Y-m-d H:i'));
             $extensao = $request->curriculum->extension();
             $nameFile = "{$nome}.{$extensao}";

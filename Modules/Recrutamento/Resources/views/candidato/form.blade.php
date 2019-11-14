@@ -17,7 +17,7 @@
             <div class="form-row">
                 <div class="col-md-12">    
                     <label for="nome" class="control-label font-weight-bold">Nome</label>
-                    <input type="text" name="candidato[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', "") }}">
+                    <input type="text" required name="candidato[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', "") }}">
                     <label class="errors"> {{ $errors->first('nome') }} </label>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <div class="col">
                     <div class="input-group">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="curriculum" id="curriculum" aria-describedby="inputcurriculum">
+                            <input required type="file" class="custom-file-input" name="curriculum" id="curriculum" aria-describedby="inputcurriculum">
                             <label class="custom-file-label"  for="curriculum">Escolha o currículo</label>
                         </div>
                     </div>
@@ -41,16 +41,11 @@
                 <div class="col">
                     <div class="input-group">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="foto" id="foto" aria-describedby="inputfoto">
+                            <input required type="file" class="custom-file-input" name="foto" id="foto" aria-describedby="inputfoto">
                             <label class="custom-file-label"  for="foto">Escolha a foto</label>
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="col-sm custom-file"">
-                    <label for="foto">Foto</label>
-                    <input type="file" name="foto" class="custom-file-input" id="foto">
-                </div> -->
 
             </div>
 
@@ -88,7 +83,7 @@
 
             <div class="col-sm">
                 <label for="numero" class="control-label">Número</label>
-                <input type="text" required name="telefone[numero]" maxlength='11' id="numero" class="form-control" value="{{ $data['model'] ? $data['model']->telefones->numero : old('numero', "") }}">
+                <input type="text" required name="telefone[numero]"  id="numero" class="form-control sp_celphones" value="{{ $data['model'] ? $data['model']->telefones->numero : old('numero', "") }}">
                 <label class="errors"> {{ $errors->first('telefone.numero') }} </label>
             </div>
             </div>
@@ -107,7 +102,7 @@
                                     <i class="material-icons">location_on</i>
                                 </span>
                             </div>
-                            <input type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control cep" value="{{ old('endereco.cep', $data['model'] ? $data['model']->endereco()->cep : '') }}">
+                            <input required type="text" placeholder="CEP" name="endereco[cep]" id="cep" class="form-control cep" value="{{ old('endereco.cep', $data['model'] ? $data['model']->endereco()->cep : '') }}">
                         </div>
                         <span class="errors"> {{ $errors->first('endereco.cep') }} </span>
                     </div>
@@ -205,7 +200,7 @@
                                     <i class="material-icons">location_on</i>
                                 </span>
                             </div>
-                            <input type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ old('endereco.complemento', $data['model'] ? $data['model']->endereco()->complemento : '') }}">
+                            <input required type="text" placeholder="Complemento" name="endereco[complemento]" id="complemento" class="form-control" value="{{ old('endereco.complemento', $data['model'] ? $data['model']->endereco()->complemento : '') }}">
                         </div>
                         <span class="errors"> {{ $errors->first('endereco.complemento') }} </span>
                     </div>
@@ -229,6 +224,17 @@
 
         $(document).ready(function () {
             $('#cep').mask('00000-000');
+
+            var SPMaskBehavior = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+            },
+            spOptions = {
+            onKeyPress: function(val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+                }
+            };
+
+            $('.sp_celphones').mask(SPMaskBehavior, spOptions);
 
             $(".custom-file-input").on("change", function() {
                 var fileName = $(this).val().split("\\").pop();

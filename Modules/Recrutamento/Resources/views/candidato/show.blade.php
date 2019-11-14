@@ -40,7 +40,32 @@
             <h4>Endereço</h4>
             <hr>
 
-            <div class="row mb-3">
+            <table class='table table-striped'>
+                <thead>
+                    <tr>
+                        <th colspan='4'>Dados Cadastrais</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Estado: </b> {{$data['candidato']->endereco->cidade->estado()->first()->nome}}</td>
+                        <td><b>Cidade: </b> {{$data['candidato']->endereco->cidade->nome}}</td>
+                        <td colspan='2'><b>Bairro: </b> {{$data['candidato']->endereco->bairro}}</td>
+                    </tr>
+                    @if($data['candidato']->endereco->complemento != "")
+                    <tr>
+                        <td><b>Logradouro: </b> {{$data['candidato']->endereco->logradouro}}</td>
+                        <td><b>Complemento: </b> {{$data['candidato']->endereco->complemento}}</td>
+                        <td><b>CEP: </b> {{$data['candidato']->endereco->cep}}</td>
+                        <td><b>Número: </b> {{$data['candidato']->endereco->numero}}</td>
+                    </tr>
+                    @else
+
+                    @endif
+                </tbody>
+            </table>
+
+            <!-- <div class="row mb-3">
                 <div class="col-md-6">
                     <h5>Estado:</h5>
                     <p>{{$data['candidato']->endereco->cidade->estado()->first()->nome}}</p>
@@ -74,12 +99,10 @@
                     <h5>Número:</h5>
                     <p>{{$data['candidato']->endereco->numero}}</p>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="mb-3">
-                <div class="float-right">
-                    <a class="btn btn-success" href="{{url('recrutamento/mensagem/enviarMensagem/'.$data['candidato']->id)}}"><i class="material-icons" style="vertical-align: middle;">message</i> {{$data['button']}}</a>
-                </div>
+            <div class="card-footer">
+                <a class="btn btn-success" href="{{url('recrutamento/mensagem/enviarMensagem/'.$data['candidato']->id)}}"><i class="material-icons" style="vertical-align: middle;">message</i> {{$data['button']}}</a>
             </div>
             
 

@@ -14,7 +14,7 @@
                     <option value="{{$item->id}}">{{$item->nome}}</option>
                     @endforeach
                 </select>
-                <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="material-icons" style=" vertical-align: middle;">search</i> Pesquisar</button>
+                <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit"><i class="material-icons" style=" vertical-align: middle;">search</i> Pesquisar</button>
             </form>
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">

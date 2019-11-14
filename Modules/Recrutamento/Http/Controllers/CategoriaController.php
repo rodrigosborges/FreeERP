@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Recrutamento\Entities\{Categoria,Cargo};
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Recrutamento\Http\Requests\{CategoriaRequest};
 
 
 class CategoriaController extends Controller
@@ -80,7 +81,7 @@ class CategoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoriaRequest $request)
     {
         $categorias = Categoria::all();
         foreach($categorias as $categoria){
@@ -139,7 +140,7 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoriaRequest $request, $id)
     {
 
         $categorias = Categoria::all();
@@ -197,18 +198,5 @@ class CategoriaController extends Controller
 		}
     }
 
-    public function pesquisa(Request $request)
-    {
-        
-        $moduleInfo = $this->moduleInfo;
-        $menu = $this->menu;
-        $data = [
-            'categorias'	=> $pesquisa,
-            'categorias_inativas'	=> $pesquisa_inativos,
-            'title'		=> "Lista de Categorias",
-            
-		]; 
-        return view('recrutamento::categoria.index', compact('data','moduleInfo','menu'));
-    }
 
 }

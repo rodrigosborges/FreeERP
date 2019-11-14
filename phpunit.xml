@@ -9,13 +9,19 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
+    
         <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
+            <directory suffix=".php">Modules/Recrutamento/Tests/Unit/CaixaBranca</directory>
         </testsuite>
 
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+        <testsuite name="Unit">
+            <directory suffix=".php">Modules/Recrutamento/Tests/Unit/CaixaPreta</directory>
         </testsuite>
+
+
+        <!-- <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
+        </testsuite> -->
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">

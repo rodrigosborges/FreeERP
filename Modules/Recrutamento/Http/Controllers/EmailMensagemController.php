@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Recrutamento\Entities\{Email};
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Recrutamento\Http\Requests\{EmailRequest};
+
 
 class EmailMensagemController extends Controller
 {
@@ -63,7 +65,7 @@ class EmailMensagemController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(EmailRequest $request)
     {
         $emails = Email::all();
         foreach($emails as $email){
@@ -118,7 +120,7 @@ class EmailMensagemController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(EmailRequest $request, $id)
     {
         $emails = Email::all();
         foreach($emails as $email){

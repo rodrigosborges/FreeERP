@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Modules\Recrutamento\Entities\{Vaga,Candidato,Cargo,Categoria};
 use App\Entities\{Estado,Cidade,TipoTelefone,Telefone,Endereco};
 use Auth;
+use Modules\Recrutamento\Http\Requests\{VagaRequest};
 
 class VagaController extends Controller
 {
@@ -86,7 +87,7 @@ class VagaController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(VagaRequest $request)
     {
         DB::beginTransaction();
 		try{
@@ -121,7 +122,7 @@ class VagaController extends Controller
 			"model"		=> null,
             'title'		=> "Visualização de Vaga",
             'vaga'      => Vaga::findOrFail($id)
-		];
+        ];
         return view('recrutamento::vaga.show',compact('data','moduleInfo','menu'));
     }
 
@@ -150,7 +151,7 @@ class VagaController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(VagaRequest $request, $id)
     {
         $salario = str_replace('.','',$request->salario);
         $salario = str_replace(',','.',$salario);

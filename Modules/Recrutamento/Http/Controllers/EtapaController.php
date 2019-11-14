@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Recrutamento\Entities\{Etapa};
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Recrutamento\Http\Requests\{EtapaRequest};
 
 class EtapaController extends Controller
 {
@@ -77,7 +78,7 @@ class EtapaController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(EtapaRequest $request)
     {
         DB::beginTransaction();
 		try{    
@@ -125,7 +126,7 @@ class EtapaController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(EtapaRequest $request, $id)
     {
         DB::beginTransaction();
 		try{    

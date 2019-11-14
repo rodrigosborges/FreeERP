@@ -16,6 +16,11 @@ class RecrutamentoDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        $this->call([
+            CategoriaTableSeeder::class,
+            CargoTableSeeder::class,
+            EtapaTableSeeder::class
+        ]);
+        
     }
 }

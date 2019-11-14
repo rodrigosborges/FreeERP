@@ -1,52 +1,48 @@
 @extends('template')
 @section('content')
 
-    <div class="card ">
-    <div class="card-header"><h3>{{$data['title']}}</h3></div>
+    <div class="card">
+    <div class="card-header d-flex justify-content-center"><h3>{{$data['title']}}</h3></div>
     <div class="card-body">
+        <h5>{{$data['vaga']->cargo->nome}}</h5>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th colspan='2'>Dados Gerais</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Regime de Contratação:</b> {{strtoupper($data['vaga']->regime)}}</td>
+                    <td><b>Salário:</b> {{$data['vaga']->salario}}</td>
+                </tr>
+                <tr>
+                    <td><b>Benefícios:</b> {{strtoupper($data['vaga']->beneficios)}}</td>
+                    <td><b>Escolaridade:</b> Ensino {{$data['vaga']->escolaridade}}</td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Especificações:</b> {{$data['vaga']->especificacoes}}</td>
+                </tr>
+                <tr>
+                    <td colspan='2'><b>Descrição:</b> {{$data['vaga']->descricao}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="ativos" role="tabpanel" aria-labelledby="ativos-tab">
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <h4>Salário:</h4>
-                    <p>{{$data['vaga']->salario}}</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Ecolaridade:</h5>
-                    <p>Ensino {{$data['vaga']->escolaridade == 'medio' ? 'médio' : $data['vaga']->escolaridade}}</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Regime de Contratação:</h5>
-                    <p>{{$data['vaga']->regime}}</p>
-                </div>
-                <div class="col-md-12">
-                    <h5>Benefícios:</h5>
-                    <p>{{$data['vaga']->beneficios}}</p>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <h5>Descrição:</h5>
-                    <p>{{$data['vaga']->descricao}}</p>
-                </div>
-            </div>
-            <br>
-            <div class="row mb-3 center">
-                <div class="col-md-12">
-                    <h5>Especificações:</h5>
-                    <p>{{$data['vaga']->especificacoes}}</p>
-                </div>
-            </div>
-        </div>
-
+    <div class="card-footer">
         <div class="row">
-            <a class="btn btn-light mr-sm-3" href="{{ url('recrutamento/vagasDisponiveis') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
-            <a  href="{{ url('recrutamento/candidato/novo/'.$data['vaga']->id) }}" class="btn btn-success "> {{ $data['button'] }} </a> 
+            <div class="col col-sm-6">
+                <a class="btn  btn-dark " href="{{ url('recrutamento/vagasDisponiveis') }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+            </div>
+            <div class="col col-sm-6 ">
+                <a href="{{ url('recrutamento/candidato/novo/'.$data['vaga']->id) }}" class="btn btn-success float-right"> {{ $data['button'] }} </a> 
+            </div>
         </div>
+    </div>
 
     </div>
-    </div>
-    </div>
+@endsection
+@section('footer')
     
 @endsection
