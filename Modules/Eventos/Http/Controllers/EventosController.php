@@ -48,7 +48,8 @@ class EventosController extends Controller
         })->get();
         $estados = Estado::all();
         $pessoas = Pessoa::all();
-        return view('eventos::eventos', ['eventos' => $eventos,'estados' => $estados, 'pessoas' => $pessoas]);
+        $usuario = Auth::user()->id;
+        return view('eventos::eventos', ['eventos' => $eventos,'estados' => $estados, 'pessoas' => $pessoas, 'usuario' => $usuario]);
     }
     
     public function cadastrar(SalvaEvento $request)
@@ -103,7 +104,7 @@ class EventosController extends Controller
         
     }
     
-    public function editar(Request $request)
+    public function editar(SalvaEvento $request)
     {
         try{
             $evento = Evento::find($request->id);
@@ -162,6 +163,7 @@ class EventosController extends Controller
         return view('eventos::detalhaEvento', ['evento' => $evento, 'programacao' => $programacao]); 
     }
     
+    //INSCRIÇÃO EM ATIVIDADE
     public function inscricao(Programacao $programacao)
     {    
         if ($programacao->participantes()->where('pessoa_id', Auth::id())->first()) {
@@ -172,7 +174,8 @@ class EventosController extends Controller
 
         return redirect()->route('eventos.detalhar', ['evento' => $programacao->evento]);
     }
-            
+    
+    //RETORNA UM EVENTO, INCLUSIVE COM NOME DA CIDADE E DO ESTADO E UF DO ESTADO
     public function getEvento($id){
         $evento = DB::table('evento')
                 ->where('evento.id', '=', $id)
@@ -183,6 +186,7 @@ class EventosController extends Controller
         return $evento;
     }
     
+    //RETORNA TODOS OS ORGANIZADORES DE UM EVENTO
     public function getOrganizador($id){
         $organizadores = DB::table('evento_has_pessoa')
                 ->where('evento_id', '=', $id)

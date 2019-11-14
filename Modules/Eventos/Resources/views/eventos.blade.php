@@ -57,8 +57,10 @@
                             <button class="btn btn-xs btn-secondary" title="Visualizar / Editar" data-toggle="modal" data-target="#modalEvento" onclick="visualizar('{{$evento->id}}')">
                                 <i class="material-icons">search</i>
                             </button>
-                            @if($evento->permissoes->where('pessoa_id', Auth::id())->pluck('nivel_id')->first() == 2)
-                                <button class="btn btn-xs btn-secondary" title="Excluir" data-toggle="modal" data-target="#modalExcluirEvento" onclick="excluir('{{$evento->id}}', '{{$evento->nome}}')"><i class="material-icons">delete</i></button>
+                            @if(isset($evento))
+                                @if($evento->permissoes->where('pessoa_id', Auth::id())->pluck('nivel_id')->first() == 2)
+                                    <button class="btn btn-xs btn-secondary" title="Excluir" data-toggle="modal" data-target="#modalExcluirEvento" onclick="excluir('{{$evento->id}}', '{{$evento->nome}}')"><i class="material-icons">delete</i></button>
+                                @endif
                             @endif
                         </td> 
                     </tr>
@@ -82,7 +84,7 @@
                         </div>
                         <div class="form-group">
                             <label for="nome" class="col-form-label">Nome*:</label>
-                            <input type="text" class="form-control edit" name="nome" required>
+                            <input type="text" class="form-control edit" name="nome" minlength="2" required>
                         </div>
                         <div class="form-group">
                             <label for="local" class="col-form-label">Local*:</label>
@@ -116,6 +118,7 @@
                                     <input type="date" class="form-control edit" name="dataFim" required>
                                 </div>
                             </div>
+                            <p class="erro" style="color: red;"><p>
                         </div>
                         <div class="form-group">
                             <label for="descricao" class="col-form-label">Descrição*:</label>
@@ -147,17 +150,13 @@
                             <label for="organizador" class="col-form-label">Organizador(es):</label>
                             <select class="chosen-select form-control" id="organizador" name="organizador[]" data-placeholder="Selecione" multiple>
                                 @foreach($pessoas as $pessoa)
-                                    @if($pessoa->id != auth::id())
-                                        <option value="{{$pessoa->id}}">{{$pessoa->nome}}</option>
-                                    @endif
+                                    <option value="{{$pessoa->id}}">{{$pessoa->nome}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        @if($evento->permissoes->where('pessoa_id', Auth::id())->pluck('nivel_id')->first() == 2)
-                            <button type="button" class="btn btn-primary" id="btnEditar" onclick="editar()">Editar</button>
-                        @endif
+                        <button type="button" class="btn btn-primary" id="btnEditar" onclick="editar()">Editar</button>
                         <button type="button" class="btn btn-secondary" id="btnFechar" data-dismiss="modal"></button>
                         <button type="submit" class="btn btn-primary" id="btnSalvar">Salvar</button>
                     </div>
@@ -236,7 +235,8 @@
             $('.modal-header #tituloModal').html('Cadastrar evento');
             $('.modal-body [name=estado]').prop('selectedIndex',0);
             $('.modal-body [name=cidade]').html('<option value="" disabled selected>Selecione o estado</option>');
-            $('.modal-body #organizador option:selected').attr('selected',false);
+            $('#organizador').val('');
+            $('#organizador').trigger("chosen:updated");
             $('.modal-body .img').attr("src", "http://www.clker.com/cliparts/c/W/h/n/P/W/generic-image-file-icon-hi.png");
             
             //EDITA OS BOTÕES
@@ -252,11 +252,6 @@
             }
             
             $('.modal-header #tituloModal').html('Visualizar evento');
-            
-            //EDITA OS BOTÕES
-            $('.modal-footer #btnEditar').show();
-            $('.modal-footer #btnSalvar').hide();
-            $('.modal-footer #btnFechar').html('Cancelar');
             
             $.get('/eventos/get-evento/' + idevento, function (evento){
                 $.each(evento, function (index, value){
@@ -285,9 +280,18 @@
                 $.each(organizadores, function (index, value){
                     vals.push(value.pessoa_id);
                 });
-                console.log(vals);
+                //SE O USUARIO NÃO FOR ENCONTRADO NO ARRAY DE ORGANIZADORES, É ADMIN, ENTÃO LIBERA O BOTÃO DE EDIÇÃO
+                if( $.inArray({{$usuario}}, vals) !== -1 ){
+                   $('.modal-footer #btnEditar').hide();
+                }else{
+                   $('.modal-footer #btnEditar').show();
+                };
                 $('#organizador').val(vals);
+                $('#organizador').trigger("chosen:updated");
             });
+            
+            $('.modal-footer #btnSalvar').hide();
+            $('.modal-footer #btnFechar').html('Cancelar');
         }
         
         //LIBERA OS CAMPOS PARA EDIÇÃO
@@ -314,15 +318,28 @@
         
         //VERIFICA SE A DATA DIGITADA É MENOR QUE A DATA ATUAL E SE A DATA FIM É MENOR 
         //QUE A DATA DE INÍCIO DO EVENTO
-        $('.modal-body [name=dataInicio]').change(function(event) { 
+        $('.modal-body [name=dataInicio]').focusout(function(event) { 
             var datainicio = $('.modal-body [name=dataInicio]').val();
             $.get( "/eventos/get-data/", function( data ) {
                 if (datainicio < data){
-                    console.log('Digite uma data válida');
+                    $('.modal-body [name=dataInicio]').focus();
+                    $('.erro').show();
+                    $('.erro').html('A data de início deve ser igual ou maior que a data atual.');
                 }else{
-                    console.log('ok');
+                    $('.erro').hide();
                 }
             });
+        });
+        $('.modal-body [name=dataFim]').focusout(function(event) { 
+            var datainicio = $('.modal-body [name=dataInicio]').val();
+            var datafim = $('.modal-body [name=dataFim]').val();
+            if (datafim < datainicio){
+                $('.modal-body [name=dataFim]').focus();
+                $('.erro').show();
+                $('.erro').html('A data de término do evento deve ser igual ou maior que a data de início.');
+            }else{
+                $('.erro').hide();
+            }
         });
     </script>
     
