@@ -29,7 +29,7 @@
                 <th scope="col">Descrição</th>
                 <th scope="col">Eventos</th>
                 <th scope="col" class="text-center">Compartilhamentos</th>
-                <th scope="col"></th>
+                <th scope="col" class="text-center">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -97,9 +97,7 @@
                 </tr>
             @endforeach
             @if($agendas->count() == $lixeira)
-                <tr class="vazio">
-                    <td colspan="6" class="text-center">Nenhuma agenda cadastrada.</td>
-                </tr>
+
             @endif
             </tbody>
         </table>

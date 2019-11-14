@@ -22,7 +22,7 @@
                 <th scope="col">Título</th>
                 <th scope="col">Data</th>
                 <th scope="col">Descrição</th>
-                <th></th>
+                <th scope="col" class="text-center">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -68,4 +68,5 @@
 @section('js')
     @parent
     @include('calendario::eventos.js')
+
 @endsection

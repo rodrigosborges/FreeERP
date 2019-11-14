@@ -16,4 +16,8 @@
         content: "\e5ca";
         color: #000000;
     }
+
+    .acoes{
+        width: 120px;
+    }
 </style>

@@ -1,5 +1,15 @@
 <script type="text/javascript">
     $(function () {
+        $('.table').DataTable({
+            "lengthChange": false,
+            "columnDefs": [
+                { "orderable": false, "targets": 5 }
+            ],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Portuguese-Brasil.json"
+            }
+        });
+
         $('#formAgDel button').on('click', function () {
             bootbox.confirm({
                 title: 'Confirmar ação',
