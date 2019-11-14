@@ -30,7 +30,7 @@ class ConsertoController extends Controller
         if($ultimo == null){
           $id = 1;
         } else {
-          $id = 1 + $ultimo->id;
+          $id = 1 + $ultimo->id; //variavel que retornara o numero da ordem de serviço no form
         }
         return view('assistencia::paginas.consertos.cadastrarconserto', compact('id','pecaOS','itemServico','clientes','tecnicos','pecas','servicos'));
       
@@ -64,7 +64,7 @@ class ConsertoController extends Controller
        return view('assistencia::paginas.consertos.visualizarConserto', compact('conserto', 'pecaOS','itemServico'));
     }
     public function imprimir($id) { //GET geração de PDF da OS
-      $conserto = ConsertoAssistenciaModel::findOrFail($id);
+       $conserto = ConsertoAssistenciaModel::findOrFail($id);
        $pecaOS = PecaOs::where('idConserto', $id)->get();
        $itemServico = itemServico::where('idConserto', $id)->get();
 
@@ -102,69 +102,70 @@ class ConsertoController extends Controller
     public function salvar(StoreConsertosRequest $req){ //POST/store da OS
 
       $dados  = $req->all();
-      $dados['valor'] = str_replace(",",".",$dados['valor']);
+      $dados['valor'] = str_replace(",",".",$dados['valor']); //troca , por .
       if($dados['sinal'])
-        $dados['sinal'] = str_replace(",",".",$dados['sinal']);
+        $dados['sinal'] = str_replace(",",".",$dados['sinal']); //verifica se possui adiantamento
         
-      $conserto = ConsertoAssistenciaModel::create($dados);
+      $conserto = ConsertoAssistenciaModel::create($dados); //cria a ordem de serviço
       $idConserto = $conserto->id;
-      PagamentoAssistenciaModel::create([
+      PagamentoAssistenciaModel::create([ //Cria o pagamento relacionado a ordem
         'idConserto' => $conserto->id,
         'idCliente' => $conserto->idCliente,
         'valor' => ($dados['sinal']) ? $dados['valor']-$dados['sinal'] : $dados['valor'],
         'status' => 'Pendente',
         'forma' => 'Não pago'
       ]);
-      SituacaoOsModel::create([
+      SituacaoOsModel::create([ //Cria a situação relacionada a ordem
         'situacao' => $dados['situacao'],
         'obs' => 'Criação da ordem deserviço.',
         'idConserto' => $conserto->id
       ]);
 
-      if(isset($dados['pecas']) ? true : false){
+      if(isset($dados['pecas']) ? true : false){ //Verifica as peças selecionadas
         for ($i=0; $i < count($dados['pecas']); $i++) {
-          $pecas = new PecaOs;
+          $pecas = new PecaOs; 
           $pecas->idConserto = $idConserto;
           $pecas->idItemPeca = $dados['pecas'][$i];
-          $pecas->save();
+          $pecas->save();//cria a peça e vincula a ordem
         }
       }
       
-      if(isset($dados['servicos']) ? true : false){
+      if(isset($dados['servicos']) ? true : false){ //verifica os serviços selecionados
         for ($i=0; $i < count($dados['servicos']); $i++) {
           $servicos = new ItemServico;
           $servicos->idConserto = $idConserto;
           $servicos->idMaoObra = $dados['servicos'][$i];
-          $servicos->save();
+          $servicos->save();  //cria e vincula o serviço a ordem
         }
       }
 
       return redirect()->route('consertos.localizar')->with('success','Ordem de serviço iniciada!');
-      
     }
+
     public function atualizar(Request $req, $id){ //PUT/update da OS
-     
       $dados  = $req->all();
-      $dados['valor'] = str_replace(",",".",$dados['valor']);
+      $dados['valor'] = str_replace(",",".",$dados['valor']);//troca , por .
       if($dados['sinal'])
-        $dados['sinal'] = str_replace(",",".",$dados['sinal']);
-       ConsertoAssistenciaModel::findOrFail($id)->update($dados);
-       $conserto = ConsertoAssistenciaModel::findOrFail($id);
+        $dados['sinal'] = str_replace(",",".",$dados['sinal']); //verifica se tem adiantamento
+
+       ConsertoAssistenciaModel::findOrFail($id)->update($dados); //atualiza os dados da os
+       $conserto = ConsertoAssistenciaModel::findOrFail($id); 
    
-      $pagamento = PagamentoAssistenciaModel::findOrFail($id);
-      $pagamento->update(['valor' => ($conserto['valor']) ? $conserto['valor']- $conserto['sinal'] : $conserto['valor']]);
+      $pagamento = PagamentoAssistenciaModel::findOrFail($id); 
+      $pagamento->update(['valor' => ($conserto['valor']) ? $conserto['valor']- $conserto['sinal'] : $conserto['valor']]); //atualiza os dados do pagamento vinculado a os
   
-      SituacaoOsModel::create([
+      SituacaoOsModel::create([ //cria uma nova situação
         'situacao' => $dados['situacao'],
         'obs' =>  $dados['obsInfo'] !=  '' ? $dados['obsInfo'] : 'Alteração de dados' ,
         'idConserto' => $conserto->id
       ]);
+
       $pecaOS = PecaOs::where('idConserto', $id)->get();
       $itemServico = ItemServico::where('idConserto', $id)->get();
-      foreach($pecaOS as $item){
+      foreach($pecaOS as $item){ //deleta as peças antigas
         $item->forceDelete();
       }
-      if(isset($dados['pecas']) ? true : false){
+      if(isset($dados['pecas']) ? true : false){//gera novas peças
         
         for ($i=0; $i < count($dados['pecas']); $i++) {
           $pecas = new PecaOs;
@@ -173,10 +174,10 @@ class ConsertoController extends Controller
           $pecas->save();
         }
       }
-      foreach($itemServico as $item){
+      foreach($itemServico as $item){ //deleta serviços antigos
         $item->forceDelete();
       }
-      if(isset($dados['servicos']) ? true : false){
+      if(isset($dados['servicos']) ? true : false){ //gera novos serviços selecionados
         for ($i=0; $i < count($dados['servicos']); $i++) {
           $servicos = new ItemServico;
           $servicos->idConserto = $id;
@@ -210,7 +211,7 @@ class ConsertoController extends Controller
       $pagamento =  PagamentoAssistenciaModel::where('idConserto', $id)->get()->first();
       
       $pecas = PecaOs::where('idConserto', $id)->get();
-      foreach ($pecas as $item){
+      foreach ($pecas as $item){ //Apaga a peça do estoque e atualiza a quatidade
         $itemPeca = ItemPeca::find($item->idItemPeca);
         $itemPeca->delete();
         $itemPeca->update();
