@@ -40,9 +40,10 @@ $(document).ready(function () {
             $("input[name='endereco[complemento]'").val(data.endereco.complemento).prop('readonly', true);
 
             $primeiroCampoTel = $('.telefones').find('.form-inline').first().find('input');
+            $('.telefones').children(':not(:first-child())').remove();
             data.telefones.forEach(telefone => {
                 if ($primeiroCampoTel.val() == "") {
-                    $('.telefones').find('.form-inline').first().find('input').val(telefone.numero).prop('readonly', true);
+                    $('.telefones').find('.form-inline').first().find('input').val('').mask('(99) 99999-9999').val(telefone.numero).prop('readonly', true);
                 }
                 else {
                     var div = $('.telefones').find('.form-inline').first().clone(true);
