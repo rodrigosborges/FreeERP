@@ -12,6 +12,7 @@
 
         $('a.deletar-evento').on('click', function (event) {
             event.preventDefault();
+            var url = this.href;
             bootbox.confirm({
                 title: 'Confirmar ação',
                 message: 'Deseja realmente excluir o evento?',
@@ -20,7 +21,7 @@
                 locale: 'br',
                 callback: function (result) {
                     if (result == true) {
-                        window.location = $('a.deletar-evento').attr('href');
+                        window.location = url;
                     }
                 }
             });
@@ -28,6 +29,7 @@
 
         $('a.deletar-convite').on('click', function (event) {
             event.preventDefault();
+            var url = this.href;
             bootbox.confirm({
                 title: 'Confirmar ação',
                 message: 'Deseja realmente excluir o convite para o evento?',
@@ -36,7 +38,7 @@
                 locale: 'br',
                 callback: function (result) {
                     if (result == true) {
-                        window.location = $('a.deletar-convite').attr('href');
+                        window.location = url;
                     }
                 }
             });
@@ -44,6 +46,7 @@
 
         $('a.aceitar-convite').on('click', function (event) {
             event.preventDefault();
+            var url = this.href;
             bootbox.confirm({
                 title: 'Confirmar ação',
                 message: 'Deseja realmente aceitar o convite para o evento?',
@@ -52,7 +55,7 @@
                 locale: 'br',
                 callback: function (result) {
                     if (result == true) {
-                        window.location = $('a.aceitar-convite').attr('href');
+                        window.location = url;
                     }
                 }
             });
@@ -60,6 +63,7 @@
 
         $('a.revogar-convite').on('click', function (event) {
             event.preventDefault();
+            var url = this.href;
             bootbox.confirm({
                 title: 'Confirmar ação',
                 message: 'Deseja realmente revogar o aceite do convite para o evento?',
@@ -68,7 +72,7 @@
                 locale: 'br',
                 callback: function (result) {
                     if (result == true) {
-                        window.location = $('a.revogar-convite').attr('href');
+                        window.location = url;
                     }
                 }
             });

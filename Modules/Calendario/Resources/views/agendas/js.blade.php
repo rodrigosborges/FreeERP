@@ -10,7 +10,8 @@
             }
         });
 
-        $('#formAgDel button').on('click', function () {
+        $('.formAgDel button').on('click', function () {
+            var form = $(this).parent('form');
             bootbox.confirm({
                 title: 'Confirmar ação',
                 message: 'Deseja realmente mover a agenda para a lixeira?',
@@ -19,12 +20,13 @@
                 locale: 'br',
                 callback: function (result) {
                     if(result == true){
-                        $('#formAgDel').submit();
+                        $(form).submit();
                     }
                 }
             });
         });
-        $('#formAgDelPerm button').on('click', function () {
+        $('.formAgDelPerm button').on('click', function () {
+            var form = $(this).parent('form');
             bootbox.confirm({
                 title: 'Confirmar ação',
                 message: 'Deseja realmente excluir definitivamente a agenda?',
@@ -33,12 +35,13 @@
                 locale: 'br',
                 callback: function (result) {
                     if(result == true){
-                        $('#formAgDelPerm').submit();
+                        $(form).submit();
                     }
                 }
             });
         });
-        $('#formAgRec button').on('click', function () {
+        $('.formAgRec button').on('click', function () {
+            var form = $(this).parent('form');
             bootbox.confirm({
                 title: 'Confirmar ação',
                 message: 'Deseja realmente restaurar a agenda?',
@@ -47,7 +50,7 @@
                 locale: 'br',
                 callback: function (result) {
                     if(result == true){
-                        $('#formAgRec').submit();
+                        $(form).submit();
                     }
                 }
             });
@@ -74,6 +77,7 @@
         });
 
         $('a.deletar-compartilhamento').on('click', function (event) {
+            var url = this.href;
             event.preventDefault();
             bootbox.confirm({
                 title: 'Confirmar ação',
@@ -83,7 +87,7 @@
                 locale: 'br',
                 callback: function (result) {
                     if (result == true) {
-                        window.location = $('a.deletar-compartilhamento').attr('href');
+                        window.location = url;
                     }
                 }
             });
@@ -91,6 +95,7 @@
 
         $('a.aprovar-compartilhamento').on('click', function (event) {
             event.preventDefault();
+            var url = this.href;
             bootbox.confirm({
                 title: 'Confirmar ação',
                 message: 'Deseja realmente aprovar o compartilhamento de agenda?',
@@ -99,7 +104,7 @@
                 locale: 'br',
                 callback: function (result) {
                     if (result == true) {
-                        window.location = $('a.aprovar-compartilhamento').attr('href');
+                        window.location = url;
                     }
                 }
             });
@@ -107,6 +112,7 @@
 
         $('a.revogar-compartilhamento').on('click', function (event) {
             event.preventDefault();
+            var url = this.href;
             bootbox.confirm({
                 title: 'Confirmar ação',
                 message: 'Deseja realmente revogar o compartilhamento de agenda?',
@@ -115,7 +121,7 @@
                 locale: 'br',
                 callback: function (result) {
                     if (result == true) {
-                        window.location = $('a.revogar-compartilhamento').attr('href');
+                        window.location = url;
                     }
                 }
             });

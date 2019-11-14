@@ -70,14 +70,14 @@
                     </td>
                     <td class="acoes">
                         @if($agenda->trashed())
-                            <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" id="formAgDelPerm">
+                            <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" class="formAgDelPerm" id="formAgDelPerm{{$agenda->id}}">
                                 @method('DELETE')
                                 @csrf
                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Deletar agenda permanentemente">
                                     <i class="material-icons">delete_forever</i>
                                 </button>
                             </form>
-                            <form method="POST" action="{{route('agendas.restaurar', $agenda->id)}}" id="formAgRec">
+                            <form method="POST" action="{{route('agendas.restaurar', $agenda->id)}}" class="formAgRec" id="formAgRec{{$agenda->id}}">
                                 @method('PATCH')
                                 @csrf
                                 <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" title="Restaurar agenda">
@@ -85,7 +85,7 @@
                                 </button>
                             </form>
                         @else
-                            <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" id="formAgDel">
+                            <form method="POST" action="{{route('agendas.deletar', $agenda->id)}}" class="formAgDel" id="formAgDel{{$agenda->id}}">
                                 @method('DELETE')
                                 @csrf
                                 <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" title="Deletar agenda">

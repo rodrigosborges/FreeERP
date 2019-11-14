@@ -305,6 +305,9 @@ class AgendaController extends Controller
         else
             $retorno = redirect()->route('agendas.index');
 
+        if ($agenda->trashed())
+            $retorno = redirect()->route('agendas.index')->with('warning', 'Remova a agenda da lixeira para visualizar seus eventos.');
+
         return $retorno;
     }
 }
