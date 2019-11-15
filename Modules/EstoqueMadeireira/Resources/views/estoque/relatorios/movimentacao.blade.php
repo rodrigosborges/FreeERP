@@ -1,9 +1,10 @@
+@extends('estoquemadeireira::estoque.template')
 @section('title', 'Relatório de Movimentação')
 @section('body')
 
 
 <div class="container">
-    <form method="POST" action="{{url('/estoque/relatorio/movimentacao')}}" id="form">
+    <form method="POST" action="{{url('/estoquemadeireira/relatorio/movimentacao')}}" id="form">
         @csrf
         <div class="row">
             <div class="form-group col-lg-4 col-sm-12">

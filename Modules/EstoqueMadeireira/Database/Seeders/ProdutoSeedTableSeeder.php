@@ -13,7 +13,7 @@ class ProdutoSeedTableSeeder extends Seeder {
           'categoria_id' => '1',
           'fornecedor_id' => '1',
           'preco' => '10',
-          'codigo' => '123123123'
+          'unidadeMedida_id' => '1',
           //'created_at' => '',
           //'deleted_at' => ''
         ],
@@ -23,7 +23,7 @@ class ProdutoSeedTableSeeder extends Seeder {
           'categoria_id' => '2',
           'fornecedor_id' => '2',
           'preco' => '20',
-          'codigo' => '223123123'
+          'unidadeMedida_id' => '1',
           //'created_at' => '',
           //'deleted_at' => ''
         ],
@@ -33,7 +33,7 @@ class ProdutoSeedTableSeeder extends Seeder {
           'categoria_id' => '3',
           'fornecedor_id' => '3',
           'preco' => '30',
-          'codigo' => '323123123'
+          'unidadeMedida_id' => '1',
           //'created_at' => '',
           //'deleted_at' => ''
         ],
@@ -43,7 +43,7 @@ class ProdutoSeedTableSeeder extends Seeder {
           'categoria_id' => '4',
           'fornecedor_id' => '4',
           'preco' => '40',
-          'codigo' => '423123123'
+          'unidadeMedida_id' => '1',
           //'created_at' => '',
           //'deleted_at' => ''
         ],
@@ -53,7 +53,7 @@ class ProdutoSeedTableSeeder extends Seeder {
         'categoria_id' => '5',
         'fornecedor_id' => '5',
         'preco' => '50',
-        'codigo' => '523123123'
+        'unidadeMedida_id' => '1',
         //'created_at' => '',
         //'deleted_at' => ''
        ],

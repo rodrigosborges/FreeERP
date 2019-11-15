@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group col-3">
                         <label for="nome">Telefone</label>
-                        <input required type="numeric" class="form-control" placeholder="Insira o telefone" name="telefone" id="telefone" value="{{isset($cliente) ? $cliente->telefone : ''}}">
+                        <input required minlength="13" type="numeric" class="form-control" placeholder="Insira o telefone" name="telefone" id="telefone" value="{{isset($cliente) ? $cliente->telefone : ''}}">
                         <span style="color:red">{{$errors->first('telefone')}}</span>
                     </div>  
 

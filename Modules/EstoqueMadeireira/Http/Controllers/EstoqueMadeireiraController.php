@@ -234,6 +234,7 @@ class EstoqueMadeireiraController extends Controller
 
     public function relatorioMovimentacao()
     {
+ 
         $categorias = Categoria::all();
         $data = [
             'dadosEntrada' => "",
@@ -243,6 +244,7 @@ class EstoqueMadeireiraController extends Controller
             'labels' => "", 
             'estoque' => Estoque::all()
         ];
+        
         return view('estoquemadeireira::estoque.relatorios.movimentacao', compact('categorias', 'data'));
     }
     
@@ -294,30 +296,42 @@ class EstoqueMadeireiraController extends Controller
             array_push($menorMovimentacao, $q->data, $q->menorMovimentacao);
         }
        
-        //Maior movimentacao
+        //Maior e Menor movimentação
+        $maiorMovimentacao = date('d/m/Y',  strtotime($maiorMovimentacao[0])) . ' | '. $maiorMovimentacao[1] . ' itens ';
+        $menorMovimentacao = date('d/m/Y', strtotime($menorMovimentacao[0])) . ' | '. $menorMovimentacao[1] . ' itens ';
+
+
+        //Total de entrada e saida
+        $totalEntrada = $totalEntrada[0];
+        $totalSaida = $totalSaida[0];
+
+        
         //nome do estoque
         if($estoque_id == -1){
             $estoqueSelecionado = "Todo o estoque";
         }else{
             $estoque = Estoque::findOrFail($estoque_id);
-            $estoqueSelecionado = $estoque->produtos->last()->nome . ' - ' . $estoque->tipoUnidade->nome . '(' . $estoque->tipoUnidade->quantidade_itens . ' itens)'; 
+            $estoqueSelecionado = $estoque->produtos->last()->nome . ' - ' . $estoque->tipoUnidade->nome; 
         }
        
+
+        
         $data = [
             'estoqueSelecionado' => $estoqueSelecionado,
-            'maiorMovimentacao' => json_encode($maiorMovimentacao),
-            'menorMovimentacao' => json_encode($menorMovimentacao),
-            'totalEntrada' => json_encode($totalEntrada),
-            'totalSaida' => json_encode($totalSaida),
+            'maiorMovimentacao' =>($maiorMovimentacao),
+            'menorMovimentacao' => ($menorMovimentacao),
+            'totalEntrada' => ($totalEntrada),
+            'totalSaida' => ($totalSaida),
             'flag' => "1",
             'labels' => json_encode($labels),
             'dadosEntrada' => json_encode($dadosEntrada),
             'dadosSaida' => json_encode($dadosSaida),
             'estoque' => Estoque::all(),
             'categorias' => Categoria::all(),
-            'dataInicial' => $req->dataInicial,
-            'dataFinal' => $req->dataFinal
+            'dataInicial' => date('d/m/Y', strtotime($req->dataInicial)),
+            'dataFinal' => date('d/m/Y', strtotime($req->dataFinal))
         ];
+        
     return view('estoquemadeireira::estoque.relatorios.movimentacao', compact('data'));
     }
 
