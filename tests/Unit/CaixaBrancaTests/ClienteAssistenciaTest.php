@@ -7,15 +7,21 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Modules\assistencia\Entities\ClienteAssistenciaModel;
+use Modules\assistencia\Http\Controllers\ClienteController;
 
-class ClienteAssistencia extends TestCase
+class ClienteAssistenciaTest extends TestCase
 {
+
+    public function testListClient() {
+        $response = $this->get('/assistencia/cliente');
+
+        $response->assertStatus(200);
+    }
+
     public function testFormCreate()
     {
 
-        $response = $this->WithoutMiddleware()->withHeaders([
-            'X-Header' => 'Value',
-        ])->json(
+        $response = $this->WithoutMiddleware()->json(
             'POST',
             '/assistencia/cliente/salvar',
             [
@@ -33,13 +39,11 @@ class ClienteAssistencia extends TestCase
                 'cep' => '11630000',
             ]
         );
-        $response
-        ->assertStatus(201)
-        ->assertJson([
-            'created' => true,
-        ]);
-    }
+        //redirecioanndo
+        $response = $this->get('/assistencia/cliente');
 
+        $response->assertStatus(200);
+    }
     // public function testEditOrdemServico(){
     //     $user = Usuario::findOrFail(1);
     //     $response = $this->WithoutMiddleware()->actingAs($user)->withHeaders([
