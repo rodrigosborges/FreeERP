@@ -134,16 +134,17 @@
                             <input type="text" class="form-control edit" name="empresa" required>
                         </div>
                         <div class="form-group">
-                            <label for="email" class="col-form-label">E-mail:</label>
+                            <label for="email" class="col-form-label">E-mail para contato:</label>
                             <input type="text" class="form-control edit" name="email">
                         </div>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                    <label for="telefone" class="col-form-label">Telefone:</label>
+                                    <label for="telefone" class="col-form-label">Telefone para contato:</label>
                                     <input type="text" class="form-control edit" name="telefone">
                                 </div>
                             </div>
+                            <p class="erroTelefone" style="color: red;"><p>
                         </div>
                         <!-- MULTI SELECT PARA SELECIONAR ORGANIZADORES, NÃO FUNCIONOU NO CHROME -->
                         <div class="form-group">
@@ -341,13 +342,26 @@
                 $('.erro').hide();
             }
         });
+        
+        //VERIFICA TELEFONE
+        $('.modal-body [name=telefone]').focusout(function(event) { 
+            var telefone = $('.modal-body [name=telefone]').val().length;
+            if(telefone < 13){
+                $('.modal-body [name=telefone]').focus();
+                $('.erroTelefone').show();
+                $('.erroTelefone').html('Verifique o número');
+            } else {
+                $('.erroTelefone').hide();
+            }
+            
+        });
     </script>
     
     <!-- Preview da imagem -->
     <script>
         $(".imgEvento").change(function(event) {  
             readURL(this);    
-        });    
+        });
     
         function readURL(input) {    
             if (input.files && input.files[0]) {   

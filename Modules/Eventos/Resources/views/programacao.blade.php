@@ -20,6 +20,10 @@
             cursor: pointer;
             border-radius: 50%;
         }
+        
+        input[type=date],input[type=datetime-local],input[type=month],input[type=time]{
+            -webkit-appearance:none;
+        }
     </style>
 @endsection
 
@@ -91,7 +95,7 @@
                         </div>
                         <div class="form-group">
                             <label for="nome" class="col-form-label">Atividade*:</label>
-                            <input type="text" class="form-control edit" name="nome" required>
+                            <input type="text" class="form-control edit" name="nome" minlength="2" required>
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-form-label">Tipo*:</label>
@@ -123,6 +127,7 @@
                                     <input type="time" class="form-control edit" name="duracao" required>
                                 </div>
                             </div>
+                            <p class="erro" style="color: red;"><p>
                         </div>
                         <div class="form-group">
                             <label for="local" class="col-form-label">Local*:</label>
@@ -141,11 +146,11 @@
                             <div class="form-group">
                                 <img src="" id="img" alt="Foto" title='Foto'/></br>
                                 <input type='file' class="edit" name="fotoPalestrante" id="fotoPalestrante" accept="image/*" hidden>
-                                <p style="text-align: center; margin-top: -20px; color: gray;">Utilize uma foto quadrada ou ela não será salva!</p>
+                                <p class="erroFoto" style="text-align: center; margin-top: -20px; color: red;"></p>
                             </div>
                             <div class="form-group" style="margin-top: -30px;">
                                 <label for="nomePalestrante" class="col-form-label">Nome*:</label>
-                                <input type="text" class="form-control edit" name="nomePalestrante" required>
+                                <input type="text" class="form-control edit" name="nomePalestrante" minlength="2" required>
                             </div>
                             <div class="form-group">
                                 <label for="bio" class="col-form-label">Bio / Descrição:</label>
@@ -288,6 +293,19 @@
             $('#modalExcluirAtividade [name=id]').val(id);
             $('#modalExcluirAtividade p').text('Tem certeza que deseja excluir ' + nome + '?'); 
         }
+        
+        $('.modal-body [name=data]').focusout(function(event) { 
+            var data = $('.modal-body [name=data]').val();
+            var dataInicio = "{{$evento->dataInicio}}";
+            var dataFim = "{{$evento->dataFim}}";
+            if (data < dataInicio || data > dataFim){
+                $('.modal-body [name=data]').focus();
+                $('.erro').show();
+                $('.erro').html('A data da atividade deve estar entre as datas de início e término do evento.');
+            }else{
+                $('.erro').hide();
+            }
+        });
     </script>
     
     <!-- Preview da imagem -->
@@ -297,23 +315,42 @@
         });
 
         $("#fotoPalestrante").change(function(event) {  
-            readURL(this);    
+            $.when(
+                readURL(this)
+            ).done(function(){
+                console.log($('img').width());
+                console.log($('img').height());
+            });
         });    
 
-        function readURL(input) {    
+        function readURL(input) {
             
-        if (input.files && input.files[0]) {    
-            var reader = new FileReader();
+            
+            if (input.files && input.files[0]) {    
+                var reader = new FileReader();
                 var filename = $("#img").val();
                 filename = filename.substring(filename.lastIndexOf('\\')+1);
                 reader.onload = function(e) {
-                    $('img').attr('src', e.target.result);
-                    $('img').hide();
-                    $('img').fadeIn(500);
-
+                    var image = new Image();
+                    image.src = e.target.result;
+                    image.onload = function () {
+                        var height = this.height;
+                        var width = this.width;
+                        if (height != width) {
+                            $('.erroFoto').show();
+                            $('.erroFoto').html('Utilize uma foto quadrada!');
+                            $('#img').attr("src", 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStl-KWsV0KVxQug2HoR6e3lx6UUSD4KAqyDbevILtDVDvs0YK1xA&s');
+                            $('#fotoPalestrante').val('');
+                        } else {
+                            $('.erroFoto').hide();
+                            $('img').attr('src', e.target.result);
+                            $('img').hide();
+                            $('img').fadeIn(500);
+                        }
+                    };
                 };
-                reader.readAsDataURL(input.files[0]); 
-            } 
+                reader.readAsDataURL(input.files[0]);
+            }
         }
     </script>
 @endsection

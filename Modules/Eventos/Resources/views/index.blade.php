@@ -53,35 +53,6 @@
             <h1 style="text-align: center;">Próximos eventos</h1>
         </div>
     </div>
-
-    <!-- BARRA DE PESQUISA / SE DER TEMPO -->
-    <!-- <div class="row">
-        <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="well">
-                <div class="row">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Pesquisar evento"/>
-                    </div>
-                    <div class="col">
-                        <select name="estado" class="form-control">
-                            <option value="" disabled selected>Todos os estados</option>
-                            @foreach ($estados as $estado)
-                                <option value="{{$estado->id}}">{{$estado->uf}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col">
-                        <select name="cidade" class="form-control">
-                            <option value="" disabled selected>Todas as cidades</option>
-                        </select>
-                    </div>
-                    <div class="col" style="float: right;">
-                        <button class="btn btn-primary d-flex" style="width: 268.5px; padding-left: 90px;"><i class="material-icons mr-2">search</i>Buscar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
     
     <!-- EVENTOS -->
     <div class="well">

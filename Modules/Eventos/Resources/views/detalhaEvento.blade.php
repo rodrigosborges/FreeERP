@@ -14,6 +14,8 @@
         
         .eventoImg{
             padding-bottom: 10px;
+            max-height: 250px;
+            max-width: 250px;
         }
         
         .fotoPalestrante{
@@ -175,10 +177,10 @@
         <h3>Contato</h3>
         <p>{{$evento->empresa}}</p>
         @if($evento->email !== null && $evento->email !== "")
-            <p style="margin-top: -10px;"><i class="material-icons" style="vertical-align: middle;">phone</i>{{$evento->telefone}}</p>
+            <p style="margin-top: -10px;"><i class="material-icons" style="vertical-align: middle;">mail</i>{{$evento->email}}</p>
         @endif
         @if($evento->telefone !== null && $evento->telefone !== "")
-            <p style="margin-top: -10px;"><i class="material-icons" style="vertical-align: middle;">mail</i>{{$evento->email}}</p>
+            <p style="margin-top: -10px;"><i class="material-icons" style="vertical-align: middle;">phone</i>{{$evento->telefone}}</p>
         @endif
     </div>
     

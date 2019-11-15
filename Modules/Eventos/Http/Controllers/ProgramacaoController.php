@@ -5,10 +5,10 @@ namespace Modules\Eventos\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
 use Modules\Eventos\Entities\Evento;
 use Modules\Eventos\Entities\Programacao;
 use Modules\Eventos\Entities\Palestrante;
+use Modules\Eventos\Http\Requests\SalvaAtividade;
 
 class ProgramacaoController extends Controller
 {
@@ -24,7 +24,7 @@ class ProgramacaoController extends Controller
         return view('eventos::programacao', ['evento' => $evento, 'atividades' => $atividades]);
     }
     
-    function cadastrar(Request $request){
+    function cadastrar(SalvaAtividade $request){
         try{
             $palestrante = new Palestrante();
             $palestrante->nome = $request->nomePalestrante;
@@ -32,13 +32,10 @@ class ProgramacaoController extends Controller
 
             if ($request->hasFile('fotoPalestrante')){
                 $arquivo = $request->fotoPalestrante;
-                $tamanho = getimagesize($arquivo);
-                if($tamanho[0] == $tamanho[1]) {
-                    $extensao = $arquivo->getClientOriginalExtension();
-                    $nomeArquivo = time() . '.' . $extensao;
-                    $upload = $request->fotoPalestrante->storeAs('palestrantes', $nomeArquivo);
-                    $palestrante->foto = $nomeArquivo;
-                }
+                $extensao = $arquivo->getClientOriginalExtension();
+                $nomeArquivo = time() . '.' . $extensao;
+                $upload = $request->fotoPalestrante->storeAs('palestrantes', $nomeArquivo);
+                $palestrante->foto = $nomeArquivo;
             } else {
                 $palestrante->foto = '';
             }
@@ -65,7 +62,7 @@ class ProgramacaoController extends Controller
             ->with('success', $request->nome . ' adicionado(a) com sucesso.');
     }
     
-    function editar (Request $request){
+    function editar (SalvaAtividade $request){
         
         try{
             $programacao = Programacao::find($request->id);
@@ -78,12 +75,12 @@ class ProgramacaoController extends Controller
 
             if ($request->hasFile('fotoPalestrante')){
                 $arquivo = $request->fotoPalestrante;
-                if($tamanho[0] == $tamanho[1]) {
-                    $extensao = $arquivo->getClientOriginalExtension();
-                    $nomeArquivo = time() . '.' . $extensao;
-                    $upload = $request->fotoPalestrante->storeAs('palestrantes', $nomeArquivo);
-                    $palestrante->update(['foto' => $nomeArquivo]);
-                }
+                $extensao = $arquivo->getClientOriginalExtension();
+                $nomeArquivo = time() . '.' . $extensao;
+                $upload = $request->fotoPalestrante->storeAs('palestrantes', $nomeArquivo);
+                $palestrante->update(['foto' => $nomeArquivo]);
+            } else {
+                $palestrante->update(['foto' => '']);
             }
         } catch (\Exception $e) {
             return redirect()->route('programacao.exibir', ['evento' => $request->eventoId])

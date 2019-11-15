@@ -36,7 +36,7 @@ class EventosController extends Controller
     public function index(){
         $data = new Carbon();
         $data->format('Y-m-d');
-        $eventos = Evento::orderBy('dataInicio', 'ASC')->where('dataInicio', '>=', $data)->get();
+        $eventos = Evento::orderBy('dataInicio', 'ASC')->where('dataFim', '>=', $data)->get();
         $estados = Estado::all();
         return view('eventos::index', ['eventos' => $eventos,'estados' => $estados]);
     }

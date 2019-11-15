@@ -22,7 +22,7 @@ class SalvaEvento extends FormRequest
             'imgEvento' => 'nullable|max:2048|mimes:jpeg,png,jpg,gif,svg',
             'empresa' => 'required',
             'email' => 'nullable|email',
-            'telefone' => 'nullable|min:10|max:14',
+            'telefone' => 'nullable|min:13|max:14',
             'cidade' => 'required',
         ];
     }
