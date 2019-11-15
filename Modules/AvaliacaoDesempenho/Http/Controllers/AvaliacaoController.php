@@ -179,7 +179,7 @@ class AvaliacaoController extends Controller
 
             DB::commit();
 
-            return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação Criada com Sucesso');
+            return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação criada com Sucesso');
 
         } catch (\Throwable $th) {
 
@@ -238,7 +238,7 @@ class AvaliacaoController extends Controller
 
             DB::commit();
 
-            return redirect('avaliacaodesempenho/avaliacao')->with('success', 'Avaliação cadastrada com sucesso.');
+            return redirect('avaliacaodesempenho/avaliacao')->with('success', 'Avaliação atualizada com sucesso.');
 
         } catch (\Throwable $th) {
 

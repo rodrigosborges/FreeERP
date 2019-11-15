@@ -1,4 +1,4 @@
-@if(isset($data['processo']->id))
+@if(isset($data['categoria']->id))
     <form action="{{ url('avaliacaodesempenho/categoria', [$data['categoria']->id]) }}" method="POST">
     @method('PUT')
     {{ csrf_field() }}      

@@ -12,7 +12,7 @@ class Setor extends Model
     use SoftDeletes;
 
     public function gestor() {
-        return $this->hasOne('Modules\AvaliacaoDesempenho\Entities\Funcionario');
+        return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Funcionario');
     }
 
     public function funcionarios() {

@@ -6,6 +6,8 @@
 
         <th class="text-center">Nome</th>
 
+        <th class="text-center">Gestor</th>
+
         <th class="text-center">Status</th>
 
         <th class="text-center">Ações</th>
@@ -23,6 +25,8 @@
           <tr class="{{ !empty($setor->deleted_at) ? 'table-inactive' : '' }}">
 
             <td class="text-center align-middle">{{ $setor->nome }}</td>
+
+            <td class="text-center align-middle">{{ $setor->gestor->nome }}</td>
 
             <td class="text-center align-middle">{{ is_null($setor->deleted_at) ? 'Ativado' : 'Desativado' }}</td>
 

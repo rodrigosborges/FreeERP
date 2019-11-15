@@ -1,4 +1,4 @@
-@if(isset($data['processo']->id))
+@if(isset($data['setor']->id))
     <form action="{{ url('avaliacaodesempenho/setor', [$data['setor']->id]) }}" method="POST">
     @method('PUT')
     {{ csrf_field() }}      
@@ -23,7 +23,7 @@
 
                 <div class='form-row'>
 
-                    <div class='form-group col-md-12'>
+                    <div class='form-group col-md-6'>
 
                         <label>Nome do Setor</label>
 
@@ -37,6 +37,31 @@
 
                             <input class="form-control" name='setor[nome]' type="text" value="{{ old('setor.nome', isset($data['setor']) ? $data['setor']->nome : '') }}"
                                 placeholder="Digite o nome da setor">
+
+                        </div>
+
+                        <span class="errors"> {{ $errors->first('setor.nome') }} </span>
+
+                    </div>
+
+                    <div class='form-group col-md-6'>
+
+                        <label>Gestor</label>
+
+                        <div class='input-group'>
+
+                            <div class='input-group-prepend'>
+                                <span class="input-group-text">
+                                    <i class="material-icons">subject</i>
+                                </span>
+                            </div>
+
+                            <select class="form-control" name="setor[gestor_id]" id="setor[gestor_id]">
+                                <option value="">Selecione o Gestor do Setor</option>
+                                @foreach( $data['funcionarios'] as $funcionario)
+                                    <option {{ old('setor.gestor_id', isset($data['setor']) ? $data['setor']->gestor_id : '') == $funcionario->id ? 'selected' : ''}} value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
+                                @endforeach
+                            </select>
 
                         </div>
 

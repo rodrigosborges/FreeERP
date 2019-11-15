@@ -78,17 +78,13 @@ class QuestaoController extends Controller
             return redirect('/avaliacaodesempenho/questao')->with('success', 'Questão Criada com Sucesso');
 
         } catch (\Throwable $th) {
+            
+            DB::rollback();
 
-            echo '<pre>';
-            print_r($th->getMessage());exit;
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return back()->with('error', 'Não foi possível cadastrar a Questão')->withInput($request->input());
         }
-    }
-
-    public function show($id)
-    {
-        return view('avaliacaodesempenho::show');
     }
 
     public function edit($id)
@@ -116,12 +112,14 @@ class QuestaoController extends Controller
             $questao->update($input);
 
             DB::commit();
+
             return redirect('/avaliacaodesempenho/questao')->with('success', 'Questão Atualizada com Sucesso');
 
         } catch (\Throwable $th) {
 
-            echo '<pre>';
-            print_r($th->getMessage());exit;
+            DB::rollback();
+
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return back()->with('error', 'Não foi possível cadastrar a Questão')->withInput($request->input());
         }
@@ -152,10 +150,10 @@ class QuestaoController extends Controller
             }
 
         } catch (\Throwable $th) {
+           
             DB::rollback();
 
-            echo '<pre>';
-            print_r($th->getMessage());exit;
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return redirect('/avaliacaodesempenho/questao')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
         }

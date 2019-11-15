@@ -74,20 +74,16 @@ class ProcessoController extends Controller
 
             DB::commit();
 
-            return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo Criado com Sucesso');
+            return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo criado com Sucesso');
 
         } catch (\Throwable $th) {
+            
+            DB::rollback();
 
-            echo '<pre>';
-            print_r($th->getMessage());exit;
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return back()->with('error', 'Não foi possível cadastrar o Processo')->withInput($request->input());
         }
-    }
-
-    public function show($id)
-    {
-        return view('avaliacaodesempenho::show');
     }
 
     public function edit($id)
@@ -114,12 +110,14 @@ class ProcessoController extends Controller
             $processo->update($input);
 
             DB::commit();
-            return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo Atualizado com Sucesso');
+
+            return redirect('/avaliacaodesempenho/processo')->with('success', 'Processo atualizado com Sucesso');
 
         } catch (\Throwable $th) {
 
-            echo '<pre>';
-            print_r($th->getMessage());exit;
+            DB::rollback();
+
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return back()->with('error', 'Não foi possível cadastrar o Processo')->withInput($request->input());
         }
@@ -150,9 +148,10 @@ class ProcessoController extends Controller
             }
 
         } catch (\Throwable $th) {
-            echo '<pre>';
-            print_r($th->getMessage());exit;
+
             DB::rollback();
+            
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return redirect('/avaliacaodesempenho/processo')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
         }
@@ -202,6 +201,7 @@ class ProcessoController extends Controller
             DB::commit();
 
         } catch (\Throwable $th) {
+
             DB::rollback();
 
             echo '<pre>';print_r($th->getMessage());exit;

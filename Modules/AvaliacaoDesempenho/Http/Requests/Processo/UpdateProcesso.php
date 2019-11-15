@@ -6,12 +6,14 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateProcesso extends FormRequest {
 
     public function rules() {
-        
+
+        $today = date('d/m/Y');
+
         return [
             'processo.nome' => 'required',
             'processo.funcionario_id' => 'required',
-            'processo.data_inicio' => 'required|date_format:d/m/Y',
-            'processo.data_fim' => 'required|date_format:d/m/Y'
+            'processo.data_inicio' => 'required|date_format:d/m/Y|after_or_equal:'.$today,
+            'processo.data_fim' => 'required|date_format:d/m/Y|after_or_equal:'.$today
         ];
     }
 

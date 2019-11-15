@@ -105,9 +105,12 @@ class CategoriaController extends Controller
             $categoria->update($input);
 
             DB::commit();
+
             return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria Criado com Sucesso');
 
         } catch (\Throwable $th) {
+            
+            DB::rollback();
 
             echo '<pre>';print_r($th->getMessage());exit;
 
@@ -140,8 +143,10 @@ class CategoriaController extends Controller
             }
 
         } catch (\Throwable $th) {
-            echo '<pre>';print_r($th->getMessage());exit;
+            
             DB::rollback();
+            
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return redirect('/avaliacaodesempenho/categoria')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
         }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\AvaliacaoDesempenho\Entities\Setor;
+use Modules\AvaliacaoDesempenho\Entities\Funcionario;
 
 class SetorController extends Controller
 {
@@ -47,8 +48,11 @@ class SetorController extends Controller
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+        $data = [
+            'funcionarios' => Funcionario::where('cargo_id', '!=', 1)->get()
+        ];
 
-        return view('avaliacaodesempenho::setores/create', compact('moduleInfo', 'menu'));
+        return view('avaliacaodesempenho::setores/create', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function store(Request $request)
@@ -63,20 +67,16 @@ class SetorController extends Controller
 
             DB::commit();
 
-            return redirect('/avaliacaodesempenho/setor')->with('success', 'Setor Criado com Sucesso');
+            return redirect('/avaliacaodesempenho/setor')->with('success', 'Setor criado com Sucesso');
 
         } catch (\Throwable $th) {
 
-            echo '<pre>';
-            print_r($th->getMessage());exit;
+            DB::rollback();
+            
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return back()->with('error', 'Não foi possível cadastrar o Setor')->withInput($request->input());
         }
-    }
-
-    public function show($id)
-    {
-        return view('avaliacaodesempenho::show', compact('moduleInfo','menu'));
     }
 
     public function edit($id)
@@ -84,7 +84,8 @@ class SetorController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-            'setor' => Setor::findOrFail($id)
+            'setor' => Setor::findOrFail($id),
+            'funcionarios' => Funcionario::where('setor_id', $id)->get()
         ];
 
         return view('avaliacaodesempenho::setores/edit', compact('moduleInfo', 'menu', 'data'));
@@ -95,19 +96,21 @@ class SetorController extends Controller
         DB::beginTransaction();
 
         try {
-            $setor = Categoria::findOrFail($id);
+            $setor = Setor::findOrFail($id);
 
             $input = $request->input('setor');
 
-            $categoria->update($input);
+            $setor->update($input);
 
             DB::commit();
-            return redirect('/avaliacaodesempenho/setor')->with('success', 'Setor Criado com Sucesso');
+
+            return redirect('/avaliacaodesempenho/setor')->with('success', 'Setor atualizado com Sucesso');
 
         } catch (\Throwable $th) {
 
-            echo '<pre>';
-            print_r($th->getMessage());exit;
+            DB::rollback();
+            
+            echo '<pre>';print_r($th->getMessage());exit;
 
             return back()->with('error', 'Não foi possível cadastrar o Setor')->withInput($request->input());
         }
@@ -138,9 +141,10 @@ class SetorController extends Controller
             }
 
         } catch (\Throwable $th) {
-            echo '<pre>';print_r($th->getMessage());exit;
             DB::rollback();
-
+            
+            echo '<pre>';print_r($th->getMessage());exit;
+            
             return redirect('/avaliacaodesempenho/setor')->with('error', 'Não foi possivel realizar a operação desejada. Tente novamente mais tarde.');
         }
     }
