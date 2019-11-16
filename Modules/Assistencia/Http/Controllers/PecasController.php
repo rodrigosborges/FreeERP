@@ -69,8 +69,12 @@ class PecasController extends Controller
     DB::beginTransaction();
     try {
       $dados  = $req->all();
+      $dados['valor_venda'] = str_replace(".","",$dados['valor_venda']);
       $dados['valor_venda'] = str_replace(",",".",$dados['valor_venda']);
+      $dados['valor_venda'] = str_replace("R$","",$dados['valor_venda']);
+      $dados['valor_compra'] = str_replace(".","",$dados['valor_compra']);
       $dados['valor_compra'] = str_replace(",",".",$dados['valor_compra']);
+      $dados['valor_compra'] = str_replace("R$","",$dados['valor_compra']);
       PecaAssistenciaModel::find($id)->update($dados);
       DB::commit();
       return redirect()->route('pecas.localizar');
