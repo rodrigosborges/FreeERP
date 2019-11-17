@@ -40,8 +40,11 @@ class SetorController extends Controller
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+        $data = [
+            'setores' => Setor::with('gestor')->get()            
+        ];
 
-        return view('avaliacaodesempenho::setores/index', compact('moduleInfo', 'menu'));
+        return view('avaliacaodesempenho::setores/index', compact('moduleInfo', 'menu', 'data'));
     }
 
     public function create()

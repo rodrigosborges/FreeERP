@@ -10,11 +10,22 @@ class UpdateQuestao extends FormRequest {
         return [
             'questao.enunciado' => 'required',
             'questao.categoria_id' => 'required',
-            'questao.opt1' => 'required',
-            'questao.opt2' => 'required',
-            'questao.opt3' => 'required',
-            'questao.opt4' => 'required',
-            'questao.opt5' => 'required'
+            'questao.opt1' => 'required|numeric',
+            'questao.opt2' => 'required|numeric',
+            'questao.opt3' => 'required|numeric',
+            'questao.opt4' => 'required|numeric',
+            'questao.opt5' => 'required|numeric'
+        ];
+    }
+
+    public function attributes() {
+
+        return [
+            'questao.opt1' => 'Opção 1',
+            'questao.opt2' => 'Opção 2',
+            'questao.opt3' => 'Opção 3',
+            'questao.opt4' => 'Opção 4',
+            'questao.opt5' => 'Opção 5'
         ];
     }
 

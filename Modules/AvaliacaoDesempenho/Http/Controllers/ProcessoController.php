@@ -43,7 +43,7 @@ class ProcessoController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-            'funcionarios' => Funcionario::all(),
+            'funcionarios' => Funcionario::all()
         ];
 
         $this->updateStatus();
@@ -56,7 +56,7 @@ class ProcessoController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-            'funcionarios' => Funcionario::all(),
+            'funcionarios' => Funcionario::all()
         ];
 
         return view('avaliacaodesempenho::processos/create', compact('moduleInfo', 'menu', 'data'));

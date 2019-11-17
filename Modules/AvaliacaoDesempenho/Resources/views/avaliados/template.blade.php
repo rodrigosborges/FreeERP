@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Avaliação</title>
 
-    <link rel='stylesheet' href="{{Module::asset('avaliacaodesempenho:css/plugins/datatable.min.css')}}"/>
-    <link rel='stylesheet' href="{{Module::asset('avaliacaodesempenho:css/plugins/datatable-bootstrap.min.css')}}"/>
+    <link rel='stylesheet' href="{{Module::asset('avaliacaodesempenho:css/plugins/datatable.min.css')}}" />
+    <link rel='stylesheet' href="{{Module::asset('avaliacaodesempenho:css/plugins/datatable-bootstrap.min.css')}}" />
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link href="{{ url('css/material-icons.css') }}" rel="stylesheet">
 
@@ -53,6 +53,16 @@
     <script src="{{ url('js/popper.min.js') }}"></script>
     <script src="{{ url('js/bootstrap.min.js') }}"></script>
     <script src="{{Module::asset('avaliacaodesempenho:js/plugins/datatable.min.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $(window).keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault()
+                    return false;
+                }
+            })
+        })
+    </script>
 
     @yield('scripts')
 

@@ -75,7 +75,7 @@ class QuestaoController extends Controller
 
             DB::commit();
 
-            return redirect('/avaliacaodesempenho/questao')->with('success', 'Questão Criada com Sucesso');
+            return redirect('/avaliacaodesempenho/questao')->with('success', 'Questão criada com Sucesso');
 
         } catch (\Throwable $th) {
             
@@ -113,7 +113,7 @@ class QuestaoController extends Controller
 
             DB::commit();
 
-            return redirect('/avaliacaodesempenho/questao')->with('success', 'Questão Atualizada com Sucesso');
+            return redirect('/avaliacaodesempenho/questao')->with('success', 'Questão atualizada com Sucesso');
 
         } catch (\Throwable $th) {
 

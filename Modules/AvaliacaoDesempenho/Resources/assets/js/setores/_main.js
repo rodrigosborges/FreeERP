@@ -38,7 +38,8 @@ $(document).on('click', '#submit-btn', function (e) {
     
     const _token = $('input[name="_token"]').val()
     var search = {
-        nome: $('input[name="_nome"]').val()
+        nome: $('input[name="_nome"]').val(),
+        gestor_id: $('#_gestor').children('option:selected').val(),        
     }
     var status = $('#_status').children('option:selected').val()
 
