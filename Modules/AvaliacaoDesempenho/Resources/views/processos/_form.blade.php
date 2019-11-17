@@ -1,9 +1,9 @@
 @if(isset($data['processo']->id))
-    <form action="{{ url('avaliacaodesempenho/processo', [$data['processo']->id]) }}" method="POST">
+    <form id="processoForm" action="{{ url('avaliacaodesempenho/processo', [$data['processo']->id]) }}" method="POST">
     @method('PUT')
     {{ csrf_field() }}      
 @else
-    <form action='{{ url("avaliacaodesempenho/processo/store") }}' method="POST">
+    <form id="processoForm" action='{{ url("avaliacaodesempenho/processo/store") }}' method="POST">
     {{ csrf_field() }} 
 @endif
 
@@ -35,7 +35,7 @@
                                         </span>
                                     </div>
         
-                                    <input class="form-control" name='processo[nome]' type="text" value="{{ old('processo.nome', isset($data['processo']) ? $data['processo']->nome : '') }}"
+                                    <input class="form-control nome" name='processo[nome]' type="text" value="{{ old('processo.nome', isset($data['processo']) ? $data['processo']->nome : '') }}"
                                         placeholder="Digite o nome do processo">
 
                                 </div>
@@ -60,7 +60,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control date" name='processo[data_inicio]' type="text" value="{{ old('processo.data_inicio', isset($data['processo']) ? $data['processo']->data_inicio : '') }}"
+                            <input class="form-control date data_inicio" name='processo[data_inicio]' type="text" value="{{ old('processo.data_inicio', isset($data['processo']) ? $data['processo']->data_inicio : '') }}"
                                 placeholder="Selecione a data de inicio">
 
                         </div>
@@ -81,7 +81,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control date" name='processo[data_fim]' type="text" value="{{ old('processo.data_fim', isset($data['processo']) ? $data['processo']->data_fim : '') }}"
+                            <input class="form-control date data_fim" name='processo[data_fim]' type="text" value="{{ old('processo.data_fim', isset($data['processo']) ? $data['processo']->data_fim : '') }}"
                                 placeholder="Selecione a data final">
 
                         </div>
@@ -106,7 +106,7 @@
                                 </span>
                             </div>
 
-                            <select class="form-control" name="processo[funcionario_id]"
+                            <select class="form-control responsavel" name="processo[funcionario_id]"
                                 id="processo[funcionario_id]">
                                 <option value="">Selecione o Funcionario Responsavel pelo Processo</option>
                                 @foreach( $data['funcionarios'] as $funcionario)

@@ -9,4 +9,5 @@
 @endsection
 
 @section('scripts')
+<script src="{{Module::asset('avaliacaodesempenho:js/setores/_setor-validation.js')}}"></script>
 @endsection

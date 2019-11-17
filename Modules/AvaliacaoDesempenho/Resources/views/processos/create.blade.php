@@ -11,4 +11,5 @@
 @section('scripts')
 <script src="{{Module::asset('avaliacaodesempenho:js/plugins/jquery-mask.js')}}"></script>
 <script src="{{Module::asset('avaliacaodesempenho:js/avaliacoes/_masks.js')}}"></script>
+<script src="{{Module::asset('avaliacaodesempenho:js/processos/_processo-validation.js')}}"></script>
 @endsection

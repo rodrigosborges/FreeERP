@@ -1,9 +1,9 @@
 @if(isset($data['setor']->id))
-    <form action="{{ url('avaliacaodesempenho/setor', [$data['setor']->id]) }}" method="POST">
+    <form id="setorForm" action="{{ url('avaliacaodesempenho/setor', [$data['setor']->id]) }}" method="POST">
     @method('PUT')
     {{ csrf_field() }}      
 @else
-    <form action='{{ url("avaliacaodesempenho/setor/store") }}' method="POST">
+    <form id="setorForm" action='{{ url("avaliacaodesempenho/setor/store") }}' method="POST">
     {{ csrf_field() }} 
 @endif
 
@@ -35,7 +35,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='setor[nome]' type="text" value="{{ old('setor.nome', isset($data['setor']) ? $data['setor']->nome : '') }}"
+                            <input class="form-control nome" name='setor[nome]' type="text" value="{{ old('setor.nome', isset($data['setor']) ? $data['setor']->nome : '') }}"
                                 placeholder="Digite o nome da setor">
 
                         </div>
@@ -56,7 +56,7 @@
                                 </span>
                             </div>
 
-                            <select class="form-control" name="setor[gestor_id]" id="setor[gestor_id]">
+                            <select class="form-control gestor" name="setor[gestor_id]" id="setor[gestor_id]">
                                 <option value="">Selecione o Gestor do Setor</option>
                                 @foreach( $data['funcionarios'] as $funcionario)
                                     <option {{ old('setor.gestor_id', isset($data['setor']) ? $data['setor']->gestor_id : '') == $funcionario->id ? 'selected' : ''}} value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
@@ -65,7 +65,7 @@
 
                         </div>
 
-                        <span class="errors"> {{ $errors->first('setor.nome') }} </span>
+                        <span class="errors"> {{ $errors->first('setor.gestor_id') }} </span>
 
                     </div>
 

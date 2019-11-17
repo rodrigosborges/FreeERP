@@ -9,4 +9,5 @@
 @endsection
 
 @section('scripts')
+<script src="{{Module::asset('avaliacaodesempenho:js/questoes/_questao-validation.js')}}"></script>
 @endsection

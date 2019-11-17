@@ -34,7 +34,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='avaliacao[nome]' type="text" value="{{ old('avaliacao.nome', isset($data['avaliacao']) ? $data['avaliacao']->nome : '') }}"
+                            <input class="form-control nome" name='avaliacao[nome]' type="text" value="{{ old('avaliacao.nome', isset($data['avaliacao']) ? $data['avaliacao']->nome : '') }}"
                                 placeholder="Digite o nome da avaliacao">
 
                         </div>
@@ -59,7 +59,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control date" name='avaliacao[data_inicio]' type="text" value="{{ old('avaliacao.data_inicio', isset($data['avaliacao']) ? $data['avaliacao']->data_inicio : '') }}"
+                            <input class="form-control date data_inicio" name='avaliacao[data_inicio]' type="text" value="{{ old('avaliacao.data_inicio', isset($data['avaliacao']) ? $data['avaliacao']->data_inicio : '') }}"
                                 placeholder="Selecione a data de inicio">
 
                         </div>
@@ -80,7 +80,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control date" name='avaliacao[data_fim]' type="text" value="{{ old('avaliacao.data_fim', isset($data['avaliacao']) ? $data['avaliacao']->data_fim : '') }}"
+                            <input class="form-control date data_fim" name='avaliacao[data_fim]' type="text" value="{{ old('avaliacao.data_fim', isset($data['avaliacao']) ? $data['avaliacao']->data_fim : '') }}"
                                 placeholder="Selecione a data final">
 
                         </div>
@@ -105,7 +105,7 @@
                                 </span>
                             </div>
 
-                            <select class="form-control" name="avaliacao[processo_id]"
+                            <select class="form-control processo" name="avaliacao[processo_id]"
                                 id="avaliacao[processo_id]">
                                 <option value="">Selecione o Processo ao qual a Avaliação pertence</option>
                                 @foreach( $data['processos'] as $processo)
@@ -135,7 +135,7 @@
                                 </span>
                             </div>
 
-                            <select class="form-control" name="avaliacao[funcionario_id]"
+                            <select class="form-control responsavel" name="avaliacao[funcionario_id]"
                                 id="avaliacao[funcionario_id]">
                                 <option value="">Selecione o Funcionario responsavel pela Avaliação</option>
                                 @foreach( $data['funcionarios'] as $funcionario)
@@ -161,7 +161,7 @@
                                 </span>
                             </div>
 
-                            <select class="form-control {{ isset($data['avaliacao']) ? 'readonly' : '' }}" name="avaliacao[setor_id]"
+                            <select class="form-control setor {{ isset($data['avaliacao']) ? 'readonly' : '' }}" name="avaliacao[setor_id]"
                                 id="avaliacao[setor_id]">
                                 <option value="">Selecione o Setor a ser avaliado</option>
                                 @foreach( $data['setores'] as $setor)
@@ -184,9 +184,9 @@
                         <label>Tipo de Avaliação</label>
 
                         <br>
-                        <input type="radio" name='avaliacao[tipo_id]' value='2' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 0 ? 'checked' : '' }}> Avaliar Gestores
+                        <input class='tipo' type="radio" name='avaliacao[tipo_id]' value='2' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 0 ? 'checked' : '' }}> Avaliar Gestores
                         <br>
-                        <input type="radio" name='avaliacao[tipo_id]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 1 ? 'checked' : '' }}> Avaliar Funcionários
+                        <input class='tipo' type="radio" name='avaliacao[tipo_id]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 1 ? 'checked' : '' }}> Avaliar Funcionários
 
                     </div>
 

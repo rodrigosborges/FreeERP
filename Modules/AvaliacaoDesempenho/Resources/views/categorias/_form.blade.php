@@ -1,9 +1,9 @@
 @if(isset($data['categoria']->id))
-    <form action="{{ url('avaliacaodesempenho/categoria', [$data['categoria']->id]) }}" method="POST">
+    <form id='categoriaForm' action="{{ url('avaliacaodesempenho/categoria', [$data['categoria']->id]) }}" method="POST">
     @method('PUT')
     {{ csrf_field() }}      
 @else
-    <form action='{{ url("avaliacaodesempenho/categoria/store") }}' method="POST">
+    <form id='categoriaForm' action='{{ url("avaliacaodesempenho/categoria/store") }}' method="POST">
     {{ csrf_field() }} 
 @endif
 
@@ -35,7 +35,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control" name='categoria[nome]' type="text" value="{{ old('categoria.nome', isset($data['categoria']) ? $data['categoria']->nome : '') }}"
+                            <input class="form-control nome" name='categoria[nome]' type="text" value="{{ old('categoria.nome', isset($data['categoria']) ? $data['categoria']->nome : '') }}"
                                 placeholder="Digite o nome da categoria">
 
                         </div>

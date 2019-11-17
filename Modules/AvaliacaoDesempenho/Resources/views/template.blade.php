@@ -18,6 +18,8 @@
 @section('js')
 <script src="{{Module::asset('avaliacaodesempenho:js/plugins/bootbox.min.js')}}"></script>
 <script src="{{Module::asset('avaliacaodesempenho:js/plugins/datatable.min.js')}}"></script>
+<script src="{{Module::asset('avaliacaodesempenho:js/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+
 <script>
     $(document).ready(function () {
         $(window).keydown(function (e) {

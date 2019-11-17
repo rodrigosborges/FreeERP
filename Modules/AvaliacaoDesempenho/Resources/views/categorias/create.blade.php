@@ -9,4 +9,5 @@
 @endsection
 
 @section('scripts')
+<script src="{{Module::asset('avaliacaodesempenho:js/categorias/_categoria-validation.js')}}"></script>
 @endsection
