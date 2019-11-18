@@ -129,13 +129,12 @@ class AvaliacaoController extends Controller
                             $message->to($data['funcionario']->email->email, 'Funcionário')->subject('Avaliação de Desempenho');
                         });
 
-                    } else if ($funcionario->id == $setor->gestor->id) {
+                    } 
 
-                        $avaliado = Avaliado::create([
-                            'funcionario_id' => $funcionario->id,
-                            'avaliacao_id' => $avaliacao->id
-                        ]);
-                    }
+                    $avaliado = Avaliado::create([
+                        'funcionario_id' => $setor->gestor->id,
+                        'avaliacao_id' => $avaliacao->id
+                    ]);
                 }
 
             // PROVA PARA AVALIAR FUNCIONARIOS
@@ -149,31 +148,30 @@ class AvaliacaoController extends Controller
                             'funcionario_id' => $funcionario->id,
                             'avaliacao_id' => $avaliacao->id,
                         ]);
-
-                    } else if ($funcionario->id == $setor->gestor->id) {
-                        $token = bin2hex(random_bytes(16));
-
-                        $validade = implode('-', array_reverse(explode('/', $input['data_fim'])));
-
-                        $avaliador = Avaliador::create([
-                            'funcionario_id' => $funcionario->id,
-                            'avaliacao_id' => $avaliacao->id,
-                            'token' => $token,
-                            'validade' => $validade
-                        ]);
-
-                        $data = [
-                            'funcionario' => $funcionario,
-                            'avaliacao' => $avaliacao,
-                            'token' => $token,
-                            'validade' => $validade,
-                            'setor' => $setor
-                        ];
-
-                        Mail::send('avaliacaodesempenho::emails/_email', $data, function($message) use($data) {
-                            $message->to($data['funcionario']->email->email, 'Gestor')->subject('Avaliação de Desempenho');
-                        });
                     }
+
+                    $token = bin2hex(random_bytes(16));
+
+                    $validade = implode('-', array_reverse(explode('/', $input['data_fim'])));
+
+                    $avaliador = Avaliador::create([
+                        'funcionario_id' => $funcionario->id,
+                        'avaliacao_id' => $avaliacao->id,
+                        'token' => $token,
+                        'validade' => $validade
+                    ]);
+
+                    $data = [
+                        'funcionario' => $funcionario,
+                        'avaliacao' => $avaliacao,
+                        'token' => $token,
+                        'validade' => $validade,
+                        'setor' => $setor
+                    ];
+
+                    Mail::send('avaliacaodesempenho::emails/_email', $data, function($message) use($data) {
+                        $message->to($data['funcionario']->email->email, 'Gestor')->subject('Avaliação de Desempenho');
+                    });
                 }
             }
 
@@ -255,23 +253,23 @@ class AvaliacaoController extends Controller
         DB::beginTransaction();
 
         try {
-            $categoria = Categoria::withTrashed()->findOrFail($id);
+            $avaliacao = Avaliacao::withTrashed()->findOrFail($id);
 
-            if($categoria->trashed()) {
+            if($avaliacao->trashed()) {
 
-                $categoria->restore();
+                $avaliacao->restore();
 
                 DB::commit();
 
-                return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria ativada com Sucesso');
+                return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação ativada com sucesso.');
 
             } else {
 
-                $categoria->delete();
+                $avaliacao->delete();
 
                 DB::commit();
 
-                return redirect('/avaliacaodesempenho/categoria')->with('success', 'Categoria desativada com Sucesso');
+                return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação desativada com sucesso.');
             }
 
         } catch (\Throwable $th) {

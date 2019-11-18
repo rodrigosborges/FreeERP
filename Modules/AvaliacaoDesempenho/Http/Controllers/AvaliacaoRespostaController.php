@@ -210,8 +210,6 @@ class AvaliacaoRespostaController extends Controller
                 if ($resultado->id) {
 
                     $concluidos = ResultadoGestor::where('avaliado_id', $avaliado->id)->get();
-
-                    $aux = $avaliacao->avaliadores;
                     
                     if (count($avaliacao->avaliadores) == count($concluidos)) {
                         $avaliado->update(['concluido' => 1]);
