@@ -20,14 +20,7 @@ class VendasController extends Controller
 {
 
 
-    //ESTOQUE DE PRODUTOS: onde é salvo as informações do estoque do produto especifícado, aonde está localizado no estoque fisíco, preço de custo daquele estoque e a quantidade de itens do produto
-    //Propriedades:
-    //Produto: Nome do produto JÁ REGISTRADO, OBRIGATÓRIO.
-    //Nome da Unidade: Especifica em que local fisíco está localizado aquele estoque do Produto X, exemplo: Parafusos na PRATELEIRA 3, OBRIGATÓRIO
-    //Preço de Custo: Preço de custo total daquele estoque de produto que está entrando, serve para que se compare preços no futuro
-    //Quantidade: A quantidade de produtos X que está entrando no estoque 
-
-
+    
     //A função construct serve para passar o template padrão do sistema para serem carregadas na função, passadas pelo $this->template
 
 
@@ -43,8 +36,8 @@ class VendasController extends Controller
             ['icon' => 'shopping_basket', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
             ['icon' => 'class', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
             ['icon' => 'account_circle', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
-            ['icon' => 'attach_money', 'tool' => 'Vendas', 'route' => '/estoquemadeireira/vendas'],
             ['icon' => 'store', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
+            ['icon' => 'attach_money', 'tool' => 'Vendas', 'route' => '/estoquemadeireira/vendas'],
 
 
         ];
@@ -57,7 +50,7 @@ class VendasController extends Controller
     
     
     
-    //Tela inicial do Estoque
+    //Tela inicial de Vendas, apresenta a lista dos Clientes
     public function index()
     {
         $flag = 0;
@@ -65,58 +58,18 @@ class VendasController extends Controller
         return view('estoquemadeireira::vendas.index', $this->template, compact('clientes', 'flag'));     
     }
  
-    //Tela de estoques desativados
 
-    public function inativos()
-     {
-        $flag = 1;
-        $itensInativos = Estoque::onlyTrashed()->paginate(5);
-        return view('estoquemadeireira::estoque.index', $this->template, compact('itensInativos', 'flag'));     
-    }
-    
-
-
-    //Criação do estoque, usando 'data' para comprimir todos os dados em uma só variável, e passando as notificações pro template
     public function create()
     {           
-        $data = [
-            'titulo' => 'Cadastrar Estoque',
-            'button' => 'Cadastrar',
-            'url' => 'estoquemadeireira',
-            'estoque' => null,
-            'produtos' => Produto::all(),
-            'tipoUnidade' => TipoUnidade::all()
-        ];
-            
-        return view('estoquemadeireira::.estoque.form', $this->template, compact('data'));
+      
     }
 
 
-    //Função para salvar o Estoque no banco, carregando: Produto (nome), Unidade da localização do estoque, Preço de custo desse estoque e a quantidade de produtos que serão registrados
-    //A primeira movimentação desse estoque já é registrada (MovimentacaoEstoque::create) 
+   
 
     public function store(Request $request)       
     {
-        try{
-            $estoque = Estoque::create($request->all());
-            $produto = Produto::findOrFail($request->produto_id);
-            $estoque->produtos()->attach($produto);
-            $estoque->save();
-            MovimentacaoEstoque::create(
-                [
-                    'estoque_id' => $estoque->id,
-                    'quantidade' => $estoque->quantidade,
-                    'preco_custo' => $request['preco_custo'],
-                    'observacao' => "Entrada Inicial",
-                ]
-            );
-            DB::commit();
-            return redirect('/estoquemadeireira')->with('success', 'Item de estoque registrado com sucesso!');
-        } 
-        catch (Exception $e) {
-            DB::rollback();
-            return back()->with('Error', 'Erro no cadastro de Estoque');
-        }
+        
     }
 
     
@@ -212,20 +165,37 @@ class VendasController extends Controller
     }
 
 
-    public function Busca(Request $request){
-
-        $flag = 0;
+    public function busca(Request $request){
+        $sql = [];
+        $clientes = Cliente::all();
         
-        if ($request['pesquisa'] == null) {
+        
+        if($request['pesquisa'] == null){
+            return redirect('/estoquemadeireira/vendas')->with('error', 'Insira um dado para a pesquisa');
+
+        }else{
+            array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);
             
-            return redirect('/estoquemadeireira')->with('Error', 'Insira um nome para a pesquisa');
-        } else {
-            $itens = Estoque::join('estoque_has_produto', 'estoque_has_produto.estoque_id', '=', 'estoque.id')
-                ->join('produto', 'produto.id', '=', 'estoque_has_produto.produto_id')
-                ->where('produto.nome', 'like', '%' . $request->pesquisa . '%')->paginate(5);
-            return view('estoquemadeireira::estoque.index', $this->template, compact( 'itens', 'flag'))->with('success', 'Resultado da Pesquisa');
+        
+        
+        //Se a flag for 1 retorna os produtos inativos, se for 2 os produtos ativos
+        if($request['flag'] == 1){
+            $clientes = Cliente::onlyTrashed()->where($sql)->paginate(5);
+            if(count($clientes) == 0){
+                return redirect('/estoquemadeireira/vendas')->with('error', 'Nenhum resultado encontrado');
+            }
+            $flag = $request['flag'];
+            return view('estoquemadeireira::vendas.index', $this->template, compact('clientes', 'flag'))->with('success', 'Resultado da pesquisa');
+        }else{
+            $clientes = Cliente::where($sql)->paginate(5);
+            if(count($clientes) == 0){
+                return redirect('/estoquemadeireira/vendas')->with('error', 'Nenhum resultado encontrado');
+            }
+            $flag = $request['flag'];
+            return view('estoquemadeireira::vendas.index', $this->template, compact('clientes', 'flag'))->with('success', 'Resultado da pesquisa');
         }
     }
 
+    }
 
 }

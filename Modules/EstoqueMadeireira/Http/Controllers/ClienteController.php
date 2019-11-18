@@ -27,8 +27,8 @@ class ClienteController extends Controller
             ['icon' => 'shopping_basket', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
             ['icon' => 'class', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
             ['icon' => 'account_circle', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
-            ['icon' => 'attach_money', 'tool' => 'Vendas', 'route' => '/estoquemadeireira/vendas'],
             ['icon' => 'store', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
+            ['icon' => 'attach_money', 'tool' => 'Vendas', 'route' => '/estoquemadeireira/vendas'],
 
         ];
         $this->template = [
@@ -134,7 +134,6 @@ class ClienteController extends Controller
     public function ficha($id)
     {
         $cliente = Cliente::findOrFail($id);
-        
         return view('estoquemadeireira::vendas.cliente.ficha', $this->template, compact('cliente'));
     }
 
@@ -145,7 +144,7 @@ class ClienteController extends Controller
         
         
         if($request['pesquisa'] == null){
-            return redirect('/estoquemadeireira/produtos/categorias')->with('error', 'Insira um nome para a pesquisa');
+            return redirect('/estoquemadeireira/vendas/clientes')->with('error', 'Insira um dado para a pesquisa');
 
         }else{
             array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);

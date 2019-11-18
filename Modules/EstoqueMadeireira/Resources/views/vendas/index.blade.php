@@ -10,15 +10,12 @@
             <div class="header text-left">
                 <h4>Pesquisar Cliente</h4>
             </div>
-            <form action="{{url('estoquemadeireira/vendas/clientes/busca')}}" method="POST" id="form">
+            <form action="{{url('estoquemadeireira/vendas/busca')}}" method="POST" id="form">
             @csrf
             <div class="row">
                     <div class="form-group col-8">
                         <input type="text" id="search-input" maxlength="40" placeholder="Insira o nome do Cliente" class="form-control" name="pesquisa">
                     </div>   
-                    <div class="form-group col-8 mt-1 mb-1">
-                        <input type="text" id="search-input" maxlength="40" placeholder="Insira o CPF ou CNPJ" class="form-control" name="pesquisa">
-                    </div> 
                     <div class="form-group">
                         <button type="submit" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
                     </div>             

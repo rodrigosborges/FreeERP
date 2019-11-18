@@ -41,9 +41,8 @@ class EstoqueMadeireiraController extends Controller
             ['icon' => 'shopping_basket', 'tool' => 'Produtos', 'route' => '/estoquemadeireira/produtos'],
             ['icon' => 'class', 'tool' => 'Categorias', 'route' => '/estoquemadeireira/produtos/categorias'],
             ['icon' => 'account_circle', 'tool' => 'Fornecedores', 'route' => '/estoquemadeireira/produtos/fornecedores'],
-            ['icon' => 'attach_money', 'tool' => 'Vendas', 'route' => '/estoquemadeireira/vendas'],
             ['icon' => 'store', 'tool' => 'Estoque', 'route' => '/estoquemadeireira'],
-
+            ['icon' => 'attach_money', 'tool' => 'Vendas', 'route' => '/estoquemadeireira/vendas'],
 
         ];
         $this->template = [
@@ -232,6 +231,10 @@ class EstoqueMadeireiraController extends Controller
         }
     }
 
+
+    //Relatório das movimentações
+
+
     public function relatorioMovimentacao()
     {
  
@@ -249,6 +252,10 @@ class EstoqueMadeireiraController extends Controller
     }
     
     public function relatorioMovimentacaoBusca(Request $req){
+        if($req->dataInicial > $req->dataFinal){
+            return back()->with('Error', 'Insira um nome para a pesquisa'); 
+        }
+
         $estoque_id = $req->estoque_id;
         $ms = [];
         if ($req->estoque_id == -1){

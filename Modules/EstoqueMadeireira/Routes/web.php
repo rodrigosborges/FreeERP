@@ -22,7 +22,7 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::post('/produtos/fornecedores/busca', 'FornecedorController@busca');      //BUSCA DE FORNECEDORES
     Route::post('/movimentacao/buscar', 'MovimentacaoEstoqueController@buscar');    //BUSCA DE MOVIMENTAÇÕES
     Route::post('/vendas/clientes/busca', 'ClienteController@busca');               //BUSCA DE CLIENTES
-
+    Route::post('/vendas/busca', 'VendasController@busca');                         //BUSCA DE CLIENTES EM VENDAS
 
     //PRODUTOS
     Route::get('/produtos/inativos', 'ProdutoController@inativos'); 

@@ -28,7 +28,7 @@
                     <div class="form-group col-3">
                         <label for="preco">Preço por Unidade</label>
                         <input required type="text" class="form-control" placeholder="R$" name="preco"  onKeyUp="verificaPreco(this);" value="{{isset($produto) ? $produto->preco : ''}}">
-                        {{$errors->first('preco')}}
+                        <span style="color:red">{{$errors->first('preco')}}</span>
                     </div>
                     
                     <div class="form-group ml-2">
@@ -54,7 +54,7 @@
                 </div>
             
                 <div class="row ml-2 mt-2">
-                      <div class="form-group  ml-2">
+                      <div class="form-group ml-2">
                         <label for="fornecedor">Fornecedor</label>
                         <select name="fornecedor_id" class="form-control" required>
                             @if(isset($fornecedor))
@@ -78,7 +78,7 @@
                    <div class="form-group col-2 ">
                         <label for="tamanho">Tamanho</label>
                         <input type="text" class="form-control" placeholder="Nenhum" name="tamanho"  onKeyUp="verificaPreco(this);" value="{{isset($produto) ? $produto->tamanho : ''}}">
-
+                        <span style="color:red">{{$errors->first('tamanho')}}</span>
                    </div>
                    
                    <div class="form-group col-3 ">
@@ -89,10 +89,7 @@
                             @foreach($unidadeMedidas as $medidas)
                                 <option value="{{$medidas->id}}" selected>{{$medidas->nome}}</option>
                             @endforeach
-                        @endif  
-                    
-                    
-                    
+                        @endif                                     
                     </select>
 
                    

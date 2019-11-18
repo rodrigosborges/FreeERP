@@ -41,7 +41,7 @@
                 <div class="row ml-2 mt-2">
                     <div class="form-group col-4">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="insira o Email" value="{{isset($cliente) ? $cliente->email: ''}}">
+                        <input required type="email" class="form-control" name="email" id="email" placeholder="insira o Email" value="{{isset($cliente) ? $cliente->email: ''}}">
                     </div>
                     
                     

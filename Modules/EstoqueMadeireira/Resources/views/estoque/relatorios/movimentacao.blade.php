@@ -4,7 +4,7 @@
 
 
 <div class="container">
-    <form method="POST" action="{{url('/estoquemadeireira/relatorio/movimentacao')}}" id="form">
+    <form method="POST" action="{{url('/estoquemadeireira/relatorios/movimentacao')}}" id="form">
         @csrf
         <div class="row">
             <div class="form-group col-lg-4 col-sm-12">
@@ -12,7 +12,7 @@
                 <select required class="form-control" name="estoque_id" >
                     <option value="-1">Todo o Estoque</option>
                     @foreach($data['estoque'] as $e)
-                        <option value="{{$e->id}}">{{$e->produtos->last()->nome}} - {{$e->tipoUnidade->nome}}({{$e->tipoUnidade->quantidade_itens}} itens)}}</option>
+                        <option value="{{$e->id}}">{{$e->produtos->last()->nome}} - {{$e->tipoUnidade->nome}}</option>
                     @endforeach
                 </select>       
             </div>

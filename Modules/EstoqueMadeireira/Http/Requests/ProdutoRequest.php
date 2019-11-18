@@ -8,7 +8,9 @@ class ProdutoRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => ['required', 'min: 3', 'max: 40', 'unique:produto,nome,'.$this->route('produto')],
+            // 'nome' => ['required', 'min: 3', 'max: 40', 'unique:produto,nome,'.$this->route('produto')], 
+            'nome' => ['required', 'min: 3', 'max: 40'],
+            'tamanho' =>['max:8'],
             'preco' => ['required', 'numeric'],
             'descricao' => ['max: 500'],
         ];
@@ -18,8 +20,8 @@ class ProdutoRequest extends FormRequest
             'required' => 'O campo :attribute é obrigatório!',
             'min' => 'Minimo de :min caracteres!',
             'max' => 'Máximo de :max caracteres!',
-            'unique' => ':attribute já cadastrado!',
             'numeric' => 'Insira apenas valores númericos',
+            // 'unique' => 'Produto já registrado!'
         ];
     }
     public function authorize()
