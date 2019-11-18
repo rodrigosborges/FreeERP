@@ -41,7 +41,6 @@
             </a>       
         </li>   
     </div>
-
     <div class="tab-content">
         <div class="tab-pane active" role="tabpane11" id="ativos">
             <table class="table text-center">

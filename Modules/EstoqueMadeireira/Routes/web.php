@@ -23,6 +23,7 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::post('/movimentacao/buscar', 'MovimentacaoEstoqueController@buscar');    //BUSCA DE MOVIMENTAÇÕES
     Route::post('/vendas/clientes/busca', 'ClienteController@busca');               //BUSCA DE CLIENTES
     Route::post('/vendas/busca', 'VendasController@busca');                         //BUSCA DE CLIENTES EM VENDAS
+    Route::post('/vendas/pedidos/busca', 'PedidoController@busca');                 //BUSCA DE CLIENTES EM PEDIDOS
 
     //PRODUTOS
     Route::get('/produtos/inativos', 'ProdutoController@inativos'); 
@@ -61,6 +62,7 @@ Route::prefix('estoquemadeireira')->group(function() {
     Route::get('/vendas/pedidos/abertos', 'PedidoController@abertos');
     Route::get('/vendas/pedidos/enviados', 'PedidoController@enviados');
     Route::get('/vendas/pedidos/finalizados', 'PedidoController@finalizados');
+    route::get('/vendas/pedidos/ficha/{id}', 'PedidoController@ficha');
 
     //ROTAS DE RELATÓRIOS
     Route::get('/relatorios/movimentacao', 'EstoqueMadeireiraController@relatorioMovimentacao');
@@ -75,7 +77,7 @@ Route::prefix('estoquemadeireira')->group(function() {
 
 
     //VENDAS
-    
+    // Route::get('/vendas/pedidos/{id}/create', 'PedidoController@create');
     
 
     //ROTAS PADRÕES (index, create, edit, update, delete)
@@ -97,4 +99,7 @@ Route::prefix('estoquemadeireira')->group(function() {
 });
 
 Route::resource('/estoquemadeireira', 'EstoqueMadeireiraController'); 
+
+//AJAX
 Route::get('/buscacliente', 'PedidoController@buscaCliente');
+Route::get('/buscaproduto', 'PedidoController@buscaProduto');

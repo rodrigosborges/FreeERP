@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\EstoqueMadeireira\Http\Controllers;
-use Modules\EstoqueMadeireira\Entities\{Produto, Pedido, Estoque, Cliente};
+use Modules\EstoqueMadeireira\Entities\{Produto, Pedido, Estoque, Cliente, itemPedido};
 use Modules\EstoqueMadeireira\Http\Requests\CategoriaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -42,9 +42,9 @@ class PedidoController extends Controller
 
     public function index()
     {
-        $flag = 0;
+        $itemPedido = itemPedido::all();
         $pedidos = Pedido::paginate(10);        
-        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'flag'));
+        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'itemPedido'));
     }
 
     //Retorna os inativos, com a opção de reativa-los 
@@ -52,24 +52,24 @@ class PedidoController extends Controller
     
     public function abertos()
     {
-        $flag = 1;
-        $pedidos = Pedido::all()->paginate(10);
-        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'flag',));
+        $itemPedido = itemPedido::all();
+        $pedidos = Pedido::where('status_pedido', 1)->paginate(10);
+        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'itemPedido'));
     }
 
 
     public function enviados()
     {
-        $flag = 2;
-        $pedidos = Pedido::all()->paginate(10);
-        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'flag',));
+        $itemPedido = itemPedido::all();
+        $pedidos = Pedido::where('status_pedido', 2)->paginate(10);
+        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'itemPedido'));
     }
     
     public function finalizados()
     {
-        $flag = 3;
-        $pedidos = Pedido::all()->paginate(10);
-        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'flag',));
+        $itemPedido = itemPedido::all();
+        $pedidos = Pedido::where('status_pedido', 3)->paginate(10);
+        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'itemPedido'));
     }
 
 
@@ -125,8 +125,8 @@ class PedidoController extends Controller
     {
 
        
-        $categoria = Categoria::findOrFail($id);      
-        return view('estoquemadeireira::categoria.form', $this->template, compact('categoria'));
+        $pedido = Pedido::findOrFail($id);      
+        return view('estoquemadeireira::vendas.pedidos.form', $this->template, compact('pedido'));
     }
 
     //Atualiza a Categoria
@@ -157,41 +157,28 @@ class PedidoController extends Controller
     }
 
 
-    //Função para encontrar uma categoria registrada, filtrando pelo Nome
+    //Função para encontrar um pedido registrado filtrando pelo ID
+
 
     public function busca(Request $request){
-        $sql = [];
-        $categorias = Categoria::all();
         
-        return $request;
-        if($request['pesquisa'] == null){
-            return redirect('/estoquemadeireira/produtos/categorias')->with('error', 'Insira um nome para a pesquisa');
-
-        }else{
-            array_push($sql,['nome', 'like', '%' . $request['pesquisa'] . '%']);
-        
-        
-        //Flag = 0 (index de ativos) retorna as categorias ativas
-        //Flag = 1 (index de inativos) retorna as categorias inativas (onlyTrashed)
-        
-        if($request['flag'] == 1){
-            $categorias = Categoria::onlyTrashed()->where($sql)->paginate(5);
-            if(count($categorias) == 0){
-                return redirect('/estoquemadeireira/produtos/categorias')->with('error', 'Nenhum resultado encontrado');
+        if($request->pesquisa == null){
+            $pedido = Pedido::paginate(10);
+            return redirect('/estoquemadeireira/vendas/pedidos')->with('error', 'Insira algo para a pesquisa!');
+        }
+        else{      
+            $pedido = Pedido::where('id', $request->pesquisa)->paginate(10);
+            if(count($pedido) > 0){
+                return view('estoquemadeireira::vendas.pedidos.index')->with('success', 'Resultado da pesquisa');
+            }else{
+                return redirect('/estoquemadeireira/vendas/pedidos')->with('error', 'Nenhum resultado encontrado');
             }
-            $flag = $request['flag'];
-            return view('estoquemadeireira::Categoria.index', $this->template, compact('categorias', 'flag'))->with('success', 'Resultado da pesquisa');
-        }else{
-            $categorias = Categoria::where($sql)->paginate(5);
-            if(count($categorias) == 0){
-                return redirect('/estoquemadeireira/produtos/categorias')->with('error', 'Nenhum resultado encontrado');
-            }
-            $flag = $request['flag'];
-            return view('estoquemadeireira::Categoria.index', $this->template, compact('categorias', 'flag'))->with('success', 'Resultado da pesquisa');
         }
     }
 
-    
+    public function ficha($id){
+        $pedido = Pedido::findOrFail($id);
+        return view('estoquemadeireira::vendas.pedidos.ficha', $this->template, compact('pedido'));
     }
 
 
@@ -202,6 +189,14 @@ class PedidoController extends Controller
     public function buscaCliente(Request $request){
         if($request->valor != null)
             $query = Cliente::where('nome','like', $request->valor.'%')->get();
+        else
+            $query = [];
+        return $query;
+    }
+
+    public function buscaProduto(Request $request){
+        if($request->valor != null)
+            $query = Estoque::where('nome', 'like', $request->valor. '%')->get();
         else
             $query = [];
         return $query;

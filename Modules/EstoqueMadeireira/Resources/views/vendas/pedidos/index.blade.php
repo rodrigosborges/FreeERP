@@ -10,11 +10,11 @@
             <div class="header text-left">
                 <h4>Pesquisar Pedido</h4>
             </div>
-            <form action="{{url('estoquemadeireira/vendas/produtos/busca')}}" method="POST" id="form">
+            <form action="{{url('estoquemadeireira/vendas/pedidos/busca')}}" method="POST" id="form">
             @csrf
             <div class="row">
                     <div class="form-group col-8">
-                        <input type="text" id="search-input" maxlength="40" placeholder="Insira o nome do Cliente" class="form-control" name="pesquisa">
+                        <input type="text" id="search-input" maxlength="40" placeholder="Insira o ID do pedido" class="form-control" name="pesquisa">
                     </div>   
                     <div class="form-group">
                         <button type="submit" class="btn btn-sm btn-secondary" style="font-size:18px;"><i class="btn btn-sm btn-secondary material-icons" style="font-size:18px;" id="search-button">search</i></button>
@@ -48,20 +48,28 @@
                     </div>
 
                     <tr>
-                        <th scope="col">Nome</th>                       
-                        <th scope="col">Documento</th>              
-                        <th scope="col">Editar</th> 
-                        <th scope="col">Visualizar</th>              
-                        <th scope="col">Restaurar</th>
-  
+                        <th scope="col">ID</th>                       
+                        <th scope="col">Cliente</th>              
+                        <th scope="col">Pedido</th> 
+                        <th scope="col">Visualizar</th>  
+                        <th scope="col">Editar</th>            
+                        <th scope="col">Status</th>
                         </thead>
 
                     <tbody>
                         @if(isset($pedidos))
                         @foreach($pedidos as $pedido)
+                            <tr>$pedido->id</tr>
+                            <tr>$pedido->cliente_id->nome</tr>
+                            <tr>$itemPedido->pedido_id</tr>
                             <tr>
-                                
+                            <a href="{{url('/estoquemadeireira/vendas/pedidos/ficha/' . $pedido->id)}}"><button class="btn btn-sm" style="font-size: 0px; background-color:blue;">
+                                <i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a>
                             </tr>
+                            <tr>
+                            <a href="{{url('/estoquemadeireira/vendas/pedidos/' . $pedido->id . '/edit')}}"><button class="btn btn-sm btn-warning"><i class="material-icons" style="font-size:18px;">border_color</i></button></a>
+                            </tr>
+                            <tr>$pedido->status_pedido</tr>
                         @endforeach
                         @endif          
                     

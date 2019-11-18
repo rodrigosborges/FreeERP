@@ -29,16 +29,14 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="telefone"><i class="material-icons" style="vertical-align:middle;">phone</i>&nbsp&nbsp<b>Tipo de Pessoa</b><br><br>{{$cliente->tipoDocumento_id}}</label>   
-                </div>   
+                        <label for="telefone"><i class="material-icons" style="vertical-align:middle;">phone</i>&nbsp&nbsp<b>Telefone</b><br><br>{{$cliente->telefone}}</label>   
+                </div>  
                     
             </div>
             <hr>
            
             <div class="row">
-                <div class="col-md-6">
-                        <label for="telefone"><i class="material-icons" style="vertical-align:middle;">phone</i>&nbsp&nbsp<b>Telefone</b><br><br>{{$cliente->telefone}}</label>   
-                </div> 
+                
 
                 <div class="col-md-6">
                     <label for="cnpj"><i class="material-icons" style="vertical-align:middle;">email</i>&nbsp&nbsp<b>Email</b><br><br>{{$cliente->email}}</label>
