@@ -16,9 +16,8 @@ class CreateTramiteTable extends Migration
         Schema::create('tramite', function (Blueprint $table) {
             $table->integer('id', true);
             $table->text('observacao');
-            $table->text('status');
             $table->text('origem');
-            $table->text('destino');
+            $table->text('destino')->nullable();
             $table->integer('protocolo_id')->index('fk_tramite_protocolo1');
             $table->timestamps();
         });

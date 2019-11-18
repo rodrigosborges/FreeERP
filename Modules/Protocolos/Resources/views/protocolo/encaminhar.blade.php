@@ -35,10 +35,17 @@
         </div>
 @endsection
 @section('footer')
-    <div class="text-right">
-        <button class="btn btn-success sendForm" type="button">
-            <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">forward</i>{{$data['button']}}
-        </button>
+    <div class="d-flex flex-row justify-content-between">
+        <div class="">
+            <a class="btn btn-dark" href="{{url('protocolos/protocolos/acompanhar')}}<?= '/'.$data['protocolo_id'] ?>">
+                <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">arrow_back</i>Voltar
+            </a>
+        </div>
+        <div class="">
+            <button class="btn btn-success sendForm" type="button">
+                <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">forward</i>{{$data['button']}}
+            </button>
+        </div>
     </div>
 @endsection
 

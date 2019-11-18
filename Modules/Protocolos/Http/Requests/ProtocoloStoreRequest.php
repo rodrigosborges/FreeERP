@@ -33,7 +33,7 @@ class ProtocoloStoreRequest extends FormRequest
     public function messages() {
         return [
             'required'  => 'O campo é obrigatório!',
-            'min'       => 'Digite no mínimo 50 caracteres.',
+            'min'       => 'Digite no mínimo 20 caracteres.',
             'max'       => 'Digite no máximo 500 caracteres.',
         ];
     }

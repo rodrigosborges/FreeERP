@@ -4,41 +4,41 @@
 @section('relatorio')
 <div class="container">
         <div class="card-deck justify-content-between">
-            <div class="card bg-light mb-3" style="max-width: 260px;">
+            <div class="card bg-light mb-4 justify-content-center" style="width: 200px; height:150px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         <canvas id="protocolosEncalhados" width="50" height="50"></canvas>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h6 class="text-center">ENCALHADOS</h6>
-                            <h6 class="text-center">{{$data['encalhado']}}</h6>
+                            <h5 class="text-center">ENCALHADOS</h5>
+                            <h5 class="text-center">{{$data['encalhado']}}</h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card bg-light mb-3" style="max-width: 260px;">
+            <div class="card bg-light mb-4 justify-content-center" style="width: 200px; height:150px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         <canvas id="protocolosAndamento" width="50" height="50"></canvas>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h6 class="text-center">EM ANDAMENTO</h6>
-                            <h6 class="text-center">{{$data['andamento']}}</h6>
+                            <h5 class="text-center">EM ANDAMENTO</h5>
+                            <h5 class="text-center">{{$data['andamento']}}</h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card bg-light mb-3" style="max-width: 260px;">
+            <div class="card bg-light mb-4 justify-content-center" style="width: 200px; height:150px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         <canvas id="protocolosFinalizados" width="50" height="50"></canvas>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h6 class="text-center">FINALIZADOS</h6>
-                            <h6 class="text-center">{{$data['finalizado']}}</h6>
+                            <h5 class="text-center">FINALIZADOS</h5>
+                            <h5 class="text-center">{{$data['finalizado']}}</h5>
                         </div>
                     </div>
                 </div>

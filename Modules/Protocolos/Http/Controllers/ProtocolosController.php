@@ -20,16 +20,16 @@ class ProtocolosController extends Controller
      */
     public function index(Request $request)
     {
-
+        $usuarioLogado = Auth::user()->id;
         $dataAtualMenosUmAno = date('Y-m-d', strtotime('-1 years'));
 
         $data = [
             'protocolos'    => Protocolo::all(),
             'title'         => 'Lista de Protocolos',
             'finalizado'    => Protocolo::onlyTrashed()->count(),
-            'andamento'     => Protocolo::where('status_id', '<>', '6')->where('updated_at', '>', $dataAtualMenosUmAno)->count(),
-            'encalhado'     => Protocolo::where('updated_at', '<', $dataAtualMenosUmAno)->count(),
-            'total'         => Protocolo::withTrashed()->count(),
+            'andamento'     => Protocolo::where('status_id', '<>', '6')->where('updated_at', '>', $dataAtualMenosUmAno)->where('usuario_id', $usuarioLogado)->count(),
+            'encalhado'     => Protocolo::where('updated_at', '<', $dataAtualMenosUmAno)->where('usuario_id', $usuarioLogado)->count(),
+            'total'         => Protocolo::withTrashed()->where('usuario_id', $usuarioLogado)->count(),
         ];
 
         return view('protocolos::protocolo.index', compact('data'));
@@ -228,13 +228,19 @@ class ProtocolosController extends Controller
                 'protocolo_id'  => $protocolo->id,
             ]);
            
+            $tramite = Tramite::Create([
+                'observacao'            => $request['assunto'],
+                'origem'                => Auth::user()->id,
+                'protocolo_id'          => $protocolo->id,
+            ]);
+            dd($request);
             DB::commit();
             
             return redirect('protocolos/protocolos')->with('success', 'Protocolo cadastrado com sucesso!');
             
 		}catch(\Exception $e){
 			DB::rollback();
-			return back();
+			return back()->with('error', 'Protocolo não cadastrado, tente novamente!');
 		}
         
     }
@@ -349,9 +355,8 @@ class ProtocolosController extends Controller
             $data = [
             'url'        => url("protocolos/protocolos/$id"),
             'model'      => '',
-            'usuario'    => Usuario::where('id','<>',$idLogado)->whereNotIn('id',function($query) use($id){
-                                            $query->select('usuario_id')->from('protocolo_has_usuario')->where('protocolo_id','=', $id);
-                                        })->get(),
+            'protocolo_id'  => $id,
+            'usuario'    => Usuario::where('id','<>',$idLogado)->get(),
             'button'     => 'Despachar'
             ];
 
@@ -381,7 +386,6 @@ class ProtocolosController extends Controller
 
 			$tramite = Tramite::Create([
                 'observacao'            => $request['observacao'],
-                'status'                => 'Pendente',
                 'origem'                => Auth::user()->id,
                 'destino'               => $request->tramite['destino'],
                 'protocolo_id'          => $id
@@ -394,7 +398,7 @@ class ProtocolosController extends Controller
             $protocolo->save();
 
             $log = Log::Create([
-                'status_id'        => '5',
+                'status_id'        => '2',
                 'usuario_id'    => Auth::user()->id,
                 'protocolo_id'  => $protocolo->id
             ]);
@@ -418,7 +422,7 @@ class ProtocolosController extends Controller
             'protocolo'             => Protocolo::findOrFail($id),
             'log'                   => Log::where('protocolo_id', '=', $id)->get(),
             'ultima_modificacao'    => Log::where('protocolo_id', '=', $id)->where('status_id', '<>', '4')->get()->last(),
-            'tramite'               => Tramite::where('protocolo_id', '=', $id)->get(),
+            'tramite'               => Tramite::where('protocolo_id', '=', $id)->where('destino', '<>', null)->get(),
             'documento'             => Documento::where('protocolo_id', '=', $id)->get(),
             'title'                 => 'Acompanhamento de Protocolo',
             'button'                => 'Adicionar',
@@ -522,6 +526,7 @@ class ProtocolosController extends Controller
     public function destroy($id)
     {
         $protocolo = Protocolo::withTrashed()->findOrFail($id);
+
         if($protocolo->trashed()) {
             $protocolo->restore();
 
@@ -532,17 +537,35 @@ class ProtocolosController extends Controller
             ]);
 
             return back()->with('success', 'Protocolo ativado com sucesso!');
+
         } else {
 
-            $protocolo->delete();
+            $ultimoUsuarioQueModificou = $protocolo->user_modificador_id;
+            $interessados = $protocolo->interessado()->pluck('usuario_id')->toArray();
 
-            $log = Log::Create([
+            if($protocolo->tipo_acesso == 1 && $ultimoUsuarioQueModificou == Auth::user()->id || (in_array(Auth::user()->id, $interessados))){
+                $protocolo->delete();
+
+                $log = Log::Create([
+                    'status_id'         => '6',
+                    'usuario_id'        => Auth::user()->id,
+                    'protocolo_id'      => $id
+                ]);
+            }
+            else if($protocolo->tipo_acesso == 0){
+                $protocolo->delete();
+
+                $log = Log::Create([
                 'status_id'         => '6',
                 'usuario_id'        => Auth::user()->id,
                 'protocolo_id'      => $id
-            ]);
+                ]);
+            }
+            else{
+                return back()->with('error', 'Você não tem permissão para finalizar o protocolo!');
+            }
 
-            return back()->with('success', 'Protocolo desativado com sucesso!');
+            return back()->with('success', 'Protocolo finalizado com sucesso!');
         }
     }
 }

@@ -126,7 +126,7 @@
                     <tbody>
                     @foreach($data["tramite"] as $tramite)
                         <tr>
-                            <td>{{$tramite->created_at}}</td>
+                            <td>{{date('d/m/Y', strtotime($tramite->created_at))}}</td>
                             <td>{{$tramite->origem_usuario->nome}}<br>({{$tramite->origem_usuario->setor->nome}})</td>
                             <td>{{$tramite->destino_usuario->nome}}<br>({{$tramite->destino_usuario->setor->nome}})</td>
                             <td>{{$tramite->observacao}}</td>
@@ -137,7 +137,7 @@
             </div>
             <div class="tab-pane fade" id="apensados" role="tabpanel" aria-labelledby="apensados-tab">
                 <br>
-                @if($data['protocolo']->status_id == 3)
+                @if($data['protocolo']->status_id == 3 || $data['protocolo']->usuario_id == Auth::user()->id)
                 <form id="form-apensados">
                 {{ csrf_field() }}
                 @if($data['model'])
@@ -201,8 +201,7 @@
                 <br>
                 <table id="table-logs" class="table table-bordered table-hover">
                     <thead>
-                        <tr class="table-info text-center">
-                            <th scope="col">ID</th>       
+                        <tr class="table-info text-center">  
                             <th scope="col">Data</th>
                             <th scope="col">Horário</th>
                             <th scope="col">Status</th>
@@ -212,7 +211,6 @@
                     <tbody>
                         @foreach($data["protocolo"]->logs()->get() as $log)
                             <tr>
-                                <td>{{$log->id}}</td>
                                 <td class="text-center">{{date('d/m/Y', strtotime($log->created_at))}}</td>
                                 <td class="text-center">{{date('H:i', strtotime($log->created_at))}}</td>
                                 <td class="text-center">
@@ -225,7 +223,7 @@
                                 <?php }  else if ($log->status_id == 4) {?>
                                         <span class="badge badge-info" style="width:80px">Visualizado</span> 
                                 <?php }  else if ($log->status_id == 5) {?>
-                                        <span class="badge badge-secondary" style="width:80px">Atualizado</span> 
+                                        <span class="badge badge-danger" style="width:80px">Atualizado</span> 
                                 <?php }  else if ($log->status_id == 6) {?>
                                         <span class="badge badge-success" style="width:80px">Finalizado</span> 
                                 <?php }  ?>
@@ -239,8 +237,17 @@
         </div>
 @endsection
 @section('footer')
-    <div class="text-left">
-        <a class="btn btn-dark" href="{{ url('protocolos/protocolos') }}">Voltar</a>
+    <div class="d-flex flex-row justify-content-between">
+        <div>
+            <a class="btn btn-dark" href="{{ url('protocolos/protocolos') }}">
+                <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">arrow_back</i>Voltar
+            </a>
+        </div>
+        <div>                     
+            <a class="btn btn-warning" href="{{url('protocolos/protocolos/encaminhar')}}<?= '/'.$data['protocolo']->id ?>">
+                <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">forward</i>Despachar
+            </a>
+        </div>
     </div>
 @endsection
 @section('script')

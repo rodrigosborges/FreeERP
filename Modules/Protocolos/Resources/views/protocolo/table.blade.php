@@ -10,17 +10,11 @@
                 @if($status == "despacho")
                     <th>Recebido por</th>
                 @endif
-                @if($status !== "despacho" && $status !== "caixa-saida")
-                    <th>Setor</th>
-                @endif
-                <th style="width:350px">Despacho</th>
+                <th style="width:350px">Último Despacho</th>
                 @if($status !== "despacho")
                     <th>Última modificação</th>
                 @endif
                 <th class="min" colspan="3">Ações</th>
-                @if($status == "ativos" || $status == "meus-protocolos" || $status == "caixa-entrada")
-                    <th class="min"></th>
-                @endif
             </tr>
         </thead>
         <tbody>
@@ -34,29 +28,16 @@
                         </a>
                     </td>
                     @if($status !== "caixa-saida")
-                        <td class="align-middle">{{$protocolo->usuario->nome}}</td>
-                    @endif
-                    @if($status !== "despacho" && $status !== "caixa-saida")
-                        <td class="align-middle">{{$protocolo->usuario->setor->nome}}</td>
+                        <td class="align-middle">{{$protocolo->tramite->last()->origem_usuario->nome}}<br>({{$protocolo->tramite->last()->origem_usuario->setor->nome}})</td>
                     @endif
                     @if($status == "despacho")
-                    <td class="align-middle">{{$protocolo->usuario_modificador->nome}}</td>
+                    <td class="align-middle">{{$protocolo->usuario_modificador->nome}}<br>({{$protocolo->usuario_modificador->setor->nome}})</td>
                     @endif
-                    @if($status == "caixa-saida")
-                        <td class="align-middle">{{$protocolo->tramite->last()->observacao}}</td>
-                    @endif
-                    @if($status !== "caixa-saida")
-                        <td class="align-middle">{{$protocolo->assunto}}</td>
-                    @endif
+                    <td class="align-middle">{{$protocolo->tramite->last()->observacao}}</td>
                     @if($status !== "despacho")
                         <td class="align-middle">{{date('d/m/Y', strtotime($protocolo->updated_at))}}</td>
                     @endif
                     @if($status == "ativos" || $status == "despacho")
-                    <td class="align-middle">                       
-                        <a class="btn btn-warning btn-sm" href='{{ url("protocolos/protocolos/encaminhar/$protocolo->id") }}'>
-                            <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">forward</i>Despachar
-                        </a>
-                    </td>
                     @endif
                     @if($status =="inativos" || $status == "ativos" || $status == "despacho")
                         <td class="align-middle">

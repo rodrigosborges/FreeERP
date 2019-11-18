@@ -16,7 +16,7 @@ class CreateProtocoloTable extends Migration
         Schema::create('protocolo', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('numero',100);
-			$table->string('assunto',200);
+			$table->text('assunto');
             $table->integer('tipo_protocolo_id')->index('fk_protocolo_tipo_protocolo1');
             $table->boolean('tipo_acesso');
             $table->integer('status_id')->index('fk_protocolo_status1');
