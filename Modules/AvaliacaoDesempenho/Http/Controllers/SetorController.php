@@ -51,8 +51,16 @@ class SetorController extends Controller
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+
+        $setores = Setor::all();
+
+        $gestores = [];
+        foreach ($setores as $key => $setor) {
+            $gestores[] = $setor->gestor_id;
+        }
+
         $data = [
-            'funcionarios' => Funcionario::where('cargo_id', '!=', 1)->get()
+            'funcionarios' => Funcionario::where('cargo_id', 1)->whereNotIn('id', $gestores)->get()
         ];
 
         return view('avaliacaodesempenho::setores/create', compact('moduleInfo', 'menu', 'data'));
@@ -86,9 +94,18 @@ class SetorController extends Controller
     {
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
+
+        $setor = Setor::findOrFail($id);
+        $setores = Setor::all();
+
+        $gestores = [];
+        foreach ($setores as $key => $aux) {
+            $gestores[] = $aux->gestor_id;
+        }
+
         $data = [
-            'setor' => Setor::findOrFail($id),
-            'funcionarios' => Funcionario::where('setor_id', $id)->get()
+            'setor' => $setor,
+            'funcionarios' => Funcionario::where('cargo_id', 1)->whereNotIn('id', $gestores)->orWhere('id', $setor->gestor_id)->get()
         ];
 
         return view('avaliacaodesempenho::setores/edit', compact('moduleInfo', 'menu', 'data'));
