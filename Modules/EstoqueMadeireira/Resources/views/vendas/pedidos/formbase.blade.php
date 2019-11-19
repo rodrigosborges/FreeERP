@@ -91,8 +91,6 @@
 
 <script>
         var itens = [];
-
-        foreach(inserir itemPedido)
         function adicionarProduto(){
             $('#tabelaProduto').append("<tr><td>0</td><td>"+$('#nomeProduto').val()+"</td></tr>")
         }
