@@ -19,12 +19,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `tcc1`
+-- Banco de dados: `avaliacao_desempenho`
 --
 
-DROP DATABASE IF EXISTS `tcc1`;
-CREATE DATABASE IF NOT EXISTS `tcc1`;
-USE `tcc1`;
+DROP DATABASE IF EXISTS `avaliacao_desempenho`;
+CREATE DATABASE IF NOT EXISTS `avaliacao_desempenho`;
+USE `avaliacao_desempenho`;
 
 --
 -- Estrutura da tabela `password_resets`
