@@ -11,12 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/xampp/htdocs/FreeERP/database/seeds/PalestranteSeeder.php</file>
-            <file>file:/C:/xampp/htdocs/FreeERP/database/seeds/DatabaseSeeder.php</file>
-            <file>file:/C:/xampp/htdocs/FreeERP/database/seeds/ProgramacaoSeeder.php</file>
-            <file>file:/C:/xampp/htdocs/FreeERP/database/seeds/EventoSeeder.php</file>
-            <file>file:/C:/xampp/htdocs/FreeERP/database/seeds/NivelSeeder.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

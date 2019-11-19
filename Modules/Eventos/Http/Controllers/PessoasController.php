@@ -36,19 +36,19 @@ class PessoasController extends Controller
     {
         $evento = Evento::find($request->evento);
         $permissoes = $evento->permissoes;
-        foreach ($permissoes as $permissao){
-            if($permissao->pessoa_id ==  Auth::id()){ //VERIFICA SE O USUÁRIO TEM PERMISSÃO DE ACESSO AO EVENTO
-                if(!isset($request->atividade) || $request->atividade === "todas"){ //VERIFICA SE 1 ATIVIDADE/PROGRAMAÇÃO FOI SELECIONADA
-                    $programacao = $evento->programacao; //RETORNA TODAS AS ATIVIDADES DO EVENTO
-                    return view('eventos::pessoas', ['evento' => $evento, 'eventos' => [], 'programacao' => $programacao]);
-                } else {
-                    $programacao = $evento->programacao()->where('id', $request->atividade)->get(); //RETORNA SÓ A ATIVIDADE SELECIONADA
-                    return view('eventos::pessoas', ['evento' => $evento, 'eventos' => [], 'programacao' => $programacao]);
-                }
+
+        if($permissoes->contains('pessoa_id', Auth::id())){ //VERIFICA SE O USUÁRIO TEM PERMISSÃO DE ACESSO AO EVENTO
+            if(!isset($request->atividade) || $request->atividade === "todas"){ //VERIFICA SE 1 ATIVIDADE/PROGRAMAÇÃO FOI SELECIONADA
+                $programacao = $evento->programacao; //RETORNA TODAS AS ATIVIDADES DO EVENTO
+                return view('eventos::pessoas', ['evento' => $evento, 'eventos' => [], 'programacao' => $programacao]);
             } else {
-                abort(403, 'Ação não autorizada');
+                $programacao = $evento->programacao()->where('id', $request->atividade)->get(); //RETORNA SÓ A ATIVIDADE SELECIONADA
+                return view('eventos::pessoas', ['evento' => $evento, 'eventos' => [], 'programacao' => $programacao]);
             }
+        } else {
+            abort(403, 'Ação não autorizada');
         }
+        
     }
         
     /* 
