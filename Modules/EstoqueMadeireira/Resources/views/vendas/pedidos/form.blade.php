@@ -60,14 +60,12 @@
             buscarcliente(valor)
         })
     })
-
     function removerCliente(){
         cliente = '';
         $('#divNome').hide();
         $('#selecionarCliente').show();
         
     }
-
     function selecionar(data){
         cliente = data;
         document.getElementById('nomecliente').value = d[cliente].nome;
@@ -78,7 +76,6 @@
         document.getElementById('nomeSelecionado').type = 'text';
         
     }
-
     // function buscarProduto(valor){
     //     $.ajax({
     //         url: '/buscaproduto',
@@ -93,8 +90,6 @@
     //         })
     //     })
     // }
-
-
     function buscarcliente(valor){
             $.ajax({
                 url:'/buscacliente',
@@ -115,8 +110,6 @@
             }).fail(function(){
                 console.log('fail')
             }).always(function(){
-
             })
     }
-
 </script>

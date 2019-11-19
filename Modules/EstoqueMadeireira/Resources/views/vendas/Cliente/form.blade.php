@@ -49,7 +49,7 @@
                     
                     <div class="form-group col-3">
                         <label for="tipoDocumento">Pessoa Física ou Jurídica:</label>
-                        <select class="form-control maskField" id="tipoDocumento" name="tipoDocumento_id" data-target-id="documento">
+                        <select required class="form-control maskField" id="tipoDocumento" name="tipoDocumento_id" data-target-id="documento">
                             <option value="">Selecione</option>
                             <option value="1" data-mask="000.000.000-00">Pessoa Física</option>
                             <option value="2" data-mask="00.000.000/0000-00">Pessoa Jurídica</option>
@@ -58,7 +58,7 @@
                     
                     <div class="form-group col-3">
                         <label for="documento">Informe seu CPF/CNPJ:</label>
-                        <input type="text" id="documento" name="documento" class="form-control"/>
+                        <input required minlength="14" type="text" id="documento" name="documento" class="form-control"/>
                     </div>
                     
                 
