@@ -42,6 +42,7 @@
                                         <th scope="col">Apelido</th>
                                         <th scope="col">Avatar</th>
                                         <th scope="col">E-mail</th>
+                                        <th scope="col">Papel</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -51,6 +52,7 @@
                                         <td>{{ $usuario->apelido }}</td>
                                         <td>{{ $usuario->avatar }}</td>
                                         <td>{{ $usuario->email }}</td>
+                                        <td>{{ $usuario->papel->nome }}</td>
                                         <td class="text-center"><i class="material-icons">{{ $usuario->icone }}</i></td>
                                         <td>
                                             <div class="d-flex justify-content-end">

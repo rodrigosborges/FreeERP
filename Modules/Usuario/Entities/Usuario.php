@@ -2,7 +2,7 @@
 
 namespace Modules\Usuario\Entities;
 
-use Modules\Usuario\Entities\Modulo;
+use Modules\Usuario\Entities\Papel;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,11 +16,10 @@ class Usuario extends Authenticatable{
     use SoftDeletes;
 
     protected $table = 'usuario';
-    protected $fillable = ['apelido', 'avatar', 'email', 'password'];
+    protected $fillable = ['apelido', 'avatar', 'email', 'password','papel_id'];
 
-    public function modulos(){
-        return $this->belongsToMany('Modules\Usuario\Entities\Modulo', 'usuario_has_modulo')
-                    ->withPivot('papel');
+    public function papel(){
+        return $this->belongsTo('Modules\Usuario\Entities\Papel');
     }
 
 }

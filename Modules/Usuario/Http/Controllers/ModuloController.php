@@ -47,8 +47,6 @@ class ModuloController extends Controller
      */
     public function create()
     {
-        $papeis = Papel::all();
-
         return view('usuario::modulo.form', compact('papeis'));
     }
 
@@ -61,8 +59,7 @@ class ModuloController extends Controller
     {
         DB::beginTransaction();
         try {
-            $modulo = Modulo::create($request->all());
-            $modulo->papeis()->attach($request->papel_id);
+            Modulo::create($request->all());
             DB::commit();
             return back()->with('success', 'Módulo '.$request->nome.' cadastrado com sucesso!');
         }
@@ -135,10 +132,5 @@ class ModuloController extends Controller
         } else {
             return 'true';
         }
-    }
-
-    public function listPapeis($idModulo){
-        $dados = Papel::all()->where('id',$idModulo);
-        return response()->json($dados);
     }
 }

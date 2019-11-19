@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
 <div class="row justify-content-center align-items-center" style="height:100%">
     <div class="col-xm-12 col-sm-10 col-md-8 col-lg-6">
         <div class="card">
@@ -81,30 +82,18 @@
 
                            
                     <div class="form-group input-modulo-papel">
-                    <div class="form-row input-modulo-papel-interior">
-                            <div class="col-md-5 mb-1">
-                                <label for='modulo'>Modulo</label>
-                                <select class="form-control" name='modulos[0][modulo_id]'>
-                                    <option disabled selected>Escolha um Modulo...</option>
-                                    @foreach($modulos as $modulo)
-                                    <option class='modulo' name = "modulo[]['modulo_id']" value="{{ $modulo->id }}" > {{ $modulo->nome }} </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                    <div class="form-row">
                             
                         <div class="col-md-5 mb-1">
                                 <label for="papel">Papel</label>
-                                <select class="form-control" name='modulos[0][papel_id]'>
+                                <select class="form-control" name='papel'>
                                     <option disabled selected>Escolha um Papel...</option>
                                     @foreach($papeis as $papel)
-                                    <option name= "papel[]['papel_id'] value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
+                                    <option value="{{ $papel->id }}" {{isset($usuario) && $papel->id == $usuario->papel_id ? 'selected' : '' }}> {{ $papel->nome }} </option>
                                     @endforeach
                                 </select>
                                 {{$errors->first('papel')}}
                             </div>
-                            <div class="col-md-1" style="margin-top:32px;">
-                                <a  class='btn bg-success adicionar text-white'>+</a>
-                                </div>
                         </div>
                     </div>
                     @endif
@@ -155,20 +144,22 @@ function readURL(input) {
 
 <script>
         $(document).ready(function(){
-
             $(".adicionar").click(function(){
                 //div que irá ser clonada
                 var div = $(".input-modulo-papel").first().clone(true)
+                div.append("<div class='col-md-1'><a  class='btn bg-danger remover text-white'>-</a></div>")
             
                 div.insertAfter($(".form-group").last())
-                var div2 = $(".input-modulo-papel-interior").last()
-                div2.append("<div class='col-md-1' style='margin-top:32px';><a  class='btn bg-danger text-white remover'>-</a></div>");
-            });
-            $(document).on("click", '.remover', function(){
-                    $(this).parent().parent().remove();
-            })
 
-    
+                $(".remover").on("click", function(){
+                    if($(".input-group").length > 1)
+                            $(this).parent().remove();
+                })
+            })
+            $(".remover").on("click", function(){
+                if($(".input-group").length > 1)
+                    $(this).parent().remove();
+            })
         })
     </script>
 
