@@ -16,7 +16,9 @@ class UpdateAvaliacao extends FormRequest {
             'avaliacao.processo_id' => 'required',
             'avaliacao.funcionario_id' => 'required',
             'avaliacao.setor_id' => 'required',
-            'avaliacao.tipo_id' => 'required'
+            'avaliacao.tipo_id' => 'required',
+            'avaliacao.questoes' => 'required',
+            'avaliacao.questoes.*' => 'distinct'
         ];
     }
 
@@ -31,7 +33,8 @@ class UpdateAvaliacao extends FormRequest {
     public function messages() {
 
         return [
-            'required' => 'Este campo é obrigatorio.'
+            'required' => 'Este campo é obrigatorio.',
+            'distinct' => 'Só é possivel cadastrar uma unica vez cada questão.'
         ];
     }
 }

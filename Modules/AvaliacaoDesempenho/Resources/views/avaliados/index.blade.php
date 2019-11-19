@@ -82,7 +82,7 @@
             </div>
 
             <div class="submit-btn form-row">
-                <button class="btn btn-success offset-md-3 col-md-6">Enviar</button>
+                <button class="btn btn-success offset-md-5 col-md-2">Enviar</button>
             </div>
 
         </form>

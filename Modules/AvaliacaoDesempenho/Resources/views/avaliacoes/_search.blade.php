@@ -108,7 +108,7 @@
                             </span>
                         </div>
     
-                        <input class="form-control" name='_data_inicio' type="date"
+                        <input class="form-control data" name='_data_inicio' type="text"
                             placeholder="Busque por Data de Inicio">
     
                     </div>
@@ -125,7 +125,7 @@
                             </span>
                         </div>
     
-                        <input class="form-control" name='_data_fim' type="date"
+                        <input class="form-control data" name='_data_fim' type="text"
                             placeholder="Busque por Data de Finalização">
     
                     </div>

@@ -67,7 +67,7 @@
                         <td colspan="2" style="text-align: center;"><b>Gestor: </b>'.$avaliacao->avaliados[0]->funcionario->nome.'</td>
 
                         <td colspan="2" style="text-align: center;"> 
-                            <button id="VisualizarGeral" class="btn btn-info acoes-btn" onclick="visualizarGeral(this)">Visualizar Geral</button>
+                            <button id="VisualizarGeral" class="btn btn-info acoes-btn" onclick="visualizarGeral(this)">Visão Geral</button>
                         </td>
                     </tr>';
                 }

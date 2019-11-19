@@ -19,7 +19,7 @@
                 <div class="funcionario">
                     <p><b>Nome: </b>{{ $avaliador->funcionario->nome }}</p>
                     <p><b>E-mail: </b>{{ $avaliador->funcionario->email->email }}</p>
-                    <p><b>Setor: </b>{{ $avaliador->funcionario->setor->nome }}</p>
+                    <p><b>Setor: </b>{{ $avaliador->funcionario->setor_id != NULL ? $avaliador->funcionario->setor->nome : 'CEO' }}</p>
                     <p><b>Avaliacao: </b>{{ $avaliacao->nome }}</p>
                 </div>
 

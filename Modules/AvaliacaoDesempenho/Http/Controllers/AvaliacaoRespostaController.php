@@ -174,7 +174,7 @@ class AvaliacaoRespostaController extends Controller
                         app('Modules\AvaliacaoDesempenho\Http\Controllers\AvaliacaoController')->updateStatus();
                         app('Modules\AvaliacaoDesempenho\Http\Controllers\ProcessoController')->updateStatus();
                         
-                        return redirect('/avaliacaodesempenho/avaliacao')->with('success', 'Avaliação Respondida com Sucesso');                 
+                        return redirect('/avaliacaodesempenho/avaliacao/responder')->with('success', 'Avaliação Respondida com Sucesso');                 
                     }
                     
                     DB::commit();

@@ -23,38 +23,34 @@
 
                     <div class="info">
 
-                        @if ($data['avaliacao']->tipo->id == 1)
+                        @if ($data['avaliacao']->tipo->id == 2)
 
                         <div>
                             <p><b>Responsável:</b> {{ $data['avaliacao']->responsavel->nome }}</p>
-                            <p><b>Tipo de Avaliação:</b> Avaliar Funcionários</p>
+                            <p><b>Tipo de Avaliação:</b> Avaliar Gestores</p>
                             <p><b>Setor:</b> {{ $data['avaliacao']->setor->nome }}</p>
-                            @foreach ($data['avaliacao']->avaliadores as $avaliador)
-                                <p><b>Avaliador:</b> {{ $avaliador->funcionario->nome }}</p>
-                            @endforeach
+                            <p><b>Qtd de Avaliadores:</b> {{ count($data['avaliacao']->avaliadores) }}</p>
                         </div>
 
                         <div>
                             <p><b>Data Inicio:</b> {{ $data['avaliacao']->data_inicio }}</p>
-                            <p><b>Data Fim:</b> {{ date("d/m/Y", strtotime($data['avaliacao']->data_fim)) }}</p>                            
-                            <p><b>Qtd de Avaliados:</b> {{ count($data['setor']->funcionarios)-1 }}</p>
+                            <p><b>Data Fim:</b> {{ $data['avaliacao']->data_fim }}</p>                            
+                            <p><b>Avaliado:</b> {{ $data['setor']->gestor->nome }}</p>
                         </div>
 
                         @else
 
                         <div>
                             <p><b>Responsável:</b> {{ $data['avaliacao']->responsavel->nome }}</p>
-                            <p><b>Tipo de Avaliação:</b> Avaliar Gestores</p>
+                            <p><b>Tipo de Avaliação:</b> Avaliar Funcionários</p>
                             <p><b>Setor:</b> {{ $data['avaliacao']->setor->nome }}</p>
-                            <p><b>Qtd de Avaliadores:</b> {{ count($data['setor']->funcionarios)-1 }}</p>
+                            <p><b>Avaliador:</b> {{ $data['setor']->gestor->nome }}</p>
                         </div>
                         
                         <div>
                             <p><b>Data Inicio:</b> {{ $data['avaliacao']->data_inicio }}</p>
-                            <p><b>Data Fim:</b> {{ date("d/m/Y", strtotime($data['avaliacao']->data_fim)) }}</p>
-                            @foreach ($data['avaliacao']->avaliados as $avaliado)
-                                <p><b>Gestor Avaliado:</b> {{ $avaliado->funcionario->nome }}</p>
-                            @endforeach
+                            <p><b>Data Fim:</b> {{ $data['avaliacao']->data_fim }}</p>
+                            <p><b>Qtd de Avaliados:</b> {{ count($data['avaliacao']->avaliados) }}</p>
                         </div>
 
                         @endif

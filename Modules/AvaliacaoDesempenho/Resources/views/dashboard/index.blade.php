@@ -128,6 +128,7 @@
                                 <tr>
                                     <th>Avaliação</th>
                                     <th>Setor</th>
+                                    <th>Tipo</th>
                                     <th>Responsável</th>
                                     <th>Prazo Final</th>
                                     <th>Status</th>
@@ -140,6 +141,7 @@
                                         <tr>
                                             <td>{{ $avaliacao->nome }}</td>
                                             <td>{{ $avaliacao->setor->nome }}</td>
+                                            <td>{{ $avaliacao->tipo->nome }}</td>
                                             <td>{{ $avaliacao->responsavel->nome }}</td>
                                             <td>{{ $avaliacao->data_fim }}</td>
                                             <td>{{ $avaliacao->status->nome }}</td>
@@ -159,6 +161,7 @@
                                 <tr>
                                     <th>Avaliação</th>
                                     <th>Setor</th>
+                                    <th>Tipo</th>
                                     <th>Responsável</th>
                                     <th>Prazo Final</th>
                                     <th>Status</th>
@@ -171,6 +174,7 @@
                                         <tr>
                                             <td>{{ $avaliacao->nome }}</td>
                                             <td>{{ $avaliacao->setor->nome }}</td>
+                                            <td>{{ $avaliacao->tipo->nome }}</td>
                                             <td>{{ $avaliacao->responsavel->nome }}</td>
                                             <td>{{ $avaliacao->data_fim }}</td>
                                             <td>{{ $avaliacao->status->nome }}</td>
@@ -223,6 +227,7 @@
                         <tr>
                             <th>Avaliação</th>
                             <th>Setor</th>
+                            <th>Tipo</th>
                             <th>Responsável</th>
                             <th>Prazo Final</th>
                             <th>Status</th>
@@ -235,6 +240,7 @@
                                 <tr>
                                     <td>{{ $avaliacao->nome }}</td>
                                     <td>{{ $avaliacao->setor->nome }}</td>
+                                    <td>{{ $avaliacao->tipo->nome }}</td>
                                     <td>{{ $avaliacao->responsavel->nome }}</td>
                                     <td>{{ $avaliacao->data_fim }}</td>
                                     <td>{{ $avaliacao->status->nome }}</td>

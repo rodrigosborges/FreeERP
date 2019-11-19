@@ -59,7 +59,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control date data_inicio" name='avaliacao[data_inicio]' type="text" value="{{ old('avaliacao.data_inicio', isset($data['avaliacao']) ? $data['avaliacao']->data_inicio : '') }}"
+                            <input class="form-control data data_inicio" name='avaliacao[data_inicio]' type="text" value="{{ old('avaliacao.data_inicio', isset($data['avaliacao']) ? $data['avaliacao']->data_inicio : '') }}"
                                 placeholder="Selecione a data de inicio">
 
                         </div>
@@ -80,7 +80,7 @@
                                 </span>
                             </div>
 
-                            <input class="form-control date data_fim" name='avaliacao[data_fim]' type="text" value="{{ old('avaliacao.data_fim', isset($data['avaliacao']) ? $data['avaliacao']->data_fim : '') }}"
+                            <input class="form-control data data_fim" name='avaliacao[data_fim]' type="text" value="{{ old('avaliacao.data_fim', isset($data['avaliacao']) ? $data['avaliacao']->data_fim : '') }}"
                                 placeholder="Selecione a data final">
 
                         </div>
@@ -184,9 +184,9 @@
                         <label>Tipo de Avaliação</label>
 
                         <br>
-                        <input class='tipo' type="radio" name='avaliacao[tipo_id]' value='2' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 0 ? 'checked' : '' }}> Avaliar Gestores
+                        <input class='tipo {{ isset($data['avaliacao']) ? 'readonly' : '' }}' type="radio" name='avaliacao[tipo_id]' value='2' {{ isset($data['avaliacao']) && $data['avaliacao']->tipo_id == 2 ? 'checked' : '' }}> Avaliar Gestores
                         <br>
-                        <input class='tipo' type="radio" name='avaliacao[tipo_id]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->gestor == 1 ? 'checked' : '' }}> Avaliar Funcionários
+                        <input class='tipo {{ isset($data['avaliacao']) ? 'readonly' : '' }}' type="radio" name='avaliacao[tipo_id]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->tipo_id == 1 ? 'checked' : '' }}> Avaliar Funcionários
 
                     </div>
 

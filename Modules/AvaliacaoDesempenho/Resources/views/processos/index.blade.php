@@ -38,5 +38,7 @@
 @endsection
 
 @section('scripts')
+<script src="{{Module::asset('avaliacaodesempenho:js/plugins/jquery-mask.js')}}"></script>
 <script src="{{Module::asset('avaliacaodesempenho:js/processos/_main.js')}}"></script>
+<script src="{{Module::asset('avaliacaodesempenho:js/processos/_masks.js')}}"></script>
 @endsection

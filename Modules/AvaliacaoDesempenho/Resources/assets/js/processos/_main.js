@@ -38,12 +38,28 @@ $(document).on('click', '#submit-btn', function (e) {
     
     const _token = $('input[name="_token"]').val()
 
+    if ($('input[name="_data_inicio"]').val() !== '') {
+        var data_inicio_parts = $('input[name="_data_inicio"]').val().split("/")
+        var data_inicio = `${data_inicio_parts[2]}-${data_inicio_parts[1]}-${data_inicio_parts[0]}`
+    } else {
+        var data_inicio = ''
+    }
+
+    if ($('input[name="_data_fim"]').val() !== '') {
+        var data_fim_parts = $('input[name="_data_fim"]').val().split("/")
+        var data_fim = `${data_fim_parts[2]}-${data_fim_parts[1]}-${data_fim_parts[0]}`
+    } else {
+        var data_fim = ''
+    }
+    
     var search = {
         nome: $('input[name="_nome"]').val(),
         funcionario_id: $('#_responsavel').children('option:selected').val(),
-        data_inicio: $('input[name="_data_inicio"]').val(),
-        data_fim: $('input[name="_data_fim"]').val()
+        data_inicio: data_inicio,
+        data_fim: data_fim
     }
+
+    console.log(search)
 
     var status = $('#_status').children('option:selected').val()
 

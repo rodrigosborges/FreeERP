@@ -85,8 +85,8 @@ class AvaliacaoController extends Controller
             $input = $request->input('avaliacao');
 
             $check = Avaliacao::where('setor_id', $input['setor_id'])->where('tipo_id', $input['tipo_id'])->where('status_id', '!=', 3)->get();
-
-            if ($check) {
+            
+            if (count($check)) {
                 return back()->with('error', 'Não foi possivel cadastrar. Já existe uma Avaliação com o mesmo tipo e setor em andamento.')->withInput($request->input());  
             } 
 
@@ -102,24 +102,25 @@ class AvaliacaoController extends Controller
 
             // PROVA PARA AVALIAR GESTORES
             if ($input['tipo_id'] == 2) {
+                
+                for ($i=0; $i < count($funcionarios)+1; $i++) { 
 
-                foreach ($funcionarios as $key => $funcionario) {
+                    if ($funcionarios->has($i) && ($funcionarios[$i]->id != $setor->gestor->id)) {
+                        echo'<pre>';print_r($funcionarios[$i]);
 
-                    if ($funcionario->id != $setor->gestor->id) {
-
-                        $token = bin2hex(random_bytes(16));
+                        $token = bin2hex(random_bytes(3));
 
                         $validade = implode('-', array_reverse(explode('/', $input['data_fim'])));
 
                         $avaliador = Avaliador::create([
-                            'funcionario_id' => $funcionario->id,
+                            'funcionario_id' => $funcionarios[$i]->id,
                             'avaliacao_id' => $avaliacao->id,
                             'token' => $token,
                             'validade' => $validade
                         ]);
 
                         $data = [
-                            'funcionario' => $funcionario,
+                            'funcionario' => $funcionarios[$i],
                             'avaliacao' => $avaliacao,
                             'token' => $token,
                             'validade' => $validade
@@ -129,49 +130,52 @@ class AvaliacaoController extends Controller
                             $message->to($data['funcionario']->email->email, 'Funcionário')->subject('Avaliação de Desempenho');
                         });
 
-                    } 
+                    } else {
 
-                    $avaliado = Avaliado::create([
-                        'funcionario_id' => $setor->gestor->id,
-                        'avaliacao_id' => $avaliacao->id
-                    ]);
+                        $avaliado = Avaliado::create([
+                            'funcionario_id' => $setor->gestor->id,
+                            'avaliacao_id' => $avaliacao->id
+                        ]);
+                    }
                 }
 
             // PROVA PARA AVALIAR FUNCIONARIOS
             } else if ($input['tipo_id'] == 1) {
 
-                foreach ($funcionarios as $key => $funcionario) {
+                for ($i=0; $i < count($funcionarios)+1; $i++) {
 
-                    if ($funcionario->id != $setor->gestor->id) {
+                    if ($funcionarios->has($i) && ($funcionarios[$i]->id != $setor->gestor->id)) {
 
                         $avaliado = Avaliado::create([
-                            'funcionario_id' => $funcionario->id,
+                            'funcionario_id' => $funcionarios[$i]->id,
                             'avaliacao_id' => $avaliacao->id,
                         ]);
-                    }
 
-                    $token = bin2hex(random_bytes(16));
+                    } else {
 
-                    $validade = implode('-', array_reverse(explode('/', $input['data_fim'])));
+                        $token = bin2hex(random_bytes(3));
+    
+                        $validade = implode('-', array_reverse(explode('/', $input['data_fim'])));
 
-                    $avaliador = Avaliador::create([
-                        'funcionario_id' => $funcionario->id,
-                        'avaliacao_id' => $avaliacao->id,
-                        'token' => $token,
-                        'validade' => $validade
-                    ]);
-
-                    $data = [
-                        'funcionario' => $funcionario,
-                        'avaliacao' => $avaliacao,
-                        'token' => $token,
-                        'validade' => $validade,
-                        'setor' => $setor
-                    ];
-
-                    Mail::send('avaliacaodesempenho::emails/_email', $data, function($message) use($data) {
-                        $message->to($data['funcionario']->email->email, 'Gestor')->subject('Avaliação de Desempenho');
-                    });
+                        $avaliador = Avaliador::create([
+                            'funcionario_id' => $setor->gestor->id,
+                            'avaliacao_id' => $avaliacao->id,
+                            'token' => $token,
+                            'validade' => $validade
+                        ]);
+    
+                        $data = [
+                            'funcionario' => $setor->gestor,
+                            'avaliacao' => $avaliacao,
+                            'token' => $token,
+                            'validade' => $validade,
+                            'setor' => $setor
+                        ];
+    
+                        Mail::send('avaliacaodesempenho::emails/_email', $data, function($message) use($data) {
+                            $message->to($data['funcionario']->email->email, 'Gestor')->subject('Avaliação de Desempenho');
+                        });
+                    }                 
                 }
             }
 
