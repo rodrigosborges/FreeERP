@@ -4,16 +4,28 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Modules\Eventos\Entities\Pessoa;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testBasicTest()
+    use RefreshDatabase;
+    
+    public function testUsuarioNaoLogado()
     {
-        $this->assertTrue(true);
+        $response = $this->get('/eventos')->assertRedirect('/login');
+    }
+    
+    public function testUsuarioLogado()
+    {
+        $usuario = factory(Pessoa::class)->create();
+        $response = $this->actingAs($usuario)->get('/login');
+        $response->assertRedirect('/eventos');
+    }
+    
+    public function testGetEvento()
+    {
+        $usuario = factory(Pessoa::class)->create();
+        $response = $this->actingAs($usuario)->get('/eventos/get-evento/1');
+        $response->assertOk();
     }
 }
