@@ -22,6 +22,7 @@ class Usuario extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('papel_id')->unsigned();
             $table->string('password');
+            $table->string('reset_password_token');
             $table->foreign('papel_id')->references('id')->on('papel');
             $table->rememberToken();
             $table->timestamps();
