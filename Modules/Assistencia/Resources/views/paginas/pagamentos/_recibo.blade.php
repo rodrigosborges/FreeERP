@@ -14,7 +14,7 @@
     
         <div class="row">
             <div class="col-6">
-                <h6>Recibo nº {{$pagamento->id}}</h6>
+                <h6>Recibo nº {{$pagamento->conserto->numeroOrdem}}</h6>
             </div>
             
         </div>
