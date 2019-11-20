@@ -195,10 +195,28 @@ class PedidoController extends Controller
     }
 
     public function buscaProduto(Request $request){
+        // $estoque = Estoque::produtos()->where('id' ,'>', 0);
+        // return $estoque;
         if($request->valor != null)
-            $query = Estoque::where('nome', 'like', $request->valor. '%')->get();
+            $query = DB::table('estoque')
+            ->join('estoque_has_produto', 'estoque_has_produto.estoque_id', '=', 'estoque.id')
+            ->join('produto', 'produto.id', '=', 'estoque_has_produto.produto_id') 
+            ->where('produto.nome', 'like', '%' . $request->valor. '%')->get();
         else
             $query = [];
+       
+        return $query;  
+    }
+
+    public function verificaEstoque(Request $request){
+        $query = [];
+
+        if($request->valor != null){
+            $query = Estoque::where($request->valor,'>','quantidade');
+        }
+        else{
+            $query;
+        }
         return $query;
     }
 }
