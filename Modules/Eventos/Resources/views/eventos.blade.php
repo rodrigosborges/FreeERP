@@ -227,6 +227,7 @@
         function cadastrar(){
             $('form').attr('method', 'POST');
             $('form').attr('action', '{{route('eventos.cadastrar')}}');
+            $('.erro').hide();
             $('.edit').val('');
             var input = document.getElementsByClassName('edit');
             for (var i=0; i<(input.length); i++){
