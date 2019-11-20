@@ -11,6 +11,7 @@
     <testsuites>
         <testsuite name="Unit">
             <directory suffix=".php">Modules/Protocolos/Tests/Unit/CaixaBranca</directory>
+            <directory suffix=".php">Modules/Protocolos/Tests/Unit/CaixaPreta</directory>
         </testsuite>
     </testsuites>
     <filter>

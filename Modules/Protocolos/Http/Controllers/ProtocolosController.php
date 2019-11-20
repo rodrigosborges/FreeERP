@@ -27,9 +27,9 @@ class ProtocolosController extends Controller
             'protocolos'    => Protocolo::all(),
             'title'         => 'Lista de Protocolos',
             'finalizado'    => Protocolo::onlyTrashed()->count(),
-            'andamento'     => Protocolo::where('status_id', '<>', '6')->where('updated_at', '>', $dataAtualMenosUmAno)->where('usuario_id', $usuarioLogado)->count(),
-            'encalhado'     => Protocolo::where('updated_at', '<', $dataAtualMenosUmAno)->where('usuario_id', $usuarioLogado)->count(),
-            'total'         => Protocolo::withTrashed()->where('usuario_id', $usuarioLogado)->count(),
+            'andamento'     => Protocolo::where('status_id', '<>', '6')->where('updated_at', '>', $dataAtualMenosUmAno)->count(),
+            'encalhado'     => Protocolo::where('updated_at', '<', $dataAtualMenosUmAno)->count(),
+            'total'         => Protocolo::withTrashed()->count(),
         ];
 
         return view('protocolos::protocolo.index', compact('data'));
@@ -91,7 +91,7 @@ class ProtocolosController extends Controller
             $protocolosIds = [];
 
             foreach(Protocolo::all() as $protocolo) {
-                $ultimoUsuarioQueModificou = $protocolo->logs->last()->usuario_id;
+                $ultimoUsuarioQueModificou = $protocolo->user_modificador_id;
                 $usuarioQueModificou = Usuario::findOrFail($ultimoUsuarioQueModificou);
                 $usuarioLogado = Usuario::findOrFail(Auth::user()->id);
 
@@ -127,7 +127,9 @@ class ProtocolosController extends Controller
         }
 
 		if($status == "inativos"){
+
             $protocolos = $protocolos->onlyTrashed();
+
         }
             
         $protocolos = $protocolos->paginate(10);
@@ -233,7 +235,7 @@ class ProtocolosController extends Controller
                 'origem'                => Auth::user()->id,
                 'protocolo_id'          => $protocolo->id,
             ]);
-            dd($request);
+            
             DB::commit();
             
             return redirect('protocolos/protocolos')->with('success', 'Protocolo cadastrado com sucesso!');
