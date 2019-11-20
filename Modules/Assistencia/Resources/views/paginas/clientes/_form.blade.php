@@ -74,33 +74,30 @@
 
 <div class="row">
     <div class="form-group col-sm-3">
-        <label for="endereco[cep]">CEP</label>
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">map</i></span>
             </div>
-            <input type="text" class="form-control cep" name="endereco[cep]" value="{{ old('endereco.cep', isset($cliente) ? $cliente->endereco->cep : '') }}">
+            <input type="text" class="form-control cep" placeholder="CEP" name="endereco[cep]" value="{{ old('endereco.cep', isset($cliente) ? $cliente->endereco->cep : '') }}">
             
         </div>
         <span class="error"> {{ $errors->first('endereco.cep') }} </span>
     </div>
     <div class="form-group col-sm-6">
-        <label for="endereco[logradouro]">Logradouro</label>
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">house</i></span>
             </div>
-            <input type="text" class="form-control" name="endereco[logradouro]" value="{{ old('endereco.logradouro', isset($cliente) ? $cliente->endereco->logradouro : '') }}">
+            <input type="text" class="form-control" placeholder="Logradouro" name="endereco[logradouro]" value="{{ old('endereco.logradouro', isset($cliente) ? $cliente->endereco->logradouro : '') }}">
         </div>
         <span class="error"> {{ $errors->first('endereco.logradouro') }} </span>
     </div>
     <div class="form-group col-sm-2">
-        <label for="endereco[numero]">Número</label>
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">house</i></span>
             </div>
-            <input type="text" class="form-control" name="endereco[numero]" value="{{ old('endereco.numero', isset($cliente) ? $cliente->endereco->numero : '') }}">
+            <input type="text" class="form-control" placeholder="Número" name="endereco[numero]" value="{{ old('endereco.numero', isset($cliente) ? $cliente->endereco->numero : '') }}">
         </div>
         <span class="error"> {{ $errors->first('endereco.numero') }} </span>
     </div>
@@ -108,23 +105,21 @@
 
 <div class="row">
     <div class="form-group col-sm-3">
-        <label for="endereco[bairro]">Bairro:</label>
         <div class="input-group">
             <div class="input-group-prepend">
                     <span class="input-group-text"><i class="material-icons">location_city</i></span>
             </div>
-            <input type="text" class="form-control" name="endereco[bairro]" value="{{ old('endereco.bairro', isset($cliente) ? $cliente->endereco->bairro : '') }}">
+            <input type="text" class="form-control" placeholder="Bairro" name="endereco[bairro]" value="{{ old('endereco.bairro', isset($cliente) ? $cliente->endereco->bairro : '') }}">
         </div>
         <span class="error"> {{ $errors->first('endereco.bairro') }} </span>
     </div>
-    <div class="form-group col-sm-3">
-        <label for="endereco[estado_id]">Estado</label>
+    <div class="form-group col-sm-4">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">location_city</i></span>
             </div>
             <select cidade="{{ old('endereco.cidade_id', isset($cliente) ? $cliente->endereco->cidade_id : "")}}" name="endereco[estado_id]" class="form-control" id="estado">
-                <option value="" disabled selected>Selecione</option>
+                <option value="" disabled selected>Selecione o estado</option>
                 @foreach($estados as $estado)
                     <option value="{{$estado->id}}" uf="{{$estado->uf}}" {{ old('endereco.estado_id', isset($cliente) ? $cliente->endereco->cidade->estado_id : "") == $estado->id ? 'selected' : '' }}>{{ $estado->nome }}</option>
                 
@@ -133,13 +128,14 @@
         </div>  
         <span class="error"> {{ $errors->first('endereco.estado_id') }} </span>
     </div>
-    <div class="form-group col-sm-3">
-        <label for="endereco[cidade_id]">Cidade</label>
+    <div class="form-group col-sm-4">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">location_city</i></span>
             </div>
-            <select name="endereco[cidade_id]" class="form-control" id="cidade"></select>
+            <select name="endereco[cidade_id]" class="form-control" id="cidade">
+                <option value="" disabled>Selecione o estado primeiro</option>
+            </select>
             
         </div>
         <span class="error"> {{ $errors->first('endereco.cidade_id') }} </span>

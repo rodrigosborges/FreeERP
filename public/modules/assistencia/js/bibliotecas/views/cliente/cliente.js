@@ -157,7 +157,7 @@ $('#estado').change(function() {
         getCidades(idEstado);
     } else {
         $('#cidade').empty()
-        $('#cidade').append("<option value=''>Selecione</option>")
+        $('#cidade').append("<option selected disabled value=''>Selecione</option>")
     }
 
 });
@@ -165,7 +165,7 @@ function getCidades(estado_id,nome_cidade=null){
    
     $.get(main_url+'/api/assistencia/cidades/' + estado_id, function(cidades) {
             $('#cidade').empty()
-            $('#cidade').append("<option value=''>Selecione</option>")
+            $('#cidade').append("<option selected disabled value=''>Selecione a cidade</option>")
             $.each(cidades, function(key, value) {
                
                 if(nome_cidade == value.nome || nome_cidade == value.id){
