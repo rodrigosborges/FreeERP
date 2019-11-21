@@ -1,6 +1,9 @@
 @extends('assistencia::layouts.master')
 @section('css')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+
+<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />-->
+<link href="{{Module::asset('assistencia:css/select2.css')}}" rel="stylesheet"/>
+
 
 <style>
 .errors {
@@ -40,7 +43,8 @@
 @stop
 
 @section('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>-->
+<script src="{{Module::asset('assistencia:js/bibliotecas/select2.min.js')}}"></script>
 
 <script>
 $(document).ready(function() {

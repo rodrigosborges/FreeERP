@@ -29,7 +29,9 @@
 
 @stop
 @section('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/bindings/inputmask.binding.min.js    "></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/bindings/inputmask.binding.min.js"></script>-->
+<script src="{{Module::asset('assistencia:js/bibliotecas/inputmask.binding.min.js')}}"></script>
+
 <script>
 $(document).ready(function() {
   
