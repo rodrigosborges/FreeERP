@@ -22,7 +22,7 @@
                 <input type="text" class="form-control" name="busca" placeholder="Nome da mão de obra"
                     aria-label="Buscar" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                <button class="btn btn-info" type="submit" id="button-addon2"><i class="material-icons">search</i></button>
+                <button class="btn btn-info material-icons" type="submit" id="button-addon2">search</button>
                 </div>
             </form>
 

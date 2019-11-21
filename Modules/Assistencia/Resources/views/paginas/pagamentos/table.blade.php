@@ -14,7 +14,7 @@
         <tr>
             <td scope="row">{{$pagamento->conserto->numeroOrdem }}</td>
             <td>{{$pagamento->cliente->nome }}</td>
-            <td> R$ {{$pagamento->valor}} </td>
+            <td> R$ {{ number_format($pagamento->valor, 2, ',', '.')}} </td>
             <td>{{date_format($pagamento->updated_at, 'd/m/Y')}}</td>
             <td>{{$pagamento->status}}</td>
         </tr>

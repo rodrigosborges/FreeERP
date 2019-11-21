@@ -13,16 +13,19 @@
     <div class="card-body">
         
         <div class="form-group row">
-            <form class="input-group col-lg-9 col-sm-12" >
+            <form class="input-group col-6" >
                 {{ csrf_field() }}
                 <input type="text" class="form-control" name="busca" placeholder="Pesquise por nome">
                 <div class="input-group-append">
-                    <button class="btn btn-info" id="buscar"  type="submit"><i class="material-icons">search</i></button>
+                    <button class="btn btn-info material-icons" id="buscar"  type="submit">search</button>
                 </div>
             </form>
-            <div class="col-lg-3 col-sm-12 text-center">
-                <a href="{{route('cliente.cadastrar')}}"><button type="button" class="btn btn-info">Cadastrar
-                        Cliente</button></a>
+            <div class="col-6">
+                <div class="text-right">
+                    <a href="{{route('cliente.cadastrar')}}"><button type="button" class="btn btn-info">Cadastrar
+                            Cliente</button></a>
+                </div>
+            
             </div>
         </div>
         <div class="row-center table">
