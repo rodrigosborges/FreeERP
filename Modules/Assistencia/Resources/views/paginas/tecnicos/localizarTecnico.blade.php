@@ -17,7 +17,7 @@
                 <input type="text" class="form-control" name="busca" placeholder="Nome do técnico"
                     aria-label="Buscar técnico" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-info" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                    <button class="btn btn-info" type="submit" id="button-addon2"><i class="material-icons">search</i></button>
                 </div>
             </form>
             <div class="col-md-6">

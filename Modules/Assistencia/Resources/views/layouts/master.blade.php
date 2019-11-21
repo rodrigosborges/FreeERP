@@ -19,13 +19,21 @@ $menu = [
         <meta charset="utf-8">
         <title>FreeERP @yield('title')</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> 
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="{{Module::asset('assistencia:css/roboto.css')}}" rel="stylesheet"/>
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link href="{{Module::asset('assistencia:css/bootstrap.min.css')}}" rel="stylesheet"/>
+        <link href="{{Module::asset('assistencia:css/jquery-ui.css')}}" rel="stylesheet"/>
+        <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
+        <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
         <!-- Material Icons -->
+
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+        <link href="{{Module::asset('assistencia:css/all.css')}}" rel="stylesheet"/>
+        <link href="{{Module::asset('assistencia:css/materialicon.css')}}" rel="stylesheet"/>
+
         <style>
             * {font-family: 'Roboto', sans-serif;}
             .card-header {

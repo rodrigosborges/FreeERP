@@ -17,7 +17,7 @@
                 {{ csrf_field() }}
                 <input type="text" class="form-control" name="busca" placeholder="Pesquise por nome">
                 <div class="input-group-append">
-                    <button class="btn btn-info" id="buscar"  type="submit"><i class="fas fa-search"></i></button>
+                    <button class="btn btn-info" id="buscar"  type="submit"><i class="material-icons">search</i></button>
                 </div>
             </form>
             <div class="col-lg-3 col-sm-12 text-center">
