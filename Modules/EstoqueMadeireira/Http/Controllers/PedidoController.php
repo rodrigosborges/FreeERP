@@ -219,4 +219,34 @@ class PedidoController extends Controller
         }
         return $query;
     }
+
+    public function gerarpedido(Request $request){
+        
+         $pedido = Pedido::create([
+             'cliente_id' => $request->cliente,
+             'taxa' => '0.00',
+             'desconto' => '0.00',
+             'status_pedido' => 1
+         ]);
+        
+         try{
+            for($i=0; $i < $request->produtos.length ; $i+=3){
+                ItemPedido::create([
+                    'pedido_id' => $pedido->id,
+                    'produto_id' => $request->produtos[i]->id,
+                    'quantidade' => $request->produtos[i+1],
+                    'precoVenda' => $request->produtos[i]->preco,
+                    'precoCusto' => '0.00'
+                    
+                ]);
+            }
+         }catch(\Exception $e){
+             return $e;
+         }
+        return $pedido;
+        
+        
+
+
+    }
 }

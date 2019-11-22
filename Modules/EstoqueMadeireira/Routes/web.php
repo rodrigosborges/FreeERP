@@ -104,3 +104,4 @@ Route::resource('/estoquemadeireira', 'EstoqueMadeireiraController');
 Route::get('/buscacliente', 'PedidoController@buscaCliente');
 Route::get('/buscaproduto', 'PedidoController@buscaProduto');
 Route::get('/verificaestoque', 'PedidoController@verificaestoque');
+Route::post('/gerarpedido', 'PedidoController@gerarpedido');

@@ -5,6 +5,9 @@
 @section('body')
 
 <div class="container" style="justify-content: center;" id=""> 
+    <form>
+        @csrf
+    </form>
     <div class="card">
         <div class="card-header">
             <h4>Registro de Pedido</h4>
@@ -40,6 +43,7 @@
                             <tr>
                             <th scope="col">Nome</th>
                             <th scope="col">Quantidade</th>
+                            <th scope="col">Preço Un.</th>
                             <th scope="col">Desconto</th>
                             <th scope="col">Valor</th>
                             <th scope="col">Remover</th>
@@ -73,7 +77,7 @@
         </div>
         <div class="form-group col-12">
             <label for="quantidade">Desconto</label>
-            <input type="text" name="desconto" required id="desconto" onKeyUp="verificaPreco(this);" class="form-control">
+            <input type="text" name="desconto" required id="desconto" onKeyUp="verificaPreco(this);" class="form-control" value="0.00">
         </div>
       </div>
       <div class="modal-footer">
@@ -84,6 +88,7 @@
   </div>
 </div>
 
+<button type="button" class="btn btn-success btn-md" onClick="enviar();">Enviar</button>
 
 
 
@@ -97,6 +102,7 @@
 <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
 
 <script>
+    var idCliente = '';
     var produtos = [];
     var d = [];   
     var d2 = []; 
@@ -141,6 +147,11 @@
         // $('#tabelaProdutos').append(linha);
     }
     
+    function remover(val){
+        produtos.splice(val, 3)
+        preencherTabela()
+    }
+
     function preencherTabela(){
         $('#tabelaProdutos').show();
         var table = document.getElementById('itensTabela');
@@ -149,7 +160,10 @@
             var row = document.createElement('tr');
             row.insertCell(0).innerHTML = produtos[i].nome;
             row.insertCell(1).innerHTML = '<input type="number" value="'+produtos[i+1]+'" disabled class="form-control">';
-            row.insertCell(2).innerHTML = '<input type="text" value="'+produtos[i+2]+'" disabled class="form-control">';
+            row.insertCell(2).innerHTML = '<input type="text" value="R$'+produtos[i].preco+'" disabled class="form-control">';
+            row.insertCell(3).innerHTML = '<input type="text" value="R$'+produtos[i+2]+'" disabled class="form-control">';
+            row.insertCell(4).innerHTML = '<input type="text" value="R$'+((produtos[i+1]*produtos[i].preco)- $('#desconto').val())+'"  disabled class="form-control">';
+            row.insertCell(5).innerHTML = "<button class='btn btn-danger btn-sm' onClick='remover("+i+");'>Remover</button>";
             document.getElementById('itensTabela').appendChild(row);
         }
     }
@@ -175,6 +189,7 @@
     function selecionar(data){
         cliente = data;
         document.getElementById('nomecliente').value = d[cliente].nome;
+        idCliente = d[cliente].id;
         $('#selecionarCliente').hide();
         $('#clienteSelecionado').show();
         $('#produtos').show();
@@ -185,6 +200,27 @@
 
 
     //FUNÇÃO AJAX PARA PUXAR OS ESTOQUES
+    function enviar(){
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN': $('input[name=_token]').val()
+            }
+        })
+        $.ajax({
+        type: 'POST',
+        url: '/gerarpedido',
+        data:{
+            'produtos': produtos,
+            'cliente': idCliente
+        }
+    }).done(function(data){
+        console.log(data)
+    }).always(function(){
+        console.log('Rodou')
+    })
+    }
+    
+    
     function buscarProduto(valor){
         $.ajax({
             url: '/buscaproduto',
