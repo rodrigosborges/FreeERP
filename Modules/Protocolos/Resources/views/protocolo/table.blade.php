@@ -26,8 +26,13 @@
                     @endif
                     <td class="align-middle">{{$protocolo->tramite->last()->observacao}}</td>
                     @if($status !== "despacho")
-                    <td class="align-middle">{{date('d/m/Y', strtotime($protocolo->updated_at))}}</td>
+                    <td class="align-middle">{{date('d/m/Y H:i', strtotime($protocolo->updated_at))}}</td>
                     @endif
+                    <td class="align-middle">     
+                        <a class="btn btn-info btn-sm" href='{{ url("protocolos/protocolos/acompanhar/$protocolo->id") }}'>
+                            <i class="material-icons send"  style="vertical-align:middle; font-size:25px; margin-right:5px;">find_in_page</i>Ver
+                        </a>
+                    </td>
                     @if($status == "despacho" || $status == "inativos")
                         @if($protocolo->usuario_id ==  Auth::user()->id)
                         <td class="align-middle">
@@ -44,13 +49,6 @@
                             </form>
                         </td>
                         @endif
-                    @endif
-                    @if($status !== "caixa-saida")
-                    <td class="align-middle">     
-                        <a class="btn btn-info btn-sm" href='{{ url("protocolos/protocolos/acompanhar/$protocolo->id") }}'>
-                            <i class="material-icons send"  style="vertical-align:middle; font-size:25px; margin-right:5px;">find_in_page</i>Ver
-                        </a>
-                    </td>
                     @endif
                     @if($status == "caixa-entrada")
                     <td class="align-middle">

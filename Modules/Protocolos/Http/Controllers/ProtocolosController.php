@@ -380,7 +380,6 @@ class ProtocolosController extends Controller
 
 
         $protocolo = Protocolo::where('id', '=',$id)->first();
-       
 
         DB::beginTransaction();
 
@@ -392,23 +391,36 @@ class ProtocolosController extends Controller
                 'destino'               => $request->tramite['destino'],
                 'protocolo_id'          => $id
             ]);
-
-            $protocolo->interessado()->attach(['usuario_id' => $request->tramite['destino']]);
             
-            $protocolo->status_id = '2';
-            $protocolo->user_modificador_id = Auth::user()->id;
-            $protocolo->save();
+            if($protocolo->interessado()->where('usuario_id', $request->tramite['destino'])->first()){
+                
+                $protocolo->status_id = '2';
+                $protocolo->user_modificador_id = Auth::user()->id;
+                $protocolo->save();
+    
+                $log = Log::Create([
+                    'status_id'        => '2',
+                    'usuario_id'    => Auth::user()->id,
+                    'protocolo_id'  => $protocolo->id
+                ]);    
+            }
+            else{
+                $protocolo->interessado()->attach(['usuario_id' => $request->tramite['destino']]);
+                $protocolo->status_id = '2';
+                $protocolo->user_modificador_id = Auth::user()->id;
+                $protocolo->save();
 
-            $log = Log::Create([
-                'status_id'        => '2',
-                'usuario_id'    => Auth::user()->id,
-                'protocolo_id'  => $protocolo->id
-            ]);
+                $log = Log::Create([
+                    'status_id'        => '2',
+                    'usuario_id'    => Auth::user()->id,
+                    'protocolo_id'  => $protocolo->id
+                ]);
 
+            }
             DB::commit();
-            
+
             return redirect('protocolos/protocolos')->with('success', 'Despachado com sucesso!');
-            
+
 		}catch(Exception $e){
 			DB::rollback();
 			return back();
@@ -429,28 +441,37 @@ class ProtocolosController extends Controller
             'title'                 => 'Acompanhamento de Protocolo',
             'button'                => 'Adicionar',
         ]);
-        
-
-        $log = Log::Create([
-            'status_id'        => '4',
-            'usuario_id'    => Auth::user()->id,
-            'protocolo_id'  => $data['protocolo']->id
-        ]);
 
         if($data["protocolo"]->tipo_acesso == 1) {
 
             $interessadosIds = $data['protocolo']->interessado()->pluck('usuario_id')->toArray();
 
             if(in_array(Auth::user()->id, $interessadosIds) || Auth::user()->id == $data['protocolo']->usuario_id) {
+
+                $log = Log::Create([
+                    'status_id'        => '4',
+                    'usuario_id'    => Auth::user()->id,
+                    'protocolo_id'  => $data['protocolo']->id
+                ]);
+
                 return view('protocolos::protocolo.acompanhar', compact('data'));
+
             } else{
+
                 return back()->with('error', 'Esse protocolo é privado!');
             }
         }
         else{
+            
+
+            $log = Log::Create([
+                'status_id'        => '4',
+                'usuario_id'    => Auth::user()->id,
+                'protocolo_id'  => $data['protocolo']->id
+            ]);
+
             return view('protocolos::protocolo.acompanhar', compact('data'));
         }
-        return view('protocolos::protocolo.acompanhar', compact('data'));
     }
 
     public function salvarDocumento(DocumentoStoreRequest $request){

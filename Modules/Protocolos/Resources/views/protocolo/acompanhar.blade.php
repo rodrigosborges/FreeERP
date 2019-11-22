@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <td><b>Data de cadastro: </b>{{date('d/m/Y', strtotime($data["protocolo"]->created_at))}} por {{$data["protocolo"]->usuario->nome}}</td>
-                <td><b>Última modificação: </b>{{date('d/m/Y', strtotime($data["ultima_modificacao"]->created_at))}} por {{$data["protocolo"]->logs()->get()->last()->usuario->nome}}</td>
+                <td><b>Última modificação: </b>{{date('d/m/Y', strtotime($data["protocolo"]->updated_at))}} por {{$data["protocolo"]->usuario_modificador->nome}}</td>
             </tr>
         </tbody>
     </table>
@@ -63,8 +63,8 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade {{!isset($_GET['active']) ? 'show active' : ''}}" id="documentos" role="tabpanel" aria-labelledby="documentos-tab">
             <br>
-                <label for="" class="control-label">Adicionar um documento ao protocolo: <span class="required-symbol">*</span></label>
                 @if($data['protocolo']->status_id == '3' || $data['protocolo']->usuario_id == Auth::user()->id)
+                <label for="" class="control-label">Adicionar um documento ao protocolo: <span class="required-symbol">*</span></label>
                 <form id="doc-protocolo" enctype="multipart/form-data"> 
                     {{ csrf_field() }}
                     <div class="row">
@@ -217,7 +217,7 @@
                                 <?php if($log->status_id == 1){ ?>
                                     <span class="badge badge-success" style="width:80px">Criado</span> 
                                 <?php } else if ($log->status_id == 2){?>
-                                        <span class="badge badge-warning" style="width:80px">Aguardando recebimento</span> 
+                                        <span class="badge badge-warning" style="width:150px">Aguardando recebimento</span> 
                                 <?php }  else if ($log->status_id == 3) {?>
                                         <span class="badge badge-dark" style="width:80px">Recebido</span> 
                                 <?php }  else if ($log->status_id == 4) {?>
@@ -243,11 +243,13 @@
                 <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">arrow_back</i>Voltar
             </a>
         </div>
+        @if($data['protocolo']->status_id == 3)
         <div>                     
             <a class="btn btn-warning" href="{{url('protocolos/protocolos/encaminhar')}}<?= '/'.$data['protocolo']->id ?>">
                 <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">forward</i>Despachar
             </a>
         </div>
+        @endif
     </div>
 @endsection
 @section('script')
