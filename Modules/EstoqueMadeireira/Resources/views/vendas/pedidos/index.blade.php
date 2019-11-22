@@ -49,8 +49,8 @@
 
                     <tr>
                         <th scope="col">ID</th>                       
-                        <th scope="col">Cliente</th>              
-                        <th scope="col">Pedido</th> 
+                        <th scope="col">Cliente</th> 
+                        <th scope="col">Valor Total</th>
                         <th scope="col">Visualizar</th>  
                         <th scope="col">Editar</th>            
                         <th scope="col">Status</th>
@@ -59,23 +59,31 @@
                     <tbody>
                         @if(isset($pedidos))
                         @foreach($pedidos as $pedido)
-                            <tr>$pedido->id</tr>
-                            <tr>$pedido->cliente_id->nome</tr>
-                            <tr>$itemPedido->pedido_id</tr>
-                            <tr>
+                            <td>{{$pedido->id}}</td>
+                            <td>{{$pedido->cliente_id}}</td>
+                            <td>a</td>
+                            <td>
                             <a href="{{url('/estoquemadeireira/vendas/pedidos/ficha/' . $pedido->id)}}"><button class="btn btn-sm" style="font-size: 0px; background-color:blue;">
                                 <i class="material-icons" style="font-size:18px;">remove_red_eye</i></button></a>
-                            </tr>
-                            <tr>
+                            </td>
+                            <td>
                             <a href="{{url('/estoquemadeireira/vendas/pedidos/' . $pedido->id . '/edit')}}"><button class="btn btn-sm btn-warning"><i class="material-icons" style="font-size:18px;">border_color</i></button></a>
-                            </tr>
-                            <tr>$pedido->status_pedido</tr>
+                            </td>                          
+                            @if($pedido->status_pedido == 1)
+                            <td><button type="button" class="btn btn-success btn-sm">Aberto</button></td>                        
+                            @if($pedido->status_pedido == 2)   
+                            <button type="button" class="btn btn-warning btn-sm">Enviado</button>                    
+                            @if($pedido->status_pedido == 3)   
+                            <button type="button" class="btn btn-primary btn-sm">Fechado</button>
+                            @endif                          
+                            @endif
+                            @endif
+                            
+                           
                         @endforeach
                         @endif          
                     
-                    </tbody>
-
-                    
+                    </tbody>             
                     <tfoot>
                             <tr>
                                 <td colspan="100%" class="text-center">
@@ -92,27 +100,10 @@
                                 </td>
                             </tr>
                             @endif
-                        </tfoot>
-
-
+                    </tfoot>
                 </thead>
-
-
-            </table>
-        
-        
-        </div>
-    
-    
-    
-    </div>
-
-   
-                   
-
-
+            </table>       
+        </div>   
+    </div>  
 </div>
-
-
-
 @stop

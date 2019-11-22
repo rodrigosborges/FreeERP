@@ -5,38 +5,91 @@
 @section('body')
 
 <div class="container" style="justify-content: center;" id=""> 
+    <form>
+        @csrf
+    </form>
     <div class="card">
         <div class="card-header">
             <h4>Registro de Pedido</h4>
         </div>
         <div id="selecionarCliente">
-            <div class="row col-4 ml-2 mb-2">
-                <label for="Cliente">Cliente</label>
+            <div class="row col-4 ml-2 mb-2 mt-2">
+                <label for="Cliente"><h4>Cliente</h4></label>
                 <input class="form-control" type="text" value="" id="nomecliente" placeholder="insira o nome do Cliente">           
             </div>
             <div class="col-4">
-                <ul class="list-group " id="listaClientes">
+                <ul class="list-group "id="listaClientes">  
                 </ul>   
             </div>
         </div>
-        <div class="row col-12" id="clienteSelecionado">
-            <div class="form-group col-5 ml-2 mb-2">
-                <label for="nomeSelecionado">Cliente Selecionado</label>
-                <input type="text" id="nomeSelecionado" disabled class="form-control">
-                <button class="btn btn-primary btn-sm mt-2" style="justify content:flex-end;" onClick="removerCliente();">Alterar</button>
-            </div>
-        </div>
-
-        <div class="row col-12 ml-2 mt-4" id="produtos">
-            <label for=""> <h2> Selecionar produtos</h2></label>
-
+            <div id="clienteSelecionado">
+                <div class="row col-12">
+                    <div class="form-group col-5 ml-2 mb-2 mt-2">
+                        <label for="nomeSelecionado"><h4>Cliente Selecionado</h4></label>
+                        <input type="text" id="nomeSelecionado" disabled class="form-control">
+                        <button class="btn btn-primary btn-sm mt-2" style="justify content:flex-end;" onClick="removerCliente();">Alterar</button>
+                    </div>        
+                </div>
+                <div class="row col-12" id="produtos">
+                <div class="form-group col-5 ml-2 mt-2 mb-2" >
+                    <label for="selecionarProduto"><h4> Selecionar produtos</h4></label>
+                    <input class="form-control" type="text" value="" id="selecionarProduto">
+                </div> 
+                <div class="col-4">
+                <ul class="list-group "id="listaProdutos"></ul>        
+                </div>
+                   <table class="table" id="tabelaProdutos">
+                        <thead>
+                            <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Quantidade</th>
+                            <th scope="col">Preço Un.</th>
+                            <th scope="col">Desconto</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Remover</th>
+                            </tr>
+                        </thead>
+                        <tbody id="itensTabela">                                               
+                        </tbody>
+                    </table>
+                   </div>           
+            
+            
         </div>
     </div>
 </div>
+<input type="hidden" id="md" data-toggle="modal" data-target="#addProduto" />
 
-
-
-
+<div class="modal fade" id="addProduto" tabindex="-1" role="dialog" aria-labelledby="modalProduto" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalInsumo">Adicionar Produto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <input type="hidden" id="indexProduto" value="">
+      <div class="modal-body">
+        <div class="form-group col-12">
+            <label for="quantidade">Quantidade</label>
+            <input type="number" name="quantidade" required id="quantidade" value="1" class="form-control">
+        </div>
+        <div class="form-group col-12">
+            <label for="quantidade">Desconto</label>
+            <input type="text" name="desconto" required id="desconto" onKeyUp="verificaPreco(this);" class="form-control" value="0.00">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnAdd" type="button" class="btn btn-primary" onclick="selecionarProduto();" data-dismiss="modal">Adicionar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mr-3 mt-2" style="justify-content: flex-end;" id="enviar">
+<button type="button" class="btn btn-success btn-md" onClick="enviar();">Cadastrar Pedido</button>
+</div>
 
 
 
@@ -50,25 +103,88 @@
 <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
 
 <script>
-    var d = [];    
+    var idCliente = '';
+    var produtos = [];
+    var d = [];   
+    var d2 = []; 
     var cliente = '';
+    
+    
     $(document).ready(function(){
         $('#produtos').hide();
         $('#clienteSelecionado').hide();
+        $('#tabelaProdutos').hide();
+        $('#enviar').hide()
         $('#nomecliente').keyup(function(){
             var valor = $('#nomecliente').val()
             buscarcliente(valor)
         })
+        $('#selecionarProduto').keyup(function(){
+            var valor = $('#selecionarProduto').val()
+            buscarProduto(valor)
+        })
     })
+    function adicionarProduto(valor){
+        //Abre modal
+        $('#indexProduto').val(valor);
+        $('#quantidade').val('1');
+        $('#desconto').val('');
+        $("#md").click()
+    }
+    //FUNÇÃO PARA ADICIONAR UM NOVO PRODUTO VC ESTA AQUI GABRIEL FREITAS
+    function selecionarProduto(){
+        produtos.push(d2[$('#indexProduto').val()], $('#quantidade').val(), $('#desconto').val())
+        $('#enviar').show()
+        preencherTabela()
+        // produtos.push(d2[id]);
+        // console.log(produtos)
+        // console.log(id)
+        // console.log("descrição"+d2[id].descricao)
+        // $('#tabelaProdutos').show();
+        // var linha = "<tr><td>"+ d2[id].nome+"</td><td><input class='form-control' type='number'  value='1' id='quantidade'></td><td> <input class='form-control' type='number' onKeyUp='verificaPreco(this);' id='desconto'></td><td><input class='form-control' disabled type='text' id='valor'></td><td><button class='btn btn-danger btn-sm'>X</button></td></tr>"
+        // $('#tabelaProdutos').append(linha);
+    }
+    
+    function remover(val){
+        produtos.splice(val, 3)
+        preencherTabela()
+    }
+    function preencherTabela(){
+        $('#tabelaProdutos').show();
+        var table = document.getElementById('itensTabela');
+        table.innerHTML = "";
+        for(var i = 0; i < produtos.length; i+=3 ){
+            var row = document.createElement('tr');
+            row.insertCell(0).innerHTML = produtos[i].nome;
+            row.insertCell(1).innerHTML = '<input type="number" value="'+produtos[i+1]+'" disabled class="form-control">';
+            row.insertCell(2).innerHTML = '<input type="text" value="R$'+produtos[i].preco+'" disabled class="form-control">';
+            row.insertCell(3).innerHTML = '<input type="text" value="R$'+produtos[i+2]+'" disabled class="form-control">';
+            row.insertCell(4).innerHTML = '<input type="text" value="R$'+((produtos[i+1]*produtos[i].preco)- $('#desconto').val())+'"  disabled class="form-control">';
+            row.insertCell(5).innerHTML = "<button class='btn btn-danger btn-sm' onClick='remover("+i+");'>Remover</button>";
+            document.getElementById('itensTabela').appendChild(row);
+        }
+    }
+    
+    
+    //ALTERAR CLIENTE, RESETA TUDO
     function removerCliente(){
         cliente = '';
         $('#divNome').hide();
         $('#selecionarCliente').show();
+        $('#clienteSelecionado').hide();
         
     }
+    // //BOTÃO DE SELECIONAR O PRODUTO
+    // function selecionarProduto(data){
+    //     produtos.push(data);
+    //     document.getElementById('selecionarProduto').value = d2[produtos].nome;
+    //     document.getElementById('selecionarProduto').type = 'text';
+    // }
+    //SELECIONAR O CLIENTE E DEFINIR ELE NO INPUT
     function selecionar(data){
         cliente = data;
         document.getElementById('nomecliente').value = d[cliente].nome;
+        idCliente = d[cliente].id;
         $('#selecionarCliente').hide();
         $('#clienteSelecionado').show();
         $('#produtos').show();
@@ -76,20 +192,53 @@
         document.getElementById('nomeSelecionado').type = 'text';
         
     }
-    // function buscarProduto(valor){
-    //     $.ajax({
-    //         url: '/buscaproduto',
-    //         type: 'GET',
-    //         data:{
-    //                 valor:valor,
-    //                 '_token': $('input[name=_token]').val(),
-    //         }
-    //     }).done(function(data){
-    //         $.each(data, function(key, item){
-    //             $('#listaProdutos')
-    //         })
-    //     })
-    // }
+    //FUNÇÃO AJAX PARA PUXAR OS ESTOQUES
+    function enviar(){
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN': $('input[name=_token]').val()
+            }
+        })
+        $.ajax({
+        type: 'POST',
+        url: '/gerarpedido',
+        data:{
+            'produtos': produtos,
+            'cliente': idCliente
+        }
+    }).done(function(data){
+        console.log(data)
+    }).always(function(){
+        console.log('Rodou')
+    })
+    }
+    
+    
+    function buscarProduto(valor){
+        $.ajax({
+            url: '/buscaproduto',
+            type: 'GET',
+            data:{
+                valor:valor,
+                '_token': $('input[name=_token]').val(),
+            }
+        }).done(function(data){
+            d2 = data;
+         
+            $('#listaProdutos').empty();
+            $.each(data, function(key, item){
+                $('#listaProdutos').append($("<li class='list-group-item'>"+item.nome+"<button type='button'value='"+key+"' class='btn btn-primary btn-sm' onClick='adicionarProduto(this.value);'>Selecionar Produto</button></li>"))
+            })
+            if(data.length == 0){
+                $('#listaProdutos').append($("<li class='list-group-item'>Nenhum produto encontrado</li>"))
+            }
+        }).fail(function (fail){
+            console.log(fail)
+        }).always(function (){
+            
+        })
+    }
+    //FUNÇÃO AJAX PRA PUXAR O CLIENTE
     function buscarcliente(valor){
             $.ajax({
                 url:'/buscacliente',
@@ -111,5 +260,14 @@
                 console.log('fail')
             }).always(function(){
             })
+    }
+    function verificaPreco(i){
+        var v = i.value.replace(/\D/g,'');
+        v = (v/100).toFixed(2) + '';
+        v = v.replace(",", ".");
+        v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1$2$3.");
+        v = v.replace(/(\d)(\d{3}),/g, "$1$2.");
+        i.value = v;
+    
     }
 </script>

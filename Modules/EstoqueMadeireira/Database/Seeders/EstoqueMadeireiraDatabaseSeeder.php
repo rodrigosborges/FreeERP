@@ -17,7 +17,7 @@ class EstoqueMadeireiraDatabaseSeeder extends Seeder
         $this->call([
            CategoriaSeedTableSeeder::class,
            FornecedorSeedTableSeeder::class,
-          UnidadeMedidaSeedTableSeeder::class,
+           UnidadeMedidaSeedTableSeeder::class,
           TipoUnidadeSeedTableSeeder::class,
           tipoDocumentoSeedTableSeeder::class,
            ProdutoSeedTableSeeder::class,

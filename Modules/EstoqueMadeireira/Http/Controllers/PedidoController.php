@@ -42,9 +42,12 @@ class PedidoController extends Controller
 
     public function index()
     {
-        $itemPedido = itemPedido::all();
-        $pedidos = Pedido::paginate(10);        
-        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'itemPedido'));
+       $pedidos = Pedido::paginate(10);
+       $itemPedido = itemPedido::all();          
+       $clientes = DB::table('clientes')
+       ->join('pedidos', 'cliente_id', '=', 'pedidos.cliente_id')->get();            
+        
+       return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'itemPedido', 'clientes'));
     }
 
     //Retorna os inativos, com a opção de reativa-los 
@@ -74,15 +77,6 @@ class PedidoController extends Controller
 
 
 
-
-    public function restore($id){
-       
-        $categoria = Categoria::onlyTrashed()->findOrFail($id);
-        $categoria->restore();
-
-        return redirect('estoquemadeireira/produtos/categorias')->with('success', 'Categoria restaurada com sucesso!');
-
-    }
 
     //Insere a nova categoria no banco (store), verificando se já não existe um registro igual no banco
 
@@ -163,12 +157,12 @@ class PedidoController extends Controller
     public function busca(Request $request){
         
         if($request->pesquisa == null){
-            $pedido = Pedido::paginate(10);
-            return redirect('/estoquemadeireira/vendas/pedidos')->with('error', 'Insira algo para a pesquisa!');
+            $pedidos = Pedido::paginate(10);
+            return redirect('/estoquemadeireira/vendas/pedidos')->with('error', 'Insira um ID para a pesquisa!');
         }
         else{      
-            $pedido = Pedido::where('id', $request->pesquisa)->paginate(10);
-            if(count($pedido) > 0){
+            $pedidos = Pedido::where('id', $request->pesquisa)->paginate(10);
+            if(count($pedidos) > 0){
                 return view('estoquemadeireira::vendas.pedidos.index')->with('success', 'Resultado da pesquisa');
             }else{
                 return redirect('/estoquemadeireira/vendas/pedidos')->with('error', 'Nenhum resultado encontrado');
@@ -177,8 +171,8 @@ class PedidoController extends Controller
     }
 
     public function ficha($id){
-        $pedido = Pedido::findOrFail($id);
-        return view('estoquemadeireira::vendas.pedidos.ficha', $this->template, compact('pedido'));
+        $pedidos = Pedido::findOrFail($id);
+        return view('estoquemadeireira::vendas.pedidos.ficha', $this->template, compact('pedidos'));
     }
 
 
@@ -195,10 +189,58 @@ class PedidoController extends Controller
     }
 
     public function buscaProduto(Request $request){
+        // $estoque = Estoque::produtos()->where('id' ,'>', 0);
+        // return $estoque;
         if($request->valor != null)
-            $query = Estoque::where('nome', 'like', $request->valor. '%')->get();
+            $query = DB::table('estoque')
+            ->join('estoque_has_produto', 'estoque_has_produto.estoque_id', '=', 'estoque.id')
+            ->join('produto', 'produto.id', '=', 'estoque_has_produto.produto_id') 
+            ->where('produto.nome', 'like', '%' . $request->valor. '%')->get();
         else
             $query = [];
+       
+        return $query;  
+    }
+
+    public function verificaEstoque(Request $request){
+        $query = [];
+
+        if($request->valor != null){
+            $query = Estoque::where($request->valor,'>','quantidade');
+        }
+        else{
+            $query;
+        }
         return $query;
+    }
+
+    public function gerarpedido(Request $request){
+        
+         $pedido = Pedido::create([
+             'cliente_id' => $request->cliente,
+             'taxa' => '0.00',
+             'desconto' => '0.00',
+             'status_pedido' => 1
+         ]);
+        
+         try{
+            for($i=0; $i < $request->produtos.length ; $i+=3){
+                ItemPedido::create([
+                    'pedido_id' => $pedido->id,
+                    'produto_id' => $request->produtos[i]->id,
+                    'quantidade' => $request->produtos[i+1],
+                    'precoVenda' => $request->produtos[i]->preco,
+                    'precoCusto' => '0.00'
+                    
+                ]);
+            }
+         }catch(\Exception $e){
+             return $e;
+         }
+        return $pedido;
+        
+        
+
+
     }
 }
