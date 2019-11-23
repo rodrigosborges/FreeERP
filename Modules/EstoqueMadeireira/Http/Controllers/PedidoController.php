@@ -124,8 +124,12 @@ class PedidoController extends Controller
     {
 
        
-        $pedido = Pedido::findOrFail($id);      
-        return view('estoquemadeireira::vendas.pedidos.form', $this->template, compact('pedido'));
+        $pedido = DB::table('pedidos')
+        ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
+        ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')
+        ->join('produto', 'produto.id', '=', 'item_pedidos.produto_id')
+        ->where('pedidos.id', '=', $id)->get();
+        return view('estoquemadeireira::vendas.pedidos.edit', $this->template, compact('pedido'));
     }
 
     //Atualiza a Categoria
@@ -176,11 +180,12 @@ class PedidoController extends Controller
     }
 
     public function ficha($id){
-       $pedidos = DB::table('pedidos')
-          ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
-          ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')->get();
-       return $pedidos;
-          return view('estoquemadeireira::vendas.pedidos.ficha', $this->template, compact('pedidos'));
+        $pedido = DB::table('pedidos')
+        ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
+        ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')
+        ->join('produto', 'produto.id', '=', 'item_pedidos.produto_id')
+        ->where('pedidos.id', '=', $id)->get();
+     return view('estoquemadeireira::vendas.pedidos.ficha', $this->template, compact('pedido'));
     }
 
 
