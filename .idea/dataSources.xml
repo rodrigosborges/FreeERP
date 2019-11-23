@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="freeerp.sqlite" uuid="69ad9156-f180-4077-9463-774fd5875404">
-      <driver-ref>sqlite.xerial</driver-ref>
+    <data-source source="LOCAL" name="FreeERP" uuid="081c52ce-734a-438c-bbc1-7e80b6745a04">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/database/freeerp.sqlite</jdbc-url>
-      <driver-properties>
-        <property name="enable_load_extension" value="true" />
-      </driver-properties>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/freeerp</jdbc-url>
     </data-source>
   </component>
 </project>

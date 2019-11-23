@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="">
+    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="Melhoria no js do DataTable">
+      <change afterPath="$PROJECT_DIR$/.idea/php-test-framework.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/css.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/css.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/js.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/js.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/js.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/js.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +21,36 @@
     <execution>
       <executable />
     </execution>
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="FreeERP" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="FreeERP" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="FreeERP" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="freeerp: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+    </expand>
+    <select />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -41,7 +70,7 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.2">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
@@ -143,7 +172,9 @@
   <component name="ProjectId" id="1TGQUYrMFVoeTXwMHCy6IA9gsIK" />
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
@@ -165,11 +196,40 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="PHPUnit.EventoTest">
+    <configuration name="AgendaTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\AgendaTest" file="$PROJECT_DIR$/tests/Unit/AgendaTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="AgendaTest.teste_acessar_agenda_de_outro_usuario" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\AgendaTest" file="$PROJECT_DIR$/tests/Unit/AgendaTest.php" method="teste_acessar_agenda_de_outro_usuario" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="EventoTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\EventoTest" file="$PROJECT_DIR$/tests/Unit/EventoTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="EventoTest.test_acessar_evento_de_outro_usuario" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\EventoTest" file="$PROJECT_DIR$/tests/Unit/EventoTest.php" method="test_acessar_evento_de_outro_usuario" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="EventoTest.test_criar_evento_com_data_final_menor_que_inicial" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\EventoTest" file="$PROJECT_DIR$/tests/Unit/EventoTest.php" method="test_criar_evento_com_data_final_menor_que_inicial" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.EventoTest" />
+        <item itemvalue="PHPUnit.AgendaTest" />
+        <item itemvalue="PHPUnit.EventoTest.test_acessar_evento_de_outro_usuario" />
+        <item itemvalue="PHPUnit.AgendaTest.teste_acessar_agenda_de_outro_usuario" />
+        <item itemvalue="PHPUnit.EventoTest.test_criar_evento_com_data_final_menor_que_inicial" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -186,7 +246,11 @@
       <workItem from="1573498374412" duration="11897000" />
       <workItem from="1573577374314" duration="4000" />
       <workItem from="1573578171689" duration="17079000" />
-      <workItem from="1573758098211" duration="8903000" />
+      <workItem from="1573758098211" duration="10149000" />
+      <workItem from="1574098048102" duration="1982000" />
+      <workItem from="1574183472305" duration="12267000" />
+      <workItem from="1574364717781" duration="12035000" />
+      <workItem from="1574465443853" duration="1598000" />
     </task>
     <task id="LOCAL-00001" summary="Echo substituido pelo pusher-js">
       <created>1573085202447</created>
@@ -272,7 +336,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573765805023</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Melhoria no js do DataTable">
+      <created>1573768070229</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1573768070229</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -305,6 +376,7 @@
     <MESSAGE value="Adição de data da criação na visualização de convites e compartilhamentos" />
     <MESSAGE value="Adicionado jQuery DataTables" />
     <MESSAGE value="Correção nos botões de ações de eventos e agendas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correção nos botões de ações de eventos e agendas" />
+    <MESSAGE value="Melhoria no js do DataTable" />
+    <option name="LAST_COMMIT_MESSAGE" value="Melhoria no js do DataTable" />
   </component>
 </project>
