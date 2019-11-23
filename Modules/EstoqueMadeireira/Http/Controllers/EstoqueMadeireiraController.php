@@ -232,115 +232,109 @@ class EstoqueMadeireiraController extends Controller
     }
 
 
-    //Relatório das movimentações
+   //Relatório das movimentações
+   public function relatorioMovimentacao()
+   {
 
-
-    public function relatorioMovimentacao()
-    {
- 
-        $categorias = Categoria::all();
-        $data = [
-            'dadosEntrada' => "",
-            'dadosSaida' => "",
-            'flag' => "0",
-            'dados' => "", 
-            'labels' => "", 
-            'estoque' => Estoque::all()
-        ];
-        
-        return view('estoquemadeireira::estoque.relatorios.movimentacao', compact('categorias', 'data'));
-    }
-    
-    public function relatorioMovimentacaoBusca(Request $req){
-        if($req->dataInicial > $req->dataFinal){
-            return back()->with('Error', 'Insira um nome para a pesquisa'); 
-        }
-
-        $estoque_id = $req->estoque_id;
-        $ms = [];
-        if ($req->estoque_id == -1){
-            $ms  =  DB::select(
-                    'SELECT distinct substring_index(created_at, " ", 1) as data,
-                    (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtdEntrada,
-                    (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade < 0) as qtdSaida,
-                    (SELECT MAX(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data)  as maiorMovimentacao,
-                    (SELECT MIN(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data) as menorMovimentacao
-                     
-                        FROM movimentacao_estoque as me WHERE substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
-                            order by data asc'
-        );   
+       $categorias = Categoria::all();
+       $data = [
+           'dadosEntrada' => "",
+           'dadosSaida' => "",
+           'flag' => "0",
+           'dados' => "", 
+           'labels' => "", 
+           'estoque' => Estoque::all()
+       ];
        
-        }else{
-            $ms  =  DB::select(
-                    'SELECT distinct substring_index(created_at," ", 1) as data,   
-                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade > 0) as qtdEntrada,
-                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade < 0) as qtdSaida,
-                     (SELECT MAX(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.') as maiorMovimentacao,
-                     (SELECT MIN(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.') as menorMovimentacao
-                     
-                        FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id.' AND
-                        substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
-                            order by data asc'
-               
-                        );
-        
-        }
-        $labels =[];
-        $dadosEntrada =[];
-        $dadosSaida = [];
-        $maiorMovimentacao = [];
-        $menorMovimentacao = [];
-        $totalEntrada = [];
-        $totalSaida = [];
-        $test = "";
-        foreach ($ms as $q){
-            array_push($dadosEntrada, $q->qtdEntrada);  
-            array_push($dadosSaida, $q->qtdSaida * -1);   
-            array_push($totalEntrada, $q->qtdEntrada);  
-            array_push($totalSaida, $q->qtdSaida * -1);       
-            array_push($labels, $q->data);
-            array_push($maiorMovimentacao, $q->data, $q->maiorMovimentacao);
-            array_push($menorMovimentacao, $q->data, $q->menorMovimentacao);
-        }
+       return view('estoquemadeireira::estoque.relatorios.movimentacao', compact('categorias', 'data'));
+   }
+   
+   public function relatorioMovimentacaoBusca(Request $req){
+       if($req->dataInicial > $req->dataFinal){
+           return back()->with('Error', 'Insira um nome para a pesquisa'); 
+       }
+       $estoque_id = $req->estoque_id;
+       $ms = [];
+       if ($req->estoque_id == -1){
+           $ms  =  DB::select(
+                   'SELECT distinct substring_index(created_at, " ", 1) as data,
+                   (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtdEntrada,
+                   (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade < 0) as qtdSaida,
+                   (SELECT MAX(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data)  as maiorMovimentacao,
+                   (SELECT MIN(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data) as menorMovimentacao
+                    
+                       FROM movimentacao_estoque as me WHERE substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
+                           order by data asc'
+       );   
+      
+       }else{
+           $ms  =  DB::select(
+                   'SELECT distinct substring_index(created_at," ", 1) as data,   
+                    (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade > 0) as qtdEntrada,
+                    (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade < 0) as qtdSaida,
+                    (SELECT MAX(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.') as maiorMovimentacao,
+                    (SELECT MIN(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.') as menorMovimentacao
+                    
+                       FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id.' AND
+                       substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
+                           order by data asc'
+              
+                       );
        
-        //Maior e Menor movimentação
-        $maiorMovimentacao = date('d/m/Y',  strtotime($maiorMovimentacao[0])) . ' | '. $maiorMovimentacao[1] . ' itens ';
-        $menorMovimentacao = date('d/m/Y', strtotime($menorMovimentacao[0])) . ' | '. $menorMovimentacao[1] . ' itens ';
-
-
-        //Total de entrada e saida
-        $totalEntrada = $totalEntrada[0];
-        $totalSaida = $totalSaida[0];
-
-        
-        //nome do estoque
-        if($estoque_id == -1){
-            $estoqueSelecionado = "Todo o estoque";
-        }else{
-            $estoque = Estoque::findOrFail($estoque_id);
-            $estoqueSelecionado = $estoque->produtos->last()->nome . ' - ' . $estoque->tipoUnidade->nome; 
-        }
+       }
+       $labels =[];
+       $dadosEntrada =[];
+       $dadosSaida = [];
+       $maiorMovimentacao = [];
+       $menorMovimentacao = [];
+       $totalEntrada = [];
+       $totalSaida = [];
+       $test = "";
+       foreach ($ms as $q){
+           array_push($dadosEntrada, $q->qtdEntrada);  
+           array_push($dadosSaida, $q->qtdSaida * -1);   
+           array_push($totalEntrada, $q->qtdEntrada);  
+           array_push($totalSaida, $q->qtdSaida * -1);       
+           array_push($labels, $q->data);
+           array_push($maiorMovimentacao, $q->data, $q->maiorMovimentacao);
+           array_push($menorMovimentacao, $q->data, $q->menorMovimentacao);
+       }
+      
+       //Maior e Menor movimentação
+       $maiorMovimentacao = date('d/m/Y',  strtotime($maiorMovimentacao[0])) . ' | '. $maiorMovimentacao[1] . ' itens ';
+       $menorMovimentacao = date('d/m/Y', strtotime($menorMovimentacao[0])) . ' | '. $menorMovimentacao[1] . ' itens ';
+       //Total de entrada e saida
+       $totalEntrada = $totalEntrada[0];
+       $totalSaida = $totalSaida[0];
        
+       //nome do estoque
+       if($estoque_id == -1){
+           $estoqueSelecionado = "Todo o estoque";
+       }else{
+           $estoque = Estoque::findOrFail($estoque_id);
+           $estoqueSelecionado = $estoque->produtos->last()->nome . ' - ' . $estoque->tipoUnidade->nome; 
+       }
+      
+       
+       $data = [
+           'estoqueSelecionado' => $estoqueSelecionado,
+           'maiorMovimentacao' =>($maiorMovimentacao),
+           'menorMovimentacao' => ($menorMovimentacao),
+           'totalEntrada' => ($totalEntrada),
+           'totalSaida' => ($totalSaida),
+           'flag' => "1",
+           'labels' => json_encode($labels),
+           'dadosEntrada' => json_encode($dadosEntrada),
+           'dadosSaida' => json_encode($dadosSaida),
+           'estoque' => Estoque::all(),
+           'categorias' => Categoria::all(),
+           'dataInicial' => date('d/m/Y', strtotime($req->dataInicial)),
+           'dataFinal' => date('d/m/Y', strtotime($req->dataFinal))
+       ];
+       
+   return view('estoquemadeireira::estoque.relatorios.movimentacao', compact('data'));
+   }
 
-        
-        $data = [
-            'estoqueSelecionado' => $estoqueSelecionado,
-            'maiorMovimentacao' =>($maiorMovimentacao),
-            'menorMovimentacao' => ($menorMovimentacao),
-            'totalEntrada' => ($totalEntrada),
-            'totalSaida' => ($totalSaida),
-            'flag' => "1",
-            'labels' => json_encode($labels),
-            'dadosEntrada' => json_encode($dadosEntrada),
-            'dadosSaida' => json_encode($dadosSaida),
-            'estoque' => Estoque::all(),
-            'categorias' => Categoria::all(),
-            'dataInicial' => date('d/m/Y', strtotime($req->dataInicial)),
-            'dataFinal' => date('d/m/Y', strtotime($req->dataFinal))
-        ];
-        
-    return view('estoquemadeireira::estoque.relatorios.movimentacao', compact('data'));
-    }
 
 
 }

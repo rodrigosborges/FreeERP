@@ -42,12 +42,13 @@ class PedidoController extends Controller
 
     public function index()
     {
-       $pedidos = Pedido::paginate(10);
-       $itemPedido = itemPedido::all();          
-       $clientes = DB::table('clientes')
-       ->join('pedidos', 'cliente_id', '=', 'pedidos.cliente_id')->get();            
-        
-       return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'itemPedido', 'clientes'));
+      $cliente = Cliente::all();
+      $pedidos = itemPedido::all();
+      $pedidos = DB::table('pedidos')
+        ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
+        ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')->paginate(10);
+
+       return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos'));
     }
 
     //Retorna os inativos, com a opção de reativa-los 
@@ -55,9 +56,13 @@ class PedidoController extends Controller
     
     public function abertos()
     {
-        $itemPedido = itemPedido::all();
-        $pedidos = Pedido::where('status_pedido', 1)->paginate(10);
-        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'itemPedido'));
+        $cliente = Cliente::all();
+        $pedidos = itemPedido::all();
+        $pedidos = DB::table('pedidos')
+          ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
+          ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')->paginate(10);
+        
+         return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos'));
     }
 
 
@@ -171,8 +176,11 @@ class PedidoController extends Controller
     }
 
     public function ficha($id){
-        $pedidos = Pedido::findOrFail($id);
-        return view('estoquemadeireira::vendas.pedidos.ficha', $this->template, compact('pedidos'));
+       $pedidos = DB::table('pedidos')
+          ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
+          ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')->get();
+       return $pedidos;
+          return view('estoquemadeireira::vendas.pedidos.ficha', $this->template, compact('pedidos'));
     }
 
 
@@ -215,31 +223,35 @@ class PedidoController extends Controller
     }
 
     public function gerarpedido(Request $request){
-        
+        DB::beginTransaction();
+
          $pedido = Pedido::create([
              'cliente_id' => $request->cliente,
              'taxa' => '0.00',
              'desconto' => '0.00',
              'status_pedido' => 1
          ]);
-        
+       
          try{
-            for($i=0; $i < $request->produtos.length ; $i+=3){
+            for($i=0; $i < count($request->produtos) ; $i+=3){
                 ItemPedido::create([
-                    'pedido_id' => $pedido->id,
-                    'produto_id' => $request->produtos[i]->id,
-                    'quantidade' => $request->produtos[i+1],
-                    'precoVenda' => $request->produtos[i]->preco,
+                    'pedido_id' => $pedido['id'],
+                    'produto_id' => $request->produtos[$i]['id'],
+                    'quantidade' => $request->produtos[$i]['quantidade'],
+                    'precoVenda' => $request->produtos[$i]['preco'],
                     'precoCusto' => '0.00'
                     
                 ]);
             }
+            DB::commit();
+            return redirect('/estoquemadeireira/vendas/pedidos')->with('success', 'Pedido registrado com sucesso!');
          }catch(\Exception $e){
              return $e;
+             return back()->with('Error', 'Erro no cadastro de pedido');
+
          }
-        return $pedido;
         
-        
+     return redirect('/estoquemadeireira/vendas/pedidos')->with('success', 'Pedido registrado com sucesso!');
 
 
     }
