@@ -64,14 +64,17 @@ $('#modelo').on('change', function() {
       },
       success: function(data) {
   
-        $('#input-questoes').html('')
-  
         data.forEach(element => {
           salvarQuestao(element.id, element.enunciado)
         })
       }
     })
   }
+})
+
+$('#limpar').on('click', function(e) {
+  e.preventDefault()
+  $('#input-questoes').html('')
 })
 
 function populateCard(data) {

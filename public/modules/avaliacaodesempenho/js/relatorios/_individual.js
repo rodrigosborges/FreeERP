@@ -4,7 +4,6 @@ $(document).ready(function() {
 
         const _token = $('#token').val()
         var processo_id = $(this).val()
-        console.log(processo_id)
 
         if (processo_id !== '') {
 
@@ -16,7 +15,6 @@ $(document).ready(function() {
                     id: processo_id
                 },
                 success: function (data) {
-                    console.log(data)
                     $('#_avaliacao').html('')
                     $('#_avaliacao').attr('disabled', false)
                     $('#submit-btn').attr('disabled', false)

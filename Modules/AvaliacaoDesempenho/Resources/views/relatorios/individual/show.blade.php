@@ -10,6 +10,8 @@
     
     <div class="card-header result-resume">
 
+        <?php $notafinal = number_format((float)($data['pontuacao']/(count($data['questoes'])*5))*100, 1, '.', '') ?>
+
         <div>
             <p><b>Avaliação: </b>{{ $data['avaliacao']->nome }}</p>
             <p><b>Avaliador: </b>{{ $data['resultado']->avaliador->funcionario->nome }}</p>
@@ -19,7 +21,8 @@
 
         <div>
             <p><b>Numero de Categorias: </b>{{ count($data['categorias']) }}</p>
-            <p><b>Pontuação Total: </b>{{ number_format((float)($data['pontuacao']/(count($data['questoes'])*5))*100, 1, '.', '') }}/100</p>
+            <p><b>Pontuação Total: </b>{{ $notafinal }}/100</p>
+                    
             <b>Pontuação por Categoria: </b>
             @foreach ($data['pontuacaoCategoria'] as $key => $categoria)
                 @foreach ($data['categorias'] as $aux)
@@ -33,7 +36,27 @@
     </div>
 
     <div class="card-body">
-        <h3>Questões</h3>
+
+        <div class='card-body-header'>
+            
+            <h3>Questões</h3>
+
+            <h5>
+                <b>Resultado:</b>
+                @if ($notafinal <= 20)
+                    Insatisfatório
+                @elseif ($notafinal <= 40)
+                    Satisfatório
+                @elseif ($notafinal <= 60)
+                    Bom
+                @elseif ($notafinal <= 80)
+                    Ótimo
+                @else
+                    Excelente
+                @endif
+            </h5>
+
+        </div>
 
         @foreach ($data['questoes'] as $questao)
     

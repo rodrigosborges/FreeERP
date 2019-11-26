@@ -4,10 +4,6 @@
     justify-content: space-between;
 }
 
-.card-body h3 {
-    text-align: center;
-}
-
 .opt-list {
     display: flex;
     justify-content: space-between;
@@ -21,4 +17,10 @@
 
 .question {
     display: flex;
+}
+
+.card-body-header {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
 }

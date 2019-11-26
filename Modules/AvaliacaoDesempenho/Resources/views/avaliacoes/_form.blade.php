@@ -190,7 +190,7 @@
 
                     <div class="form-row">
 
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-11">
 
                             <label>Modelo</label>
 
@@ -213,6 +213,11 @@
 
                             <span class="errors"> {{ $errors->first('avaliacao.modelo_id') }} </span>
 
+                        </div>
+                        
+                        <div class="form-group col-md-1">
+                            <label></label>
+                            <button class="form-control btn btn-danger" type='button' id='limpar'>Limpar</button>
                         </div>
 
                     </div>
