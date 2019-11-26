@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Modules\estoque\Entities\{Categoria, Subcategoria};
 use Modules\estoque\Http\Requests\CategoriaRequest;
 use DB;
+use Gate;
 
 class CategoriaController extends Controller
 {
@@ -64,23 +65,27 @@ class CategoriaController extends Controller
      */
     public function store(CategoriaRequest $request)
     {
-        DB::beginTransaction();
-        try {
-            $nome =  DB::table('categoria')->select('*')->where('nome','=' , $request->nome)->count();
-            $categoria =  Categoria::create($request->all());
-            $subcategoria = new Subcategoria();
-            $subcategoria->id = $categoria->id;
-            $subcategoria->categoria_id = ($request->categoriaPai != -1) ? $request->categoriaPai : null;
-            if ($nome == 0) {
-                $subcategoria->save();
-            } else {
-                return back()->with('warning', 'O nome selecionado já está cadastrado');
-            }
-            DB::commit();
-            return redirect('/estoque/produto/categoria')->with('success', 'Categoria ' . $request->nome . ' cadastrada com sucesso');
-        } catch (\Exception $e) {
-            DB::rollback();
-            return back()->with('danger', 'Erro ao cadastrar categoria. cod:' . $e->getMessage());
+        if (Gate::allows('operator',Auth::user())) {    
+            DB::beginTransaction();
+            try {
+                $nome =  DB::table('categoria')->select('*')->where('nome','=' , $request->nome)->count();
+                $categoria =  Categoria::create($request->all());
+                $subcategoria = new Subcategoria();
+                $subcategoria->id = $categoria->id;
+                $subcategoria->categoria_id = ($request->categoriaPai != -1) ? $request->categoriaPai : null;
+                if ($nome == 0) {
+                    $subcategoria->save();
+                } else {
+                    return back()->with('warning', 'O nome selecionado já está cadastrado');
+                }
+                DB::commit();
+                return redirect('/estoque/produto/categoria')->with('success', 'Categoria ' . $request->nome . ' cadastrada com sucesso');
+            } catch (\Exception $e) {
+                DB::rollback();
+                return back()->with('danger', 'Erro ao cadastrar categoria. cod:' . $e->getMessage());
+            } 
+        } else {         
+            return redirect()->back()->with('error','Você não possui permissão para acessar a página!');
         }
     }
 
