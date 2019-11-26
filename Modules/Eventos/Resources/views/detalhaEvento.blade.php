@@ -79,10 +79,11 @@
                             {{$atividade->local}}
                         </p>
                         <h4 data-toggle="modal" data-target="#modalAtividade-{{$atividade->id}}" style="cursor: pointer;">{{$atividade->nome}}</h4>
-                        <p style="margin-bottom: 0px;">{{$atividade->vagas}} vagas ({{$atividade->vagas - count($atividade->participantes)}}  restantes)</p>
+                        <p style="margin-bottom: 0px;">{{$atividade->vagas}} vagas ({{$atividade->vagas - $atividade->participantes()->where('deleted_at', '=', null)->count()}}  restantes)</p>
                     </div>
                     <div class="col-flex" style="display: flex; align-items: center; justify-content: center;">
-                        @if(!$atividade->participantes()->where('pessoa_id', auth()->id())->first())
+                        
+                        @if(!$atividade->participantes()->where('pessoa_id', auth()->id())->first() || $atividade->participantes()->where('pessoa_id', auth()->id())->where('deleted_at', '=', null)->get()->isEmpty())
                             @if($atividade->vagas - count($atividade->participantes) > 0)
                                 <a class="btn btn-success" href="{{route('eventos.inscricao', $atividade->id)}}">Inscreva-se</a>
                             @endif

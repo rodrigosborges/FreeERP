@@ -14,6 +14,14 @@
                 border-collapse: collapse;
             }
             
+            tr:not(.cabecalho){
+                height: 50px;
+            }
+            
+            td{
+                padding: 0px 5px;
+            }
+            
             button{
                 float: right;
             }
@@ -23,16 +31,16 @@
         <button class="imprimir"><i class="material-icons">print</i></button>
         <h1>{{$programacao->evento->nome}}</h1>
         <h2>{{$programacao->nome}} - {{\Carbon\Carbon::parse($programacao->data)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($programacao->horario)->format('H:i')}}</h2>
-        <table id="pessoas" class="table table-striped">
+        <table>
             <thead>
-                <tr>
+                <tr class="cabecalho">
                     <th class="text-center">Nome</th>
                     <th class="text-center">E-mail</th>
                     <th class="text-center" style="min-width: 180px;">Assinatura</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($programacao->participantes as $pessoa)
+                @foreach($programacao->participantes->sortBy('nome') as $pessoa)
                     <tr>
                         <td class="text-center align-middle">{{$pessoa->nome}}</td>
                         <td class="text-center align-middle">{{$pessoa->email}}</td>

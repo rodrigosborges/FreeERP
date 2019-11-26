@@ -14,7 +14,7 @@ class AddForeignKeysToEventoTable extends Migration
     public function up()
     {
         Schema::table('evento', function (Blueprint $table) {
-            $table->integer('cidade_id')->unsigned()->default('');
+            $table->unsignedInteger('cidade_id');
             $table->foreign('cidade_id')->references('id')->on('cidade')->onDelete('CASCADE');
         });
     }

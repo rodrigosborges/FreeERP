@@ -40,7 +40,7 @@ class ResetPassword extends Notification
     {
         return (new MailMessage)
             ->subject('Recuperação de senha')
-            ->line('Você recebeu esse e-mail para redefinir sua senha de acesso ao Free ERP.')
+            ->line('Você recebeu esse e-mail para redefinir sua senha de acesso ao ERPedu.')
             ->action('Redefinir senha', url(config('app.url').route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
             ->line('Se você não solicitou a recuperação de senha, nenhuma ação é necessária.');
     }

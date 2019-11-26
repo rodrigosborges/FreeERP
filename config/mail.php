@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'eventos.freeerp@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Eventos - Free ERP'),
+        'name' => env('MAIL_FROM_NAME', 'Eventos - ERPedu'),
     ],
 
     /*

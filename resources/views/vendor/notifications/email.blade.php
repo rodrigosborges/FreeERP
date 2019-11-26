@@ -44,7 +44,7 @@
 {{ $salutation }}
 @else
 @lang('Atenciosamente'),<br>
-@lang('Free ERP')
+@lang('ERPedu')
 @endif
 
 {{-- Subcopy --}}

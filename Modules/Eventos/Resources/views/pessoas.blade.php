@@ -57,7 +57,7 @@
         
             <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12" align="right">
                 @if(!$evento->certificado)
-                    <button class="btn btn-success imprimir">Imprimir lista</button>
+                    <button class="btn btn-success imprimir">Imprimir lista de inscritos</button>
                     <button class="btn btn-primary btnGerar" data-toggle="modal" data-target="#modal">Gerar certificados</button>
                 @else
                     <button class="btn btn-success btnGerado" disabled>Certificados gerados</button>

@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="info">
-                        <a class="text-dark" href="{{route('eventos.detalhar', $evento->id)}}"><h2>{{$evento->nome}}</h2></a>
+                        <a class="text-dark" href="{{route('eventos.detalhar', $evento->id)}}"><h2>{{$evento->nome}} @if(isset($evento->programacao)) @if($evento->vagas()) <span style="color: red;">(VAGAS ESGOTADAS)</span> @endif @endif</h2></a>
                         <p>{{\Carbon\Carbon::parse($evento->dataInicio)->format('d/m/Y')}} - {{$evento->cidade->nomeCidade}}/{{$evento->cidade->estado->uf}}</p>
                     </div>
                 </div>

@@ -14,9 +14,9 @@ class AddForeignKeysToProgramacaoTable extends Migration
     public function up()
     {
         Schema::table('programacao', function (Blueprint $table) {
-            $table->integer('evento_id')->unsigned()->default('');
+            $table->unsignedInteger('evento_id');
             $table->foreign('evento_id')->references('id')->on('evento')->onDelete('CASCADE');
-            $table->integer('palestrante_id')->unsigned()->default('');
+            $table->unsignedInteger('palestrante_id');
             $table->foreign('palestrante_id')->references('id')->on('palestrante')->onDelete('CASCADE');
         });
     }

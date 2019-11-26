@@ -35,8 +35,7 @@ class EventosController extends Controller
     //EXIBE AS VIEWS
     public function index(){
         $data = new Carbon();
-        $data->format('Y-m-d');
-        $eventos = Evento::orderBy('dataInicio', 'ASC')->where('dataFim', '>=', $data)->get();
+        $eventos = Evento::orderBy('dataInicio', 'ASC')->where('dataFim', '>=', $data->format('Y-m-d'))->get();
         $estados = Estado::all();
         return view('eventos::index', ['eventos' => $eventos,'estados' => $estados]);
     }
@@ -166,10 +165,10 @@ class EventosController extends Controller
     //INSCRIÇÃO EM ATIVIDADE
     public function inscricao(Programacao $programacao)
     {    
-        if ($programacao->participantes()->where('pessoa_id', Auth::id())->first()) {
-            $programacao->participantes()->detach(Auth::id());
+        if ($programacao->participantes()->where('pessoa_id', Auth::id())->first() && !$programacao->participantes()->where('pessoa_id', Auth::id())->where('deleted_at', '=', null)->get()->isEmpty()) {
+            $programacao->participantes()->where('pessoa_id', Auth::id())->updateExistingPivot(Auth::id(), ['deleted_at' => Carbon::now()]);
         } else {
-            $programacao->participantes()->attach(Auth::id());
+            $programacao->participantes()->sync([Auth::id(), ['deleted_at' => null]]);
         }
 
         return redirect()->route('eventos.detalhar', ['evento' => $programacao->evento]);
@@ -216,7 +215,7 @@ class EventosController extends Controller
             }
         }
         
-        $pessoas = $pessoas->unique();
+        $pessoas = $pessoas->unique('id');
         
         foreach($pessoas as $participante){
             if($participante->faltou != 1){

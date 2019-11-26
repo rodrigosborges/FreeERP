@@ -42,6 +42,21 @@ class Evento extends Model
     public function certificado(){
         return $this->hasOne(Certificado::class);
     }
+    
+    //RETORNA TRUE SE NÃO TIVER MAIS VAGAS DISPONÍVEIS
+    public function vagas()
+    {
+        $programacao = $this->programacao()->get();
+        $vagas = [];
+        foreach($programacao as $atividade){
+            $vagas[] = $atividade->vagas - count($atividade->participantes);
+        }
+        if(count(array_unique($vagas)) == 1 && array_unique($vagas)[0] == 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 

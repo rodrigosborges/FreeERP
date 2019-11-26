@@ -15,9 +15,6 @@ class DatabaseSeeder extends Seeder
             EstadoSeeder::class,
             CidadeSeeder::class,
             NivelSeeder::class,
-            EventoSeeder::class,
-            PalestranteSeeder::class,
-            ProgramacaoSeeder::class,
         ]);
     }
 }

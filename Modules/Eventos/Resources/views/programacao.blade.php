@@ -48,6 +48,7 @@
                     <th class="text-center">Duração</th>
                     <th class="text-center">Vagas</th>
                     <th class="text-center">Inscritos</th>
+                    <th class="text-center">Inscrições canceladas</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
@@ -66,7 +67,8 @@
                             {{\Carbon\Carbon::parse($atividade->duracao)->format('H:i')}}
                         </td>
                         <td class="text-center align-middle">{{$atividade->vagas}}</td>
-                        <td class="text-center align-middle">{{count($atividade->participantes)}}</td>
+                        <td class="text-center align-middle">{{$atividade->participantes()->where('deleted_at', '=', null)->count()}}</td>
+                        <td class="text-center align-middle">{{$atividade->participantes()->where('deleted_at', '!=', null)->count()}}</td>
                         <td class="text-center align-middle" style="white-space: nowrap;">
                             <button class="btn btn-xs" title="Visualizar / Editar" data-toggle="modal" data-target="#modalAtividade" onclick="visualizar('{{$atividade->id}}')"><i class="material-icons">search</i></button>
                             <button class="btn btn-xs" title="Excluir" data-toggle="modal" data-target="#modalExcluirAtividade" onclick="excluir('{{$evento->id}}', '{{$atividade->id}}', '{{$atividade->nome}}')"><i class="material-icons">delete</i></button>
