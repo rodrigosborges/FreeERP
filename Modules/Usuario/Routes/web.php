@@ -17,7 +17,6 @@ Route::get('/esqueciSenha', 'auth\ForgotPasswordController@esqueceu');
 Route::post('/esqueciSenha', 'auth\ForgotPasswordController@recuperarSenha');
 Route::get('/recuperarSenha', 'auth\ForgotPasswordController@resetarSenha');
 Route::put('/recuperarSenha', 'auth\ForgotPasswordController@trocarSenhaUpdate');
-Route::get('/inicio', 'InicioController@listarModulos')->middleware('auth');;
 
 Route::prefix('usuario')->group(function() {
     //Trocar Senha
@@ -41,8 +40,6 @@ Route::prefix('usuario')->group(function() {
 
 // Módulo
 Route::prefix('modulo')->group(function() {
-    //Listar papeis
-    Route::get('/list-papeis/{idModulo}', 'ModuloController@listPapeis');
     // Cadastrar
     Route::get('/cadastrar', 'ModuloController@create');
     Route::post('/', 'ModuloController@store');

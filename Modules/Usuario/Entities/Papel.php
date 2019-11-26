@@ -13,7 +13,4 @@ class Papel extends Model
     protected $table = 'papel';
     protected $fillable = ['nome'];
 
-    public function modulo(){
-        return $this->belongsToMany('Modules\Usuario\Entities\Modulo','papel_has_modulo');
-    }
 }

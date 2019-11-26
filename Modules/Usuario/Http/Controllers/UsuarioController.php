@@ -41,18 +41,18 @@ class UsuarioController extends Controller
 
     public function create()
     {
-        // if (Gate::allows('administrador',Auth::user())|| Gate::allows('operador',Auth::user())) {
+        if (Gate::allows('administrador',Auth::user())|| Gate::allows('operador',Auth::user())) {
             $papeis = Papel::all();
             $modulos = Modulo::all();
             return view('usuario::usuario.form',compact('papeis','modulos'));
-        // }         
+        }         
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     
     }
 
     public function store(UsuarioStoreRequest $request)
-    {   
-        // if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
+    {
+        if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
             DB::beginTransaction();
             try{
                 $avatar = $request->file('avatar');
@@ -79,16 +79,14 @@ class UsuarioController extends Controller
                     'password' => Hash::make($request->password)
                 ]);
         
-                $usuario->modulos()->attach($request['modulo']);
                 DB::commit();
         
                 return back()->with('success', 'Usuário cadastrado com sucesso');
             }catch(\Exception $e){
                 DB::rollback();
-                dd($e);
                 return back()->with('error', 'Erro no servidor');
         }
-    // }
+    }
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
 
     }
@@ -101,47 +99,34 @@ class UsuarioController extends Controller
 
     public function edit($id)
     {
-        //if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
+        if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
             $usuario = Usuario::findOrFail($id);
             $papeis = Papel::all();
-            $modulos = Modulo::all();
 
-            return view('usuario::usuario.form', compact('usuario','papeis','modulos'));
-        //}
+            return view('usuario::usuario.form', compact('usuario','papeis'));
+        }
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     }
 
     public function update(UsuarioUpdateRequest $request, $id)
-    {
-        
-        //if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
-
+    {   
+        if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
             DB::beginTransaction();
             try{
                 //atualizando dados básicos
                 $usuario = Usuario::findOrFail($id);
-
-                // $usuario->modulos()->delete();
-                // DB::commit();
-
                 $usuario->update([
                     'apelido' => $request->apelido,
                     'email' => $request->email,
                 ]);
-
-                $usuario->modulos()->detach();
                 
-                $usuario->modulos()->attach($request['modulo']);
-
                 //pegando a imagem 
                 $avatar = $request->file('avatar');
 
                 if($avatar && $avatar->isValid()){
                     $name = uniqid(date('HisYmd'));
                     $extension = $request->avatar->extension();
-
                     $nameFile = "{$name}.{$extension}";
-
                     $upload = $request->avatar->storeAs('img/avatars',$nameFile);
                 
                     if(!$upload){
@@ -159,35 +144,34 @@ class UsuarioController extends Controller
                 DB::commit();
             }catch(\Exception $e){
                 DB::rollback();
-                dd($e);
                 return back()->with('error', 'Erro no servidor');
             }
 
             return redirect('/usuario');
-        //}
+        }
             
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     }
 
     public function destroy($id)
     {
-        //if (Gate::allows('administrador',Auth::user())) {
+        if (Gate::allows('administrador',Auth::user())) {
             if(Auth::user()->id == $id){
                 return redirect()->back()->with("error","Impossível deletar sua conta logada");
             }
             $usuario = Usuario::findOrFail($id);
             $usuario->delete();
             return back();
-        //}            
+        }            
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     }
 
     public function restore($id){    
-        //if (Gate::allows('administrador',Auth::user())) {       
+        if (Gate::allows('administrador',Auth::user())) {       
             $usuario = Usuario::onlyTrashed()->findOrFail($id);
             $usuario->restore();
             return back();
-        //}
+        }
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     }
 
@@ -200,9 +184,9 @@ class UsuarioController extends Controller
     }
     public function trocarSenha($id){
         $usuario = Usuario::findOrFail($id);
-        //if (Gate::allows('administrador',Auth::user() ) && ($usuario->papel->nome != "Administrador" || $usuario == Auth::user())) {    
+        if (Gate::allows('administrador',Auth::user() ) && ($usuario->papel->nome != "Administrador" || $usuario == Auth::user())) {    
             return view('usuario::usuario.trocarSenha',compact('usuario'));
-        //}
+        }
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     }
 
