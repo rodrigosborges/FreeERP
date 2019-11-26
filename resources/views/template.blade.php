@@ -74,14 +74,15 @@
                     <i class="material-icons mr-2">{{$moduleInfo['icon']}}</i>
                     <h1>{{$moduleInfo['name']}}</h1>
                 </div>
+                <nav class="nav flex-column">
+                    @foreach ($menu as $item)
+                        <a class="nav-link d-flex align-items-center" href="{{$item['route']}}">
+                            <i class="material-icons mr-2">{{$item['icon']}}</i>
+                            <span> {{$item['tool']}} </span>
+                        </a>
+                    @endforeach
+                </nav>
             </div>
-            <div id="content">
-                @if(Session::get('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{Session::get("success")}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
             <div class="d-flex flex-column" id="workspace">
                 <div class="shadow-sm d-flex align-items-center justify-content-between" id="header">
                     <div class="d-flex align-items-center">
@@ -94,27 +95,36 @@
                         <img src="{{url('storage/img/avatars/'.Auth::user()->avatar)}}" width='35px' height="35px" class='rounded-circle' style="overflow: hidden;" alt="">                        
                     </div>
                 </div>
-                @endif
-                @if(Session::get('warning'))
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{Session::get('warning')}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div id="content">
+                    @if(Session::get('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{Session::get("success")}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                    @if(Session::get('warning'))
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{Session::get('warning')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                    @if(Session::get('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{Session::get('error')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                    @yield('content')
                 </div>
-                @endif
-                @if(Session::get('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{Session::get('error')}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="d-flex align-items-center" id="footer">
+                    Desenvolvido por IFSP Caraguatatuba &copy
                 </div>
-                @endif
-                @yield('content')
-            </div>
-            <div class="d-flex align-items-center" id="footer">
-                Desenvolvido por IFSP Caraguatatuba &copy
             </div>
         </div>
         <!-- Bootstrap JS -->
@@ -131,11 +141,9 @@
                 var sidebar = document.getElementById('sidebar');
                 var workspace = document.getElementById('workspace');
                 var header = document.getElementById('header');
-
                 var displaySidebar = sidebar.style.display === "none" ? "block" : "none";
                 var marginLeftWorkspace = workspace.style.marginLeft === "0px" ? "210px" : "0px";
                 var widthHeader = header.style.width === "100%" ? "calc(100% - 210px)" : "100%";
-
                 sidebar.style.display = displaySidebar;
                 workspace.style.marginLeft = marginLeftWorkspace;
                 header.style.width = widthHeader;
