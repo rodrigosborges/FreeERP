@@ -9,7 +9,7 @@
     ];
 ?>
 
-@extends('template')
+@extends('clientesTemplate')
 
 @section('css')
     {{-- <link rel="stylesheet" type="text/css" href="{{Module::asset('cliente:css/style.css')}}"> --}}
