@@ -28,7 +28,7 @@ class PainelTecnicoController extends Controller
 
     public function ordensDisponiveis()
     {
-        $idStatusConcluida = Status::all()->where('titulo','Concluída')->first()->id;
+        $idStatusConcluida = Status::all()->where('titulo','Serviço executado')->first()->id;
         $idStatusInutilizado = Status::all()->where('titulo','Marcado como Inutilizável')->first()->id;
 
         $data = [
@@ -46,7 +46,7 @@ class PainelTecnicoController extends Controller
 
     public function ordensAtivas()
     {
-        $idStatusConcluida = Status::all()->where('titulo', 'Concluída')->first()->id;
+        $idStatusConcluida = Status::all()->where('titulo', 'Serviço executado')->first()->id;
         $idStatusInutilizado = Status::all()->where('titulo', 'Marcado como Inutilizável')->first()->id;
         $data = [
             'title' => 'Minhas Ordens de Serviços',

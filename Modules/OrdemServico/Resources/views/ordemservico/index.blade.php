@@ -23,7 +23,7 @@
     }
 
     .cards-dashboard .card {
-        height: 24vh;
+        min-height: 30vh;
     }
 
     .card-dashboard-icon {
@@ -68,23 +68,12 @@
                 <div class='float-right'>
                     <i class="card-dashboard-icon material-icons">devices</i>
                 </div>
-                <h5>Equipamentos Inutilizados</h5>
-                <div class="btn-group">
-                    <button class="btn btn-info  btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Mês
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">{{$data['inutilizadosMes']->count()}}</a>
-                    </div>
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Ano
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">{{$data['inutilizadosAno']->count()}}</a>
-                    </div>
-                </div>
+                <h5>Quantidade por prioridade</h5>
+                <span>Alta : {{$data['model']->where('prioridade','1')->count()}} </span>
+                <br>
+                <span>Média : {{$data['model']->where('prioridade','2')->count()}} </span>
+                <br>
+                <span>Baixa : {{$data['model']->where('prioridade','3')->count()}} </span>
             </div>
         </div>
     </div>
@@ -97,10 +86,19 @@
                     <i class="card-dashboard-icon material-icons">list_alt</i>
                 </div>
                 <h5>Principais Problemas</h5>
-                @foreach($data['principaisFalhas'] as $falhas)
-                    {{$falhas->titulo}}
-                    <br>
-                @endforeach
+                <div class="dropdown show">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMarcas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Marcas
+                    </a>
+                    <div class="float-right dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        @foreach($data['marcas'] as $marca)
+                        <a class="dropdown-item" href="#">{{$marca[0]->marca}}</a>
+                        @endforeach
+                    </div>
+
+                    <div id='titulos'>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -116,42 +114,80 @@
 <button type="button" class="btn btn-outline-info btn-sm status-button">
     Atualizar Status
 </button>
+<button type="button" class="btn btn-outline-info btn-sm definir-tecnico-button">
+    Definir técnico
+</button>
 @endsection
 
 @section('modal')
 @include('ordemservico::ordemservico.modais.status.form')
 @include('ordemservico::ordemservico.modais.prioridade.form')
+@include('ordemservico::ordemservico.modais.definir-tecnico.form')
 @endsection
 
 @section('js-add')
 <script>
     $(document).ready(function() {
-        $(".status-button").click(function() {
 
-            var linha = $(this).parent().parent();
+        $('.dropdown-item').click(function() {
+            $('#titulos').children().remove();
+            $('#titulos').append('<span>buscando...</span>');
+                
+            $.get("/ordemservico/os/" + $(this).text() + "/problemasMarca", function(data) {
+                }).done(function(data){
+                    var problemas = (data);
+                        $('#titulos').children().remove();
+                        for (var i = 0; i < problemas.length; i++) {
+                            $('#titulos').append('<span>' + problemas[i].titulo + "</span>");
+                            $('#titulos').append('<br>');
+                        }
 
-            var idOS = linha.find("td:eq(0)").text().trim();
+                })
+        })
 
-            $.get("/ordemservico/os/status/" + idOS + "/showStatusOS", function(data) {
-                $('select').val(data);
-            });
+    $(".status-button").click(function() {
 
-            $("#form").attr("action", '/ordemservico/os/status/' + idOS + '/updateStatus');
+        var linha = $(this).parent().parent();
 
-            $('#atualizar-status').modal('show');
+        var idOS = linha.find("td:eq(0)").text().trim();
 
+        $.get("/ordemservico/os/status/" + idOS + "/showStatusOS", function(data) {
+            $('select').val(data);
         });
 
-        $(".prioridade-button").click(function() {
-            var linha = $(this).parent().parent();
-            var id = linha.find("td:eq(0)").text().trim();
-            var prioridade = linha.find("td:eq(3)").text().trim();
-            $("#form-prioridade").attr("action", '/ordemservico/prioridade/' + id + "/update");
-            $("#campo").remove();
-            $('#prioridade').append("<select id='campo' required name='prioridade' class='custom-select mr-sm-2'><option value='3'> Baixa </option><option value='2'> Média </option><option value='1'> Alta </option></select>");
-            $("#campo").val( $('option:contains('+prioridade+')').val() );
-            $('#definir-prioridade').modal('show');
+        $("#form").attr("action", '/ordemservico/os/status/' + idOS + '/updateStatus');
+
+        $('#atualizar-status').modal('show');
+
+    });
+
+    $(".definir-tecnico-button").click(function() {
+
+        var linha = $(this).parent().parent();
+
+        var idOS = linha.find("td:eq(0)").text().trim();
+
+        $.get("/ordemservico/os/" + idOS + "/showOS", function(data) {
+            console.log(data);
+            $('select').val(data.tecnico_id);
         });
+
+        $("#form-tecnico").attr("action", '/ordemservico/os/' + idOS + '/atribuirTecnico');
+
+        $('#definir-tecnico').modal('show');
+
+    });
+
+    $(".prioridade-button").click(function() {
+        var linha = $(this).parent().parent();
+        var id = linha.find("td:eq(0)").text().trim();
+        var prioridade = linha.find("td:eq(3)").text().trim();
+        $("#form-prioridade").attr("action", '/ordemservico/prioridade/' + id + "/update");
+        $("#campo").remove();
+        $('#prioridade').append("<select id='campo' required name='prioridade' class='custom-select mr-sm-2'><option value='3'> Baixa </option><option value='2'> Média </option><option value='1'> Alta </option></select>");
+        $("#campo").val($('option:contains(' + prioridade + ')').val());
+        $('#definir-prioridade').modal('show');
+    });
 
     });
 </script>

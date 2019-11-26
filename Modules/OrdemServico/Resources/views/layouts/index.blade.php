@@ -69,6 +69,7 @@
 <script>
     $(document).ready(function() {
         $('#datatable').DataTable({
+            "order": [[ 2, "asc" ]],
             "pageLength": 5,
             "lengthChange": false,
             'info': false,

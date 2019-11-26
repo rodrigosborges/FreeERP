@@ -6,6 +6,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
+use Modules\Usuario\Entities\Usuario;
 use Modules\OrdemServico\Entities\{
     Solicitante,
     Endereco,
@@ -15,7 +16,6 @@ use Modules\OrdemServico\Entities\{
     Cidade,
     Problema,
     Status,
-    Telefone
 };
 use DB;
 use Illuminate\Support\Facades\Mail;
@@ -28,16 +28,19 @@ class OrdemServicoController extends Controller
     {
 
         if (Gate::allows('administrador', Auth::user())) {
-            $idStatusConcluida = Status::all()->where('titulo', 'Concluída')->first()->id;
+            $idStatusConcluida = Status::all()->where('titulo', 'Serviço executado')->first()->id;
             $idStatusInutilizado = Status::all()->where('titulo', 'Marcado como Inutilizável')->first()->id;
             $idStatusCancelada = Status::all()->where('titulo', 'Cancelada')->first()->id;
 
             $ordensConcluidas = DB::table('ordem_servico')->where('status_id', $idStatusConcluida);
             $data = [
                 'title' => 'Administração de Ordem de Servico em Andamento',
-                'model' => OrdemServico::all()->where('status_id', '<>', $idStatusConcluida)->where('status_id', '<>', $idStatusInutilizado)->where('status_id', '<>', $idStatusCancelada),
-                'thead' => ['Protocolo', 'Solicitante', 'Status', 'Prioridade'],
-                'row_db' => ['protocolo', 'solicitante_id', 'status_id', 'prioridade'],
+                'model' => OrdemServico::all()->where('status_id', '<>', $idStatusConcluida)
+                ->where('status_id', '<>', $idStatusInutilizado)
+                ->where('status_id', '<>', $idStatusCancelada),
+                'marcas' => Aparelho::all()->groupBy('marca'),
+                'thead' => ['Protocolo','Acompanhamento','Data Abertura','Data ult. modificação','Solicitante', 'Status', 'Prioridade'],
+                'row_db' => ['protocolo','numero_acompanhamento','created_at','updated_at','solicitante_id', 'status_id', 'prioridade'],
                 'create' => true,
                 'principaisFalhas' => DB::table('ordem_servico')
                     ->join('problema', 'problema.id', '=', 'ordem_servico.problema_id')
@@ -46,16 +49,15 @@ class OrdemServicoController extends Controller
                     ->orderBy('total', 'desc')
                     ->groupBy('problema.titulo')
                     ->get(),
-                'inutilizadosAno' => DB::table('aparelho')->where('inutilizacao', true)->whereYear('updated_at', date('Y')),
-                'inutilizadosMes' => DB::table('aparelho')->where('inutilizacao', true)->whereMonth('updated_at', date('m'))->whereYear('updated_at', date('Y')),
                 'tempoMedio' => (DB::select("select avg(timediff(updated_at,created_at)) as media from ordem_servico where status_id =" . $idStatusConcluida)),
                 'ordensConcluidas' => $ordensConcluidas->whereMonth('updated_at', date('m'))->count(),
                 'status' => Status::where('titulo','<>','Encaminhada para o Técnico')->pluck('titulo', 'id'),
+                'tecnicos' => Usuario::where('papel_id',2)->pluck('apelido','id'),
                 'route' => 'modulo.os.',
                 'acoes' => [
                     ['nome' => 'Editar', 'class' => 'btn btn-outline-info btn-sm', 'complemento-route' => 'edit'],
                     ['nome' => 'Detalhes', 'class' => 'btn btn-outline-warning btn-sm', 'complemento-route' => 'show'],
-                    ['nome' => 'PDF', 'class' => 'btn btn-outline-dark btn-sm', 'complemento-route' => 'pdf']
+                    ['nome' => 'PDF', 'class' => 'btn btn-outline-dark btn-sm', 'complemento-route' => 'pdf'],
                 ]
             ];
             return view('ordemservico::ordemservico.index', compact('data'));
@@ -102,7 +104,7 @@ class OrdemServicoController extends Controller
 
             $solicitante->telefones()->createMany($request->telefone);
 
-
+            $lastOS = OrdemServico::all()->count() > 0 ? OrdemServico::all()->last()->id : 0;
             $ordem_servico = OrdemServico::create(
                 [
                     'solicitante_id' => $solicitante->id,
@@ -111,6 +113,7 @@ class OrdemServicoController extends Controller
                     'descricao' => $request->descricao,
                     'gerente_id' => Auth::user()->id,
                     'protocolo' => uniqid(),
+                    'numero_acompanhamento' => 'OS' . ( $lastOS + 1)  . date('m') . '/' . date('Y'), 
                 ]
             );
 
@@ -121,8 +124,7 @@ class OrdemServicoController extends Controller
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
         }
-    }
-
+    }    
     public function show($id)
     {
         $data = [
@@ -238,6 +240,13 @@ class OrdemServicoController extends Controller
         return redirect()->back()->with('error', 'Você não possui permissão para acessar a pagina!');
     }
 
+    
+    public function showOS($id)
+    {
+        $dados = OrdemServico::all()->where('protocolo', $id)->first();   
+        return response()->json($dados);
+    }
+
     public function showAparelho(Request $request)
     {
         $dados = Aparelho::where('numero_serie', $request->numero_serie)->firstOrFail();
@@ -249,4 +258,33 @@ class OrdemServicoController extends Controller
         $dados = Problema::all();
         return response()->json($dados);
     }
+
+    public function problemasMarca($marca){
+        $ordens = OrdemServico::all();
+
+        foreach($ordens as $ordem){
+            if($ordem->aparelho->marca == $marca){
+                $problema[] = ['id'=>$ordem->problema->id , 'titulo' => $ordem->problema->titulo];
+            }
+        }  
+
+        $problemaMarca = collect($problema)->groupBy('id');
+
+        foreach($problemaMarca as $problema){
+            $countProblema[] = ['titulo' => $problema->get(0)['titulo'] , 'count' => $problema->count()];
+        }
+
+        return collect($countProblema)->sortByDesc('count')->values()->take(3);
+    }
+
+    public function atribuirTecnico($idOS,Request $request ){
+        $os = OrdemServico::all()->where('protocolo', $idOS)->first();
+        $idEncaminhadaTecnico = Status::all()->where('titulo', 'Encaminhada para o técnico')->first()->id;
+        $os->status_id = $idEncaminhadaTecnico;
+        $os->tecnico_id = $request->tecnico_id;
+        $os->save();
+
+        return redirect()->back()->with('success', 'Ordem Ativada atribuida com successo');
+    }
+
 }

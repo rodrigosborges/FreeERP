@@ -12,6 +12,9 @@
 */
 
 //Módulo de Ordem de servico
+
+use Modules\OrdemServico\Http\Controllers\OrdemServicoController;
+
 Route::prefix('ordemservico')->name('modulo.')->group(function() {
 	Route::get('/','AcompanhamentoController@acompanharOS')->name('os.acompanharOS');
 	Route::post('/acompanhamento','AcompanhamentoController@linhaTempo')->name('os.linhaTempo');
@@ -22,11 +25,14 @@ Route::prefix('ordemservico')->name('modulo.')->group(function() {
 	Route::post('status/store','StatusController@store')->middleware('auth')->name('status.store');
 	Route::post('os/status/{id}/updateStatus','StatusController@updateStatus')->middleware('auth')->name('os.update.status');
 	Route::get('os/status/{id}/showStatusOS','StatusController@showStatusOS')->middleware('auth');
+	Route::post('os/{idOS}/atribuirTecnico','OrdemServicoController@atribuirTecnico')->middleware('auth');
+	Route::get('os/{idOS}/showOS','OrdemServicoController@showOS')->middleware('auth');
+	Route::get('os/{marca}/problemasMarca', 'OrdemServicoController@problemasMarca')->middleware('auth');
 	Route::post('prioridade/{id}/update', 'OrdemServicoController@updatePrioridade')->middleware('auth');
 	Route::get("aparelho/showAparelho",'OrdemServicoController@showAparelho');
 	Route::get("problema/showProblemas",'OrdemServicoController@showProblemas');
-	Route::get("solicitante/showSolicitante",'SolicitanteController@show');
 
+	Route::get("solicitante/showSolicitante",'SolicitanteController@show');
 	Route::get('painel/problema', 'PainelTecnicoController@listarProblemas')->middleware('auth')->name('tecnico.painel.problemas');
 	Route::get('painel/problema/{id}/solucoes', 'PainelTecnicoController@listarSolucoes')->middleware('auth')->name('tecnico.painel.problemas.solucoes');
 	Route::get('painel/ordensDisponiveis','PainelTecnicoController@ordensDisponiveis')->middleware('auth')->name('tecnico.painel.ordens_disponiveis');

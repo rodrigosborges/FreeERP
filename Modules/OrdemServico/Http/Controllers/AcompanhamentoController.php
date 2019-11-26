@@ -17,10 +17,10 @@ class AcompanhamentoController extends Controller
 
     public function linhaTempo(Request $request){
         $data = [
-            'model' => OrdemServico::all()->where('protocolo',$request->protocolo)->first(),
+            'model' => OrdemServico::all()->where('numero_acompanhamento',$request->numero)->first(),
         ];
         if($data['model'] == null ){
-            return redirect()->back()->with('error','Protocolo não encontrado');
+            return redirect()->back()->with('error','OS não encontrada');
         }
         return view('ordemservico::ordemservico.acompanhamento.linhaTempo',compact('data'));
     }

@@ -25,7 +25,7 @@ class StatusTableSeeder extends Seeder
             ['titulo' => 'Pronta / Aguardando retirada'],
             ['titulo' => 'Pronta / Entrega a Domicilio'],
             ['titulo' => 'Cancelada'],
-            ['titulo' => 'Concluída'],
+            ['titulo' => 'Serviço executado'],
         ]);
         Model::unguard();
     }

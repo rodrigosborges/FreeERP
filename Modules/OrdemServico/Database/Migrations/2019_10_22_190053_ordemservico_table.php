@@ -17,6 +17,7 @@ class OrdemServicoTable extends Migration
 		{
             $table->increments('id');
             $table->string('protocolo')->unique();
+            $table->string('numero_acompanhamento')->unique();
             $table->string('descricao');
             $table->integer('prioridade')->default(3);
 
