@@ -299,11 +299,16 @@ class EstoqueController extends Controller
     }
     public function saidaProdutos()
     {
-        $data = [
-            'estoque' => Estoque::withTrashed()->get(),
-            'categorias' => Categoria::all(),
-        ];
-        return view('estoque::estoque.relatorios.saidaProdutos', compact('data'));
+        if (Gate::allows('administrador',Auth::user())) { 
+            $data = [
+                'estoque' => Estoque::withTrashed()->get(),
+                'categorias' => Categoria::all(),
+            ];
+            return view('estoque::estoque.relatorios.saidaProdutos', compact('data'));
+        } else {         
+            return redirect()->back()->with('error','Você não possui permissão para acessar a página!');
+        }
+        
     }
 
     public static function verificarNotificacoes()
@@ -314,255 +319,275 @@ class EstoqueController extends Controller
 
     public function relatorioCusto()
     {
-        $query_result = DB::select(
-            'SELECT distinct substring_index(created_at, " ", 1) as data,
-            (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = 3)) as nome,
-            (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = 3 AND quantidade > 0) as qtd
-             FROM movimentacao_estoque as me WHERE estoque_id = 3 order by data asc'
-        );
-        $labels = [];
-        $dados = [];
-        $data = [
-            'estoque' => Estoque::all(),
-            'labels' => json_encode($labels),
-            'dados' => json_encode($dados),
-            'flag' => "0"
-        ];
+        if (Gate::allows('administrador',Auth::user())) { 
+            $query_result = DB::select(
+                'SELECT distinct substring_index(created_at, " ", 1) as data,
+                (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = 3)) as nome,
+                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = 3 AND quantidade > 0) as qtd
+                FROM movimentacao_estoque as me WHERE estoque_id = 3 order by data asc'
+            );
+            $labels = [];
+            $dados = [];
+            $data = [
+                'estoque' => Estoque::all(),
+                'labels' => json_encode($labels),
+                'dados' => json_encode($dados),
+                'flag' => "0"
+            ];
 
-        return view('estoque::estoque.relatorios.custo', compact('data'));
+            return view('estoque::estoque.relatorios.custo', compact('data'));
+        } else {         
+            return redirect()->back()->with('error','Você não possui permissão para acessar a página!');
+        }
     }
 
     public function relatorioCustoResult($data_inicial, $data_final, $estoque_id){
         //Se for para selecionar o período com todos os estoques
-        $query_result = [];
-        $movimentacao = [];
-        $maior_preco = 0;
-        $quantidade_movimentada = 0;
-        $estoque_selecionado = "EAE";
-        $custo_total = "";
-        $dia_maior_custo = 0;
-        $dia_menor_custo = 0;
+        if (Gate::allows('administrador',Auth::user())) {
+            $query_result = [];
+            $movimentacao = [];
+            $maior_preco = 0;
+            $quantidade_movimentada = 0;
+            $estoque_selecionado = "EAE";
+            $custo_total = "";
+            $dia_maior_custo = 0;
+            $dia_menor_custo = 0;
 
-        if($estoque_id == -1){
-            $estoque_selecionado = "Todo estoque";
-        }else{
-            $estoque = Estoque::findOrFail($estoque_id);
-            $estoque_selecionado = $estoque->produtos->last()->nome . ' - ' . $estoque->tipoUnidade->nome . '(' . $estoque->tipoUnidade->quantidade_itens . ' itens)'; 
-        }
+            if($estoque_id == -1){
+                $estoque_selecionado = "Todo estoque";
+            }else{
+                $estoque = Estoque::findOrFail($estoque_id);
+                $estoque_selecionado = $estoque->produtos->last()->nome . ' - ' . $estoque->tipoUnidade->nome . '(' . $estoque->tipoUnidade->quantidade_itens . ' itens)'; 
+            }
 
-        if ($estoque_id == -1) {
-            $query_result = DB::select(
-                'SELECT distinct substring_index(created_at, " ", 1) as data,
-                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtd
-                 FROM movimentacao_estoque as me WHERE
-                 substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
-                  order by data asc'
-            );
-            $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('quantidade', '>', 0)->get();
-            $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"');
-            $maior_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->max('preco_custo');
-            $menor_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->min('preco_custo');
+            if ($estoque_id == -1) {
+                $query_result = DB::select(
+                    'SELECT distinct substring_index(created_at, " ", 1) as data,
+                    (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtd
+                    FROM movimentacao_estoque as me WHERE
+                    substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
+                    order by data asc'
+                );
+                $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('quantidade', '>', 0)->get();
+                $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"');
+                $maior_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->max('preco_custo');
+                $menor_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->min('preco_custo');
 
-            $dia_maior_custo = DB::select(
-                'SELECT distinct substring_index(created_at, " ", 1) as data,
-                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as valor
-                FROM movimentacao_estoque as me WHERE
-                 substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
-                order by valor desc limit 1
-                '
-            );
-            $dia_menor_custo = DB::select(
-                'SELECT distinct substring_index(created_at, " ", 1) as data,
-                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as valor
-                FROM movimentacao_estoque as me WHERE
-                 substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
-                order by valor asc limit 1
-                '
-            );
-            //Se for para selecionar o período com um estoque específico
-        } else {
-            $query_result = DB::select(
-                'SELECT distinct substring_index(created_at, " ", 1) as data,
-                (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = ' . $estoque_id . ')) as nome,
-                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = ' . $estoque_id . ' AND quantidade > 0) as qtd
-                 FROM movimentacao_estoque as me WHERE estoque_id = ' . $estoque_id . ' AND
-                 substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
-                  order by data asc'
-            );
-            $maior_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('estoque_id', $estoque_id)->where('quantidade', '>', 0)->max('preco_custo');
-            $menor_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('estoque_id', $estoque_id)->where('quantidade', '>', 0)->min('preco_custo');
-            $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('quantidade', '>', 0)->where('estoque_id', $estoque_id)->get();
-            $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '" AND estoque_id = ' . $estoque_id);
+                $dia_maior_custo = DB::select(
+                    'SELECT distinct substring_index(created_at, " ", 1) as data,
+                    (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as valor
+                    FROM movimentacao_estoque as me WHERE
+                    substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
+                    order by valor desc limit 1
+                    '
+                );
+                $dia_menor_custo = DB::select(
+                    'SELECT distinct substring_index(created_at, " ", 1) as data,
+                    (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as valor
+                    FROM movimentacao_estoque as me WHERE
+                    substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
+                    order by valor asc limit 1
+                    '
+                );
+                //Se for para selecionar o período com um estoque específico
+            } else {
+                $query_result = DB::select(
+                    'SELECT distinct substring_index(created_at, " ", 1) as data,
+                    (SELECT nome FROM produto WHERE id = (SELECT produto_id FROM estoque_has_produto WHERE estoque_id = ' . $estoque_id . ')) as nome,
+                    (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = ' . $estoque_id . ' AND quantidade > 0) as qtd
+                    FROM movimentacao_estoque as me WHERE estoque_id = ' . $estoque_id . ' AND
+                    substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
+                    order by data asc'
+                );
+                $maior_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('estoque_id', $estoque_id)->where('quantidade', '>', 0)->max('preco_custo');
+                $menor_preco = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('estoque_id', $estoque_id)->where('quantidade', '>', 0)->min('preco_custo');
+                $movimentacao = MovimentacaoEstoque::whereBetween('created_at', array($data_inicial, $data_final))->where('quantidade', '>', 0)->where('estoque_id', $estoque_id)->get();
+                $quantidade_movimentada = DB::select('SELECT SUM(quantidade) as qtd FROM movimentacao_estoque WHERE quantidade > 0 AND substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '" AND estoque_id = ' . $estoque_id);
+                
+                $dia_maior_custo = DB::select(
+                    'SELECT distinct substring_index(created_at, " ", 1) as data,
+                    (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE estoque_id = ' . $estoque_id . ' AND substring_index(created_at, " ", 1) = data AND quantidade > 0) as valor
+                    FROM movimentacao_estoque as me WHERE estoque_id = ' . $estoque_id . ' AND
+                    substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
+                    order by valor desc limit 1
+                    '
+                );
+                $dia_menor_custo = DB::select(
+                    'SELECT distinct substring_index(created_at, " ", 1) as data,
+                    (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = ' . $estoque_id . ' AND quantidade > 0) as valor
+                    FROM movimentacao_estoque as me WHERE estoque_id = ' . $estoque_id . ' AND
+                    substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
+                    order by valor asc limit 1
+                    '
+                );
+            }
+            //Transfere as datas e os valores para um array especifico que será utilizado como labels e dados do gráfico
+            $labels = [];
+            $dados = [];
+            foreach ($query_result as $q) {
+                array_push($dados, $q->qtd);
+                array_push($labels, $q->data);
+            }
+
+            $total = 0;
+            foreach ($dados as $d) {
+                $total += $d;
+            }
+            $custo_medio = 0;
+            if(count($quantidade_movimentada) > 0){
+                $custo_medio = round($total/$quantidade_movimentada[0]->qtd, 2);
+            }
+
+            if(count($dia_maior_custo) > 0){
+                $aux = date_create($dia_maior_custo[0]->data);
+                $dia_maior_custo = date_format($aux, 'd/m/Y') . ' (R$' . $dia_maior_custo[0]->valor . ')';            
+            }else{
+                $dia_maior_custo = "";
+            }
+
+            if(count($dia_menor_custo) > 0){
+                $aux = date_create($dia_menor_custo[0]->data);
+                $dia_menor_custo = date_format($aux, 'd/m/Y') . ' (R$' . $dia_menor_custo[0]->valor . ')';            
+            }else{
+                $dia_menor_custo = "";
+            }
             
-            $dia_maior_custo = DB::select(
-                'SELECT distinct substring_index(created_at, " ", 1) as data,
-                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE estoque_id = ' . $estoque_id . ' AND substring_index(created_at, " ", 1) = data AND quantidade > 0) as valor
-                FROM movimentacao_estoque as me WHERE estoque_id = ' . $estoque_id . ' AND
-                 substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
-                order by valor desc limit 1
-                '
-            );
-            $dia_menor_custo = DB::select(
-                'SELECT distinct substring_index(created_at, " ", 1) as data,
-                (SELECT SUM(quantidade*preco_custo) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND estoque_id = ' . $estoque_id . ' AND quantidade > 0) as valor
-                FROM movimentacao_estoque as me WHERE estoque_id = ' . $estoque_id . ' AND
-                 substring_index(created_at, " ", 1) BETWEEN "' . $data_inicial . '" AND "' . $data_final . '"
-                order by valor asc limit 1
-                '
-            );
-        }
-        //Transfere as datas e os valores para um array especifico que será utilizado como labels e dados do gráfico
-        $labels = [];
-        $dados = [];
-        foreach ($query_result as $q) {
-            array_push($dados, $q->qtd);
-            array_push($labels, $q->data);
-        }
 
-        $total = 0;
-        foreach ($dados as $d) {
-            $total += $d;
-        }
-        $custo_medio = 0;
-        if(count($quantidade_movimentada) > 0){
-            $custo_medio = round($total/$quantidade_movimentada[0]->qtd, 2);
-        }
+            $data = [
+                'menor_custo' => $menor_preco,
+                'estoque_id' => $estoque_id,
+                'maior_custo' => $maior_preco,
+                'custo_medio' => $custo_medio,
+                'custo_total' => $total,
+                'quantidade_movimentada' => $quantidade_movimentada[0]->qtd,
+                'estoque' => Estoque::all(),
+                'estoque_selecionado' => $estoque_selecionado,
+                'labels' => json_encode($labels),
+                'dados' => json_encode($dados),
+                'flag' => "1",
+                'movimentacao' => $movimentacao,
+                'data_inicial' => $data_inicial,
+                'data_final' => $data_final,
+                'dia_maior_custo' => $dia_maior_custo,
+                'dia_menor_custo' => $dia_menor_custo
+            ];
 
-        if(count($dia_maior_custo) > 0){
-            $aux = date_create($dia_maior_custo[0]->data);
-            $dia_maior_custo = date_format($aux, 'd/m/Y') . ' (R$' . $dia_maior_custo[0]->valor . ')';            
-        }else{
-            $dia_maior_custo = "";
+            return $data;
+        } else {         
+            return redirect()->back()->with('error','Você não possui permissão para acessar a página!');
         }
-
-        if(count($dia_menor_custo) > 0){
-            $aux = date_create($dia_menor_custo[0]->data);
-            $dia_menor_custo = date_format($aux, 'd/m/Y') . ' (R$' . $dia_menor_custo[0]->valor . ')';            
-        }else{
-            $dia_menor_custo = "";
-        }
-        
-
-        $data = [
-            'menor_custo' => $menor_preco,
-            'estoque_id' => $estoque_id,
-            'maior_custo' => $maior_preco,
-            'custo_medio' => $custo_medio,
-            'custo_total' => $total,
-            'quantidade_movimentada' => $quantidade_movimentada[0]->qtd,
-            'estoque' => Estoque::all(),
-            'estoque_selecionado' => $estoque_selecionado,
-            'labels' => json_encode($labels),
-            'dados' => json_encode($dados),
-            'flag' => "1",
-            'movimentacao' => $movimentacao,
-            'data_inicial' => $data_inicial,
-            'data_final' => $data_final,
-            'dia_maior_custo' => $dia_maior_custo,
-            'dia_menor_custo' => $dia_menor_custo
-        ];
-
-        return $data;
     }
 
     public function relatorioCustoBusca(Request $req)
     {
-        $data = $this->relatorioCustoResult($req->data_inicial, $req->data_final, $req->estoque_id);
-        
-        return view('estoque::estoque.relatorios.custo', compact('data'));
+        if (Gate::allows('administrador',Auth::user())) {
+            $data = $this->relatorioCustoResult($req->data_inicial, $req->data_final, $req->estoque_id);
+            
+            return view('estoque::estoque.relatorios.custo', compact('data'));
+        } else {         
+            return redirect()->back()->with('error','Você não possui permissão para acessar a página!');
+        }
     }
 
     public function relatorioMovimentacao()
     {
-        $categorias = Categoria::all();
-        $data = [
-            'dadosEntrada' => "",
-            'dadosSaida' => "",
-            'flag' => "0",
-            'dados' => "", 
-            'labels' => "", 
-            'estoque' => Estoque::all()
-        ];
-        return view('estoque::estoque.relatorios.movimentacao', compact('categorias', 'data'));
+        if (Gate::allows('administrador',Auth::user())) {
+            $categorias = Categoria::all();
+            $data = [
+                'dadosEntrada' => "",
+                'dadosSaida' => "",
+                'flag' => "0",
+                'dados' => "", 
+                'labels' => "", 
+                'estoque' => Estoque::all()
+            ];
+            return view('estoque::estoque.relatorios.movimentacao', compact('categorias', 'data'));
+        } else {         
+            return redirect()->back()->with('error','Você não possui permissão para acessar a página!');
+        }
     }
 
-    
-    public function relatorioMovimentacaoBusca(Request $req){
-        $estoque_id = $req->estoque_id;
-        $ms = [];
-
-        if ($req->estoque_id == -1){
-            $ms  =  DB::select(
-                    'SELECT distinct substring_index(created_at, " ", 1) as data,
-                    (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtdEntrada,
-                    (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade < 0) as qtdSaida,
-                    (SELECT MAX(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data)  as maiorMovimentacao,
-                    (SELECT MIN(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data) as menorMovimentacao
-                     
-                        FROM movimentacao_estoque as me WHERE substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
-                            order by data asc'
-        );   
-       
-        }else{
-            $ms  =  DB::select(
-                    'SELECT distinct substring_index(created_at," ", 1) as data,   
-                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade > 0) as qtdEntrada,
-                     (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade < 0) as qtdSaida,
-                     (SELECT MAX(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.') as maiorMovimentacao,
-                     (SELECT MIN(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.') as menorMovimentacao
-                     
-                        FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id.' AND
-                        substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
-                            order by data asc'
-               
-                        );
         
-        }
-        $labels =[];
-        $dadosEntrada =[];
-        $dadosSaida = [];
-        $maiorMovimentacao = [];
-        $menorMovimentacao = [];
-        $totalEntrada = [];
-        $totalSaida = [];
-        $test = "";
-        foreach ($ms as $q){
-            array_push($dadosEntrada, $q->qtdEntrada);  
-            array_push($dadosSaida, $q->qtdSaida * -1);   
-            array_push($totalEntrada, $q->qtdEntrada);  
-            array_push($totalSaida, $q->qtdSaida * -1);       
-            array_push($labels, $q->data);
-            array_push($maiorMovimentacao, $q->data, $q->maiorMovimentacao);
-            array_push($menorMovimentacao, $q->data, $q->menorMovimentacao);
+        public function relatorioMovimentacaoBusca(Request $req){
+            if (Gate::allows('administrador',Auth::user())) {
+                $estoque_id = $req->estoque_id;
+                $ms = [];
 
-        }
-       
-        //Maior movimentacao
+                if ($req->estoque_id == -1){
+                    $ms  =  DB::select(
+                            'SELECT distinct substring_index(created_at, " ", 1) as data,
+                            (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade > 0) as qtdEntrada,
+                            (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ", 1) = data AND quantidade < 0) as qtdSaida,
+                            (SELECT MAX(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data)  as maiorMovimentacao,
+                            (SELECT MIN(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data) as menorMovimentacao
+                            
+                                FROM movimentacao_estoque as me WHERE substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
+                                    order by data asc'
+                );   
+            
+                }else{
+                    $ms  =  DB::select(
+                            'SELECT distinct substring_index(created_at," ", 1) as data,   
+                            (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade > 0) as qtdEntrada,
+                            (SELECT SUM(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.' AND quantidade < 0) as qtdSaida,
+                            (SELECT MAX(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.') as maiorMovimentacao,
+                            (SELECT MIN(quantidade) FROM movimentacao_estoque WHERE substring_index(created_at, " ",1) = data AND estoque_id = '.$req->estoque_id.') as menorMovimentacao
+                            
+                                FROM movimentacao_estoque as me WHERE estoque_id = '.$req->estoque_id.' AND
+                                substring_index(created_at, " ", 1) BETWEEN "'.$req->dataInicial.'" AND "'.$req->dataFinal.'"
+                                    order by data asc'
+                    
+                                );
+                
+                }
+                $labels =[];
+                $dadosEntrada =[];
+                $dadosSaida = [];
+                $maiorMovimentacao = [];
+                $menorMovimentacao = [];
+                $totalEntrada = [];
+                $totalSaida = [];
+                $test = "";
+                foreach ($ms as $q){
+                    array_push($dadosEntrada, $q->qtdEntrada);  
+                    array_push($dadosSaida, $q->qtdSaida * -1);   
+                    array_push($totalEntrada, $q->qtdEntrada);  
+                    array_push($totalSaida, $q->qtdSaida * -1);       
+                    array_push($labels, $q->data);
+                    array_push($maiorMovimentacao, $q->data, $q->maiorMovimentacao);
+                    array_push($menorMovimentacao, $q->data, $q->menorMovimentacao);
 
-        //nome do estoque
-        if($estoque_id == -1){
-            $estoqueSelecionado = "Todo o estoque";
-        }else{
-            $estoque = Estoque::findOrFail($estoque_id);
-            $estoqueSelecionado = $estoque->produtos->last()->nome . ' - ' . $estoque->tipoUnidade->nome . '(' . $estoque->tipoUnidade->quantidade_itens . ' itens)'; 
+                }
+            
+                //Maior movimentacao
+
+                //nome do estoque
+                if($estoque_id == -1){
+                    $estoqueSelecionado = "Todo o estoque";
+                }else{
+                    $estoque = Estoque::findOrFail($estoque_id);
+                    $estoqueSelecionado = $estoque->produtos->last()->nome . ' - ' . $estoque->tipoUnidade->nome . '(' . $estoque->tipoUnidade->quantidade_itens . ' itens)'; 
+                }
+            
+                $data = [
+                    'estoqueSelecionado' => $estoqueSelecionado,
+                    'maiorMovimentacao' => json_encode($maiorMovimentacao),
+                    'menorMovimentacao' => json_encode($menorMovimentacao),
+                    'totalEntrada' => json_encode($totalEntrada),
+                    'totalSaida' => json_encode($totalSaida),
+                    'flag' => "1",
+                    'labels' => json_encode($labels),
+                    'dadosEntrada' => json_encode($dadosEntrada),
+                    'dadosSaida' => json_encode($dadosSaida),
+                    'estoque' => Estoque::all(),
+                    'categorias' => Categoria::all(),
+                    'dataInicial' => $req->dataInicial,
+                    'dataFinal' => $req->dataFinal
+                ];
+            return view('estoque::estoque.relatorios.movimentacao', compact('data'));
+        } else {         
+            return redirect()->back()->with('error','Você não possui permissão para acessar a página!');
         }
-       
-        $data = [
-            'estoqueSelecionado' => $estoqueSelecionado,
-            'maiorMovimentacao' => json_encode($maiorMovimentacao),
-            'menorMovimentacao' => json_encode($menorMovimentacao),
-            'totalEntrada' => json_encode($totalEntrada),
-            'totalSaida' => json_encode($totalSaida),
-            'flag' => "1",
-            'labels' => json_encode($labels),
-            'dadosEntrada' => json_encode($dadosEntrada),
-            'dadosSaida' => json_encode($dadosSaida),
-            'estoque' => Estoque::all(),
-            'categorias' => Categoria::all(),
-            'dataInicial' => $req->dataInicial,
-            'dataFinal' => $req->dataFinal
-        ];
-    return view('estoque::estoque.relatorios.movimentacao', compact('data'));
     }
 
 
@@ -570,41 +595,45 @@ class EstoqueController extends Controller
 
     public function getSaidaProdutos(Request $request)
     {
-        $dataForm = [
-            'created_at' => '',
-            'id' => $request->estoque,
-            'inicio' => $request->inicio,
-            'fim' => $request->fim,
+        if (Gate::allows('administrador',Auth::user())) {
+            $dataForm = [
+                'created_at' => '',
+                'id' => $request->estoque,
+                'inicio' => $request->inicio,
+                'fim' => $request->fim,
 
-        ];
+            ];
 
-        $movimentacao = ($dataForm['id'] != 0) ? DB::table('movimentacao_estoque')->where('estoque_id', $dataForm['id'])->where('observacao', '=', 'Item Excluido')->get() : DB::table('movimentacao_estoque')->where('observacao', '=', 'Item Excluido')->get();
-        $data['estoque'] = DB::table('estoque')->where('deleted_at','<>',NULL)->where(function ($query) use ($dataForm) {
-            if ($dataForm['id'] != 0) {
-               
-                $query->where('id', $dataForm['id']);
-            }
-            if ($dataForm['inicio'] != null) {
-                $query->where('created_at', '>=', $dataForm['inicio']);
-                if ($dataForm['fim'] != null) {
-                    $query->where('created_at', '<=', $dataForm['fim']);
+            $movimentacao = ($dataForm['id'] != 0) ? DB::table('movimentacao_estoque')->where('estoque_id', $dataForm['id'])->where('observacao', '=', 'Item Excluido')->get() : DB::table('movimentacao_estoque')->where('observacao', '=', 'Item Excluido')->get();
+            $data['estoque'] = DB::table('estoque')->where('deleted_at','<>',NULL)->where(function ($query) use ($dataForm) {
+                if ($dataForm['id'] != 0) {
+                
+                    $query->where('id', $dataForm['id']);
                 }
-            } else {
-                if ($dataForm['fim'] != null) {
-                    $query->where('created_at', '<=', $dataForm['fim']);
+                if ($dataForm['inicio'] != null) {
+                    $query->where('created_at', '>=', $dataForm['inicio']);
+                    if ($dataForm['fim'] != null) {
+                        $query->where('created_at', '<=', $dataForm['fim']);
+                    }
+                } else {
+                    if ($dataForm['fim'] != null) {
+                        $query->where('created_at', '<=', $dataForm['fim']);
+                    }
                 }
+            })->get();
+            $ids = array();
+            foreach($data['estoque'] as $key=>$estoque){
+            $ids[$key] = $data['estoque'][$key]->id;
             }
-        })->get();
-        $ids = array();
-        foreach($data['estoque'] as $key=>$estoque){
-        $ids[$key] = $data['estoque'][$key]->id;
+            $produtos = DB::table('produto')
+            ->join('estoque_has_produto', function ($join) use ($ids) {
+                $join->whereIn('estoque_id', $ids)->whereraw('produto.id = estoque_has_produto.produto_id');
+            })->get();
+            $data['produtos'] = $produtos;
+            $data['movimentacao'] = $movimentacao;
+            return json_encode($data);
+        } else {         
+            return redirect()->back()->with('error','Você não possui permissão para acessar a página!');
         }
-        $produtos = DB::table('produto')
-        ->join('estoque_has_produto', function ($join) use ($ids) {
-            $join->whereIn('estoque_id', $ids)->whereraw('produto.id = estoque_has_produto.produto_id');
-        })->get();
-       $data['produtos'] = $produtos;
-        $data['movimentacao'] = $movimentacao;
-        return json_encode($data);
     }
 }
