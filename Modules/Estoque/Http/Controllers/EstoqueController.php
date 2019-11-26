@@ -10,7 +10,8 @@ use Modules\Estoque\Entities\Categoria;
 use Modules\Estoque\Entities\Estoque;
 use Modules\Estoque\Entities\MovimentacaoEstoque;
 use Modules\Estoque\Entities\Produto;
-
+use Gate;
+use Auth;
 use Modules\Estoque\Entities\TipoUnidade;
 use Barryvdh\DomPDF\Facade as PDF;
 class EstoqueController extends Controller

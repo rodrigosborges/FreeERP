@@ -9,8 +9,6 @@ use Illuminate\Routing\Controller;
 use Modules\estoque\Entities\{Categoria, Subcategoria};
 use Modules\estoque\Http\Requests\CategoriaRequest;
 use DB;
-use Auth;
-use Gate;
 
 class CategoriaController extends Controller
 {
