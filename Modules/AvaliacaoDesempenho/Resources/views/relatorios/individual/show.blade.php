@@ -36,47 +36,71 @@
         <h3>Questões</h3>
 
         @foreach ($data['questoes'] as $questao)
+    
+            <hr>
 
             <div>
 
-                <hr>
+                <b>{{ $questao->enunciado }}</b>
 
-                <b>Categoria:</b>
-                <p>{{ $questao->categoria->nome }}</p>
+                <br>
+                <br>
 
-                <b>Enunciado:</b>
-                <p>{{ $questao->enunciado }}</p>
-
-                <b>Alternativas:</b>
+                <p>Resposta:</p>
                 <ul class='opt-list'>
-                    @if ($data['respostas'][$questao->id] == $questao->opt1)
-                        <li style='color: red'><b>a)</b> {{ $questao->opt1 }}</li>
-                    @else
-                        <li><b>a)</b> {{ $questao->opt1 }}</li>
+                    @if ($data['respostas'][$questao->id] == 1)
+                        <li class='question'>
+                            <p>a)</p>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star_border</i>
+                            <i class='material-icons'>star_border</i>
+                            <i class='material-icons'>star_border</i>
+                            <i class='material-icons'>star_border</i>
+                        </li>
                     @endif
 
-                    @if ($data['respostas'][$questao->id] == $questao->opt2)
-                        <li style='color: red'><b>b)</b> {{ $questao->opt2 }}</li>
-                    @else
-                        <li><b>b)</b> {{ $questao->opt2 }}</li>
+                    @if ($data['respostas'][$questao->id] == 2)
+                        <li class='question'>
+                            <p>b)</p>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star_border</i>
+                            <i class='material-icons'>star_border</i>
+                            <i class='material-icons'>star_border</i>
+                        </li>
                     @endif
 
-                    @if ($data['respostas'][$questao->id] == $questao->opt3)
-                        <li style='color: red'><b>c)</b> {{ $questao->opt3 }}</li>
-                    @else
-                        <li><b>c)</b> {{ $questao->opt3 }}</li>
+                    @if ($data['respostas'][$questao->id] == 3)
+                        <li class='question'>
+                            <p>c)</p>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star_border</i>
+                            <i class='material-icons'>star_border</i>
+                        </li>
                     @endif
 
-                    @if ($data['respostas'][$questao->id] == $questao->opt4)
-                        <li style='color: red'><b>d)</b> {{ $questao->opt4 }}</li>
-                    @else
-                        <li><b>d)</b> {{ $questao->opt4 }}</li>
+                    @if ($data['respostas'][$questao->id] == 4)
+                        <li class='question'>
+                            <p>d)</p>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star_border</i>
+                        </li>
                     @endif
 
-                    @if ($data['respostas'][$questao->id] == $questao->opt5)
-                        <li style='color: red'><b>e)</b> {{ $questao->opt5 }}</li>
-                    @else
-                        <li><b>e)</b> {{ $questao->opt5 }}</li>
+                    @if ($data['respostas'][$questao->id] == 5)
+                        <li class='question'>
+                            <p>e)</p> 
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star</i>
+                            <i class='material-icons'>star</i>
+                        </li>
                     @endif
                 </ul>
 

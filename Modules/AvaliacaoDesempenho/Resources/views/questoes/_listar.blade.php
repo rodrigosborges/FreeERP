@@ -73,14 +73,8 @@
 
                         <hr>
 
-                        <b>Alternativas:</b>
-                        <ul class='opt-list'>
-                            <li><b>a)</b> {{ $questao->opt1 }}</li>
-                            <li><b>b)</b> {{ $questao->opt2 }}</li>
-                            <li><b>c)</b> {{ $questao->opt3 }}</li>
-                            <li><b>d)</b> {{ $questao->opt4 }}</li>
-                            <li><b>e)</b> {{ $questao->opt5 }}</li>
-                        </ul>
+                        <b>Descrição:</b>
+                        <textarea class='form-control' disabled>{{ $questao->descricao }}</textarea>
 
                     </div>
 

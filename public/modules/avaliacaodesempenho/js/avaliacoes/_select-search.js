@@ -48,6 +48,32 @@ $(document).ready(function() {
     $("#questoes").easyAutocomplete(options);
 })
 
+$('#modelo').on('change', function() {
+
+  const _token = $('#token').val()
+  const id = $(this).val()
+
+  if (id != '') {
+
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost/tcc/public/avaliacaodesempenho/ajax/modelos',
+      data: {
+        _token: _token,
+        modelo: id
+      },
+      success: function(data) {
+  
+        $('#input-questoes').html('')
+  
+        data.forEach(element => {
+          salvarQuestao(element.id, element.enunciado)
+        })
+      }
+    })
+  }
+})
+
 function populateCard(data) {
 
     $('#questaoCard').html(`
@@ -61,14 +87,9 @@ function populateCard(data) {
             <div class='card-body'>
                 <b>Enunciado: ${data.enunciado}</b>
                 <br>
-                <b>Alternativas:</b>
-                <ul class='alternativas'>
-                    <li><b>a)</b> ${data.opt1}</li>
-                    <li><b>b)</b> ${data.opt2}</li>
-                    <li><b>c)</b> ${data.opt3}</li>
-                    <li><b>d)</b> ${data.opt4}</li>
-                    <li><b>e)</b> ${data.opt5}</li>
-                </ul>
+
+                <b>Descricao:</b>
+                <textarea class='form-control' disabled>${data.descricao}</textarea>
             </div>
 
             <div class='card-footer'>

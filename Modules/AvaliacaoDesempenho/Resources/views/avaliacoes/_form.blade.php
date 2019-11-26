@@ -1,269 +1,279 @@
 @if(isset($data['avaliacao']->id))
-    <form id='avaliacaoForm' action="{{ url('avaliacaodesempenho/avaliacao', [$data['avaliacao']->id]) }}" method="POST">
+<form id='avaliacaoForm' action="{{ url('avaliacaodesempenho/avaliacao', [$data['avaliacao']->id]) }}" method="POST">
     @method('PUT')
     {{ csrf_field() }}
-@else
+    @else
     <form id='avaliacaoForm' action='{{ url("avaliacaodesempenho/avaliacao/store") }}' method="POST">
-    {{ csrf_field() }}
-@endif
+        {{ csrf_field() }}
+        @endif
 
-    <div class='row'>
+        <div class='row'>
 
-        <div class='card'>
+            <div class='card'>
 
-            <div class='card-header'>
+                <div class='card-header'>
 
-                <div class="card-title">
-                    <h3>Adicionar</h3>
+                    <div class="card-title">
+                        <h3>Adicionar</h3>
+                    </div>
                 </div>
-            </div>
 
-            <div class='card-body'>
+                <div class='card-body'>
 
-                <div class='form-row'>
+                    <div class='form-row'>
 
-                    <div class='form-group col-md-12'>
+                        <div class='form-group col-md-12'>
 
-                        <label>Nome da Avaliação</label>
+                            <label>Nome da Avaliação</label>
 
-                        <div class='input-group'>
+                            <div class='input-group'>
 
-                            <div class='input-group-prepend'>
-                                <span class="input-group-text">
-                                    <i class="material-icons">description</i>
-                                </span>
+                                <div class='input-group-prepend'>
+                                    <span class="input-group-text">
+                                        <i class="material-icons">description</i>
+                                    </span>
+                                </div>
+
+                                <input class="form-control nome" name='avaliacao[nome]' type="text" value="{{ old('avaliacao.nome', isset($data['avaliacao']) ? $data['avaliacao']->nome : '') }}" placeholder="Digite o nome da avaliacao">
+
                             </div>
 
-                            <input class="form-control nome" name='avaliacao[nome]' type="text" value="{{ old('avaliacao.nome', isset($data['avaliacao']) ? $data['avaliacao']->nome : '') }}"
-                                placeholder="Digite o nome da avaliacao">
+                            <span class="errors"> {{ $errors->first('avaliacao.nome') }} </span>
 
                         </div>
 
-                        <span class="errors"> {{ $errors->first('avaliacao.nome') }} </span>
-
                     </div>
 
-                </div>
+                    <div class='form-row'>
 
-                <div class='form-row'>
+                        <div class='form-group col-md-6'>
 
-                    <div class='form-group col-md-6'>
+                            <label>Data Inicio Avaliação</label>
 
-                        <label>Data Inicio Avaliação</label>
+                            <div class='input-group'>
 
-                        <div class='input-group'>
+                                <div class='input-group-prepend'>
+                                    <span class="input-group-text">
+                                        <i class="material-icons">date_range</i>
+                                    </span>
+                                </div>
 
-                            <div class='input-group-prepend'>
-                                <span class="input-group-text">
-                                    <i class="material-icons">date_range</i>
-                                </span>
+                                <input class="form-control data data_inicio" name='avaliacao[data_inicio]' type="text" value="{{ old('avaliacao.data_inicio', isset($data['avaliacao']) ? $data['avaliacao']->data_inicio : '') }}" placeholder="Selecione a data de inicio">
+
                             </div>
 
-                            <input class="form-control data data_inicio" name='avaliacao[data_inicio]' type="text" value="{{ old('avaliacao.data_inicio', isset($data['avaliacao']) ? $data['avaliacao']->data_inicio : '') }}"
-                                placeholder="Selecione a data de inicio">
+                            <span class="errors"> {{ $errors->first('avaliacao.data_inicio') }} </span>
 
                         </div>
 
-                        <span class="errors"> {{ $errors->first('avaliacao.data_inicio') }} </span>
+                        <div class='form-group col-md-6'>
 
-                    </div>
+                            <label>Data Final Avaliação</label>
 
-                    <div class='form-group col-md-6'>
+                            <div class='input-group'>
 
-                        <label>Data Final Avaliação</label>
+                                <div class='input-group-prepend'>
+                                    <span class="input-group-text">
+                                        <i class="material-icons">date_range</i>
+                                    </span>
+                                </div>
 
-                        <div class='input-group'>
+                                <input class="form-control data data_fim" name='avaliacao[data_fim]' type="text" value="{{ old('avaliacao.data_fim', isset($data['avaliacao']) ? $data['avaliacao']->data_fim : '') }}" placeholder="Selecione a data final">
 
-                            <div class='input-group-prepend'>
-                                <span class="input-group-text">
-                                    <i class="material-icons">date_range</i>
-                                </span>
                             </div>
 
-                            <input class="form-control data data_fim" name='avaliacao[data_fim]' type="text" value="{{ old('avaliacao.data_fim', isset($data['avaliacao']) ? $data['avaliacao']->data_fim : '') }}"
-                                placeholder="Selecione a data final">
+                            <span class="errors"> {{ $errors->first('avaliacao.data_fim') }} </span>
 
                         </div>
 
-                        <span class="errors"> {{ $errors->first('avaliacao.data_fim') }} </span>
-
                     </div>
 
-                </div>
+                    <div class="form-row">
 
-                <div class="form-row">
+                        <div class="form-group col-md-12">
 
-                    <div class="form-group col-md-12">
+                            <label>Processo</label>
 
-                        <label>Processo</label>
+                            <div class="input-group">
 
-                        <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">description</i>
+                                    </span>
+                                </div>
 
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="material-icons">description</i>
-                                </span>
-                            </div>
-
-                            <select class="form-control processo" name="avaliacao[processo_id]"
-                                id="avaliacao[processo_id]">
-                                <option value="">Selecione o Processo ao qual a Avaliação pertence</option>
-                                @foreach( $data['processos'] as $processo)
+                                <select class="form-control processo" name="avaliacao[processo_id]" id="avaliacao[processo_id]">
+                                    <option value="">Selecione o Processo ao qual a Avaliação pertence</option>
+                                    @foreach( $data['processos'] as $processo)
                                     <option {{ old('avaliacao.processo_id', isset($data['avaliacao']) ? $data['avaliacao']->processo_id : '') == $processo->id ? 'selected' : ''}} value="{{ $processo->id }}">{{ $processo->nome }}</option>
-                                @endforeach
-                            </select>
+                                    @endforeach
+                                </select>
+
+                            </div>
+
+                            <span class="errors"> {{ $errors->first('avaliacao.processo_id') }} </span>
 
                         </div>
 
-                        <span class="errors"> {{ $errors->first('avaliacao.processo_id') }} </span>
-
                     </div>
 
-                </div>
+                    <div class="form-row">
 
-                <div class="form-row">
+                        <div class="form-group col-md-8">
 
-                    <div class="form-group col-md-8">
+                            <label>Responsavel</label>
 
-                        <label>Responsavel</label>
+                            <div class="input-group">
 
-                        <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">people</i>
+                                    </span>
+                                </div>
 
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="material-icons">people</i>
-                                </span>
-                            </div>
-
-                            <select class="form-control responsavel" name="avaliacao[funcionario_id]"
-                                id="avaliacao[funcionario_id]">
-                                <option value="">Selecione o Funcionario responsavel pela Avaliação</option>
-                                @foreach( $data['funcionarios'] as $funcionario)
+                                <select class="form-control responsavel" name="avaliacao[funcionario_id]" id="avaliacao[funcionario_id]">
+                                    <option value="">Selecione o Funcionario responsavel pela Avaliação</option>
+                                    @foreach( $data['funcionarios'] as $funcionario)
                                     <option {{ old('avaliacao.funcionario_id', isset($data['avaliacao']) ? $data['avaliacao']->funcionario_id : '') == $funcionario->id ? 'selected' : ''}} value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
-                                @endforeach
-                            </select>
+                                    @endforeach
+                                </select>
+
+                            </div>
+
+                            <span class="errors"> {{ $errors->first('avaliacao.funcionario_id') }} </span>
 
                         </div>
 
-                        <span class="errors"> {{ $errors->first('avaliacao.funcionario_id') }} </span>
+                        <div class="form-group col-md-4">
 
-                    </div>
+                            <label>Setor</label>
 
-                    <div class="form-group col-md-4">
+                            <div class="input-group">
 
-                        <label>Setor</label>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">style</i>
+                                    </span>
+                                </div>
 
-                        <div class="input-group">
-
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="material-icons">style</i>
-                                </span>
-                            </div>
-
-                            <select class="form-control setor {{ isset($data['avaliacao']) ? 'readonly' : '' }}" name="avaliacao[setor_id]"
-                                id="avaliacao[setor_id]">
-                                <option value="">Selecione o Setor a ser avaliado</option>
-                                @foreach( $data['setores'] as $setor)
+                                <select class="form-control setor {{ isset($data['avaliacao']) ? 'readonly' : '' }}" name="avaliacao[setor_id]" id="avaliacao[setor_id]">
+                                    <option value="">Selecione o Setor a ser avaliado</option>
+                                    @foreach( $data['setores'] as $setor)
                                     <option {{ old('avaliacao.setor_id', isset($data['avaliacao']) ? $data['avaliacao']->setor_id : '') == $setor->id ? 'selected' : ''}} value="{{ $setor->id }}">{{ $setor->nome }}</option>
-                                @endforeach
-                            </select>
+                                    @endforeach
+                                </select>
 
-                        </div>
-
-                        <span class="errors"> {{ $errors->first('avaliacao.setor_id') }} </span>
-
-                    </div>
-
-                </div>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-12">
-
-                        <label>Tipo de Avaliação</label>
-
-                        <br>
-                        <input class='tipo {{ isset($data['avaliacao']) ? 'readonly' : '' }}' type="radio" name='avaliacao[tipo_id]' value='2' {{ isset($data['avaliacao']) && $data['avaliacao']->tipo_id == 2 ? 'checked' : '' }}> Avaliar Gestores
-                        <br>
-                        <input class='tipo {{ isset($data['avaliacao']) ? 'readonly' : '' }}' type="radio" name='avaliacao[tipo_id]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->tipo_id == 1 ? 'checked' : '' }}> Avaliar Funcionários
-
-                    </div>
-
-                    <span class="errors"> {{ $errors->first('avaliacao.tipo_id') }} </span>
-
-                </div>
-
-                <hr>
-
-                <h4>QUESTÕES</h4>
-
-                <div id="input-questoes" class="input-questoes">
-                    @if (isset($data['avaliacao']))
-
-                      @foreach ($data['avaliacao']->questoes as $key => $questao)
-                        <div class='row input-questao'>
-                          <input class='name-questao' type='hidden' name='avaliacao[questoes][{{ $key }}]' value={{ $questao->id }}></input>
-
-                          <div>
-                            <h6 class='questao-count'></h6>
-                            <p><b>Enunciado: </b>{{ $questao->enunciado }}</p>
-                          </div>
-
-                          <button type='button' class='btn btn-danger btn-sm float-right' onclick="excluirQuestao({{ $key }})"><i class="material-icons md-18">close</i>
-                        </div>
-                      @endforeach
-
-                    @endif
-                </div>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-12">
-
-                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-
-                        <input id='questoes' type="text" class='form-control'>
-
-                    </div>
-
-                    <span class="errors"> {{ $errors->first('avaliacao.questoes') }} </span>
-                    <span class="errors"> {{ $errors->first('avaliacao.questoes.*') }} </span>
-
-                </div>
-
-                <div id='questaoCard' class="form-row hidden">
-
-                    <div class="card">
-
-                        <div class="card-header"></div>
-
-                        <div class="card-body">
-
-                            <div class="enunciado"></div>
-                            <div class="options">
-                                <ul></ul>
                             </div>
 
+                            <span class="errors"> {{ $errors->first('avaliacao.setor_id') }} </span>
+
                         </div>
 
-                        <div class="card-footer">
-                            <button type='button' class="btn btn-primary btn-sm float-right save-card">Salvar</button>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+
+                            <label>Tipo de Avaliação</label>
+
+                            <br>
+                            <input class='tipo {{ isset($data['avaliacao']) ? 'readonly' : '' }}' type="radio" name='avaliacao[tipo_id]' value='2' {{ isset($data['avaliacao']) && $data['avaliacao']->tipo_id == 2 ? 'checked' : '' }}> Avaliar Gestores
+                            <br>
+                            <input class='tipo {{ isset($data['avaliacao']) ? 'readonly' : '' }}' type="radio" name='avaliacao[tipo_id]' value='1' {{ isset($data['avaliacao']) && $data['avaliacao']->tipo_id == 1 ? 'checked' : '' }}> Avaliar Funcionários
+
                         </div>
+
+                        <span class="errors"> {{ $errors->first('avaliacao.tipo_id') }} </span>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+
+                            <label>Modelo</label>
+
+                            <div class="input-group">
+
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">style</i>
+                                    </span>
+                                </div>
+
+                                <select class="form-control" name="avaliacao[modelo_id]" id="modelo">
+                                    <option value="">Selecione o Modelo de avaliação</option>
+                                    @foreach( $data['modelos'] as $modelo)
+                                        <option {{ old('avaliacao.modelo_id', isset($data['avaliacao']) ? $data['avaliacao']->modelo_id : '') == $modelo->id ? 'selected' : ''}} value="{{ $modelo->id }}">{{ $modelo->nome }}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+
+                            <span class="errors"> {{ $errors->first('avaliacao.modelo_id') }} </span>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h4>QUESTÕES</h4>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+
+                            <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+
+                            <input id='questoes' type="text" class='form-control'>
+
+                        </div>
+
+                        <span class="errors"> {{ $errors->first('avaliacao.questoes') }} </span>
+                        <span class="errors"> {{ $errors->first('avaliacao.questoes.*') }} </span>
+
+                    </div>
+
+                    <div id='questaoCard' class="form-row hidden"></div>
+
+                    <div id="input-questoes" class="input-questoes">
+
+                        @if (isset($data['avaliacao']))
+
+                            @foreach ($data['avaliacao']->questoes as $key => $questao)
+
+                                <div class='row input-questao'>
+
+                                    <input class='name-questao' type='hidden' name='avaliacao[questoes][{{ $key }}]' value={{ $questao->id }}></input>
+
+                                    <div>
+                                        <h6 class='questao-count'></h6>
+                                        <p><b>Enunciado: </b>{{ $questao->enunciado }}</p>
+                                    </div>
+
+                                    <button type='button' class='btn btn-danger btn-sm float-right' onclick="excluirQuestao({{ $key }})"><i class="material-icons md-18">close</i>
+                                
+                                </div>
+
+                            @endforeach
+
+                        @endif
 
                     </div>
 
                 </div>
 
-            </div>
+                <div class='card-footer'>
 
-            <div class='card-footer'>
+                    <div class="row">
 
-                <div class="row">
+                        <a href="{{ url('avaliacaodesempenho/avaliacao') }}" class="btn btn-danger">Cancelar</a>
 
-                    <a href="{{ url('avaliacaodesempenho/avaliacao') }}" class="btn btn-danger">Cancelar</a>
+                        <button class="btn btn-success" type='submit'>Salvar</button>
 
-                    <button class="btn btn-success" type='submit'>Salvar</button>
+                    </div>
 
                 </div>
 
@@ -271,6 +281,4 @@
 
         </div>
 
-    </div>
-
-</form>
+    </form>

@@ -14,6 +14,7 @@ use Modules\AvaliacaoDesempenho\Entities\Processo;
 use Modules\AvaliacaoDesempenho\Entities\Funcionario;
 use Modules\AvaliacaoDesempenho\Entities\Setor;
 use Modules\AvaliacaoDesempenho\Entities\Questao;
+use Modules\AvaliacaoDesempenho\Entities\Categoria;
 use Modules\AvaliacaoDesempenho\Entities\Avaliacao;
 use Modules\AvaliacaoDesempenho\Entities\Avaliador;
 use Modules\AvaliacaoDesempenho\Entities\Avaliado;
@@ -70,7 +71,8 @@ class AvaliacaoController extends Controller
             'processos' => Processo::where('status_id', '!=', 3)->where('status_id', '!=', 4)->get(),
             'funcionarios' => Funcionario::all(),
             'setores' => Setor::all(),
-            'questoes' => Questao::all()
+            'questoes' => Questao::all(),
+            'modelos' => Categoria::has('questoes')->get()
         ];
 
         return view('avaliacaodesempenho::avaliacoes/create', compact('moduleInfo', 'menu', 'data'));
@@ -218,7 +220,8 @@ class AvaliacaoController extends Controller
             'avaliacao' => Avaliacao::findOrFail($id),
             'processos' => Processo::all(),
             'funcionarios' => Funcionario::all(),
-            'setores' => Setor::all()
+            'setores' => Setor::all(),
+            'modelos' => Categoria::has('questoes')->get()
         ];
 
         return view('avaliacaodesempenho::avaliacoes/edit', compact('moduleInfo', 'menu', 'data'));
@@ -361,5 +364,14 @@ class AvaliacaoController extends Controller
 
             echo '<pre>';print_r($th->getMessage());exit;
         }
+    }
+
+    public function getModelo(Request $request) {
+
+        $id = $request->input('modelo');
+
+        $questoes = Questao::where('categoria_id', $id)->get();
+
+        return $questoes;
     }
 }

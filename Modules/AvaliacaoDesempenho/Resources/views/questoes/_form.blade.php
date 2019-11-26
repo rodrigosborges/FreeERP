@@ -79,7 +79,7 @@
 
                     <div class='form-group col-md-12'>
 
-                        <label>Opção 1</label>
+                        <label>Descrição</label>
 
                         <div class='input-group'>
 
@@ -89,112 +89,11 @@
                                 </span>
                             </div>
 
-                            <input class="form-control opt5 opt4 opt3 opt2 opt1" name='questao[opt1]' type='text' value="{{ old('questao.opt1', isset($data['questao']) ? $data['questao']->opt1 : '') }}"
-                                placeholder="Digite a opção">
+                            <textarea class='form-control' name='questao[descricao]'>{{ old('questao.descricao', isset($data['questao']) ? $data['questao']->descricao : '') }}</textarea>
 
                         </div>
 
-                        <span class="errors"> {{ $errors->first('questao.opt1') }} </span>
-
-                    </div>
-
-                </div>
-
-                <div class="form-row">
-
-                    <div class='form-group col-md-12'>
-
-                        <label>Opção 2</label>
-
-                        <div class='input-group'>
-
-                            <div class='input-group-prepend'>
-                                <span class="input-group-text">
-                                    <i class="material-icons">done</i>
-                                </span>
-                            </div>
-
-                            <input class="form-control opt5 opt4 opt3 opt2" name='questao[opt2]' type='text' value="{{ old('questao.opt2', isset($data['questao']) ? $data['questao']->opt2 : '') }}"
-                                placeholder="Digite a opção">
-
-                        </div>
-
-                        <span class="errors"> {{ $errors->first('questao.opt2') }} </span>
-
-                    </div>
-
-                </div>
-
-                <div class="form-row">
-
-                    <div class='form-group col-md-12'>
-
-                        <label>Opção 3</label>
-
-                        <div class='input-group'>
-
-                            <div class='input-group-prepend'>
-                                <span class="input-group-text">
-                                    <i class="material-icons">done</i>
-                                </span>
-                            </div>
-
-                            <input class="form-control opt5 opt4 opt3" name='questao[opt3]' type='text' value="{{ old('questao.opt3', isset($data['questao']) ? $data['questao']->opt3 : '') }}"
-                                placeholder="Digite a opção">
-
-                        </div>
-
-                        <span class="errors"> {{ $errors->first('questao.opt3') }} </span>
-
-                    </div>
-
-                </div>
-
-                <div class="form-row">
-
-                    <div class='form-group col-md-12'>
-
-                        <label>Opção 4</label>
-
-                        <div class='input-group'>
-
-                            <div class='input-group-prepend'>
-                                <span class="input-group-text">
-                                    <i class="material-icons">done</i>
-                                </span>
-                            </div>
-
-                            <input class="form-control opt5 opt4" name='questao[opt4]' type='text' value="{{ old('questao.opt4', isset($data['questao']) ? $data['questao']->opt4 : '') }}"
-                                placeholder="Digite a opção">
-
-                        </div>
-
-                        <span class="errors"> {{ $errors->first('questao.opt4') }} </span>
-
-                    </div>
-
-                </div>
-
-                <div class="form-row">
-
-                    <div class='form-group col-md-12'>
-
-                        <label>Opção 5</label>
-
-                        <div class='input-group'>
-
-                            <div class='input-group-prepend'>
-                                <span class="input-group-text">
-                                    <i class="material-icons">done</i>
-                                </span>
-                            </div>
-
-                            <input class="form-control opt5" name='questao[opt5]' type='text' value="{{ old('questao.opt5', isset($data['questao']) ? $data['questao']->opt5 : '') }}"
-                                placeholder="Digite a opção">
-
-                        </div>
-
-                        <span class="errors"> {{ $errors->first('questao.opt5') }} </span>
+                        <span class="errors"> {{ $errors->first('questao.descricao') }} </span>
 
                     </div>
 

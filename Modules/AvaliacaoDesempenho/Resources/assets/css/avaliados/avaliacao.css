@@ -66,3 +66,13 @@
 .funcionario-nome {
     margin-left: 20px;
 }
+
+.question {
+    display: flex;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.question input {
+    margin: 8px 10px;
+}

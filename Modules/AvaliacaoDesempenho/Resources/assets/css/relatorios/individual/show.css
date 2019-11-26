@@ -18,3 +18,7 @@
 .opt-list li {
     margin: 20px 0;
 }
+
+.question {
+    display: flex;
+}

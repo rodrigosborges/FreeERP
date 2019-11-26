@@ -60,31 +60,75 @@
                         @foreach($questoes as $key => $questao)
                             
                             <div class="card questao tab">
-                                    
-                                <div class="card-header">
-                                    <b>Categoria: {{ $questao->categoria->nome }}</b>
-                                </div>
     
                                 <div class="card-body">
     
-                                    <b>Enunciado:</b>
-                                    <p>{{ $questao->enunciado }}</p>
+                                    <b>{{ $questao->enunciado }}</b>
                             
                                     <hr>
                             
                                     <b>Alternativas:</b>
                                     <ul>
                                         <br>
-                                        <b>a)</b> <input required type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='1'> {{ $questao->opt1 }}
+                                        <label class='question'>
+                                            <b>a)</b> 
+                                            <input required type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='1'> 
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star_border</i>
+                                            <i class='material-icons'>star_border</i>
+                                            <i class='material-icons'>star_border</i>
+                                            <i class='material-icons'>star_border</i>
+                                        </label>
+
                                         <br>
-                                        <b>b)</b> <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='2'> {{ $questao->opt2 }}
+                                        <label class='question'>
+                                            <b>b)</b> 
+                                            <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='2'>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star_border</i>
+                                            <i class='material-icons'>star_border</i>
+                                            <i class='material-icons'>star_border</i>
+                                        </label>
+                                        
                                         <br>
-                                        <b>c)</b> <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='3'> {{ $questao->opt3 }}
+                                        <label class='question'>
+                                            <b>c)</b> 
+                                            <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='3'>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star_border</i>
+                                            <i class='material-icons'>star_border</i>
+                                        </label>
+                                        
                                         <br>
-                                        <b>d)</b> <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='4'> {{ $questao->opt4 }}
+                                        <label class='question'>
+                                            <b>d)</b> 
+                                            <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='4'>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star_border</i>
+                                        </label>
+                                        
                                         <br>
-                                        <b>e)</b> <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='5'> {{ $questao->opt5 }}
+                                        <label class='question'>
+                                            <b>e)</b>
+                                            <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='5'>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star</i>
+                                            <i class='material-icons'>star</i>
+                                        </label>
+                                        
                                     </ul>
+
+                                    <hr>
+
+                                    <p>{{ $questao->descricao }}</p>
     
                                 </div>
     

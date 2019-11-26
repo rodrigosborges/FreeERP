@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Avaliacao extends Model
 {
     protected $table = 'avaliacao';
-    protected $fillable = ['nome', 'processo_id', 'funcionario_id', 'setor_id', 'tipo_id', 'status_id', 'data_inicio', 'data_fim'];
+    protected $fillable = ['nome', 'processo_id', 'funcionario_id', 'setor_id', 'tipo_id', 'status_id', 'modelo_id', 'data_inicio', 'data_fim'];
     use SoftDeletes;
 
     public function processo() {
@@ -29,6 +29,10 @@ class Avaliacao extends Model
 
     public function status() {
         return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Status', 'status_id');
+    }
+
+    public function modelo() {
+        return $this->belongsTo('Modules\AvaliacaoDesempenho\Entities\Categoria', 'modelo_id');
     }
 
     public function questoes() {

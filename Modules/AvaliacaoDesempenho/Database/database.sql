@@ -83,6 +83,7 @@ CREATE TABLE `avaliacao` (
   `setor_id` int(11) NOT NULL,
   `tipo_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
+  `modelo_id` int(11) DEFAULT NULL,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -179,11 +180,11 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`id`, `nome`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Capacidade de Gestão', '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
-(2, 'Preparo e Qualificação', '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
-(3, 'Capacidade de Trabalho em Equipe', '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
-(4, 'Compromissos com Resultados', '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
-(5, 'Visão Institucional', '2019-09-22 03:00:00', '2019-10-05 13:36:41', NULL);
+(1, 'Tecnologia da Informação', '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
+(2, 'Juridico', '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
+(3, 'Operacional', '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
+(4, 'Gerencia', '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
+(5, 'Financeiro', '2019-09-22 03:00:00', '2019-10-05 13:36:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -6156,11 +6157,7 @@ CREATE TABLE `processo` (
 CREATE TABLE `questao` (
   `id` int(11) NOT NULL,
   `enunciado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `opt1` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `opt2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `opt3` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `opt4` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `opt5` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `categoria_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -6171,14 +6168,14 @@ CREATE TABLE `questao` (
 -- Extraindo dados da tabela `questao`
 --
 
-INSERT INTO `questao` (`id`, `enunciado`, `opt1`, `opt2`, `opt3`, `opt4`, `opt5`, `categoria_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Capacidade de Orientação', '1', '2', '3', '4', '5', 2, '2019-09-22 03:00:00', '2019-10-02 22:45:41', NULL),
-(2, 'Interação', '1', '2', '3', '4', '5', 3, '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
-(3, 'Orientação par a Eficiencia e Eficacia', '1', '2', '3', '4', '5', 4, '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
-(4, 'Monitoramento', '1', '2', '3', '4', '5', 1, '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
-(5, 'Articulação', '1', '2', '3', '4', '5', 5, '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
-(6, 'Teste orientação', '1', '2', '3', '4', '5', 1, '2019-09-23 02:45:02', '2019-09-23 02:45:02', NULL),
-(7, 'Teste2', '1', '2', '3', '4', '5', 1, '2019-09-23 02:45:33', '2019-09-23 02:45:33', NULL);
+INSERT INTO `questao` (`id`, `enunciado`, `descricao`, `categoria_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Capacidade de Orientação', 'descricao teste', 2, '2019-09-22 03:00:00', '2019-10-02 22:45:41', NULL),
+(2, 'Interação', 'descricao teste', 3, '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
+(3, 'Orientação par a Eficiencia e Eficacia', 'descricao teste', 4, '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
+(4, 'Monitoramento', 'descricao teste', 1, '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
+(5, 'Articulação', 'descricao teste', 5, '2019-09-22 03:00:00', '2019-09-22 03:00:00', NULL),
+(6, 'Teste orientação', 'descricao teste', 1, '2019-09-23 02:45:02', '2019-09-23 02:45:02', NULL),
+(7, 'Teste2', 'descricao teste', 1, '2019-09-23 02:45:33', '2019-09-23 02:45:33', NULL);
 
 -- --------------------------------------------------------
 

@@ -121,7 +121,7 @@ class QuestaoController extends Controller
 
             echo '<pre>';print_r($th->getMessage());exit;
 
-            return back()->with('error', 'Não foi possível cadastrar a Questão')->withInput($request->input());
+            return back()->with('error', 'Não foi possível atualizar a Questão')->withInput($request->input());
         }
     }
 
