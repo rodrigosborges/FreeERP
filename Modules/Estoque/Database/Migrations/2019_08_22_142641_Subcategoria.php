@@ -15,7 +15,7 @@ class Subcategoria extends Migration
     {
         //
         Schema::create('subcategoria', function (Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
             $table->integer('categoria_id')->unsigned()->nullable()->index('fk_categoria_pai');
             $table->softDeletes();
             $table->timestamps();
