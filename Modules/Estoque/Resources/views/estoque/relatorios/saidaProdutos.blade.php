@@ -39,6 +39,7 @@
         </div>
     </div>
 </form>
+<div class="main">
 <div class="row">
     <div class=" col-lg-6 col-md-12 col-sm-12">
         <div class="card" style="min-width:250px;">
@@ -92,45 +93,28 @@
             <div class="card-body">
                 <div class="form-row">
                     <!--L 1-->
-                    <div class="form-group col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group col-lg-6 col-md-12 col-sm-12">
                         <label for="qtd_movimentada">Quantidade Total Movimentada </label>
                         <input type="text" id='qtd_movimentada' class="form-control" disabled>
                     </div>
-                    <div class="form-group col-lg-4 col-md-12 col-sm-12">
-                        <label for="custo_periodo">custo no Período </label>
-                        <input type="text" class="form-control" disabled>
+                    <div class="form-group col-lg-6 col-md-12 col-sm-12">
+                        <label for="custo_periodo">Despesa no periodo </label>
+                        <input type="text" class="form-control despesa" disabled>
                     </div>
-                    <div class="form-group col-lg-4 col-md-12 col-sm-12">
-                        <label for="">Quantidade Movimentada </label>
-                        <input type="text" class="form-control" disabled>
-                    </div>
+                
                     <!--L 2-->
-                    <div class="form-group col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group col-lg-6 col-md-12 col-sm-12">
                         <label for="qtd_movimentada">Dia com maior custo </label>
                         <input type="text" id= "maior_custo" class="form-control" disabled>
                     </div>
 
-                    <div class="form-group  col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group  col-lg-6 col-md-12 col-sm-12">
                         <label>Dia com menor custo</label>
                         <input type="text"  id= "menor_custo" class="form-control" disabled>
                     </div>
-                    <div class="form-group  col-lg-4 col-md-12 col-sm-12">
-                        <label for="">Maior Preço unitário </label>
-                        <input type="text" class="form-control" disabled>
-                    </div>
+                  
                     <!--L3-->
-                    <div class="form-group  col-lg-4 col-md-12 col-sm-12">
-                        <label>Menor preço unitário </label>
-                        <input type="text" class="form-control" disabled>
-                    </div>
-                    <div class="form-group  col-lg-4 col-md-12 col-sm-12">
-                        <label>Dia com maior movimentação </label>
-                        <input type="text" class="form-control" disabled>
-                    </div>
-                    <div class="form-group  col-lg-4 col-md-12 col-sm-12">
-                        <label for="">Dia com menor movimentação</label>
-                        <input type="text" class="form-control" disabled>
-                    </div>
+                  
                 </div>
             </div>
         </div>
@@ -144,7 +128,7 @@
                 <table class="table table-responsive text-center table-striped" style="">
                     <caption>List of users</caption>
                     <thead>
-                        <tr>
+                        <tr class='tr'>
                             <th scope="col">#</th>
                             <th scope="col">Data</th>
                             <th scope="col">Quantidade</th>
@@ -153,13 +137,7 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        <tr>
-                            <td>1</td>
-                            <td>22/11/2018</td>
-                            <td>50</td>
-                            <td>6000</td>
-                            <td>300000</td>
-                        </tr>
+                       
                     </tbody>
                 </table>
             </div>
@@ -170,6 +148,7 @@
         <canvas id="chart2" class="chart_custo" height="250"></canvas>
     </div>
 </div>
+</div>
 
 
 @endsection
@@ -177,13 +156,14 @@
 
 
 <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
-
 <script>
     $(document).ready(function() {
+        $('.main').hide();
        // mostraGrafico1();
        // mostraGrafico2();
         //   $('.chart_custo').hide();
         $('.btn-search').click(function(e) {
+            $('.main').show('slow')
             e.preventDefault()
             var dataInicial = $('.dataInicial').val()
             var dataFinal = $('.dataFinal').val()
@@ -210,9 +190,14 @@
                var datas =[]
                var precos= []
                var produtos=[]
+               var valorTotal = 0
+               var qtdmovimentada =0;
+               var despesa = 0
                $.each(data['movimentacao'],function(chave,valor){
                    datas[chave]= valor['created_at'];
                    precos[chave]= valor['preco_custo']* valor['quantidade'];
+                   valorTotal += precos[chave];
+                   qtdmovimentada +=valor['quantidade'];
                    produtos[chave] =  data['produtos'][chave]['nome']
                  if((valor['preco_custo']* valor['quantidade']) >=diaMaiorCusto){
                      diaMaiorCusto = valor['created_at']
@@ -223,8 +208,11 @@
                })
                $('#maior_custo').val(diaMaiorCusto)
                $('#menor_custo').val(diaMenorCusto)
+               $('.qtdMovimentada').val(qtdmovimentada);
                console.log('Maior custo', diaMaiorCusto)
                console.log('menor custo', diaMenorCusto)
+               console.log('valor total movimentado:'+valorTotal )
+               $('.despesa').val(valorTotal);
                console.log("dados:"+data);
             
                
@@ -236,6 +224,7 @@
              
                 var qtdTotalMovimentada = 0;
                 var precoCustoMedio = 0;
+               
                 $.each(data['estoque'], function(chave, valor) {
                     //  console.log(valor[chave]);
                     qtdTotalMovimentada += valor['quantidade']
@@ -246,6 +235,8 @@
                     //  console.log(valor[chave]);
                     precoCustoMedio += (valor['quantidade'] * valor['preco_custo']) / data['movimentacao'].length;
                 })
+               
+                
               //  console.log(qtdTotalMovimentada)
                 if (dataInicial != "" && dataInicial != null) {
                     $('#periodoInicialBusca').val(dataInicial);
@@ -277,8 +268,9 @@
         function insertDataInTable(estoque, movimentacao){
             
             var linhas ="";
+            $('.tr').remove();
             $.each(estoque,function(chave,valor){
-                linhas+=  "<tr><td>"+valor['id']+"</td><td>"+valor['created_at']+"</td><td>"+valor['quantidade']+"</td><td>"+movimentacao[chave]['preco_custo']+"</td><td>"+(+movimentacao[chave]['preco_custo']*valor['quantidade']) +"</td></tr>"
+                linhas+=  "<tr class='tr'><td>"+valor['id']+"</td><td>"+valor['created_at']+"</td><td>"+valor['quantidade']+"</td><td>"+movimentacao[chave]['preco_custo']+"</td><td>"+(+movimentacao[chave]['preco_custo']*valor['quantidade']) +"</td></tr>"
           
             })
            $('#tbody').append(linhas);
