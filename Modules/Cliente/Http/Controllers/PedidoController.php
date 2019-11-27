@@ -16,12 +16,17 @@ class PedidoController extends Controller
    //view listagem
     public function index($cliente_id)
     {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $cliente = Cliente::findOrFail($cliente_id);
 
         return view('cliente::pedidos.index',compact('cliente'));
     }
 
     public function table(Request $request, $cliente_id, $status) {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     
         
         if ($status != 'ativos' && $status != 'inativos') return ;
@@ -46,7 +51,9 @@ class PedidoController extends Controller
 
     //view novo pedido
     public function novo($cliente_id){
-
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $cliente = Cliente::findOrFail($cliente_id);
         $produtos = Produto::all();
         
@@ -57,11 +64,17 @@ class PedidoController extends Controller
 
     public function create()
     {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         return view('cliente::create');
     }
 
     //Salvar Pedido
     public function store(CreatePedidoRequest $request, $id_cliente) {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $valores = $request->all();
         $valores["cliente_id"] = $id_cliente;
         
@@ -101,6 +114,9 @@ class PedidoController extends Controller
     
     public function edit($pedido_id)
     {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $pedido = Pedido::findOrFail($pedido_id);
         $cliente = $pedido->cliente;
         $produtos = Produto::all();
@@ -110,6 +126,9 @@ class PedidoController extends Controller
 
     public function update(CreatePedidoRequest $request, $pedido_id)
     {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $pedido = Pedido::findOrFail($pedido_id);
         $produtos = $request->input('produtos');
         $params = $request->all();
@@ -144,6 +163,9 @@ class PedidoController extends Controller
     }
     // Deletar ou restaurar varios
     public function deleteMultiples(Request $request){
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $ids = $request->ids;
         $tipo = $request->tipo;
 
@@ -167,6 +189,9 @@ class PedidoController extends Controller
 
     public function destroy($pedido_id)
     {   
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $pedido = Pedido::withTrashed()->findOrFail($pedido_id);
         DB::beginTransaction();
         try{
@@ -188,6 +213,9 @@ class PedidoController extends Controller
 
 
     public function pdf($cliente_id, $start, $end){
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $cliente = Cliente::findOrFail($cliente_id);
         $start = new Carbon($start);
         $end = new Carbon($end);
@@ -206,6 +234,9 @@ class PedidoController extends Controller
     }
 
     public function getData(){
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $cliente = Cliente::findOrFail(1);
         $data = new Carbon("2019");
         $pedidos = $cliente->pedidos()->whereYear( 'data', '=', $data )->get();
@@ -214,6 +245,9 @@ class PedidoController extends Controller
 
     public function dashboard()
     {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         return view('cliente::dashboard.index');
     }
 

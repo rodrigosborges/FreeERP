@@ -15,17 +15,25 @@ class DashboardController extends Controller
     
     public function index()
     {
-
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $produtos = Produto::all();
         $anos = Pedido::select(DB::raw('YEAR(data) as ano'))->orderBy('ano', 'desc')->groupBy('ano')->get();
         return view('cliente::dashboard.index', compact('produtos', 'anos'));
     }
 
     public function getTotalVendas($ano){
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         return $pedidos = Pedido::whereYear('data', '=', $ano)->get()->count();
 
     }
     public function getTotalClientes($ano){
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         // $pedidos = Pedido::whereYear('data', '=', $ano)->get();
         // $clientes = [];
         // foreach($pedidos as $pedido){
@@ -40,6 +48,9 @@ class DashboardController extends Controller
 
 
     public function getMediaGasto($ano){
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $pedidos = Pedido::whereYear('data', '=', $ano)->get();
         $vl_total_pedido = 0;
         if (count($pedidos) > 0) {
@@ -55,6 +66,9 @@ class DashboardController extends Controller
     }
     public function getVendasMes($ano)
     {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         dd("teste");
         $pedidos = Pedido::whereYear('data', '=', $ano)->get();
         
@@ -83,6 +97,9 @@ class DashboardController extends Controller
 
 
     public function getVendasProdutoMes($id_produto, $ano){
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $produto = Produto::findOrFail($id_produto);
 
         $pedidos = $produto->pedidos()->whereYear('data', '=', $ano)->get();

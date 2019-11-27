@@ -14,10 +14,16 @@ class ClienteController extends Controller
 {
     
     public function index(Request $request) {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
         
+
         return view('cliente::cliente.index');
     }
     public function table(Request $request, $status) {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         if ($status != 'ativos' && $status != 'inativos') return ;
 
         $clientes = new Cliente;
@@ -35,6 +41,9 @@ class ClienteController extends Controller
     }
     
     public function create() {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $tipo_cliente = TipoCliente::all();
         $tipo_telefone = TipoTelefone::all();
         $estados = Estado::all();
@@ -44,7 +53,9 @@ class ClienteController extends Controller
 
 
     public function store(CreateClienteRequest $request) {
-        
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         DB::beginTransaction();
         try {
             $dados = $request->all();
@@ -94,8 +105,10 @@ class ClienteController extends Controller
     //     return view('cliente::show');
     // }
 
-    public function edit($id)
-    {
+    public function edit($id){
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $tipo_cliente = TipoCliente::all();
         $tipo_telefone = TipoTelefone::all();
         $estados = Estado::all();
@@ -110,7 +123,9 @@ class ClienteController extends Controller
     }
 
     public function update(CreateClienteRequest $request, $id){
-            
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
             $dados = $request->all();
 
       
@@ -155,6 +170,9 @@ class ClienteController extends Controller
     }
 
     public function destroy($id) {
+        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+            return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
+    
         $cliente = Cliente::withTrashed()->findOrFail($id);
         if($cliente->trashed()){
             $cliente->restore();
