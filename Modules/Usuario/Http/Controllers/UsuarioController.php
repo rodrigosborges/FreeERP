@@ -41,11 +41,11 @@ class UsuarioController extends Controller
 
     public function create()
     {
-        if (Gate::allows('administrador',Auth::user())|| Gate::allows('operador',Auth::user())) {
+        if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())) {
             $papeis = Papel::all();
             $modulos = Modulo::all();
             return view('usuario::usuario.form',compact('papeis','modulos'));
-        }         
+        }
         return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     
     }
