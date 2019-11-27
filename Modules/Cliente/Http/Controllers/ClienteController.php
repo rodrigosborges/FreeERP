@@ -1,7 +1,8 @@
 <?php
 
 namespace Modules\Cliente\Http\Controllers;
-
+use Gate;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;

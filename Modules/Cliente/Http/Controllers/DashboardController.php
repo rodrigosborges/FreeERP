@@ -1,7 +1,8 @@
 <?php
 
 namespace Modules\Cliente\Http\Controllers;
-
+use Gate;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -15,7 +16,7 @@ class DashboardController extends Controller
     
     public function index()
     {
-        if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
+        if(!Gate::allows('administrador', Auth::user()) && !Gate::allows('operador', Auth::user())  ) 
             return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     
         $produtos = Produto::all();
