@@ -84,6 +84,7 @@ class UsuarioController extends Controller
                 return back()->with('success', 'Usuário cadastrado com sucesso');
             }catch(\Exception $e){
                 DB::rollback();
+                return $e;
                 return back()->with('error', 'Erro no servidor');
         }
     }
