@@ -12,7 +12,7 @@
                 This view is loaded from module: {!! config('usuario.name') !!}
             </p> -->
 
-            <form id="loginForm" method="POST" action="/logar">
+            <form id="loginForm" method="POST" action="{{url('/logar')}}">
                         
                     @csrf
 

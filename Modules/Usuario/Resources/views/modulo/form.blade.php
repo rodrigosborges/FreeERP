@@ -33,7 +33,7 @@
                             <i class="material-icons mr-2">save</i>Salvar
                         </button>
                 </form>
-                        <a class="btn btn-secondary d-flex align-items-center" href="/modulo">
+                        <a class="btn btn-secondary d-flex align-items-center" href="{{url('/modulo')}}">
                             <i class="material-icons mr-2">view_list</i> Módulos Cadastrados
                         </a>
                     </div>

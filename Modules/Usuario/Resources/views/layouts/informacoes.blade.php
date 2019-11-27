@@ -5,10 +5,10 @@
 
 <?php
     $menu = [
-        ['icon' => 'person', 'tool' => 'Usuário', 'route' => '/usuario'],
-        ['icon' => 'add_circle', 'tool' => 'Módulo', 'route' => '/modulo'],
-        ['icon' => 'contacts', 'tool' => 'Papel', 'route' => '/papel'],
-        ['icon' => 'power_settings_new', 'tool' => 'Sair', 'route' => '/logout'],
+        ['icon' => 'person', 'tool' => 'Usuário', 'route' => url('/usuario')],
+        ['icon' => 'add_circle', 'tool' => 'Módulo', 'route' => url('/modulo')],
+        ['icon' => 'contacts', 'tool' => 'Papel', 'route' => url('/papel')],
+        ['icon' => 'power_settings_new', 'tool' => 'Sair', 'route' => url('/logout')],
     ];
     $moduleInfo = [
         'icon' => 'person',

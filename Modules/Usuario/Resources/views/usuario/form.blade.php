@@ -102,7 +102,7 @@
                             <i class="material-icons mr-2">save</i>Salvar
                         </button>
                 </form>
-                        <a class="btn btn-secondary d-flex align-items-center" href="/usuario">
+                        <a class="btn btn-secondary d-flex align-items-center" href="{{url('/usuario')}}">
                             <i class="material-icons mr-2">view_list</i> Usuários Cadastrados
                         </a>
                     </div>
