@@ -1,5 +1,5 @@
 <?php
-namespace app\Entities;
+namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 
 class Relacao extends Model{

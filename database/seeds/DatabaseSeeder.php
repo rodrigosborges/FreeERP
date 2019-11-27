@@ -16,9 +16,10 @@ class DatabaseSeeder extends Seeder
             CidadeSeeder::class,
             EstadoCivilSeeder::class,
             TipoTelefoneSeeder::class,
-            TipoDocumentoSeeder::class,
             ParentescoSeeder::class,
-            TipoClienteSeeder::class,
+            TipoDemissaoSeeder::class,
+            TipoAvisoPrevioIndicador::class,
+            TipoDocumentoSeeder::class
         ]);
     }
 }

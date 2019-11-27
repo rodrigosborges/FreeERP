@@ -9,19 +9,19 @@ class EstadoCivilSeeder extends Seeder{
     {
         DB::table('estado_civil')->insert([
             [
-                'nome'          => 'Solteiro',
+                'nome'          => 'Solteiro(a)',
             ],
             [
-                'nome'          => 'Casado',
+                'nome'          => 'Casado(a)',
             ],
             [
-                'nome'          => 'Separado',
+                'nome'          => 'Separado(a)',
             ],
             [
-                'nome'          => 'Divorciado',
+                'nome'          => 'Divorciado(a)',
             ],
             [
-                'nome'          => 'Viúvo',
+                'nome'          => 'Viúvo(a)',
             ],
         ]);
     }

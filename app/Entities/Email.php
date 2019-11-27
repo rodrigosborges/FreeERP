@@ -6,8 +6,11 @@ class Email extends Model{
 
     protected $table = 'email';
 
-    protected $fillable = ['email'];
+    protected $fillable = ['email','id'];
 
     public $timestamps = false;
     
+    public function funcionario(){
+        return $this->hasOne('Modules/Entities/Funcionario');
+    }
 }   

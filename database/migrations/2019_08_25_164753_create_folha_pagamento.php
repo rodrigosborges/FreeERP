@@ -13,18 +13,21 @@ class CreateFolhaPagamento extends Migration
      */
     public function up()
     {
-        Schema::create('folha_pagamento', function(Blueprint $table)
+        Schema::create('pagamento', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->double('salario', 9,2); //1,000 a 999999,999
-			$table->double('horas_extras', 3,2)->nullable();
-			$table->double('adicional_noturno', 3,2)->nullable();
-			$table->double('inss', 3,2);
+			$table->double('valor', 9,2); //1,000 a 999999,999
+			$table->integer('horas_extras');
+			$table->integer('adicional_noturno');
+			$table->integer('tipo_hora_extra');
+			$table->double('inss', 7,2);
             $table->integer('faltas');
             $table->date('emissao');
+            $table->double('total', 9,2);
+            $table->string('tipo_pagamento');
             $table->integer('funcionario_id')->index('fk_folha_pagamento_funcionario1');
+            $table->softDeletes();
             $table->timestamps();
-			$table->softDeletes();
 		});
     }
 
@@ -35,6 +38,6 @@ class CreateFolhaPagamento extends Migration
      */
     public function down()
     {
-        Schema::drop('folha_pagamento');
+        Schema::dropIfExists('pagamento');
     }
 }

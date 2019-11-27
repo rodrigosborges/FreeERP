@@ -26,6 +26,7 @@ class UsuarioDatabaseSeeder extends Seeder{
             'papel_id' => 1,            
             'email' => 'admin@freeerp.com',
             'password' => bcrypt('password'),
+            'reset_password_token' =>'',
         ]);
 
         Model::unguard();
