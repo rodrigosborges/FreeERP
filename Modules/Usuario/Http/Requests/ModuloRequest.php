@@ -15,7 +15,7 @@ class ModuloRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => ['required', 'min:3', 'max:50', 'unique:modulo']
+            'nome' => ['required', 'min:3', 'max:50', 'unique:modulo,nome,'. $this->route('id')]
         ];
     }
 

@@ -47,8 +47,6 @@ class ModuloController extends Controller
      */
     public function create()
     {
-        $papeis = Papel::all();
-
         return view('usuario::modulo.form', compact('papeis'));
     }
 

@@ -50,7 +50,7 @@ class UsuarioController extends Controller
     
     }
 
-    public function store(Request $request)
+    public function store(UsuarioStoreRequest $request)
     {
         if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
             DB::beginTransaction();
@@ -109,8 +109,7 @@ class UsuarioController extends Controller
     }
 
     public function update(UsuarioUpdateRequest $request, $id)
-    {
-        
+    {   
         if (Gate::allows('administrador',Auth::user()) || Gate::allows('operador',Auth::user())  ) {
             DB::beginTransaction();
             try{
@@ -119,7 +118,6 @@ class UsuarioController extends Controller
                 $usuario->update([
                     'apelido' => $request->apelido,
                     'email' => $request->email,
-                    'papel_id' => $request->papel
                 ]);
                 
                 //pegando a imagem 
@@ -128,9 +126,7 @@ class UsuarioController extends Controller
                 if($avatar && $avatar->isValid()){
                     $name = uniqid(date('HisYmd'));
                     $extension = $request->avatar->extension();
-
                     $nameFile = "{$name}.{$extension}";
-
                     $upload = $request->avatar->storeAs('img/avatars',$nameFile);
                 
                     if(!$upload){
