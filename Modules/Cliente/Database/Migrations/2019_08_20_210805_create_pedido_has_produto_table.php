@@ -15,7 +15,7 @@ class CreatePedidoHasProdutoTable extends Migration {
 		Schema::create('pedido_has_produto', function(Blueprint $table)
 		{
 			$table->integer('pedido_id');
-			$table->integer('produto_id')->index('fk_pedido_has_produto_produto1');
+			$table->integer('produto_id');
 			$table->integer('quantidade');
 			$table->float('desconto', 10, 0)->nullable();
 			$table->primary(['pedido_id','produto_id']);
