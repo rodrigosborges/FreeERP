@@ -36,8 +36,8 @@ class PainelTecnicoController extends Controller
             'model' => OrdemServico::where('tecnico_id', null)
             ->where('status_id','<>',$idStatusConcluida)
             ->where('status_id','<>',$idStatusInutilizado)->get(),
-            'thead' => ['Protocolo', 'Solicitante', 'Status','Problema','Prioridade'],
-            'row_db' => ['protocolo', 'solicitante_id', 'status_id','problema_id','prioridade'],
+            'thead' => ['Protocolo','Acompanhamento','Data Abertura','Data ult. modificação','Solicitante', 'Status', 'Prioridade'],
+            'row_db' => ['protocolo','numero_acompanhamento','created_at','updated_at','solicitante_id', 'status_id', 'prioridade'],
             'create' => false,
             'acoes' => []
         ];
@@ -51,8 +51,8 @@ class PainelTecnicoController extends Controller
         $data = [
             'title' => 'Minhas Ordens de Serviços',
             'model' => OrdemServico::where('tecnico_id', Auth::user()->id)->where('status_id', '<>', $idStatusConcluida)->where('status_id', '<>', $idStatusInutilizado)->get(),
-            'thead' => ['Protocolo', 'Solicitante', 'Status','Problema','Prioridade'],
-            'row_db' => ['protocolo', 'solicitante_id', 'status_id','problema_id','prioridade'],
+            'thead' => ['Protocolo','Acompanhamento','Data Abertura','Data ult. modificação','Solicitante', 'Status', 'Prioridade'],
+            'row_db' => ['protocolo','numero_acompanhamento','created_at','updated_at','solicitante_id', 'status_id', 'prioridade'],
             'create' => false,
             'status' => Status::pluck('titulo', 'id'),
             'route' => 'modulo.tecnico.painel.',
