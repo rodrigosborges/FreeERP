@@ -55,6 +55,11 @@
             <h3>Pagamentos</h3>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('relatorios.index')}}">
+            <h3>Relatórios</h3>
+        </a>
+    </li>
 </ul>
 <div class="row text-center d-flex justify-content-center">
     

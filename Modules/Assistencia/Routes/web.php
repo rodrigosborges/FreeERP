@@ -81,6 +81,8 @@ Route::prefix('assistencia')->group(function() {
     Route::get('pagamento/table/{status}', 'PagamentoController@table');
     /*JS*/
     Route::get('cliente/table', 'ClienteController@table');
+
+    Route::get('relatorios', ['as' =>'relatorios.index','uses' =>'RelatoriosController@index']);
 });
 
 
