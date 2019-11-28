@@ -10,20 +10,21 @@ class RespostaAvaliacao extends FormRequest {
     
     public function rules() {
         
-        $input = $this->input('avaliacao');
+        // $input = $this->input('avaliacao');
         
-        Validator::extend('valid_avaliacao', function($attribute, $value, $parametes) use($input) {
-            $avaliacao = Avaliacao::findOrFail($input['avaliacao_id']);
+        // Validator::extend('valid_avaliacao', function($attribute, $value, $parametes) use($input) {
 
-            if (count($input['questoes']) == count($avaliacao->questoes)) {
-                return true;
-            } else {
-                return false;
-            }
-        });
+        //     foreach ($input['questoes'] as $key => $val) {
+        //         if (empty($val)) {
+        //             return false;
+        //         } else {
+        //             return true;
+        //         }
+        //     }
+        // });
         
         return [
-            'avaliacao' => 'valid_avaliacao',
+            // 'avaliacao' => 'valid_avaliacao',
             'avaliacao.questoes' => 'required',
             'avaliacao.questoes.*' => 'required'
         ];
@@ -32,8 +33,8 @@ class RespostaAvaliacao extends FormRequest {
     public function messages() {
 
         return [
-            'required' => 'Este campo é obrigatorio.',
-            'valid_avaliacao' => 'É obrigatorio responder todas as questões antes de submeter o formulário'
+            'required' => 'Todas as questões são obrigatorias.',
+            // 'valid_avaliacao' => 'É obrigatorio responder todas as questões antes de submeter o formulário'
         ];
     }
 }
