@@ -30,14 +30,14 @@ class RelatoriosController extends Controller
         elseif($req->status == 3)
             $consertos = ConsertoAssistenciaModel::all();
 
-    
-        // if($req->data_inicio && $req->data_final){
-        //     $periodo = 'Filtro de '.date('d/m/Y', strtotime($req->data_inicio)).' até '.date('d/m/Y', strtotime($req->data_final));
-        // } elseif($req->data_inicio) {
-        //     $periodo = 'Filtro a partir de '.date('d/m/Y', strtotime($req->data_inicio)).' até hoje.';
-        // } elseif($req->data_final){
-        //     $periodo = 'Filtro do inicio até '.date('d/m/Y', strtotime($req->data_final));
-        // }
+        $periodo = 'Relatório de todo o periodo';
+        if($req->data_inicio && $req->data_final){
+            $periodo = 'Relatório de '.date('d/m/Y', strtotime($req->data_inicio)).' até '.date('d/m/Y', strtotime($req->data_final));
+        } elseif($req->data_inicio) {
+            $periodo = 'Relatório a partir de '.date('d/m/Y', strtotime($req->data_inicio)).' até hoje.';
+        } elseif($req->data_final){
+            $periodo = 'Relatório do inicio até '.date('d/m/Y', strtotime($req->data_final));
+        }
             
         if($req->data_inicio)
             $consertos = $consertos->where('updated_at' , '>=' , $req->data_inicio);
@@ -48,12 +48,12 @@ class RelatoriosController extends Controller
             
         if($req->tipo == 1) {
             $itemServico = ItemServico::all();
-            return view('assistencia::paginas.relatorios.servicos', compact('consertos','itemServico'));
+            return view('assistencia::paginas.relatorios.servicos', compact('consertos','itemServico','periodo'));
         }elseif($req->tipo == 2){
-            return view('assistencia::paginas.relatorios.tecnicos', compact('consertos'));
+            return view('assistencia::paginas.relatorios.tecnicos', compact('consertos','periodo'));
         }elseif($req->tipo == 3){
             $pecaOS = PecaOs::all();
-            return view('assistencia::paginas.relatorios.pecas', compact('consertos','pecaOS'));
+            return view('assistencia::paginas.relatorios.pecas', compact('consertos','pecaOS','periodo'));
         }
         
         

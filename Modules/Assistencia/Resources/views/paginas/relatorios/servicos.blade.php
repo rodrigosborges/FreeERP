@@ -1,4 +1,4 @@
-
+{{$periodo}}
 <table class="table">
 <tr>
     <th>OS nº</th>
@@ -12,12 +12,15 @@
     <?php
         $itemServico = $itemServico->where('idConserto', $conserto->id);
     ?>
-    @foreach ($itemServico as $servico)
-        <td>
-            {{$servico->servico->nome}} | R${{number_format( $servico->servico->valor , 2, ',', '.')}}
-        </td>
-    @endforeach
-
+    @if(count($itemServico) > 0)
+        @foreach ($itemServico as $servico)
+            <td>
+                {{$servico->servico->nome}} | R${{number_format( $servico->servico->valor , 2, ',', '.')}}
+            </td>
+        @endforeach
+    @else
+        <td>Nenhum serviço para esta OS</td>
+    @endif
 </tr>
 
 @endforeach

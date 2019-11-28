@@ -10,7 +10,8 @@ $menu = [
     ['icon' => 'extension', 'tool' => 'Peças', 'route' => 'pecas.localizar'],
     ['icon' => 'gavel', 'tool' => 'Mão de obra', 'route' => 'servicos.localizar'],
     ['icon' => 'payment', 'tool' => 'Pagamentos', 'route' => 'pagamento.index'],
-    ['icon' => 'perm_identity', 'tool' => 'Técnicos', 'route' => 'tecnico.index']
+    ['icon' => 'perm_identity', 'tool' => 'Técnicos', 'route' => 'tecnico.index'],
+    ['icon' => 'print', 'tool' => 'Relatórios', 'route' => 'relatorios.index']
 ];
 ?>
 <!DOCTYPE html>

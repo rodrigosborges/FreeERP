@@ -6,7 +6,7 @@
         <div class="row d-flex text-center justify-content-between align-items-center">
             <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
             <h3>Técnicos</h3>
-            <a href="{{url('/assistencia/consertos')}}"><i class="material-icons">keyboard_arrow_right</i></a>
+            <a href="{{route('relatorios.index')}}"><i class="material-icons">keyboard_arrow_right</i></a>
         </div>
     </div>
     <div class="card-body">

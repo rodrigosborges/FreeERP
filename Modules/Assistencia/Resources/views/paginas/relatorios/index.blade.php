@@ -5,7 +5,7 @@
         <div class="row d-flex text-center justify-content-between align-items-center">
             <a href="{{url('/assistencia')}}"><i class="material-icons mr-2">home</i></button></a>
             <h3>Gerar Relatórios</h3>
-            <a href="{{url('/assistencia/tecnico')}}"><i class="material-icons">keyboard_arrow_right</i></a>
+            <a href="{{url('/assistencia/consertos')}}"><i class="material-icons">keyboard_arrow_right</i></a>
         </div>
     </div>
     <div class="card-body">
@@ -51,13 +51,13 @@
             </div>
             
         </div>
-        <div class="col-12 text-center">
+        <div class="col-12 form-group text-center">
             <button class="btn btn-success" id="gerar">Gerar</button>
         </div>
         <div class="card ">
-            <div class="card-header d-flex justify-content-around">
+            <div class="card-header d-flex justify-content-around align-items-center">
                 <h3>Relatório</h3>
-                <button>imprimir</button>
+                <a id="print" style="cursor:pointer;color:blue;"><i class="material-icons">print</i></a>
             </div>
             <div class="card-body text-center relatorio ">
                 Nenhum relatório gerado até o momento
@@ -69,6 +69,7 @@
 
 @stop
 @section('js')
+<script src="{{Module::asset('assistencia:js/bibliotecas/printThis.js')}}"></script>
 <script>
 $(document).on('click', '#gerar', function(e){
     e.preventDefault();
@@ -89,6 +90,9 @@ $(document).on('click', '#gerar', function(e){
     $.get(main_url+'/assistencia/relatorios/gerar?data_inicio='+data_inicio+'&data_final='+data_final+'&tipo='+tipo+'&status='+status, function(table){
         $('.relatorio').html(table)
     })
+})
+$(document).on('click','#print', function(){
+    $(".relatorio").printThis();
 })
 
 </script>
