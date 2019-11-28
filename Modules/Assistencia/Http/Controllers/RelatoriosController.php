@@ -22,6 +22,7 @@ class RelatoriosController extends Controller
      * @return Response
      */
     public function gerar(Request $req){
+ 
         if($req->status == 1)
             $consertos = ConsertoAssistenciaModel::withTrashed()->get();
         elseif($req->status == 2)
@@ -29,12 +30,21 @@ class RelatoriosController extends Controller
         elseif($req->status == 3)
             $consertos = ConsertoAssistenciaModel::all();
 
-        
+    
+        // if($req->data_inicio && $req->data_final){
+        //     $periodo = 'Filtro de '.date('d/m/Y', strtotime($req->data_inicio)).' até '.date('d/m/Y', strtotime($req->data_final));
+        // } elseif($req->data_inicio) {
+        //     $periodo = 'Filtro a partir de '.date('d/m/Y', strtotime($req->data_inicio)).' até hoje.';
+        // } elseif($req->data_final){
+        //     $periodo = 'Filtro do inicio até '.date('d/m/Y', strtotime($req->data_final));
+        // }
+            
         if($req->data_inicio)
-            $consertos = $consertos->where('deleted_at' , '>=' , $req->data_inicio);
+            $consertos = $consertos->where('updated_at' , '>=' , $req->data_inicio);
         
         if($req->data_final)
-            $consertos = $consertos->where('deleted_at' , '<=' , $req->data_final);
+            $consertos = $consertos->where('updated_at' , '<=' , $req->data_final);
+            
             
         if($req->tipo == 1) {
             $itemServico = ItemServico::all();
@@ -47,7 +57,7 @@ class RelatoriosController extends Controller
         }
         
         
-       
+        
         
     }
     public function create()

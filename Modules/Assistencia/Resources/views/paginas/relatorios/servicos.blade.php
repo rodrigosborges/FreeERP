@@ -1,4 +1,5 @@
-<table>
+
+<table class="table">
 <tr>
     <th>OS nº</th>
 

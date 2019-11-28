@@ -9,8 +9,6 @@
         </div>
     </div>
     <div class="card-body">
-    <form id="form" method="POST" action="{{route('relatorios.gerar')}}">
-        @csrf
         <div class="row">
             <div class="form-group col-lg-4 col-12">
                 <label for="data-inicio">Data inicial</label>
@@ -54,17 +52,17 @@
             
         </div>
         <div class="col-12 text-center">
-            <button class="btn btn-success">Gerar</button>
+            <button class="btn btn-success" id="gerar">Gerar</button>
         </div>
-    
-    </form>
-        
-
-        
-
-        
-
-   
+        <div class="card ">
+            <div class="card-header d-flex justify-content-around">
+                <h3>Relatório</h3>
+                <button>imprimir</button>
+            </div>
+            <div class="card-body text-center relatorio ">
+                Nenhum relatório gerado até o momento
+            </div>
+        </div>
     </div>
 
 </div>
@@ -72,27 +70,26 @@
 @stop
 @section('js')
 <script>
-$(document).on('click', '#filtrar', function() {
-    var data_inicio = $("[name='data-inicio']").val();
-    var data_fim = $("[name='data-final']").val();
+$(document).on('click', '#gerar', function(e){
+    e.preventDefault();
+    data_inicio = $("[name='data_inicio']").val()
+    data_final = $("[name='data_final']").val()
+    tipo = $("[name='tipo']").val()
+    status = $("[name='status']").val()
 
-    if(data_inicio && data_fim){
-        if(data_fim<data_inicio){
-            $('#data').text('Data final não pode ser menor que data inicial!')
+    if(data_inicio && data_final){
+        if(data_final<data_inicio){
+            $('#data').text('Data final não pode ser menor que data inicial.')
         }else {
             $('#data').text(' ')
             table('Pago', 'pagos')
             table('Pendente', 'pendentes') 
         }
-    }else {
-        $('#data').text(' ')
-        table('Pago', 'pagos')
-        table('Pendente', 'pendentes') 
     }
-
-
-    
-
+    $.get(main_url+'/assistencia/relatorios/gerar?data_inicio='+data_inicio+'&data_final='+data_final+'&tipo='+tipo+'&status='+status, function(table){
+        $('.relatorio').html(table)
+    })
 })
+
 </script>
 @endsection
