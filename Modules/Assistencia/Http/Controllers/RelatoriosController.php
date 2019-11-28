@@ -5,7 +5,7 @@ namespace Modules\Assistencia\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Assistencia\Entities\{ConsertoAssistenciaModel};
+use Modules\Assistencia\Entities\{ConsertoAssistenciaModel,ItemServico,PecaOs};
 class RelatoriosController extends Controller
 {
     /**
@@ -22,20 +22,33 @@ class RelatoriosController extends Controller
      * @return Response
      */
     public function gerar(Request $req){
+        if($req->status == 1)
+            $consertos = ConsertoAssistenciaModel::withTrashed()->get();
+        elseif($req->status == 2)
+            $consertos = ConsertoAssistenciaModel::onlyTrashed()->get();
+        elseif($req->status == 3)
+            $consertos = ConsertoAssistenciaModel::all();
 
         
-        $consertos = ConsertoAssistenciaModel::where('deleted_at' , '>=' , $request->data_inicio);
-        $consertos = $consertos::where('deleted_at' , '>=' , $request->data_final);
+        if($req->data_inicio)
+            $consertos = $consertos->where('deleted_at' , '>=' , $req->data_inicio);
         
-        $data = DB::table('conserto_assistencia')->join('ferias', 'funcionario.id', '=', 'ferias.funcionario_id')
-            ->join('pagamento', 'funcionario.id', '=', 'pagamento.funcionario_id')
-            ->where([
-                ['data_inicio', '>=', $dataInicio],
-                ['data_fim', '<=', $dataFim],
-                ['tipo_pagamento', '=', 'ferias'],
-            ])->select('funcionario.nome', 'ferias.data_inicio', 'ferias.data_fim', 'pagamento.total')->get();
-
-        return $data;
+        if($req->data_final)
+            $consertos = $consertos->where('deleted_at' , '<=' , $req->data_final);
+            
+        if($req->tipo == 1) {
+            $itemServico = ItemServico::all();
+            return view('assistencia::paginas.relatorios.servicos', compact('consertos','itemServico'));
+        }elseif($req->tipo == 2){
+            return view('assistencia::paginas.relatorios.tecnicos', compact('consertos'));
+        }elseif($req->tipo == 3){
+            $pecaOS = PecaOs::all();
+            return view('assistencia::paginas.relatorios.pecas', compact('consertos','pecaOS'));
+        }
+        
+        
+       
+        
     }
     public function create()
     {

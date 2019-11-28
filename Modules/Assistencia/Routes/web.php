@@ -83,6 +83,7 @@ Route::prefix('assistencia')->group(function() {
     Route::get('cliente/table', 'ClienteController@table');
 
     Route::get('relatorios', ['as' =>'relatorios.index','uses' =>'RelatoriosController@index']);
+    Route::post('relatorios/gerar', ['as' =>'relatorios.gerar','uses' =>'RelatoriosController@gerar']);
 });
 
 

@@ -32,5 +32,8 @@ class ConsertoAssistenciaModel extends Model
     public function servico(){ //relacionamento ao servico/mao de obra
         return $this->hasMany('Modules\Assistencia\Entities\ServicoAssistenciaModel', 'idMaoObra')->withTrashed();
     }
+    public function servicos(){
+        return $this->hasMany('Modules\Assistencia\Entities\ItemServico');
+    }
 
 }

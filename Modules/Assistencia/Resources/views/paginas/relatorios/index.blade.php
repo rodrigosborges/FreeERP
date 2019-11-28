@@ -9,7 +9,8 @@
         </div>
     </div>
     <div class="card-body">
-    <form id="form">
+    <form id="form" method="POST" action="{{route('relatorios.gerar')}}">
+        @csrf
         <div class="row">
             <div class="form-group col-lg-4 col-12">
                 <label for="data-inicio">Data inicial</label>
@@ -37,10 +38,23 @@
             <div class="col-6 form-group">
                 <label for="">Relatório desejado: </label>
                 <select class="form-control" name="tipo">
-                    <option value="">Técnicos</option>
+                    <option value="1">Serviços</option>
+                    <option value="2">Técnicos</option>
+                    <option value="3">Peças</option>
+                </select>
+            </div>
+            <div class="col-6 form-group">
+                <label for="">Status da ordem: </label>
+                <select name="status" class="form-control">
+                    <option value="1">Finalizadas e não finalizadas</option>
+                    <option value="2">Apenas finalizadas</option>
+                    <option value="3">Apenas não finalizadas</option>
                 </select>
             </div>
             
+        </div>
+        <div class="col-12 text-center">
+            <button class="btn btn-success">Gerar</button>
         </div>
     
     </form>
