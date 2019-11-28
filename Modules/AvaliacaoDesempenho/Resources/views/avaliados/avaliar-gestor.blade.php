@@ -59,62 +59,21 @@
                             
                             <hr>
                     
-                            <b>Alternativas:</b>
+                            <b>Resposta:</b>
                             <ul>
-                                <br>
-                                <label class='question'>
-                                    <b>a)</b> 
-                                    <input required type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='1'> 
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star_border</i>
-                                    <i class='material-icons'>star_border</i>
-                                    <i class='material-icons'>star_border</i>
-                                    <i class='material-icons'>star_border</i>
-                                </label>
 
                                 <br>
-                                <label class='question'>
-                                    <b>b)</b> 
-                                    <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='2'>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star_border</i>
-                                    <i class='material-icons'>star_border</i>
-                                    <i class='material-icons'>star_border</i>
-                                </label>
-                                
-                                <br>
-                                <label class='question'>
-                                    <b>c)</b> 
-                                    <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='3'>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star_border</i>
-                                    <i class='material-icons'>star_border</i>
-                                </label>
-                                
-                                <br>
-                                <label class='question'>
-                                    <b>d)</b> 
-                                    <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='4'>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star_border</i>
-                                </label>
-                                
-                                <br>
-                                <label class='question'>
-                                    <b>e)</b>
-                                    <input type="radio" name='avaliacao[questoes][{{$questao->id}}]' value='5'>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star</i>
-                                    <i class='material-icons'>star</i>
-                                </label>
+                                <button class='btn btn-lg' type="button" onclick="control(this)">
+                                    <label class='question'>
+                                        <i class='material-icons md-48 star'>star_border</i>
+                                        <i class='material-icons md-48 star'>star_border</i>
+                                        <i class='material-icons md-48 star'>star_border</i>
+                                        <i class='material-icons md-48 star'>star_border</i>
+                                        <i class='material-icons md-48 star'>star_border</i>
+                                    </label>
+                                </button>
+
+                                <input class='input' type="hidden" id="{{$key}}" name='avaliacao[questoes][{{$questao->id}}]' value='' required>
                                 
                             </ul>
 

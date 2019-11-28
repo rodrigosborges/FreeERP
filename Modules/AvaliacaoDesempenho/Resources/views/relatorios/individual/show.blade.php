@@ -73,7 +73,6 @@
                 <ul class='opt-list'>
                     @if ($data['respostas'][$questao->id] == 1)
                         <li class='question'>
-                            <p>a)</p>
                             <i class='material-icons'>star</i>
                             <i class='material-icons'>star_border</i>
                             <i class='material-icons'>star_border</i>
@@ -84,7 +83,6 @@
 
                     @if ($data['respostas'][$questao->id] == 2)
                         <li class='question'>
-                            <p>b)</p>
                             <i class='material-icons'>star</i>
                             <i class='material-icons'>star</i>
                             <i class='material-icons'>star_border</i>
@@ -95,7 +93,6 @@
 
                     @if ($data['respostas'][$questao->id] == 3)
                         <li class='question'>
-                            <p>c)</p>
                             <i class='material-icons'>star</i>
                             <i class='material-icons'>star</i>
                             <i class='material-icons'>star</i>
@@ -106,7 +103,6 @@
 
                     @if ($data['respostas'][$questao->id] == 4)
                         <li class='question'>
-                            <p>d)</p>
                             <i class='material-icons'>star</i>
                             <i class='material-icons'>star</i>
                             <i class='material-icons'>star</i>
@@ -117,7 +113,6 @@
 
                     @if ($data['respostas'][$questao->id] == 5)
                         <li class='question'>
-                            <p>e)</p> 
                             <i class='material-icons'>star</i>
                             <i class='material-icons'>star</i>
                             <i class='material-icons'>star</i>

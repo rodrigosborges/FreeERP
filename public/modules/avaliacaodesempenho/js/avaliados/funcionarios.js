@@ -51,3 +51,34 @@ function nextPrev(n) {
     showTab(currentTab);
 }
 
+function control(obj) {
+    var all = $(obj).children().children('.star')
+
+    if (all.length > 0) {
+        modify = all[0]
+        
+        $(modify).removeClass('star')
+        $(modify).addClass('modified')
+        $(modify).html('star')
+
+    } else {
+        var all = $(obj).children().children('.modified')
+
+        Object.keys(all).map((key) => {
+            if (!isNaN(key)) {
+                $(all[key]).removeClass('modified')
+                $(all[key]).addClass('star')
+                $(all[key]).html('star_border')
+            }
+        })
+    }
+
+    var input = $(obj).siblings('.input')
+
+    if ($(obj).children().children('.modified').length) {
+        input.val($(obj).children().children('.modified').length)
+    } else {
+        input.val('')
+    }
+}
+

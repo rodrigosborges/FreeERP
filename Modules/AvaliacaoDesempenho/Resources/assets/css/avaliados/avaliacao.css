@@ -73,6 +73,6 @@
     cursor: pointer;
 }
 
-.question input {
-    margin: 8px 10px;
+.card-body ul button {
+    margin: 0 -40px;
 }
