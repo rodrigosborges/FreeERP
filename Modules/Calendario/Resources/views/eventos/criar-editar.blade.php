@@ -24,14 +24,14 @@
 
         <!-- Titulo -->
             <div class="form-group">
-                <label for="eventoTitulo">Título</label>
+                <label for="eventoTitulo" class="font-weight-bold">Título</label>
                 <input type="text" class="form-control" id="eventoTitulo" name="eventoTitulo" value="{{isset($evento) ? $evento->titulo : old('eventoTitulo')}}"
                        required autofocus maxlength="100">
             </div>
 
             <!-- Data -->
             <div class="form-group">
-                <label for="eventoDataInicio">Período</label>
+                <label for="eventoDataInicio" class="font-weight-bold">Período</label>
                 <div class="input-group">
                     <input type="text" class="form-control datetimepicker-input" name="eventoDataInicio"
                            id="eventoDataInicio" data-toggle="datetimepicker" data-target="#eventoDataInicio" required>
@@ -112,7 +112,7 @@
             <!-- Agenda -->
             <div class="form-row">
                 <div class="form-group">
-                    <label for="eventoAgenda">Agenda</label>
+                    <label for="eventoAgenda" class="font-weight-bold">Agenda</label>
                     <select id="eventoAgenda" class="form-control" name="eventoAgenda" required
                             @if(isset($evento) && $rota != 'eventos.duplicar') disabled @endif>
                         @foreach($agendas as $agenda)

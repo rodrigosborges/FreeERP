@@ -17,7 +17,7 @@
             @csrf
             {{isset($agenda) ? method_field('PUT') : ''}}
             <div class="form-group">
-                <label for="agendaNome">Título</label>
+                <label for="agendaNome" class="font-weight-bold">Título</label>
                 <input type="text" name="agendaNome" id="agendaNome" class="form-control" maxlength="100"
                        value="{{isset($agenda) ? $agenda->titulo : old('agendaNome')}}" required autofocus>
             </div>
@@ -27,7 +27,7 @@
                           maxlength="500">{{isset($agenda) ? $agenda->descricao : old('agendaDescricao')}}</textarea>
             </div>
             <div class="form-group">
-                <label for="agendaCor">Cor</label>
+                <label for="agendaCor" class="font-weight-bold">Cor</label>
                 <select id="agendaCor" name="agendaCor" required>
                     @foreach($cores as $cor)
                         <option value="{{$cor->id}}" data-color="#{{$cor->codigo}}"

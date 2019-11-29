@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="Melhoria no js do DataTable">
+    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="Ajuste no nome do projeto">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarAlteracaoEvento.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarAlteracaoEvento.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarConviteParaEvento.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarConviteParaEvento.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarEventoProximo.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarEventoProximo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/template.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/template.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar-editar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar-editar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar-editar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar-editar.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,7 +258,7 @@
       <workItem from="1574719740424" duration="1361000" />
       <workItem from="1574886881728" duration="74000" />
       <workItem from="1574961867622" duration="23000" />
-      <workItem from="1575063636591" duration="261000" />
+      <workItem from="1575063636591" duration="613000" />
     </task>
     <task id="LOCAL-00001" summary="Echo substituido pelo pusher-js">
       <created>1573085202447</created>
@@ -355,7 +351,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573768070229</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Ajuste no nome do projeto">
+      <created>1575064036688</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1575064036689</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -389,12 +392,13 @@
     <MESSAGE value="Adicionado jQuery DataTables" />
     <MESSAGE value="Correção nos botões de ações de eventos e agendas" />
     <MESSAGE value="Melhoria no js do DataTable" />
-    <option name="LAST_COMMIT_MESSAGE" value="Melhoria no js do DataTable" />
+    <MESSAGE value="Ajuste no nome do projeto" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajuste no nome do projeto" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="473" y="96" width="860" height="810" key="CommitChangelistDialog2" timestamp="1575064016861">
+    <state x="473" y="96" width="860" height="810" key="CommitChangelistDialog2" timestamp="1575064036380">
       <screen x="59" y="27" width="1621" height="1023" />
     </state>
-    <state x="473" y="96" width="860" height="810" key="CommitChangelistDialog2/59.27.1621.1023@59.27.1621.1023" timestamp="1575064016861" />
+    <state x="473" y="96" width="860" height="810" key="CommitChangelistDialog2/59.27.1621.1023@59.27.1621.1023" timestamp="1575064036380" />
   </component>
 </project>

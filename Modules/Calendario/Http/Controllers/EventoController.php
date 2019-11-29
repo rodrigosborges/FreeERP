@@ -37,7 +37,7 @@ class EventoController extends Controller
     public function notificar()
     {
 
-        User::find(1)->notify(new NotificarEventoProximo(Evento::find(1)));
+        User::find(1)->notify(new NotificarEventoProximo(Evento::find(2)));
     }
 
     /**
