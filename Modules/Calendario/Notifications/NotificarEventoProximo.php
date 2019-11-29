@@ -50,7 +50,7 @@ class NotificarEventoProximo extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from('freeerp@ifspcaraguatatuba.edu.br', 'FreeERP')
+                    ->from('erpedu@ifspcaraguatatuba.edu.br', 'ERPedu')
                     ->subject('Evento prestes a ocorrer')
                     ->greeting('Olá!')
                     ->line('O evento "' . $this->evento->titulo . '" está prestes a ocorrer.')

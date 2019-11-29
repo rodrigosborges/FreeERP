@@ -57,6 +57,7 @@
         @endif
 
         @if($convites['definidos']->isNotEmpty())
+            <hr>
             <p class="text-secondary">Aceitos e/ou recusados:</p>
             <table class="convites table table-striped table-hover">
                 <thead>

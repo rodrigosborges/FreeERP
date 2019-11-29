@@ -51,7 +51,7 @@ class NotificarAlteracaoEvento extends Notification
                 . ' até ' . Carbon::parse($this->convite->evento->data_fim)->format('d/m/Y H:i');
         }
         return (new MailMessage)
-            ->from('freeerp@ifspcaraguatatuba.edu.br', 'FreeERP')
+            ->from('erpedu@ifspcaraguatatuba.edu.br', 'ERPedu')
             ->subject('Alteração de evento')
             ->greeting('Olá!')
             ->line('Alteração em evento que você confirmou presença.')

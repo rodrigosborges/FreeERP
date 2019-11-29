@@ -51,7 +51,7 @@ class NotificarConviteParaEvento extends Notification
                 . ' até ' . Carbon::parse($this->convite->evento->data_fim)->format('d/m/Y H:i');
         }
         return (new MailMessage)
-            ->from('freeerp@ifspcaraguatatuba.edu.br', 'FreeERP')
+            ->from('erpedu@ifspcaraguatatuba.edu.br', 'ERPedu')
             ->subject('Convite para evento')
             ->greeting('Olá!')
             ->line('Você foi convidado para um evento.')

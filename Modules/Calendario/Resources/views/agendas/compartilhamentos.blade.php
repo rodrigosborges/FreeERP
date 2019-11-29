@@ -49,6 +49,7 @@
         @endif
 
         @if($solicitacoes['aprovadas'])
+            <hr>
             <p class="text-secondary">Aprovados:</p>
             <table class="compartilhamentos table table-striped table-hover">
                 <thead>

@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="Melhoria no js do DataTable">
-      <change afterPath="$PROJECT_DIR$/.idea/php-test-framework.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarAlteracaoEvento.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarAlteracaoEvento.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarConviteParaEvento.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarConviteParaEvento.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarEventoProximo.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Notifications/NotificarEventoProximo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/template.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/template.blade.php" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,7 +55,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="b4e2db765df73513d6a6a711418a24e119e958da" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -170,10 +170,16 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1TGQUYrMFVoeTXwMHCy6IA9gsIK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -183,18 +189,6 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="PHPUnit.EventoTest">
     <configuration name="AgendaTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
@@ -231,6 +225,18 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -251,6 +257,12 @@
       <workItem from="1574183472305" duration="12267000" />
       <workItem from="1574364717781" duration="12035000" />
       <workItem from="1574465443853" duration="1598000" />
+      <workItem from="1574718854407" duration="29000" />
+      <workItem from="1574718914709" duration="212000" />
+      <workItem from="1574719740424" duration="1361000" />
+      <workItem from="1574886881728" duration="74000" />
+      <workItem from="1574961867622" duration="23000" />
+      <workItem from="1575063636591" duration="261000" />
     </task>
     <task id="LOCAL-00001" summary="Echo substituido pelo pusher-js">
       <created>1573085202447</created>
@@ -378,5 +390,11 @@
     <MESSAGE value="Correção nos botões de ações de eventos e agendas" />
     <MESSAGE value="Melhoria no js do DataTable" />
     <option name="LAST_COMMIT_MESSAGE" value="Melhoria no js do DataTable" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="473" y="96" width="860" height="810" key="CommitChangelistDialog2" timestamp="1575064016861">
+      <screen x="59" y="27" width="1621" height="1023" />
+    </state>
+    <state x="473" y="96" width="860" height="810" key="CommitChangelistDialog2/59.27.1621.1023@59.27.1621.1023" timestamp="1575064016861" />
   </component>
 </project>
