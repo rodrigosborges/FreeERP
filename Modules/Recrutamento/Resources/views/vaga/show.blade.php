@@ -17,7 +17,12 @@
                     <td><b>Salário:</b> {{$data['vaga']->salario}}</td>
                 </tr>
                 <tr>
-                    <td><b>Benefícios:</b> {{strtoupper($data['vaga']->beneficios)}}</td>
+                    <td>
+                    <b>Benefícios:</b>
+                    @foreach($data['vaga']->beneficios()->get() as $beneficio)
+                        {{$beneficio->nome.' '}} 
+                    @endforeach
+                    </td>
                     <td><b>Escolaridade:</b> Ensino {{$data['vaga']->escolaridade}}</td>
                 </tr>
                 <tr>

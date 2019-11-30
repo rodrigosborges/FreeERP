@@ -23,7 +23,8 @@ class CategoriaController extends Controller
             ['icon' => 'work', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
             ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
             ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
-            ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/email'],
+            ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/mensagem/malaDireta'],
+            ['icon' => 'card_giftcard', 'tool' => 'Benefícios', 'route' => '/recrutamento/beneficio'],
             ['icon' => 'power_settings_new', 'tool' => 'Logout', 'route' => '/logout'],
 		];
     }
@@ -125,7 +126,7 @@ class CategoriaController extends Controller
         $menu = $this->menu;
         $data = [
             'url'       => url('recrutamento/categoria/'.$id), 
-            'title'		=> "Atualziação de Categoria",
+            'title'		=> "Atualização de Categoria",
             'button'    => "Atualizar",
             'model'     => Categoria::findOrFail($id),
             "voltar"    => url('recrutamento/categoria'),

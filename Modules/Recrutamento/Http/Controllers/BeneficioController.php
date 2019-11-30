@@ -3,16 +3,15 @@
 namespace Modules\Recrutamento\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
-use Modules\Recrutamento\Entities\{Email};
+use Modules\Recrutamento\Entities\{Beneficio};
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Recrutamento\Http\Requests\{EmailRequest};
 
-
-class EmailMensagemController extends Controller
+class BeneficioController extends Controller
 {
+    protected $moduleInfo;
+    protected $menu;
     public function  __construct(){
         $this->moduleInfo = [
             'icon' => 'people',
@@ -24,22 +23,35 @@ class EmailMensagemController extends Controller
             ['icon' => 'work', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
             ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
             ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
-            ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/email'],
+            ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/mensagem/malaDireta'],
+            ['icon' => 'card_giftcard', 'tool' => 'Benefícios', 'route' => '/recrutamento/beneficio'],
             ['icon' => 'power_settings_new', 'tool' => 'Logout', 'route' => '/logout'],
 		];
     }
 
-
-    public function index()
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function index(Request $request)
     {
+        if($request->pesquisa != "" || $request->pesquisa != null){
+            $pesquisa = Beneficio::where('nome', 'like', '%'.$request->pesquisa.'%')->get();
+            $pesquisa_inativos = Beneficio::onlyTrashed()->where('nome', 'like', '%'.$request->pesquisa.'%')->get();
+        }else{
+            $pesquisa = Beneficio::all();
+            $pesquisa_inativos = Beneficio::onlyTrashed()->get();
+        }
+        
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-			'emails'		=> Email::all(),
-			'emails_inativos'		=> Email::onlyTrashed()->get(),
-			'title'		=> "Email",
+            'beneficios'	=>  $pesquisa,
+            'beneficios_inativos'	=> $pesquisa_inativos,
+            'title'		=> "Lista de Benefícios",
+            
 		]; 
-        return view('recrutamento::email.index', compact('data','moduleInfo','menu'));
+        return view('recrutamento::beneficio.index', compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -51,13 +63,13 @@ class EmailMensagemController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-			'url'       => url('recrutamento/email'), 
-            'title'		=> "Cadastro de Email",
+            'url'       => url('recrutamento/beneficio'), 
+            'title'		=> "Cadastro de Benefício",
             'button'    => "Salvar",
             'model'     => null,
-            "voltar"    => url('recrutamento/email'),
+            "voltar"    => url('recrutamento/beneficio'),
 		]; 
-        return view('recrutamento::email.form', compact('data','moduleInfo','menu'));
+        return view('recrutamento::beneficio.form', compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -65,20 +77,13 @@ class EmailMensagemController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(EmailRequest $request)
+    public function store(Request $request)
     {
-        $emails = Email::all();
-        foreach($emails as $email){
-            if(strtoupper($request->email) == strtoupper($email->email)){
-                return back()->with('error', 'Esse email já existe');
-            }
-        }
-
         DB::beginTransaction();
 		try{    
-            $email = Email::Create($request->all());          
+            $etapa = Beneficio::Create($request->all());          
 			DB::commit();
-			return redirect('/recrutamento/email')->with('success', 'Email cadastrado com sucesso');
+			return redirect('/recrutamento/beneficio')->with('success', 'Benefício cadastrada com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -92,7 +97,7 @@ class EmailMensagemController extends Controller
      */
     public function show($id)
     {
-        //
+       // 
     }
 
     /**
@@ -105,13 +110,13 @@ class EmailMensagemController extends Controller
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
-            'url'       => url('recrutamento/email/'.$id), 
-            'title'		=> "Atualziação de Email",
+            'url'       => url('recrutamento/beneficio/'.$id), 
+            'title'		=> "Atualziação de Benefício",
             'button'    => "Atualizar",
-            'model'     => Email::findOrFail($id),
-            "voltar"    => url('recrutamento/email'),
+            'model'     => Beneficio::findOrFail($id),
+            "voltar"    => url('recrutamento/beneficio'),
 		]; 
-        return view('recrutamento::email.form', compact('data','moduleInfo','menu'));
+        return view('recrutamento::beneficio.form', compact('data','moduleInfo','menu'));
     }
 
     /**
@@ -120,23 +125,14 @@ class EmailMensagemController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(EmailRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $emails = Email::all();
-        foreach($emails as $email){
-            if($email->id != $id){
-                if(strtoupper($request->email) == strtoupper($email->email)){
-                    return back()->with('error', 'Email já existe');
-                }
-            }
-        }
-
         DB::beginTransaction();
 		try{    
-            $email = Email::FindOrFail($id);
-            $email->update($request->all());          
+            $beneficio = Beneficio::FindOrFail($id);
+            $beneficio->update($request->all());          
 			DB::commit();
-			return redirect('/recrutamento/email')->with('success', 'Email atualizado com sucesso');
+			return redirect('/recrutamento/beneficio')->with('success', 'Benefício atualizada com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -152,10 +148,10 @@ class EmailMensagemController extends Controller
     {
         DB::beginTransaction();
 		try{    
-            $email = Email::FindOrFail($id);
-            $email->delete();          
+            $beneficio = Beneficio::FindOrFail($id);
+            $beneficio->delete();          
 			DB::commit();
-			return redirect('/recrutamento/email')->with('success', 'Email deletado com sucesso');
+			return redirect('/recrutamento/beneficio')->with('success', 'Benefício deletada com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
@@ -166,14 +162,13 @@ class EmailMensagemController extends Controller
     {
         DB::beginTransaction();
 		try{    
-            $email = Email::onlyTrashed()->where('id', $id)->first();
-            $email->restore();          
+            $beneficio = Beneficio::onlyTrashed()->where('id', $id)->first();
+            $beneficio->restore();          
 			DB::commit();
-			return redirect('/recrutamento/email')->with('success', 'Email restaurado com sucesso');
+			return redirect('/recrutamento/beneficio')->with('success', 'Benefício restaurada com sucesso');
 		}catch(Exception $e){
 			DB::rollback();
 			return back()->with('error', 'Erro no servidor');
 		}
     }
-
 }

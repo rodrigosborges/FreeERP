@@ -26,6 +26,7 @@ class CargoController extends Controller
             ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
             ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
             ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/email'],
+            ['icon' => 'card_giftcard', 'tool' => 'Benefícios', 'route' => '/recrutamento/beneficio'],
             ['icon' => 'power_settings_new', 'tool' => 'Logout', 'route' => '/logout'],
 		];
     }

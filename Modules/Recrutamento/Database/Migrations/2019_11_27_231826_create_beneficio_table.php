@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmailMensagemTable extends Migration
+class CreateBeneficioTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateEmailMensagemTable extends Migration
      */
     public function up()
     {
-        Schema::create('email_mensagem', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->string('email');
-            $table->softDeletes();
+        Schema::create('beneficio', function (Blueprint $table) {
+            $table->integer('id',true);
+            $table->string('nome');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +28,6 @@ class CreateEmailMensagemTable extends Migration
      */
     public function down()
     {
-        Schema::drop('email_mensagem');
+        Schema::drop('beneficio');
     }
 }

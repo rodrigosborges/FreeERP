@@ -30,7 +30,8 @@ class CandidatoController extends Controller
                 ['icon' => 'work', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
                 ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
                 ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
-                ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/email'],
+                ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/mensagem/malaDireta'],
+                ['icon' => 'card_giftcard', 'tool' => 'Benefícios', 'route' => '/recrutamento/beneficio'],
                 ['icon' => 'power_settings_new', 'tool' => 'Logout', 'route' => '/logout'],
             ];
        
@@ -96,11 +97,11 @@ class CandidatoController extends Controller
 
             $upload = $request->curriculum->storeAs('curriculos', $nameFile);
             if(!$upload){
-                return redirect()->back()->with('error', 'Falha no upload do curriculum');
+                return back()->with('error', 'Falha no upload do curriculum');
             }
         }
         else{
-            return redirect()->back()->with('error', 'Falha, formato de curriculum inválido');
+            return back()->with('error', 'Falha, formato de curriculum inválido');
         }
 
         //Upload do Foto

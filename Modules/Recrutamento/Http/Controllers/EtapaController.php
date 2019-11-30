@@ -25,7 +25,8 @@ class EtapaController extends Controller
             ['icon' => 'work', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
             ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
             ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
-            ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/email'],
+            ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/mensagem/malaDireta'],
+            ['icon' => 'card_giftcard', 'tool' => 'Benefícios', 'route' => '/recrutamento/beneficio'],
             ['icon' => 'power_settings_new', 'tool' => 'Logout', 'route' => '/logout'],
 		];
     }

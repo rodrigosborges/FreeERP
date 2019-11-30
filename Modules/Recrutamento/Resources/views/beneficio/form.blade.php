@@ -14,18 +14,18 @@
             <div class="form-group">
             <div class="form-row">
                 <div class="col-md-12">    
-                    <label for="email" class="control-label">Email</label>
-                    <input type="email" required name="email" id="email" class="form-control" value="{{ $data['model'] ? $data['model']->email : old('email', "") }}">
-                    <label class="errors"> {{ $errors->first('email') }} </label>
+                    <label for="nome" class="control-label">Nome</label>
+                    <input required type="text" name="nome" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', "") }}">
+                    <label class="errors"> {{ $errors->first('nome') }} </label>
                 </div>
             </div>
     </div>
     </div>
     <div class="card-footer">
         <div class="form-row">
-            <a class="btn btn-light " href="{{ $data['voltar'] }}"> Voltar</a>
-            <button type="submit" class="btn btn-success "> {{ $data['button'] }} </button>
-        </div>
+                <a class="btn btn-light mr-sm-3" href="{{ $data['voltar'] }}"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+                <button type="submit" class="btn btn-success flot"> {{ $data['button'] }} </button>
+            </div>
         </form>
     </div>
     </div>

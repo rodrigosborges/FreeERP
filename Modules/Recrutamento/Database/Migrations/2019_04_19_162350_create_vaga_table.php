@@ -19,7 +19,8 @@ class CreateVagaTable extends Migration
             $table->string('salario');
             $table->longText('descricao')->nullable($value = true);
             $table->string('regime');
-            $table->string('beneficios');
+            $table->string('interessado_nome');
+            $table->string('interessado_email');
             $table->string('escolaridade');
             $table->string('especificacoes')->nullable($value = true);
             $table->boolean('status');

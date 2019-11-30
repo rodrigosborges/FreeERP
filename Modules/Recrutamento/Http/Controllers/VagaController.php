@@ -5,7 +5,7 @@ namespace Modules\Recrutamento\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Modules\Recrutamento\Entities\{Vaga,Candidato,Cargo,Categoria};
+use Modules\Recrutamento\Entities\{Vaga,Candidato,Cargo,Categoria,Beneficio};
 use App\Entities\{Estado,Cidade,TipoTelefone,Telefone,Endereco};
 use Auth;
 use Modules\Recrutamento\Http\Requests\{VagaRequest};
@@ -31,7 +31,8 @@ class VagaController extends Controller
             ['icon' => 'work', 'tool' => 'Cargos', 'route' => '/recrutamento/cargo'],
             ['icon' => 'assignment', 'tool' => 'Etapas', 'route' => '/recrutamento/etapa'],
             ['icon' => 'group', 'tool' => 'Candidatos', 'route' => '/recrutamento/candidato'],
-            ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/email'],
+            ['icon' => 'email', 'tool' => 'Emails', 'route' => '/recrutamento/mensagem/malaDireta'],
+            ['icon' => 'card_giftcard', 'tool' => 'Benefícios', 'route' => '/recrutamento/beneficio'],
             ['icon' => 'power_settings_new', 'tool' => 'Logout', 'route' => '/logout'],
         ];
     }
@@ -78,6 +79,7 @@ class VagaController extends Controller
 			"model"		=> null,
             'title'		=> "Cadastrar Vaga",
             'cargos'    => Cargo::all(), 
+            'beneficios'    => Beneficio::all(), 
 		];
         return view('recrutamento::vaga.form',compact('data','moduleInfo','menu'));
     }
@@ -88,12 +90,20 @@ class VagaController extends Controller
      * @return Response
      */
     public function store(VagaRequest $request)
-    {
+    {   
+        
         DB::beginTransaction();
 		try{
             
-            $vaga = Vaga::Create($request->all());
+            $vaga = Vaga::Create($request->vaga);
             
+            if($request->beneficios != null){
+
+                foreach($request->beneficios as $beneficio){
+                    $vaga->beneficios()->attach($beneficio);
+                }
+            }
+
 			DB::commit();
 			return redirect('/recrutamento/vaga')->with('success', 'Vaga cadastrada com sucesso');
 		}catch(Exception $e){
@@ -132,7 +142,13 @@ class VagaController extends Controller
      * @return Response
      */
     public function edit($id)
-    {
+    {   
+        $vaga = Vaga::findOrFail($id);
+        $model_beneficios = array();
+        foreach($vaga->beneficios()->get() as $data){
+            array_push($model_beneficios,$data->pivot->beneficio_id);
+        }  
+
         $moduleInfo = $this->moduleInfo;
         $menu = $this->menu;
         $data = [
@@ -141,8 +157,15 @@ class VagaController extends Controller
 			"model"		=> Vaga::findOrFail($id),
             'title'		=> "Atualizar Vaga",
             'cargos'    => Cargo::all(),
-		];
+            'beneficios'    => Beneficio::all(), 
+            'model_beneficios'    => $model_beneficios, 
+        ];
+        
+        
+
+
         return view('recrutamento::vaga.form',compact('data','moduleInfo','menu'));
+        
     }
 
     /**
@@ -153,20 +176,19 @@ class VagaController extends Controller
      */
     public function update(VagaRequest $request, $id)
     {
-        $salario = str_replace('.','',$request->salario);
-        $salario = str_replace(',','.',$salario);
-        $upVaga = array(
-            'cargo' => $request->cargo,
-            'status' => $request->status,
-            'especificacoes' =>$request->especificacoes,
-            'descricao' => $request->descricao,
-            'salario' => $salario,
-            'escolaridade'=>$request->escolaridade
-        );
         DB::beginTransaction();
 		try{
             $vaga = Vaga::findOrFail($id);
-            $vaga->update($upVaga);
+            $vaga->update($request->vaga);
+
+            $vaga->beneficios()->detach();
+            if($request->beneficios != null){
+                foreach($request->beneficios as $beneficio){
+                    $vaga->beneficios()->attach($beneficio);
+                }
+            }
+            
+
 			DB::commit();
 			return redirect('recrutamento/vaga')->with('success', 'Vaga atualizada com sucesso');
 		}catch(Exception $e){

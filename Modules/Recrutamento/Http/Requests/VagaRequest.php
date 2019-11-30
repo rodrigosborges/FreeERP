@@ -14,20 +14,20 @@ class VagaRequest extends FormRequest
     public function rules()
     {
         return [
-            'cargo_id' => 'required',
-            'salario' => 'required',
-            'escolaridade' => 'required',
-            'status' => 'required',
-            'regime' => 'required',
-            'beneficios' => 'required',
-            'descricao' => 'required',
-            'especificacoes' => 'required',
+            // 'cargo_id' => 'required',
+            // 'salario' => 'required',
+            // 'escolaridade' => 'required',
+            // 'status' => 'required',
+            // 'regime' => 'required',
+            // 'beneficios' => 'required',
+            // 'descricao' => 'required',
+            // 'especificacoes' => 'required',
         ];
     }
 
     public function messages() {
         return [
-            'required' => 'Este campo é obrigatório!'
+            // 'required' => 'Este campo é obrigatório!'
         ];
     }
 }

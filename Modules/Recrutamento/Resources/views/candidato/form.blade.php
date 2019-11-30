@@ -17,7 +17,7 @@
             <div class="form-row">
                 <div class="col-md-12">    
                     <label for="nome" class="control-label font-weight-bold">Nome</label>
-                    <input type="text" required name="candidato[nome]" id="nome" class="form-control" value="{{ $data['model'] ? $data['model']->nome : old('nome', "") }}">
+                    <input type="text" required name="candidato[nome]" id="nome" class="form-control" value="{{  old('candidato.nome', $data['model'] ? $data['model']->nome : '') }}">
                     <label class="errors"> {{ $errors->first('nome') }} </label>
                 </div>
             </div>
@@ -26,7 +26,6 @@
 
                 <div class="col-sm">
                     <p><b>Vaga:</b> {{$data['vaga']->cargo->first()->nome}}.</p>
-                    <p><b>Categoria:</b> {{$data['vaga']->cargo->first()->categoria()->first()->nome}}.</p>
                 </div>
 
                 <div class="col">
@@ -63,7 +62,7 @@
                         <i class="material-icons">email</i>
                     </span>
                 </div>
-                <input required type="text" placeholder="E-mail" name="email[email]" id="email" class="form-control" value="{{ old('email', $data['model'] ? $data['model']->email()->email : '') }}">
+                <input required type="text" placeholder="E-mail" name="email[email]" id="email" class="form-control" value="{{ old('email.email', $data['model'] ? $data['model']->email()->email : '') }}">
             </div>
                 <span class="errors"> {{ $errors->first('email') }} </span>
             </div>
@@ -83,7 +82,7 @@
 
             <div class="col-sm">
                 <label for="numero" class="control-label">Número</label>
-                <input type="text" required name="telefone[numero]"  id="numero" class="form-control sp_celphones" value="{{ $data['model'] ? $data['model']->telefones->numero : old('numero', "") }}">
+                <input type="text" required name="telefone[numero]"  id="numero" class="form-control sp_celphones" value="{{ old('numero', $data['model'] ? $data['model']->telefones->numero : '') }}">
                 <label class="errors"> {{ $errors->first('telefone.numero') }} </label>
             </div>
             </div>
@@ -184,7 +183,7 @@
                                     <i class="material-icons">location_on</i>
                                 </span>
                             </div>
-                            <input required type="text" placeholder="N°" name="endereco[numero]" id="numero" class="form-control numero" value="{{ old('endereco.numero', $data['model'] ? $data['model']->endereco()->numero : '') }}">
+                            <input required type="number" placeholder="N°" name="endereco[numero]" id="numero" class="form-control numero" value="{{ old('endereco.numero', $data['model'] ? $data['model']->endereco()->numero : '') }}">
                         </div>
                         <span class="errors"> {{ $errors->first('endereco.numero') }} </span>
                     </div>
@@ -267,8 +266,6 @@
                     $(".bairro").val(data.bairro).prop('readonly', true);
 
                     $(".logradouro").val(data.logradouro).prop('readonly', true);
-
-                    $("#complemento").val(data.complemento).prop('readonly', true);
 
                     $(".estados option").each(function () {
                         if($(this).data("uf") == data.uf){

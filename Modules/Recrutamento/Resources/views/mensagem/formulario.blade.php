@@ -1,4 +1,5 @@
 @extends('template')
+
 @section('content')
     
     <div class="card">
@@ -15,18 +16,9 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <label for="assunto" class="control-label">Assunto</label>
                         <input required type="text" name="assunto" id="assunto" class="form-control" value="{{ $data['model'] ? $data['model']->assunto : old('assunto', "") }}">
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="email" class="control-label">Email</label>
-                        <select name="email" id="email" class="form-control">
-                            <option value="">Selecione um Email</option>
-                            @foreach($data['emails'] as $email)
-                                <option value="{{$email->email}}">{{$email->email}}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
             </div>
@@ -34,7 +26,7 @@
 
             <div class="form-group">
                 <label class="font-weight-bold" for="mensagem">Mensagem</label>
-                <textarea class="form-control" id="mensagem" name="mensagem" rows="6"></textarea>
+                <textarea class="form-control" id="mensagem" name="mensagem" rows="6">Olá {{$data['candidato']->nome}} Você foi selecionado para etapa de ..... Local: Horário: </textarea>
             </div>
 
             <div class="form-group">
@@ -43,10 +35,13 @@
             </div>
 
             <input type="text" name="candidato_id" value="{{$data['candidato']->id}}" style="display:none">
+            <input type="text" name="email" value="" style="display:none">
 
         </form>
     </div>
     </div>
     
 
+@endsection
+@section('js')
 @endsection
