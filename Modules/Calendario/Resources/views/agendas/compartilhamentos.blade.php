@@ -31,10 +31,10 @@
                         <td>{{$solicitacao->agenda->funcionario->nome}}</td>
                         <td>{{\Carbon\Carbon::parse($solicitacao->created_at)->format('d/m/Y H:i')}}</td>
                         <td class="acoes">
-                            <a href="{{route('compartilhamentos.deletar', $solicitacao)}}" class="btn btn-secondary btn-sm text-white deletar-compartilhamento">
+                            <a href="{{route('compartilhamentos.deletar', $solicitacao)}}" class="btn btn-secondary btn-sm text-white deletar-compartilhamento" data-toggle="tooltip" title="Excluir solicitação">
                                 <i class="material-icons">delete</i>
                             </a>
-                            <a href="{{route('compartilhamentos.aprovar', $solicitacao)}}" class="btn btn-success btn-sm text-white aprovar-compartilhamento">
+                            <a href="{{route('compartilhamentos.aprovar', $solicitacao)}}" class="btn btn-success btn-sm text-white aprovar-compartilhamento" data-toggle="tooltip" title="Aprovar compartilhamento">
                                 <i class="material-icons">done</i>
                             </a>
                         </td>
@@ -72,7 +72,7 @@
                         <td>{{\Carbon\Carbon::parse($solicitacao->created_at)->format('d/m/Y H:i')}}</td>
                         <td class="acoes">
                             <a href="{{route('compartilhamentos.revogar', $solicitacao)}}"
-                               class="btn btn-info btn-sm text-white small revogar-compartilhamento">
+                               class="btn btn-info btn-sm text-white small revogar-compartilhamento" data-toggle="tooltip" title="Revogar compartilhamento">
                                 <i class="material-icons">redo</i>
                             </a>
                         </td>

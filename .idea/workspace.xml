@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="Ajuste no nome do projeto">
+    <list default="true" id="fc5deec3-8cfe-4dbe-8691-1bdd6965e394" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Http/Controllers/EventoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/compartilhamentos.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar-editar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/agendas/criar-editar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/convites.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar-editar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Calendario/Resources/views/eventos/criar-editar.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -258,7 +259,8 @@
       <workItem from="1574719740424" duration="1361000" />
       <workItem from="1574886881728" duration="74000" />
       <workItem from="1574961867622" duration="23000" />
-      <workItem from="1575063636591" duration="613000" />
+      <workItem from="1575063636591" duration="708000" />
+      <workItem from="1575073532371" duration="490000" />
     </task>
     <task id="LOCAL-00001" summary="Echo substituido pelo pusher-js">
       <created>1573085202447</created>
@@ -358,7 +360,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575064036689</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Indicação de campos obrigatórios">
+      <created>1575064313152</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1575064313152</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,12 +402,21 @@
     <MESSAGE value="Correção nos botões de ações de eventos e agendas" />
     <MESSAGE value="Melhoria no js do DataTable" />
     <MESSAGE value="Ajuste no nome do projeto" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajuste no nome do projeto" />
+    <MESSAGE value="Indicação de campos obrigatórios" />
+    <option name="LAST_COMMIT_MESSAGE" value="Indicação de campos obrigatórios" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="473" y="96" width="860" height="810" key="CommitChangelistDialog2" timestamp="1575064036380">
+    <state x="473" y="96" width="860" height="810" key="CommitChangelistDialog2" timestamp="1575064313027">
       <screen x="59" y="27" width="1621" height="1023" />
     </state>
-    <state x="473" y="96" width="860" height="810" key="CommitChangelistDialog2/59.27.1621.1023@59.27.1621.1023" timestamp="1575064036380" />
+    <state x="473" y="96" width="860" height="810" key="CommitChangelistDialog2/59.27.1621.1023@59.27.1621.1023" timestamp="1575064313027" />
+    <state x="464" y="274" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1575064353272">
+      <screen x="59" y="27" width="1621" height="1023" />
+    </state>
+    <state x="464" y="274" width="800" height="535" key="Vcs.Push.Dialog.v2/59.27.1621.1023@59.27.1621.1023" timestamp="1575064353272" />
+    <state x="414" y="188" width="1095" height="684" key="find.popup" timestamp="1575074030141">
+      <screen x="59" y="27" width="1621" height="1023" />
+    </state>
+    <state x="414" y="188" width="1095" height="684" key="find.popup/59.27.1621.1023@59.27.1621.1023" timestamp="1575074030141" />
   </component>
 </project>

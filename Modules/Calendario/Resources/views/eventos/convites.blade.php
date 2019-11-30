@@ -43,10 +43,10 @@
                         <td>{{$convite->evento->agenda->funcionario->nome}}</td>
                         <td>{{\Carbon\Carbon::parse($convite->created_at)->format('d/m/Y H:i')}}</td>
                         <td class="acoes">
-                            <a href="{{route('convites.deletar', $convite->id)}}" class="btn btn-secondary btn-sm text-white small deletar-convite">
+                            <a href="{{route('convites.deletar', $convite->id)}}" class="btn btn-secondary btn-sm text-white small deletar-convite" data-toggle="tooltip" title="Excluir convite">
                                 <i class="material-icons">delete</i>
                             </a>
-                            <a href="{{route('convites.aceitar', $convite->id)}}" class="btn btn-success btn-sm text-white small aceitar-convite">
+                            <a href="{{route('convites.aceitar', $convite->id)}}" class="btn btn-success btn-sm text-white small aceitar-convite" data-toggle="tooltip" title="Confirmar presença">
                                 <i class="material-icons">thumb_up</i>
                             </a>
                         </td>
@@ -91,7 +91,7 @@
                         <td>{{$convite->evento->agenda->funcionario->nome}}</td>
                         <td>{{\Carbon\Carbon::parse($convite->created_at)->format('d/m/Y H:i')}}</td>
                         <td class="acoes">
-                            <a href="{{route('convites.revogar', $convite->id)}}" class="btn btn-info btn-sm text-white small revogar-convite">
+                            <a href="{{route('convites.revogar', $convite->id)}}" class="btn btn-info btn-sm text-white small revogar-convite" data-toggle="tooltip" title="Desconfirmar">
                                 <i class="material-icons">redo</i>
                             </a>
                         </td>

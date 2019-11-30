@@ -126,9 +126,9 @@
                     @endif
                 </div>
             </div>
-            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="submit" class="btn btn-success" data-toggle="tooltip" title="Salvar">Salvar</button>
             @if(isset($evento) && $rota != 'eventos.duplicar')
-                <a href="{{route('eventos.deletar', $evento->id)}}" class="btn btn-secondary text-white deletar-evento">
+                <a href="{{route('eventos.deletar', $evento->id)}}" class="btn btn-secondary text-white deletar-evento" data-toggle="tooltip" title="Excluir evento">
                     Deletar
                 </a>
             @endif
