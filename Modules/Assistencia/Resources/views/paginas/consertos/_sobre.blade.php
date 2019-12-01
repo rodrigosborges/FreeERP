@@ -36,7 +36,7 @@
 
 </div>
 
-<div class="form-group row">
+<div class="form-group row d-flex align-items-center">
     <div class="col-6">
         <input type="text" name="defeito" class="form-control" placeholder="Defeito/Reclamação"
             value="{{ isset($conserto->defeito) ? $conserto->defeito : old('defeito', '') }}">
@@ -46,8 +46,7 @@
     </div>
 
     <div class="col-6">
-        <input class="form-control" type="text" name="obs" placeholder="Observações" id="" rows="3"
-            value="{{ isset($conserto->obs) ? $conserto->obs : old('obs', '') }}"></input>
+        <textarea class="form-control" type="text" name="obs" placeholder="Relato" id="" rows="3">{{ isset($conserto->obs) ? $conserto->obs : old('obs', '') }}</textarea>
         <div class="col-12">
             <span class="errors"> {{ $errors->first('obs') }} </span>
         </div>
