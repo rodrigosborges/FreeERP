@@ -73,7 +73,7 @@
 </div>
 
 <div class="row">
-    <div class="form-group col-sm-3">
+    <div class="form-group col-sm-2">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">map</i></span>
@@ -83,7 +83,7 @@
         </div>
         <span class="error"> {{ $errors->first('endereco.cep') }} </span>
     </div>
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-4">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="material-icons">house</i></span>
@@ -101,6 +101,18 @@
         </div>
         <span class="error"> {{ $errors->first('endereco.numero') }} </span>
     </div>
+    <div class="form-group col-sm-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="material-icons">house</i></span>
+            </div>
+            <input type="text" class="form-control" name="endereco[complemento]" placeholder="Complemento" value="{{ old('endereco.complemento', isset($cliente) ? $cliente->endereco->complemento : '') }}">
+            
+        </div>
+        <span class="error">{{$errors->first('endereco.complemento')}}</span>
+    </div>
+
+                    
 </div>
 
 <div class="row">
