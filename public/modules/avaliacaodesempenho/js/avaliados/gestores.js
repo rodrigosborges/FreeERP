@@ -37,33 +37,29 @@ function nextPrev(n) {
 }
 
 function control(obj) {
-    var all = $(obj).children().children('.star')
 
-    if (all.length > 0) {
-        modify = all[0]
-        
-        $(modify).removeClass('star')
-        $(modify).addClass('modified')
-        $(modify).html('star')
+    var all = $(obj).parent().children()
 
-    } else {
-        var all = $(obj).children().children('.modified')
+    Object.keys(all).map((key) => {
+        if (!isNaN(key)) {
+            
+            if ($(all[key]).attr('id') <= $(obj).attr('id')) {
 
-        Object.keys(all).map((key) => {
-            if (!isNaN(key)) {
-                $(all[key]).removeClass('modified')
-                $(all[key]).addClass('star')
-                $(all[key]).html('star_border')
+                $(all[key]).children().removeClass('star')
+                $(all[key]).children().addClass('modified')
+                $(all[key]).children().html('star')
+
+            } else {
+                
+                $(all[key]).children().removeClass('modified')
+                $(all[key]).children().addClass('star')
+                $(all[key]).children().html('star_border')
             }
-        })
-    }
+        }
+    })
 
-    var input = $(obj).siblings('.input')
+    var input = $(obj).parent().parent().siblings('.input')
 
-    if ($(obj).children().children('.modified').length) {
-        input.val($(obj).children().children('.modified').length)
-    } else {
-        input.val('')
-    }
+    input.val($(obj).parent().children().children('.modified').length)
 }
 

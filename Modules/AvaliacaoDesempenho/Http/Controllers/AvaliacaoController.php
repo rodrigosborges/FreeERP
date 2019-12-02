@@ -108,7 +108,6 @@ class AvaliacaoController extends Controller
                 for ($i=0; $i < count($funcionarios)+1; $i++) { 
 
                     if ($funcionarios->has($i) && ($funcionarios[$i]->id != $setor->gestor->id)) {
-                        echo'<pre>';print_r($funcionarios[$i]);
 
                         $token = bin2hex(random_bytes(3));
 

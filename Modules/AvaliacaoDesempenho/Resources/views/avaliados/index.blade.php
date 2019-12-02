@@ -19,19 +19,19 @@
 @endif
 
 <div class="explanation">
-    <p>Digite seu email e senha para ter acesso a avaliação.</p>
+    <p>Digite seu email e token para ter acesso a avaliação.</p>
 
-    <p>Está senha de acesso é válida apenas uma vez, visto que a prova deve ser realizada apenas uma vez.</p>
+    <p>Este token de acesso é válida apenas uma vez, visto que a prova deve ser realizada apenas uma vez.</p>
 
     <p>Portanto, seriedade e atenção as respostas.</p>
 
-    <p>Sua senha de acesso foi enviada por email.</p>
+    <p>Seu token de acesso foi enviada por email.</p>
 
     <div class="form">
 
         <div style="display:flex; justify-content: space-between">
-            <p>Digite seu E-mail e Senha</p>
-            <a href="{{ url('avaliacaodesempenho/avaliacao/recuperar') }}">Reenviar Senha</a>
+            <p>Digite seu E-mail e Token</p>
+            <a href="{{ url('avaliacaodesempenho/avaliacao/recuperar') }}">Reenviar Token</a>
         </div>
 
         <form action="{{ url('avaliacaodesempenho/avaliacao/responder') }}" method="POST">
@@ -61,7 +61,7 @@
 
                 <div class="form-group col-md-6">
 
-                    <label>Senha</label>
+                    <label>Token</label>
 
                     <div class="input-group">
 

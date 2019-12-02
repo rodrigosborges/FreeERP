@@ -70,6 +70,10 @@
 .question {
     display: flex;
     width: fit-content;
+}
+
+.question a {
+    text-decoration: none;
     cursor: pointer;
 }
 

@@ -16,18 +16,18 @@
         <p>Funcionários a avaliar:{{ count($setor->funcionarios) - 1 }}</p>
     @endif
 
-    <p>Sua senha de acesso é: <h4><b>{{ $token }}</b></h4></p>
+    <p>Seu token de acesso é: <h4><b>{{ $token }}</b></h4></p>
     <p>Com validade até: {{ date('d/m/Y', strtotime($validade)) }}</p>
 
     <br>
 
     <p>
         <a href="http://localhost/tcc/public/avaliacaodesempenho/avaliacao/responder">Visite o link</a> 
-        ,insira seu email e senha para ter acesso ao questionário.
+        ,insira seu email e token para ter acesso ao questionário.
     </p>
 
-    <p>Está senha poderá ser usada uma única vez.</p>
+    <p>Este token poderá ser usada uma única vez.</p>
 
-    <p>Caso ultrapasse o prazo de validade da senha, procure um administrador do sistema.</p>
+    <p>Caso ultrapasse o prazo de validade do token, procure um administrador do sistema.</p>
 </body>
 </html>

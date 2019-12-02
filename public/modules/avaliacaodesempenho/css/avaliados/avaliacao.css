@@ -70,12 +70,12 @@
 .question {
     display: flex;
     width: fit-content;
-    cursor: pointer;
 }
 
-/* .question input {
-    margin: 8px 10px;
-} */
+.question a {
+    text-decoration: none;
+    cursor: pointer;
+}
 
 .card-body ul button {
     margin: 0 -40px;

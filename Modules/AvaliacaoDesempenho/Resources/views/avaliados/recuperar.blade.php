@@ -9,7 +9,7 @@
 
     <div>
         <p>Digite o email cadastrado no sistema</p>
-        <p>Enviaremos uma nova senha para você.</p>
+        <p>Enviaremos novamente seu token.</p>
     </div>
 
     <form action="{{ url('avaliacaodesempenho/avaliacao/reenviar') }}" method="POST">
