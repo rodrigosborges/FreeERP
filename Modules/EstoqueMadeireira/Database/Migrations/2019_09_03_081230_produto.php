@@ -17,11 +17,12 @@ class Produto extends Migration
             $table->bigIncrements('id');
             $table->string('nome', 45);
             $table->string('descricao', 300)->nullable();
-            $table->decimal('tamanho', 8,2)->nullable();
+            $table->decimal('medida', 8,2)->nullable();
             $table->integer('categoria_id')->unsigned()->index('fk_produtos_categoria');
             $table->integer('fornecedor_id')->unsigned()->index('fk_produtos_fornecedor');
-            $table->integer('unidadeMedida_id')->unsigned()->index('fk_produtos_unidadeMedida');
+            $table->string('unidadeMedida_id', 10)->unsigned()->index('fk_produtos_unidadeMedida');
             $table->decimal('preco', 12, 2);
+            $table->decimal('precoCusto', 12, 2);
             $table->timestamps();   
             $table->softDeletes();
         });

@@ -15,7 +15,7 @@
                     
                 </div>
                 <div class="col-md-6">
-                    <label for="preco"><i class="material-icons" style="vertical-align:middle;">attach_money</i>&nbsp&nbsp<b>Preço</b><br><br>R${{$produto->preco}}</label>
+                    <label for="preco"><i class="material-icons" style="vertical-align:middle;">attach_money</i>&nbsp&nbsp<b>Preço de Venda | de Custo</b><br><br>R${{$produto->preco}} | R${{$produto->precoCusto}}</label>
                 </div>
 
                 
@@ -24,14 +24,14 @@
             
             <div class="row">
 
-                @if(($produto->tamanho == null) && ($unidadeMedida->id == -1)){
+                @if(($produto->medida == null) && ($unidadeMedida->id == -1)){
                 <div class="col-md-6">
-                    <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Tamanho</b><br><br> Sem Medição </label>
+                    <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Medida</b><br><br> Sem Medição </label>
                 </div>
                 } 
                 @else
                 <div class="col-md-6">
-                    <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Tamanho</b><br><br>{{$produto->tamanho}} - {{$unidadeMedida->nome}} </label>
+                    <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Medida</b><br><br>{{$produto->medida}} - {{$unidadeMedida->nome}} </label>
                 </div>
                 @endif
 

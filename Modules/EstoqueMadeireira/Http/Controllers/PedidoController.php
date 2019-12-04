@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\EstoqueMadeireira\Http\Controllers;
-use Modules\EstoqueMadeireira\Entities\{Produto, Pedido, Estoque, Cliente, itemPedido};
+use Modules\EstoqueMadeireira\Entities\{Produto, Pedido, Estoque, Cliente, itemPedido, Endereco};
 use Modules\EstoqueMadeireira\Http\Requests\CategoriaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -57,27 +57,35 @@ class PedidoController extends Controller
     public function abertos()
     {
         $cliente = Cliente::all();
-        $pedidos = itemPedido::all();
+        $pedidos = Pedido::all();
         $pedidos = DB::table('pedidos')
           ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
-          ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')->paginate(10);
-        
+          ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')
+          ->where('pedidos.status_pedido', '=',1 )->paginate(10);
          return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos'));
     }
 
 
     public function enviados()
     {
-        $itemPedido = itemPedido::all();
-        $pedidos = Pedido::where('status_pedido', 2)->paginate(10);
-        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'itemPedido'));
+      $cliente = Cliente::all();
+      $pedidos = itemPedido::all();
+      $pedidos = DB::table('pedidos')
+        ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
+        ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')
+        ->where('pedidos.status_pedido', '=', 2)->paginate(10);
+       return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos'));
     }
     
     public function finalizados()
     {
-        $itemPedido = itemPedido::all();
-        $pedidos = Pedido::where('status_pedido', 3)->paginate(10);
-        return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos', 'itemPedido'));
+        $cliente = Cliente::all();
+        $pedidos = itemPedido::all();
+        $pedidos = DB::table('pedidos')
+          ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
+          ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')
+          ->where('pedidos.status_pedido', '=', 3)->paginate(10);
+         return view('estoquemadeireira::vendas.pedidos.index', $this->template, compact('pedidos'));
     }
 
 
@@ -105,50 +113,39 @@ class PedidoController extends Controller
 
 
 
-    public function store(CategoriaRequest $req)
-    {
-       
-        DB::beginTransaction();
-        try{
-            Categoria::create($req->all());
-            DB::commit();
-            return redirect('/estoquemadeireira/produtos/categorias')->with('Success', 'Categoria cadastrada com sucesso!');
-        } catch(\Exeception $e) {
-            return back()->with('Error', 'Erro no cadastro de Categoria');
-        }
-    }
-
-    //Retorna o formulário com a categoria passada para ser editada 
-
     public function edit($id)
     {
-
-       
+        
+        
         $pedido = DB::table('pedidos')
         ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
         ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')
         ->join('produto', 'produto.id', '=', 'item_pedidos.produto_id')
         ->where('pedidos.id', '=', $id)->get();
-        return view('estoquemadeireira::vendas.pedidos.edit', $this->template, compact('pedido'));
+        $cliente = Cliente::where('id', $pedido->first()->cliente_id)->get();
+        $produtos = Produto::where('id', $pedido->last()->produto_id)->get();
+        return view('estoquemadeireira::vendas.pedidos.edit', $this->template, compact('pedido', 'cliente', 'produtos'));
+
+        
     }
 
-    //Atualiza a Categoria
+    //Atualiza o Pedido
 
-     public function update(CategoriaRequest $request, $id)
+     public function update(Request $request, $id)
     {
-
         DB::beginTransaction();
         try{
-            $categoria = Categoria::findOrFail($id);
-            $categoria->update($request->all());
+            $pedido = Pedido::findOrFail($id);
+            $pedido->update($request->all());
             DB::commit();
-            return redirect('/estoquemadeireira/produtos/categorias')->with('success', 'Categoria atualizada com sucesso!');
+            return redirect('/estoquemadeireira/vendas/pedidos')->with('success', 'Pedido com sucesso!');
       
         }catch (\Exception $e) {
             DB::rollback();
             return back()->with('error', 'Erro no servidor');
         }
     }
+    
 
     //Desativa a Categoria do sistema, sendo possível reativa-la depois
 
@@ -169,10 +166,13 @@ class PedidoController extends Controller
             $pedidos = Pedido::paginate(10);
             return redirect('/estoquemadeireira/vendas/pedidos')->with('error', 'Insira um ID para a pesquisa!');
         }
-        else{      
+        else{              
             $pedidos = Pedido::where('id', $request->pesquisa)->paginate(10);
             if(count($pedidos) > 0){
-                return view('estoquemadeireira::vendas.pedidos.index')->with('success', 'Resultado da pesquisa');
+                $pedidos = DB::table('pedidos')
+                ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
+                ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')->paginate(10);
+                return view('estoquemadeireira::vendas.pedidos.index', compact('pedidos'))->with('success', 'Resultado da pesquisa');
             }else{
                 return redirect('/estoquemadeireira/vendas/pedidos')->with('error', 'Nenhum resultado encontrado');
             }
@@ -180,12 +180,21 @@ class PedidoController extends Controller
     }
 
     public function ficha($id){
+
         $pedido = DB::table('pedidos')
         ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
         ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')
         ->join('produto', 'produto.id', '=', 'item_pedidos.produto_id')
-        ->where('pedidos.id', '=', $id)->get();
-     return view('estoquemadeireira::vendas.pedidos.ficha', $this->template, compact('pedido'));
+        ->where('pedido_id','=', $id)->get();
+
+
+        // for($i=0,$i count($pedido->produto_id)), $i++){
+
+        // }
+        $cliente = Cliente::where('id', $pedido->first()->cliente_id)->get();
+        $endereco = Endereco::where('id', $cliente->first()->id)->get();
+        $produtos = Produto::where('id', $pedido->last()->produto_id)->get();
+        return view('estoquemadeireira::vendas.pedidos.ficha', $this->template, compact('endereco', 'pedido', 'produtos', 'cliente'));
     }
 
 
@@ -229,21 +238,22 @@ class PedidoController extends Controller
 
     public function gerarpedido(Request $request){
         DB::beginTransaction();
-
-         $pedido = Pedido::create([
-             'cliente_id' => $request->cliente,
-             'taxa' => '0.00',
-             'desconto' => '0.00',
-             'status_pedido' => 1
-         ]);
+        
        
          try{
+            $pedido = Pedido::create([
+                'cliente_id' => $request->cliente,
+                'taxa' => '0.00',
+                'desconto' => '0.00',
+                'status_pedido' => 1
+            ]);
+
             for($i=0; $i < count($request->produtos) ; $i+=3){
                 ItemPedido::create([
                     'pedido_id' => $pedido['id'],
                     'produto_id' => $request->produtos[$i]['id'],
-                    'quantidade' => $request->produtos[$i]['quantidade'],
                     'precoVenda' => $request->produtos[$i]['preco'],
+                    'quantidade' => $request->produtos[$i+1],
                     'precoCusto' => '0.00'
                     
                 ]);

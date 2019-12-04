@@ -17,7 +17,7 @@ class CreatePedidosTable extends Migration
             $table->bigIncrements('id');
             $table->integer('cliente_id')->unsigned()->index('fk_pedido_cliente');
             $table->decimal('taxa', 10,2);
-            $table->decimal('desconto', 10,2);
+            $table->decimal('desconto', 10,2)->nullable();
             $table->integer('status_pedido');    
             $table->timestamps();
         });

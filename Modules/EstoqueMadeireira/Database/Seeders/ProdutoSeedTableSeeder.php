@@ -13,6 +13,7 @@ class ProdutoSeedTableSeeder extends Seeder {
           'categoria_id' => '1',
           'fornecedor_id' => '1',
           'preco' => '10',
+          'precoCusto' => '5',
           'unidadeMedida_id' => '1',
           //'created_at' => '',
           //'deleted_at' => ''
@@ -23,6 +24,7 @@ class ProdutoSeedTableSeeder extends Seeder {
           'categoria_id' => '2',
           'fornecedor_id' => '2',
           'preco' => '20',
+          'precoCusto' => '10',
           'unidadeMedida_id' => '1',
           //'created_at' => '',
           //'deleted_at' => ''
@@ -33,6 +35,7 @@ class ProdutoSeedTableSeeder extends Seeder {
           'categoria_id' => '3',
           'fornecedor_id' => '3',
           'preco' => '30',
+          'precoCusto' => '15',
           'unidadeMedida_id' => '1',
           //'created_at' => '',
           //'deleted_at' => ''
@@ -43,6 +46,7 @@ class ProdutoSeedTableSeeder extends Seeder {
           'categoria_id' => '4',
           'fornecedor_id' => '4',
           'preco' => '40',
+          'precoCusto' => '20',
           'unidadeMedida_id' => '1',
           //'created_at' => '',
           //'deleted_at' => ''
@@ -53,6 +57,7 @@ class ProdutoSeedTableSeeder extends Seeder {
         'categoria_id' => '5',
         'fornecedor_id' => '5',
         'preco' => '50',
+        'precoCusto' => '25',
         'unidadeMedida_id' => '1',
         //'created_at' => '',
         //'deleted_at' => ''

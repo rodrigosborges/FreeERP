@@ -44,7 +44,6 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Quantidade</th>
                             <th scope="col">Preço Un.</th>
-                            <th scope="col">Desconto</th>
                             <th scope="col">Valor</th>
                             <th scope="col">Remover</th>
                             </tr>
@@ -74,10 +73,6 @@
         <div class="form-group col-12">
             <label for="quantidade">Quantidade</label>
             <input type="number" name="quantidade" required id="quantidade" value="1" class="form-control">
-        </div>
-        <div class="form-group col-12">
-            <label for="quantidade">Desconto</label>
-            <input type="text" name="desconto" required id="desconto" onKeyUp="verificaPreco(this);" class="form-control" value="0.00">
         </div>
       </div>
       <div class="modal-footer">
@@ -128,12 +123,11 @@
         //Abre modal
         $('#indexProduto').val(valor);
         $('#quantidade').val('1');
-        $('#desconto').val('');
         $("#md").click()
     }
     //FUNÇÃO PARA ADICIONAR UM NOVO PRODUTO VC ESTA AQUI GABRIEL FREITAS
     function selecionarProduto(){
-        produtos.push(d2[$('#indexProduto').val()], $('#quantidade').val(), $('#desconto').val())
+        produtos.push(d2[$('#indexProduto').val()], $('#quantidade').val())
         $('#enviar').show()
         preencherTabela()
         // produtos.push(d2[id]);
@@ -146,21 +140,20 @@
     }
     
     function remover(val){
-        produtos.splice(val, 3)
+        produtos.splice(val, 2)
         preencherTabela()
     }
     function preencherTabela(){
         $('#tabelaProdutos').show();
         var table = document.getElementById('itensTabela');
         table.innerHTML = "";
-        for(var i = 0; i < produtos.length; i+=3 ){
+        for(var i = 0; i < produtos.length; i+=2 ){
             var row = document.createElement('tr');
             row.insertCell(0).innerHTML = produtos[i].nome;
             row.insertCell(1).innerHTML = '<input type="number" value="'+produtos[i+1]+'" disabled class="form-control">';
             row.insertCell(2).innerHTML = '<input type="text" value="R$'+produtos[i].preco+'" disabled class="form-control">';
-            row.insertCell(3).innerHTML = '<input type="text" value="R$'+produtos[i+2]+'" disabled class="form-control">';
-            row.insertCell(4).innerHTML = '<input type="text" value="R$'+((produtos[i+1]*produtos[i].preco)- $('#desconto').val())+'"  disabled class="form-control">';
-            row.insertCell(5).innerHTML = "<button class='btn btn-danger btn-sm' onClick='remover("+i+");'>Remover</button>";
+            row.insertCell(3).innerHTML = '<input type="text" value="R$'+((produtos[i+1]*produtos[i].preco))+'"  disabled class="form-control">';
+            row.insertCell(4).innerHTML = "<button class='btn btn-danger btn-sm' onClick='remover("+i+");'>Remover</button>";
             document.getElementById('itensTabela').appendChild(row);
         }
     }
@@ -208,6 +201,7 @@
         }
     }).done(function(data){
         console.log(data)
+        window.location.href = "/estoquemadeireira/vendas/pedidos";
     }).always(function(){
         console.log('Rodou')
     })
@@ -271,3 +265,4 @@
     
     }
 </script>
+       

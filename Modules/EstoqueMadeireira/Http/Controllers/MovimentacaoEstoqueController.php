@@ -105,27 +105,6 @@ class MovimentacaoEstoqueController extends Controller
         return view('estoque::edit');
     }
 
-
-
-
-
-    public function update(Request $request, $id)
-    {
-        
-    }
-  
-
-
-
-    public function destroy($id)
-    {
-        
-    }
-
-
-
-
-
     public function buscar(Request $request)
     {
         if($request->pesquisa == null){
