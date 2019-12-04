@@ -14,8 +14,10 @@ class FuncionarioDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
-
-        // $this->call("OthersTableSeeder");
+        $this->call([
+            ParentescoSeeder::class,
+            TipoAvisoPrevioIndicadorSeeder::class,
+            TipoDemissaoSeeder::class,
+        ]);
     }
 }

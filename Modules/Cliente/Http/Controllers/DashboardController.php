@@ -70,7 +70,6 @@ class DashboardController extends Controller
         if(!Gate::allows('administrador',Auth::user()) && !Gate::allows('operador',Auth::user())  ) 
             return redirect()->back()->with('error','Você não possui permissão para acessar a pagina!');
     
-        dd("teste");
         $pedidos = Pedido::whereYear('data', '=', $ano)->get();
         
         $dados = [

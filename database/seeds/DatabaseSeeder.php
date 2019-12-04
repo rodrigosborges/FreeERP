@@ -12,14 +12,15 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            EstadoCivilSeeder::class,
             EstadoSeeder::class,
             CidadeSeeder::class,
-            EstadoCivilSeeder::class,
+            TipoDocumentoSeeder::class,
             TipoTelefoneSeeder::class,
-            ParentescoSeeder::class,
-            TipoDemissaoSeeder::class,
-            TipoAvisoPrevioIndicador::class,
-            TipoDocumentoSeeder::class
+            Modules\Cliente\Database\Seeders\ClienteDatabaseSeeder::class,
+            Modules\Estoque\Database\Seeders\EstoqueDatabaseSeeder::class,
+            Modules\Funcionario\Database\Seeders\FuncionarioDatabaseSeeder::class,
+            Modules\Usuario\Database\Seeders\UsuarioDatabaseSeeder::class,
         ]);
     }
 }

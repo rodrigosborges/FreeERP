@@ -1,6 +1,8 @@
 <?php
+namespace Modules\Funcionario\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TipoDemissaoSeeder extends Seeder
 {

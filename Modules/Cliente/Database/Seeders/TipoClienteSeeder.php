@@ -1,6 +1,8 @@
 <?php
 
+namespace Modules\Cliente\Database\Seeders;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TipoClienteSeeder extends Seeder
 {

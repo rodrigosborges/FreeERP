@@ -12,10 +12,9 @@ class ClienteDatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-        Model::unguard();
-
-        // $this->call("OthersTableSeeder");
+    public function run(){
+        $this->call([
+            TipoClienteSeeder::class,
+        ]);
     }
 }

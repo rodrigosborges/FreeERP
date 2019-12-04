@@ -28,13 +28,14 @@
             position: absolute;			
             text-align: center;			
             width: 60px;					
-            height: 28px;					
+            height: 18px;					
             padding: 2px;				
             font: 12px sans-serif;		
-            background: lightsteelblue;	
+            background: #303e45;	
             border: 0px;		
             border-radius: 8px;			
-            pointer-events: none;			
+            pointer-events: none;		
+            color:white;
         }
 
     </style>
@@ -56,31 +57,28 @@
         <div class="row mt-3">
             <div class="col-sm-4">
                 <div class="card h-100">
-                <div class="card-body ">
+                <div class="card-body  text-center">
                     <h5 class="card-title">Média de Gasto por Compra</h5>
-                    <div id='mediagasto'>
-                        
-                    </div>
+                    <h3 id='mediagasto'>
+                    </h3>
                 </div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="card h-100">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <h5 class="card-title">Total de Clientes</h5>
-                    <div id='totalclientes'>
-                        
-                    </div>
+                    <h3 id='totalclientes'>
+                    </h3>
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="card h-100">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <h5 class="card-title">Total de Vendas</h5>
-                    <div id='totalvendas'>
-                        
-                    </div>
+                    <h3 id='totalvendas'>
+                    </h3>
                 </div>
                 </div>
             </div>
@@ -91,9 +89,11 @@
 
             <div class="col-sm-6">
                 <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Valor Total das Compras</h5>
-                        <div id="totalCompras"></div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Valor Total das Compras (R$)</h5>
+                        <div >
+                            <svg id='totalCompras' preserveAspectRatio='xMinYMin meet' viewBox='0 0 460 320'></svg>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,9 +103,10 @@
 
                     <div class="card-body text-center">
                             <h5 class="card-title">Produtos Vendidos</h5>
-                            <div id="totalProdutos"></div>
+                            <div>
+                                <svg id='totalProdutos' preserveAspectRatio='xMinYMin meet' viewBox='0 0 460 320'></svg>
+                            </div>
                             <select name="produto" id="" class="form-control">
-                                <option value="">Selecione um produto</option>
                                 @foreach($produtos as $produto)   
                                     <option value="{{$produto->id}}"> {{$produto->nome}} </option>
                                 @endforeach        
@@ -137,10 +138,9 @@
                     value: dataset[key]
                     })
                 })
+
                 grafico("#totalCompras", datasetVendas);
                     
-                           
-
             });
 
             $.get(main_url+"/cliente/dashboard/totalclientes/2019", function(dataset){
@@ -152,11 +152,11 @@
             });
 
             $.get(main_url+"/cliente/dashboard/mediagasto/2019", function(dataset){
-                $('#mediagasto').append(dataset);
+                $('#mediagasto').append("R$ "+dataset);
             }); 
 
 
-            $.get(main_url+"/cliente/dashboard/vendasProdutoMes/2/2019", function(dataset){
+            $.get(main_url+"/cliente/dashboard/vendasProdutoMes/"+$("[name=produto]").val()+"/2019", function(dataset){
         
                 datasetProdutos = []
 
@@ -169,18 +169,29 @@
                 grafico("#totalProdutos", datasetProdutos);
             });            
            
-            
-           
-
         });
+
+        $(document).on('change', '[name=produto]', function(){
+            $.get(main_url+"/cliente/dashboard/vendasProdutoMes/"+$(this).val()+"/2019", function(dataset){
+        
+                datasetProdutos = []
+
+                Object.keys(dataset).map((key) =>{
+                    datasetProdutos.push({
+                        month: key, 
+                        value: dataset[key]
+                    })
+                })
+
+                grafico("#totalProdutos", datasetProdutos);
+            });   
+        })
                        
-
-
         function grafico(id, dataset){
 
-            console.log(id);
+            $(id).html("")
 
-            var margin = {top: 40, right: 30, bottom: 30, left: 50},
+            var margin = {top: 15, right: 15, bottom: 25, left: 30},
             width = 460 - margin.left - margin.right,
             height = 320 - margin.top - margin.bottom;
 
@@ -191,8 +202,6 @@
             var formatPercent = d3.format(",.2f");
 
             var svg = d3.select(id).append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
             .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -215,19 +224,16 @@
             var div = d3.select("body").append("div")	
                 .attr("class", "tooltip")				
                 .style("opacity", 0);
-
-            
-
             
             x.domain(dataset.map( d => { return d.month}));
-            y.domain([0, max]);;
-
-            
+            y.domain([0, (max+1)]);;
 
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
+                .call(xAxis)
+                .selectAll("text")
+                    .style("font-size", 12)
             svg.append("g")
                 .attr("class","y axis")
                 .call(yAxis);
@@ -259,9 +265,9 @@
                     .attr("y",  d => { return height; })
                     .attr("height", 0)
                         .transition()
-                        .duration(750)
+                        .duration(500)
                         .delay(function (d, i) {
-                            return i * 150;
+                            return i * 50;
                         })
                 .attr("y",  d => { return y(d.value); })
                 .attr("height",  d => { return height - y(d.value); })

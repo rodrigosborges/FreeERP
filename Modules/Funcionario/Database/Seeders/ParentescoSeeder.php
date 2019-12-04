@@ -1,4 +1,5 @@
 <?php
+namespace Modules\Funcionario\Database\Seeders;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;

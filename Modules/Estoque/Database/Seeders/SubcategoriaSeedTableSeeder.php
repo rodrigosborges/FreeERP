@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class CategoriaSeedTableSeeder extends Seeder{
+class SubCategoriaSeedTableSeeder extends Seeder{
     public function run()
     {
             DB::table('subcategoria')->insert([
