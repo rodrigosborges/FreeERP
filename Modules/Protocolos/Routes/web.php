@@ -23,6 +23,7 @@ Route::prefix('protocolos')->group(function() {
     Route::post('buscaApensado', 'ProtocolosController@fetchApensado');
     Route::get('protocolos/acompanhar/{id}', 'ProtocolosController@acompanhar');
     Route::post('protocolos/acompanhar/{id}', 'ProtocolosController@salvarDocumento');
+    Route::post('protocolos/acompanhar/enviarComplemento/{id}', 'ProtocolosController@salvarComplemento');
     Route::get('protocolos/download/{id}', 'ProtocolosController@download');
     Route::post('salvarApensado/{id}', 'ProtocolosController@salvarApensado');
     Route::get('teste/{id}', 'ProtocolosController@teste');

@@ -19,6 +19,11 @@ class Protocolo extends Model
         return $this->belongsTo('Modules\Protocolos\Entities\TipoProtocolo');
     }
 
+    //Relação com a tabela documento
+    public function documentos(){
+        return $this->belongsTo('Modules\Protocolos\Entities\Documento');
+    } 
+
     //Relação com a tabela tipo_acesso
     public function tipo_acesso(){
         return $this->belongsTo('Modules\Protocolos\Entities\TipoAcesso');

@@ -10,7 +10,7 @@ class Tramite extends Model
 
     protected $table = 'tramite';
 
-    protected $fillable = ['observacao', 'origem', 'destino', 'protocolo_id'];
+    protected $fillable = ['observacao', 'origem', 'destino', 'protocolo_id', 'checkbox'];
     
     //Relação com a tabela protocolo
     public function protocolo(){

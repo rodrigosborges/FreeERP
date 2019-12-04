@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Protocolo, Usuario, Tramite, Status, Documento, Log};
+use Modules\Protocolos\Entities\{TipoProtocolo, TipoAcesso, Protocolo, Complemento, Usuario, Tramite, Status, Documento, Log};
 use Modules\Protocolos\Http\Requests\{ProtocoloStoreRequest, DocumentoStoreRequest};
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -50,6 +50,9 @@ class ProtocolosController extends Controller
 
 		if($request['pesquisa']) {
             $protocolos = $protocolos->where('assunto', 'like', '%'.$request['pesquisa'].'%');
+        }
+        if($status == "meus-protocolos"){
+            $protocolos = $protocolos->where('usuario_id', $id);
         }
         if($status == "caixa-entrada"){
 
@@ -234,6 +237,7 @@ class ProtocolosController extends Controller
                 'observacao'            => $request['assunto'],
                 'origem'                => Auth::user()->id,
                 'protocolo_id'          => $protocolo->id,
+                'checkbox'              => 0
             ]);
             
             DB::commit();
@@ -378,7 +382,6 @@ class ProtocolosController extends Controller
 
     public function salvarEncaminhamento(Request $request, $id){
 
-
         $protocolo = Protocolo::where('id', '=',$id)->first();
 
         DB::beginTransaction();
@@ -389,7 +392,8 @@ class ProtocolosController extends Controller
                 'observacao'            => $request['observacao'],
                 'origem'                => Auth::user()->id,
                 'destino'               => $request->tramite['destino'],
-                'protocolo_id'          => $id
+                'protocolo_id'          => $id,
+                'checkbox'              => $request['checkbox'] ? 1 : 0
             ]);
             
             if($protocolo->interessado()->where('usuario_id', $request->tramite['destino'])->first()){
@@ -436,12 +440,13 @@ class ProtocolosController extends Controller
             'protocolo'             => Protocolo::findOrFail($id),
             'log'                   => Log::where('protocolo_id', '=', $id)->get(),
             'ultima_modificacao'    => Log::where('protocolo_id', '=', $id)->where('status_id', '<>', '4')->get()->last(),
-            'tramite'               => Tramite::where('protocolo_id', '=', $id)->where('destino', '<>', null)->get(),
+            'tramite'               => Tramite::where('protocolo_id', '=', $id)->get(),
             'documento'             => Documento::where('protocolo_id', '=', $id)->get(),
+            'complementos'          => Complemento::where('protocolo_id', '=', $id)->get(),
             'title'                 => 'Acompanhamento de Protocolo',
             'button'                => 'Adicionar',
         ]);
-
+        
         if($data["protocolo"]->tipo_acesso == 1) {
 
             $interessadosIds = $data['protocolo']->interessado()->pluck('usuario_id')->toArray();
@@ -474,8 +479,43 @@ class ProtocolosController extends Controller
         }
     }
 
-    public function salvarDocumento(DocumentoStoreRequest $request){
+    public function salvarComplemento(Request $request){
+        
+        $id = $request['id-protocolo'];
 
+        DB::beginTransaction();
+
+        try{
+
+            $complemento = Complemento::Create([
+                'complemento'    => $request['complemento'],
+                'user_id'        => Auth::user()->id,
+                'protocolo_id'      => $request['id-protocolo']
+            ]);
+            
+            $log = Log::Create([
+                'status_id'        => '5',
+                'usuario_id'    => Auth::user()->id,
+                'protocolo_id'  => $request['id-protocolo']
+            ]);
+            
+            DB::commit();
+
+            return response()->json($complemento);
+
+        }catch(Exception $e){
+
+			DB::rollback();
+            return back();
+            
+		}
+    }
+    public function salvarDocumento(DocumentoStoreRequest $request){
+        if(Documento::select()->where('protocolo_id', $request['id-protocolo'])->get()->last() == ''){
+            $lastId = 1;
+        }else{  
+            $lastId= (Documento::select('id')->where('protocolo_id', $request['id-protocolo'])->get()->count())+1;
+        }
         if($request->hasFile('documento') && $request->file('documento')->isValid() && $request->documento->extension() == 'pdf' || 'doc' || 'docx' || 'xsl' || 'csv'){
             $nome = md5(date('Y-m-d H:i:s'));
             $extensao = $request->documento->extension();
@@ -488,33 +528,36 @@ class ProtocolosController extends Controller
                             ->with('error', 'Falha no upload do arquivo');
             }
         }
+        $id = $request['id-protocolo'];
+        $protocolo = Protocolo::where('id', '=', $id)->get()->first();
 
-        DB::beginTransaction();
 
-        try{
+            DB::beginTransaction();
 
-            $documento = Documento::Create([
-                'nome_documento'    => $request->file('documento')->getClientOriginalName(),
-                'documento'         => $documento,
-                'protocolo_id'      => $request['id-protocolo']
-            ]);
-            
-            $log = Log::Create([
-                'status_id'        => '5',
-                'usuario_id'    => Auth::user()->id,
-                'protocolo_id'  => $request['id-protocolo']
-            ]);
-            
-            DB::commit();
+            try{
 
-            return response()->json($documento);
+                $documento = Documento::Create([
+                    'nome_documento'    => $protocolo->numero.".".$lastId,
+                    'documento'         => $documento,
+                    'protocolo_id'      => $request['id-protocolo']
+                ]);
+                
+                $log = Log::Create([
+                    'status_id'        => '5',
+                    'usuario_id'    => Auth::user()->id,
+                    'protocolo_id'  => $request['id-protocolo']
+                ]);
+                
+                DB::commit();
 
-        }catch(Exception $e){
+                return response()->json($documento);
 
-			DB::rollback();
-            return back();
-            
-		}
+            }catch(Exception $e){
+
+                DB::rollback();
+                return back();
+                
+            }
     }
 
    public function download($id){
@@ -585,10 +628,10 @@ class ProtocolosController extends Controller
                 ]);
             }
             else{
-                return back()->with('error', 'Você não tem permissão para finalizar o protocolo!');
+                return redirect('protocolos/protocolos')->with('error', 'Você não tem permissão para finalizar o protocolo!');
             }
 
-            return back()->with('success', 'Protocolo finalizado com sucesso!');
+            return redirect('protocolos/protocolos')->with('success', 'Protocolo finalizado com sucesso!');
         }
     }
 }

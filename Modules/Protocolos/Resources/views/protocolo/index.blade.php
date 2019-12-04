@@ -69,7 +69,10 @@
     
     <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="caixa-entrada-tab" data-toggle="tab" href="#caixa-entrada" role="tab" aria-controls="caixa-entrada" aria-selected="true">Caixa de entrada</a>
+            <a class="nav-link active" id="meus-protocolos-tab" data-toggle="tab" href="#meus-protocolos" role="tab" aria-controls="meus-protocolos" aria-selected="true">Meus protocolos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="caixa-entrada-tab" data-toggle="tab" href="#caixa-entrada" role="tab" aria-controls="caixa-entrada" aria-selected="true">Caixa de entrada</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="despacho-tab" data-toggle="tab" href="#despacho" role="tab" aria-controls="despacho" aria-selected="true">Aguardando despacho</a>
@@ -82,7 +85,8 @@
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="caixa-entrada" role="tabpanel"></div>
+        <div class="tab-pane fade show active" id="meus-protocolos" role="tabpanel"></div>
+        <div class="tab-pane fade" id="caixa-entrada" role="tabpanel"></div>
         <div class="tab-pane fade" id="despacho" role="tabpanel"></div>
         <div class="tab-pane fade" id="caixa-saida" role="tabpanel"></div>
         <div class="tab-pane fade" id="inativos" role="tabpanel"></div>
@@ -114,10 +118,15 @@
         })
     }
     ativosInativos = (url) => {
+        search(`${url}/meus-protocolos`, $("#meus-protocolos"))
         search(`${url}/caixa-entrada`, $("#caixa-entrada"))
         search(`${url}/despacho`, $("#despacho"))
         search(`${url}/inativos`, $("#inativos"))
         search(`${url}/caixa-saida`, $("#caixa-saida"))
+        $("#meus-protocolos").on('click', 'ul.pagination a', function(e){
+            e.preventDefault()
+            search($(this).attr('href'), $('#meus-protocolos'))
+        })
         $("#caixa-entrada").on('click', 'ul.pagination a', function(e){
             e.preventDefault()
             search($(this).attr('href'), $("#caixa-entrada"))

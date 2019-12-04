@@ -19,6 +19,7 @@ class CreateTramiteTable extends Migration
             $table->text('origem');
             $table->text('destino')->nullable();
             $table->integer('protocolo_id')->index('fk_tramite_protocolo1');
+            $table->boolean('checkbox');
             $table->timestamps();
         });
     }

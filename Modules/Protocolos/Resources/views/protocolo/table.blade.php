@@ -33,23 +33,6 @@
                             <i class="material-icons send"  style="vertical-align:middle; font-size:25px; margin-right:5px;">find_in_page</i>Ver
                         </a>
                     </td>
-                    @if($status == "despacho" || $status == "inativos")
-                        @if($protocolo->usuario_id ==  Auth::user()->id)
-                        <td class="align-middle">
-                            <form action="{{url('protocolos/protocolos', [$protocolo->id])}}" class="input-group" method="POST">
-                            {{method_field('DELETE')}}
-                            {{ csrf_field() }}
-                                <button type="submit" class="btn btn-{{$protocolo->trashed() ? 'success' : 'danger'}} btn-sm" value="{{$protocolo->trashed() ? 'Reabrir' : 'Finalizar'}}">
-                                @if($protocolo->trashed())
-                                    <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">restore_from_trash</i> Restaurar
-                                @else
-                                    <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">delete_forever</i> Finalizar
-                                @endif
-                                </button>
-                            </form>
-                        </td>
-                        @endif
-                    @endif
                     @if($status == "caixa-entrada")
                     <td class="align-middle">
                         <a class="btn btn-dark btn-sm" href='{{ url("protocolos/protocolos/receber/$protocolo->id") }}'>

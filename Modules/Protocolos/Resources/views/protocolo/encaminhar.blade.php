@@ -31,6 +31,10 @@
                     <label for="nome" class="control-label">Despacho: <span class="required-symbol">*</span></label>
                     <textarea class="form-control" id="observacao" name="observacao" rows="3"></textarea>
                 </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="checkbox" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Protocolo finalizado, caso existam pendências, deve ser aberto novo protocolo, atendendo aos requisitos listados no despacho.</label>
+                </div>
             </div>
         </div>
 @endsection

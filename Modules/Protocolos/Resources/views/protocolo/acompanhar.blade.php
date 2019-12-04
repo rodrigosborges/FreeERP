@@ -55,6 +55,11 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" id="complemento-tab" data-toggle="tab" href="#complementos" role="tab" aria-controls="complementos" aria-selected="false">
+                    <i class="material-icons" style="vertical-align:middle; font-size:25px; margin-right:5px;">add_circle_outline</i>Complementos ({{$data["complementos"]->count()}})
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" id="logs-tab" data-toggle="tab" href="#logs" role="tab" aria-controls="logs" aria-selected="false">
                     <i class="material-icons" style="vertical-align:middle; font-size:25px; margin-right:5px;">access_time</i>Histórico de eventos ({{$data["protocolo"]->logs()->count()}})
                 </a>
@@ -63,30 +68,32 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade {{!isset($_GET['active']) ? 'show active' : ''}}" id="documentos" role="tabpanel" aria-labelledby="documentos-tab">
             <br>
-                @if($data['protocolo']->status_id == '3' || $data['protocolo']->usuario_id == Auth::user()->id)
-                <label for="" class="control-label">Adicionar um documento ao protocolo: <span class="required-symbol">*</span></label>
-                <form id="doc-protocolo" enctype="multipart/form-data"> 
-                    {{ csrf_field() }}
-                    <div class="row">
-                        <input id="id-protocolo" name="id-protocolo" type="hidden" value="{{$data['protocolo']->id}}">
-                        @if($data['model'] == '' )
-                            <div class="input-group col-6 mb-3 mt-3">
-                                <span class="input-group-text">
-                                    <i class="material-icons">camera_alt</i>
-                                </span>
-                                <div class="custom-file">
-                                    <input required type="file" name="documento" class="custom-file-input" id="documento">
-                                    <label class="custom-file-label" for="validatedCustomFile">Selecione o arquivo</label>
+                @if($data['documento']->count() < 10)
+                    @if($data['protocolo']->status_id == '3' || $data['protocolo']->usuario_id == Auth::user()->id)
+                    <label for="" class="control-label">Adicionar um documento ao protocolo:</label>
+                    <form id="doc-protocolo" enctype="multipart/form-data"> 
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <input id="id-protocolo" name="id-protocolo" type="hidden" value="{{$data['protocolo']->id}}">
+                            @if($data['model'] == '' )
+                                <div class="input-group col-6 mb-3 mt-3">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">camera_alt</i>
+                                    </span>
+                                    <div class="custom-file">
+                                        <input required type="file" name="documento" class="custom-file-input" id="documento">
+                                        <label class="custom-file-label" for="validatedCustomFile">Selecione o arquivo</label>
+                                    </div>
+                                    
                                 </div>
-                                
-                            </div>
-                            <label class="errors font-text text-danger">{{$errors->first('documento')}}</label>
-                            <div class="col-2 justify-content-center mt-3">
-                                <button class="btn btn-success" type="submit">Adicionar</button>
-                            </div>
-                        @endif
-                    </div>
-                </form>
+                                <label class="errors font-text text-danger">{{$errors->first('documento')}}</label>
+                                <div class="col-2 justify-content-center mt-3">
+                                    <button class="btn btn-success" type="submit">Adicionar</button>
+                                </div>
+                            @endif
+                        </div>
+                    </form>
+                    @endif
                 @endif
                 <br>
                     <table class="table table-bordered table-hover" id="table-documento">
@@ -128,7 +135,11 @@
                         <tr>
                             <td>{{date('d/m/Y', strtotime($tramite->created_at))}}</td>
                             <td>{{$tramite->origem_usuario->nome}}<br>({{$tramite->origem_usuario->setor->nome}})</td>
+                            @if($tramite['destino'])
                             <td>{{$tramite->destino_usuario->nome}}<br>({{$tramite->destino_usuario->setor->nome}})</td>
+                            @else
+                            <td> - </td>
+                            @endif
                             <td>{{$tramite->observacao}}</td>
                         </tr>
                     @endforeach
@@ -197,6 +208,39 @@
                     </tbody>
                 </table>
             </div>
+            <div class="tab-pane fade" id="complementos" role="tabpanel" aria-labelledby="complementos-tab">
+            <br>
+                <form id="complemento-protocolo" enctype="multipart/form-data"> 
+                    {{ csrf_field() }}
+                    <input id="id-protocolo" name="id-protocolo" type="hidden" value="{{$data['protocolo']->id}}">
+                    <div class="row align-items-end">
+                        <div class="col-6 mt-3">
+                            <label for="validationTextarea">Adicione um complemento</label>
+                            <textarea class="form-control" id="complemento" name="complemento" placeholder="Digite aqui" required></textarea>
+                        </div>
+                        <div class="col-2 justify-content-center">
+                            <button class="btn btn-success" type="submit">Adicionar</button>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <table id="table-complementos" class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="table-primary">
+                            <th scope="col">Usuário</th>
+                            <th scope="col">Complemento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data["complementos"] as $complemento)
+                            <tr>
+                                <td>{{$complemento->usuario->nome}}</td>
+                                <td>{{$complemento->complemento}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             <div class="tab-pane fade" id="logs" role="tabpanel" aria-labelledby="logs-tab">
                 <br>
                 <table id="table-logs" class="table table-bordered table-hover">
@@ -243,12 +287,24 @@
                 <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">arrow_back</i>Voltar
             </a>
         </div>
-        @if($data['protocolo']->status_id == 3)
+        @if($data['tramite']->last()->checkbox == '1')
         <div>                     
-            <a class="btn btn-warning" href="{{url('protocolos/protocolos/encaminhar')}}<?= '/'.$data['protocolo']->id ?>">
-                <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">forward</i>Despachar
-            </a>
+            <form action="{{url('protocolos/protocolos', [$data['protocolo']->id])}}" class="input-group" method="POST">
+            {{method_field('DELETE')}}
+            {{ csrf_field() }}
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">delete_forever</i> Finalizar
+                </button>
+            </form>
         </div>
+        @else
+            @if($data['protocolo']->status_id == 3)
+            <div>                     
+                <a class="btn btn-warning" href="{{url('protocolos/protocolos/encaminhar')}}<?= '/'.$data['protocolo']->id ?>">
+                    <i class="material-icons find_in_page" style="vertical-align:middle; font-size:25px; margin-right:5px;">forward</i>Despachar
+                </a>
+            </div>
+            @endif
         @endif
     </div>
 @endsection
@@ -277,6 +333,26 @@
                 success:function(response){
                     window.location.reload()
 
+                },
+                error:function(err){
+                console.log(err);
+                }
+            });
+        })
+
+        $("#complemento-protocolo").submit(function (e){
+            console.log('entrou')
+            e.preventDefault();
+            var idprotocolo = document.getElementById('id-protocolo').value;
+            var dados = $(this).serialize();
+            console.log(dados);
+            $.ajax({
+                url: main_url+'/protocolos/protocolos/acompanhar/enviarComplemento/'+idprotocolo,
+                method:"POST",
+                dataType:"json",
+                data:dados,
+                success:function(response){
+                    window.location.reload()
                 },
                 error:function(err){
                 console.log(err);
