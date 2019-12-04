@@ -2,11 +2,14 @@
 
 namespace Modules\Funcionario\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Funcionario\Entities\{Pagamento, Funcionario, Cargo};
-use DB;
+use Modules\Funcionario\Entities\Cargo;
+use Modules\Funcionario\Entities\Funcionario;
+
+use Modules\Funcionario\Entities\Pagamento;
 
 class PagamentoController extends Controller
 {
@@ -16,21 +19,23 @@ class PagamentoController extends Controller
      */
     public function index(Request $request)
     {
-        if (isset($request->search) || $request->search != "") {
-            $funcionarios = Funcionario::where('nome', 'like', '%' . $request->search . '%')->get();
-        } else {
-            $funcionarios = Funcionario::all();
+        if (Gate::allows('administrador', Auth::user())) {
+            if (isset($request->search) || $request->search != "") {
+                $funcionarios = Funcionario::where('nome', 'like', '%' . $request->search . '%')->get();
+            } else {
+                $funcionarios = Funcionario::all();
+            }
+
+            $data = [
+                'title' => "Pagamentos",
+                'url' => url('funcionario/pagamento/create'),
+                'funcionarios' => $funcionarios,
+            ];
+
+            //$pagamentos = Pagamento::paginate(5);
+
+            return view('funcionario::pagamentos.index', compact('data'));
         }
-
-        $data = [
-            'title'         => "Pagamentos",
-            'url' => url('funcionario/pagamento/create'),
-            'funcionarios' => $funcionarios,
-        ];
-
-        //$pagamentos = Pagamento::paginate(5);
-
-        return view('funcionario::pagamentos.index', compact('data'));
     }
 
     /**
@@ -39,62 +44,65 @@ class PagamentoController extends Controller
      */
     public function create(Request $request)
     {
-        $data = [
-            "url"   => url('funcionario/pagamento/'),
-            "button" => 'Salvar',
-            "model" => '',
-            "title" => "Cadastrar Pagamento",
-            'pagamento' => '',
-            'funcionarios' => Funcionario::all(),
+        if (Gate::allows('administrador', Auth::user())) {
+            $data = [
+                "url" => url('funcionario/pagamento/'),
+                "button" => 'Salvar',
+                "model" => '',
+                "title" => "Cadastrar Pagamento",
+                'pagamento' => '',
+                'funcionarios' => Funcionario::all(),
 
-        ];
+            ];
 
-
-        return view('funcionario::pagamentos.form', compact('data'));
+            return view('funcionario::pagamentos.form', compact('data'));
+        }
     }
 
     public function novoPagamento($id)
     {
-        $funcionario = Funcionario::findOrFail($id);
-        
-        $data = [
-            "url"        => url('funcionario/pagamento'),
-            "button"     => 'Salvar',
-            "title"      => "Cadastrar Pagamento",
-            'model'      => null,
-            'pagamento'  => null,
-            'funcionario' => $funcionario,
-            'cargo' => $funcionario->cargos->last()
-        ];
+        if (Gate::allows('administrador', Auth::user())) {
+            $funcionario = Funcionario::findOrFail($id);
 
-        return view('funcionario::pagamentos.form', compact('data', 'funcionario'));
+            $data = [
+                "url" => url('funcionario/pagamento'),
+                "button" => 'Salvar',
+                "title" => "Cadastrar Pagamento",
+                'model' => null,
+                'pagamento' => null,
+                'funcionario' => $funcionario,
+                'cargo' => $funcionario->cargos->last(),
+            ];
+
+            return view('funcionario::pagamentos.form', compact('data', 'funcionario'));
+        }
     }
-
 
     public function listar($id, Request $request)
     {
-        if (isset($request->search) || $request->search != "") {
-            $from = $request->search . " 00:00:00";
-            $to = $request->search . " 23:59:59";
-            $pagamentos = Pagamento::where('funcionario_id', '=', $id)
-                ->whereBetween('created_at', array($from, $to))->get();
+        if (Gate::allows('administrador', Auth::user())) {
+            if (isset($request->search) || $request->search != "") {
+                $from = $request->search . " 00:00:00";
+                $to = $request->search . " 23:59:59";
+                $pagamentos = Pagamento::where('funcionario_id', '=', $id)
+                    ->whereBetween('created_at', array($from, $to))->get();
 
-            // DB::enableQueryLog(); // Enable query log
-            // // Your Eloquent query
-            // dd(DB::getQueryLog($pagamentos = Pagamento::
-            // where('funcionario_id', '=', $id)
-            // ->whereBetween('created_at', array($from, $to))->get()));
+                // DB::enableQueryLog(); // Enable query log
+                // // Your Eloquent query
+                // dd(DB::getQueryLog($pagamentos = Pagamento::
+                // where('funcionario_id', '=', $id)
+                // ->whereBetween('created_at', array($from, $to))->get()));
 
+            } else {
+                $pagamentos = Pagamento::where('funcionario_id', '=', $id)->get();
+            }
+            $data = [
+                'title' => 'Lista de Pagamentos',
+                'pagamentos' => $pagamentos,
+            ];
 
-        } else {
-            $pagamentos = Pagamento::where('funcionario_id', '=', $id)->get();
+            return view('funcionario::pagamentos.listar', compact('data'));
         }
-        $data = [
-            'title' => 'Lista de Pagamentos',
-            'pagamentos' => $pagamentos,
-        ];
-
-        return view('funcionario::pagamentos.listar', compact('data'));
     }
 
     /**
@@ -104,43 +112,44 @@ class PagamentoController extends Controller
      */
     public function store(Request $request)
     {
-       
-        DB::beginTransaction();
+        if (Gate::allows('administrador', Auth::user())) {
+            DB::beginTransaction();
 
-        try {
+            try {
 
-            $pagamento = new Pagamento;
-            $funcionario = Funcionario::findOrFail($request->funcionario_id);
-            $salario = ($funcionario->cargos->last()->salario);
-            $salario = str_replace('.', '', $salario);
-            $salario = floatval($salario);
-            $pagamento->valor = $salario;
-            $pagamento->faltas = $request->faltas;
-            $pagamento->horas_extras = $request->horas_extras;
-            $pagamento->adicional_noturno = $request->adicional;
-            $pagamento->tipo_hora_extra = $request->tipo_hora_extra;
-            $inss = $this->calcularInss($salario);
-        
-            if ($request->opcao_pagamento == "2") {
-                $temp = $salario * 0.4;
-                $pagamento->inss = floatVal(number_format($this->calcularInss($temp), 2,',',''));
-                $pagamento->valor *= 0.4;
-            } else
-                $pagamento->inss = floatVal(number_format($inss, 2,',',''));
+                $pagamento = new Pagamento;
+                $funcionario = Funcionario::findOrFail($request->funcionario_id);
+                $salario = ($funcionario->cargos->last()->salario);
+                $salario = str_replace('.', '', $salario);
+                $salario = floatval($salario);
+                $pagamento->valor = $salario;
+                $pagamento->faltas = $request->faltas;
+                $pagamento->horas_extras = $request->horas_extras;
+                $pagamento->adicional_noturno = $request->adicional;
+                $pagamento->tipo_hora_extra = $request->tipo_hora_extra;
+                $inss = $this->calcularInss($salario);
 
-            $pagamento->emissao = brToEnDate($request->emissao);
-            $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
-            $pagamento->funcionario_id = $funcionario->id;
-            $pagamento = $this->OpcaoPagamentoNome($pagamento);
-            $pagamento = $this->calcularTotal($pagamento, $salario);
-            $pagamento->save();
+                if ($request->opcao_pagamento == "2") {
+                    $temp = $salario * 0.4;
+                    $pagamento->inss = floatVal(number_format($this->calcularInss($temp), 2, ',', ''));
+                    $pagamento->valor *= 0.4;
+                } else {
+                    $pagamento->inss = floatVal(number_format($inss, 2, ',', ''));
+                }
 
+                $pagamento->emissao = brToEnDate($request->emissao);
+                $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
+                $pagamento->funcionario_id = $funcionario->id;
+                $pagamento = $this->OpcaoPagamentoNome($pagamento);
+                $pagamento = $this->calcularTotal($pagamento, $salario);
+                $pagamento->save();
 
-            DB::commit();
-            return redirect('/funcionario/pagamento')->with('success', "pagamento cadastrado com sucesso");
-        } catch (Exception $e) {
-            DB::rollback();
-            return redirect()->back()->with('danger', "Erro ao cadastrar pagamento!: cod_erro:" . $e->getMessage());
+                DB::commit();
+                return redirect('/funcionario/pagamento')->with('success', "pagamento cadastrado com sucesso");
+            } catch (Exception $e) {
+                DB::rollback();
+                return redirect()->back()->with('danger', "Erro ao cadastrar pagamento!: cod_erro:" . $e->getMessage());
+            }
         }
     }
 
@@ -151,57 +160,56 @@ class PagamentoController extends Controller
      */
     public function show($id, Request $request)
     {
+        if (Gate::allows('administrador', Auth::user())) {
+            if ((isset($request->tipo) && $request->tipo != "") || (isset($request->data) && $request->data != "")) {
 
-        if( (isset($request->tipo) && $request->tipo != "")   || ( isset($request->data) && $request->data != "") ){
-
-            if(isset($request->tipo) && $request->tipo != "demissao"){
-                if(isset($request->data) && $request->data != ""){
-                    $pagamentos = Pagamento::findOrFail($id)->get();
-                    foreach ($pagamentos as $key => $fpagamento) {
-                        if( substr($fpagamento->emissao , 0, 7) == $request->data){
-                            $pagamento = $fpagamento;
+                if (isset($request->tipo) && $request->tipo != "demissao") {
+                    if (isset($request->data) && $request->data != "") {
+                        $pagamentos = Pagamento::findOrFail($id)->get();
+                        foreach ($pagamentos as $key => $fpagamento) {
+                            if (substr($fpagamento->emissao, 0, 7) == $request->data) {
+                                $pagamento = $fpagamento;
+                            }
                         }
                     }
-                }
-                
-                if(!isset($pagamento)){
-                    $error = true;
-                    $pagamento = Pagamento::findOrFail($id)->get()->last();
+
+                    if (!isset($pagamento)) {
+                        $error = true;
+                        $pagamento = Pagamento::findOrFail($id)->get()->last();
+                    }
+
+                } else {
+                    return "demissao";
                 }
 
-            }else{
-                return "demissao";
+                $valorFalta = (floatVal(str_replace('.', '', $pagamento->funcionario->cargos->last()->salario)) / 30) * $pagamento->faltas;
+                $desconto = $pagamento->inss + $valorFalta;
+                $desconto = number_format($desconto, 2, ',', '');
+                $valorFalta = number_format($valorFalta, 2, ',', '');
+                $vencimentos = floatVal(str_replace('.', '', $pagamento->funcionario->cargos->last()->salario)) + $pagamento->horas_extras + $pagamento->adicional_noturno;
+                $vencimentos = number_format($vencimentos, 2, ',', '');
+
+            } else {
+
+                $pagamento = Pagamento::latest('emissao')->first();
+
+                $valorFalta = (floatVal(str_replace('.', '', $pagamento->funcionario->cargos->last()->salario)) / 30) * $pagamento->faltas;
+                $desconto = $pagamento->inss + $valorFalta;
+                $desconto = number_format($desconto, 2, ',', '');
+                $valorFalta = number_format($valorFalta, 2, ',', '');
+                $vencimentos = floatVal(str_replace('.', '', $pagamento->funcionario->cargos->last()->salario)) + $pagamento->horas_extras + $pagamento->adicional_noturno;
+                $vencimentos = number_format($vencimentos, 2, ',', '');
             }
-            
 
-            $valorFalta = (floatVal(str_replace('.','',$pagamento->funcionario->cargos->last()->salario)) / 30) * $pagamento->faltas;
-            $desconto = $pagamento->inss + $valorFalta;
-            $desconto = number_format($desconto, 2, ',', '');
-            $valorFalta = number_format($valorFalta, 2, ',', '');
-            $vencimentos = floatVal(str_replace('.','',$pagamento->funcionario->cargos->last()->salario)) + $pagamento->horas_extras + $pagamento->adicional_noturno;
-            $vencimentos= number_format($vencimentos, 2, ',', '');
+            $data = [
+                'title' => 'Folha de Pagamento',
+                'pagamento' => $pagamento,
 
-        }else{
-            
-            $pagamento = Pagamento::latest('emissao')->first();
+            ];
 
-            $valorFalta = (floatVal(str_replace('.','',$pagamento->funcionario->cargos->last()->salario)) / 30) * $pagamento->faltas;
-            $desconto = $pagamento->inss + $valorFalta;
-            $desconto = number_format($desconto, 2, ',', '');
-            $valorFalta = number_format($valorFalta, 2, ',', '');
-            $vencimentos = floatVal(str_replace('.','',$pagamento->funcionario->cargos->last()->salario)) + $pagamento->horas_extras + $pagamento->adicional_noturno;
-            $vencimentos= number_format($vencimentos, 2, ',', '');
+            return view('funcionario::pagamentos.show', compact('data', 'desconto', 'vencimentos', 'valorFalta'));
+
         }
-
-        $data = [
-            'title' => 'Folha de Pagamento',
-            'pagamento' => $pagamento,
-
-        ];
-
-        return view('funcionario::pagamentos.show', compact('data', 'desconto','vencimentos','valorFalta'));
-        
-        
     }
 
     /**
@@ -211,21 +219,22 @@ class PagamentoController extends Controller
      */
     public function edit($id)
     {
-        $funcionario = Funcionario::findOrFail($id);
+        if (Gate::allows('administrador', Auth::user())) {
+            $funcionario = Funcionario::findOrFail($id);
             //return $funcionario->pagamento->last()->emissao;
-        $data = [
-            "button"        => 'Atualizar',
-            'title'         => "Editar pagamentos",
-            'url'           => url('funcionario/pagamento/'.$id),
-            'model'         =>$funcionario->pagamento()->get()->last(),
-            'pagamento'     => $funcionario->pagamento,
-            'funcionario'   => $funcionario,
-            'funcionarios'  => Funcionario::findOrFail($id)->get(),
-            'cargo'         => $funcionario->cargos->last()
-        ];
-        
+            $data = [
+                "button" => 'Atualizar',
+                'title' => "Editar pagamentos",
+                'url' => url('funcionario/pagamento/' . $id),
+                'model' => $funcionario->pagamento()->get()->last(),
+                'pagamento' => $funcionario->pagamento,
+                'funcionario' => $funcionario,
+                'funcionarios' => Funcionario::findOrFail($id)->get(),
+                'cargo' => $funcionario->cargos->last(),
+            ];
 
-        return view('funcionario::pagamentos.form', compact('data', 'funcionario'));
+            return view('funcionario::pagamentos.form', compact('data', 'funcionario'));
+        }
     }
 
     /**
@@ -233,54 +242,54 @@ class PagamentoController extends Controller
      * @param Request $request
      * @param int $id
      * @return Response
-     */ //Autor: Denise Lopes
+     *///Autor: Denise Lopes
     public function update(Request $request, $id)
     {
+        if (Gate::allows('administrador', Auth::user())) {
+            DB::beginTransaction();
 
-        DB::beginTransaction();
+            try {
 
-        try {
+                $pagamento = Pagamento::findOrFail($id);
+                $funcionario = Funcionario::findOrFail($id);
+                $salario = $funcionario->cargos->last()->salario;
+                $salario = str_replace('.', '', $salario);
+                $salario = str_replace(',', '.', $salario);
 
-            $pagamento = Pagamento::findOrFail($id);
-            $funcionario = Funcionario::findOrFail($id);
-            $salario = $funcionario->cargos->last()->salario;
-            $salario = str_replace('.', '', $salario);
-            $salario = str_replace(',', '.', $salario);
+                //$salario= number_format($salario, 2, ',', '');
+                $pagamento->valor = $salario;
+                // $pagamento = str_replace(',', '.', $pagamento);
+                $faltas = $request->faltas;
+                $horas_extras = $request->horas_extras;
+                $adicional_noturno = $request->adicional;
+                $tipo_hora_extra = $request->tipo_hora_extra;
+                $inss = $this->calcularInss($salario);
 
-            //$salario= number_format($salario, 2, ',', '');
-            $pagamento->valor = $salario;
-           // $pagamento = str_replace(',', '.', $pagamento);
-            $faltas = $request->faltas;
-            $horas_extras = $request->horas_extras;
-            $adicional_noturno = $request->adicional;
-            $tipo_hora_extra = $request->tipo_hora_extra;
-            $inss = $this->calcularInss($salario);
-            
-            if ($request->opcao_pagamento == "2") {
-                $temp = $salario * 0.4;
-                $pagamento->inss = $this->calcularInss($temp);
-                $pagamento->valor *= 0.4;
-            } else
-                $pagamento->inss = $inss;
-            $inss = str_replace(',', '.', $inss);
-            $pagamento->emissao = brToEnDate($request->emissao);
-            $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
-            $pagamento->funcionario_id = $funcionario->id;
-            $pagamento = $this->OpcaoPagamentoNome($pagamento);
-            $pagamento = $this->calcularTotal($pagamento, $salario);
-            // dd($pagamento);
-            $pagamento->save();
+                if ($request->opcao_pagamento == "2") {
+                    $temp = $salario * 0.4;
+                    $pagamento->inss = $this->calcularInss($temp);
+                    $pagamento->valor *= 0.4;
+                } else {
+                    $pagamento->inss = $inss;
+                }
 
-            DB::commit();
-            return redirect('/funcionario/pagamento')->with('success', "pagamento atualizado com sucesso");
-        } catch (Exception $e) {
-            DB::rollback();
-            return redirect()->back()->with('danger', "Erro ao atualizar o pagamento!: cod_erro:" . $e->getMessage());
+                $inss = str_replace(',', '.', $inss);
+                $pagamento->emissao = brToEnDate($request->emissao);
+                $pagamento->tipo_pagamento = $_POST['opcao-pagamento'];
+                $pagamento->funcionario_id = $funcionario->id;
+                $pagamento = $this->OpcaoPagamentoNome($pagamento);
+                $pagamento = $this->calcularTotal($pagamento, $salario);
+                // dd($pagamento);
+                $pagamento->save();
+
+                DB::commit();
+                return redirect('/funcionario/pagamento')->with('success', "pagamento atualizado com sucesso");
+            } catch (Exception $e) {
+                DB::rollback();
+                return redirect()->back()->with('danger', "Erro ao atualizar o pagamento!: cod_erro:" . $e->getMessage());
+            }
         }
     }
-
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -293,7 +302,6 @@ class PagamentoController extends Controller
     }
     public function buscaCargo(Request $request)
     {
-
 
         $funcionario = Funcionario::findOrFail($request->id);
 
@@ -311,17 +319,16 @@ class PagamentoController extends Controller
         return null;
     }
 
-
     public function calcularInss($salario)
-    {  
-        $inss =0;
+    {
+        $inss = 0;
         if ($salario <= 1751.81) {
-            $inss = ($salario * 8) /100;
+            $inss = ($salario * 8) / 100;
         } else if ($salario > 1751.81) {
             $inss = ($salario * 9) / 100;
         } else {
             $inss = ($salario * 11) / 100;
-            
+
         }
 
         return $inss;
@@ -362,10 +369,8 @@ class PagamentoController extends Controller
         $add_noturno = ($salario / 220) * 0.2;
         $add_noturno *= $pagamento->adicional_noturno;
 
-
         //faltas
         $faltas = ($salario / 30) * $pagamento->faltas;
-
 
         if ($pagamento->tipo_pagamento == "2") {
             $total *= 0.4;
@@ -377,25 +382,25 @@ class PagamentoController extends Controller
         return $pagamento;
         // $desconto = $pagamento->salario / 30 * ($pagamento->faltas * $horas_dia);
         /*
-            console.log("Valor salario :" + selectedCargo.salario + "hora Extra:" + $('#horas_extras').val() + "Adicional noturno:" + $('.adicional1').val() + " Faltas:" + $('#faltas').val())
-            var salario = parseFloat(selectedCargo.salario)
-            var horas_extras = parseFloat($('.horas_extras').val())
-            var valor_dia = salario / 20
-            var horas_dias = parseFloat(selectedCargo.horas_semanais / 5)
-            var valor_hora_extra = (valor_dia / 8) * horas_extras
-            var adicional = parseFloat($('.adicional1').val())
-            var faltas = parseFloat($('.faltas').val())
-            var inss = parseFloat($('.inss').val())
-            var desconto = salario / 30 * (faltas * horas_dias)
+        console.log("Valor salario :" + selectedCargo.salario + "hora Extra:" + $('#horas_extras').val() + "Adicional noturno:" + $('.adicional1').val() + " Faltas:" + $('#faltas').val())
+        var salario = parseFloat(selectedCargo.salario)
+        var horas_extras = parseFloat($('.horas_extras').val())
+        var valor_dia = salario / 20
+        var horas_dias = parseFloat(selectedCargo.horas_semanais / 5)
+        var valor_hora_extra = (valor_dia / 8) * horas_extras
+        var adicional = parseFloat($('.adicional1').val())
+        var faltas = parseFloat($('.faltas').val())
+        var inss = parseFloat($('.inss').val())
+        var desconto = salario / 30 * (faltas * horas_dias)
 
-            console.log("desconto:" + -desconto)
-            var temp = total;
+        console.log("desconto:" + -desconto)
+        var temp = total;
 
-            //do total ele efetua os descontos e soma os extras
-            temp -= desconto
-            temp += (valor_hora_extra + adicional)
-            */
-        // $salario = 
+        //do total ele efetua os descontos e soma os extras
+        temp -= desconto
+        temp += (valor_hora_extra + adicional)
+         */
+        // $salario =
 
     }
 }
