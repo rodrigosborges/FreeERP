@@ -49,6 +49,7 @@ class RelatoriosController extends Controller
         if($req->tipo == 1) {
             $itemServico = ItemServico::all();
             return view('assistencia::paginas.relatorios.servicos', compact('consertos','itemServico','periodo'));
+        
         }elseif($req->tipo == 2){
             return view('assistencia::paginas.relatorios.tecnicos', compact('consertos','periodo'));
         }elseif($req->tipo == 3){
