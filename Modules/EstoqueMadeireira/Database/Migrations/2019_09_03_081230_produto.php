@@ -20,7 +20,7 @@ class Produto extends Migration
             $table->decimal('medida', 8,2)->nullable();
             $table->integer('categoria_id')->unsigned()->index('fk_produtos_categoria');
             $table->integer('fornecedor_id')->unsigned()->index('fk_produtos_fornecedor');
-            $table->string('unidadeMedida_id', 10)->unsigned()->index('fk_produtos_unidadeMedida');
+            $table->string('unidadeMedida', 10)->nullable();
             $table->decimal('preco', 12, 2);
             $table->decimal('precoCusto', 12, 2);
             $table->timestamps();   

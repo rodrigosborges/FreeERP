@@ -24,16 +24,17 @@
             
             <div class="row">
 
-                @if(($produto->medida == null) && ($unidadeMedida->id == -1)){
-                <div class="col-md-6">
+               @if($produto->medida == null && $produto->unidadeMedida == null)
+               <div class="col-md-6">
                     <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Medida</b><br><br> Sem Medição </label>
                 </div>
-                } 
-                @else
-                <div class="col-md-6">
-                    <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Medida</b><br><br>{{$produto->medida}} - {{$unidadeMedida->nome}} </label>
+               @else
+               <div class="col-md-6">
+                    <label for="codigo"><i class="material-icons" style="vertical-align:middle;">view_week</i>&nbsp&nbsp<b>Medida ou Quantidade</b><br><br>{{$produto->medida}} - {{$produto->unidadeMedida}} </label>
                 </div>
                 @endif
+               
+        
 
                 <div class="col-md-6">
                     <label for="categoria"><i class="material-icons" style="vertical-align:middle;">category</i>&nbsp&nbsp<b>Categoria</b><br><br>{{$produto->categoria->nome}}</label>   

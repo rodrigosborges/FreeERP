@@ -10,7 +10,7 @@ class Produto extends Model
     use softDeletes;
 
     protected $table = 'produto';
-    protected $fillable = ['nome', 'preco', 'precoCusto', 'medida', 'descricao', 'categoria_id', 'fornecedor_id', 'unidadeMedida_id'];
+    protected $fillable = ['nome', 'preco', 'precoCusto', 'medida', 'descricao', 'categoria_id', 'fornecedor_id', 'unidadeMedida'];
 
 
     public function categoria(){
@@ -22,7 +22,7 @@ class Produto extends Model
 
     }
 
-    public function unidadeMedida(){
-        return $this->belongsTo('Modules\EstoqueMadeireira\Entities\UnidadeMedida')->withTrashed();
-    }
+    // public function unidadeMedida(){
+    //     return $this->belongsTo('Modules\EstoqueMadeireira\Entities\UnidadeMedida')->withTrashed();
+    // }
 }

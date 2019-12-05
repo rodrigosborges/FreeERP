@@ -31,7 +31,7 @@
                 </div>       
                 <div class="form-group col-3">
                     <label for="desconto">Desconto</label>
-                    <input class="form-control" type="text" id="desconto" name="desconto" onKeyUp="verificaPreco(this);">
+                    <input class="form-control" type="text" id="desconto" name="desconto" value="{{isset($pedido) ? $pedido->last()->desconto : ''}}" onKeyUp="verificaPreco(this);">
                 </div>
 
                 <div class="row col-12 mb-2" style="justify-content: flex-end;">

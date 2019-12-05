@@ -81,24 +81,16 @@
                         {{$errors->first('fornecedor_id')}}
                     </div>
                    
-                   <div class="form-group col-2 ">
-                        <label for="medida">Medida</label>
+                   <div class="form-group col-3 ">
+                        <label for="medida">Medida ou Quantidade</label>
                         <input type="text" class="form-control" placeholder="Nenhum" name="medida"  onKeyUp="verificaPreco(this);" value="{{isset($produto) ? $produto->medida : ''}}">
                         <span style="color:red">{{$errors->first('medida')}}</span>
                    </div>
                    
                    <div class="form-group col-3 ">
-                    <label for="unidadeMedida">Unidade de Medida</label>
-                    <select name="unidadeMedida_id" class="form-control">
-                        <option value="" disabled  selected>Selecione uma medida</option>
-                        @if(isset($unidadeMedidas))
-                            @foreach($unidadeMedidas as $medidas)
-                                <option value="{{$medidas->id}}" selected>{{$medidas->nome}}</option>
-                            @endforeach
-                        @endif                                     
-                    </select>
-
-                   
+                   <label for="nome">Unidade de Medida</label>
+                        <input  type="text" class="form-control" placeholder="Ex: M², M³, Cm" name="unidadeMedida" maxlength="10" value="{{isset($produto) ? $produto->unidadeMedida : ''}}">
+                        <span style="color:red">{{$errors->first('unidadeMedida')}}</span>   
                    
                    </div>
                    

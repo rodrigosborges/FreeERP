@@ -138,7 +138,7 @@ class PedidoController extends Controller
             $pedido = Pedido::findOrFail($id);
             $pedido->update($request->all());
             DB::commit();
-            return redirect('/estoquemadeireira/vendas/pedidos')->with('success', 'Pedido com sucesso!');
+            return redirect('/estoquemadeireira/vendas/pedidos')->with('success', 'Pedido atualizado com sucesso!');
       
         }catch (\Exception $e) {
             DB::rollback();
@@ -171,7 +171,8 @@ class PedidoController extends Controller
             if(count($pedidos) > 0){
                 $pedidos = DB::table('pedidos')
                 ->join('clientes', 'clientes.id', '=', 'pedidos.cliente_id')
-                ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')->paginate(10);
+                ->join('item_pedidos', 'item_pedidos.pedido_id', '=', 'pedidos.id')
+                ->where('pedidos.id', '=', $request->pesquisa)->paginate(10);
                 return view('estoquemadeireira::vendas.pedidos.index', compact('pedidos'))->with('success', 'Resultado da pesquisa');
             }else{
                 return redirect('/estoquemadeireira/vendas/pedidos')->with('error', 'Nenhum resultado encontrado');
