@@ -15,7 +15,7 @@
     <tr>
       <td> {{ $funcionario->nome }} </td>
       <td class="d-flex justify-content-end">
-        <a href='{{url("funcionario/ferias/controleFerias/$funcionario->id")}}' class="btn btn-success ">Agendar ferias</a>
+        <a href='{{url("funcionario/ferias/controleFerias/$funcionario->id")}}' class="btn btn-success ">Agendar férias</a>
         <?php
           if($funcionario->ferias()->first()){
             if(substr($funcionario->ferias()->get()->last()->created_at,'0','4') == date('Y',time())){

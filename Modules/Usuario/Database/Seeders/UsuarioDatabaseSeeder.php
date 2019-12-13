@@ -24,7 +24,7 @@ class UsuarioDatabaseSeeder extends Seeder{
             'apelido' => 'admin',
             'avatar' => 'default.png',
             'papel_id' => 1,            
-            'email' => 'admin@freeerp.com',
+            'email' => 'admin@erpedu.com',
             'password' => bcrypt('password'),
             'reset_password_token' =>'',
         ]);

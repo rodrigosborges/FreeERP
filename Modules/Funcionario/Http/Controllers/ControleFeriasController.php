@@ -10,6 +10,8 @@ use Modules\Funcionario\Entities\Cargo;
 use Modules\Funcionario\Entities\ControleFerias;
 
 use Modules\Funcionario\Entities\Funcionario;
+use Gate;
+use Auth;
 
 class ControleFeriasController extends Controller
 {

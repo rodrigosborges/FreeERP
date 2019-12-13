@@ -5,7 +5,7 @@
     <div class="col-xm-12 col-sm-10">
         <div class="card mt-4 shadow-sm">
             <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <h5 class="card-title m-0 ">usuarios</h5>
+                <h5 class="card-title m-0 ">Usuários</h5>
                 <a href="{{url('usuario/cadastrar')}}" style="text-decoration: none; padding:0">
                     <button class="text-success d-flex align-items-center p-0" style="background: none; border: 0; cursor: pointer;" type="submit" title="Cadastrar">
                         <i class="material-icons" style="font-size: 32px">add</i>

@@ -14,7 +14,7 @@
             <h4 style="text-align: center;">Demissão</h4>
             <div class="row">
                 <div class="form-group col-6">
-                    <label for="data_demissao">Data Demissão:</label>
+                    <label for="data_demissao">Data de demissão:</label>
                     <input type="date" name="data_demissao" id="data_demissao" class="form-control" value="{{old('data_demissao')}}">    
                 </div>
 
@@ -47,12 +47,12 @@
            
                 <div class='form-group col-3'>
                     <input type="checkbox" name="aviso_previo_indenizado" id="aviso_previo_indenizado"  {{old('aviso_previo_indenizado') ? 'checked' : null }} disabled>
-                    <label for="aviso_previo_indenizado">Aviso previo indenizado</label>
+                    <label for="aviso_previo_indenizado">Aviso prévio indenizado</label>
                 </div>
 
                 <div class="form-group col-3">
                     <input type="checkbox" name="descontar_aviso_previo" id="descontar_aviso_previo" {{old('descontar_aviso_previo') ? 'checked' : null}} disabled>
-                    <label for="descontar_aviso_previo">Desconta aviso previo</label>
+                    <label for="descontar_aviso_previo">Desconta aviso prévio</label>
                 </div>
 
                 <div class="form-group col-3">

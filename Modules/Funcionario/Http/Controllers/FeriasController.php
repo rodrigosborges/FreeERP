@@ -4,6 +4,8 @@ namespace Modules\Funcionario\Http\Controllers;
 
 use DateTime;
 use DB;
+use Gate;
+use Auth;
 use Illuminate\Http\Request;use Illuminate\Http\Response;use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\ControleFerias;
 

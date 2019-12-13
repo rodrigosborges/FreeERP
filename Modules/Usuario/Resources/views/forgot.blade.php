@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-center" style="margin-top:8%">
     <div class="card" style="width:40%">
         <div class="card-body">
-            <h1 style="text-align:center">FreeErp</h1>
+            <h1 style="text-align:center">ERPedu</h1>
             <br>
             <br>
 

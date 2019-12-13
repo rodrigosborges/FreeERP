@@ -142,7 +142,7 @@
         var localdate = day + '/' + month + '/' + dNow.getFullYear() + ' ' + hours + ':' + minutes;
 
         $("#show").printThis({
-            header: "<h1 class='text-center'>Folha de Pagamento<h1><hr><br>",
+            header: "<h1 class='text-center'>Resumo de pagamento<h1><hr><br>",
             footer: `<span class='text-center bottom-center-absolute'>${localdate}<span><hr><br>`,
             afterPrint: function(){
                 $(".change-class-2").toggleClass("col-lg-2").toggleClass("col-2");

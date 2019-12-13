@@ -8,7 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Funcionario\Entities\Cargo;
 use Modules\Funcionario\Entities\Funcionario;
-
+use Gate;
+use Auth;
 use Modules\Funcionario\Entities\Pagamento;
 
 class PagamentoController extends Controller
@@ -202,7 +203,7 @@ class PagamentoController extends Controller
             }
 
             $data = [
-                'title' => 'Folha de Pagamento',
+                'title' => 'Resumo de pagamento',
                 'pagamento' => $pagamento,
 
             ];

@@ -1,5 +1,5 @@
 @extends('estoque::estoque.estoqueTemplate')
-@section('title', 'Detalhes de movimentacao #' . $movimentacao->id)
+@section('title', 'Detalhes de movimentação #' . $movimentacao->id)
 @section('body')
 
 <div class="container" style="justify-content: center" id="imprimir">

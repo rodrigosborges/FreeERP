@@ -87,7 +87,7 @@ use Illuminate\Support\Carbon;
     </tr>
     @if($movim == $data['movimentacao'][count($data['movimentacao'])-1])
         <footer>
-            <p>Relatório emitido por FreeERP®</p>
+            <p>Relatório emitido por ERPedu®</p>
             <p>Data: {{date('d/m/y H:i:s')}}</p>
         </footer>
     @endif

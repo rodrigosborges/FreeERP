@@ -12,6 +12,6 @@
     ];
     $moduleInfo = [
         'icon' => 'person',
-        'name' => 'Usuario'
+        'name' => 'Usuário'
     ];
 ?>

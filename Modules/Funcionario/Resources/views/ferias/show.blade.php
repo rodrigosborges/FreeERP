@@ -49,7 +49,7 @@
     
     <div class="row-5 d-flex justify-content-between">
         <div class="col-4 mt-5" style="border-top: solid 1px">
-            <p>Assinatura do Funcionario</p>
+            <p>Assinatura do Funcionário</p>
         </div>
 
         <div class="col-4 mt-5" style="border-top: solid 1px">
