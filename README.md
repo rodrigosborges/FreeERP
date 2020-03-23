@@ -17,4 +17,4 @@ Software para gerenciamento de ordens de serviço para uma assistência técnica
 &nbsp;&nbsp;&nbsp;&nbsp;4.2. 'compser update' <br>
 &nbsp;&nbsp;&nbsp;&nbsp;4.3. php artisan key:generate <br>
 &nbsp;&nbsp;&nbsp;&nbsp;4.4. php artisan migrate --seed <br>
-5. Acessar: http://localhost/FreeERP/assistencia/public 
+5. Acessar: http://localhost/FreeERP/public/assistencia/public 
